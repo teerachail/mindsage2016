@@ -6,40 +6,225 @@ var gulp = require("gulp"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     uglify = require("gulp-uglify");
+var $ = require('gulp-load-plugins')();
+var argv = require('yargs').argv;
+var browser = require('browser-sync');
+var gulp = require('gulp');
+var panini = require('panini');
+var sequence = require('run-sequence');
+var sherpa = require('style-sherpa');
 
-var paths = {
+// Check for --production flag
+var isProduction = !!(argv.production);
+
+// Port to use for the development server.
+var PORT = 8000;
+
+// Browsers to target when prefixing CSS.
+var COMPATIBILITY = ['last 2 versions', 'ie >= 9'];
+
+// File paths to various assets are defined here.
+var PATHS = {
+    assets: [
+        'src/assets/**/*',
+        '!src/assets/{img,js,scss}/**/*'
+    ],
+    sass: [
+        'bower_components/foundation-sites/scss',
+        'bower_components/motion-ui/src/'
+    ],
+    javascript: [
+        'bower_components/jquery/dist/jquery.js',
+        'bower_components/what-input/what-input.js',
+        'bower_components/foundation-sites/js/foundation.core.js',
+        'bower_components/foundation-sites/js/foundation.util.*.js',
+    // Paths to individual JS components defined below
+        'bower_components/foundation-sites/js/foundation.abide.js',
+        'bower_components/foundation-sites/js/foundation.accordion.js',
+        'bower_components/foundation-sites/js/foundation.accordionMenu.js',
+        'bower_components/foundation-sites/js/foundation.drilldown.js',
+        'bower_components/foundation-sites/js/foundation.dropdown.js',
+        'bower_components/foundation-sites/js/foundation.dropdownMenu.js',
+        'bower_components/foundation-sites/js/foundation.equalizer.js',
+        'bower_components/foundation-sites/js/foundation.interchange.js',
+        'bower_components/foundation-sites/js/foundation.magellan.js',
+        'bower_components/foundation-sites/js/foundation.offcanvas.js',
+        'bower_components/foundation-sites/js/foundation.orbit.js',
+        'bower_components/foundation-sites/js/foundation.responsiveMenu.js',
+        'bower_components/foundation-sites/js/foundation.responsiveToggle.js',
+        'bower_components/foundation-sites/js/foundation.reveal.js',
+        'bower_components/foundation-sites/js/foundation.slider.js',
+        'bower_components/foundation-sites/js/foundation.sticky.js',
+        'bower_components/foundation-sites/js/foundation.tabs.js',
+        'bower_components/foundation-sites/js/foundation.toggler.js',
+        'bower_components/foundation-sites/js/foundation.tooltip.js',
+        'src/assets/js/**/!(app).js',
+        'src/assets/js/app.js'
+    ],
     webroot: "./wwwroot/"
 };
 
-paths.js = paths.webroot + "js/**/*.js";
-paths.minJs = paths.webroot + "js/**/*.min.js";
-paths.css = paths.webroot + "css/**/*.css";
-paths.minCss = paths.webroot + "css/**/*.min.css";
-paths.concatJsDest = paths.webroot + "js/site.min.js";
-paths.concatCssDest = paths.webroot + "css/site.min.css";
+PATHS.js = PATHS.webroot + "js/**/*.js";
+PATHS.minJs = PATHS.webroot + "js/**/*.min.js";
+PATHS.css = PATHS.webroot + "css/**/*.css";
+PATHS.minCss = PATHS.webroot + "css/**/*.min.css";
+PATHS.concatJsDest = PATHS.webroot + "js/site.min.js";
+PATHS.concatCssDest = PATHS.webroot + "css/site.min.css";
+PATHS.pageTmpl = PATHS.webroot + "tmpl";
+PATHS.webAssets = PATHS.webroot + "assets";
+PATHS.assetCss = PATHS.webroot + "assets/css";
+PATHS.assetJs = PATHS.webroot + "assets/js";
+
+// Delete the "dist" folder
+// This happens every time a build starts
+gulp.task('clean:dist', function (done) {
+    rimraf(PATHS.webAssets, done);
+});
+gulp.task('clean:tmpl', function (done) {
+    rimraf(PATHS.pageTmpl, done);
+});
 
 gulp.task("clean:js", function (cb) {
-    rimraf(paths.concatJsDest, cb);
+    rimraf(PATHS.concatJsDest, cb);
 });
 
 gulp.task("clean:css", function (cb) {
-    rimraf(paths.concatCssDest, cb);
+    rimraf(PATHS.concatCssDest, cb);
 });
 
-gulp.task("clean", ["clean:js", "clean:css"]);
+gulp.task("clean", ["clean:js", "clean:css", "clean:dist", "clean:tmpl"]);
 
-gulp.task("min:js", function () {
-    return gulp.src([paths.js, "!" + paths.minJs], { base: "." })
-        .pipe(concat(paths.concatJsDest))
-        .pipe(uglify())
-        .pipe(gulp.dest("."));
+// Copy files out of the assets folder
+// This task skips over the "img", "js", and "scss" folders, which are parsed separately
+gulp.task('copy', function () {
+    return gulp.src(PATHS.assets)
+        .pipe(gulp.dest(PATHS.webAssets));
+});
+
+// Copy page templates into finished HTML files
+gulp.task('pages', function () {
+    return gulp.src('src/pages/**/*.{html,hbs,handlebars}')
+        .pipe(panini({
+            root: 'src/pages/',
+            layouts: 'src/layouts/',
+            partials: 'src/partials/',
+            data: 'src/data/',
+            helpers: 'src/helpers/'
+        }))
+        .pipe(gulp.dest(PATHS.pageTmpl))
+        .on('finish', browser.reload);
+});
+
+gulp.task('pages:reset', function (done) {
+    panini.refresh();
+    gulp.run('pages');
+    done();
+});
+
+gulp.task('styleguide', function (done) {
+    sherpa('src/styleguide/index.md', {
+        output: PATHS.pageTmpl + '/styleguide.html',
+        template: 'src/styleguide/template.html'
+    }, function () {
+        browser.reload;
+        done();
+    });
+});
+
+// Compile Sass into CSS
+// In production, the CSS is compressed
+gulp.task('sass', function () {
+    var uncss = $.if(isProduction, $.uncss({
+        html: ['src/**/*.html'],
+        ignore: [
+            new RegExp('.foundation-mq'),
+            new RegExp('^\.is-.*')
+        ]
+    }));
+
+    var minifycss = $.if(isProduction, $.minifyCss());
+
+    return gulp.src('src/assets/scss/app.scss')
+        .pipe($.sourcemaps.init())
+        .pipe($.sass({
+            includePaths: PATHS.sass
+        })
+            .on('error', $.sass.logError))
+        .pipe($.autoprefixer({
+            browsers: COMPATIBILITY
+        }))
+        .pipe(uncss)
+        .pipe(minifycss)
+        .pipe($.if(!isProduction, $.sourcemaps.write()))
+        .pipe(gulp.dest(PATHS.assetCss))
+        .pipe(browser.reload({ stream: true }));
 });
 
 gulp.task("min:css", function () {
-    return gulp.src([paths.css, "!" + paths.minCss])
-        .pipe(concat(paths.concatCssDest))
+    return gulp.src([PATHS.css, "!" + PATHS.minCss])
+        .pipe(concat(PATHS.concatCssDest))
         .pipe(cssmin())
-        .pipe(gulp.dest("."));
+        .pipe(gulp.dest(PATHS.assetCss));
+});
+
+gulp.task("min:js", function () {
+    return gulp.src([PATHS.js, "!" + PATHS.minJs], { base: "." })
+        .pipe(concat(PATHS.concatJsDest))
+        .pipe(uglify())
+        .pipe(gulp.dest(PATHS.assetJs));
 });
 
 gulp.task("min", ["min:js", "min:css"]);
+
+// Combine JavaScript into one file
+// In production, the file is minified
+gulp.task('javascript', function () {
+    var uglify = $.if(isProduction, $.uglify()
+        .on('error', function (e) {
+            console.log(e);
+        }));
+
+    return gulp.src(PATHS.javascript)
+        .pipe($.sourcemaps.init())
+        .pipe($.concat('app.js'))
+        .pipe(uglify)
+        .pipe($.if(!isProduction, $.sourcemaps.write()))
+        .pipe(gulp.dest(PATHS.assetJs))
+        .on('finish', browser.reload);
+});
+
+// Copy images to the "dist" folder
+// In production, the images are compressed
+gulp.task('images', function () {
+    var imagemin = $.if(isProduction, $.imagemin({
+        progressive: true
+    }));
+
+    return gulp.src('src/assets/img/**/*')
+        .pipe(imagemin)
+        .pipe(gulp.dest(PATHS.webAssets + '/img'))
+        .on('finish', browser.reload);
+});
+
+// Build the "dist" folder by running all of the above tasks
+gulp.task('build', function (done) {
+    sequence('clean', ['pages', 'sass', 'javascript', 'min', 'images', 'copy'], 'styleguide', done);
+});
+
+// Start a server with LiveReload to preview the site in
+gulp.task('server', ['build'], function () {
+    browser.init({
+        server: PATHS.webroot, port: PORT
+    });
+});
+
+// Build the site, run the server, and watch for file changes
+gulp.task('default', ['build', 'server'], function () {
+    gulp.watch(PATHS.assets, ['copy']);
+    gulp.watch(['src/pages/**/*'], ['pages']);
+    gulp.watch(['src/{layouts,partials,helpers,data}/**/*'], ['pages:reset']);
+    gulp.watch(['src/assets/scss/**/{*.scss, *.sass}'], ['sass']);
+    gulp.watch(['src/assets/js/**/*.js'], ['javascript']);
+    gulp.watch(['src/assets/img/**/*'], ['images']);
+    gulp.watch(['src/styleguide/**'], ['styleguide']);
+});

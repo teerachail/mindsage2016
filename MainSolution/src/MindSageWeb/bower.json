@@ -1,8 +1,21 @@
 {
-  "name": "ASP.NET",
+  "name": "MindSage",
+  "version": "0.1.0",
+  "authors": [
+    "The S <thes@perfenterprise.com>"
+  ],
   "private": true,
+  "main": "gulpfile.js",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
   "dependencies": {
-    "bootstrap": "3.3.5",
+    "foundation-sites": "~6.1.0",
+    "motion-ui": "~1.1.0",
     "jquery": "2.1.4",
     "jquery-validation": "1.14.0",
     "jquery-validation-unobtrusive": "3.2.4"
