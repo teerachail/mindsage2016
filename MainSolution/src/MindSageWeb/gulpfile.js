@@ -30,34 +30,34 @@ var PATHS = {
         '!src/assets/{img,js,scss}/**/*'
     ],
     sass: [
-        'bower_components/foundation-sites/scss',
-        'bower_components/motion-ui/src/'
+        'wwwroot/lib/foundation-sites/scss',
+        'wwwroot/lib/motion-ui/src/'
     ],
     javascript: [
-        'bower_components/jquery/dist/jquery.js',
-        'bower_components/what-input/what-input.js',
-        'bower_components/foundation-sites/js/foundation.core.js',
-        'bower_components/foundation-sites/js/foundation.util.*.js',
+        'wwwroot/lib/jquery/dist/jquery.js',
+        'wwwroot/lib/what-input/what-input.js',
+        'wwwroot/lib/foundation-sites/js/foundation.core.js',
+        'wwwroot/lib/foundation-sites/js/foundation.util.*.js',
     // Paths to individual JS components defined below
-        'bower_components/foundation-sites/js/foundation.abide.js',
-        'bower_components/foundation-sites/js/foundation.accordion.js',
-        'bower_components/foundation-sites/js/foundation.accordionMenu.js',
-        'bower_components/foundation-sites/js/foundation.drilldown.js',
-        'bower_components/foundation-sites/js/foundation.dropdown.js',
-        'bower_components/foundation-sites/js/foundation.dropdownMenu.js',
-        'bower_components/foundation-sites/js/foundation.equalizer.js',
-        'bower_components/foundation-sites/js/foundation.interchange.js',
-        'bower_components/foundation-sites/js/foundation.magellan.js',
-        'bower_components/foundation-sites/js/foundation.offcanvas.js',
-        'bower_components/foundation-sites/js/foundation.orbit.js',
-        'bower_components/foundation-sites/js/foundation.responsiveMenu.js',
-        'bower_components/foundation-sites/js/foundation.responsiveToggle.js',
-        'bower_components/foundation-sites/js/foundation.reveal.js',
-        'bower_components/foundation-sites/js/foundation.slider.js',
-        'bower_components/foundation-sites/js/foundation.sticky.js',
-        'bower_components/foundation-sites/js/foundation.tabs.js',
-        'bower_components/foundation-sites/js/foundation.toggler.js',
-        'bower_components/foundation-sites/js/foundation.tooltip.js',
+        'wwwroot/lib/foundation-sites/js/foundation.abide.js',
+        'wwwroot/lib/foundation-sites/js/foundation.accordion.js',
+        'wwwroot/lib/foundation-sites/js/foundation.accordionMenu.js',
+        'wwwroot/lib/foundation-sites/js/foundation.drilldown.js',
+        'wwwroot/lib/foundation-sites/js/foundation.dropdown.js',
+        'wwwroot/lib/foundation-sites/js/foundation.dropdownMenu.js',
+        'wwwroot/lib/foundation-sites/js/foundation.equalizer.js',
+        'wwwroot/lib/foundation-sites/js/foundation.interchange.js',
+        'wwwroot/lib/foundation-sites/js/foundation.magellan.js',
+        'wwwroot/lib/foundation-sites/js/foundation.offcanvas.js',
+        'wwwroot/lib/foundation-sites/js/foundation.orbit.js',
+        'wwwroot/lib/foundation-sites/js/foundation.responsiveMenu.js',
+        'wwwroot/lib/foundation-sites/js/foundation.responsiveToggle.js',
+        'wwwroot/lib/foundation-sites/js/foundation.reveal.js',
+        'wwwroot/lib/foundation-sites/js/foundation.slider.js',
+        'wwwroot/lib/foundation-sites/js/foundation.sticky.js',
+        'wwwroot/lib/foundation-sites/js/foundation.tabs.js',
+        'wwwroot/lib/foundation-sites/js/foundation.toggler.js',
+        'wwwroot/lib/foundation-sites/js/foundation.tooltip.js',
         'src/assets/js/**/!(app).js',
         'src/assets/js/app.js'
     ],
@@ -68,12 +68,12 @@ PATHS.js = PATHS.webroot + "js/**/*.js";
 PATHS.minJs = PATHS.webroot + "js/**/*.min.js";
 PATHS.css = PATHS.webroot + "css/**/*.css";
 PATHS.minCss = PATHS.webroot + "css/**/*.min.css";
-PATHS.concatJsDest = PATHS.webroot + "js/site.min.js";
-PATHS.concatCssDest = PATHS.webroot + "css/site.min.css";
+PATHS.jsDest = "./site.min.js";
+PATHS.cssDest = "./site.min.css";
 PATHS.pageTmpl = PATHS.webroot + "tmpl";
 PATHS.webAssets = PATHS.webroot + "assets";
-PATHS.assetCss = PATHS.webroot + "assets/css";
-PATHS.assetJs = PATHS.webroot + "assets/js";
+PATHS.assetJs = PATHS.webAssets + '/js';
+PATHS.assetCss = PATHS.webAssets + '/css';
 
 // Delete the "dist" folder
 // This happens every time a build starts
@@ -85,11 +85,13 @@ gulp.task('clean:tmpl', function (done) {
 });
 
 gulp.task("clean:js", function (cb) {
-    rimraf(PATHS.concatJsDest, cb);
+    //rimraf(PATHS.jsDest, cb);
+    rimraf(PATHS.assetJs, cb);
 });
 
 gulp.task("clean:css", function (cb) {
-    rimraf(PATHS.concatCssDest, cb);
+    //rimraf(PATHS.cssDest, cb);
+    rimraf(PATHS.assetCss, cb);
 });
 
 gulp.task("clean", ["clean:js", "clean:css", "clean:dist", "clean:tmpl"]);
@@ -162,14 +164,14 @@ gulp.task('sass', function () {
 
 gulp.task("min:css", function () {
     return gulp.src([PATHS.css, "!" + PATHS.minCss])
-        .pipe(concat(PATHS.concatCssDest))
+        .pipe(concat(PATHS.cssDest))
         .pipe(cssmin())
         .pipe(gulp.dest(PATHS.assetCss));
 });
 
 gulp.task("min:js", function () {
     return gulp.src([PATHS.js, "!" + PATHS.minJs], { base: "." })
-        .pipe(concat(PATHS.concatJsDest))
+        .pipe(concat(PATHS.jsDest))
         .pipe(uglify())
         .pipe(gulp.dest(PATHS.assetJs));
 });
