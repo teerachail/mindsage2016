@@ -34,7 +34,7 @@ namespace SpecFlow.GeneratedTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Click-like-a-lesson", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Click_Like_A_Lesson", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
                     "wo numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -173,7 +173,7 @@ namespace SpecFlow.GeneratedTests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Click-like-a-lesson")]
+        [Xunit.TraitAttribute("FeatureTitle", "Click_Like_A_Lesson")]
         [Xunit.TraitAttribute("Description", "User click like a lesson Then system update lesson\'s total like")]
         public virtual void UserClickLikeALessonThenSystemUpdateLessonSTotalLike()
         {

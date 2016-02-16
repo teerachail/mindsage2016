@@ -1,4 +1,4 @@
-﻿Feature: Click-like-a-lesson
+﻿Feature: Click_Like_A_Lesson
 	In order to avoid silly mistakes
 	As a math idiot
 	I want to be told the sum of two numbers

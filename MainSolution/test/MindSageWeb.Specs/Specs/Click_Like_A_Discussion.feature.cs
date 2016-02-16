@@ -18,15 +18,15 @@ namespace SpecFlow.GeneratedTests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Click_Like_A_CommentFeature : Xunit.IClassFixture<Click_Like_A_CommentFeature.FixtureData>, System.IDisposable
+    public partial class Click_Like_A_DiscussionFeature : Xunit.IClassFixture<Click_Like_A_DiscussionFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "Click_Like_A_Comment.feature"
+#line 1 "Click_Like_A_Discussion.feature"
 #line hidden
         
-        public Click_Like_A_CommentFeature()
+        public Click_Like_A_DiscussionFeature()
         {
             this.TestInitialize();
         }
@@ -34,7 +34,7 @@ namespace SpecFlow.GeneratedTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Click_Like_A_Comment", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Click_Like_A_Discussion", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
                     "wo numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -104,14 +104,24 @@ namespace SpecFlow.GeneratedTests
         ""Description"": ""Hello lesson 1"",
         ""TotalLikes"": 0,
         ""LessonId"": ""Lesson01"",
-        ""Discussions"": []
+        ""Discussions"":
+[
+{
+	""id"": ""Discussion01"",
+	""Description"": ""This is a discussion"",
+	""TotalLikes"": 0,
+	""CreatorImageUrl"": ""ImgURL01"",
+	""CreatorDisplayName"": ""Sakul jaruthanaset"",
+	""CreatedByUserProfileId"": ""sakul@mindsage.com"",
+}
+]
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 60
- testRunner.And("System have LikeComment collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 70
+ testRunner.And("System have LikeDiscussion collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 64
+#line 74
     testRunner.And("System have UserActivity collection with JSON format are", @"[
 {
 ""id"": ""UserActivity01"",
@@ -137,7 +147,7 @@ namespace SpecFlow.GeneratedTests
 #line hidden
         }
         
-        public virtual void SetFixture(Click_Like_A_CommentFeature.FixtureData fixtureData)
+        public virtual void SetFixture(Click_Like_A_DiscussionFeature.FixtureData fixtureData)
         {
         }
         
@@ -147,30 +157,31 @@ namespace SpecFlow.GeneratedTests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Click_Like_A_Comment")]
-        [Xunit.TraitAttribute("Description", "User click like a comment Then system update comment\'s total like")]
-        public virtual void UserClickLikeACommentThenSystemUpdateCommentSTotalLike()
+        [Xunit.TraitAttribute("FeatureTitle", "Click_Like_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "User click like a discussion Then system update discussion\'s total like")]
+        public virtual void UserClickLikeADiscussionThenSystemUpdateDiscussionSTotalLike()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click like a comment Then system update comment\'s total like", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click like a discussion Then system update discussion\'s total like", new string[] {
                         "mock"});
-#line 91
+#line 101
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 92
+#line 102
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 93
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' click the like button for comment \'Comment01\' " +
-                    "in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 94
-    testRunner.Then("System update total likes for comment \'Comment01\' in the lesson \'Lesson01\' of Cla" +
-                    "ssRoom \'ClassRoom01\' to \'1\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 95
-    testRunner.And("System add new LikeComment by JSON format is", "{\r\n    \"LessonId\": \"Lesson01\",\r\n\"CommentId\": \"Comment01\",\r\n    \"LikedByUserProfil" +
-                    "eId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
+#line 103
+    testRunner.When("UserProfileId \'sakul@mindsage.com\' click the like button discussion \'Discussion01" +
+                    "\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line 104
+    testRunner.Then("System update total likes discussion \'Discussion01\' for comment \'Comment01\' in th" +
+                    "e lesson \'Lesson01\' of ClassRoom \'ClassRoom01\' to \'1\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 105
+    testRunner.And("System upsert LikeDiscussion by JSON format is", "{\r\n    \"LessonId\": \"Lesson01\",\r\n\"DiscussionId\": \"Discussion01\",\r\n\"CommentId\": \"Co" +
+                    "mment01\",\r\n    \"LikedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/" +
+                    "8/2016 00:00 am\"\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 115
  testRunner.And("System update UserActivity collection with JSON format is", @"{
 ""id"": ""UserActivity01"",
 ""UserProfileId"": ""sakul@mindsage.com"",
@@ -202,12 +213,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                Click_Like_A_CommentFeature.FeatureSetup();
+                Click_Like_A_DiscussionFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                Click_Like_A_CommentFeature.FeatureTearDown();
+                Click_Like_A_DiscussionFeature.FeatureTearDown();
             }
         }
     }
