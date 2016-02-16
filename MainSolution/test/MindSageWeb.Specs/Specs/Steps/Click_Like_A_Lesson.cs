@@ -3,13 +3,10 @@ using MindsageWeb.Repositories;
 using MindsageWeb.Repositories.Models;
 using Moq;
 using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace MindSageWeb.Specs.Specs.Steps
+namespace MindSageWeb.Specs.Steps
 {
     [Binding]
     public class Click_Like_A_Lesson

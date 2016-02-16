@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace MindSageWeb.Specs.Specs
+namespace MindSageWeb.Specs
 {
     [Binding]
     public sealed class Hooks

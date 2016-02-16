@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
-namespace MindSageWeb.Specs.Specs.Steps
+namespace MindSageWeb.Specs.Steps
 {
     [Binding]
     public sealed class CommonSteps

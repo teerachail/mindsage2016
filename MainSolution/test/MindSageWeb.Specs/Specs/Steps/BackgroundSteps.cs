@@ -3,7 +3,7 @@ using MindsageWeb.Repositories;
 using Moq;
 using TechTalk.SpecFlow;
 
-namespace MindSageWeb.Specs.Specs.Steps
+namespace MindSageWeb.Specs.Steps
 {
     [Binding]
     public class BackgroundSteps
