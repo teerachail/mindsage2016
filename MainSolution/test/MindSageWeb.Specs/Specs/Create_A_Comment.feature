@@ -1,4 +1,4 @@
-﻿Feature: Click-like-a-lesson
+﻿Feature: Create_A_Comment
 	In order to avoid silly mistakes
 	As a math idiot
 	I want to be told the sum of two numbers
@@ -58,44 +58,8 @@ Background: Initialize mocking data
         },
     ]
     """  
-    And System have ClassRoom collection with JSON format are  
-    """
-    [
-        {
-            "id": "ClassRoom01",
-            "Name": "Emotional literacy",
-            "CourseCatalogId": "CourseCatalog01",
-            "CreatedDate": "2/1/2016",
-            "Lessons":
-            [
-                {
-                    "id": "Lesson01",
-                    "TotalLikes": 1,
-                    "LessonCatalogId": "LessonCatalog01"
-                },
-                {
-                    "id": "Lesson02",
-                    "TotalLikes": 0,
-                    "LessonCatalogId": "LessonCatalog02"
-                },
-            ]
-        }
-    ]
-    """  
-    And System have LikeLesson collection with JSON format are  
-    """
-    [
-        {
-            "id": "LikeLesson01",
-            "ClassRoomId": "ClassRoom01",
-            "LessonId": "Lesson01",
-            "LikedByUserProfileId": "miolynet@perfenterprise.com",
-            "CreatedDate": "2/1/2016",
-        },
-    ]
-    """
-	And System have UserActivity collection with JSON format are
-    """
+    And System have UserActivity collection with JSON format are
+	"""
     [
 		{
 			"id": "UserActivity01",
@@ -113,30 +77,34 @@ Background: Initialize mocking data
 						"Content01"
 					],
 					"CreatedCommentAmount": 0,
-					"ParticipationAmount": 0
+					"ParticipationAmount": 1
 				}
 			]
 		}
     ]
     """  
-
+    
 @mock  
-Scenario: User click like a lesson Then system update lesson's total like  
+Scenario: User create a new comment Then system create a new comment  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfileId 'sakul@mindsage.com' click the like button in the lesson 'Lesson01' of ClassRoom: 'ClassRoom01'  
-    Then System update total likes in the lesson 'Lesson01' of ClassRoom 'ClassRoom01' to '2' likes   
-    And System add new LikeLesson by JSON format is  
+    When UserProfileId 'sakul@mindsage.com' create a new comment with a message is 'Hello lesson 1' in the lesson 'Lesson01' of ClassRoom: 'ClassRoom01'  
+    Then System add new Comment by JSON format is  
     """
     {
         "ClassRoomId": "ClassRoom01",
+        "CreatedByUserProfileId": "sakul@mindsage.com",
+		"CreatorDisplayName": "Sakul jaruthanaset",
+		"CreatorImageUrl": "ImgURL01",
+        "Description": "Hello lesson 1",
+        "TotalLikes": 0,
         "LessonId": "Lesson01",
-        "LikedByUserProfileId": "sakul@mindsage.com",
+        "Discussions": [],
 		"CreatedDate": "2/8/2016 00:00 am"
     }
-    """  
-	And System update UserActivity collection with JSON format is  
     """
-	{
+    And System update UserActivity collection with JSON format is
+    """
+    {
 		"id": "UserActivity01",
 		"UserProfileId": "sakul@mindsage.com",
 		"ClassRoomId": "ClassRoom01",
@@ -151,7 +119,7 @@ Scenario: User click like a lesson Then system update lesson's total like
 				[
 					"Content01"
 				],
-				"CreatedCommentAmount": 0,
+				"CreatedCommentAmount": 1,
 				"ParticipationAmount": 1
 			}
 		]

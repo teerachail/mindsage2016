@@ -1,4 +1,4 @@
-﻿Feature: Click-like-a-lesson
+﻿Feature: Click_Unlike_A_Lesson
 	In order to avoid silly mistakes
 	As a math idiot
 	I want to be told the sum of two numbers
@@ -10,8 +10,6 @@ Background: Initialize mocking data
     [
 		{
 			"id": "sakul@mindsage.com",
-			"Name": "Sakul jaruthanaset",
-			"ImageProfileUrl": "ImgURL01",
 			"Subscriptions":
 			[
 				{
@@ -70,7 +68,7 @@ Background: Initialize mocking data
             [
                 {
                     "id": "Lesson01",
-                    "TotalLikes": 1,
+                    "TotalLikes": 2,
                     "LessonCatalogId": "LessonCatalog01"
                 },
                 {
@@ -92,10 +90,17 @@ Background: Initialize mocking data
             "LikedByUserProfileId": "miolynet@perfenterprise.com",
             "CreatedDate": "2/1/2016",
         },
+        {
+            "id": "LikeLesson02",
+            "ClassRoomId": "ClassRoom01",
+            "LessonId": "Lesson01",
+            "LikedByUserProfileId": "sakul@mindsage.com",
+            "CreatedDate": "2/1/2016",
+        },
     ]
-    """
+    """  
 	And System have UserActivity collection with JSON format are
-    """
+	"""
     [
 		{
 			"id": "UserActivity01",
@@ -113,7 +118,7 @@ Background: Initialize mocking data
 						"Content01"
 					],
 					"CreatedCommentAmount": 0,
-					"ParticipationAmount": 0
+					"ParticipationAmount": 1
 				}
 			]
 		}
@@ -121,39 +126,19 @@ Background: Initialize mocking data
     """  
 
 @mock  
-Scenario: User click like a lesson Then system update lesson's total like  
+Scenario: User click unlike a lesson Then system update lesson's total like  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfileId 'sakul@mindsage.com' click the like button in the lesson 'Lesson01' of ClassRoom: 'ClassRoom01'  
-    Then System update total likes in the lesson 'Lesson01' of ClassRoom 'ClassRoom01' to '2' likes   
-    And System add new LikeLesson by JSON format is  
+    Then System update total likes in the lesson 'Lesson01' of ClassRoom 'ClassRoom01' to '1' likes   
+    And System update LikeLesson by JSON format is  
     """
     {
-        "ClassRoomId": "ClassRoom01",
-        "LessonId": "Lesson01",
-        "LikedByUserProfileId": "sakul@mindsage.com",
-		"CreatedDate": "2/8/2016 00:00 am"
+            "id": "LikeLesson02",
+            "ClassRoomId": "ClassRoom01",
+            "LessonId": "Lesson01",
+            "LikedByUserProfileId": "sakul@mindsage.com",
+            "CreatedDate": "2/1/2016",
+            "DeletedDate": "2/8/2016 00:00 am"
     }
     """  
-	And System update UserActivity collection with JSON format is  
-    """
-	{
-		"id": "UserActivity01",
-		"UserProfileId": "sakul@mindsage.com",
-		"ClassRoomId": "ClassRoom01",
-		"LessonActivities":
-		[
-			{
-				"id": "LessonActivity01",
-				"LessonId": "Lesson01",
-
-				"TotalContentsAmount": 1,
-				"SawContentIds": 
-				[
-					"Content01"
-				],
-				"CreatedCommentAmount": 0,
-				"ParticipationAmount": 1
-			}
-		]
-	}
-    """  
+	And System doesn't update UserActivity collection with JSON format is  

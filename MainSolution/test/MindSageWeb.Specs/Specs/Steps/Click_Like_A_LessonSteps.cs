@@ -3,13 +3,15 @@ using MindsageWeb.Repositories;
 using MindsageWeb.Repositories.Models;
 using Moq;
 using Newtonsoft.Json;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace MindSageWeb.Specs.Steps
 {
     [Binding]
-    public class Click_Like_A_Lesson
+    public class Click_Like_A_LessonSteps
     {
         [When(@"UserProfileId '(.*)' click the like button in the lesson '(.*)' of ClassRoom: '(.*)'")]
         public void WhenUserProfileIdClickTheLikeButtonInTheLessonOfClassRoom(string userprofileId, string lessonId, string classRoomId)
