@@ -13,7 +13,8 @@ namespace MindSageWeb.Repositories.Models
         public string Grade { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
-        public string Description { get; set; }
+        public string ShortDescription { get; set; }
+        public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
         public string FullImageUrl { get; set; }
         public string ThumbnailImageUrl { get; set; }

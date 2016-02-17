@@ -19,6 +19,11 @@ namespace MindSageWeb.Repositories
         /// <param name="courseCatalogId">รหัส course catalog ที่ต้องการข้อมูล</param>
         CourseCatalog GetCourseCatalogById(string courseCatalogId);
 
+        /// <summary>
+        /// ขอข้อมูล course ทั้งหมดที่สามารถเลือกได้
+        /// </summary>
+        IEnumerable<CourseCatalog> GetAvailableCourses();
+
         #endregion Methods
     }
 }

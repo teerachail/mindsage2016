@@ -32,7 +32,30 @@ namespace MindSageWeb.Controllers
 
         #region Methods
 
+        // GET: api/course
+        /// <summary>
+        /// Get all available courses
+        /// </summary>
+        public IEnumerable<CourseCatalogRespond> Get()
+        {
+            var result = _repo.GetAvailableCourses()
+                .Where(it => !it.DeletedDate.HasValue)
+                .Select(it => new CourseCatalogRespond
+                {
+                    id = it.id,
+                    Description = it.ShortDescription,
+                    ImageUrl = it.ThumbnailImageUrl,
+                    Name = it.Name
+                })
+                .ToList();
+            return result;
+        }
+
         // GET: api/course/{course-catalog-id}
+        /// <summary>
+        /// Get course's detail
+        /// </summary>
+        /// <param name="id">Course id</param>
         public CourseCatalog Get(string id)
         {
             var isArgumentValid = !string.IsNullOrEmpty(id);
