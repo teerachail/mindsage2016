@@ -18,15 +18,15 @@ namespace SpecFlow.GeneratedTests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Show_Lesson_CommentsFeature : Xunit.IClassFixture<Show_Lesson_CommentsFeature.FixtureData>, System.IDisposable
+    public partial class Show_DiscussionsFeature : Xunit.IClassFixture<Show_DiscussionsFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "Show_Lesson_Comments.feature"
+#line 1 "Show_Discussions.feature"
 #line hidden
         
-        public Show_Lesson_CommentsFeature()
+        public Show_DiscussionsFeature()
         {
             this.TestInitialize();
         }
@@ -34,7 +34,7 @@ namespace SpecFlow.GeneratedTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Show_Lesson_Comments", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Show_Discussions", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
                     "wo numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -143,7 +143,7 @@ namespace SpecFlow.GeneratedTests
 #line hidden
         }
         
-        public virtual void SetFixture(Show_Lesson_CommentsFeature.FixtureData fixtureData)
+        public virtual void SetFixture(Show_DiscussionsFeature.FixtureData fixtureData)
         {
         }
         
@@ -153,11 +153,11 @@ namespace SpecFlow.GeneratedTests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
-        [Xunit.TraitAttribute("Description", "User request lesson\'s comments Then system send the lesson\'s comments back")]
-        public virtual void UserRequestLessonSCommentsThenSystemSendTheLessonSCommentsBack()
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Discussions")]
+        [Xunit.TraitAttribute("Description", "User request comment\'s discussion Then system send the comment\'s discussion back")]
+        public virtual void UserRequestCommentSDiscussionThenSystemSendTheCommentSDiscussionBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request lesson\'s comments Then system send the lesson\'s comments back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request comment\'s discussion Then system send the comment\'s discussion back", new string[] {
                         "mock"});
 #line 150
 this.ScenarioSetup(scenarioInfo);
@@ -166,30 +166,26 @@ this.FeatureBackground();
 #line 151
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 152
-    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson02\' of Cl" +
-                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request discussion from comment \'Comment03\' in t" +
+                    "he lesson \'Lesson02\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 153
-    testRunner.Then("System send lesson\'s comment with JSON format are", @"[
-{
-        ""id"": ""Comment03"",
-        ""ClassRoomId"": ""ClassRoom01"",
-        ""CreatedByUserProfileId"": ""earn@mindsage.com"",
-        ""Description"": ""Msg03"",
-        ""TotalLikes"": 10,
-        ""LessonId"": ""Lesson02"",
-""CreatedDate"": ""2/1/2016 03:00 am"",
-        ""TotalDiscussions"": 2
-    },
+    testRunner.Then("System send comment\'s discussion with JSON format are", @"[
     {
-        ""id"": ""Comment02"",
-        ""ClassRoomId"": ""ClassRoom01"",
+        ""Id"": ""DiscussionId03"",
+""CommentId"": ""Comment03"",
+        ""Description"": ""Discussion03"",
+        ""TotalLikes"": 300,
         ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
-        ""Description"": ""Msg02"",
-        ""TotalLikes"": 5,
-        ""LessonId"": ""Lesson02"",
-""CreatedDate"": ""2/1/2016 02:00 am"",
-        ""TotalDiscussions"": 1
+""CreatedDate"": ""2/1/2016 03:02 am"",
+    },
+{
+        ""Id"": ""DiscussionId02"",
+""CommentId"": ""Comment03"",
+        ""Description"": ""Discussion02"",
+        ""TotalLikes"": 200,
+        ""CreatedByUserProfileId"": ""someone@mindsage.com"",
+""CreatedDate"": ""2/1/2016 03:01 am"",
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
@@ -203,12 +199,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                Show_Lesson_CommentsFeature.FeatureSetup();
+                Show_DiscussionsFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                Show_Lesson_CommentsFeature.FeatureTearDown();
+                Show_DiscussionsFeature.FeatureTearDown();
             }
         }
     }

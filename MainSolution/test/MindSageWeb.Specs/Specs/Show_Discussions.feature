@@ -1,4 +1,4 @@
-﻿Feature: Show_Lesson_Comments
+﻿Feature: Show_Discussions
 	In order to avoid silly mistakes
 	As a math idiot
 	I want to be told the sum of two numbers
@@ -147,31 +147,27 @@ Background: Initialize mocking data
     """ 
 
 @mock  
-Scenario: User request lesson's comments Then system send the lesson's comments back  
+Scenario: User request comment's discussion Then system send the comment's discussion back  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfile 'sakul@mindsage.com' request comment from the lesson 'Lesson02' of ClassRoom: 'ClassRoom01'
-    Then System send lesson's comment with JSON format are  
+    When UserProfile 'sakul@mindsage.com' request discussion from comment 'Comment03' in the lesson 'Lesson02' of ClassRoom: 'ClassRoom01'
+    Then System send comment's discussion with JSON format are  
     """
     [
-		{
-            "id": "Comment03",
-            "ClassRoomId": "ClassRoom01",
-            "CreatedByUserProfileId": "earn@mindsage.com",
-            "Description": "Msg03",
-            "TotalLikes": 10,
-            "LessonId": "Lesson02",
-			"CreatedDate": "2/1/2016 03:00 am",
-            "TotalDiscussions": 2
-        },
         {
-            "id": "Comment02",
-            "ClassRoomId": "ClassRoom01",
+            "Id": "DiscussionId03",
+			"CommentId": "Comment03",
+            "Description": "Discussion03",
+            "TotalLikes": 300,
             "CreatedByUserProfileId": "sakul@mindsage.com",
-            "Description": "Msg02",
-            "TotalLikes": 5,
-            "LessonId": "Lesson02",
-			"CreatedDate": "2/1/2016 02:00 am",
-            "TotalDiscussions": 1
+			"CreatedDate": "2/1/2016 03:02 am",
+        },
+		{
+            "Id": "DiscussionId02",
+			"CommentId": "Comment03",
+            "Description": "Discussion02",
+            "TotalLikes": 200,
+            "CreatedByUserProfileId": "someone@mindsage.com",
+			"CreatedDate": "2/1/2016 03:01 am",
         },
     ]
     """ 
