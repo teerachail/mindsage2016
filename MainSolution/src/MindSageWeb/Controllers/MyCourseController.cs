@@ -43,6 +43,11 @@ namespace MindsageWeb.Controllers
         #region Methods
 
         // GET: api/mycourse/{user-id}/{class-room-id}
+        /// <summary>
+        /// Get lesson map content
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
         public IEnumerable<CourseMapContentRespond> Get(string id, string classRoomId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -74,6 +79,12 @@ namespace MindsageWeb.Controllers
             return result;
         }
 
+        // GET: api/mycourse/{user-id}/{class-room-id}/status
+        /// <summary>
+        /// Get lesson map status
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
         [Route(":id/:classRoomId/status")]
         public IEnumerable<CourseMapStatusRespond> GetStatus(string id, string classRoomId)
         {

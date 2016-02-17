@@ -49,6 +49,10 @@ namespace MindsageWeb.Controllers
         #region Methods
 
         // POST: api/discussion
+        /// <summary>
+        /// Create a discussion
+        /// </summary>
+        /// <param name="body">Request information</param>
         public void Post(PostNewDiscussionRequest body)
         {
             var areArgumentsValid = body != null
@@ -102,6 +106,11 @@ namespace MindsageWeb.Controllers
         }
 
         // PUT: api/discussion/{discusion-id}
+        /// <summary>
+        /// Update a discussion
+        /// </summary>
+        /// <param name="id">Discussion's id</param>
+        /// <param name="body">Request information</param>
         public void Put(string id, RemoveDiscussionRequest body)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -134,6 +143,10 @@ namespace MindsageWeb.Controllers
         }
 
         // POST: api/discussion/like
+        /// <summary>
+        /// Like a discussion
+        /// </summary>
+        /// <param name="body">Request information</param>
         [Route("like")]
         public void Like(LikeDiscussionRequest body)
         {

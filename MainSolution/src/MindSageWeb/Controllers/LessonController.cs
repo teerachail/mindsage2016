@@ -62,6 +62,12 @@ namespace MindsageWeb.Controllers
         #region Methods
 
         // GET: api/lesson/{lesson-id}/{class-room-id}/{user-id}
+        /// <summary>
+        /// Get lesson's content
+        /// </summary>
+        /// <param name="id">Lesson's id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <param name="userId">Request by user id</param>
         [Route(":id/:classRoomId/:userId")]
         public LessonContentRespond Get(string id, string classRoomId, string userId)
         {
@@ -125,6 +131,12 @@ namespace MindsageWeb.Controllers
         }
 
         // GET: api/lesson/{lesson-id}/{class-room-id}/comments/{user-id}
+        /// <summary>
+        /// Get lesson's comments
+        /// </summary>
+        /// <param name="id">Lesson's id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <param name="userId">Request by user id</param>
         [Route(":id/:classRoomId/comments/:userId")]
         public IEnumerable<Comment> Comments(string id, string classRoomId, string userId)
         {
@@ -163,6 +175,10 @@ namespace MindsageWeb.Controllers
         }
 
         // POST: api/lesson/like
+        /// <summary>
+        /// Like a lesson
+        /// </summary>
+        /// <param name="body">Request's information</param>
         [Route("like")]
         public void Post(LikeLessonRequest body)
         {
