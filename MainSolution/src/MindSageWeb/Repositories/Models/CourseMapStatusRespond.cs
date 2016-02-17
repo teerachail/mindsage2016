@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 namespace MindSageWeb.Repositories.Models
 {
-    public class CourseMapContentRespond
+    public class CourseMapStatusRespond
     {
         #region Properties
 
         public string LessonId { get; set; }
-        public string SemesterName { get; set; }
-        public string LessonWeekName { get; set; }
-        public bool IsLocked { get; set; }
+        public bool HaveAnyComments { get; set; }
+        public bool IsReadedAllContents { get; set; }
 
         #endregion Properties
     }

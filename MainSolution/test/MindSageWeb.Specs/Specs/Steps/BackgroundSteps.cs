@@ -63,6 +63,7 @@ namespace MindSageWeb.Specs.Steps
 
             var mycourseCtrl = new MyCourseController(classCalendarRepo.Object,
                 userprofileRepo.Object,
+                userActivityRepo.Object,
                 dateTime.Object);
 
             ScenarioContext.Current.Set(myCourseCtrl);

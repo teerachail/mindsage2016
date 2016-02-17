@@ -1,4 +1,4 @@
-﻿Feature: Show_Course_Map_Content
+﻿Feature: Show_Course_Map_Status
 	In order to avoid silly mistakes
 	As a math idiot
 	I want to be told the sum of two numbers
@@ -67,13 +67,56 @@ Background: Initialize mocking data
         },
     ]
     """  
+	And System have UserActivity collection with JSON format are
+    """
+    [
+		{
+			"id": "UserActivity01",
+			"UserProfileId": "sakul@mindsage.com",
+			"ClassRoomId": "ClassRoom01",
+			"LessonActivities":
+			[
+				{
+					"id": "LessonActivity01",
+					"LessonId": "Lesson01",
+					"TotalContentsAmount": 1,
+					"SawContentIds": 
+					[
+						"Content01"
+					],
+					"CreatedCommentAmount": 1,
+					"ParticipationAmount": 1
+				},
+				{
+					"id": "LessonActivity02",
+					"LessonId": "Lesson02",
+					"TotalContentsAmount": 2,
+					"SawContentIds": 
+					[
+						"Content02"
+					],
+					"CreatedCommentAmount": 0,
+					"ParticipationAmount": 1
+				},
+				{
+					"id": "LessonActivity03",
+					"LessonId": "Lesson03",
+					"TotalContentsAmount": 3,
+					"SawContentIds": [],
+					"CreatedCommentAmount": 0,
+					"ParticipationAmount": 0
+				},
+			]
+		}
+    ]
+    """  
 
 @mock  
-Scenario: User request course map's content Then system send the content back  
+Scenario: User request course map's status Then system send the status back  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfileId 'sakul@mindsage.com' reuqest course map content of ClassRoom: 'ClassRoom01'  
-    Then System send course map content back are
-	| LessonId | SemesterName | LessonWeekName | IsLocked |
-	| Lesson01 | A            | Week01         | false    |
-	| Lesson02 | A            | Week02         | false    |
-	| Lesson03 | B            | Week03         | true     |
+    When UserProfileId 'sakul@mindsage.com' reuqest course map status of ClassRoom: 'ClassRoom01'  
+    Then System send course map status back are
+	| LessonId | HaveAnyComments | IsReadedAllContents |
+	| Lesson01 | true            | true                |
+	| Lesson02 | false           | false               |
+	| Lesson03 | false           | false               |

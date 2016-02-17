@@ -18,15 +18,15 @@ namespace SpecFlow.GeneratedTests
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Show_Course_Map_ContentFeature : Xunit.IClassFixture<Show_Course_Map_ContentFeature.FixtureData>, System.IDisposable
+    public partial class Show_Course_Map_StatusFeature : Xunit.IClassFixture<Show_Course_Map_StatusFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "Show_Course_Map_Content.feature"
+#line 1 "Show_Course_Map_Status.feature"
 #line hidden
         
-        public Show_Course_Map_ContentFeature()
+        public Show_Course_Map_StatusFeature()
         {
             this.TestInitialize();
         }
@@ -34,7 +34,7 @@ namespace SpecFlow.GeneratedTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Show_Course_Map_Content", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Show_Course_Map_Status", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
                     "wo numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -118,9 +118,51 @@ namespace SpecFlow.GeneratedTests
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 70
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""sakul@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": 
+	[
+		""Content01""
+	],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": 
+	[
+		""Content02""
+	],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
         }
         
-        public virtual void SetFixture(Show_Course_Map_ContentFeature.FixtureData fixtureData)
+        public virtual void SetFixture(Show_Course_Map_StatusFeature.FixtureData fixtureData)
         {
         }
         
@@ -130,44 +172,40 @@ namespace SpecFlow.GeneratedTests
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
-        [Xunit.TraitAttribute("Description", "User request course map\'s content Then system send the content back")]
-        public virtual void UserRequestCourseMapSContentThenSystemSendTheContentBack()
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "User request course map\'s status Then system send the status back")]
+        public virtual void UserRequestCourseMapSStatusThenSystemSendTheStatusBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request course map\'s content Then system send the content back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request course map\'s status Then system send the status back", new string[] {
                         "mock"});
-#line 72
+#line 115
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 73
+#line 116
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 74
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map content of ClassRoom: \'Clas" +
-                    "sRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 117
+    testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map status of ClassRoom: \'Class" +
+                    "Room01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "LessonId",
-                        "SemesterName",
-                        "LessonWeekName",
-                        "IsLocked"});
-            table1.AddRow(new string[] {
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table2.AddRow(new string[] {
                         "Lesson01",
-                        "A",
-                        "Week01",
-                        "false"});
-            table1.AddRow(new string[] {
-                        "Lesson02",
-                        "A",
-                        "Week02",
-                        "false"});
-            table1.AddRow(new string[] {
-                        "Lesson03",
-                        "B",
-                        "Week03",
+                        "true",
                         "true"});
-#line 75
-    testRunner.Then("System send course map content back are", ((string)(null)), table1, "Then ");
+            table2.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table2.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 118
+    testRunner.Then("System send course map status back are", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -179,12 +217,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                Show_Course_Map_ContentFeature.FeatureSetup();
+                Show_Course_Map_StatusFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                Show_Course_Map_ContentFeature.FeatureTearDown();
+                Show_Course_Map_StatusFeature.FeatureTearDown();
             }
         }
     }
