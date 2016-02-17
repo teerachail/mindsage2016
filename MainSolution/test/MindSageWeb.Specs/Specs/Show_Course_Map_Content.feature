@@ -30,6 +30,7 @@ Background: Initialize mocking data
         {
             "id": "ClassCalendar01",
             "BeginDate": "2/1/2016",
+			"ExpiredDate": "2/1/2017",
             "ClassRoomId": "ClassRoom01",
             "LessonCalendars":
             [
@@ -54,6 +55,14 @@ Background: Initialize mocking data
                     "SemesterGroupName": "B",
                     "BeginDate": "2/15/2016",
                 },
+				{
+                    "Id": "LessonCalendar04",
+                    "LessonId": "Lesson04",
+                    "Order": 4,
+                    "SemesterGroupName": "B",
+                    "BeginDate": "2/22/2016",
+					"DeletedDate": "1/1/2016",
+                },
             ]
         },
     ]
@@ -62,41 +71,9 @@ Background: Initialize mocking data
 @mock  
 Scenario: User request course map's content Then system send the content back  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfileId 'sakul@mindsage.com' reuqest course map's content of ClassRoom: 'ClassRoom01'  
-    Then System add new Comment by JSON format is  
-    """
-    {
-        "ClassRoomId": "ClassRoom01",
-        "CreatedByUserProfileId": "sakul@mindsage.com",
-		"CreatorDisplayName": "Sakul jaruthanaset",
-		"CreatorImageUrl": "ImgURL01",
-        "Description": "Hello lesson 1",
-        "TotalLikes": 0,
-        "LessonId": "Lesson01",
-        "Discussions": [],
-		"CreatedDate": "2/8/2016 00:00 am"
-    }
-    """
-    And System update UserActivity collection with JSON format is
-    """
-    {
-		"id": "UserActivity01",
-		"UserProfileId": "sakul@mindsage.com",
-		"ClassRoomId": "ClassRoom01",
-		"LessonActivities":
-		[
-			{
-				"id": "LessonActivity01",
-				"LessonId": "Lesson01",
-
-				"TotalContentsAmount": 1,
-				"SawContentIds": 
-				[
-					"Content01"
-				],
-				"CreatedCommentAmount": 1,
-				"ParticipationAmount": 1
-			}
-		]
-	}
-    """  
+    When UserProfileId 'sakul@mindsage.com' reuqest course map content of ClassRoom: 'ClassRoom01'  
+    Then System send course map content back are
+	| SemesterName | LessonWeekName | IsLocked |
+	| A            | Week01         | false    |
+	| A            | Week02         | false    |
+	| B            | Week03         | true     |

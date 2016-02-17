@@ -61,9 +61,14 @@ namespace MindSageWeb.Specs.Steps
                 likeDiscussionRepo.Object,
                 dateTime.Object);
 
+            var mycourseCtrl = new MyCourseController(classCalendarRepo.Object,
+                userprofileRepo.Object,
+                dateTime.Object);
+
             ScenarioContext.Current.Set(myCourseCtrl);
             ScenarioContext.Current.Set(commentCtrl);
             ScenarioContext.Current.Set(discussionCtrl);
+            ScenarioContext.Current.Set(mycourseCtrl);
         }
     }
 }

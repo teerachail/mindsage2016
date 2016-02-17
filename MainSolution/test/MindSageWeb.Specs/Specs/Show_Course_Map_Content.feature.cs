@@ -34,8 +34,8 @@ namespace SpecFlow.GeneratedTests
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Show_Course_Map_Content", "In order to avoid silly mistakes\nAs a math idiot\nI want to be told the sum of two" +
-                    " numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Show_Course_Map_Content", "In order to avoid silly mistakes\r\nAs a math idiot\r\nI want to be told the sum of t" +
+                    "wo numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
         
@@ -81,6 +81,7 @@ namespace SpecFlow.GeneratedTests
     {
         ""id"": ""ClassCalendar01"",
         ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/1/2017"",
         ""ClassRoomId"": ""ClassRoom01"",
         ""LessonCalendars"":
         [
@@ -105,6 +106,14 @@ namespace SpecFlow.GeneratedTests
                 ""SemesterGroupName"": ""B"",
                 ""BeginDate"": ""2/15/2016"",
             },
+{
+                ""Id"": ""LessonCalendar04"",
+                ""LessonId"": ""Lesson04"",
+                ""Order"": 4,
+                ""SemesterGroupName"": ""B"",
+                ""BeginDate"": ""2/22/2016"",
+	""DeletedDate"": ""1/1/2016"",
+            },
         ]
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
@@ -127,50 +136,34 @@ namespace SpecFlow.GeneratedTests
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request course map\'s content Then system send the content back", new string[] {
                         "mock"});
-#line 63
+#line 72
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 64
+#line 73
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 65
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map\'s content of ClassRoom: \'Cl" +
-                    "assRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 74
+    testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map content of ClassRoom: \'Clas" +
+                    "sRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 66
-    testRunner.Then("System add new Comment by JSON format is", @"{
-    ""ClassRoomId"": ""ClassRoom01"",
-    ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
-""CreatorDisplayName"": ""Sakul jaruthanaset"",
-""CreatorImageUrl"": ""ImgURL01"",
-    ""Description"": ""Hello lesson 1"",
-    ""TotalLikes"": 0,
-    ""LessonId"": ""Lesson01"",
-    ""Discussions"": [],
-""CreatedDate"": ""2/8/2016 00:00 am""
-}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 80
-    testRunner.And("System update UserActivity collection with JSON format is", @"{
-""id"": ""UserActivity01"",
-""UserProfileId"": ""sakul@mindsage.com"",
-""ClassRoomId"": ""ClassRoom01"",
-""LessonActivities"":
-[
-{
-""id"": ""LessonActivity01"",
-""LessonId"": ""Lesson01"",
-
-""TotalContentsAmount"": 1,
-""SawContentIds"": 
-[
-	""Content01""
-],
-""CreatedCommentAmount"": 1,
-""ParticipationAmount"": 1
-}
-]
-}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
+                        "SemesterName",
+                        "LessonWeekName",
+                        "IsLocked"});
+            table1.AddRow(new string[] {
+                        "A",
+                        "Week01",
+                        "false"});
+            table1.AddRow(new string[] {
+                        "A",
+                        "Week02",
+                        "false"});
+            table1.AddRow(new string[] {
+                        "B",
+                        "Week03",
+                        "true"});
+#line 75
+    testRunner.Then("System send course map content back are", ((string)(null)), table1, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
