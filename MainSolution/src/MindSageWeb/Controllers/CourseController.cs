@@ -9,6 +9,10 @@ using System.Linq;
 
 namespace MindSageWeb.Controllers
 {
+    /// <summary>
+    /// Course API
+    /// </summary>
+    [Route("api/[controller]")]
     public class CourseController : Controller
     {
         #region Fields
@@ -36,7 +40,8 @@ namespace MindSageWeb.Controllers
         /// <summary>
         /// Get all available courses
         /// </summary>
-        public IEnumerable<CourseCatalogRespond> Get()
+        [HttpGet]
+        public IEnumerable<CourseCatalogRespond> GetAvailableCourse()
         {
             var result = _repo.GetAvailableCourses()
                 .Where(it => !it.DeletedDate.HasValue)
@@ -56,7 +61,8 @@ namespace MindSageWeb.Controllers
         /// Get course's detail
         /// </summary>
         /// <param name="id">Course id</param>
-        public CourseCatalog Get(string id)
+        [HttpGet("{id}")]
+        public CourseCatalog GetCourseDetail(string id)
         {
             var isArgumentValid = !string.IsNullOrEmpty(id);
             if (!isArgumentValid) return null;

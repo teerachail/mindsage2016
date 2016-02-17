@@ -6,6 +6,10 @@ using System.Linq;
 
 namespace MindsageWeb.Controllers
 {
+    /// <summary>
+    /// Comment API
+    /// </summary>
+    [Route("api/[controller]")]
     public class CommentController : Controller
     {
         #region Fields
@@ -53,6 +57,7 @@ namespace MindsageWeb.Controllers
         /// Create a comment
         /// </summary>
         /// <param name="body">Request information</param>
+        [HttpPost]
         public void Post(PostNewCommentRequest body)
         {
             var areArgumentsValid = body != null
@@ -100,6 +105,7 @@ namespace MindsageWeb.Controllers
         /// </summary>
         /// <param name="id">Comment's id</param>
         /// <param name="body">Request information</param>
+        [HttpPut]
         public void Put(string id, RemoveCommentRequest body)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -131,6 +137,7 @@ namespace MindsageWeb.Controllers
         /// Like a comment
         /// </summary>
         /// <param name="body">Request information</param>
+        [HttpPost]
         [Route("like")]
         public void Like(LikeCommentRequest body)
         {

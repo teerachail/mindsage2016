@@ -7,6 +7,10 @@ using System.Linq;
 
 namespace MindsageWeb.Controllers
 {
+    /// <summary>
+    /// Lesson API
+    /// </summary>
+    [Route("api/[controller]")]
     public class LessonController : Controller
     {
         #region Fields
@@ -68,6 +72,7 @@ namespace MindsageWeb.Controllers
         /// <param name="id">Lesson's id</param>
         /// <param name="classRoomId">Class room id</param>
         /// <param name="userId">Request by user id</param>
+        [HttpGet]
         [Route(":id/:classRoomId/:userId")]
         public LessonContentRespond Get(string id, string classRoomId, string userId)
         {
@@ -137,6 +142,7 @@ namespace MindsageWeb.Controllers
         /// <param name="id">Lesson's id</param>
         /// <param name="classRoomId">Class room id</param>
         /// <param name="userId">Request by user id</param>
+        [HttpGet]
         [Route(":id/:classRoomId/comments/:userId")]
         public IEnumerable<GetCommentRespond> Comments(string id, string classRoomId, string userId)
         {
@@ -189,6 +195,7 @@ namespace MindsageWeb.Controllers
         /// <param name="classRoomId">Class room id</param>
         /// <param name="commentId">Comment id</param>
         /// <param name="userId">Request by user id</param>
+        [HttpGet]
         [Route(":id/:classRoomId/discussions/:userId")]
         public IEnumerable<GetDiscussionRespond> Discussions(string id, string classRoomId, string commentId, string userId)
         {
@@ -241,6 +248,7 @@ namespace MindsageWeb.Controllers
         /// Like a lesson
         /// </summary>
         /// <param name="body">Request's information</param>
+        [HttpPost]
         [Route("like")]
         public void Post(LikeLessonRequest body)
         {

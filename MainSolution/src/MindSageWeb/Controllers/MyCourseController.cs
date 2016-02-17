@@ -8,6 +8,10 @@ using System.Linq;
 
 namespace MindsageWeb.Controllers
 {
+    /// <summary>
+    /// MyCourse API
+    /// </summary>
+    [Route("api/[controller]")]
     public class MyCourseController : Controller
     {
         #region Fields
@@ -48,6 +52,7 @@ namespace MindsageWeb.Controllers
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
+        [HttpGet]
         public IEnumerable<CourseMapContentRespond> Get(string id, string classRoomId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -85,6 +90,7 @@ namespace MindsageWeb.Controllers
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
+        [HttpGet]
         [Route(":id/:classRoomId/status")]
         public IEnumerable<CourseMapStatusRespond> GetStatus(string id, string classRoomId)
         {
