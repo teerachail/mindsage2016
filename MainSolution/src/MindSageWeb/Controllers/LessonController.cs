@@ -138,7 +138,7 @@ namespace MindsageWeb.Controllers
         /// <param name="classRoomId">Class room id</param>
         /// <param name="userId">Request by user id</param>
         [Route(":id/:classRoomId/comments/:userId")]
-        public IEnumerable<Comment> Comments(string id, string classRoomId, string userId)
+        public IEnumerable<GetCommentRespond> Comments(string id, string classRoomId, string userId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
                 && !string.IsNullOrEmpty(classRoomId)
@@ -164,14 +164,76 @@ namespace MindsageWeb.Controllers
             var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames)
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)
+                .Select(it => new GetCommentRespond
+                {
+                    id = it.id,
+                    Description = it.Description,
+                    TotalLikes = it.TotalLikes,
+                    CreatorImageUrl = it.CreatorImageUrl,
+                    CreatorDisplayName = it.CreatorDisplayName,
+                    ClassRoomId = it.ClassRoomId,
+                    LessonId = it.LessonId,
+                    CreatedByUserProfileId = it.CreatedByUserProfileId,
+                    TotalDiscussions = it.Discussions.Count(),
+                    CreatedDate = it.CreatedDate
+                })
                 .ToList();
-            comments.ForEach(comment =>
-            {
-                comment.Discussions = comment.Discussions
-                .Where(it => !it.DeletedDate.HasValue)
-                .OrderByDescending(it => it.CreatedDate);
-            });
             return comments;
+        }
+
+        // GET: api/lesson/{lesson-id}/{class-room-id}/discussions/{user-id}
+        /// <summary>
+        /// Get comment's discussions
+        /// </summary>
+        /// <param name="id">Lesson's id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <param name="commentId">Comment id</param>
+        /// <param name="userId">Request by user id</param>
+        [Route(":id/:classRoomId/discussions/:userId")]
+        public IEnumerable<GetDiscussionRespond> Discussions(string id, string classRoomId, string commentId, string userId)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId)
+                && !string.IsNullOrEmpty(commentId)
+                && !string.IsNullOrEmpty(userId);
+            if (!areArgumentsValid) return null;
+
+            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId);
+            if (!canAccessToTheClassRoom) return null;
+
+            var now = _dateTime.GetCurrentTime();
+            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            if (!canAccessToTheClassLesson) return null;
+
+            var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(userId);
+            if (friendRequests == null) return null;
+
+            var friendIds = friendRequests
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
+                .Select(it => it.ToUserProfileId);
+
+            var filterByCreatorNames = friendIds.Union(new string[] { userId });
+            var selectedComment = _commentRepo.GetCommentById(commentId);
+            var canAccessToTheComment = selectedComment != null && !selectedComment.DeletedDate.HasValue;
+            if (!canAccessToTheComment) return null;
+
+            var discussions = selectedComment.Discussions
+                .Where(it => !it.DeletedDate.HasValue)
+                .OrderByDescending(it => it.CreatedDate)
+                .Select(it => new GetDiscussionRespond
+                {
+                    id = it.id,
+                    CommentId = commentId,
+                    Description = it.Description,
+                    TotalLikes = it.TotalLikes,
+                    CreatorImageUrl = it.CreatorImageUrl,
+                    CreatorDisplayName = it.CreatorDisplayName,
+                    CreatedByUserProfileId = it.CreatedByUserProfileId,
+                    CreatedDate = it.CreatedDate
+                })
+                .ToList();
+            return discussions;
         }
 
         // POST: api/lesson/like

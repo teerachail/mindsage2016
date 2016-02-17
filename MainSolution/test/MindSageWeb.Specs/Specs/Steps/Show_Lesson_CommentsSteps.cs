@@ -25,8 +25,8 @@ namespace MindSageWeb.Specs.Steps
         [Then(@"System send lesson's comment and their discussions with JSON format are")]
         public void ThenSystemSendLessonSCommentAndTheirDiscussionsWithJSONFormatAre(string multilineText)
         {
-            var expectedObj = JsonConvert.DeserializeObject<IEnumerable<Comment>>(multilineText);
-            var actualObj = ScenarioContext.Current.Get<IEnumerable<Comment>>();
+            var expectedObj = JsonConvert.DeserializeObject<IEnumerable<GetCommentRespond>>(multilineText);
+            var actualObj = ScenarioContext.Current.Get<IEnumerable<GetCommentRespond>>();
 
             var expectedString = JsonConvert.SerializeObject(expectedObj);
             var actualString = JsonConvert.SerializeObject(actualObj);

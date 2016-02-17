@@ -181,23 +181,7 @@ this.FeatureBackground();
         ""TotalLikes"": 10,
         ""LessonId"": ""Lesson02"",
 ""CreatedDate"": ""2/1/2016 03:00 am"",
-        ""Discussions"":
-        [
-{
-                ""Id"": ""DiscussionId03"",
-                ""Description"": ""Discussion03"",
-                ""TotalLikes"": 300,
-                ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
-	""CreatedDate"": ""2/1/2016 03:02 am"",
-            },
-            {
-                ""Id"": ""DiscussionId02"",
-                ""Description"": ""Discussion02"",
-                ""TotalLikes"": 200,
-                ""CreatedByUserProfileId"": ""someone@mindsage.com"",
-	""CreatedDate"": ""2/1/2016 03:01 am"",
-            },
-        ]
+        ""TotalDiscussions"": 2
     },
     {
         ""id"": ""Comment02"",
@@ -207,16 +191,7 @@ this.FeatureBackground();
         ""TotalLikes"": 5,
         ""LessonId"": ""Lesson02"",
 ""CreatedDate"": ""2/1/2016 02:00 am"",
-        ""Discussions"":
-        [
-            {
-                ""Id"": ""DiscussionId01"",
-                ""Description"": ""Discussion01"",
-                ""TotalLikes"": 100,
-                ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
-	""CreatedDate"": ""2/1/2016 02:01 am"",
-            }
-        ]
+        ""TotalDiscussions"": 1
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
