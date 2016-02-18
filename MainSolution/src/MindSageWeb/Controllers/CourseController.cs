@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNet.Mvc;
-using MindsageWeb.Repositories;
-using MindsageWeb.Repositories.Models;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
+using MindSageWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -30,6 +29,11 @@ namespace MindSageWeb.Controllers
         public CourseController(ICourseCatalogRepository courseCatalogRepo)
         {
             _repo = courseCatalogRepo;
+        }
+
+        internal object GetCourseDetail(object courseId)
+        {
+            throw new NotImplementedException();
         }
 
         #endregion Constructors
@@ -62,13 +66,48 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="id">Course id</param>
         [HttpGet("{id}")]
-        public CourseCatalog GetCourseDetail(string id)
+        public GetCourseDetailRespond GetCourseDetail(string id)
         {
             var isArgumentValid = !string.IsNullOrEmpty(id);
             if (!isArgumentValid) return null;
 
             var selectedCourse = _repo.GetCourseCatalogById(id);
-            return selectedCourse;
+            if (selectedCourse == null) return null;
+
+            var result = new GetCourseDetailRespond
+            {
+                id = selectedCourse.id,
+                CreatedDate = selectedCourse.CreatedDate,
+                Description = selectedCourse.FullDescription,
+                DescriptionImageUrl = selectedCourse.DescriptionImageUrl,
+                FullImageUrl = selectedCourse.FullImageUrl,
+                Name = selectedCourse.Name,
+                Price = selectedCourse.Price,
+                Title = selectedCourse.Title,
+                Semesters = selectedCourse.Semesters
+                .Select(semester => new GetCourseDetailRespond.Semester
+                {
+                    Description = semester.Description,
+                    Name = semester.Name,
+                    Title = semester.Title,
+                    TotalWeeks = semester.Units.SelectMany(unit => unit.Lessons).Count(),
+                    Units = semester.Units.Select(unit => new GetCourseDetailRespond.Unit
+                    {
+                        Description = unit.FullDescription,
+                        Title = unit.Title,
+                        TotalWeeks = unit.Lessons.Count(),
+                        UnitNo = unit.Order,
+                        Lessons = unit.Lessons.Select(it => new GetCourseDetailRespond.Lesson
+                        {
+                            id = it.id,
+                            Name = it.Name,
+                            Order = it.Order,
+                            SemesterGroupName = it.SemesterGroupName
+                        }).ToList()
+                    }).ToList()
+                }).ToList()
+            };
+            return result;
         }
 
         #endregion Methods

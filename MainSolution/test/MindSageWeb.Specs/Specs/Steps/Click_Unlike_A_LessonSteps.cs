@@ -1,6 +1,6 @@
-﻿using MindsageWeb.Controllers;
-using MindsageWeb.Repositories;
-using MindsageWeb.Repositories.Models;
+﻿using MindSageWeb.Controllers;
+using MindSageWeb.Repositories;
+using MindSageWeb.Repositories.Models;
 using Moq;
 using Newtonsoft.Json;
 using System;

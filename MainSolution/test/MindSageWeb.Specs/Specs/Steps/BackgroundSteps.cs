@@ -1,5 +1,5 @@
-﻿using MindsageWeb.Controllers;
-using MindsageWeb.Repositories;
+﻿using MindSageWeb.Controllers;
+using MindSageWeb.Repositories;
 using Moq;
 using TechTalk.SpecFlow;
 

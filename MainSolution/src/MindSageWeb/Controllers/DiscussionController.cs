@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNet.Mvc;
-using MindsageWeb.Repositories;
-using MindsageWeb.Repositories.Models;
+using MindSageWeb.Repositories;
+using MindSageWeb.Repositories.Models;
 using System;
 using System.Linq;
 
-namespace MindsageWeb.Controllers
+namespace MindSageWeb.Controllers
 {
     /// <summary>
     /// Discussion API

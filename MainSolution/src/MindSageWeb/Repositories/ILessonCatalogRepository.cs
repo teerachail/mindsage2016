@@ -1,11 +1,11 @@
-﻿using MindsageWeb.Repositories.Models;
+﻿using MindSageWeb.Repositories.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MindsageWeb.Repositories
+namespace MindSageWeb.Repositories
 {
     /// <summary>
     /// มาตรฐานในการติดต่อกับ Lesson catalog

@@ -59,6 +59,7 @@ namespace MindSageWeb
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.AddTransient<ICourseCatalogRepository, CourseCatalogRepository>();
+            services.AddTransient<Controllers.CourseController, Controllers.CourseController>();
 
             services.AddSwaggerGen();
         }

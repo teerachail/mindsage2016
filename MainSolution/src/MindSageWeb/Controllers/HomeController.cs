@@ -8,6 +8,13 @@ namespace MindSageWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private CourseController _courseCtrl;
+
+        public HomeController(CourseController courseCtrl)
+        {
+            _courseCtrl = courseCtrl;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -32,9 +39,10 @@ namespace MindSageWeb.Controllers
             return View();
         }
 
-        public IActionResult Detail()
+        public IActionResult Detail(string id)
         {
-            return View();
+            var course = _courseCtrl.GetCourseDetail(id);
+            return View(course);
         }
     }
 }

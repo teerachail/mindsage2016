@@ -1,6 +1,8 @@
-﻿@{
+﻿@model MindSageWeb.Repositories.Models.GetCourseDetailRespond
+@{
     ViewData["Title"] = "Contact";
 }
+
 <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
     <ul class="orbit-container">
         <button class="orbit-previous" aria-label="previous"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
@@ -22,19 +24,16 @@
 
 <div class="row content-section">
     <div class="large-2 pull-10 columns purchase">
-        <p>COMPLETE 7th GRADE COURSE</p>
-        <p>$80.00</p>
+        <p>@Model.Name</p>
+        <p>@Model.Price.ToString("C2")</p>
         <a class="button primary large-centered" href="#">PURCHASE</a>
     </div>
 
     <div class="large-9 push-3 columns">
-        <p class="detail-info">Mind Sage Middle School Program: 6th, 7th & 8th Grades</p>
-        <h1 class="detail-header">GUIDING THE NATURAL DESIRE TO BECOME INDPENDANT THINKERS</h1>
+        <p class="detail-info">@Model.Name</p>
+        <h1 class="detail-header">@Model.Title</h1>
         <p>
-            Middle school is a transitional period for students. they are no longer children, but entering phare were they
-            are not quite adults either. This wonderful period in life addords teachers the opportunity build on the
-            awareness of the Elementary MindSage course, developing and guilding the students as they natual begin to
-            push for indepenents and control of their lives.
+            @Model.Description
         </p>
 
         <div class="row">
@@ -42,253 +41,50 @@
                 <h2 class="detail-header">Two 17 Week Courses</h2>
             </div>
             <div class="large-6 columns">
-                <img class="thumbnail" src="http://placehold.it/300x50">
+                <img class="thumbnail" src="@Model.DescriptionImageUrl">
             </div>
         </div>
+        @foreach (var semester in Model.Semesters)
+        {
+            <h1 class="lesson-header">@semester.Name</h1>
 
-        <h1 class="lesson-header">SEMESTER A</h1>
-
-        <div class="lesson-bg accordion">
-            <div class="row" data-accordion data-allow-all-closed="true">
-                <div class="title">
-                    <h2>INTRO</h2>
-                </div>
-                <div class="detail" data-accordion-item>
-                    <h3>Intro to 7th Grade: The NextU</h3>
-                    <p class="week-info">4 Weeks</p>
-                    <p>
-                        Middle school is a transitional period for students. they are no longer children, but entering phare
-                        were they are not quite adults either. This wonderful period in life addords teachers the opportunity
-                        build on the awareness of the Elementary MindSage course, developing and guilding the students
-                        as they natual begin to push for indepenents and control of their lives.
-                    </p>
-                    <a>
-                        <p> > More Details</p>
-                    </a>
-                    <div class="undisplay" data-tab-content>
-                        <div>
-                            <p>WEEK 1</p>
-                            <div class="row">
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <p>WEEK 2</p>
-                            <div class="row">
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <p>WEEK 3</p>
-                            <div class="row">
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+            <div class="lesson-bg accordion">
+                <div class="row" data-accordion data-allow-all-closed="true">
+                    <div class="title">
+                        <h2>INTRO</h2>
                     </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="lesson-bg accordion">
-            <div class="row" data-accordion data-allow-all-closed="true">
-                <div class="title">
-                    <h2>Unit 1</h2>
-                </div>
-                <div class="detail" data-accordion-item>
-                    <h3>Intro to 7th Grade: The NextU</h3>
-                    <p class="week-info">4 Weeks</p>
-                    <p>
-                        Middle school is a transitional period for students. they are no longer children, but entering phare
-                        were they are not quite adults either. This wonderful period in life addords teachers the opportunity
-                        build on the awareness of the Elementary MindSage course, developing and guilding the students
-                        as they natual begin to push for indepenents and control of their lives.
-                    </p>
-                    <a>
-                        <p> > More Details</p>
-                    </a>
-                    <div class="undisplay" data-tab-content>
-                        <div>
-                            <p>WEEK 1</p>
-                            <div class="row">
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
+                    <div class="detail" data-accordion-item>
+                        <h3>@semester.Title</h3>
+                        <p class="week-info">@semester.TotalWeeks Weeks</p>
+                        <p>
+                            @semester.Description
+                        </p>
+                        <a>
+                            <p> > More Details</p>
+                        </a>
+                        @foreach (var unit in semester.Units)
+                        {
+                            @foreach (var lesson in unit.Lessons)
+                            {
+                                <div class="undisplay" data-tab-content>
+                                    <div>
+                                        <p>WEEK @lesson.Order</p>
+                                        <div class="row">
+                                            <div class="large-3 small-3 columns"><img src="http://placehold.it/100x100?text=1"></div>
+                                            <div class="large-9 small-9 columns">
+                                                <p>
+                                                    @lesson.Name
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                            </div>
-
-                            <p>WEEK 2</p>
-                            <div class="row">
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </div>
-        </div>
-
-        <div class="lesson-bg accordion">
-            <div class="row" data-accordion data-allow-all-closed="true">
-
-                <div class="title">
-                    <h2>Unit 2</h2>
-                </div>
-
-                <div class="detail" data-accordion-item>
-                    <h3>Intro to 7th Grade: The NextU</h3>
-                    <p class="week-info">4 Weeks</p>
-                    <p>
-                        Middle school is a transitional period for students. they are no longer children, but entering phare
-                        were they are not quite adults either. This wonderful period in life addords teachers the opportunity
-                        build on the awareness of the Elementary MindSage course, developing and guilding the students
-                        as they natual begin to push for indepenents and control of their lives.
-                    </p>
-                    <a>
-                        <p> > More Details</p>
-                    </a>
-                    <div class="undisplay" data-tab-content>
-                        <div>
-                            <p>WEEK 3</p>
-                            <div class="row">
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                                <div class="large-3 small-3 columns"><img src="http://placehold.it/2000x750?text=1"></div>
-                                <div class="large-9 small-9 columns">
-                                    <p>
-                                        Middle school is a transitional period for students. they are no longer children,
-                                        but entering phare were they are not quite adults either. This wonderful period
-                                        in life addords teachers the opportunity build on the awareness of the Elementary
-                                        MindSage course, developing and guilding the students as they natual begin to
-                                        push for indepenents and control of their lives.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
+                            }
+                        }
                     </div>
                 </div>
-
             </div>
-        </div>
-
+        }
     </div>
 </div>
 

@@ -1,12 +1,11 @@
 ﻿using Microsoft.AspNet.Mvc;
-using MindsageWeb.Repositories;
-using MindsageWeb.Repositories.Models;
+using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace MindsageWeb.Controllers
+namespace MindSageWeb.Controllers
 {
     /// <summary>
     /// MyCourse API
