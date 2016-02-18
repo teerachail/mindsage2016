@@ -13,7 +13,8 @@ namespace MindSageWeb.Repositories
     {
         #region Fields
 
-        private const string CourseCatalogTableName = "mindsage.CourseCatalogs";
+        // HACK: Table name
+        private const string CourseCatalogTableName = "test.au.mindsage.CourseCatalogs";
 
         #endregion Fields
 
@@ -37,7 +38,7 @@ namespace MindSageWeb.Repositories
         public CourseCatalog GetCourseCatalogById(string courseCatalogId)
         {
             var result = MongoAccess.MongoUtil.GetCollection<CourseCatalog>(CourseCatalogTableName)
-                .Find(it => !it.DeletedDate.HasValue && it.id.Equals(courseCatalogId, StringComparison.CurrentCultureIgnoreCase))
+                .Find(it => !it.DeletedDate.HasValue && it.id == courseCatalogId)
                 .ToEnumerable()
                 .FirstOrDefault();
             return result;
