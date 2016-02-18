@@ -39,6 +39,9 @@ namespace MindSageWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
+            MongoAccess.MongoUtil.Instance.Initialize(appConfig);
+
             // Add framework services.
             services.AddEntityFramework()
                 .AddSqlServer()

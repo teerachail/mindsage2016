@@ -7,24 +7,38 @@ using System.Threading.Tasks;
 
 namespace MindSageWeb.MongoAccess
 {
-    static class MongoUtil
+    public class MongoUtil
     {
         #region Fields
 
         private static IMongoClient _client;
         private static IMongoDatabase _database;
+        private static MongoUtil _instance;
 
         #endregion Fields
 
+        #region Properties
+
+        public static MongoUtil Instance
+        {
+            get
+            {
+                if (_instance == null) _instance = new MongoUtil();
+                return _instance;
+            }
+
+            set
+            {
+                _instance = value;
+            }
+        }
+
+        #endregion Properties
+
         #region Constructors
 
-        static MongoUtil()
+        private MongoUtil()
         {
-            // HACK: MongoDb's connection
-            var connectionString = "mongodb://MongoLab-4o:UMOcc359jl3WoTatREpo9qAAEGFL87uwoUWVyfusDUk-@ds056288.mongolab.com:56288/MongoLab-4o";
-            var dbName = "MongoLab-4o";
-            _client = new MongoClient(connectionString);
-            _database = _client.GetDatabase(dbName);
         }
 
         #endregion Constructors
@@ -32,11 +46,23 @@ namespace MindSageWeb.MongoAccess
         #region Methods
 
         /// <summary>
+        /// Initialize database's connection
+        /// </summary>
+        /// <param name="appConfig">App configuration</param>
+        public void Initialize(AppConfigOptions appConfig)
+        {
+            var connectionString = appConfig.PrimaryDBConnectionString;
+            var dbName = appConfig.PrimaryDBName;
+            _client = new MongoClient(connectionString);
+            _database = _client.GetDatabase(dbName);
+        }
+
+        /// <summary>
         /// ดึงข้อมูลจากตาราง
         /// </summary>
         /// <typeparam name="T">ข้อมูลที่ทำงานด้วย</typeparam>
         /// <param name="tableName">ชื่อตาราง</param>
-        public static IMongoCollection<T> GetCollection<T>(string tableName)
+        public IMongoCollection<T> GetCollection<T>(string tableName)
         {
             return _database.GetCollection<T>(tableName);
         }
