@@ -38,7 +38,7 @@
 
         <div class="row">
             <div class="large-6 columns">
-                <h2 class="detail-header">Two 17 Week Courses</h2>
+                <h2 class="detail-header">@Model.TotalWeeks Week Courses</h2>
             </div>
             <div class="large-6 columns">
                 <img class="thumbnail" src="@Model.DescriptionImageUrl">
@@ -84,6 +84,43 @@
                     </div>
                 </div>
             </div>
+
+            @foreach (var unit in semester.Units)
+            {
+                <div class="lesson-bg accordion">
+                    <div class="row" data-accordion data-allow-all-closed="true">
+                        <div class="title">
+                            <h2>UNIT @unit.UnitNo</h2>
+                        </div>
+                        <div class="detail" data-accordion-item>
+                            <h3>@unit.Title</h3>
+                            <p class="week-info">@unit.TotalWeeks Weeks</p>
+                            <p>
+                                @unit.Description
+                            </p>
+                            <a>
+                                <p> > More Details</p>
+                            </a>
+                            @foreach (var lesson in unit.Lessons)
+                            {
+                                <div class="undisplay" data-tab-content>
+                                    <div>
+                                        <p>WEEK @lesson.Order</p>
+                                        <div class="row">
+                                            <div class="large-3 small-3 columns"><img src="http://placehold.it/100x100?text=1"></div>
+                                            <div class="large-9 small-9 columns">
+                                                <p>
+                                                    @lesson.Name
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
         }
     </div>
 </div>

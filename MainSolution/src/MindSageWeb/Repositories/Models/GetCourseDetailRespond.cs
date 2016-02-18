@@ -17,6 +17,7 @@ namespace MindSageWeb.Repositories.Models
         public string DescriptionImageUrl { get; set; }
         public string FullImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
+        public int TotalWeeks { get; set; }
 
         public IEnumerable<Semester> Semesters { get; set; }
 

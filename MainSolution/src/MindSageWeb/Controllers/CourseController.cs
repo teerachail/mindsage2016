@@ -84,8 +84,8 @@ namespace MindSageWeb.Controllers
                 Name = selectedCourse.Name,
                 Price = selectedCourse.Price,
                 Title = selectedCourse.Title,
-                Semesters = selectedCourse.Semesters
-                .Select(semester => new GetCourseDetailRespond.Semester
+                TotalWeeks = selectedCourse.Semesters.SelectMany(it => it.Units).Count(),
+                Semesters = selectedCourse.Semesters.Select(semester => new GetCourseDetailRespond.Semester
                 {
                     Description = semester.Description,
                     Name = semester.Name,
