@@ -26,9 +26,9 @@ namespace MindSageWeb.Repositories
         /// <param name="courseCatalogId">รหัส course catalog ที่ต้องการข้อมูล</param>
         public IEnumerable<CourseCatalog> GetAvailableCourses()
         {
-               var qry = MongoAccess.MongoUtil.Instance.GetCollection<CourseCatalog>(CourseCatalogTableName)
-                .Find(it => !it.DeletedDate.HasValue)
-                .ToEnumerable();
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<CourseCatalog>(CourseCatalogTableName)
+             .Find(it => !it.DeletedDate.HasValue)
+             .ToEnumerable();
             return qry;
         }
 

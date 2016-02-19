@@ -73,7 +73,7 @@ namespace MindSageWeb.Controllers
         /// <param name="classRoomId">Class room id</param>
         /// <param name="userId">Request by user id</param>
         [HttpGet]
-        [Route(":id/:classRoomId/:userId")]
+        [Route("{id}/{classRoomId}/{userId}")]
         public LessonContentRespond Get(string id, string classRoomId, string userId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -143,7 +143,7 @@ namespace MindSageWeb.Controllers
         /// <param name="classRoomId">Class room id</param>
         /// <param name="userId">Request by user id</param>
         [HttpGet]
-        [Route(":id/:classRoomId/comments/:userId")]
+        [Route("{id}/{classRoomId}/comments/{userId}")]
         public IEnumerable<GetCommentRespond> Comments(string id, string classRoomId, string userId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -196,7 +196,7 @@ namespace MindSageWeb.Controllers
         /// <param name="commentId">Comment id</param>
         /// <param name="userId">Request by user id</param>
         [HttpGet]
-        [Route(":id/:classRoomId/discussions/:userId")]
+        [Route("{id}/{classRoomId}/discussions/{userId}")]
         public IEnumerable<GetDiscussionRespond> Discussions(string id, string classRoomId, string commentId, string userId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)

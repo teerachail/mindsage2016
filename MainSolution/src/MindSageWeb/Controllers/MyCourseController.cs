@@ -51,7 +51,7 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
-        [HttpGet]
+        [HttpGet("{id}/{classRoomId}")]
         public IEnumerable<CourseMapContentRespond> Get(string id, string classRoomId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -90,7 +90,7 @@ namespace MindSageWeb.Controllers
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
         [HttpGet]
-        [Route(":id/:classRoomId/status")]
+        [Route("{id}/{classRoomId}/status")]
         public IEnumerable<CourseMapStatusRespond> GetStatus(string id, string classRoomId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
@@ -116,6 +116,48 @@ namespace MindSageWeb.Controllers
                 })
                 .ToList();
             return result;
+        }
+
+        // GET: api/mycourse/{user-id}/status
+        /// <summary>
+        /// Get all user's courses
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        [HttpGet]
+        [Route("{id}/courses")]
+        public IEnumerable<CourseCatalogRespond> GetAllCourses(string id)
+        {
+            var isArguementValid = !string.IsNullOrEmpty(id);
+            if (!isArguementValid) return Enumerable.Empty<CourseCatalogRespond>();
+
+            var selectedUserProfile = _userprofileRepo.GetUserProfileById(id);
+            var canAccessToSubscription = selectedUserProfile != null
+                && selectedUserProfile.Subscriptions != null
+                && selectedUserProfile.Subscriptions.Any();
+            if (!canAccessToSubscription) return Enumerable.Empty<CourseCatalogRespond>();
+
+            var subscriptionQry = selectedUserProfile.Subscriptions.Where(it => !it.DeletedDate.HasValue);
+
+            var now = _dateTime.GetCurrentTime();
+            var availableClassRoomIdQry = subscriptionQry
+                .Select(it => _classCalendarRepo.GetClassCalendarByClassRoomId(it.ClassRoomId))
+                .Where(it => it != null)
+                .Where(it => it.BeginDate.Date <= now.Date)
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => !it.CloseDate.HasValue)
+                .Where(it => it.ExpiredDate.HasValue)
+                .Where(it => it.ExpiredDate.Value.Date > now.Date)
+                .Select(it => it.ClassRoomId);
+
+            var availableSubscriptions = subscriptionQry
+                .Where(it => availableClassRoomIdQry.Contains(it.ClassRoomId))
+                .Select(it => new CourseCatalogRespond
+                {
+                    id = it.id,
+                    Name = it.ClassRoomName,
+                }).ToList();
+
+            return availableSubscriptions;
         }
 
         private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
