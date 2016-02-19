@@ -63,10 +63,10 @@ namespace MindSageWeb.Controllers
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId);
             if (!canAccessToTheClassRoom) return Enumerable.Empty<GetFriendListRespond>();
 
-            var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id);
+            var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id).ToList();
             if (!friendRequests.Any()) return Enumerable.Empty<GetFriendListRespond>();
 
-            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId);
+            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
             if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetFriendListRespond>();
 
             var students = allStudentsInTheClassRoom

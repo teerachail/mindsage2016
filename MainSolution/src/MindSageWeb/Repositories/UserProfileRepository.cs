@@ -38,8 +38,9 @@ namespace MindSageWeb.Repositories
         public IEnumerable<UserProfile> GetUserProfilesByClassRoomId(string classRoomId)
         {
             var result = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
-                .Find(it => !it.DeletedDate.HasValue && it.Subscriptions.Where(s => !s.DeletedDate.HasValue).Select(s => s.ClassRoomId).Contains(classRoomId))
-                .ToEnumerable();
+                .Find(it => !it.DeletedDate.HasValue && it.Subscriptions.Any())
+                .ToEnumerable()
+                .Where(it => it.Subscriptions.Where(subscription => !subscription.DeletedDate.HasValue).Select(s => s.ClassRoomId).Contains(classRoomId));
             return result;
         }
 

@@ -63,6 +63,7 @@ namespace MindSageWeb
             services.AddTransient<ICourseCatalogRepository, CourseCatalogRepository>();
             services.AddTransient<IClassCalendarRepository, ClassCalendarRepository>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<IFriendRequestRepository, FriendRequestRepository>();
             services.AddTransient<Controllers.CourseController, Controllers.CourseController>();
 
             services.AddSwaggerGen();
