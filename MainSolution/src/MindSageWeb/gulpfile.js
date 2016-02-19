@@ -1,4 +1,6 @@
-﻿/// <binding Clean='clean' />
+﻿/// <reference path="wwwroot/lib/angular/angular.min.js" />
+/// <reference path="wwwroot/lib/angular/angular.js" />
+/// <binding Clean='clean' />
 "use strict";
 
 var gulp = require("gulp"),
@@ -58,6 +60,9 @@ var PATHS = {
         'wwwroot/lib/foundation-sites/js/foundation.tabs.js',
         'wwwroot/lib/foundation-sites/js/foundation.toggler.js',
         'wwwroot/lib/foundation-sites/js/foundation.tooltip.js',
+        'wwwroot/lib/angular/angular.js',
+        'wwwroot/lib/angular-route/angular-route.js',
+        'wwwroot/lib/angular-resource/angular-resource.js',
         'src/assets/js/**/!(app).js',
         'src/assets/js/app.js'
     ],

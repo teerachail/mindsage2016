@@ -15,7 +15,7 @@
         <link rel="stylesheet" href="~/assets/css/site.min.css" asp-append-version="true" />
     </environment>
 </head>
-<body>
+<body ng-app>
 
     <div class="top-bar" data-topbar role="navigation">
         <div class="row">
@@ -64,6 +64,7 @@
     <environment names="Development">
         <script src="~/assets/js/app.js" asp-append-version="true"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/js/appbundle.js"></script>
     </environment>
     <environment names="Staging,Production">
         <script src="~/assets/js/app.js" asp-append-version="true"></script>

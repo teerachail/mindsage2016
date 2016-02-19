@@ -18,6 +18,9 @@
     "motion-ui": "~1.1.0",
     "jquery": "2.1.4",
     "jquery-validation": "1.14.0",
-    "jquery-validation-unobtrusive": "3.2.4"
+    "jquery-validation-unobtrusive": "3.2.4",
+    "angular": "1.4.6",
+    "angular-resource": "1.4.6",
+    "angular-route": "1.4.6"
   }
 }
