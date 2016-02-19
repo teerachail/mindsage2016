@@ -988,7 +988,7 @@ a.button.outline {
 }
 
 
-icon///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////
 .size-12 { font-size: 12px; }
       
 .size-14 { font-size: 14px; }
@@ -1026,44 +1026,11 @@ body.lesson-bg {
     background-color: $white;
 }
 
-.side-nav-style {
-    list-style-type: none;
-    margin: 0;
-    margin-bottom: 3em;
-}
-
-.side-nav li {
-    padding: 10px 20px;
-    background-color: $white;
-    border-radius: 2px;
-    border-style: solid;
-    border-color: $light-gray;
-    border-width: 1px;
-    & i {
-        padding: 0 10px;
-    }
-}
-
-.purchase {
-    background-color: $white;
-    text-align: center;
-    padding: 4rem;
-    margin-bottom: 2em;
-    & p {
-        line-height: 120%;
-        font-size: 1.5em;
-        font-weight: bold;
-        color: $primary-color;
-        text-align: left;
-        margin-bottom: 0.2em;
-    }
-}
-
-.side-nav li a {
+li a {
     color: $hight-dark-gray;
 }
 
-.side-nav li.active {
+li.active {
     background-color: $primary-color;
     & a {
         color: $white;
@@ -1079,15 +1046,23 @@ p.detail-info {
     border-bottom: solid 3px $black;
 }
 
+.purchase {
+    background-color: $white;
+    text-align: center;
+    padding: 4rem;
+    & p {
+        line-height: 120%;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: $primary-color;
+        text-align: left;
+    }
+}
+
 .lesson-header {
     font-size: 1.8em;
     font-weight: bold;
-    height: 43px;
     color: $primary-color;
-    margin-bottom: 0.2em;
-    & img {
-        margin: 0;
-    }
 }
 
 .view-select  {
@@ -1099,19 +1074,10 @@ p.detail-info {
     color: $primary-color;
     }
 }
-
-
-.have-like {
-    margin-bottom: 1em !important;
-}
     
 .accordion {
     margin-bottom: 3em;
-    border-style: solid !important;
-    border-width: 1px !important;
-    border-bottom-width: 10px !important;
-    border-color: $black !important;
-    border-bottom-color: $success-color !important;
+    border-bottom:solid 10px $success-color !important;
     & .title {
         border-bottom-width: 0;
         padding: 1.25rem 1rem;
@@ -1129,7 +1095,6 @@ p.detail-info {
         margin-left: -15px;
         margin-bottom: 1em;
         padding: 0.2em 0 0 0.9em;
-        width: 160px;
         background-color: $success-color;
     }
     & h3 {
@@ -1139,11 +1104,10 @@ p.detail-info {
         margin-right: 2em;
     }
     & a {
-        margin-top: 1em;
-        & img {
-            width: 32px;
-            height: 32px;
-        }
+        margin-top: 0.5em;
+    }
+    & .icon {
+        color: $black;
     }
     & .detail {
         margin-left: 3em; 
@@ -1183,6 +1147,10 @@ p.detail-info {
     }
 }
 
+.have-like {
+    margin-bottom: 1em;
+}
+
 .setting {
     & a {
         color: $dark-gray;
@@ -1208,27 +1176,20 @@ p.detail-info {
 } 
 
 .comment {
-    & .title {
-        font-weight: bold;
-        font-size: 1.5em;
+    & a.close {
+        color: $black;
     }
-    & .user-img {
-        margin: auto;
-    }
-    & .like-button {
-        margin-bottom: 0.2em;
-    }
-    & .discussion {
-        margin-top: 1.2em;
-    }
-    & .user-discus {
+    & .user {
         text-align: center;
+    }
+    & .fi-x {
+        margin-right: 0.7em;
     }
 }
 
 .partner {
     background-color: $white;
-    padding: 4rem;
+    padding: 2rem;
 }
 
 textarea {
