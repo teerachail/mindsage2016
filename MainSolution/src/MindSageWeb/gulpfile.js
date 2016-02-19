@@ -15,6 +15,7 @@ var gulp = require('gulp');
 var panini = require('panini');
 var sequence = require('run-sequence');
 var sherpa = require('style-sherpa');
+var ts = require('gulp-typescript');
 
 // Check for --production flag
 var isProduction = !!(argv.production);
@@ -79,6 +80,8 @@ PATHS.pageTmpl = PATHS.webroot + "tmpl";
 PATHS.webAssets = PATHS.webroot + "assets";
 PATHS.assetJs = PATHS.webAssets + '/js';
 PATHS.assetCss = PATHS.webAssets + '/css';
+
+var tsProject = ts.createProject('scripts/tsconfig.json');
 
 // Delete the "dist" folder
 // This happens every time a build starts
@@ -183,9 +186,16 @@ gulp.task("min:js", function () {
 
 gulp.task("min", ["min:js", "min:css"]);
 
+// Compile TypeScript
+gulp.task('typescripts', function () {
+    var tsResult = tsProject.src() // instead of gulp.src(...) 
+		.pipe(ts(tsProject));
+
+    return tsResult.js.pipe(gulp.dest('.'));
+});
 // Combine JavaScript into one file
 // In production, the file is minified
-gulp.task('javascript', function () {
+gulp.task('javascript', ['typescripts'], function () {
     var uglify = $.if(isProduction, $.uglify()
         .on('error', function (e) {
             console.log(e);
