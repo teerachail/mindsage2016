@@ -58,7 +58,7 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentsValid) return Enumerable.Empty<CourseMapContentRespond>();
 
-            if (!checkAccessPermissionToSelectedClassRoom(id, classRoomId)) return Enumerable.Empty<CourseMapContentRespond>();
+            if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId)) return Enumerable.Empty<CourseMapContentRespond>();
 
             var now = _dateTime.GetCurrentTime();
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
@@ -97,7 +97,7 @@ namespace MindSageWeb.Controllers
                  && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentsValid) return Enumerable.Empty<CourseMapStatusRespond>();
 
-            if (!checkAccessPermissionToSelectedClassRoom(id, classRoomId)) return Enumerable.Empty<CourseMapStatusRespond>();
+            if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId)) return Enumerable.Empty<CourseMapStatusRespond>();
 
             var now = _dateTime.GetCurrentTime();
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(id, classRoomId);
@@ -158,29 +158,6 @@ namespace MindSageWeb.Controllers
                 }).ToList();
 
             return availableSubscriptions;
-        }
-
-        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
-        {
-            UserProfile userprofile;
-            return checkAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out userprofile);
-        }
-        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile userprofile)
-        {
-            userprofile = null;
-            var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
-            if (!areArgumentsValid) return false;
-
-            var selectedUserProfile = _userprofileRepo.GetUserProfileById(userprofileId);
-            if (selectedUserProfile == null) return false;
-            userprofile = selectedUserProfile;
-
-            var canAccessToTheClass = selectedUserProfile
-                .Subscriptions
-                .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
-                .Any();
-
-            return canAccessToTheClass;
         }
 
         #endregion Methods

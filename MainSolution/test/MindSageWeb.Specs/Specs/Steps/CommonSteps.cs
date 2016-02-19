@@ -20,6 +20,15 @@ namespace MindSageWeb.Specs.Steps
             var mockUserprofileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
             mockUserprofileRepo.Setup(it => it.GetUserProfileById(It.IsAny<string>()))
                 .Returns<string>(userprofileId => userprofiles.FirstOrDefault(it => it.id == userprofileId));
+            mockUserprofileRepo.Setup(it => it.GetUserProfilesByClassRoomId(It.IsAny<string>()))
+                .Returns<string>(classRoomId =>
+                {
+                    var qry = from userprofile in userprofiles
+                              from subscription in userprofile.Subscriptions
+                              where subscription.ClassRoomId == classRoomId
+                              select userprofile;
+                    return qry;
+                });
         }
 
         [Given(@"System have ClassCalendar collection with JSON format are")]

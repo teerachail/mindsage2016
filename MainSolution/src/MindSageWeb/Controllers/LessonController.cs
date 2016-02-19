@@ -81,12 +81,17 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(userId);
             if (!areArgumentsValid) return null;
 
-            UserProfile.Subscription subscription;
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId, out subscription);
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return null;
 
+            var subscription = userprofile.Subscriptions
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
+                .FirstOrDefault();
+
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
             if (!canAccessToTheClassLesson) return null;
 
             var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
@@ -151,11 +156,11 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(userId);
             if (!areArgumentsValid) return null;
 
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId);
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId);
             if (!canAccessToTheClassRoom) return null;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
             if (!canAccessToTheClassLesson) return null;
 
             var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(userId);
@@ -205,11 +210,11 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(userId);
             if (!areArgumentsValid) return null;
 
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(userId, classRoomId);
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId);
             if (!canAccessToTheClassRoom) return null;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
             if (!canAccessToTheClassLesson) return null;
 
             var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(userId);
@@ -258,11 +263,11 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(body.UserProfileId);
             if (!isArgumentValid) return;
 
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
             if (!canAccessToTheClassRoom) return;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
             var selectedClassRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
@@ -310,45 +315,6 @@ namespace MindSageWeb.Controllers
             var selectedLesson = selectedClassRoom.Lessons.First(it => it.id == body.LessonId);
             selectedLesson.TotalLikes = likeLessons.Where(it => !it.DeletedDate.HasValue).Count();
             _classRoomRepo.UpdateClassRoom(selectedClassRoom);
-        }
-
-        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
-        {
-            UserProfile.Subscription subscription;
-            return checkAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out subscription);
-        }
-        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile.Subscription subscription)
-        {
-            subscription = null;
-            var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
-            if (!areArgumentsValid) return false;
-
-            var selectedUserProfile = _userprofileRepo.GetUserProfileById(userprofileId);
-            if (selectedUserProfile == null) return false;
-
-            subscription = selectedUserProfile
-                .Subscriptions
-                .Where(it => !it.DeletedDate.HasValue)
-                .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
-                .FirstOrDefault();
-
-            var canAccessToTheClass = subscription != null;
-            return canAccessToTheClass;
-        }
-        private bool checkAccessPermissionToSelectedClassLesson(string classRoomId, string lessonId, DateTime currentTime)
-        {
-            var areArgumentsValid = !string.IsNullOrEmpty(classRoomId) && !string.IsNullOrEmpty(lessonId);
-            if (!areArgumentsValid) return false;
-
-            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
-            if (selectedClassCalendar == null) return false;
-
-            var canAccessToTheLesson = selectedClassCalendar.LessonCalendars
-                .Where(it => !it.DeletedDate.HasValue)
-                .Where(it => it.LessonId.Equals(lessonId, StringComparison.CurrentCultureIgnoreCase))
-                .Where(it => it.BeginDate <= currentTime)
-                .Any();
-            return canAccessToTheLesson;
         }
 
         #endregion Methods
