@@ -69,11 +69,11 @@ namespace MindSageWeb.Controllers
             if (!areArgumentsValid) return;
 
             UserProfile userprofile;
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
             var selectedComment = _commentRepo.GetCommentById(body.CommentId);
@@ -88,7 +88,7 @@ namespace MindSageWeb.Controllers
             var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
             if (!isCommentOwner)
             {
-                var canPostNewDiscussion = checkAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
+                var canPostNewDiscussion = _userprofileRepo.CheckAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
                 if (!canPostNewDiscussion) return;
             }
 
@@ -128,11 +128,11 @@ namespace MindSageWeb.Controllers
             if (!areArgumentsValid) return;
 
             UserProfile userprofile;
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
             var selectedComment = _commentRepo.GetCommentById(body.CommentId);
@@ -165,11 +165,11 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(body.LessonId);
             if (!areArgumentsValid) return;
 
-            var canAccessToTheClassRoom = checkAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
             if (!canAccessToTheClassRoom) return;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = checkAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
             if (!canAccessToTheClassLesson) return;
 
             var selectedComment = _commentRepo.GetCommentById(body.CommentId);
@@ -198,7 +198,7 @@ namespace MindSageWeb.Controllers
                 var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
                 if (!isCommentOwner)
                 {
-                    var canLikeThisComment = checkAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
+                    var canLikeThisComment = _userprofileRepo.CheckAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
                     if (!canLikeThisComment) return;
                 }
 
@@ -224,51 +224,6 @@ namespace MindSageWeb.Controllers
 
             selectedDiscussion.TotalLikes = likeDiscussions.Where(it => !it.DeletedDate.HasValue).Count();
             _commentRepo.UpsertComment(selectedComment);
-        }
-
-        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId)
-        {
-            UserProfile userprofile;
-            return checkAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out userprofile);
-        }
-        private bool checkAccessPermissionToSelectedClassRoom(string userprofileId, string classRoomId, out UserProfile userprofile)
-        {
-            userprofile = null;
-            var areArgumentsValid = !string.IsNullOrEmpty(userprofileId) && !string.IsNullOrEmpty(classRoomId);
-            if (!areArgumentsValid) return false;
-
-            var selectedUserProfile = _userprofileRepo.GetUserProfileById(userprofileId);
-            if (selectedUserProfile == null) return false;
-            userprofile = selectedUserProfile;
-
-            var canAccessToTheClass = selectedUserProfile
-                .Subscriptions
-                .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
-                .Any();
-
-            return canAccessToTheClass;
-        }
-        private bool checkAccessPermissionToSelectedClassLesson(string classRoomId, string lessonId, DateTime currentTime)
-        {
-            var areArgumentsValid = !string.IsNullOrEmpty(classRoomId) && !string.IsNullOrEmpty(lessonId);
-            if (!areArgumentsValid) return false;
-
-            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
-            if (selectedClassCalendar == null) return false;
-
-            var canAccessToTheLesson = selectedClassCalendar.LessonCalendars
-                .Where(it => !it.DeletedDate.HasValue)
-                .Where(it => it.LessonId.Equals(lessonId, StringComparison.CurrentCultureIgnoreCase))
-                .Where(it => it.BeginDate <= currentTime)
-                .Any();
-            return canAccessToTheLesson;
-        }
-        private bool checkAccessPermissionToUserProfile(string userprofileId)
-        {
-            var selectedCommentOwnerProfile = _userprofileRepo.GetUserProfileById(userprofileId);
-            var canPostNewDiscussion = selectedCommentOwnerProfile != null
-                && !selectedCommentOwnerProfile.IsPrivateAccount;
-            return canPostNewDiscussion;
         }
 
         #endregion Methods
