@@ -62,8 +62,8 @@ var PATHS = {
         'wwwroot/lib/foundation-sites/js/foundation.toggler.js',
         'wwwroot/lib/foundation-sites/js/foundation.tooltip.js',
         'wwwroot/lib/angular/angular.js',
-        'wwwroot/lib/angular-route/angular-route.js',
         'wwwroot/lib/angular-resource/angular-resource.js',
+        'wwwroot/lib/ui-router/release/angular-ui-router.js',
         'src/assets/js/**/!(app).js',
         'src/assets/js/app.js'
     ],

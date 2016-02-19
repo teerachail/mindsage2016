@@ -21,6 +21,7 @@
     "jquery-validation-unobtrusive": "3.2.4",
     "angular": "1.4.6",
     "angular-resource": "1.4.6",
-    "angular-route": "1.4.6"
+    "angular-ui": "0.4.0",
+    "ui-router": "~0.2.18"
   }
 }
