@@ -105,7 +105,7 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="id">Comment's id</param>
         /// <param name="body">Request information</param>
-        [HttpPut]
+        [HttpPut("{id}")]
         public void Put(string id, RemoveCommentRequest body)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)

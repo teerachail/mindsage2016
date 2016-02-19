@@ -1,0 +1,36 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using MindSageWeb.Repositories.Models;
+using MongoDB.Driver;
+
+namespace MindSageWeb.Repositories
+{
+    public class UserProfileRepository : IUserProfileRepository
+    {
+        #region Fields
+
+        // HACK: Table name
+        private const string UserProfileTableName = "test.au.mindsage.UserProfiles";
+
+        #endregion Fields
+
+        #region IUserProfileRepository members
+
+        /// <summary>
+        /// ขอข้อมูล User profile จากรหัส
+        /// </summary>
+        /// <param name="userprofileId">รหัส User profile ที่จะทำการขอข้อมูล</param>
+        public UserProfile GetUserProfileById(string userprofileId)
+        {
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+                .Find(it => !it.DeletedDate.HasValue && it.id == userprofileId)
+                .ToEnumerable()
+                .FirstOrDefault();
+            return result;
+        }
+
+        #endregion IUserProfileRepository members
+    }
+}
