@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MindSageWeb.Repositories.Models;
+using MongoDB.Driver;
 
 namespace MindSageWeb.Repositories
 {
@@ -24,8 +25,11 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room</param>
         public UserActivity GetUserActivityByUserProfileIdAndClassRoomId(string userprofile, string classRoomId)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<UserActivity>(ClassCalendarsTableName)
+                 .Find(it => !it.DeletedDate.HasValue && it.UserProfileId == userprofile && it.ClassRoomId == classRoomId)
+                 .ToEnumerable()
+                 .FirstOrDefault();
+            return result;
         }
 
         /// <summary>

@@ -69,6 +69,7 @@ namespace MindSageWeb.Specs.Steps
             var friendCtrl = new FriendController(classCalendarRepo.Object,
                 userprofileRepo.Object,
                 friendRequestRepo.Object,
+                userActivityRepo.Object,
                 dateTime.Object);
 
             ScenarioContext.Current.Set(myCourseCtrl);

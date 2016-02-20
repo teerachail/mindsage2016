@@ -18,6 +18,7 @@ namespace MindSageWeb.Controllers
         private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
         private IFriendRequestRepository _friendRequestRepo;
+        private IUserActivityRepository _userActivityRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -30,14 +31,17 @@ namespace MindSageWeb.Controllers
         /// <param name="classCalendarRepo">Class calendar repository</param>
         /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="friendRequestRepo">Friend request repository</param>
+        /// <param name="userActivityRepo">User activity repository</param>
         public FriendController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IFriendRequestRepository friendRequestRepo,
+            IUserActivityRepository userActivityRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
             _friendRequestRepo = friendRequestRepo;
+            _userActivityRepo = userActivityRepo;
             _dateTime = dateTime;
         }
 
@@ -51,7 +55,6 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
-        /// <returns></returns>
         [HttpGet]
         [Route("{id}/{classRoomId}")]
         public IEnumerable<GetFriendListRespond> Get(string id, string classRoomId)
@@ -87,6 +90,58 @@ namespace MindSageWeb.Controllers
                 })
                 .ToList();
             return students;
+        }
+
+        // GET: api/friend/{user-id}/{class-room-id}/students
+        /// <summary>
+        /// Get studens from class room id
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/students")]
+        public IEnumerable<GetStudentListRespond> Students(string id, string classRoomId)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId);
+            if (!areArgumentsValid) return Enumerable.Empty<GetStudentListRespond>();
+
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId, out userprofile);
+            if (!canAccessToTheClassRoom) return Enumerable.Empty<GetStudentListRespond>();
+
+            var isTeacherAccount = userprofile.Subscriptions.First(it => it.ClassRoomId == classRoomId).Role == UserProfile.AccountRole.Teacher;
+            if (!isTeacherAccount) return Enumerable.Empty<GetStudentListRespond>();
+
+            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
+            if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetStudentListRespond>();
+
+            var userActivities = allStudentsInTheClassRoom
+                .Select(it => _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(it.id, classRoomId))
+                .Where(it => it != null)
+                .ToList();
+
+            const int NoneScore = 0;
+            var result = allStudentsInTheClassRoom
+                .Where(it => it.id != id)
+                .OrderBy(it => it.id)
+                .Select(it =>
+                {
+                    var selectedUserActivity = userActivities.FirstOrDefault(ua => ua.UserProfileId == it.id);
+                    var isActivityFound = selectedUserActivity != null;
+
+                    return new GetStudentListRespond
+                    {
+                        id = it.id,
+                        Name = it.Name,
+                        ImageUrl = it.ImageProfileUrl,
+                        CommentPercentage = isActivityFound ? selectedUserActivity.CommentPercentage : NoneScore,
+                        OnlineExtrasPercentage = isActivityFound ? selectedUserActivity.OnlineExtrasPercentage : NoneScore,
+                        SocialParticipationPercentage = isActivityFound ? selectedUserActivity.SocialParticipationPercentage : NoneScore,
+                    };
+                })
+                .ToList();
+            return result;
         }
 
         #endregion Methods

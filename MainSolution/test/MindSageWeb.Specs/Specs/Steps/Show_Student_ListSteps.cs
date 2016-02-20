@@ -7,29 +7,31 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using TechTalk.SpecFlow.Assist;
 using Xunit;
 
 namespace MindSageWeb.Specs.Steps
 {
     [Binding]
-    public class Show_Friend_List
+    public class Show_Student_ListSteps
     {
-        [When(@"UserProfile '(.*)' request friend list from ClassRoom: '(.*)'")]
-        public void WhenUserProfileRequestFriendListFromClassRoom(string userprofile, string classRoomId)
+        [When(@"UserProfile '(.*)' request student list from ClassRoom: '(.*)'")]
+        public void WhenUserProfileRequestStudentListFromClassRoom(string userprofileId, string classRoomId)
         {
             var friendCtrl = ScenarioContext.Current.Get<FriendController>();
-            var result = friendCtrl.Get(userprofile, classRoomId);
+            var result = friendCtrl.Students(userprofileId, classRoomId);
             ScenarioContext.Current.Set(result);
         }
 
-        [Then(@"System send friend list with JSON format are")]
-        public void ThenSystemSendFriendListWithJSONFormatAre(string multilineText)
+        [Then(@"System send student list are")]
+        public void ThenSystemSendStudentListAre(Table table)
         {
-            var expected = JsonConvert.DeserializeObject<IEnumerable<GetFriendListRespond>>(multilineText);
-            var actual = ScenarioContext.Current.Get<IEnumerable<GetFriendListRespond>>();
+            var expected = table.CreateSet<GetStudentListRespond>();
+            var actual = ScenarioContext.Current.Get<IEnumerable<GetStudentListRespond>>();
 
             var expectedString = JsonConvert.SerializeObject(expected);
             var actualString = JsonConvert.SerializeObject(actual);
+
             Assert.Equal(expectedString, actualString);
         }
     }
