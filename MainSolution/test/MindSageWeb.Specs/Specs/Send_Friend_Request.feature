@@ -141,3 +141,53 @@ Scenario: User reject friend request Then system record there aren't friend
 		"DeletedDate": "2/8/2016 00:00 am",
 	}
     """  
+
+@mock  
+Scenario: User send unfriend friend Then system record there aren't friend  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have FriendRequest collection with JSON format are
+    """
+    [
+		{
+			"id": "FriendRequest01",
+			"FromUserProfileId": "sakul@mindsage.com",
+			"ToUserProfileId": "earn@mindsage.com",
+			"Status": "Friend",
+			"AcceptedDate": "2/8/2016 00:00 am",
+			"CreatedDate": "2/8/2016 00:00 am",
+		},
+		{
+			"id": "FriendRequest02",
+			"FromUserProfileId": "earn@mindsage.com",
+			"ToUserProfileId": "sakul@mindsage.com",
+			"Status": "Friend",
+			"AcceptedDate": "2/8/2016 00:00 am",
+			"CreatedDate": "2/8/2016 00:00 am",
+		},
+	]
+    """  
+    When UserProfile 'sakul@mindsage.com' respond friend request to UserProfile 'earn@mindsage.com' by RequestId 'FriendRequest01' IsAccept 'false'
+    Then System upsert FriendRequest with JSON format is
+    """
+	{
+		"id": "FriendRequest01",
+		"FromUserProfileId": "sakul@mindsage.com",
+		"ToUserProfileId": "earn@mindsage.com",
+		"Status": "Unfriend",
+		"AcceptedDate": "2/8/2016 00:00 am",
+		"CreatedDate": "2/8/2016 00:00 am",
+		"DeletedDate": "2/8/2016 00:00 am",
+	}
+    """ 
+	And System upsert FriendRequest with JSON format is
+    """
+	{
+		"id": "FriendRequest02",
+		"FromUserProfileId": "earn@mindsage.com",
+		"ToUserProfileId": "sakul@mindsage.com",
+		"Status": "Unfriend",
+		"AcceptedDate": "2/8/2016 00:00 am",
+		"CreatedDate": "2/8/2016 00:00 am",
+		"DeletedDate": "2/8/2016 00:00 am",
+	}
+    """  

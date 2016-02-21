@@ -213,6 +213,58 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Send_Friend_Request")]
+        [Xunit.TraitAttribute("Description", "User send unfriend friend Then system record there aren\'t friend")]
+        public virtual void UserSendUnfriendFriendThenSystemRecordThereArenTFriend()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User send unfriend friend Then system record there aren\'t friend", new string[] {
+                        "mock"});
+#line 146
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 147
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 148
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+{
+""id"": ""FriendRequest01"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""earn@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/8/2016 00:00 am"",
+""CreatedDate"": ""2/8/2016 00:00 am"",
+},
+{
+""id"": ""FriendRequest02"",
+""FromUserProfileId"": ""earn@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/8/2016 00:00 am"",
+""CreatedDate"": ""2/8/2016 00:00 am"",
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 169
+    testRunner.When("UserProfile \'sakul@mindsage.com\' respond friend request to UserProfile \'earn@mind" +
+                    "sage.com\' by RequestId \'FriendRequest01\' IsAccept \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 170
+    testRunner.Then("System upsert FriendRequest with JSON format is", "{\r\n\"id\": \"FriendRequest01\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserP" +
+                    "rofileId\": \"earn@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2/8/201" +
+                    "6 00:00 am\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\",\r\n\"DeletedDate\": \"2/8/2016 00:0" +
+                    "0 am\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 182
+ testRunner.And("System upsert FriendRequest with JSON format is", "{\r\n\"id\": \"FriendRequest02\",\r\n\"FromUserProfileId\": \"earn@mindsage.com\",\r\n\"ToUserPr" +
+                    "ofileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2/8/201" +
+                    "6 00:00 am\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\",\r\n\"DeletedDate\": \"2/8/2016 00:0" +
+                    "0 am\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "1.9.0.77")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable
