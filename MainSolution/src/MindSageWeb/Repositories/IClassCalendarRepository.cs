@@ -20,6 +20,12 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส Class room ที่ต้องการขอข้อมูล</param>
         ClassCalendar GetClassCalendarByClassRoomId(string classRoomId);
 
+        /// <summary>
+        /// อัพเดทหรือเพิ่มข้อมูล Class calendar
+        /// </summary>
+        /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
+        void UpsertClassCalendar(ClassCalendar data);
+
         #endregion Methods
     }
 }

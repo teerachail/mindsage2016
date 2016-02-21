@@ -31,6 +31,28 @@ namespace MindSageWeb.Repositories
             return result;
         }
 
+        /// <summary>
+        /// อัพเดทหรือเพิ่มข้อมูล Class calendar
+        /// </summary>
+        /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
+        public void UpsertClassCalendar(ClassCalendar data)
+        {
+            var update = Builders<ClassCalendar>.Update
+             .Set(it => it.BeginDate, data.BeginDate)
+             .Set(it => it.IsWeekendHoliday, data.IsWeekendHoliday)
+             .Set(it => it.ExpiredDate, data.ExpiredDate)
+             .Set(it => it.CloseDate, data.CloseDate)
+             .Set(it => it.ClassRoomId, data.ClassRoomId)
+             .Set(it => it.CreatedDate, data.CreatedDate)
+             .Set(it => it.DeletedDate, data.DeletedDate)
+             .Set(it => it.LessonCalendars, data.LessonCalendars)
+             .Set(it => it.Holidays, data.Holidays);
+
+            var updateOption = new UpdateOptions { IsUpsert = true };
+            MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(ClassCalendarsTableName)
+               .UpdateOne(it => it.id == data.id, update, updateOption);
+        }
+
         #endregion IClassCalendarRepository members
     }
 }

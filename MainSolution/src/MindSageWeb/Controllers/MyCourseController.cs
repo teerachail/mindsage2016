@@ -281,6 +281,63 @@ namespace MindSageWeb.Controllers
             _userprofileRepo.UpsertUserProfile(selectedUserProfile);
         }
 
+        // PUT: api/mycourse/leave
+        /// <summary>
+        /// Teacher leave course
+        /// </summary>
+        /// <param name="body">Request's information</param>
+        [HttpPost]
+        [Route("leave")]
+        public void Leave(LeaveCourseRequest body)
+        {
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.UserProfileId);
+            if (!areArgumentsValid) return;
+
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
+            if (!canAccessToTheClassRoom) return;
+
+            var isTeacherAccount = userprofile.Subscriptions.First(it => it.ClassRoomId == body.ClassRoomId).Role == UserProfile.AccountRole.Teacher;
+            if (!isTeacherAccount) return;
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
+            if (selectedClassRoom == null) return;
+
+            var students = _userprofileRepo.GetUserProfilesByClassRoomId(body.ClassRoomId).ToList();
+            if (students == null) return;
+
+            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+            if (selectedClassCalendar == null) return;
+
+            var now = _dateTime.GetCurrentTime();
+            selectedClassRoom.DeletedDate = now;
+            _classRoomRepo.UpsertClassRoom(selectedClassRoom);
+
+            selectedClassCalendar.DeletedDate = now;
+            _classCalendarRepo.UpsertClassCalendar(selectedClassCalendar);
+
+            var subscriptions = students.SelectMany(it => it.Subscriptions)
+                .Where(it => it.ClassRoomId.Equals(body.ClassRoomId))
+                .Where(it => !it.DeletedDate.HasValue)
+                .ToList();
+
+            subscriptions.ForEach(it => it.DeletedDate = now);
+            students.ForEach(it => _userprofileRepo.UpsertUserProfile(it));
+
+            var activities = students.Select(it => _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(it.id, body.ClassRoomId))
+                .Where(it => it != null)
+                .Where(it => !it.DeletedDate.HasValue)
+                .ToList();
+
+            activities.ForEach(it =>
+            {
+                it.DeletedDate = now;
+                _userActivityRepo.UpsertUserActivity(it);
+            });
+        }
+
         #endregion Methods
 
         //// GET: api/mycourse
