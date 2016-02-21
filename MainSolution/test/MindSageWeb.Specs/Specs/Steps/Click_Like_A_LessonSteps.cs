@@ -20,7 +20,7 @@ namespace MindSageWeb.Specs.Steps
             mockLikeLessonRepo.Setup(it => it.UpsertLikeLesson(It.IsAny<LikeLesson>()));
 
             var mockClassRoomRepo = ScenarioContext.Current.Get<Moq.Mock<IClassRoomRepository>>();
-            mockClassRoomRepo.Setup(it => it.UpdateClassRoom(It.IsAny<ClassRoom>()));
+            mockClassRoomRepo.Setup(it => it.UpsertClassRoom(It.IsAny<ClassRoom>()));
 
             var mockUserActivityRepo = ScenarioContext.Current.Get<Moq.Mock<IUserActivityRepository>>();
             mockUserActivityRepo.Setup(it => it.UpsertUserActivity(It.IsAny<UserActivity>()));
@@ -38,7 +38,7 @@ namespace MindSageWeb.Specs.Steps
         public void ThenSystemUpdateTotalLikesInTheLessonOfClassRoomToLikes(string lessonId, string classRoomId, int totalLikes)
         {
             var mockClassRoomRepo = ScenarioContext.Current.Get<Moq.Mock<IClassRoomRepository>>();
-            mockClassRoomRepo.Verify(it => it.UpdateClassRoom(It.Is<ClassRoom>(cr =>
+            mockClassRoomRepo.Verify(it => it.UpsertClassRoom(It.Is<ClassRoom>(cr =>
                 cr.id == classRoomId
                 && cr.Lessons.First(l => l.id == lessonId).TotalLikes == totalLikes
             )));

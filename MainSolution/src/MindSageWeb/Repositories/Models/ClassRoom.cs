@@ -16,7 +16,7 @@ namespace MindSageWeb.Repositories.Models
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
         public string Message { get; set; }
-        public string LastUpdatedMessageDate { get; set; }
+        public DateTime LastUpdatedMessageDate { get; set; }
 
         public IEnumerable<Lesson> Lessons { get; set; }
 

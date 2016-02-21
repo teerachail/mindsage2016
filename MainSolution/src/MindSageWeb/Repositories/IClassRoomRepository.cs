@@ -17,14 +17,14 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอข้อมูล Class room จากรหัส
         /// </summary>
-        /// <param name="id">รหัส Class room ที่ต้องการขอ</param>
-        ClassRoom GetClassRoomById(string id);
+        /// <param name="classRoomId">รหัส Class room ที่ต้องการขอ</param>
+        ClassRoom GetClassRoomById(string classRoomId);
 
         /// <summary>
         /// อัพเดทข้อมูล Class room
         /// </summary>
         /// <param name="data">ข้อมูลที่จะทำการอัพเดท</param>
-        void UpdateClassRoom(ClassRoom data);
+        void UpsertClassRoom(ClassRoom data);
 
         #endregion Methods
     }

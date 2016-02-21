@@ -15,6 +15,7 @@ namespace MindSageWeb.Controllers
     {
         #region Fields
 
+        private IClassRoomRepository _classRoomRepo;
         private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
         private IUserActivityRepository _userActivityRepo;
@@ -30,14 +31,17 @@ namespace MindSageWeb.Controllers
         /// <param name="classCalendarRepo">Class calendar repository</param>
         /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
+        /// <param name="classRoomRepo">Class room repository</param>
         public MyCourseController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IUserActivityRepository userActivityRepo,
+            IClassRoomRepository classRoomRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
             _userActivityRepo = userActivityRepo;
+            _classRoomRepo = classRoomRepo;
             _dateTime = dateTime;
         }
 
@@ -158,6 +162,31 @@ namespace MindSageWeb.Controllers
                 }).ToList();
 
             return availableSubscriptions;
+        }
+
+        // POST: api/mycourse/message
+        [HttpPost]
+        [Route("message")]
+        public void Post(PostNewCourseMessageRequest body)
+        {
+                var areArgumentsValid = body != null && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.Message)
+                && !string.IsNullOrEmpty(body.UserProfileId);
+            if (!areArgumentsValid) return;
+
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
+            if (!canAccessToTheClassRoom) return;
+
+            var isTeacherAccount = userprofile.Subscriptions.First(it => it.ClassRoomId == body.ClassRoomId).Role == UserProfile.AccountRole.Teacher;
+            if (!isTeacherAccount) return;
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
+            if (selectedClassRoom == null) return;
+
+            selectedClassRoom.Message = body.Message;
+            selectedClassRoom.LastUpdatedMessageDate = _dateTime.GetCurrentTime();
+            _classRoomRepo.UpsertClassRoom(selectedClassRoom);
         }
 
         #endregion Methods

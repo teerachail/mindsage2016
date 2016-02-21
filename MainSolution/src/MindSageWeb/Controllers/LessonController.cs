@@ -314,7 +314,7 @@ namespace MindSageWeb.Controllers
 
             var selectedLesson = selectedClassRoom.Lessons.First(it => it.id == body.LessonId);
             selectedLesson.TotalLikes = likeLessons.Where(it => !it.DeletedDate.HasValue).Count();
-            _classRoomRepo.UpdateClassRoom(selectedClassRoom);
+            _classRoomRepo.UpsertClassRoom(selectedClassRoom);
         }
 
         #endregion Methods

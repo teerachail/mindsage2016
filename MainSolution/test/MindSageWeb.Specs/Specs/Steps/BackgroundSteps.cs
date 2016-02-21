@@ -64,6 +64,7 @@ namespace MindSageWeb.Specs.Steps
             var mycourseCtrl = new MyCourseController(classCalendarRepo.Object,
                 userprofileRepo.Object,
                 userActivityRepo.Object,
+                classRoomRepo.Object,
                 dateTime.Object);
 
             var friendCtrl = new FriendController(classCalendarRepo.Object,
