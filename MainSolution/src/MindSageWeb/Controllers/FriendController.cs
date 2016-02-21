@@ -144,6 +144,88 @@ namespace MindSageWeb.Controllers
             return result;
         }
 
+        // POST: api/friend
+        /// <summary>
+        /// Send or respond a friend request
+        /// </summary>
+        /// <param name="body">Request information</param>
+        public void Post(SendFriendRequest body)
+        {
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.FromUserProfileId)
+                && !string.IsNullOrEmpty(body.ToUserProfileId);
+            if (!areArgumentsValid) return;
+
+            var requestUserProfileIds = new List<string> { body.FromUserProfileId, body.ToUserProfileId };
+            var relatedUserProfiles = _userprofileRepo.GetUserProfileById(requestUserProfileIds);
+            var usersExisting = relatedUserProfiles.Count() == requestUserProfileIds.Count();
+            if (!usersExisting) return;
+
+            var requests = _friendRequestRepo.GetFriendRequestByUserProfileId(body.FromUserProfileId)
+                .Where(it => it.ToUserProfileId.Equals(body.ToUserProfileId))
+                .ToList();
+            var currentStatus = requests.OrderByDescending(it => it.CreatedDate).FirstOrDefault();
+            var isRequestValid = currentStatus == null ? string.IsNullOrEmpty(body.RequestId) : currentStatus.id.Equals(body.RequestId);
+            if (!isRequestValid) return;
+
+            var now = _dateTime.GetCurrentTime();
+            var isNewFriendRequest = currentStatus == null;
+            if (isNewFriendRequest)
+            {
+                requests.ForEach(it => it.DeletedDate = now);
+                var newRequestFrom = new FriendRequest
+                {
+                    id = Guid.NewGuid().ToString(),
+                    CreatedDate = now,
+                    FromUserProfileId = body.FromUserProfileId,
+                    ToUserProfileId = body.ToUserProfileId,
+                    Status = FriendRequest.RelationStatus.SendRequest
+                };
+                requests.Add(newRequestFrom);
+
+                var newRequestTo = new FriendRequest
+                {
+                    id = Guid.NewGuid().ToString(),
+                    CreatedDate = now,
+                    FromUserProfileId = body.ToUserProfileId,
+                    ToUserProfileId = body.FromUserProfileId,
+                    Status = FriendRequest.RelationStatus.ReceiveRequest
+                };
+                requests.Add(newRequestTo);
+                requests.ForEach(it => _friendRequestRepo.UpsertFriendRequest(it));
+            }
+            else
+            {
+                var isRequestInvalid = currentStatus.Status == FriendRequest.RelationStatus.SendRequest && body.IsAccept;
+                if (isRequestInvalid) return;
+
+                var friendSideRequest = _friendRequestRepo.GetFriendRequestByUserProfileId(body.ToUserProfileId)
+                    .Where(it => it.ToUserProfileId.Equals(body.FromUserProfileId))
+                    .ToList();
+
+                var currentFriendSideStatus = friendSideRequest.OrderByDescending(it => it.CreatedDate).FirstOrDefault();
+                var fRequests = friendSideRequest.Except(new List<FriendRequest> { currentFriendSideStatus });
+                foreach (var item in fRequests) item.DeletedDate = now;
+
+                if (body.IsAccept)
+                {
+                    currentStatus.AcceptedDate = now;
+                    currentStatus.Status = FriendRequest.RelationStatus.Friend;
+                    currentFriendSideStatus.AcceptedDate = now;
+                    currentFriendSideStatus.Status = FriendRequest.RelationStatus.Friend;
+                }
+                else
+                {
+                    currentStatus.DeletedDate = now;
+                    currentStatus.Status = FriendRequest.RelationStatus.Unfriend;
+                    currentFriendSideStatus.DeletedDate = now;
+                    currentFriendSideStatus.Status = FriendRequest.RelationStatus.Unfriend;
+                }
+                friendSideRequest.Add(currentStatus);
+                friendSideRequest.ForEach(it => _friendRequestRepo.UpsertFriendRequest(it));
+            }
+        }
+
         #endregion Methods
 
         //// GET: api/friend

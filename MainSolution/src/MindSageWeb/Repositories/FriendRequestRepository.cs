@@ -33,6 +33,16 @@ namespace MindSageWeb.Repositories
             return qry;
         }
 
+        /// <summary>
+        /// อัพเดทหรือเพิ่มข้อมูลการขอเป็นเพื่อน
+        /// </summary>
+        /// <param name="request">ข้อมูลที่ต้องการดำเนินการ</param>
+        public void UpsertFriendRequest(FriendRequest request)
+        {
+            // TODO: Not implemented
+            throw new NotImplementedException();
+        }
+
         #endregion IFriendRequestRepository members
     }
 }

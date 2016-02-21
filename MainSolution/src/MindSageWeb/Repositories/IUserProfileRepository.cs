@@ -21,6 +21,12 @@ namespace MindSageWeb.Repositories
         UserProfile GetUserProfileById(string userprofileId);
 
         /// <summary>
+        /// ขอข้อมูล User profile จากรหัส
+        /// </summary>
+        /// <param name="userprofileId">รหัส User profile ที่จะทำการขอข้อมูล</param>
+        IEnumerable<UserProfile> GetUserProfileById(IEnumerable<string> userprofileIds);
+
+        /// <summary>
         /// ขอข้อมูล User profile จากรหัส class room
         /// </summary>
         /// <param name="classRoomId">รหัส class room ที่จะทำการขอข้อมูล</param>

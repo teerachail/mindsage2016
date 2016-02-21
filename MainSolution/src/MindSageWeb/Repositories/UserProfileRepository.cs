@@ -32,6 +32,18 @@ namespace MindSageWeb.Repositories
         }
 
         /// <summary>
+        /// ขอข้อมูล User profile จากรหัส
+        /// </summary>
+        /// <param name="userprofileId">รหัส User profile ที่จะทำการขอข้อมูล</param>
+        public IEnumerable<UserProfile> GetUserProfileById(IEnumerable<string> userprofileIds)
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+                .Find(it => !it.DeletedDate.HasValue && userprofileIds.Contains(it.id))
+                .ToEnumerable();
+            return qry;
+        }
+
+        /// <summary>
         /// ขอข้อมูล User profile จากรหัส class room
         /// </summary>
         /// <param name="classRoomId">รหัส class room ที่จะทำการขอข้อมูล</param>

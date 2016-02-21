@@ -29,6 +29,8 @@ namespace MindSageWeb.Specs.Steps
                               select userprofile;
                     return qry;
                 });
+            mockUserprofileRepo.Setup(it => it.GetUserProfileById(It.IsAny<IEnumerable<string>>()))
+                .Returns<IEnumerable<string>>(ids => userprofiles.Where(it => ids.Contains(it.id)));
         }
 
         [Given(@"System have ClassCalendar collection with JSON format are")]

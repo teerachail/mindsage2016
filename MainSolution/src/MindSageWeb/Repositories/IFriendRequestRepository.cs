@@ -20,6 +20,12 @@ namespace MindSageWeb.Repositories
         /// <param name="userprofileId">รหัสบัญชีผู้ใช้ที่ต้องการขอข้อมูล</param>
         IEnumerable<FriendRequest> GetFriendRequestByUserProfileId(string userprofileId);
 
+        /// <summary>
+        /// อัพเดทหรือเพิ่มข้อมูลการขอเป็นเพื่อน
+        /// </summary>
+        /// <param name="request">ข้อมูลที่ต้องการดำเนินการ</param>
+        void UpsertFriendRequest(FriendRequest request);
+
         #endregion Methods
     }
 }
