@@ -24,7 +24,7 @@ Background: Initialize mocking data
     """  
 
 @mock  
-Scenario: User request friend list Then system send friend list back  
+Scenario: User send friend request Then system record the request  
     Given Today is '2/8/2016 00:00 am'  
 	And System have FriendRequest collection with JSON format are
     """
@@ -48,4 +48,50 @@ Scenario: User request friend list Then system send friend list back
 		"Status": "ReceiveRequest",
 		"CreatedDate": "2/8/2016 00:00 am",
     }
+    """  
+
+@mock  
+Scenario: User accept friend request Then system record there are friend  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have FriendRequest collection with JSON format are
+    """
+    [
+		{
+			"id": "FriendRequest01",
+			"FromUserProfileId": "sakul@mindsage.com",
+			"ToUserProfileId": "earn@mindsage.com",
+			"Status": "ReceiveRequest",
+			"CreatedDate": "2/8/2016 00:00 am",
+		},
+		{
+			"id": "FriendRequest02",
+			"FromUserProfileId": "earn@mindsage.com",
+			"ToUserProfileId": "sakul@mindsage.com",
+			"Status": "SendRequest",
+			"CreatedDate": "2/8/2016 00:00 am",
+		},
+	]
+    """  
+    When UserProfile 'sakul@mindsage.com' respond friend request to UserProfile 'earn@mindsage.com' by RequestId 'FriendRequest01' IsAccept 'true'
+    Then System upsert FriendRequest with JSON format is
+    """
+	{
+		"id": "FriendRequest01",
+		"FromUserProfileId": "sakul@mindsage.com",
+		"ToUserProfileId": "earn@mindsage.com",
+		"Status": "Friend",
+		"AcceptedDate": "2/8/2016 00:00 am",
+		"CreatedDate": "2/8/2016 00:00 am",
+	}
     """ 
+	And System upsert FriendRequest with JSON format is
+    """
+	{
+		"id": "FriendRequest02",
+		"FromUserProfileId": "earn@mindsage.com",
+		"ToUserProfileId": "sakul@mindsage.com",
+		"Status": "Friend",
+		"AcceptedDate": "2/8/2016 00:00 am",
+		"CreatedDate": "2/8/2016 00:00 am",
+	}
+    """  

@@ -88,10 +88,10 @@ namespace SpecFlow.GeneratedTests
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Send_Friend_Request")]
-        [Xunit.TraitAttribute("Description", "User request friend list Then system send friend list back")]
-        public virtual void UserRequestFriendListThenSystemSendFriendListBack()
+        [Xunit.TraitAttribute("Description", "User send friend request Then system record the request")]
+        public virtual void UserSendFriendRequestThenSystemRecordTheRequest()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request friend list Then system send friend list back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User send friend request Then system record the request", new string[] {
                         "mock"});
 #line 27
 this.ScenarioSetup(scenarioInfo);
@@ -113,6 +113,54 @@ this.FeatureBackground();
 #line 43
  testRunner.And("System upsert FriendRequest with JSON format is", "{\r\n\"FromUserProfileId\": \"earn@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage." +
                     "com\",\r\n\"Status\": \"ReceiveRequest\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Send_Friend_Request")]
+        [Xunit.TraitAttribute("Description", "User accept friend request Then system record there are friend")]
+        public virtual void UserAcceptFriendRequestThenSystemRecordThereAreFriend()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User accept friend request Then system record there are friend", new string[] {
+                        "mock"});
+#line 54
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 55
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 56
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+{
+""id"": ""FriendRequest01"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""earn@mindsage.com"",
+""Status"": ""ReceiveRequest"",
+""CreatedDate"": ""2/8/2016 00:00 am"",
+},
+{
+""id"": ""FriendRequest02"",
+""FromUserProfileId"": ""earn@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""SendRequest"",
+""CreatedDate"": ""2/8/2016 00:00 am"",
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 75
+    testRunner.When("UserProfile \'sakul@mindsage.com\' respond friend request to UserProfile \'earn@mind" +
+                    "sage.com\' by RequestId \'FriendRequest01\' IsAccept \'true\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 76
+    testRunner.Then("System upsert FriendRequest with JSON format is", "{\r\n\"id\": \"FriendRequest01\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserP" +
+                    "rofileId\": \"earn@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/8/2016 " +
+                    "00:00 am\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 87
+ testRunner.And("System upsert FriendRequest with JSON format is", "{\r\n\"id\": \"FriendRequest02\",\r\n\"FromUserProfileId\": \"earn@mindsage.com\",\r\n\"ToUserPr" +
+                    "ofileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/8/2016 " +
+                    "00:00 am\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\",\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

@@ -28,6 +28,23 @@ namespace MindSageWeb.Specs.Steps
             friendCtrl.Post(body);
         }
 
+        [When(@"UserProfile '(.*)' respond friend request to UserProfile '(.*)' by RequestId '(.*)' IsAccept '(.*)'")]
+        public void WhenUserProfileRespondFriendRequestToUserProfileByRequestIdIsAccept(string fromUserprofileId, string toUserProfileId, string friendReqId, bool isAccept)
+        {
+            var mockFriendRequestRepo = ScenarioContext.Current.Get<Mock<IFriendRequestRepository>>();
+            mockFriendRequestRepo.Setup(it => it.UpsertFriendRequest(It.IsAny<FriendRequest>()));
+
+            var friendCtrl = ScenarioContext.Current.Get<FriendController>();
+            var body = new SendFriendRequest
+            {
+                FromUserProfileId = fromUserprofileId,
+                ToUserProfileId = toUserProfileId,
+                RequestId = friendReqId,
+                IsAccept = isAccept
+            };
+            friendCtrl.Post(body);
+        }
+
         [Then(@"System upsert FriendRequest with JSON format is")]
         public void ThenSystemUpsertFriendRequestWithJSONFormatIs(string multilineText)
         {
