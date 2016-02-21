@@ -149,6 +149,7 @@ namespace MindSageWeb.Controllers
         /// Send or respond a friend request
         /// </summary>
         /// <param name="body">Request information</param>
+        [HttpPost]
         public void Post(SendFriendRequest body)
         {
             var areArgumentsValid = body != null
