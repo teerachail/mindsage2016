@@ -56,6 +56,28 @@ namespace MindSageWeb.Repositories
             return result;
         }
 
+        /// <summary>
+        /// อัพเดทหรือเพิ่มข้อมูลผู้ใช้
+        /// </summary>
+        /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
+        public void UpsertUserProfile(UserProfile data)
+        {
+            var update = Builders<UserProfile>.Update
+             .Set(it => it.Name, data.Name)
+             .Set(it => it.SchoolName, data.SchoolName)
+             .Set(it => it.ImageProfileUrl, data.ImageProfileUrl)
+             .Set(it => it.IsPrivateAccount, data.IsPrivateAccount)
+             .Set(it => it.IsEnableNotification, data.IsEnableNotification)
+             .Set(it => it.CourseReminder, data.CourseReminder)
+             .Set(it => it.CreatedDate, data.CreatedDate)
+             .Set(it => it.DeletedDate, data.DeletedDate)
+             .Set(it => it.Subscriptions, data.Subscriptions);
+
+            var updateOption = new UpdateOptions { IsUpsert = true };
+            MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+               .UpdateOne(it => it.id == data.id, update, updateOption);
+        }
+
         #endregion IUserProfileRepository members
     }
 }

@@ -217,11 +217,16 @@ namespace MindSageWeb.Controllers
         }
 
         // POST: api/mycourse/message
+        /// <summary>
+        /// Post new course's message
+        /// </summary>
+        /// <param name="body">Request's information</param>
         [HttpPost]
         [Route("message")]
         public void Post(PostNewCourseMessageRequest body)
         {
-                var areArgumentsValid = body != null && !string.IsNullOrEmpty(body.ClassRoomId)
+            var areArgumentsValid = body != null 
+                && !string.IsNullOrEmpty(body.ClassRoomId)
                 && !string.IsNullOrEmpty(body.Message)
                 && !string.IsNullOrEmpty(body.UserProfileId);
             if (!areArgumentsValid) return;
@@ -239,6 +244,41 @@ namespace MindSageWeb.Controllers
             selectedClassRoom.Message = body.Message;
             selectedClassRoom.LastUpdatedMessageDate = _dateTime.GetCurrentTime();
             _classRoomRepo.UpsertClassRoom(selectedClassRoom);
+        }
+
+        // POST: api/mycourse/removestud
+        /// <summary>
+        /// Remove a student
+        /// </summary>
+        /// <param name="body">Request's information</param>
+        [HttpPost]
+        [Route("removestud")]
+        public void RemoveStudent(RemoveStudentRequest body)
+        {
+            var areArgumentsValid = body != null 
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.RemoveUserProfileId)
+                && !string.IsNullOrEmpty(body.UserProfileId);
+            if (!areArgumentsValid) return;
+
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
+            if (!canAccessToTheClassRoom) return;
+
+            var isTeacherAccount = userprofile.Subscriptions.First(it => it.ClassRoomId == body.ClassRoomId).Role == UserProfile.AccountRole.Teacher;
+            if (!isTeacherAccount) return;
+
+            var selectedUserProfile = _userprofileRepo.GetUserProfileById(body.RemoveUserProfileId);
+            if (selectedUserProfile == null) return;
+
+            var selectedSubscription = selectedUserProfile.Subscriptions
+                .Where(it => it.ClassRoomId.Equals(body.ClassRoomId))
+                .Where(it => !it.DeletedDate.HasValue)
+                .FirstOrDefault();
+            if (selectedSubscription == null) return;
+
+            selectedSubscription.DeletedDate = _dateTime.GetCurrentTime();
+            _userprofileRepo.UpsertUserProfile(selectedUserProfile);
         }
 
         #endregion Methods
