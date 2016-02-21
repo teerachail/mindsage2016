@@ -18,8 +18,8 @@ namespace MindSageWeb.Specs.Steps
         [When(@"UserProfile '(.*)' request student list from ClassRoom: '(.*)'")]
         public void WhenUserProfileRequestStudentListFromClassRoom(string userprofileId, string classRoomId)
         {
-            var friendCtrl = ScenarioContext.Current.Get<FriendController>();
-            var result = friendCtrl.Students(userprofileId, classRoomId);
+            var myCourseCtrl = ScenarioContext.Current.Get<MyCourseController>();
+            var result = myCourseCtrl.Students(userprofileId, classRoomId);
             ScenarioContext.Current.Set(result);
         }
 
