@@ -23,8 +23,8 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูลการขอเป็นเพื่อน
         /// </summary>
-        /// <param name="request">ข้อมูลที่ต้องการดำเนินการ</param>
-        void UpsertFriendRequest(FriendRequest request);
+        /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
+        void UpsertFriendRequest(FriendRequest data);
 
         #endregion Methods
     }

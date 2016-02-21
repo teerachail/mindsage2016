@@ -36,11 +36,20 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูลการขอเป็นเพื่อน
         /// </summary>
-        /// <param name="request">ข้อมูลที่ต้องการดำเนินการ</param>
-        public void UpsertFriendRequest(FriendRequest request)
+        /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
+        public void UpsertFriendRequest(FriendRequest data)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var update = Builders<FriendRequest>.Update
+             .Set(it => it.FromUserProfileId, data.FromUserProfileId)
+             .Set(it => it.ToUserProfileId, data.ToUserProfileId)
+             .Set(it => it.Status, data.Status)
+             .Set(it => it.AcceptedDate, data.AcceptedDate)
+             .Set(it => it.CreatedDate, data.CreatedDate)
+             .Set(it => it.DeletedDate, data.DeletedDate);
+
+            var updateOption = new UpdateOptions { IsUpsert = true };
+            MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(FriendRequestsTableName)
+               .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
         #endregion IFriendRequestRepository members
