@@ -20,6 +20,13 @@ namespace MindSageWeb.Repositories
         StudentKey GetStudentKeyByClassRoomId(string classRoomId);
 
         /// <summary>
+        /// ขอข้อมูล Student key ที่สามารถใช้ได้จากรหัส code และเกรด
+        /// </summary>
+        /// <param name="code">รหัส code ที่ต้องการขอข้อมูล</param>
+        /// <param name="grade">เกรดที่ต้องการขอขอ้ฒุล</param>
+        StudentKey GetStudentKeyByCodeAndGrade(string code, string grade);
+
+        /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูล Student key
         /// </summary>
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>

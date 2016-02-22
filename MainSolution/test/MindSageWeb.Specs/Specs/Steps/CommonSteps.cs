@@ -130,6 +130,8 @@ namespace MindSageWeb.Specs.Steps
             var mockStudentKeyRepo = ScenarioContext.Current.Get<Mock<IStudentKeyRepository>>();
             mockStudentKeyRepo.Setup(it => it.GetStudentKeyByClassRoomId(It.IsAny<string>()))
                 .Returns<string>(classRoomId => studentKeys.FirstOrDefault(it => it.ClassRoomId == classRoomId));
+            mockStudentKeyRepo.Setup(it => it.GetStudentKeyByCodeAndGrade(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string,string>((code,grade) => studentKeys.FirstOrDefault(it => it.Code == code && it.Grade == grade));
         }
     }
 }

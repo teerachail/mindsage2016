@@ -5,17 +5,13 @@ using System.Threading.Tasks;
 
 namespace MindSageWeb.Repositories.Models
 {
-    public class StudentKey
+    public class AddCourseRequest
     {
         #region Properties
 
-        public string id { get; set; }
+        public string UserProfileId { get; set; }
         public string Code { get; set; }
         public string Grade { get; set; }
-        public string CourseCatalogId { get; set; }
-        public string ClassRoomId { get; set; }
-        public DateTime CreatedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
 
         #endregion Properties
     }

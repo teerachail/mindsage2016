@@ -20,6 +20,7 @@ namespace MindSageWeb.Controllers
         private IUserProfileRepository _userprofileRepo;
         private IUserActivityRepository _userActivityRepo;
         private IStudentKeyRepository _studentKeyRepo;
+        private ILessonCatalogRepository _lessonCatalogRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -34,11 +35,13 @@ namespace MindSageWeb.Controllers
         /// <param name="userActivityRepo">User activity repository</param>
         /// <param name="classRoomRepo">Class room repository</param>
         /// <param name="studentKeyRepo">Student key repository</param>
+        /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
         public MyCourseController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IUserActivityRepository userActivityRepo,
             IClassRoomRepository classRoomRepo,
             IStudentKeyRepository studentKeyRepo,
+            ILessonCatalogRepository lessonCatalogRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -46,6 +49,7 @@ namespace MindSageWeb.Controllers
             _userActivityRepo = userActivityRepo;
             _classRoomRepo = classRoomRepo;
             _studentKeyRepo = studentKeyRepo;
+            _lessonCatalogRepo = lessonCatalogRepo;
             _dateTime = dateTime;
         }
 
@@ -285,7 +289,7 @@ namespace MindSageWeb.Controllers
             _userprofileRepo.UpsertUserProfile(selectedUserProfile);
         }
 
-        // PUT: api/mycourse/leave
+        // POST: api/mycourse/leave
         /// <summary>
         /// Teacher leave course
         /// </summary>
@@ -346,6 +350,85 @@ namespace MindSageWeb.Controllers
 
             selectedStudentKey.DeletedDate = now;
             _studentKeyRepo.UpsertStudentKey(selectedStudentKey);
+        }
+
+        // POST: api/mycourse/addcourse
+        /// <summary>
+        /// Add new course by code
+        /// </summary>
+        /// <param name="body">Request's information</param>
+        [HttpPost]
+        [Route("addcourse")]
+        public void AddCourse(AddCourseRequest body)
+        {
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.UserProfileId)
+                && !string.IsNullOrEmpty(body.Code)
+                && !string.IsNullOrEmpty(body.Grade);
+            if (!areArgumentsValid) return;
+
+            var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(body.Code, body.Grade);
+            if (selectedStudentKey == null) return;
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(selectedStudentKey.ClassRoomId);
+            if (selectedClassRoom == null) return;
+
+            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(selectedStudentKey.ClassRoomId);
+            if (selectedClassCalendar == null) return;
+
+            var selectedUserProfile = _userprofileRepo.GetUserProfileById(body.UserProfileId);
+            if (selectedUserProfile == null) return;
+
+            var lessonCatalogs = selectedClassRoom.Lessons
+                .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))
+                .ToList();
+            if (lessonCatalogs.Any(it => it == null)) return;
+
+            var now = _dateTime.GetCurrentTime();
+            var subscriptions = selectedUserProfile.Subscriptions.ToList();
+            subscriptions.Add(new UserProfile.Subscription
+            {
+                id = Guid.NewGuid().ToString(),
+                Role = UserProfile.AccountRole.Student,
+                ClassRoomId = selectedClassRoom.id,
+                ClassCalendarId = selectedClassCalendar.id,
+                CreatedDate = now,
+                ClassRoomName = selectedClassRoom.Name,
+            });
+            selectedUserProfile.Subscriptions = subscriptions;
+            _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+
+            const int PrimaryContent = 1;
+            var lessonActivities = selectedClassRoom.Lessons.Select(lesson =>
+            {
+                var selectedLessonCalendar = selectedClassCalendar.LessonCalendars
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .FirstOrDefault(lc => lc.LessonId == lesson.id);
+
+                var selectedLessonCatalog = lessonCatalogs
+                    .FirstOrDefault(it => it.id == lesson.LessonCatalogId);
+
+                return new UserActivity.LessonActivity
+                {
+                    id = Guid.NewGuid().ToString(),
+                    BeginDate = selectedLessonCalendar.BeginDate,
+                    TotalContentsAmount = selectedLessonCatalog.ExtraContentUrls.Count() + PrimaryContent,
+                    LessonId = lesson.id,
+                    SawContentIds = Enumerable.Empty<string>()
+                };
+            }).ToList();
+
+            var userActivity = new UserActivity
+            {
+                id = Guid.NewGuid().ToString(),
+                UserProfileName = selectedUserProfile.Name,
+                UserProfileImageUrl = selectedUserProfile.ImageProfileUrl,
+                UserProfileId = selectedUserProfile.id,
+                ClassRoomId = selectedClassRoom.id,
+                CreatedDate = now,
+                LessonActivities = lessonActivities
+            };
+            _userActivityRepo.UpsertUserActivity(userActivity);
         }
 
         #endregion Methods

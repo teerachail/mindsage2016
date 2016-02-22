@@ -68,6 +68,7 @@ namespace MindSageWeb.Specs.Steps
                 userActivityRepo.Object,
                 classRoomRepo.Object,
                 studentKeyRepo.Object,
+                lessonCatalogRepo.Object,
                 dateTime.Object);
 
             var friendCtrl = new FriendController(classCalendarRepo.Object,
