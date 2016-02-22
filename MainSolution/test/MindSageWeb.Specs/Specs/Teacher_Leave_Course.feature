@@ -117,6 +117,18 @@ Background: Initialize mocking data
 		}
     ]
     """  
+	And System have StudentKey collection with JSON format are  
+	"""
+	[
+		{
+			"id": "StudentKey01",
+			"Code": "StudentCode01",
+			"CourseCatalogId": "CourseCatalog01",
+			"ClassRoomId": "ClassRoom01",
+			"CreatedDate": "2/1/2016",
+		}
+	]
+	"""  
 
 @mock  
 Scenario: Teacher leave course Then system remove the course and their students' subscriptions  
@@ -238,3 +250,14 @@ Scenario: Teacher leave course Then system remove the course and their students'
 		]
 	}
     """  
+	And System upsert StudentKey with JSON format is  
+	"""
+	{
+		"id": "StudentKey01",
+		"Code": "StudentCode01",
+		"CourseCatalogId": "CourseCatalog01",
+		"ClassRoomId": "ClassRoom01",
+		"CreatedDate": "2/1/2016",
+		"DeletedDate": "2/8/2016 00:00 am"
+	}
+	"""  

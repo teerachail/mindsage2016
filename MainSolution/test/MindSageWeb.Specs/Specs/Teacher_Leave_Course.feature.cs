@@ -178,6 +178,11 @@ namespace SpecFlow.GeneratedTests
 }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
+#line 120
+ testRunner.And("System have StudentKey collection with JSON format are", "[\r\n\t{\r\n\t\t\"id\": \"StudentKey01\",\r\n\t\t\"Code\": \"StudentCode01\",\r\n\t\t\"CourseCatalogId\": " +
+                    "\"CourseCatalog01\",\r\n\t\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\t\"CreatedDate\": \"2/1/2016\"" +
+                    ",\r\n\t}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
         }
         
         public virtual void SetFixture(Teacher_Leave_CourseFeature.FixtureData fixtureData)
@@ -198,16 +203,16 @@ namespace SpecFlow.GeneratedTests
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher leave course Then system remove the course and their students\' subscripti" +
                     "ons", new string[] {
                         "mock"});
-#line 122
+#line 134
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 123
+#line 135
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 124
+#line 136
     testRunner.When("UserProfile \'sakul@mindsage.com\' leave class room \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 125
+#line 137
     testRunner.Then("System upsert UserProfile with JSON format is", @"{
 ""id"": ""sakul@mindsage.com"",
 ""Name"": ""Sakul"",
@@ -224,7 +229,7 @@ this.FeatureBackground();
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 143
+#line 155
  testRunner.And("System upsert UserProfile with JSON format is", @"{
 ""id"": ""earn@mindsage.com"",
 ""Name"": ""Earn"",
@@ -241,7 +246,7 @@ this.FeatureBackground();
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 161
+#line 173
  testRunner.And("System upsert ClassRoom with JSON format is", @"{
     ""id"": ""ClassRoom01"",
     ""Name"": ""Emotional literacy"",
@@ -259,7 +264,7 @@ this.FeatureBackground();
     ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 180
+#line 192
  testRunner.And("System upsert ClassCalendar with JSON format is", @"{
     ""id"": ""ClassCalendar01"",
     ""BeginDate"": ""2/1/2016"",
@@ -276,7 +281,7 @@ this.FeatureBackground();
     ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 198
+#line 210
  testRunner.And("System upsert UserActivity with JSON format is", @"{
 ""id"": ""UserActivity01"",
 ""UserProfileId"": ""sakul@mindsage.com"",
@@ -298,7 +303,7 @@ this.FeatureBackground();
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 221
+#line 233
  testRunner.And("System upsert UserActivity with JSON format is", @"{
 ""id"": ""UserActivity02"",
 ""UserProfileId"": ""earn@mindsage.com"",
@@ -316,6 +321,11 @@ this.FeatureBackground();
 }
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 253
+ testRunner.And("System upsert StudentKey with JSON format is", "{\r\n\t\"id\": \"StudentKey01\",\r\n\t\"Code\": \"StudentCode01\",\r\n\t\"CourseCatalogId\": \"Course" +
+                    "Catalog01\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"CreatedDate\": \"2/1/2016\",\r\n\t\"Dele" +
+                    "tedDate\": \"2/8/2016 00:00 am\"\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

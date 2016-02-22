@@ -19,6 +19,7 @@ namespace MindSageWeb.Controllers
         private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
         private IUserActivityRepository _userActivityRepo;
+        private IStudentKeyRepository _studentKeyRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -32,16 +33,19 @@ namespace MindSageWeb.Controllers
         /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
         /// <param name="classRoomRepo">Class room repository</param>
+        /// <param name="studentKeyRepo">Student key repository</param>
         public MyCourseController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IUserActivityRepository userActivityRepo,
             IClassRoomRepository classRoomRepo,
+            IStudentKeyRepository studentKeyRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
             _userActivityRepo = userActivityRepo;
             _classRoomRepo = classRoomRepo;
+            _studentKeyRepo = studentKeyRepo;
             _dateTime = dateTime;
         }
 
@@ -336,6 +340,12 @@ namespace MindSageWeb.Controllers
                 it.DeletedDate = now;
                 _userActivityRepo.UpsertUserActivity(it);
             });
+
+            var selectedStudentKey = _studentKeyRepo.GetStudentKeyByClassRoomId(body.ClassRoomId);
+            if (selectedStudentKey == null) return;
+
+            selectedStudentKey.DeletedDate = now;
+            _studentKeyRepo.UpsertStudentKey(selectedStudentKey);
         }
 
         #endregion Methods

@@ -122,5 +122,14 @@ namespace MindSageWeb.Specs.Steps
             mockLikeDiscussionRepo.Setup(it => it.GetLikeDiscussionByDiscusionId(It.IsAny<string>()))
                 .Returns<string>(id => likeDiscussions.Where(it => it.DiscussionId == id));
         }
+
+        [Given(@"System have StudentKey collection with JSON format are")]
+        public void GivenSystemHaveStudentKeyCollectionWithJSONFormatAre(string multilineText)
+        {
+            var studentKeys = JsonConvert.DeserializeObject<IEnumerable<StudentKey>>(multilineText);
+            var mockStudentKeyRepo = ScenarioContext.Current.Get<Mock<IStudentKeyRepository>>();
+            mockStudentKeyRepo.Setup(it => it.GetStudentKeyByClassRoomId(It.IsAny<string>()))
+                .Returns<string>(classRoomId => studentKeys.FirstOrDefault(it => it.ClassRoomId == classRoomId));
+        }
     }
 }

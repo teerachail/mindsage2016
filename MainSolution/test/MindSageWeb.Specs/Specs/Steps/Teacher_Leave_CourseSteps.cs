@@ -28,6 +28,9 @@ namespace MindSageWeb.Specs.Steps
             var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
             mockUserActivityRepo.Setup(it => it.UpsertUserActivity(It.IsAny<UserActivity>()));
 
+            var mockStudentKeyRepo = ScenarioContext.Current.Get<Mock<IStudentKeyRepository>>();
+            mockStudentKeyRepo.Setup(it => it.UpsertStudentKey(It.IsAny<StudentKey>()));
+
             var mycourseCtrl = ScenarioContext.Current.Get<MyCourseController>();
             var body = new LeaveCourseRequest
             {
@@ -67,6 +70,16 @@ namespace MindSageWeb.Specs.Steps
             var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
             mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.Is<UserActivity>(actual=>
                 JsonConvert.SerializeObject(actual) == JsonConvert.SerializeObject(expected)
+            )));
+        }
+
+        [Then(@"System upsert StudentKey with JSON format is")]
+        public void ThenSystemUpsertStudentKeyWithJSONFormatIs(string multilineText)
+        {
+            var expected = JsonConvert.DeserializeObject<StudentKey>(multilineText);
+            var mockStudentKeyRepo = ScenarioContext.Current.Get<Mock<IStudentKeyRepository>>();
+            mockStudentKeyRepo.Verify(it => it.UpsertStudentKey(It.Is<StudentKey>(actual=>
+                 JsonConvert.SerializeObject(actual) == JsonConvert.SerializeObject(expected)
             )));
         }
     }

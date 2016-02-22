@@ -23,6 +23,7 @@ namespace MindSageWeb.Specs.Steps
             var userActivityRepo = mock.Create<IUserActivityRepository>();
             var likeCommentRepo = mock.Create<ILikeCommentRepository>();
             var likeDiscussionRepo = mock.Create<ILikeDiscussionRepository>();
+            var studentKeyRepo = mock.Create<IStudentKeyRepository>();
             var dateTime = mock.Create<IDateTime>();
 
             ScenarioContext.Current.Set(classRoomRepo);
@@ -35,6 +36,7 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(userActivityRepo);
             ScenarioContext.Current.Set(likeCommentRepo);
             ScenarioContext.Current.Set(likeDiscussionRepo);
+            ScenarioContext.Current.Set(studentKeyRepo);
             ScenarioContext.Current.Set(dateTime);
 
             var myCourseCtrl = new LessonController(classCalendarRepo.Object,
@@ -65,6 +67,7 @@ namespace MindSageWeb.Specs.Steps
                 userprofileRepo.Object,
                 userActivityRepo.Object,
                 classRoomRepo.Object,
+                studentKeyRepo.Object,
                 dateTime.Object);
 
             var friendCtrl = new FriendController(classCalendarRepo.Object,
