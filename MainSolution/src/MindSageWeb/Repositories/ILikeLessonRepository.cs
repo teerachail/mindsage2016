@@ -17,8 +17,8 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอรายการ Like lesson จากรหัส lesson
         /// </summary>
-        /// <param name="id">รหัส lesson ที่ต้องการขอข้อมูล</param>
-        IEnumerable<LikeLesson> GetLikeLessonsByLessonId(string id);
+        /// <param name="lessonId">รหัส lesson ที่ต้องการขอข้อมูล</param>
+        IEnumerable<LikeLesson> GetLikeLessonsByLessonId(string lessonId);
 
         /// <summary>
         /// แก้ไขหรือเพิ่มข้อมูล Like lesson

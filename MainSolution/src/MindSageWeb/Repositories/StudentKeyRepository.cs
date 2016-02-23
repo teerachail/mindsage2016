@@ -15,7 +15,7 @@ namespace MindSageWeb.Repositories
         #region Fields
 
         // HACK: Table name
-        private const string StudentKeysTableName = "test.au.mindsage.StudentKeys";
+        private const string TableName = "test.au.mindsage.StudentKeys";
 
         #endregion Fields
 
@@ -27,7 +27,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room ที่ต้องการขอข้อมูล</param>
         public StudentKey GetStudentKeyByClassRoomId(string classRoomId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(StudentKeysTableName)
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId)
                .ToEnumerable()
                .OrderByDescending(it => it.CreatedDate)
@@ -42,7 +42,7 @@ namespace MindSageWeb.Repositories
         /// <param name="grade">เกรดที่ต้องการขอขอ้ฒุล</param>
         public StudentKey GetStudentKeyByCodeAndGrade(string code, string grade)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(StudentKeysTableName)
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.Code == code && it.Grade == grade)
                 .ToEnumerable()
                 .OrderByDescending(it => it.CreatedDate)
@@ -56,8 +56,17 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
         public void UpsertStudentKey(StudentKey data)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var update = Builders<StudentKey>.Update
+               .Set(it => it.Code, data.Code)
+               .Set(it => it.Grade, data.Grade)
+               .Set(it => it.CourseCatalogId, data.CourseCatalogId)
+               .Set(it => it.ClassRoomId, data.ClassRoomId)
+               .Set(it => it.CreatedDate, data.CreatedDate)
+               .Set(it => it.DeletedDate, data.DeletedDate);
+
+            var updateOption = new UpdateOptions { IsUpsert = true };
+            MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(TableName)
+               .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
         #endregion IStudentKeyRepository members

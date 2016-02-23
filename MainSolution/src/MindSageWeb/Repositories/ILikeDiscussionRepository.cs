@@ -23,8 +23,8 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูล like discussion
         /// </summary>
-        /// <param name="item">ข้อมูล like discussion ที่จะดำเนินการ</param>
-        void UpsertLikeDiscussion(LikeDiscussion item);
+        /// <param name="data">ข้อมูล like discussion ที่จะดำเนินการ</param>
+        void UpsertLikeDiscussion(LikeDiscussion data);
 
         #endregion Methods
     }

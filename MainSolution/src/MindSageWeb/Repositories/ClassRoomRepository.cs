@@ -12,7 +12,7 @@ namespace MindSageWeb.Repositories
         #region Fields
 
         // HACK: Table name
-        private const string ClassRoomsTableName = "test.au.mindsage.ClassRooms";
+        private const string TableName = "test.au.mindsage.ClassRooms";
 
         #endregion Fields
 
@@ -24,7 +24,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส Class room ที่ต้องการขอ</param>
         public ClassRoom GetClassRoomById(string classRoomId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(ClassRoomsTableName)
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.id == classRoomId)
                 .ToEnumerable()
                 .FirstOrDefault();
@@ -45,7 +45,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.LastUpdatedMessageDate, data.LastUpdatedMessageDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(ClassRoomsTableName)
+            MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

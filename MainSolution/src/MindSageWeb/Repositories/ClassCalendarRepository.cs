@@ -12,7 +12,7 @@ namespace MindSageWeb.Repositories
         #region Fields
 
         // HACK: Table name
-        private const string ClassCalendarsTableName = "test.au.mindsage.ClassCalendars";
+        private const string TableName = "test.au.mindsage.ClassCalendars";
 
         #endregion Fields
 
@@ -24,7 +24,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส Class room ที่ต้องการขอข้อมูล</param>
         public ClassCalendar GetClassCalendarByClassRoomId(string classRoomId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(ClassCalendarsTableName)
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId)
                 .ToEnumerable()
                 .FirstOrDefault();
@@ -49,7 +49,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.Holidays, data.Holidays);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(ClassCalendarsTableName)
+            MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

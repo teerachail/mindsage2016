@@ -15,7 +15,7 @@ namespace MindSageWeb.Repositories
         #region Fields
 
         // HACK: Table name
-        private const string LessonCatalogsTableName = "test.au.mindsage.LessonCatalogs";
+        private const string TableName = "test.au.mindsage.LessonCatalogs";
 
         #endregion Fields
 
@@ -27,7 +27,7 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonCatalogId">รหัส Lesson catalog ที่ต้องการ</param>
         public LessonCatalog GetLessonCatalogById(string lessonCatalogId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<LessonCatalog>(LessonCatalogsTableName)
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<LessonCatalog>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.id == lessonCatalogId)
                .ToEnumerable()
                .OrderByDescending(it => it.CreatedDate)

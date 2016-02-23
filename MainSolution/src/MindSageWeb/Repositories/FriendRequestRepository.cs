@@ -15,7 +15,7 @@ namespace MindSageWeb.Repositories
         #region Fields
 
         // HACK: Table name
-        private const string FriendRequestsTableName = "test.au.mindsage.FriendRequests";
+        private const string TableName = "test.au.mindsage.FriendRequests";
 
         #endregion Fields
 
@@ -27,7 +27,7 @@ namespace MindSageWeb.Repositories
         /// <param name="userprofileId">รหัสบัญชีผู้ใช้ที่ต้องการขอข้อมูล</param>
         public IEnumerable<FriendRequest> GetFriendRequestByUserProfileId(string userprofileId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(FriendRequestsTableName)
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.FromUserProfileId == userprofileId)
                 .ToEnumerable();
             return qry;
@@ -48,7 +48,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.DeletedDate, data.DeletedDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(FriendRequestsTableName)
+            MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

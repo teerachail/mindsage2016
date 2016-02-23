@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace MindSageWeb.Repositories
 {
+    /// <summary>
+    /// มาตรฐานในการดึงข้อมูลเวลา
+    /// </summary>
     public interface IDateTime
     {
         #region Methods
 
+        /// <summary>
+        /// ขอวันที่และเวลาในปัจจุบัน
+        /// </summary>
         DateTime GetCurrentTime();
 
         #endregion Methods
