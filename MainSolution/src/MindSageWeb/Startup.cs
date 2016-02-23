@@ -58,15 +58,20 @@ namespace MindSageWeb
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
-            services.AddTransient<IDateTime, ServerDateTime>();
-            services.AddTransient<IUserActivityRepository, UserActivityRepository>();
-            services.AddTransient<ICourseCatalogRepository, CourseCatalogRepository>();
             services.AddTransient<IClassCalendarRepository, ClassCalendarRepository>();
             services.AddTransient<IClassRoomRepository, ClassRoomRepository>();
-            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
+            services.AddTransient<ICourseCatalogRepository, CourseCatalogRepository>();
+            services.AddTransient<IDateTime, ServerDateTime>();
             services.AddTransient<IFriendRequestRepository, FriendRequestRepository>();
-            services.AddTransient<IStudentKeyRepository, StudentKeyRepository>();
             services.AddTransient<ILessonCatalogRepository, LessonCatalogRepository>();
+            services.AddTransient<ILikeCommentRepository, LikeCommentRepository>();
+            services.AddTransient<ILikeDiscussionRepository, LikeDiscussionRepository>();
+            services.AddTransient<ILikeLessonRepository, LikeLessonRepository>();
+            services.AddTransient<IStudentKeyRepository, StudentKeyRepository>();
+            services.AddTransient<IUserActivityRepository, UserActivityRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+
             services.AddTransient<Controllers.CourseController, Controllers.CourseController>();
 
             services.AddSwaggerGen();

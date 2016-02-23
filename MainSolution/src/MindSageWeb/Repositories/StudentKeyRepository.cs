@@ -56,6 +56,7 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
         public void UpsertStudentKey(StudentKey data)
         {
+            // TODO: Not implemented
             throw new NotImplementedException();
         }
 
