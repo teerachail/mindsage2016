@@ -38,8 +38,21 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลกิจกรรมที่ต้องการดำเนินการ</param>
         public void UpsertUserActivity(UserActivity data)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var update = Builders<UserActivity>.Update
+              .Set(it => it.IsTeacher, data.IsTeacher)
+              .Set(it => it.IsPrivateAccount, data.IsPrivateAccount)
+              .Set(it => it.UserProfileName, data.UserProfileName)
+              .Set(it => it.UserProfileImageUrl, data.UserProfileImageUrl)
+              .Set(it => it.HideClassRoomMessageDate, data.HideClassRoomMessageDate)
+              .Set(it => it.UserProfileId, data.UserProfileId)
+              .Set(it => it.ClassRoomId, data.ClassRoomId)
+              .Set(it => it.CreatedDate, data.CreatedDate)
+              .Set(it => it.DeletedDate, data.DeletedDate)
+              .Set(it => it.LessonActivities, data.LessonActivities);
+
+            var updateOption = new UpdateOptions { IsUpsert = true };
+            MongoAccess.MongoUtil.Instance.GetCollection<UserActivity>(ClassCalendarsTableName)
+               .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
         #endregion IUserActivityRepository members
