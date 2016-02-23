@@ -1,9 +1,20 @@
-<div class="learning-video">
-    <div class="row">
-        <div class="flex-video widescreen">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/J4GUFDldIXQ" frameborder="0" allowfullscreen></iframe>
-        </div>
-    </div>
+<div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
+    <ul class="orbit-container">
+        <button class="orbit-previous" aria-label="previous"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
+        <button class="orbit-next" aria-label="next"><span class="show-for-sr">Next Slide</span>&#9654;</button>
+        <li class="orbit-slide is-active">
+            <img src="http://placehold.it/2000x750?text=1">
+        </li>
+        <li class="orbit-slide">
+            <img src="http://placehold.it/2000x750?text=2">
+        </li>
+        <li class="orbit-slide">
+            <img src="http://placehold.it/2000x750?text=3">
+        </li>
+        <li class="orbit-slide">
+            <img src="http://placehold.it/2000x750?text=4">
+        </li>
+    </ul>
 </div>
 
 <div class="row content-section">
@@ -12,13 +23,13 @@
             Hello Sak <a class="float-right" href="#"><i class="fi-mail size-36"></i><span class="badge">1</span></a>
         </h1>
         <ul class="vertical menu menu-bg">
-            <li class="active">
+            <li>
                 <a href="#" ui-sref="app.main.lesson"><i class="fi-home size-36"></i> HOME</a>
             </li>
             <li>
                 <a href="#" ui-sref="app.course.jounal"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
             </li>
-            <li>
+            <li class="active">
                 <a href="#" ui-sref="app.course.coursemap"><i class="fi-foundation size-36"></i> COURSE MAP</a>
             </li>
             <li>
@@ -30,5 +41,5 @@
         </ul>
     </div>
 
-    <ui-view name="lessonContent"></ui-view>
+    <ui-view name="courseContent"></ui-view>
 </div>
