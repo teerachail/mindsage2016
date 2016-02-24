@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ui.router'])
+﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
@@ -17,10 +17,15 @@
             })
 
             .state('app.main.lesson', {
-                url: '/lesson/:lessonId',
+                url: '/lesson/:lessonId/:classRoomId',
                 views: {
                     'lessonContent': {
-                        templateUrl: 'tmpl/lesson_student.html'
+                        templateUrl: 'tmpl/lesson_student.html',
+                        controller: 'app.lessons.LessonController as cx',
+                        resolve: {
+                            'content': ['$stateParams', 'app.lessons.LessonService',
+                                (params, svc) => { svc.GetContent(params.lessonId, params.classRoomId) }]
+                        }
                     }
                 }
             })
@@ -97,5 +102,5 @@
                 }
             })
             ;
-        $urlRouterProvider.otherwise('/app/main/lesson/111');
+        $urlRouterProvider.otherwise('/app/main/lesson/Lesson01/ClassRoom01');
     }]);
