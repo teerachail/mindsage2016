@@ -33,6 +33,13 @@ namespace MindSageWeb.Repositories
         /// <param name="commentId">รหัส comment ที่ต้องการขอข้อมูล</param>
         Comment GetCommentById(string commentId);
 
+        /// <summary>
+        /// ขอข้อมูล comment จากรหัสผู้ใช้
+        /// </summary>
+        /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>
+        /// <param name="classRoomId">รหัส Class room ที่ต้องการค้นหา</param>
+        IEnumerable<Comment> GetCommentsByUserProfileId(string userprofileId, string classRoomId);
+
         #endregion Methods
     }
 }

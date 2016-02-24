@@ -71,6 +71,19 @@ namespace MindSageWeb.Repositories
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
+        /// <summary>
+        /// ขอข้อมูล comment จากรหัสผู้ใช้
+        /// </summary>
+        /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>
+        /// <param name="classRoomId">รหัส Class room ที่ต้องการค้นหา</param>
+        public IEnumerable<Comment> GetCommentsByUserProfileId(string userprofileId, string classRoomId)
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+               .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.CreatedByUserProfileId == userprofileId)
+               .ToEnumerable();
+            return qry;
+        }
+
         #endregion ICommentRepository members
     }
 }

@@ -26,6 +26,7 @@ namespace MindSageWeb.Repositories.Models
         public DateTime? DeletedDate { get; set; }
 
         public IEnumerable<Ads> Advertisments { get; set; }
+        public IEnumerable<TopicOfTheDay> TopicOfTheDays { get; set; }
 
         #endregion Properties
 
@@ -36,6 +37,21 @@ namespace MindSageWeb.Repositories.Models
             public string id { get; set; }
             public string ImageUrl { get; set; }
             public string LinkUrl { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public DateTime? DeletedDate { get; set; }
+
+            #endregion Properties
+        }
+
+        public class TopicOfTheDay
+        {
+            #region Properties
+
+            public string id { get; set; }
+            public string Message { get; set; }
+            public int SendOnDay { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public DateTime? DeletedDate { get; set; }
 
             #endregion Properties
         }
