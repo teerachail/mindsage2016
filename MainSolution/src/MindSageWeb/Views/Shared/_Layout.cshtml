@@ -28,10 +28,10 @@
                 <ul class="menu">
 
                     <li class="has-form">
-                        <a class="button radius" href="#">LOGIN</a>
+                        <a class="secondary hollow button radius" data-open="loginModal">LOGIN</a>
                     </li>
                     <li class="has-form">
-                        <a class="button radius outline" href="#">SIGNUP</a>
+                        <a class="hollow button radius" data-open="registerModal">SIGNUP</a>
                     </li>
                 </ul>
             </div>
@@ -40,6 +40,67 @@
 
     @RenderBody()
 
+    <div class="reveal tiny" id="loginModal" data-reveal>
+        <div class="modal-head"><h4 class="text-center">LOGIN</h4></div>
+        <div class="row">
+            <div class="medium-10 medium-centered large-10 large-centered columns">
+                <form>
+                    <div class="row column log-in-form">
+
+                        <label>
+                            NAME
+                            <input type="text">
+                        </label>
+                        <label>
+                            PASSWORD
+                            <input type="password">
+                        </label>
+                        <p class="text-right"><a type="submit" class="button">Log In</a></p>
+                        <p class="text-center"><a href="#">Forgot your password?</a></p>
+                        <p class="text-center"><a data-open="registerModal">Register</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="reveal tiny" id="registerModal" data-reveal>
+        <div class="modal-head"><h4 class="text-center">SIGNUP</h4></div>
+        <div class="row">
+            <div class="medium-10 medium-centered large-10 large-centered columns">
+                <form>
+                    <div class="row column log-in-form">
+
+                        <label>
+                            NAME
+                            <input type="text">
+                        </label>
+                        <label>
+                            EMAIL
+                            <input type="email">
+                        </label>
+                        <label>
+                            PASSWORD
+                            <input type="password">
+                        </label>
+                         <label>
+                            CONFIRM PASSWORD
+                            <input type="password">
+                        </label>
+                        <p class="medium-12 row columns text-right"><a type="submit" class="button">SIGNUP</a></p>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="dropdown-pane" id="login-dropdown" data-dropdown>
+        Login
+    </div>
     <footer class="footer">
         <div class="row">
             <div class="large-2 column">

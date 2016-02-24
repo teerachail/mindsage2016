@@ -1,4 +1,5 @@
-﻿/// <reference path="wwwroot/lib/angular/angular.min.js" />
+/// <binding BeforeBuild='build, sass' />
+/// <reference path="wwwroot/lib/angular/angular.min.js" />
 /// <reference path="wwwroot/lib/angular/angular.js" />
 /// <binding Clean='clean' />
 "use strict";

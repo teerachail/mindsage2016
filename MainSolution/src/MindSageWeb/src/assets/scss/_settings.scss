@@ -436,8 +436,8 @@ $reveal-background: $white;
 $reveal-width: 600px;
 $reveal-max-width: $global-width;
 $reveal-offset: rem-calc(100);
-$reveal-padding: $global-padding;
-$reveal-border: 1px solid $medium-gray;
+$reveal-padding: 0;
+$reveal-border: 2px solid #68b6e3;
 $reveal-radius: $global-radius;
 $reveal-zindex: 1005;
 $reveal-overlay-background: rgba($black, 0.45);
@@ -630,22 +630,22 @@ $topbar-input-width: 200px;
     padding:0 .9375rem;
 }
 
-a.button {
+/*a.button {
     padding: .55rem 2rem;
     letter-spacing: 1px;
     border-width: thin;
     border-color: $dark-gray;
     background-color: $hight-dark-gray;
     color: $dark-gray;
-}
+}*/
 
-a.button.outline {
+/*a.button.outline {
     color: $primary-color;
     border-color: $primary-color;
     &:hover {
                 color: $white !important;
             }
-}
+}*/
 
 .inner::before {
     position: absolute;
@@ -1096,8 +1096,9 @@ p.detail-info {
         margin-bottom: 1em;
         padding: 0.2em 0.9em 0 0.9em;
         background-color: $success-color;
-        float: left;
+        float:left;
     }
+   
     & h3 {
         font-size: 1.5em;
     }
@@ -1231,4 +1232,18 @@ textarea {
     resize: none;
     overflow: hidden !important;
 }
-
+.modal-head{
+    background-color:#68b6e3;
+    h4{
+        color:$white;
+        padding:0.2em;
+    }
+}
+.reveal{
+    p{
+        color:#68b6e3;
+    }
+    label{
+        color:#68b6e3;
+    }
+}
