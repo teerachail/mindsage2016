@@ -82,7 +82,7 @@ namespace MindSageWeb.Controllers
             }
 
             var userComments = _commentRepo.GetCommentsByUserProfileId(targetUserId, classRoomId).ToList();
-            if (userComments == null) return noDataRespond;
+            if (userComments == null || !userComments.Any()) return noDataRespond;
 
             var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
             if (selectedClassRoom == null) return noDataRespond;
