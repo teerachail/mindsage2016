@@ -1168,7 +1168,20 @@ p.detail-info {
     & .settting-edit {
         border-bottom: solid 2px $dark-gray;
         margin-bottom: 1em;
-    }    
+    }   
+    & .center {
+        text-align: center;
+        & a {
+            padding: 0;
+        }
+    } 
+    & .have-help-text input {
+        margin-bottom: 0;
+    }
+    & .checkbox {
+        width: 1.5em;
+        height: 1.5em;
+    }
 }
 
 .undisplay {
