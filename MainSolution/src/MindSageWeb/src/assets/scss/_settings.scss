@@ -1151,6 +1151,12 @@ p.detail-info {
     margin-bottom: 1em;
 }
 
+.jounal {
+    background-color: $white;
+    margin-bottom: 3em;
+    padding: 1em;
+}
+
 .setting {
     & a {
         color: $dark-gray;
@@ -1176,6 +1182,14 @@ p.detail-info {
 } 
 
 .comment {
+    & .comment-time {
+        font-size: 0.5em;
+    }
+    & .discussion {
+        & .large-9 {
+            float: left !important;
+        }
+    }
     & a.close {
         color: $black;
     }
@@ -1185,6 +1199,13 @@ p.detail-info {
     & .fi-x {
         margin-right: 0.7em;
     }
+}
+
+.comment-button a {
+    color: $dark-gray;
+}
+.like a {
+    color: $alert-color;
 }
 
 .partner {

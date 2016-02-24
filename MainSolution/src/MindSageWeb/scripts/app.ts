@@ -52,11 +52,11 @@
                 }
             })
 
-            .state('app.course.jounal', {
-                url: '/jounal/:userid',
+            .state('app.course.journal', {
+                url: '/journal/:userid',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/jounal.html'
+                        templateUrl: 'tmpl/journal.html'
                     }
                 }
             })

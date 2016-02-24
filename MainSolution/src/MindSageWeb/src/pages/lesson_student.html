@@ -78,14 +78,15 @@
 
     <div>
         <p>
-            <a><i class="fi-heart size-36"></i></a> Jim Gordon, Kirk Jameson, Robin Embler, Justin Ripley
+            <span class="comment-button"><a><i class="fi-heart size-36"></i></a></span> Jim Gordon, Kirk Jameson, Robin Embler, Justin Ripley
         </p>
     </div>
 
     <div class="comment">
         <div class="row">
-            <div class="large-offset-2 large-10 columns title">Tim Turnner</div>
-
+            <div class="large-offset-2 large-9 columns">
+                <h4><a href="#">Tim Turnner</a></h4>
+            </div>
             <div class="large-2 columns user-img"><img class="thumbnail" src="http://placehold.it/100x100"></div>
             <div class="large-10 columns">
                 <textarea rows="3"></textarea>
@@ -94,94 +95,128 @@
     </div>
 
     <div class="comment">
-                <div class="row">
-                    <div class="float-right">
-                        <a class="close" href="#"><i class="fi-x size-24"></i></a>
-                    </div>
-                    <div class="large-offset-2 large-9 columns">
-                        <h4>Tim Turnner</h4>
-                    </div>
-                    <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
-                    <div class="large-10 columns">
-                        <p>But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                            using the default <code>data-closable</code> parameters, and simply fade out.
-                        </p>
-                        <p class="like-button">
-                            <a><i class="fi-heart size-36"></i></a> Jim Gordon, Kirk Jameson, Robin Embler, Justin Ripley
-                        </p>
-                        <a>show discussion (5)</a>
-                    </div>
-                </div>
+        <div class="row" data-accordion data-allow-all-closed="true">
+            <div class="large-offset-2 large-9 columns">
+                <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
+            </div>
+            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+            <div class="large-10 columns" data-accordion-item>
+                <p>But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
+                    using the default <code>data-closable</code> parameters, and simply fade out.
+                    <span class="comment-button"><a> Edit</a></span>
+                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
+                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
+                </p>
+                <a>show discussion (5)</a>
+                <div class="undisplay" data-tab-content>
+                    <div class="discussion">
+                        <div class="row">
+                            <div class="large-offset-2 large-9 columns">
+                                <h4><a href="#">Tim Turnner</a></h4>
+                            </div>
 
-                <div class="row">
-                    <div class="large-offset-2 large-9 columns">
-                        <h4>Jim Gordon</h4>
+                            <div class="large-2 columns user-img"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-10 columns">
+                                <textarea rows="3"></textarea>
+                            </div>
+                        </div>
                     </div>
-                    <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
-                    <div class="large-10 columns">
-                        <p>But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                            using the default <code>data-closable</code> parameters, and simply fade out.
-                        </p>
-                        <p class="like-button">
-                            <a><i class="fi-heart size-36"></i></a> Jim Gordon, Kirk Jameson, Robin Embler, Justin Ripley
-                        </p>
-                        <a>hide discussion (5)</a>
 
-                        <div class="discussion">
-                            <div class="row">
-                                <div class="float-right">
-                                </div>
-                                <div class="large-2 columns user">
-                                    <img class="thumbnail" src="http://placehold.it/100x100">
-                                    <p>Tim Turnner</p>
-                                </div>
-                                <div class="large-10 columns comment">
-                                    <textarea rows="3"></textarea>
-                                </div>
-
+                    <div class="discussion">
+                        <div class="row">
+                            <div class="large-offset-2 large-9 columns">
+                                <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 2</span></h4>
+                            </div>
+                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-10 columns">
+                                <p>
+                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
+                                    using the default <code>data-closable</code> parameters, and simply fade out.
+                                    <span class="comment-button"><a><i class="fi-heart size-24"></i></a></span>
+                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
+                                </p>
                             </div>
                         </div>
 
-                        <div class="discussion">
-                            <div class="row">
-                                <div class="large-2 columns user">
-                                    <img class="thumbnail" src="http://placehold.it/100x100">
-                                    <p>Jim Gordon</p>
-                                </div>
-                                <div class="large-9 columns">
-                                    <p>But when you're done reading it, click the close button in the corner to dismiss this
-                                        alert. I'm using the default <code>data-closable</code> parameters, and simply fade
-                                        out.
-                                    </p>
-                                    <p class="like-button">
-                                        <a><i class="fi-heart size-36"></i></a> Jim Gordon, Kirk Jameson, Robin Embler, Justin
-                                        Ripley
-                                    </p>
-
-                                </div>
+                        <div class="row">
+                            <div class="large-offset-2 large-9 columns">
+                                <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
                             </div>
-
-                            <div class="row">
-                                <div class="float-right">
-                                    <a class="close" href="#"><i class="fi-x size-24"></i></a>
-                                </div>
-                                <div class="large-2 columns user">
-                                    <img class="thumbnail" src="http://placehold.it/100x100">
-                                    <p>Tim Turnner</p>
-                                </div>
-                                <div class="large-9 columns">
-                                    <p>But when you're done reading it, click the close button in the corner to dismiss this
-                                        alert. I'm using the default <code>data-closable</code> parameters, and simply fade
-                                        out.
-                                    </p>
-                                    <p class="like-button">
-                                        <a><i class="fi-heart size-36"></i></a> Jim Gordon, Kirk Jameson, Robin Embler, Justin
-                                        Ripley
-                                    </p>
-                                </div>
+                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-10 columns">
+                                <p>
+                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
+                                    using the default <code>data-closable</code> parameters, and simply fade out.
+                                    <span class="comment-button"><a> Edit</a></span>
+                                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
+                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
+                                </p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
+    
+        <div class="row" data-accordion data-allow-all-closed="true">
+            <div class="large-offset-2 large-9 columns">
+                <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 1</span></h4>
+            </div>
+            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+            <div class="large-10 columns" data-accordion-item>
+                <p>But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
+                    using the default <code>data-closable</code> parameters, and simply fade out.
+                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
+                </p>
+                <a>hide discussion (5)</a>
+                <div class="undisplay" data-tab-content>
+                    <div class="discussion">
+                        <div class="row">
+                            <div class="large-offset-2 large-9 columns">
+                                <h4><a href="#">Tim Turnner</a></h4>
+                            </div>
+
+                            <div class="large-2 columns user-img"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-10 columns">
+                                <textarea rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="discussion">
+                        <div class="row">
+                            <div class="large-offset-2 large-9 columns">
+                                <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 2</span></h4>
+                            </div>
+                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-10 columns">
+                                <p>
+                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
+                                    using the default <code>data-closable</code> parameters, and simply fade out.
+                                    <span class="comment-button"><a><i class="fi-heart size-24"></i></a></span>
+                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="large-offset-2 large-9 columns">
+                                <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
+                            </div>
+                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-10 columns">
+                                <p>
+                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
+                                    using the default <code>data-closable</code> parameters, and simply fade out.
+                                    <span class="comment-button"><a> Edit</a></span>
+                                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
+                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
