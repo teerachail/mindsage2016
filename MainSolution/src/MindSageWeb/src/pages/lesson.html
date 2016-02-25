@@ -89,20 +89,20 @@
     </div>
 
     <div class="comment">
-        <div class="row" data-accordion data-allow-all-closed="true">
+        <div class="row" ng-repeat="item in cx.comment.Comments" data-accordion data-allow-all-closed="true">
             <div class="large-offset-2 large-9 columns">
-                <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
+                <h4><a href="#">{{ item.CreatorDisplayName }}</a><span class="comment-time"> week {{ item.LessonWeek }}</span></h4>
             </div>
-            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+            <div class="large-2 columns"><img class="thumbnail" src="{{ item.CreatorImageUrl }}"></div>
             <div class="large-10 columns" data-accordion-item>
-                <p>But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                    using the default <code>data-closable</code> parameters, and simply fade out.
+                <p>{{ item.Description }}
                     <span class="comment-button"><a> Edit</a></span>
                     <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
                     <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
                 </p>
-                <a>show discussion (5)</a>
-                <div class="undisplay" data-tab-content>
+                <a>show discussion ({{ item.TotalDiscussions }})</a>
+                <a>hide discussion ({{ item.TotalDiscussions }})</a>
+                <div data-tab-content>
                     <div class="discussion">
                         <div class="row">
                             <div class="large-offset-2 large-9 columns">
@@ -152,7 +152,7 @@
             </div>
         </div>
     
-        <div class="row" data-accordion data-allow-all-closed="true">
+        <!--<div class="row" data-accordion data-allow-all-closed="true">
             <div class="large-offset-2 large-9 columns">
                 <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 1</span></h4>
             </div>
@@ -211,6 +211,6 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div>-->
     </div>
 </div>

@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons'])
+﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
@@ -24,7 +24,9 @@
                         controller: 'app.lessons.LessonController as cx',
                         resolve: {
                             'content': ['$stateParams', 'app.lessons.LessonService',
-                                (params, svc) => { return svc.GetContent(params.lessonId, params.classRoomId) }]
+                                (params, svc) => { return svc.GetContent(params.lessonId, params.classRoomId) }],
+                            'comment': ['$stateParams', 'app.lessons.LessonCommentService',
+                                (params, svc) => { return svc.GetComments(params.lessonId, params.classRoomId) }]
                         }
                     }
                 }
@@ -66,20 +68,25 @@
                 }
             })
 
-            .state('app.course.friendlist', {
-                url: '/friendlist',
+            .state('app.course.studentlist', {
+                url: '/studentlist/:classRoomId',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/friendlist.html'
+                        templateUrl: 'tmpl/studentlist.html',
+                        controller: 'app.studentlists.studentlistsController as cx',
+                        resolve: {
+                            'students': ['$stateParams', 'app.studentlists.StudentListService',
+                                (params, svc) => { return svc.GetStudentList(params.classRoomId) }]
+                        }
                     }
                 }
             })
 
-            .state('app.course.studentlist', {
-                url: '/studentlist',
+            .state('app.course.teacherlist', {
+                url: '/teacherlist',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/studentlist.html'
+                        templateUrl: 'tmpl/teacherlist.html'
                     }
                 }
             })
@@ -93,5 +100,5 @@
                 }
             })
             ;
-        $urlRouterProvider.otherwise('/app/main/lesson/Lesson01/ClassRoom01');
+        $urlRouterProvider.otherwise('/app/course//studentlist/ClassRoom01');
     }]);
