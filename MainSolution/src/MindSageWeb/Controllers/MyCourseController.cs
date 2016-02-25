@@ -95,6 +95,10 @@ namespace MindSageWeb.Controllers
                         LessonWeekName = string.Format("Week{0:00}", it.Order),
                     }).ToList()
                 }).ToList();
+            var lessonQry = result.SelectMany(it => it.LessonStatus);
+            var currentLesson = lessonQry.LastOrDefault(it => !it.IsLocked);
+            if (currentLesson != null) currentLesson.IsCurrent = true;
+            else if (lessonQry.Any()) lessonQry.Last().IsCurrent = true;
             return result;
         }
 

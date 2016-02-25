@@ -1,4 +1,4 @@
-﻿module app.courses {
+﻿module app.coursemaps {
     'use strict';
 
     export class GetCourseMapContentRequest {

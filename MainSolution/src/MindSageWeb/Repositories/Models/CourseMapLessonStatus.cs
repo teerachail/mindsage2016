@@ -12,6 +12,7 @@ namespace MindSageWeb.Repositories.Models
         public string LessonId { get; set; }
         public bool IsLocked { get; set; }
         public string LessonWeekName { get; set; }
+        public bool IsCurrent { get; set; }
 
         #endregion Properties
     }

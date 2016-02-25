@@ -88,6 +88,7 @@ Scenario: User request course map's content Then system send the content back
 					"LessonId": "Lesson02",
 					"IsLocked": false,
 					"LessonWeekName": "Week02",
+					"IsCurrent": true
 				},
 			]
 		},

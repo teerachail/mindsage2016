@@ -2,7 +2,7 @@
     'use strict';
 
     angular
-        .module('app.courses',
+        .module('app.coursemaps',
         [
             "ngResource",
             'app.shared'

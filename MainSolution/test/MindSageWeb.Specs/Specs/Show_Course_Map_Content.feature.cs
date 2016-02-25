@@ -161,6 +161,7 @@ this.FeatureBackground();
 				""LessonId"": ""Lesson02"",
 				""IsLocked"": false,
 				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": true
 			},
 		]
 	},

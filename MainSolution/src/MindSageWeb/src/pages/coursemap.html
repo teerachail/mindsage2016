@@ -13,6 +13,10 @@
                     <div ng-repeat="lesson in item.LessonStatus" class="column lesson-icon">
                         <img class="thumbnail" src="http://placehold.it/100x100">
                         <p>{{ lesson.LessonWeekName }}</p>
+                        <p>IsLock: {{ lesson.IsLocked }}</p>
+                        <p>IsCurrent: {{ lesson.IsCurrent }}</p>
+                        <p>HaveAnyComments: {{ cx.HaveAnyComments(lesson.LessonId) }}</p>
+                        <p>IsReadedAllContents: {{ cx.HaveReadAllContents(lesson.LessonId) }}</p>
                     </div>
                 </div>
             </div>

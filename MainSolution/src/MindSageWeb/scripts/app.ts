@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.courses', 'app.journals'])
+﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
@@ -64,10 +64,12 @@
                 views: {
                     'courseContent': {
                         templateUrl: 'tmpl/coursemap.html',
-                        controller: 'app.courses.CourseMapController as cx',
+                        controller: 'app.coursemaps.CourseMapController as cx',
                         resolve: {
-                            'content': ['$stateParams', 'app.courses.CourseMapService',
-                                (params, svc) => { return svc.GetContent(params.classRoomId) }]
+                            'content': ['$stateParams', 'app.coursemaps.CourseMapService',
+                                (params, svc) => { return svc.GetContent(params.classRoomId) }],
+                            'status': ['$stateParams', 'app.coursemaps.CourseMapService',
+                                (params, svc) => { return svc.GetLessonStatus(params.classRoomId) }]
                         }
                     }
                 }
