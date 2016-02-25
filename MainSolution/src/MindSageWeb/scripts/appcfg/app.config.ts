@@ -4,6 +4,7 @@ module app {
     export interface IAppConfig {
         LessonUrl: string;
         LessonCommentUrl: string;
+        CourseMapContentUrl: string;
         LessonDiscussionUrl: string;
         StudentListUrl: string;
     }
@@ -12,6 +13,7 @@ module app {
         
         public LessonUrl: string;
         public LessonCommentUrl: string;
+        public CourseMapContentUrl: string;
         public LessonDiscussionUrl: string;
         public StudentListUrl: string;
         
@@ -21,6 +23,7 @@ module app {
             
             this.LessonUrl = apiUrl + '/lesson/:id/:classRoomId/:userId';
             this.LessonCommentUrl = apiUrl + '/lesson/:id/:classRoomId/comments/:userId';
+            this.CourseMapContentUrl = apiUrl + '/mycourse/:id/:classRoomId';
             this.LessonDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/discussions/:userId';
             this.StudentListUrl = apiUrl + '/friend/:userId/:classRoomId';
         }
