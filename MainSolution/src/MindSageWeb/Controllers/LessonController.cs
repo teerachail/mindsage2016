@@ -149,7 +149,7 @@ namespace MindSageWeb.Controllers
         /// <param name="userId">Request by user id</param>
         [HttpGet]
         [Route("{id}/{classRoomId}/comments/{userId}")]
-        public IEnumerable<GetCommentRespond> Comments(string id, string classRoomId, string userId)
+        public GetCommentRespond Comments(string id, string classRoomId, string userId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
                 && !string.IsNullOrEmpty(classRoomId)
@@ -175,7 +175,7 @@ namespace MindSageWeb.Controllers
             var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames)
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)
-                .Select(it => new GetCommentRespond
+                .Select(it => new CommentInformation
                 {
                     id = it.id,
                     Description = it.Description,
@@ -187,9 +187,14 @@ namespace MindSageWeb.Controllers
                     CreatedByUserProfileId = it.CreatedByUserProfileId,
                     TotalDiscussions = it.Discussions.Count(),
                     CreatedDate = it.CreatedDate
-                })
-                .ToList();
-            return comments;
+                }).ToList();
+
+            var result = new GetCommentRespond
+            {
+                Comments = comments,
+                IsDiscussionAvailable = true,
+            };
+            return result;
         }
 
         // GET: api/lesson/{lesson-id}/{class-room-id}/discussions/{user-id}

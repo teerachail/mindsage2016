@@ -9,17 +9,9 @@ namespace MindSageWeb.Repositories.Models
     {
         #region Properties
 
-        public string id { get; set; }
-        public int LessonWeek { get; set; }
-        public string Description { get; set; }
-        public int TotalLikes { get; set; }
-        public int TotalDiscussions { get; set; }
-        public string CreatorImageUrl { get; set; }
-        public string CreatorDisplayName { get; set; }
-        public string ClassRoomId { get; set; }
-        public string LessonId { get; set; }
-        public string CreatedByUserProfileId { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public bool IsPrivateAccount { get; set; }
+        public bool IsDiscussionAvailable { get; set; }
+        public IEnumerable<CommentInformation> Comments { get; set; }
 
         #endregion Properties
     }

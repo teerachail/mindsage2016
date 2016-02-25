@@ -150,28 +150,33 @@ Background: Initialize mocking data
 Scenario: User request lesson's comments Then system send the lesson's comments back  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'sakul@mindsage.com' request comment from the lesson 'Lesson02' of ClassRoom: 'ClassRoom01'
-    Then System send lesson's comment with JSON format are  
+    Then System send lesson's comment with JSON format is  
     """
-    [
-		{
-            "id": "Comment03",
-            "ClassRoomId": "ClassRoom01",
-            "CreatedByUserProfileId": "earn@mindsage.com",
-            "Description": "Msg03",
-            "TotalLikes": 10,
-            "LessonId": "Lesson02",
-			"CreatedDate": "2/1/2016 03:00 am",
-            "TotalDiscussions": 2
-        },
-        {
-            "id": "Comment02",
-            "ClassRoomId": "ClassRoom01",
-            "CreatedByUserProfileId": "sakul@mindsage.com",
-            "Description": "Msg02",
-            "TotalLikes": 5,
-            "LessonId": "Lesson02",
-			"CreatedDate": "2/1/2016 02:00 am",
-            "TotalDiscussions": 1
-        },
-    ]
+	{
+		"IsPrivateAccount": false,
+		"IsDiscussionAvailable": true,
+		"Comments":
+		[
+			{
+				"id": "Comment03",
+				"ClassRoomId": "ClassRoom01",
+				"CreatedByUserProfileId": "earn@mindsage.com",
+				"Description": "Msg03",
+				"TotalLikes": 10,
+				"LessonId": "Lesson02",
+				"CreatedDate": "2/1/2016 03:00 am",
+				"TotalDiscussions": 2
+			},
+			{
+				"id": "Comment02",
+				"ClassRoomId": "ClassRoom01",
+				"CreatedByUserProfileId": "sakul@mindsage.com",
+				"Description": "Msg02",
+				"TotalLikes": 5,
+				"LessonId": "Lesson02",
+				"CreatedDate": "2/1/2016 02:00 am",
+				"TotalDiscussions": 1
+			},
+		]
+	}
     """ 

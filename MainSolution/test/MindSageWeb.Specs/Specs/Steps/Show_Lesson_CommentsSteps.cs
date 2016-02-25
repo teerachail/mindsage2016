@@ -22,11 +22,11 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(result);
         }
 
-        [Then(@"System send lesson's comment with JSON format are")]
-        public void ThenSystemSendLessonSCommentWithJSONFormatAre(string multilineText)
+        [Then(@"System send lesson's comment with JSON format is")]
+        public void ThenSystemSendLessonSCommentWithJSONFormatIs(string multilineText)
         {
-            var expectedObj = JsonConvert.DeserializeObject<IEnumerable<GetCommentRespond>>(multilineText);
-            var actualObj = ScenarioContext.Current.Get<IEnumerable<GetCommentRespond>>();
+            var expectedObj = JsonConvert.DeserializeObject<GetCommentRespond>(multilineText);
+            var actualObj = ScenarioContext.Current.Get<GetCommentRespond>();
 
             var expectedString = JsonConvert.SerializeObject(expectedObj);
             var actualString = JsonConvert.SerializeObject(actualObj);

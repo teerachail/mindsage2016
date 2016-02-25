@@ -59,9 +59,9 @@ namespace MindSageWeb.Controllers
         /// <param name="classRoomId">Class room id</param>
         [HttpGet]
         [Route("{targetUserId}/{requestByUserId}/{classRoomId}")]
-        public GetJournalRespond Get(string targetUserId, string requestByUserId, string classRoomId)
+        public GetCommentRespond Get(string targetUserId, string requestByUserId, string classRoomId)
         {
-            var noDataRespond = new GetJournalRespond { Comments = Enumerable.Empty<GetCommentRespond>() };
+            var noDataRespond = new GetCommentRespond { Comments = Enumerable.Empty<CommentInformation>() };
             var areArgumentsValid = !string.IsNullOrEmpty(targetUserId) && !string.IsNullOrEmpty(requestByUserId);
             if (!areArgumentsValid) return noDataRespond;
 
@@ -78,7 +78,7 @@ namespace MindSageWeb.Controllers
                 var targetUserProfile = _userprofileRepo.GetUserProfileById(targetUserId);
                 if (requestByUserId == null) return noDataRespond;
 
-                if (targetUserProfile.IsPrivateAccount) return new GetJournalRespond { IsPrivateAccount = true };
+                if (targetUserProfile.IsPrivateAccount) return new GetCommentRespond { IsPrivateAccount = true };
             }
 
             var userComments = _commentRepo.GetCommentsByUserProfileId(targetUserId, classRoomId).ToList();
@@ -108,7 +108,7 @@ namespace MindSageWeb.Controllers
                     var selectedLessonCatalog = lessons.FirstOrDefault(l => l.LessonId == it.LessonId);
                     if (selectedLessonCatalog == null) return null;
 
-                    return new GetCommentRespond
+                    return new CommentInformation
                     {
                         ClassRoomId = it.ClassRoomId,
                         CreatedByUserProfileId = it.CreatedByUserProfileId,
@@ -126,7 +126,7 @@ namespace MindSageWeb.Controllers
                 .Where(it => it != null)
                 .ToList();
 
-            return new GetJournalRespond
+            return new GetCommentRespond
             {
                 IsDiscussionAvailable = isFriend,
                 Comments = comments
