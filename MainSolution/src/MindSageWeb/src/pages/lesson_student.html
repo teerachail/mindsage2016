@@ -2,7 +2,7 @@
 
     <div class="row">
         <div class="large-6 columns">
-            <h1 class="lesson-header">SEMESTER A</h1>
+            <h1 class="lesson-header">SEMESTER {{ cx.content.SemesterName }}</h1>
         </div>
         <div class="large-6 columns view-select">
             <a ui-sref="app.main.details">TEACHER VIEW</a>
@@ -11,14 +11,13 @@
         </div>
     </div>
 
-    <div class="alert callout" data-closable>
+    <div ng-show="{{ cx.content.CourseMessage!=null }}" class="alert callout" data-closable>
         <div class="row">
             <div class="large-1 small-1 columns">
                 <i class="fi-alert size-36"></i>
             </div>
             <div class="large-11 small-11 columns">
-                <p>But when you're done reading it, click the close button in the corner to dismiss this alert.</p>
-                <p>I'm using the default <code>data-closable</code> parameters, and simply fade out.</p>
+                <p>{{ cx.content.CourseMessage }}</p>
             </div>
         </div>
         <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
@@ -29,12 +28,12 @@
     <div class="lesson-bg accordion have-like">
         <div class="row" data-accordion data-allow-all-closed="true">
             <div class="title">
-                <h2>Week 3</h2>
+                <h2>Week {{ cx.content.Order }}</h2>
             </div>
             <div class="detail control" data-accordion-item>
-                <h3>Title of The Week's Lesson</h3>
+                <h3>{{ cx.content.Title }}</h3>
                 <p class="week-info">UNIT No.</p>
-                <p>infomation</p>
+                <p>{{ cx.content.FullDescription }}</p>
                 <a>
                     <p> > More Details</p>
                 </a>

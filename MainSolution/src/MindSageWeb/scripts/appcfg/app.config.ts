@@ -2,18 +2,21 @@ module app {
     'use strict';
     
     export interface IAppConfig {
-        LessonUrl: string;    
+        LessonUrl: string;
+        LessonCommentUrl: string;
     }
     
     export class AppConfig implements IAppConfig {
         
         public LessonUrl: string;
+        public LessonCommentUrl: string;
         
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
             var apiUrl = defaultUrl + '/api';
             
             this.LessonUrl = apiUrl + '/lesson/:id/:classRoomId/:userId';
+            this.LessonCommentUrl = apiUrl + '/lesson/:id/:classRoomId/comments/:userId';
         }
     }
     
