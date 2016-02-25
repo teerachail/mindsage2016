@@ -1,5 +1,4 @@
-﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals'])
-    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
+﻿ ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists'])    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
             .state('app', {
@@ -87,7 +86,7 @@
                         templateUrl: 'tmpl/studentlist.html',
                         controller: 'app.studentlists.studentlistsController as cx',
                         resolve: {
-                            'students': ['$stateParams', 'app.studentlists.StudentListService',
+                            'list': ['$stateParams', 'app.studentlists.StudentListService',
                                 (params, svc) => { return svc.GetStudentList(params.classRoomId) }]
                         }
                     }
@@ -95,10 +94,15 @@
             })
 
             .state('app.course.teacherlist', {
-                url: '/teacherlist',
+                url: '/teacherlist/:classRoomId',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/teacherlist.html'
+                        templateUrl: 'tmpl/teacherlist.html',
+                        controller: 'app.teacherlists.teacherlistsController as cx',
+                        resolve: {
+                            'list': ['$stateParams', 'app.teacherlists.TeacherListService',
+                                (params, svc) => { return svc.GetStudentList(params.classRoomId) }]
+                        }
                     }
                 }
             })

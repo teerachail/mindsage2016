@@ -2,8 +2,8 @@
     'use strict';
 
     class studentlistsController {
-        static $inject = ['$scope', 'students'];
-        constructor(private $scope, public student) {
+        static $inject = ['$scope', 'list'];
+        constructor(private $scope, public list) {
         }
 
     }

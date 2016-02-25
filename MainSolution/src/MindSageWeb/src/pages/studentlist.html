@@ -4,7 +4,16 @@
             <h1 class="lesson-header">CLASS LIST</h1>
         </div>
     </div>
-    <div class="row" data-equalizer>
+    <div class="row" ng-repeat="item in cx.list" data-equalizer>
+        <div class="small-6 column callout" data-equalizer-watch>
+            <img src="{{ item.ImageUrl }}"> {{ item.Name }}
+        </div>
+        <div class="small-6 column middleblock" data-equalizer-watch>
+            <button class="button secondary">Friend Request</button>
+        </div>
+    </div>
+
+    <!--<div class="row" data-equalizer>
         <div class="small-6 column callout" data-equalizer-watch>
             <img src="http://placeimg.com/50/50/people"> Name
         </div>
@@ -34,7 +43,7 @@
             <img src="http://placeimg.com/50/50/people/sepia"> Name
         </div>
         <div class="small-6 column middleblock" data-equalizer-watch>
-            <!--<button class="button disabled secondary">Friend Request Sent</button>-->
+            <button class="button disabled secondary">Friend Request Sent</button>
         </div>
-    </div>
+    </div>-->
 </div>

@@ -8,7 +8,7 @@ module app {
         LessonDiscussionUrl: string;
         StudentListUrl: string;
         JournalCommentUrl: string;
-    }
+        TeacherListUrl: string;    }
     
     export class AppConfig implements IAppConfig {
         
@@ -18,7 +18,7 @@ module app {
         public LessonDiscussionUrl: string;
         public StudentListUrl: string;
         public JournalCommentUrl: string;
-        
+        public TeacherListUrl: string;        
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
             var apiUrl = defaultUrl + '/api';
@@ -29,7 +29,7 @@ module app {
             this.LessonDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/discussions/:userId';
             this.StudentListUrl = apiUrl + '/friend/:userId/:classRoomId';
             this.JournalCommentUrl = apiUrl + '/journal/:targetUserId/:requestByUserId/:classRoomId';
-        }
+            this.TeacherListUrl = apiUrl + '/mycourse/:userId/:classRoomId/students';        }
     }
     
     // HACK: Change the host Url
