@@ -12,14 +12,12 @@ module app.lessons {
         
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
-            this.svc = <ILessonContentResourceClass<any>>$resource(appConfig.LessonUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' }, {
-                GetContent: { method: 'GET' }
-            });
+            this.svc = <ILessonContentResourceClass<any>>$resource(appConfig.LessonUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
         }
 
         public GetContent(id: string, classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.svc.GetContent(new LessonContentRequest(id, classRoomId, userId)).$promise;
+            return this.svc.get(new LessonContentRequest(id, classRoomId, userId)).$promise;
         }
         
     }

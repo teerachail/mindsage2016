@@ -24,7 +24,7 @@
                         controller: 'app.lessons.LessonController as cx',
                         resolve: {
                             'content': ['$stateParams', 'app.lessons.LessonService',
-                                (params, svc) => { svc.GetContent(params.lessonId, params.classRoomId) }]
+                                (params, svc) => { return svc.GetContent(params.lessonId, params.classRoomId) }]
                         }
                     }
                 }

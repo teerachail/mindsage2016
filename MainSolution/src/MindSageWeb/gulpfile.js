@@ -114,13 +114,13 @@ gulp.task('copy', function () {
 // Copy page templates into finished HTML files
 gulp.task('pages', function () {
     return gulp.src('src/pages/**/*.{html,hbs,handlebars}')
-        .pipe(panini({
-            root: 'src/pages/',
-            layouts: 'src/layouts/',
-            partials: 'src/partials/',
-            data: 'src/data/',
-            helpers: 'src/helpers/'
-        }))
+        //.pipe(panini({
+        //    root: 'src/pages/',
+        //    layouts: 'src/layouts/',
+        //    partials: 'src/partials/',
+        //    data: 'src/data/',
+        //    helpers: 'src/helpers/'
+        //}))
         .pipe(gulp.dest(PATHS.pageTmpl))
         .on('finish', browser.reload);
 });
