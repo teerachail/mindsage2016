@@ -105,5 +105,6 @@
                 }
             })
             ;
-        $urlRouterProvider.otherwise('/app/course//studentlist/ClassRoom01');
+
+        $urlRouterProvider.otherwise('/app/main/lesson/Lesson01/ClassRoom01');
     }]);
