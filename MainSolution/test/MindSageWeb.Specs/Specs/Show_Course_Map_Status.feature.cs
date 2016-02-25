@@ -188,24 +188,24 @@ this.FeatureBackground();
     testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map status of ClassRoom: \'Class" +
                     "Room01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "LessonId",
                         "HaveAnyComments",
                         "IsReadedAllContents"});
-            table2.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "Lesson01",
                         "true",
                         "true"});
-            table2.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "Lesson02",
                         "false",
                         "false"});
-            table2.AddRow(new string[] {
+            table1.AddRow(new string[] {
                         "Lesson03",
                         "false",
                         "false"});
 #line 118
-    testRunner.Then("System send course map status back are", ((string)(null)), table2, "Then ");
+    testRunner.Then("System send course map status back are", ((string)(null)), table1, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

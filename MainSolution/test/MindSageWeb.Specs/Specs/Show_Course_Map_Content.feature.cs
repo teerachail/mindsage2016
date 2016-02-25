@@ -146,28 +146,36 @@ this.FeatureBackground();
     testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map content of ClassRoom: \'Clas" +
                     "sRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
-                        "LessonId",
-                        "SemesterName",
-                        "LessonWeekName",
-                        "IsLocked"});
-            table1.AddRow(new string[] {
-                        "Lesson01",
-                        "A",
-                        "Week01",
-                        "false"});
-            table1.AddRow(new string[] {
-                        "Lesson02",
-                        "A",
-                        "Week02",
-                        "false"});
-            table1.AddRow(new string[] {
-                        "Lesson03",
-                        "B",
-                        "Week03",
-                        "true"});
 #line 75
-    testRunner.Then("System send course map content back are", ((string)(null)), table1, "Then ");
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week02"",
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week03"",
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

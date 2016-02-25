@@ -84,14 +84,17 @@ namespace MindSageWeb.Controllers
 
             var result = classCalendar.LessonCalendars
                 .Where(it => !it.DeletedDate.HasValue)
-                .Select(it => new CourseMapContentRespond
+                .GroupBy(it => it.SemesterGroupName)
+                .Select(group => new CourseMapContentRespond
                 {
-                    LessonId = it.LessonId,
-                    IsLocked = now.Date < it.BeginDate.Date,
-                    LessonWeekName = string.Format("Week{0:00}", it.Order),
-                    SemesterName = it.SemesterGroupName
-                })
-                .ToList();
+                    SemesterName = group.Key,
+                    LessonStatus = group.Select(it => new CourseMapLessonStatus
+                    {
+                        LessonId = it.LessonId,
+                        IsLocked = now.Date < it.BeginDate.Date,
+                        LessonWeekName = string.Format("Week{0:00}", it.Order),
+                    }).ToList()
+                }).ToList();
             return result;
         }
 

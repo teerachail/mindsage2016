@@ -72,8 +72,35 @@ Background: Initialize mocking data
 Scenario: User request course map's content Then system send the content back  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfileId 'sakul@mindsage.com' reuqest course map content of ClassRoom: 'ClassRoom01'  
-    Then System send course map content back are
-	| LessonId | SemesterName | LessonWeekName | IsLocked |
-	| Lesson01 | A            | Week01         | false    |
-	| Lesson02 | A            | Week02         | false    |
-	| Lesson03 | B            | Week03         | true     |
+    Then System send course map content collection with JSON format are  
+	"""
+	[
+		{
+			"SemesterName": "A",
+			"LessonStatus":
+			[
+				{
+					"LessonId": "Lesson01",
+					"IsLocked": false,
+					"LessonWeekName": "Week01",
+				},
+				{
+					"LessonId": "Lesson02",
+					"IsLocked": false,
+					"LessonWeekName": "Week02",
+				},
+			]
+		},
+		{
+			"SemesterName": "B",
+			"LessonStatus":
+			[
+				{
+					"LessonId": "Lesson03",
+					"IsLocked": true,
+					"LessonWeekName": "Week03",
+				}
+			]
+		},
+	]
+	"""

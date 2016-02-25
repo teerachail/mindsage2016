@@ -16,7 +16,7 @@
 
         public GetContent(classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.svc.get(new GetCourseMapContentRequest(userId, classRoomId)).$promise;
+            return this.svc.query(new GetCourseMapContentRequest(userId, classRoomId)).$promise;
         }
 
     }

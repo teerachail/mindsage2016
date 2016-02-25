@@ -35,5 +35,17 @@ namespace MindSageWeb.Specs.Steps
 
             Assert.Equal(expectedString, actualString);
         }
+
+        [Then(@"System send course map content collection with JSON format are")]
+        public void ThenSystemSendCourseMapContentCollectionWithJSONFormatAre(string multilineText)
+        {
+            var expected = JsonConvert.DeserializeObject<IEnumerable<CourseMapContentRespond>>(multilineText);
+            var actual = ScenarioContext.Current.Get<IEnumerable<CourseMapContentRespond>>();
+
+            var expectedString = JsonConvert.SerializeObject(expected);
+            var actualString = JsonConvert.SerializeObject(actual);
+
+            Assert.Equal(expectedString, actualString);
+        }
     }
 }

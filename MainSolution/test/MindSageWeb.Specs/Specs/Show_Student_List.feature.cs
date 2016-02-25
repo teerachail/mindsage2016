@@ -265,35 +265,35 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'sakul@mindsage.com\' request student list from ClassRoom: \'ClassRoom0" +
                     "1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table3.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "bank@mindsage.com",
                         "Bank",
                         "bank.jpg",
                         "50",
                         "50",
                         "50"});
-            table3.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "earn@mindsage.com",
                         "Earn",
                         "earn.jpg",
                         "0",
                         "0",
                         "0"});
-            table3.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "joker@mindsage.com",
                         "Joker",
                         "joker.jpg",
                         "100",
                         "100",
                         "100"});
-            table3.AddRow(new string[] {
+            table2.AddRow(new string[] {
                         "perawatt@mindsage.com",
                         "Perawatt",
                         "perawatt.jpg",
@@ -301,7 +301,7 @@ this.FeatureBackground();
                         "100",
                         "0"});
 #line 183
-    testRunner.Then("System send student list are", ((string)(null)), table3, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table2, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
