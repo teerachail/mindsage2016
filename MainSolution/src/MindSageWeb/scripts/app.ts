@@ -20,21 +20,12 @@
                 url: '/lesson/:lessonId/:classRoomId',
                 views: {
                     'lessonContent': {
-                        templateUrl: 'tmpl/lesson_student.html',
+                        templateUrl: 'tmpl/lesson.html',
                         controller: 'app.lessons.LessonController as cx',
                         resolve: {
                             'content': ['$stateParams', 'app.lessons.LessonService',
                                 (params, svc) => { return svc.GetContent(params.lessonId, params.classRoomId) }]
                         }
-                    }
-                }
-            })
-
-            .state('app.main.details', {
-                url: '/details',
-                views: {
-                    'lessonContent': {
-                        templateUrl: 'tmpl/lesson_teacher.html'
                     }
                 }
             })

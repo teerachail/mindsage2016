@@ -4,10 +4,10 @@
         <div class="large-6 columns">
             <h1 class="lesson-header">SEMESTER {{ cx.content.SemesterName }}</h1>
         </div>
-        <div class="large-6 columns view-select">
-            <a ui-sref="app.main.details">TEACHER VIEW</a>
+        <div ng-show="cx.content.IsTeacher" class="large-6 columns view-select">
+            <a ng-class="{ 'active': cx.teacherView }" ng-click="cx.selectTeacherView()">TEACHER VIEW</a>
             <span>|</span>
-            <a class="active">STUDENT VIEW</a>
+            <a ng-class="{ 'active': !cx.teacherView }" ng-click="cx.selectStdView()">STUDENT VIEW</a>
         </div>
     </div>
 
@@ -30,43 +30,38 @@
             <div class="title">
                 <h2>Week {{ cx.content.Order }}</h2>
             </div>
-            <div class="detail control" data-accordion-item>
+
+            <div ng-show="cx.teacherView" class="detail control" data-accordion-item>
                 <h3>{{ cx.content.Title }}</h3>
-                <p class="week-info">UNIT No.</p>
-                <p>{{ cx.content.FullDescription }}</p>
+                <p class="week-info"></p>
+                <p>{{ cx.content.ShortTeacherLessonPlan }}</p>
                 <a>
                     <p> > More Details</p>
                 </a>
-                <div class="undisplay" data-tab-content>
+                <div data-tab-content>
                     <div>
-                        <p>info................</p>
+                        <p>{{ cx.content.FullTeacherLessonPlan }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div ng-show="!cx.teacherView" class="detail control" data-accordion-item>
+                <h3>{{ cx.content.Title }}</h3>
+                <p class="week-info"></p>
+                <p>{{ cx.content.ShortDescription }}</p>
+                <a>
+                    <p> > More Details</p>
+                </a>
+                <div data-tab-content>
+                    <div>
+                        <p>{{ cx.content.FullDescription }}</p>
                     </div>
                     <div>
                         <h4 class="extra-header">Extra learning</h4>
-                        <ul>
+                        <ul ng-repeat="item in cx.content.ExtraContentUrls">
                             <li class="extra">
-                                <p>Extra 1</p>
-                                <a>url link</a>
-                            </li>
-                            <li class="extra">
-                                <p>Extra 2</p>
-                                <a>url link</a>
-                            </li>
-                            <li class="extra">
-                                <p>Extra 3</p>
-                                <a>url link</a>
-                            </li>
-                            <li class="extra">
-                                <p>Extra 4</p>
-                                <a>url link</a>
-                            </li>
-                            <li class="extra">
-                                <p>Extra 5</p>
-                                <a>url link</a>
-                            </li>
-                            <li class="extra">
-                                <p>Extra 6</p>
-                                <a>url link</a>
+                                <p>Extra {{ $index + 1 }}</p>
+                                <a>{{ item }}</a>
                             </li>
                         </ul>
                     </div>
