@@ -8,6 +8,8 @@
             // HACK: User profile information
             this.clientUserProfile = new ClientUserProfile();
             this.clientUserProfile.UserProfileId = 'sakul@mindsage.com';
+            this.clientUserProfile.ImageUrl = 'http://placehold.it/100x100';
+            this.clientUserProfile.FullName = 'Sakul Jaruthanaset';
         }
 
         public GetClientUserProfile(): ClientUserProfile {

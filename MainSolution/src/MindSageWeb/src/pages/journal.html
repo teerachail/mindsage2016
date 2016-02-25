@@ -2,7 +2,7 @@
 
     <div class="row">
         <div class="large-6 columns">
-            <h1 class="lesson-header">SEMESTER A</h1>
+            <h1 class="lesson-header">SEMESTER A2</h1>
         </div>
     </div>
 
@@ -15,22 +15,26 @@
         <div class="comment">
             <div class="row">
                 <div class="large-offset-2 large-9 columns">
-                    <h4>Tim Turnner</h4>
+                    <h4>{{ cx.userprofile.FullName }}</h4>
                 </div>
 
-                <div class="large-2 columns user-img"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                <div class="large-2 columns user-img"><img class="thumbnail" src="{{ cx.userprofile.ImageUrl }}"></div>
                 <div class="large-10 columns">
                     <textarea rows="3"  placeholder="Add a comment to your Jounal"></textarea>
                 </div>
             </div>
         </div>
 
+        <!--
+            cx.content.IsPrivateAccount
+            cx.content.IsDiscussionAvailable
+        -->
         <div data-accordion>
-            <div class="is-active" data-accordion-item>
-                <a class="accordion-title">Week 3</a>
+            <div ng-repeat="item in cx.GetWeeks()" ng-class="{is-active:$first}" data-accordion-item>
+                <a class="accordion-title">Week {{ item }}</a>
                 <div class="accordion-content" data-tab-content>
                     <div class="comment">
-                        <div class="row" data-accordion data-allow-all-closed="true">
+                        <div ng-repeat="comment in cx.GetComments(item)" class="row" data-accordion data-allow-all-closed="true">
                             <div class="large-offset-2 large-9 columns">
                                 <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
                             </div>
@@ -159,7 +163,7 @@
                 </div>
             </div>
 
-            <div data-accordion-item>
+            <!--<div data-accordion-item>
                 <a class="accordion-title">Week 2</a>
                 <div class="accordion-content" data-tab-content>
                     <div class="comment">
@@ -423,7 +427,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>-->
         </div>
 
     </div>

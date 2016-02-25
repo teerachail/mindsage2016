@@ -50,7 +50,7 @@ namespace MindSageWeb.Controllers
 
         #region Methods
 
-        // GET: api/journal/{target-user-id}/{request-by-user-id}
+        // GET: api/journal/{target-user-id}/{request-by-user-id}/{class-room-id}
         /// <summary>
         /// Get all user's comments
         /// </summary>
@@ -94,7 +94,7 @@ namespace MindSageWeb.Controllers
                           where lessonIds.Contains(it.id)
                           select new
                           {
-                              LessonId = it.LessonCatalogId,
+                              LessonId = it.id,
                               LessonCatalogId = it.LessonCatalogId,
                               LessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId)
                           };
@@ -102,7 +102,6 @@ namespace MindSageWeb.Controllers
 
             var comments = userComments
                 .Where(it => lessons.Any(lesson => lesson.LessonId == it.LessonId))
-                .OrderByDescending(it => it.CreatedDate)
                 .Select(it =>
                 {
                     var selectedLessonCatalog = lessons.FirstOrDefault(l => l.LessonId == it.LessonId);
@@ -124,6 +123,7 @@ namespace MindSageWeb.Controllers
                     };
                 })
                 .Where(it => it != null)
+                .OrderByDescending(it => it.LessonWeek)
                 .ToList();
 
             return new GetCommentRespond

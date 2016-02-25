@@ -54,7 +54,12 @@
                 url: '/journal/:targetUserId',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/journal.html'
+                        templateUrl: 'tmpl/journal.html',
+                        controller: 'app.journals.JournalController as cx',
+                        resolve: {
+                            'content': ['$stateParams', 'app.journals.JournalService',
+                                (params, svc) => { return svc.GetComments(params.classRoomId, params.targetUserId) }]
+                        }
                     }
                 }
             })
