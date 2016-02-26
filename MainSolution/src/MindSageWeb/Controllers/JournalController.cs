@@ -61,6 +61,7 @@ namespace MindSageWeb.Controllers
         [Route("{targetUserId}/{requestByUserId}/{classRoomId}")]
         public GetCommentRespond Get(string targetUserId, string requestByUserId, string classRoomId)
         {
+            targetUserId = requestByUserId;
             var noDataRespond = new GetCommentRespond { Comments = Enumerable.Empty<CommentInformation>() };
             var areArgumentsValid = !string.IsNullOrEmpty(targetUserId) && !string.IsNullOrEmpty(requestByUserId);
             if (!areArgumentsValid) return noDataRespond;

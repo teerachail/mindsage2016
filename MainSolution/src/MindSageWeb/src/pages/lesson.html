@@ -89,20 +89,20 @@
     </div>
 
     <div class="comment" ng-show="!cx.teacherView">
-        <div class="row" ng-repeat="item in cx.comment.Comments" data-accordion data-allow-all-closed="true">
+        <div class="row" ng-repeat="item in cx.comment.Comments" data-accordion data-allow-all-closed="true" on-finish-render>
             <div class="large-offset-2 large-9 columns">
                 <h4><a href="#">{{ item.CreatorDisplayName }}</a><span class="comment-time"> week {{ item.LessonWeek }}</span></h4>
             </div>
             <div class="large-2 columns"><img class="thumbnail" src="{{ item.CreatorImageUrl }}"></div>
-            <div class="large-10 columns" ng-class="{ 'is-active': item.id == cx.openDiscussion }" data-accordion-item>
+            <div class="large-10 columns" data-accordion-item>
                 <p>{{ item.Description }}
                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId"><a> Edit</a></span>
                     <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
                 </p>
-                <a ng-show="item.id != cx.openDiscussion" ng-click="cx.showDiscussion(item.id)">show discussion ({{ item.TotalDiscussions }})</a>
-                <a ng-show="item.id == cx.openDiscussion" ng-click="cx.hideDiscussion(item.id)">hide discussion ({{ item.TotalDiscussions }})</a>
-                <div ng-class="{ 'undisplay': item.id != cx.openDiscussion }" data-tab-content>
+                <a ng-show="item.id != cx.openDiscussion" ><div ng-click="cx.showDiscussion(item)">show discussion ({{ item.TotalDiscussions }})</div></a>
+                <a ng-show="item.id == cx.openDiscussion"><div ng-click="cx.hideDiscussion()">hide discussion ({{ item.TotalDiscussions }})</div></a>
+                <div class="undisplay" data-tab-content>
                     <div class="discussion">
                         <div class="row">
                             <div class="large-offset-2 large-9 columns">
@@ -214,7 +214,3 @@
         </div>-->
     </div>
 </div>
-
-<script>
-    $(document).foundation();
-</script>

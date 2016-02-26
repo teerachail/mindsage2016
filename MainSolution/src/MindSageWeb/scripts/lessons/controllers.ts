@@ -21,11 +21,11 @@ module app.lessons {
             this.teacherView = false;
         }
 
-        public showDiscussion(id: string): void {
-            this.openDiscussion = id;
+        public showDiscussion(item: any): void {
+            this.openDiscussion = item.id;
         }
 
-        public hideDiscussion(id: string): void {
+        public hideDiscussion(): void {
             this.openDiscussion = "";
         }
         //public showDiscussion(commentId: string): Array<DiscussionList> {
