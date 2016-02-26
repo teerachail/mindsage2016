@@ -2,10 +2,14 @@ module app.lessons {
     'use strict';
 
     class LessonController {
+
         public teacherView: boolean;
-        static $inject = ['$scope', 'content', 'comment'];
-        constructor(private $scope, public content, public comment) {
+        public currentUser: any;
+
+        static $inject = ['$scope', 'content', 'comment', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, public content, public comment, private userprofileSvc: app.shared.ClientUserProfileService) {
             this.teacherView = this.content.IsTeacher;
+            this.currentUser = this.userprofileSvc.GetClientUserProfile();
         }
 
         public selectTeacherView(): void {

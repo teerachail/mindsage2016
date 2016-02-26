@@ -79,9 +79,9 @@
     <div class="comment">
         <div class="row">
             <div class="large-offset-2 large-9 columns">
-                <h4><a href="#">Tim Turnner</a></h4>
+                <h4><a href="#">{{ cx.currentUser.FullName }}</a></h4>
             </div>
-            <div class="large-2 columns user-img"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+            <div class="large-2 columns user-img"><img class="thumbnail" src="{{ cx.currentUser.ImageUrl }}"></div>
             <div class="large-10 columns">
                 <textarea rows="3"></textarea>
             </div>
