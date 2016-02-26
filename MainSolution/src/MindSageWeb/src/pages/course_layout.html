@@ -24,13 +24,13 @@
         </h1>
         <ul class="vertical menu menu-bg">
             <li>
-                <a href="#" ui-sref="app.main.lesson"><i class="fi-home size-36"></i> HOME</a>
+                <a href="#" ui-sref="app.main.lesson({ 'classRoomId': 'ClassRoom01' })"><i class="fi-home size-36"></i> HOME</a>
             </li>
             <li>
-                <a href="#" ui-sref="app.course.journal"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
+                <a href="#" ui-sref="app.course.journal({ 'classRoomId': 'ClassRoom01', 'targetUserId': 'sakul_mindsage.com' })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
             </li>
             <li class="active">
-                <a href="#" ui-sref="app.course.coursemap"><i class="fi-foundation size-36"></i> COURSE MAP</a>
+                <a href="#" ui-sref="app.course.coursemap({ 'classRoomId': 'ClassRoom01' })"><i class="fi-foundation size-36"></i> COURSE MAP</a>
             </li>
             <li>
                 <a href="#" ui-sref="app.course.studentlist"><i class="fi-torsos-all size-36"></i> CLASS</a>

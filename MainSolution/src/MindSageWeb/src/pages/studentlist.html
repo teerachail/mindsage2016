@@ -6,9 +6,23 @@
     </div>
     <div class="row" ng-repeat="item in cx.list" data-equalizer>
         <div class="small-6 column callout" data-equalizer-watch>
-            <img src="{{ item.ImageUrl }}"> {{ item.Name }}
+            <img width="50" height="50" src="{{ item.ImageUrl }}"> {{ item.Name }}
         </div>
-        <div class="small-6 column middleblock" data-equalizer-watch>
+
+        <div class="small-6 column middleblock" ng-show="item.Status == 0" data-equalizer-watch>
+            <button class="button disabled secondary">Friend Request Sent</button>
+        </div>
+
+        <div class="small-6 column middleblock" ng-show="item.Status == 1" data-equalizer-watch>
+            <button class="button">Confirm</button>
+            <button class="button secondary">Delete Request</button>
+        </div>
+
+        <div class="small-6 column middleblock" ng-show="item.Status == 2" data-equalizer-watch>
+            <img src="http://placehold.it/50?text=Friend+image">
+        </div>
+
+        <div class="small-6 column middleblock" ng-show="item.Status == 3" data-equalizer-watch>
             <button class="button secondary">Friend Request</button>
         </div>
     </div>
@@ -43,7 +57,7 @@
             <img src="http://placeimg.com/50/50/people/sepia"> Name
         </div>
         <div class="small-6 column middleblock" data-equalizer-watch>
-            <button class="button disabled secondary">Friend Request Sent</button>
+            <img src="http://placehold.it/50?text=Friend+image">
         </div>
     </div>-->
 </div>

@@ -1,4 +1,5 @@
-﻿ ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists'])    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
+﻿angular.module('app',['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists'])    
+    .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
             .state('app', {
