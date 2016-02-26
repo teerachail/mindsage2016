@@ -65,21 +65,24 @@
                         </a>
                         @foreach (var unit in semester.Units)
                         {
-                            @foreach (var lesson in unit.Lessons)
+                            foreach (var lesson in unit.Lessons)
                             {
                                 <div class="undisplay" data-tab-content>
                                     <div>
                                         <p>WEEK @lesson.Order</p>
-                                        <div class="media-object">
-                                            <div class="media-object-section">
-                                                <img src="http://placeimg.com/100/100/people">
+                                        @foreach (var content in lesson.Contents)
+                                        {
+                                            <div class="media-object">
+                                                <div class="media-object-section">
+                                                    <img src="@content.ImageUrl">
+                                                </div>
+                                                <div class="media-object-section">
+                                                    <p>
+                                                        @content.Description
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="media-object-section">
-                                                <p>
-                                                    @lesson.Name
-                                                </p>
-                                            </div>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                             }
@@ -110,16 +113,19 @@
                                 <div class="undisplay" data-tab-content>
                                     <div>
                                         <p>WEEK @lesson.Order</p>
-                                        <div class="media-object">
-                                            <div class="media-object-section">
-                                                <img src="http://placeimg.com/100/100/people">
+                                        @foreach (var content in lesson.Contents)
+                                        {
+                                            <div class="media-object">
+                                                <div class="media-object-section">
+                                                    <img src="@content.ImageUrl">
+                                                </div>
+                                                <div class="media-object-section">
+                                                    <p>
+                                                        @content.Description
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <div class="media-object-section">
-                                                <p>
-                                                    @lesson.Name
-                                                </p>
-                                            </div>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                             }

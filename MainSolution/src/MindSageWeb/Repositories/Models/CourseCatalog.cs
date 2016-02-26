@@ -10,6 +10,7 @@ namespace MindSageWeb.Repositories.Models
         #region Properties
 
         public string id { get; set; }
+        public string GroupName { get; set; }
         public string Grade { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
@@ -47,8 +48,7 @@ namespace MindSageWeb.Repositories.Models
             public string id { get; set; }
             public int Order { get; set; }
             public string Title { get; set; }
-            public string ShortDescription { get; set; }
-            public string FullDescription { get; set; }
+            public string Description { get; set; }
 
             public IEnumerable<Lesson> Lessons { get; set; }
 
@@ -61,8 +61,17 @@ namespace MindSageWeb.Repositories.Models
 
             public string id { get; set; }
             public int Order { get; set; }
-            public string Name { get; set; }
-            public string SemesterGroupName { get; set; }
+            public IEnumerable<LessonContent> Contents { get; set; }
+
+            #endregion Properties
+        }
+
+        public class LessonContent
+        {
+            #region Properties
+
+            public string ImageUrl { get; set; }
+            public string Description { get; set; }
 
             #endregion Properties
         }

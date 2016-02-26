@@ -57,8 +57,17 @@ namespace MindSageWeb.Repositories.Models
 
             public string id { get; set; }
             public int Order { get; set; }
-            public string Name { get; set; }
-            public string SemesterGroupName { get; set; }
+            public IEnumerable<LessonContent> Contents { get; set; }
+
+            #endregion Properties
+        }
+
+        public class LessonContent
+        {
+            #region Properties
+
+            public string ImageUrl { get; set; }
+            public string Description { get; set; }
 
             #endregion Properties
         }

@@ -84,7 +84,7 @@ namespace MindSageWeb.Controllers
                 Name = selectedCourse.Name,
                 Price = selectedCourse.Price,
                 Title = selectedCourse.Title,
-                TotalWeeks = selectedCourse.Semesters.SelectMany(it => it.Units).Count(),
+                TotalWeeks = selectedCourse.Semesters.SelectMany(it => it.Units).SelectMany(it=>it.Lessons).Count(),
                 Semesters = selectedCourse.Semesters.Select(semester => new GetCourseDetailRespond.Semester
                 {
                     Description = semester.Description,
@@ -93,16 +93,19 @@ namespace MindSageWeb.Controllers
                     TotalWeeks = semester.Units.SelectMany(unit => unit.Lessons).Count(),
                     Units = semester.Units.Select(unit => new GetCourseDetailRespond.Unit
                     {
-                        Description = unit.FullDescription,
+                        Description = unit.Description,
                         Title = unit.Title,
                         TotalWeeks = unit.Lessons.Count(),
                         UnitNo = unit.Order,
-                        Lessons = unit.Lessons.Select(it => new GetCourseDetailRespond.Lesson
+                        Lessons = unit.Lessons.Select(lesson => new GetCourseDetailRespond.Lesson
                         {
-                            id = it.id,
-                            Name = it.Name,
-                            Order = it.Order,
-                            SemesterGroupName = it.SemesterGroupName
+                            id = lesson.id,
+                            Order = lesson.Order,
+                            Contents = lesson.Contents.Select(it=>new GetCourseDetailRespond.LessonContent
+                            {
+                                Description = it.Description,
+                                ImageUrl = it.ImageUrl
+                            }).ToList()
                         }).ToList()
                     }).ToList()
                 }).ToList()
