@@ -30,7 +30,7 @@
             cx.content.IsDiscussionAvailable
         -->
         <div data-accordion>
-            <div ng-repeat="item in cx.GetWeeks()" ng-class="{is-active:$first}" data-accordion-item>
+            <div ng-repeat="item in cx.GetWeeks()" ng-class="{is-active:$first}" data-accordion-item on-finish-render>
                 <a class="accordion-title">Week {{ item }}</a>
                 <div class="accordion-content" data-tab-content>
                     <div class="comment">
@@ -432,7 +432,3 @@
 
     </div>
 </div>
-
-<script>
-    $(document).foundation();
-</script>
