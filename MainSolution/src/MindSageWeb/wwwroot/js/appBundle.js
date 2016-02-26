@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals'])
+angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app', {
@@ -79,17 +79,22 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
                     templateUrl: 'tmpl/studentlist.html',
                     controller: 'app.studentlists.studentlistsController as cx',
                     resolve: {
-                        'students': ['$stateParams', 'app.studentlists.StudentListService',
+                        'list': ['$stateParams', 'app.studentlists.StudentListService',
                             function (params, svc) { return svc.GetStudentList(params.classRoomId); }]
                     }
                 }
             }
         })
             .state('app.course.teacherlist', {
-            url: '/teacherlist',
+            url: '/teacherlist/:classRoomId',
             views: {
                 'courseContent': {
-                    templateUrl: 'tmpl/teacherlist.html'
+                    templateUrl: 'tmpl/teacherlist.html',
+                    controller: 'app.teacherlists.teacherlistsController as cx',
+                    resolve: {
+                        'list': ['$stateParams', 'app.teacherlists.TeacherListService',
+                            function (params, svc) { return svc.GetStudentList(params.classRoomId); }]
+                    }
                 }
             }
         })
@@ -142,6 +147,14 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
         'app.shared'
     ]);
 })();
+(function () {
+    'use strict';
+    angular
+        .module('app.teacherlists', [
+        "ngResource",
+        'app.shared'
+    ]);
+})();
 var app;
 (function (app) {
     'use strict';
@@ -154,6 +167,7 @@ var app;
             this.LessonDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/discussions/:userId';
             this.StudentListUrl = apiUrl + '/friend/:userId/:classRoomId';
             this.JournalCommentUrl = apiUrl + '/journal/:targetUserId/:requestByUserId/:classRoomId';
+            this.TeacherListUrl = apiUrl + '/mycourse/:userId/:classRoomId/students';
         }
         AppConfig.$inject = ['defaultUrl'];
         return AppConfig;
@@ -334,7 +348,7 @@ var app;
                 this.content = content;
                 this.comment = comment;
                 this.userprofileSvc = userprofileSvc;
-                this.teacherView = this.content.IsTeacher;
+                this.teacherView = false;
                 this.currentUser = this.userprofileSvc.GetClientUserProfile();
             }
             LessonController.prototype.selectTeacherView = function () {
@@ -342,6 +356,12 @@ var app;
             };
             LessonController.prototype.selectStdView = function () {
                 this.teacherView = false;
+            };
+            LessonController.prototype.showDiscussion = function (id) {
+                this.openDiscussion = id;
+            };
+            LessonController.prototype.hideDiscussion = function (id) {
+                this.openDiscussion = "";
             };
             LessonController.$inject = ['$scope', 'content', 'comment', 'app.shared.ClientUserProfileService'];
             return LessonController;
@@ -468,11 +488,11 @@ var app;
     (function (studentlists) {
         'use strict';
         var studentlistsController = (function () {
-            function studentlistsController($scope, student) {
+            function studentlistsController($scope, list) {
                 this.$scope = $scope;
-                this.student = student;
+                this.list = list;
             }
-            studentlistsController.$inject = ['$scope', 'students'];
+            studentlistsController.$inject = ['$scope', 'list'];
             return studentlistsController;
         })();
         angular
@@ -518,5 +538,62 @@ var app;
             .module('app.studentlists')
             .service('app.studentlists.StudentListService', StudentListService);
     })(studentlists = app.studentlists || (app.studentlists = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var teacherlists;
+    (function (teacherlists) {
+        'use strict';
+        var teacherlistsController = (function () {
+            function teacherlistsController($scope, list) {
+                this.$scope = $scope;
+                this.list = list;
+            }
+            teacherlistsController.$inject = ['$scope', 'list'];
+            return teacherlistsController;
+        })();
+        angular
+            .module('app.teacherlists')
+            .controller('app.teacherlists.teacherlistsController', teacherlistsController);
+    })(teacherlists = app.teacherlists || (app.teacherlists = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var teacherlists;
+    (function (teacherlists) {
+        'use strict';
+        var GetStudentListRequest = (function () {
+            function GetStudentListRequest(userId, classRoomId) {
+                this.userId = userId;
+                this.classRoomId = classRoomId;
+            }
+            return GetStudentListRequest;
+        })();
+        teacherlists.GetStudentListRequest = GetStudentListRequest;
+    })(teacherlists = app.teacherlists || (app.teacherlists = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var teacherlists;
+    (function (teacherlists) {
+        'use strict';
+        var TeacherListService = (function () {
+            function TeacherListService(appConfig, $resource, userprofileSvc) {
+                this.$resource = $resource;
+                this.userprofileSvc = userprofileSvc;
+                this.svc = $resource(appConfig.TeacherListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
+            }
+            TeacherListService.prototype.GetStudentList = function (classRoomId) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.svc.query(new teacherlists.GetStudentListRequest(userId, classRoomId)).$promise;
+            };
+            TeacherListService.$inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
+            return TeacherListService;
+        })();
+        teacherlists.TeacherListService = TeacherListService;
+        angular
+            .module('app.teacherlists')
+            .service('app.teacherlists.TeacherListService', TeacherListService);
+    })(teacherlists = app.teacherlists || (app.teacherlists = {}));
 })(app || (app = {}));
 //# sourceMappingURL=appBundle.js.map

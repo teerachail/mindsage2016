@@ -1,7 +1,7 @@
 <div class="learning-video">
     <div class="row">
         <div class="flex-video widescreen">
-            <iframe width="560" height="315" src="https://www.youtube.com/embed/J4GUFDldIXQ" frameborder="0" allowfullscreen></iframe>
+            <iframe width="560" height="315" src="https://www.youtube.com/embed/PD5cCBhkgTg" frameborder="0" allowfullscreen></iframe>
         </div>
     </div>
 </div>
@@ -9,8 +9,10 @@
 <div class="row content-section">
     <div class="large-3 pull-9 columns">
         <h1 class="lesson-header">
-            Hello Sak <a class="float-right" href="#"><i class="fi-mail size-36"></i><span class="badge">1</span></a>
+            Hello Sak
         </h1>
+        <a href="#"><i class="fi-mail size-36"></i><span class="badge">1</span></a>
+        <a class="float-right" href="#" data-open="classModal"><i class="fi-list size-36"></i></a>
         <ul class="vertical menu menu-bg">
             <li class="active">
                 <a href="#" ui-sref="app.main.lesson({ 'classRoomId': 'ClassRoom01' })"><i class="fi-home size-36"></i> HOME</a>
@@ -34,6 +36,19 @@
     </div>
 
     <ui-view name="lessonContent"></ui-view>
+</div>
+<div class="reveal tiny" id="classModal" data-reveal>
+    <div class="modal-head"><h4 class="text-center">CLASS LIST</h4></div>
+    <div class="row">
+        <div class="medium-10 medium-centered large-10 large-centered columns">
+            <a class="large hollow  expanded button" href="#">Class A</a>
+            <a class="large expanded button" href="#">Class B</a>
+            <a class="large hollow  expanded button" href="#">Class C</a>
+        </div>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
 <script>
     $(document).foundation();

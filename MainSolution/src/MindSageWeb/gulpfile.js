@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='build, sass' />
+/// <binding AfterBuild='build' />
 /// <reference path="wwwroot/lib/angular/angular.min.js" />
 /// <reference path="wwwroot/lib/angular/angular.js" />
 /// <binding Clean='clean' />
