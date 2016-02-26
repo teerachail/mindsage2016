@@ -31,32 +31,62 @@ namespace MindSageWeb.Controllers
             _repo = courseCatalogRepo;
         }
 
-        internal object GetCourseDetail(object courseId)
-        {
-            throw new NotImplementedException();
-        }
-
         #endregion Constructors
 
         #region Methods
 
         // GET: api/course
         /// <summary>
-        /// Get all available courses
+        /// Get all available course groups
         /// </summary>
         [HttpGet]
-        public IEnumerable<CourseCatalogRespond> GetAvailableCourse()
+        public IEnumerable<CourseCatalogRespond> GetAvailableCourseGroups()
         {
-            var result = _repo.GetAvailableCourses()
+            var allCourses = _repo.GetAvailableCourses().ToList();
+            var anyCourses = allCourses != null && allCourses.Any();
+            if (!anyCourses) return Enumerable.Empty<CourseCatalogRespond>();
+
+            var courseGroup = allCourses.Select(it => it.GroupName).Distinct();
+
+            var result = courseGroup.Select(groupName => allCourses.FirstOrDefault(it => it.GroupName == groupName))
+                .Where(it => it != null)
                 .Where(it => !it.DeletedDate.HasValue)
                 .Select(it => new CourseCatalogRespond
                 {
                     id = it.id,
+                    Name = it.GroupName,
                     Description = it.ShortDescription,
-                    ImageUrl = it.ThumbnailImageUrl,
-                    Name = it.Name
-                })
-                .ToList();
+                    ImageUrl = it.ImageUrl,
+                }).ToList();
+            return result;
+        }
+
+        // GET: api/course/{course-catalog-id}/related
+        /// <summary>
+        /// Get related courses
+        /// </summary>
+        /// <param name="id">Group name</param>
+        [HttpGet("{id}/related")]
+        public IEnumerable<CourseCatalogRespond> GetRelatedCourses(string id)
+        {
+            var isArgumentValid = !string.IsNullOrEmpty(id);
+            if (!isArgumentValid) return Enumerable.Empty<CourseCatalogRespond>();
+
+            var courses = _repo.GetRelatedCoursesByGroupName(id).ToList();
+            var anyCourses = courses != null && courses.Any();
+            if (!anyCourses) return Enumerable.Empty<CourseCatalogRespond>();
+
+            var result = courses
+                .Where(it => it != null)
+                .Where(it => !it.DeletedDate.HasValue)
+                .Select(it => new CourseCatalogRespond
+                {
+                    id = it.id,
+                    Name = it.Name,
+                    GroupName = it.GroupName,
+                    Description = it.ShortDescription,
+                    ImageUrl = it.ImageUrl,
+                }).ToList();
             return result;
         }
 
@@ -74,17 +104,27 @@ namespace MindSageWeb.Controllers
             var selectedCourse = _repo.GetCourseCatalogById(id);
             if (selectedCourse == null) return null;
 
+            var relatedCourses = GetRelatedCourses(selectedCourse.GroupName)
+                .Where(it => it.id != id)
+                .Select(it=>new GetCourseDetailRespond.RelatedCourse
+                {
+                    CourseId = it.id,
+                    Name = it.Name
+                }).ToList();
+
             var result = new GetCourseDetailRespond
             {
                 id = selectedCourse.id,
+                GroupName = selectedCourse.GroupName,
                 CreatedDate = selectedCourse.CreatedDate,
                 Description = selectedCourse.FullDescription,
                 DescriptionImageUrl = selectedCourse.DescriptionImageUrl,
-                FullImageUrl = selectedCourse.FullImageUrl,
+                ImageUrl = selectedCourse.ImageUrl,
                 Name = selectedCourse.Name,
                 Price = selectedCourse.Price,
                 Title = selectedCourse.Title,
                 TotalWeeks = selectedCourse.Semesters.SelectMany(it => it.Units).SelectMany(it=>it.Lessons).Count(),
+                RelatedCourses = relatedCourses,
                 Semesters = selectedCourse.Semesters.Select(semester => new GetCourseDetailRespond.Semester
                 {
                     Description = semester.Description,

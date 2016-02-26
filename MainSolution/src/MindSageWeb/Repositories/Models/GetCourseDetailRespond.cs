@@ -10,16 +10,18 @@ namespace MindSageWeb.Repositories.Models
         #region Properties
 
         public string id { get; set; }
+        public string GroupName { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string DescriptionImageUrl { get; set; }
-        public string FullImageUrl { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public int TotalWeeks { get; set; }
 
         public IEnumerable<Semester> Semesters { get; set; }
+        public IEnumerable<RelatedCourse> RelatedCourses { get; set; }
 
         #endregion Properties
 
@@ -68,6 +70,16 @@ namespace MindSageWeb.Repositories.Models
 
             public string ImageUrl { get; set; }
             public string Description { get; set; }
+
+            #endregion Properties
+        }
+
+        public class RelatedCourse
+        {
+            #region Properties
+
+            public string CourseId { get; set; }
+            public string Name { get; set; }
 
             #endregion Properties
         }

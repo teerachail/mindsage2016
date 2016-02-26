@@ -17,7 +17,8 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var availableCourses = _courseCtrl.GetAvailableCourseGroups();
+            return View(availableCourses);
         }
 
         public IActionResult About()
@@ -41,8 +42,10 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Detail(string id)
         {
-            var course = _courseCtrl.GetCourseDetail(id);
-            return View(course);
+            var selectedCourse = _courseCtrl.GetCourseDetail(id);
+            if (selectedCourse == null) return RedirectToAction("Error");
+
+            return View(selectedCourse);
         }
     }
 }

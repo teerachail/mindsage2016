@@ -24,6 +24,12 @@ namespace MindSageWeb.Repositories
         /// </summary>
         IEnumerable<CourseCatalog> GetAvailableCourses();
 
+        /// <summary>
+        /// ขอข้อมูล course ที่อยู่ในกลุ่มเดียวกัน
+        /// </summary>
+        /// <param name="groupName">ชื่อกลุ่มที่ต้องการค้นหา</param>
+        IEnumerable<CourseCatalog> GetRelatedCoursesByGroupName(string groupName);
+
         #endregion Methods
     }
 }

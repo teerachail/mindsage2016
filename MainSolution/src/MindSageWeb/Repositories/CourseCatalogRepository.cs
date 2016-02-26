@@ -44,6 +44,18 @@ namespace MindSageWeb.Repositories
             return result;
         }
 
+        /// <summary>
+        /// ขอข้อมูล course ที่อยู่ในกลุ่มเดียวกัน
+        /// </summary>
+        /// <param name="groupName">ชื่อกลุ่มที่ต้องการค้นหา</param>
+        public IEnumerable<CourseCatalog> GetRelatedCoursesByGroupName(string groupName)
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<CourseCatalog>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && it.GroupName == groupName)
+                .ToEnumerable();
+            return qry;
+        }
+
         #endregion ICourseCatalogRepository members
     }
 }

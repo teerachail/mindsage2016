@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<MindSageWeb.Repositories.Models.CourseCatalogRespond>
+@{
     ViewData["Title"] = "Home Page";
 }
 <div class="orbit" role="region" aria-label="Favorite Space Pictures" data-orbit>
@@ -24,49 +25,20 @@
 </div>
 
 <div class="small-up-2 large-up-3 large-collapse inner">
-    <div class="columns">
-
-        <div class="image-wrapper overlay-fade-in-new-background">
-
-            <img src="http://placeimg.com/640/480/animals" />
-            <a href="home/detail">
-                <div class="image-overlay-content">
-                    <h1>ELEMENTARY</h1>
-                    <p class="price">Lorem ipsum Ea tempor sed ut in reprehenderit ex anim fugiat dolore nulla tempor cupidatat ut laborum.</p>
-
-                </div>
-            </a>
+    @foreach (var item in Model)
+    {
+        <div class="columns">
+            <div class="image-wrapper overlay-fade-in-new-background">
+                <img src="@item.ImageUrl" />
+                <a href="@Url.Action("Detail", "Home", new { @id = item.id })">
+                    <div class="image-overlay-content">
+                        <h1>@item.Name</h1>
+                        <p class="price">@item.Description</p>
+                    </div>
+                </a>
+            </div>
         </div>
-
-    </div>
-    <div class="columns">
-
-        <div class="image-wrapper overlay-fade-in-new-background">
-
-            <img src="http://placeimg.com/640/480/arch" />
-            <a href="#">
-                <div class="image-overlay-content">
-                    <h1>MIDDLE SCHOOL</h1>
-                    <p class="price">Lorem ipsum Ea tempor sed ut in reprehenderit ex anim fugiat dolore nulla tempor cupidatat ut laborum.</p>
-                </div>
-            </a>
-        </div>
-
-    </div>
-    <div class="columns">
-
-        <div class="image-wrapper overlay-fade-in-new-background">
-
-            <img src="http://placeimg.com/640/480/nature" />
-            <a href="#">
-                <div class="image-overlay-content">
-                    <h1>HIGH SCHOOL</h1>
-                    <p class="price">$189,000</p>
-                </div>
-            </a>
-        </div>
-
-    </div>
+    }
     <div class="columns">
 
         <div class="image-wrapper overlay-fade-in-new-background">
@@ -111,7 +83,6 @@
         </div>
 
     </div>
-
 </div>
 
 <div class="row column text-center content-section">

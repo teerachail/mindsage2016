@@ -18,8 +18,7 @@ namespace MindSageWeb.Repositories.Models
         public string ShortDescription { get; set; }
         public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
-        public string FullImageUrl { get; set; }
-        public string ThumbnailImageUrl { get; set; }
+        public string ImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 

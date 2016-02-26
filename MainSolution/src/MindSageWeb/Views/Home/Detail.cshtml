@@ -8,7 +8,7 @@
         <button class="orbit-previous" aria-label="previous"><span class="show-for-sr">Previous Slide</span>&#9664;</button>
         <button class="orbit-next" aria-label="next"><span class="show-for-sr">Next Slide</span>&#9654;</button>
         <li class="orbit-slide is-active">
-            <img src="http://placehold.it/2000x750?text=1">
+            <img src="@Model.ImageUrl">
         </li>
         <li class="orbit-slide">
             <img src="http://placehold.it/2000x750?text=2">
@@ -28,6 +28,13 @@
         <p>@Model.Price.ToString("C2")</p>
         <a class="button primary large-centered" href="#">PURCHASE</a>
     </div>
+    @foreach (var item in Model.RelatedCourses)
+    {
+        <div class="large-2 pull-10 columns purchase">
+            <p>@item.Name</p>
+            <a class="button primary large-centered" href="@Url.Action("Detail", "Home", new { @id = item.CourseId })">View</a>
+        </div>
+    }
 
     <div class="large-9 push-3 columns">
         <p class="detail-info">@Model.Name</p>
