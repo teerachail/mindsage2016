@@ -10,6 +10,8 @@
             this.clientUserProfile.UserProfileId = 'sakul@mindsage.com';
             this.clientUserProfile.ImageUrl = 'http://placehold.it/100x100';
             this.clientUserProfile.FullName = 'Sakul Jaruthanaset';
+            this.clientUserProfile.CurrentClassRoomId = "ClassRoom01";
+            this.clientUserProfile.CurrentLessonId = "Lesson01";
         }
 
         public GetClientUserProfile(): ClientUserProfile {
