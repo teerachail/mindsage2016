@@ -12,6 +12,7 @@
             this.clientUserProfile.FullName = 'Sakul Jaruthanaset';
             this.clientUserProfile.CurrentClassRoomId = "ClassRoom01";
             this.clientUserProfile.CurrentLessonId = "Lesson01";
+            this.clientUserProfile.IsTeacher = false;
         }
 
         public GetClientUserProfile(): ClientUserProfile {

@@ -7,6 +7,7 @@
         public ImageUrl: string;
         public CurrentClassRoomId: string;
         public CurrentLessonId: string;
+        public IsTeacher: boolean;
     }
 
     export class GetCommentsRequest {

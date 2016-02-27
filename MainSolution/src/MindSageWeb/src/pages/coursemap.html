@@ -5,14 +5,14 @@
             <div class="title float-left">
                 <h2>SEMESTER {{ item.SemesterName }}</h2>
             </div>
-                <a class="float-right icon" ng-if="$first" ng-click="isclose = !isclose">
-                    <i class="fi-plus size-24" ng-show="isclose"></i>
-                    <i class="fi-minus size-24" ng-show="!isclose"></i>
-                </a>
-                <a class="float-right icon" ng-if="!$first" ng-click="isclose = !isclose">
-                    <i class="fi-plus size-24" ng-show="!isclose"></i>
-                    <i class="fi-minus size-24" ng-show="isclose"></i>
-                </a>
+             <a class="float-right icon" ng-if="$first" ng-click="isclose = !isclose">
+                 <i class="fi-plus size-24" ng-show="isclose"></i>
+                 <i class="fi-minus size-24" ng-show="!isclose"></i>
+             </a>
+             <a class="float-right icon" ng-if="!$first" ng-click="isclose = !isclose">
+                 <i class="fi-plus size-24" ng-show="!isclose"></i>
+                 <i class="fi-minus size-24" ng-show="isclose"></i>
+             </a>
             <div class="accordion-item control" ng-class="{ 'undisplay':!$first }"  data-tab-content>
                 <div class="row small-up-2 medium-up-2 large-up-5 lesson-map" >
                     <div ng-repeat="lesson in item.LessonStatus" class="column lesson-icon">
