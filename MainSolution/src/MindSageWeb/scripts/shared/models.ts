@@ -54,4 +54,14 @@
             public UserProfileId: string) {
         }
     }
+
+    export class LikeDiscussionRequest {
+        constructor(
+            public ClassRoomId: string,
+            public LessonId: string,
+            public CommentId: string,
+            public DiscussionId: string,
+            public UserProfileId: string) {
+        }
+    }
 }
