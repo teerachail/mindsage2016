@@ -235,7 +235,7 @@ namespace MindSageWeb.Controllers
             var canAccessToTheComment = selectedComment != null && !selectedComment.DeletedDate.HasValue;
             if (!canAccessToTheComment) return null;
 
-            var discussions = selectedComment.Discussions
+            var discussions = (selectedComment.Discussions ?? Enumerable.Empty<Comment.Discussion>())
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)
                 .Select(it => new GetDiscussionRespond
@@ -248,8 +248,7 @@ namespace MindSageWeb.Controllers
                     CreatorDisplayName = it.CreatorDisplayName,
                     CreatedByUserProfileId = it.CreatedByUserProfileId,
                     CreatedDate = it.CreatedDate
-                })
-                .ToList();
+                }).ToList();
             return discussions;
         }
 

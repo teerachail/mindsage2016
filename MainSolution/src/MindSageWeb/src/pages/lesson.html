@@ -110,26 +110,28 @@
                     <div class="discussion">
                         <div class="row">
                             <div class="large-offset-2 large-9 columns">
-                                <h4><a href="#">Tim Turnner</a></h4>
+                                <h4>{{ cx.currentUser.FullName }}</h4>
                             </div>
 
-                            <div class="large-2 columns user-img"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-2 columns user-img"><img class="thumbnail" src="{{ cx.currentUser.ImageUrl }}"></div>
                             <div class="large-10 columns">
-                                <textarea rows="3"></textarea>
+                                <textarea ng-model="discussionMsg" rows="3"></textarea>
+                            </div>
+                            <div class="large-1 columns">
+                                <button ng-click="cx.CreateNewDiscussion(item.id, discussionMsg)" class="button">Post</button>
                             </div>
                         </div>
                     </div>
 
                     <div class="discussion">
-                        <div ng-repeat="discussion in cx.GetDiscussions(item.id)" class="row">
+                        <div ng-repeat="discussion in cx.discussions" class="row">
                             <div class="large-offset-2 large-9 columns">
-                                <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 2</span></h4>
+                                <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
                             </div>
-                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-2 columns"><img class="thumbnail" src="{{ discussion.CreatorImageUrl }}"></div>
                             <div class="large-10 columns">
                                 <p>
-                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                                    using the default <code>data-closable</code> parameters, and simply fade out.
+                                    {{ discussion.Description }}
                                     <span class="comment-button"><a><i class="fi-heart size-24"></i></a></span>
                                     <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>

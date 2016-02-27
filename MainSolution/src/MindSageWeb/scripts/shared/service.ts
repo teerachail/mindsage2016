@@ -62,7 +62,7 @@
 
         public GetDiscussions(lessonId: string, classRoomId: string, commentId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.svc.get(new GetDiscussionRequest(lessonId, classRoomId, commentId, userId)).$promise;
+            return this.svc.query(new GetDiscussionRequest(lessonId, classRoomId, commentId, userId)).$promise;
         }
 
     }
