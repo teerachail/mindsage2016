@@ -8,4 +8,12 @@
         public CurrentClassRoomId: string;
         public CurrentLessonId: string;
     }
+
+    export class GetCommentsRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string,
+            public userId: string) {
+        }
+    }
 }

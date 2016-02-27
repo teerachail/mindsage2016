@@ -42,7 +42,7 @@ namespace MindSageWeb.Repositories
         public IEnumerable<Comment> GetCommentsByLessonId(string lessonId, IEnumerable<string> creatorProfiles)
         {
             var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
-               .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId)
+               .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && creatorProfiles.Contains(it.CreatedByUserProfileId))
                .ToEnumerable();
             return qry;
         }

@@ -19,7 +19,28 @@
         }
     }
 
+    interface ICommentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetComments(data: T): T;
+    }
+
+    export class CommentService {
+
+        private svc: ICommentResourceClass<any>;
+
+        static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
+        constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
+            this.svc = <ICommentResourceClass<any>>$resource(appConfig.LessonCommentUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
+        }
+
+        public GetComments(id: string, classRoomId: string): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            return this.svc.get(new GetCommentsRequest(id, classRoomId, userId)).$promise;
+        }
+
+    }
+
     angular
         .module('app.shared')
-        .service('app.shared.ClientUserProfileService', ClientUserProfileService);
+        .service('app.shared.ClientUserProfileService', ClientUserProfileService)
+        .service('app.shared.CommentService', CommentService);
 }

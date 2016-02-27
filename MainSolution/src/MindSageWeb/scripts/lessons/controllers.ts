@@ -32,6 +32,10 @@ module app.lessons {
         //    return new DiscussionList[];
         //}
 
+        public CreateAComment(message: string) {
+            alert(message);
+        }
+
     }
 
     angular

@@ -25,7 +25,7 @@
                         resolve: {
                             'content': ['$stateParams', 'app.lessons.LessonService',
                                 (params, svc) => { return svc.GetContent(params.lessonId, params.classRoomId) }],
-                            'comment': ['$stateParams', 'app.lessons.LessonCommentService',
+                            'comment': ['$stateParams', 'app.shared.CommentService',
                                 (params, svc) => { return svc.GetComments(params.lessonId, params.classRoomId) }]
                         }
                     }
