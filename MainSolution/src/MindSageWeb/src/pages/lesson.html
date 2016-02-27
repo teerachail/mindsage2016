@@ -124,7 +124,7 @@
                     </div>
 
                     <div class="discussion">
-                        <div ng-repeat="discussion in cx.discussions" class="row">
+                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: item.id }" class="row">
                             <div class="large-offset-2 large-9 columns">
                                 <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
                             </div>

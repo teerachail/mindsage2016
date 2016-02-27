@@ -7,6 +7,7 @@ module app.lessons {
         public currentUser: any;
         public openDiscussion: string;
         public discussions = [];
+        private requestedCommentIds = [];
 
         static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService'];
         constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService) {
@@ -24,17 +25,27 @@ module app.lessons {
 
         public showDiscussion(item: any): void {
             this.openDiscussion = item.id;
-            this.GetDiscussions(item.id);
+            this.GetDiscussions(item);
         }
 
         public hideDiscussion(): void {
             this.openDiscussion = "";
         }
 
-        public GetDiscussions(commentId: string) {
+        public GetDiscussions(comment) {
+            const NoneDiscussion = 0;
+            if (comment.TotalDiscussions <= NoneDiscussion) return;
+            if (this.requestedCommentIds.filter(it=> it == comment.id).length > NoneDiscussion) return;
+
+            this.requestedCommentIds.push(comment.id);
             this.discussionSvc
-                .GetDiscussions(this.lessonId, this.classRoomId, commentId)
-                .then(it=> this.discussions = it);
+                .GetDiscussions(this.lessonId, this.classRoomId, comment.id)
+                .then(it=> {
+                    if (it == null) return;
+                    for (var index = 0; index < it.length; index++) {
+                        this.discussions.push(it[index]);
+                    }
+                });
         }
 
         public CreateNewComment(message: string) {
