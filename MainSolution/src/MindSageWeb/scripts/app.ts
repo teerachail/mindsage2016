@@ -83,7 +83,7 @@
             })
 
             .state('app.course.studentlist', {
-                url: '/studentlist/:classRoomId',
+                url: '/studentlist',
                 views: {
                     'courseContent': {
                         templateUrl: 'tmpl/studentlist.html',
@@ -97,7 +97,7 @@
             })
 
             .state('app.course.teacherlist', {
-                url: '/teacherlist/:classRoomId',
+                url: '/teacherlist',
                 views: {
                     'courseContent': {
                         templateUrl: 'tmpl/teacherlist.html',
