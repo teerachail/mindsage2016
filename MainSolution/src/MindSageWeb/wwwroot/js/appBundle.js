@@ -596,4 +596,3 @@ var app;
             .service('app.teacherlists.TeacherListService', TeacherListService);
     })(teacherlists = app.teacherlists || (app.teacherlists = {}));
 })(app || (app = {}));
-//# sourceMappingURL=appBundle.js.map
