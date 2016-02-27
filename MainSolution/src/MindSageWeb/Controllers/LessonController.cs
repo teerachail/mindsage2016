@@ -322,6 +322,19 @@ namespace MindSageWeb.Controllers
             _classRoomRepo.UpsertClassRoom(selectedClassRoom);
         }
 
+        // POST: api/lesson/readnote
+        /// <summary>
+        /// Hide the current teacher's message
+        /// </summary>
+        /// <param name="body">Request's information</param>
+        [HttpPost]
+        [Route("readnote")]
+        public void ReadNote(ReadNoteRequest body)
+        {
+            // TODO: Not implemented
+            throw new NotImplementedException();
+        }
+
         #endregion Methods
 
         //// GET: api/Lesson
