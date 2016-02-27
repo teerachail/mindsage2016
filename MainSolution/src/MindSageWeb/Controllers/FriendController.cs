@@ -81,10 +81,11 @@ namespace MindSageWeb.Controllers
                     var status = selectedRequest == null ? FriendRequest.RelationStatus.Unfriend : selectedRequest.Status;
                     var result = new GetFriendListRespond
                     {
-                        id = it.id,
+                        UserProfileId = it.id,
                         Name = it.Name,
                         ImageUrl = it.ImageProfileUrl,
-                        Status = status
+                        Status = status,
+                        RequestId = selectedRequest == null ? null : selectedRequest.id
                     };
                     return result;
                 })

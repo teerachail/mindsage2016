@@ -5,18 +5,31 @@
         GetStudentList(data: T): T;
     }
 
+    interface ITeacherRemoveStdResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        RemoveStudent(data: T): T;
+    }
+
     export class TeacherListService {
 
-        private svc: ITeacherListResourceClass<any>;
+        private GetStudentListsvc: ITeacherListResourceClass<any>;
+        private RemoveStudentsvc: ITeacherRemoveStdResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
-            this.svc = <ITeacherListResourceClass<any>>$resource(appConfig.TeacherListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId'});
+            this.GetStudentListsvc = <ITeacherListResourceClass<any>>$resource(appConfig.TeacherListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
+            this.RemoveStudentsvc = <ITeacherRemoveStdResourceClass<any>>$resource(appConfig.TeacherRemoveStdUrl,
+                { 'classRoomId': '@classRoomId', 'UserProfileId': '@UserProfileId', 'RemoveUserProfileId': '@RemoveUserProfileId' });
         }
 
         public GetStudentList(classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.svc.query(new GetStudentListRequest(userId, classRoomId)).$promise;
+            return this.GetStudentListsvc.query(new GetStudentListRequest(userId, classRoomId)).$promise;
+        }
+
+        public RemoveStudent(classRoomId: string, removeId: string): ng.IPromise<any> {
+            alert(removeId + ", that will remove.");
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            return this.RemoveStudentsvc.save(new RemoveStudentRequest(classRoomId, userId, removeId)).$promise;
         }
 
     }

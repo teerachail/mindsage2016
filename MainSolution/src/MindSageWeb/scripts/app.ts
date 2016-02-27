@@ -90,7 +90,8 @@
                         controller: 'app.studentlists.studentlistsController as cx',
                         resolve: {
                             'list': ['$stateParams', 'app.studentlists.StudentListService',
-                                (params, svc) => { return svc.GetStudentList(params.classRoomId) }]
+                                (params, svc) => { return svc.GetStudentList(params.classRoomId) }],
+                            'classRoomId': ['$stateParams', params => { return params.classRoomId }]
                         }
                     }
                 }
@@ -104,7 +105,8 @@
                         controller: 'app.teacherlists.teacherlistsController as cx',
                         resolve: {
                             'list': ['$stateParams', 'app.teacherlists.TeacherListService',
-                                (params, svc) => { return svc.GetStudentList(params.classRoomId) }]
+                                (params, svc) => { return svc.GetStudentList(params.classRoomId) }],
+                            'classRoomId': ['$stateParams', params => { return params.classRoomId }]
                         }
                     }
                 }

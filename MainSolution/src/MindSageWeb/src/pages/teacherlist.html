@@ -5,15 +5,17 @@
         </div>
     </div>
     <div class="row" ng-repeat="item in cx.list" data-equalizer>
-        <div class="small-6 column callout" data-equalizer-watch>
-            <img src="{{ item.ImageUrl }}"> {{ item.Name }}
-        </div>
+            <div class="small-6 column callout" data-equalizer-watch>
+                <a ui-sref="app.course.journal({ 'classRoomId': '{{ cx.classRoomId }}', 'targetUserId': '{{ item.id }}' })">
+                    <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
+                </a>
+            </div>
         <div class="small-6 column middleblock" data-equalizer-watch>
-            <button class="button">Remove student</button>
+            <button class="button" ng-click="cx.RemoveStd(item.id)">Remove student</button>
         </div>
     </div>
 
-    <div class="row" data-equalizer>
+    <!--<div class="row" data-equalizer>
         <div class="small-6 column callout" data-equalizer-watch>
             <img src="http://placeimg.com/50/50/people"> Name
         </div>
@@ -36,5 +38,5 @@
         <div class="small-6 column middleblock" data-equalizer-watch>
             <button class="button">Remove student</button>
         </div>
-    </div>
+    </div>-->
 </div>

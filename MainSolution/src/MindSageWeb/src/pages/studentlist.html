@@ -6,7 +6,9 @@
     </div>
     <div class="row" ng-repeat="item in cx.list" data-equalizer>
         <div class="small-6 column callout" data-equalizer-watch>
-            <img width="50" height="50" src="{{ item.ImageUrl }}"> {{ item.Name }}
+            <a ui-sref="app.course.journal({ 'classRoomId': '{{ cx.classRoomId }}', 'targetUserId': '{{ item.UserProfileId }}' })">
+                <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
+            </a>
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 0" data-equalizer-watch>
@@ -14,16 +16,16 @@
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 1" data-equalizer-watch>
-            <button class="button">Confirm</button>
-            <button class="button secondary">Delete Request</button>
+            <button class="button" ng-click="cx.ConfirmFriendRequest(item.UserProfileId, item.RequestId)">Confirm</button>
+            <button class="button secondary" ng-click="cx.DeleteFriendRequest(item.UserProfileId, item.RequestId)">Delete Request</button>
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 2" data-equalizer-watch>
-            <img src="http://placehold.it/50?text=Friend+image">
+            <img style="width: 50px; height: 50px;" src="../assets/img/icon/friend.png" />
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 3" data-equalizer-watch>
-            <button class="button secondary">Friend Request</button>
+            <button class="button secondary" ng-click="cx.SendFriendRequest(item.UserProfileId)">Friend Request</button>
         </div>
     </div>
 

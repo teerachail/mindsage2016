@@ -8,4 +8,12 @@
         }
     }
 
+    export class RemoveStudentRequest {
+        constructor(
+            public classRoomId: string,
+            public UserProfileId: string,
+            public RemoveUserProfileId: string) {
+        }
+    }
+
 }

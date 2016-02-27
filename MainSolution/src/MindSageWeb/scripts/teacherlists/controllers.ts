@@ -2,8 +2,13 @@
     'use strict';
 
     class teacherlistsController {
-        static $inject = ['$scope', 'list'];
-        constructor(private $scope, public list) {
+        static $inject = ['$scope', 'list', 'classRoomId', 'app.teacherlists.TeacherListService'];
+        constructor(private $scope, public list, public classRoomId: string, private teacherlistsSvc: app.teacherlists.TeacherListService) {
+        }
+
+        public RemoveStd(removeId: string) {
+            alert(removeId);
+            this.teacherlistsSvc.RemoveStudent(this.classRoomId, removeId);
         }
 
     }

@@ -7,8 +7,10 @@ module app {
         CourseMapContentUrl: string;
         LessonDiscussionUrl: string;
         StudentListUrl: string;
+        SendFriendRequestUrl: string;
         JournalCommentUrl: string;
         TeacherListUrl: string;
+        TeacherRemoveStdUrl: string;
         GetDiscussionUrl: string;
         CreateCommentUrl: string;
         CreateDiscussionUrl: string;
@@ -26,8 +28,10 @@ module app {
         public CourseMapContentUrl: string;
         public LessonDiscussionUrl: string;
         public StudentListUrl: string;
+        public SendFriendRequestUrl: string;
         public JournalCommentUrl: string;
         public TeacherListUrl: string;
+        public TeacherRemoveStdUrl: string;
         public GetDiscussionUrl: string;
         public CreateCommentUrl: string;
         public CreateDiscussionUrl: string;
@@ -46,8 +50,10 @@ module app {
             this.CourseMapContentUrl = apiUrl + '/mycourse/:id/:classRoomId/:action';
             this.LessonDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/discussions/:userId';
             this.StudentListUrl = apiUrl + '/friend/:userId/:classRoomId';
+            this.SendFriendRequestUrl = apiUrl + '/friend';
             this.JournalCommentUrl = apiUrl + '/journal/:targetUserId/:requestByUserId/:classRoomId';
             this.TeacherListUrl = apiUrl + '/mycourse/:userId/:classRoomId/students';
+            this.TeacherRemoveStdUrl = apiUrl + '/mycourse/removestud';
             this.GetDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/:commentId/discussions/:userId';
             this.CreateCommentUrl = apiUrl + '/comment';
             this.CreateDiscussionUrl = apiUrl + '/discussion';

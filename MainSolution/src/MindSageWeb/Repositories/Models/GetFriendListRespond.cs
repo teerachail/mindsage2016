@@ -9,10 +9,11 @@ namespace MindSageWeb.Repositories.Models
     {
         #region Properties
 
-        public string id { get; set; }
+        public string UserProfileId { get; set; }
         public string Name { get; set; }
         public string ImageUrl { get; set; }
         public FriendRequest.RelationStatus Status { get; set; }
+        public string RequestId { get; set; }
 
         #endregion Properties
     }

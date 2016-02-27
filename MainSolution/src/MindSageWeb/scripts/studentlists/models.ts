@@ -8,4 +8,13 @@
         }
     }
 
+    export class SendFriendRequest {
+        constructor(
+            public FromUserProfileId: string,
+            public ToUserProfileId: string,
+            public RequestId: string,
+            public IsAccept: boolean) {
+        }
+    }
+
 }
