@@ -3,8 +3,11 @@
 
     class CourseMapController {
 
-        static $inject = ['$scope', 'content', 'status'];
-        constructor(private $scope, public content, public status) {
+        private userProfile: any;
+
+        static $inject = ['$scope', 'content', 'status', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, public content, public status, private userSvc: app.shared.ClientUserProfileService) {
+            this.userProfile = userSvc.GetClientUserProfile();
         }
 
         public HaveAnyComments(lessonId: string): boolean {
