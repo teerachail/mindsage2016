@@ -5,8 +5,8 @@ module app.journals {
 
         private userprofile: any;
 
-        static $inject = ['$scope', 'content', 'app.shared.ClientUserProfileService'];
-        constructor(private $scope, public content, private svc: app.shared.ClientUserProfileService) {
+        static $inject = ['$scope', 'content', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService'];
+        constructor(private $scope, public content, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService) {
             this.userprofile = this.svc.GetClientUserProfile();
         }
 

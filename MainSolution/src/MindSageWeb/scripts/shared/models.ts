@@ -16,4 +16,13 @@
             public userId: string) {
         }
     }
+
+    export class GetDiscussionRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string,
+            public commentId: string,
+            public userId: string) {
+        }
+    }
 }

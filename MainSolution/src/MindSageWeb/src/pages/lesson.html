@@ -106,6 +106,7 @@
                 <a ng-show="item.id != cx.openDiscussion" ><div ng-click="cx.showDiscussion(item)">show discussion ({{ item.TotalDiscussions }})</div></a>
                 <a ng-show="item.id == cx.openDiscussion"><div ng-click="cx.hideDiscussion()">hide discussion ({{ item.TotalDiscussions }})</div></a>
                 <div class="undisplay" data-tab-content>
+
                     <div class="discussion">
                         <div class="row">
                             <div class="large-offset-2 large-9 columns">
@@ -120,7 +121,7 @@
                     </div>
 
                     <div class="discussion">
-                        <div class="row">
+                        <div ng-repeat="discussion in cx.GetDiscussions(item.id)" class="row">
                             <div class="large-offset-2 large-9 columns">
                                 <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 2</span></h4>
                             </div>
@@ -130,22 +131,6 @@
                                     But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
                                     using the default <code>data-closable</code> parameters, and simply fade out.
                                     <span class="comment-button"><a><i class="fi-heart size-24"></i></a></span>
-                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
-                                </p>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="large-offset-2 large-9 columns">
-                                <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
-                            </div>
-                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
-                            <div class="large-10 columns">
-                                <p>
-                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                                    using the default <code>data-closable</code> parameters, and simply fade out.
-                                    <span class="comment-button"><a> Edit</a></span>
-                                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
                                     <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>
                             </div>

@@ -3,8 +3,6 @@ module app.lessons {
     
     interface ILessonContentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetContent(data: T): T;
-        //GetComments(data: T): T;
-        //GetDiscussion(data: T): T;
     }
 
     export class LessonService {

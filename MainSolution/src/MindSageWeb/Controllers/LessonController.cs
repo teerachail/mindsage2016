@@ -206,7 +206,7 @@ namespace MindSageWeb.Controllers
         /// <param name="commentId">Comment id</param>
         /// <param name="userId">Request by user id</param>
         [HttpGet]
-        [Route("{id}/{classRoomId}/discussions/{userId}")]
+        [Route("{id}/{classRoomId}/{commentId}/discussions/{userId}")]
         public IEnumerable<GetDiscussionRespond> Discussions(string id, string classRoomId, string commentId, string userId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
