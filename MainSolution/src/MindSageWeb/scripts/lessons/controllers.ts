@@ -72,6 +72,10 @@ module app.lessons {
             this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
         }
 
+        public DeleteComment(commentId: string) {
+            this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, commentId, true, null);
+        }
+
         public DeleteDiscussion(commentId: string, discussionId: string) {
             this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, true, null);
         }

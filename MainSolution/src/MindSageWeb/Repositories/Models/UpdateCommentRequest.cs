@@ -6,13 +6,15 @@ using System.Threading.Tasks;
 
 namespace MindSageWeb.Repositories.Models
 {
-    public class RemoveCommentRequest
+    public class UpdateCommentRequest
     {
         #region Properties
 
         public string ClassRoomId { get; set; }
         public string LessonId { get; set; }
         public string UserProfileId { get; set; }
+        public bool IsDelete { get; set; }
+        public string Description { get; set; }
 
         #endregion Properties
     }

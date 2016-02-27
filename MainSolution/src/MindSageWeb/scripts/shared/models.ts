@@ -65,6 +65,17 @@
         }
     }
 
+    export class UpdateCommentRequest {
+        constructor(
+            public id: string,
+            public ClassRoomId: string,
+            public LessonId: string,
+            public UserProfileId: string,
+            public IsDelete: boolean,
+            public Description: string) {
+        }
+    }
+
     export class UpdateDiscussionRequest {
         constructor(
             public id: string,

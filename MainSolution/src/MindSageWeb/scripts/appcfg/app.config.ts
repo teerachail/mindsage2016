@@ -14,6 +14,7 @@ module app {
         CreateDiscussionUrl: string;
         LikeCommentUrl: string;
         LikeDiscussionUrl: string;
+        UpdateCommentUrl: string;
         UpdateDiscussionUrl: string;
     }
 
@@ -31,6 +32,7 @@ module app {
         public CreateDiscussionUrl: string;
         public LikeCommentUrl: string;
         public LikeDiscussionUrl: string;
+        public UpdateCommentUrl: string;
         public UpdateDiscussionUrl: string;
 
         static $inject = ['defaultUrl'];
@@ -49,6 +51,7 @@ module app {
             this.CreateDiscussionUrl = apiUrl + '/discussion';
             this.LikeCommentUrl = apiUrl + '/comment/like';
             this.LikeDiscussionUrl = apiUrl + '/discussion/like';
+            this.UpdateCommentUrl = apiUrl + '/comment/:id';
             this.UpdateDiscussionUrl = apiUrl + '/discussion/:id';
         }
     }

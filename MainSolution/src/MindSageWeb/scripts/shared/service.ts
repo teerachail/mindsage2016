@@ -29,11 +29,15 @@
     interface ILikeCommentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         LikeComment(data: T): T;
     }
+    interface IUpdateCommentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        UpdateComment(data: T): T;
+    }
     export class CommentService {
 
         private getCommentSvc: IGetCommentResourceClass<any>;
         private createCommentSvc: ICreateCommentResourceClass<any>;
         private likeCommentSvc: ILikeCommentResourceClass<any>;
+        private updateCommentSvc: IUpdateCommentResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
@@ -42,7 +46,11 @@
                 'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'UserProfileId': '@UserProfileId', 'Description': '@Description'
             });
             this.likeCommentSvc = <ILikeCommentResourceClass<any>>$resource(appConfig.LikeCommentUrl, {
-                'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'CommentId': '@CommentId', 'UserProfileId': '@UserProfileId' });
+                'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'CommentId': '@CommentId', 'UserProfileId': '@UserProfileId'
+            });
+            this.updateCommentSvc = <IUpdateCommentResourceClass<any>>$resource(appConfig.UpdateCommentUrl, {
+                'id': '@id', 'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'UserProfileId': '@UserProfileId', 'IsDelete': '@IsDelete', 'Description': '@Description'
+            }, { UpdateComment: { method: 'PUT' } });
         }
 
         public GetComments(lessonId: string, classRoomId: string): ng.IPromise<any> {
@@ -58,6 +66,11 @@
         public LikeComment(classRoomId: string, lessonId: string, commentId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             return this.likeCommentSvc.save(new LikeCommentRequest(classRoomId, lessonId, commentId, userId)).$promise;
+        }
+
+        public UpdateComment(classRoomId: string, lessonId: string, commentId: string, isDelete: boolean, message: string): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            return this.updateCommentSvc.UpdateComment(new UpdateCommentRequest(commentId, classRoomId, lessonId, userId, isDelete, message)).$promise;
         }
     }
 
