@@ -79,6 +79,20 @@ module app.lessons {
         public DeleteDiscussion(commentId: string, discussionId: string) {
             this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, true, null);
         }
+
+        public EditComment(commentId: string, message: string) {
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
+            this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, commentId, false, message);
+        }
+
+        public EditDiscussion(commentId: string, discussionId: string, message: string) {
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
+            this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, false, message);
+        }
     }
 
     angular
