@@ -30,86 +30,24 @@
             cx.content.IsDiscussionAvailable
         -->
         <div data-accordion>
-            <div ng-repeat="item in cx.GetWeeks()" ng-class="{is-active:$first}" data-accordion-item on-finish-render>
+            <div ng-repeat="item in cx.GetWeeks()" ng-class="{ 'is-active':$first }" data-accordion-item on-finish-render>
                 <a class="accordion-title">Week {{ item }}</a>
                 <div class="accordion-content" data-tab-content>
                     <div class="comment">
-                        <div ng-repeat="comment in cx.GetComments(item)" class="row" data-accordion data-allow-all-closed="true">
+                        <div ng-repeat="comment in cx.GetComments(item)" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
                             <div class="large-offset-2 large-9 columns">
-                                <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
+                                <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ comment.LessonWeek }}</span></h4>
                             </div>
-                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div class="large-2 columns"><img class="thumbnail" src="{{ comment.CreatorImageUrl }}"></div>
                             <div class="large-10 columns" data-accordion-item>
                                 <p>
-                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                                    using the default <code>data-closable</code> parameters, and simply fade out.
-                                    <span class="comment-button"><a> Edit</a></span>
+                                    {{ comment.Description }}
+                                    <span class="comment-button" ng-show="cx.currentUser.UserProfileId == comment.CreatedByUserProfileId"><a> Edit</a></span>
                                     <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
-                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
+                                    <span class="comment-button" ng-show="cx.currentUser.UserProfileId == comment.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>
-                                <a>show discussion (5)</a>
-                                <div class="undisplay" data-tab-content>
-                                    <div class="discussion">
-                                        <div class="row">
-                                            <div class="large-offset-2 large-9 columns">
-                                                <h4><a href="#">Tim Turnner</a></h4>
-                                            </div>
-
-                                            <div class="large-2 columns user-img"><img class="thumbnail" src="http://placehold.it/100x100"></div>
-                                            <div class="large-10 columns">
-                                                <textarea rows="3"></textarea>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                    <div class="discussion">
-                                        <div class="row">
-                                            <div class="large-offset-2 large-9 columns">
-                                                <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 2</span></h4>
-                                            </div>
-                                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
-                                            <div class="large-10 columns">
-                                                <p>
-                                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                                                    using the default <code>data-closable</code> parameters, and simply fade out.
-                                                    <span class="comment-button"><a><i class="fi-heart size-24"></i></a></span>
-                                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
-                                                </p>
-                                            </div>
-                                        </div>
-
-                                        <div class="row">
-                                            <div class="large-offset-2 large-9 columns">
-                                                <h4><a href="#">Tim Turnner</a><span class="comment-time"> week 2</span></h4>
-                                            </div>
-                                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
-                                            <div class="large-10 columns">
-                                                <p>
-                                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                                                    using the default <code>data-closable</code> parameters, and simply fade out.
-                                                    <span class="comment-button"><a> Edit</a></span>
-                                                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
-                                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row" data-accordion data-allow-all-closed="true">
-                            <div class="large-offset-2 large-9 columns">
-                                <h4><a href="#">Jim Gordon</a><span class="comment-time"> week 1</span></h4>
-                            </div>
-                            <div class="large-2 columns"><img class="thumbnail" src="http://placehold.it/100x100"></div>
-                            <div class="large-10 columns" data-accordion-item>
-                                <p>
-                                    But when you're done reading it, click the close button in the corner to dismiss this alert. I'm
-                                    using the default <code>data-closable</code> parameters, and simply fade out.
-                                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
-                                </p>
-                                <a>hide discussion (5)</a>
+                                <a ng-show="comment.id != cx.openDiscussion"><div ng-click="cx.showDiscussion(comment)">show discussion ({{ comment.TotalDiscussions }})</div></a>
+                                <a ng-show="comment.id == cx.openDiscussion"><div ng-click="cx.hideDiscussion()">hide discussion ({{ comment.TotalDiscussions }})</div></a>
                                 <div class="undisplay" data-tab-content>
                                     <div class="discussion">
                                         <div class="row">

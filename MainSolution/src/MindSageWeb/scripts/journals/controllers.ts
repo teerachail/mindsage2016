@@ -4,6 +4,7 @@ module app.journals {
     class JournalController {
 
         private userprofile: any;
+        public openDiscussion: string;
 
         static $inject = ['$scope', 'content', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService'];
         constructor(private $scope, public content, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService) {
@@ -26,6 +27,14 @@ module app.journals {
         public GetComments(week: number) {
             var qry = this.content.Comments.filter(it=> it.LessonWeek == week);
             return qry;
+        }
+
+        public showDiscussion(item: any): void {
+            this.openDiscussion = item.id;
+        }
+
+        public hideDiscussion(): void {
+            this.openDiscussion = "";
         }
 
     }
