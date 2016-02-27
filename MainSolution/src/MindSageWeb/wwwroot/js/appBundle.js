@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists'])
+angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app', {
@@ -22,8 +22,10 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
                     resolve: {
                         'content': ['$stateParams', 'app.lessons.LessonService',
                             function (params, svc) { return svc.GetContent(params.lessonId, params.classRoomId); }],
-                        'comment': ['$stateParams', 'app.lessons.LessonCommentService',
-                            function (params, svc) { return svc.GetComments(params.lessonId, params.classRoomId); }]
+                        'comment': ['$stateParams', 'app.shared.CommentService',
+                            function (params, svc) { return svc.GetComments(params.lessonId, params.classRoomId); }],
+                        'classRoomId': ['$stateParams', function (params) { return params.classRoomId; }],
+                        'lessonId': ['$stateParams', function (params) { return params.lessonId; }]
                     }
                 }
             }
@@ -116,6 +118,20 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
         'app.shared'
     ]);
 })();
+var module = angular.module('appDirectives', [])
+    .directive('onFinishRender', function ($timeout) {
+    return {
+        restrict: 'A',
+        link: function (scope, element, attr) {
+            if (scope.$last === true) {
+                $timeout(function () {
+                    scope.$emit('ngRepeatFinished');
+                    $(document).foundation();
+                }, 100);
+            }
+        }
+    };
+});
 (function () {
     'use strict';
     angular
@@ -137,6 +153,14 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
     angular
         .module('app.shared', [
         "ngResource"
+    ]);
+})();
+(function () {
+    'use strict';
+    angular
+        .module('app.sidemenus', [
+        "ngResource",
+        'app.shared'
     ]);
 })();
 (function () {
@@ -168,6 +192,8 @@ var app;
             this.StudentListUrl = apiUrl + '/friend/:userId/:classRoomId';
             this.JournalCommentUrl = apiUrl + '/journal/:targetUserId/:requestByUserId/:classRoomId';
             this.TeacherListUrl = apiUrl + '/mycourse/:userId/:classRoomId/students';
+            this.GetDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/:commentId/discussions/:userId';
+            this.CreateCommentUrl = apiUrl + '/comment';
         }
         AppConfig.$inject = ['defaultUrl'];
         return AppConfig;
@@ -264,10 +290,11 @@ var app;
     (function (journals) {
         'use strict';
         var JournalController = (function () {
-            function JournalController($scope, content, svc) {
+            function JournalController($scope, content, svc, discussionSvc) {
                 this.$scope = $scope;
                 this.content = content;
                 this.svc = svc;
+                this.discussionSvc = discussionSvc;
                 this.userprofile = this.svc.GetClientUserProfile();
             }
             JournalController.prototype.GetWeeks = function () {
@@ -286,7 +313,7 @@ var app;
                 var qry = this.content.Comments.filter(function (it) { return it.LessonWeek == week; });
                 return qry;
             };
-            JournalController.$inject = ['$scope', 'content', 'app.shared.ClientUserProfileService'];
+            JournalController.$inject = ['$scope', 'content', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService'];
             return JournalController;
         })();
         angular
@@ -343,11 +370,17 @@ var app;
     (function (lessons) {
         'use strict';
         var LessonController = (function () {
-            function LessonController($scope, content, comment, userprofileSvc) {
+            function LessonController($scope, content, classRoomId, lessonId, comment, userprofileSvc, discussionSvc, commentSvc) {
                 this.$scope = $scope;
                 this.content = content;
+                this.classRoomId = classRoomId;
+                this.lessonId = lessonId;
                 this.comment = comment;
                 this.userprofileSvc = userprofileSvc;
+                this.discussionSvc = discussionSvc;
+                this.commentSvc = commentSvc;
+                this.discussions = [];
+                this.requestedCommentIds = [];
                 this.teacherView = false;
                 this.currentUser = this.userprofileSvc.GetClientUserProfile();
             }
@@ -357,13 +390,38 @@ var app;
             LessonController.prototype.selectStdView = function () {
                 this.teacherView = false;
             };
-            LessonController.prototype.showDiscussion = function (id) {
-                this.openDiscussion = id;
+            LessonController.prototype.showDiscussion = function (item) {
+                this.openDiscussion = item.id;
+                this.GetDiscussions(item);
             };
-            LessonController.prototype.hideDiscussion = function (id) {
+            LessonController.prototype.hideDiscussion = function () {
                 this.openDiscussion = "";
             };
-            LessonController.$inject = ['$scope', 'content', 'comment', 'app.shared.ClientUserProfileService'];
+            LessonController.prototype.GetDiscussions = function (comment) {
+                var _this = this;
+                var NoneDiscussion = 0;
+                if (comment.TotalDiscussions <= NoneDiscussion)
+                    return;
+                if (this.requestedCommentIds.filter(function (it) { return it == comment.id; }).length > NoneDiscussion)
+                    return;
+                this.requestedCommentIds.push(comment.id);
+                this.discussionSvc
+                    .GetDiscussions(this.lessonId, this.classRoomId, comment.id)
+                    .then(function (it) {
+                    if (it == null)
+                        return;
+                    for (var index = 0; index < it.length; index++) {
+                        _this.discussions.push(it[index]);
+                    }
+                });
+            };
+            LessonController.prototype.CreateNewComment = function (message) {
+                this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message);
+            };
+            LessonController.prototype.CreateNewDiscussion = function (commentId, message) {
+                alert('CommentId:' + commentId + ', Message:' + message);
+            };
+            LessonController.$inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService'];
             return LessonController;
         })();
         angular
@@ -385,15 +443,6 @@ var app;
             return LessonContentRequest;
         })();
         lessons.LessonContentRequest = LessonContentRequest;
-        var LessonCommentRequest = (function () {
-            function LessonCommentRequest(id, classRoomId, userId) {
-                this.id = id;
-                this.classRoomId = classRoomId;
-                this.userId = userId;
-            }
-            return LessonCommentRequest;
-        })();
-        lessons.LessonCommentRequest = LessonCommentRequest;
         var LessonDiscussionRequest = (function () {
             function LessonDiscussionRequest(id, classRoomId, commentId, userId) {
                 this.id = id;
@@ -425,24 +474,9 @@ var app;
             return LessonService;
         })();
         lessons.LessonService = LessonService;
-        var LessonCommentService = (function () {
-            function LessonCommentService(appConfig, $resource, userprofileSvc) {
-                this.$resource = $resource;
-                this.userprofileSvc = userprofileSvc;
-                this.svc = $resource(appConfig.LessonCommentUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
-            }
-            LessonCommentService.prototype.GetComments = function (id, classRoomId) {
-                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-                return this.svc.get(new lessons.LessonCommentRequest(id, classRoomId, userId)).$promise;
-            };
-            LessonCommentService.$inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
-            return LessonCommentService;
-        })();
-        lessons.LessonCommentService = LessonCommentService;
         angular
             .module('app.lessons')
-            .service('app.lessons.LessonService', LessonService)
-            .service('app.lessons.LessonCommentService', LessonCommentService);
+            .service('app.lessons.LessonService', LessonService);
     })(lessons = app.lessons || (app.lessons = {}));
 })(app || (app = {}));
 var app;
@@ -456,6 +490,35 @@ var app;
             return ClientUserProfile;
         })();
         shared.ClientUserProfile = ClientUserProfile;
+        var GetCommentsRequest = (function () {
+            function GetCommentsRequest(id, classRoomId, userId) {
+                this.id = id;
+                this.classRoomId = classRoomId;
+                this.userId = userId;
+            }
+            return GetCommentsRequest;
+        })();
+        shared.GetCommentsRequest = GetCommentsRequest;
+        var GetDiscussionRequest = (function () {
+            function GetDiscussionRequest(id, classRoomId, commentId, userId) {
+                this.id = id;
+                this.classRoomId = classRoomId;
+                this.commentId = commentId;
+                this.userId = userId;
+            }
+            return GetDiscussionRequest;
+        })();
+        shared.GetDiscussionRequest = GetDiscussionRequest;
+        var CreateCommentRequest = (function () {
+            function CreateCommentRequest(ClassRoomId, LessonId, UserProfileId, Description) {
+                this.ClassRoomId = ClassRoomId;
+                this.LessonId = LessonId;
+                this.UserProfileId = UserProfileId;
+                this.Description = Description;
+            }
+            return CreateCommentRequest;
+        })();
+        shared.CreateCommentRequest = CreateCommentRequest;
     })(shared = app.shared || (app.shared = {}));
 })(app || (app = {}));
 var app;
@@ -470,6 +533,8 @@ var app;
                 this.clientUserProfile.UserProfileId = 'sakul@mindsage.com';
                 this.clientUserProfile.ImageUrl = 'http://placehold.it/100x100';
                 this.clientUserProfile.FullName = 'Sakul Jaruthanaset';
+                this.clientUserProfile.CurrentClassRoomId = "ClassRoom01";
+                this.clientUserProfile.CurrentLessonId = "Lesson01";
             }
             ClientUserProfileService.prototype.GetClientUserProfile = function () {
                 return this.clientUserProfile;
@@ -477,10 +542,68 @@ var app;
             return ClientUserProfileService;
         })();
         shared.ClientUserProfileService = ClientUserProfileService;
+        var CommentService = (function () {
+            function CommentService(appConfig, $resource, userprofileSvc) {
+                this.$resource = $resource;
+                this.userprofileSvc = userprofileSvc;
+                this.getCommentSvc = $resource(appConfig.LessonCommentUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
+                this.createCommentSvc = $resource(appConfig.CreateCommentUrl, {
+                    'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'UserProfileId': '@UserProfileId', 'Description': '@Description' });
+            }
+            CommentService.prototype.GetComments = function (lessonId, classRoomId) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.getCommentSvc.get(new shared.GetCommentsRequest(lessonId, classRoomId, userId)).$promise;
+            };
+            CommentService.prototype.CreateNewComment = function (classRoomId, lessonId, description) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.createCommentSvc.save(new shared.CreateCommentRequest(classRoomId, lessonId, userId, description)).$promise;
+            };
+            CommentService.$inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
+            return CommentService;
+        })();
+        shared.CommentService = CommentService;
+        var DiscussionService = (function () {
+            function DiscussionService(appConfig, $resource, userprofileSvc) {
+                this.$resource = $resource;
+                this.userprofileSvc = userprofileSvc;
+                this.svc = $resource(appConfig.GetDiscussionUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'commentId': '@commentId', 'userId': '@userId' });
+            }
+            DiscussionService.prototype.GetDiscussions = function (lessonId, classRoomId, commentId) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.svc.query(new shared.GetDiscussionRequest(lessonId, classRoomId, commentId, userId)).$promise;
+            };
+            DiscussionService.$inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
+            return DiscussionService;
+        })();
+        shared.DiscussionService = DiscussionService;
         angular
             .module('app.shared')
-            .service('app.shared.ClientUserProfileService', ClientUserProfileService);
+            .service('app.shared.ClientUserProfileService', ClientUserProfileService)
+            .service('app.shared.CommentService', CommentService)
+            .service('app.shared.DiscussionService', DiscussionService);
     })(shared = app.shared || (app.shared = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var sidemenus;
+    (function (sidemenus) {
+        'use strict';
+        var SideMenuController = (function () {
+            function SideMenuController($scope, userSvc) {
+                this.$scope = $scope;
+                this.userSvc = userSvc;
+                this.userProfile = userSvc.GetClientUserProfile();
+            }
+            SideMenuController.prototype.GetUserProfileId = function () {
+                return encodeURI(this.userProfile.UserProfileId);
+            };
+            SideMenuController.$inject = ['$scope', 'app.shared.ClientUserProfileService'];
+            return SideMenuController;
+        })();
+        angular
+            .module('app.sidemenus')
+            .controller('app.sidemenus.SideMenuController', SideMenuController);
+    })(sidemenus = app.sidemenus || (app.sidemenus = {}));
 })(app || (app = {}));
 var app;
 (function (app) {

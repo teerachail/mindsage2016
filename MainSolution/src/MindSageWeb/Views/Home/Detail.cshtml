@@ -26,7 +26,7 @@
     <div class="large-2 pull-10 columns purchase">
         <p>@Model.Name</p>
         <p>@Model.Price.ToString("C2")</p>
-        <a class="button primary large-centered" href="#">PURCHASE</a>
+        <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
     </div>
     @foreach (var item in Model.RelatedCourses)
     {
@@ -187,4 +187,23 @@
             <img class="thumbnail" src="http://placehold.it/100x100">
         </div>
     </div>
+</div>
+
+<div class="reveal tiny" id="purchaseModal" data-reveal>
+    <div class="modal-head"><h4 class="text-center">COMPLETE PAYMENT</h4></div>
+    <div class="row">
+        <div class="medium-10 medium-centered large-10 large-centered columns">
+            <input type="radio" name="payment" value="Paypal" id="Paypal" checked="checked" required><label for="Paypal">Pay with Paypal</label>
+            <div><img src="http://modernshuttle.com/wp-content/uploads/2015/07/credit_card_logos-1.png" /></div>
+
+            <input type="radio" name="payment" value="Code" id="Code"><label for="Code">Use Key Code</label>
+            <input type="text" />
+            <div class="text-center">
+                <button type="submit" class="button text-center">PURCHASE</button>
+            </div>
+        </div>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
 </div>
