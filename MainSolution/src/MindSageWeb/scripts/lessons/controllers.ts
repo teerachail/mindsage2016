@@ -9,8 +9,8 @@ module app.lessons {
         public discussions = [];
         private requestedCommentIds = [];
 
-        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService'];
-        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService) {
+        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
+        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.teacherView = false;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
         }
@@ -92,6 +92,10 @@ module app.lessons {
             if (message.length <= NoneContentLength) return;
 
             this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, false, message);
+        }
+
+        public LikeLesson() {
+            this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
         }
     }
 

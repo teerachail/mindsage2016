@@ -18,4 +18,12 @@ module app.lessons {
         }
     }
 
+    export class LikeLessonRequest {
+        constructor(
+            public ClassRoomId: string,
+            public LessonId: string,
+            public UserProfileId: string) {
+        }
+    }
+
 }
