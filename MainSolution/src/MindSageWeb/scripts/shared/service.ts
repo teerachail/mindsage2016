@@ -19,23 +19,33 @@
         }
     }
 
-    interface ICommentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+    interface IGetCommentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetComments(data: T): T;
+    }
+    interface ICreateCommentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        CreateNewComment(data: T): T;
     }
     export class CommentService {
 
-        private svc: ICommentResourceClass<any>;
+        private getCommentSvc: IGetCommentResourceClass<any>;
+        private createCommentSvc: ICreateCommentResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
-            this.svc = <ICommentResourceClass<any>>$resource(appConfig.LessonCommentUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
+            this.getCommentSvc = <IGetCommentResourceClass<any>>$resource(appConfig.LessonCommentUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
+            this.createCommentSvc = <ICreateCommentResourceClass<any>>$resource(appConfig.CreateCommentUrl, {
+                'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'UserProfileId': '@UserProfileId', 'Description': '@Description' });
         }
 
         public GetComments(lessonId: string, classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.svc.get(new GetCommentsRequest(lessonId, classRoomId, userId)).$promise;
+            return this.getCommentSvc.get(new GetCommentsRequest(lessonId, classRoomId, userId)).$promise;
         }
 
+        public CreateNewComment(classRoomId: string, lessonId: string, description: string): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            return this.createCommentSvc.save(new CreateCommentRequest(classRoomId, lessonId, userId, description)).$promise;
+        }
     }
 
     interface IDiscussionResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {

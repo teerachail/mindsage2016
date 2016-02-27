@@ -25,4 +25,13 @@
             public userId: string) {
         }
     }
+
+    export class CreateCommentRequest {
+        constructor(
+            public ClassRoomId: string,
+            public LessonId: string,
+            public UserProfileId: string,
+            public Description: string) {
+        }
+    }
 }

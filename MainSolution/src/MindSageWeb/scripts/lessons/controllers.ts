@@ -7,8 +7,8 @@ module app.lessons {
         public currentUser: any;
         public openDiscussion: string;
 
-        static $inject = ['$scope', 'content', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService'];
-        constructor(private $scope, public content, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService) {
+        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService'];
+        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService) {
             this.teacherView = false;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
         }
@@ -36,8 +36,8 @@ module app.lessons {
             //    .then(it=> it);
         }
 
-        public CreateAComment(message: string) {
-           // TODO: Create a comment
+        public CreateNewComment(message: string) {
+            this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message);
         }
 
     }
