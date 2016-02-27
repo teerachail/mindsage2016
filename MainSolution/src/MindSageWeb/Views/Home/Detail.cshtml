@@ -23,12 +23,20 @@
 </div>
 
 <div class="row content-section">
-    <div class="large-2 pull-10 columns purchase">
-        <p>@Model.Name</p>
-        <p>@Model.Price.ToString("C2")</p>
-        <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
+    <div class="large-3 pull-9 columns">
+        <div class="purchase">
+            <p>@Model.Name</p>
+            <p>@Model.Price.ToString("C2")</p>
+            <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
+        </div>
+        @foreach (var item in Model.RelatedCourses)
+        {
+            <div class="purchase">
+                <p>@item.Name</p>
+                <a class="button primary large-centered" href="@Url.Action("Detail", "Home", new { @id = item.CourseId })">View</a>
+            </div>
+        }
     </div>
-
     <div class="large-9 push-3 columns">
         <p class="detail-info">@Model.Name</p>
         <h1 class="detail-header">@Model.Title</h1>

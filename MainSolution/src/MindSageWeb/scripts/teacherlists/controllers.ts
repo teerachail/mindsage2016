@@ -7,7 +7,6 @@
         }
 
         public RemoveStd(removeId: string) {
-            alert(removeId);
             this.teacherlistsSvc.RemoveStudent(this.classRoomId, removeId);
         }
 

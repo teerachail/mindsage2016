@@ -27,7 +27,6 @@
         }
 
         public RemoveStudent(classRoomId: string, removeId: string): ng.IPromise<any> {
-            alert(removeId + ", that will remove.");
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             return this.RemoveStudentsvc.save(new RemoveStudentRequest(classRoomId, userId, removeId)).$promise;
         }
