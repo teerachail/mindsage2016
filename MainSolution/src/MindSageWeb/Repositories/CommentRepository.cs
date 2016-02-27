@@ -64,7 +64,8 @@ namespace MindSageWeb.Repositories
              .Set(it => it.LastNotifyRequest, data.LastNotifyRequest)
              .Set(it => it.LastNotifyComplete, data.LastNotifyComplete)
              .Set(it => it.CreatedDate, data.CreatedDate)
-             .Set(it => it.DeletedDate, data.DeletedDate);
+             .Set(it => it.DeletedDate, data.DeletedDate)
+             .Set(it => it.Discussions, data.Discussions);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
             MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)

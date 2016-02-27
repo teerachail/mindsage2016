@@ -11,6 +11,7 @@ module app {
         TeacherListUrl: string;
         GetDiscussionUrl: string;
         CreateCommentUrl: string;
+        CreateDiscussionUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -24,6 +25,7 @@ module app {
         public TeacherListUrl: string;
         public GetDiscussionUrl: string;
         public CreateCommentUrl: string;
+        public CreateDiscussionUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -38,6 +40,7 @@ module app {
             this.TeacherListUrl = apiUrl + '/mycourse/:userId/:classRoomId/students';
             this.GetDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/:commentId/discussions/:userId';
             this.CreateCommentUrl = apiUrl + '/comment';
+            this.CreateDiscussionUrl = apiUrl + '/discussion';
         }
     }
     

@@ -34,4 +34,14 @@
             public Description: string) {
         }
     }
+
+    export class CreateDiscussionRequest {
+        constructor(
+            public ClassRoomId: string,
+            public LessonId: string,
+            public CommentId: string,
+            public UserProfileId: string,
+            public Description: string) {
+        }
+    }
 }

@@ -33,6 +33,8 @@ module app.lessons {
         }
 
         public GetDiscussions(comment) {
+            if (comment == null) return;
+
             const NoneDiscussion = 0;
             if (comment.TotalDiscussions <= NoneDiscussion) return;
             if (this.requestedCommentIds.filter(it=> it == comment.id).length > NoneDiscussion) return;
@@ -49,11 +51,17 @@ module app.lessons {
         }
 
         public CreateNewComment(message: string) {
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
             this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message);
         }
 
         public CreateNewDiscussion(commentId: string, message: string) {
-            alert('CommentId:' + commentId + ', Message:' + message);
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
+            this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message);
         }
 
     }
