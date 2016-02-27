@@ -72,6 +72,9 @@ module app.lessons {
             this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
         }
 
+        public DeleteDiscussion(commentId: string, discussionId: string) {
+            this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, true, null);
+        }
     }
 
     angular

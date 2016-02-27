@@ -70,11 +70,15 @@
     interface ILikeDiscussionResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         LikeDiscussion(data: T): T;
     }
+    interface IUpdateDiscussionResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        UpdateDiscussion(data: T): T;
+    }
     export class DiscussionService {
 
         private getDiscussionSvc: IGetDiscussionResourceClass<any>;
         private createDiscussionSvc: IGetDiscussionResourceClass<any>;
         private likeDiscussionSvc: ILikeDiscussionResourceClass<any>;
+        private updateDiscussionSvc: IUpdateDiscussionResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
@@ -85,6 +89,9 @@
             this.likeDiscussionSvc = <ILikeDiscussionResourceClass<any>>$resource(appConfig.LikeDiscussionUrl, {
                 'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'CommentId': '@CommentId', 'DiscussionId': '@DiscussionId', 'UserProfileId': '@UserProfileId', 'Description': '@Description'
             });
+            this.updateDiscussionSvc = <IUpdateDiscussionResourceClass<any>>$resource(appConfig.UpdateDiscussionUrl, {
+                'id': '@id', 'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'CommentId': '@CommentId', 'UserProfileId': '@UserProfileId', 'IsDelete': '@IsDelete', 'Description': '@Description'
+            }, { UpdateDiscussion: { method: 'PUT' } });
         }
 
         public GetDiscussions(lessonId: string, classRoomId: string, commentId: string): ng.IPromise<any> {
@@ -100,6 +107,11 @@
         public LikeDiscussion(classRoomId: string, lessonId: string, commentId: string, discussionId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             return this.likeDiscussionSvc.save(new LikeDiscussionRequest(classRoomId, lessonId, commentId, discussionId, userId)).$promise;
+        }
+
+        public UpdateDiscussion(classRoomId: string, lessonId: string, commentId: string, discussionId: string, isDelete: boolean, message: string): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            return this.updateDiscussionSvc.UpdateDiscussion(new UpdateDiscussionRequest(discussionId, classRoomId, lessonId, commentId, userId, isDelete, message)).$promise;
         }
     }
 

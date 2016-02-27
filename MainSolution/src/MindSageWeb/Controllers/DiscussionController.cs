@@ -117,7 +117,7 @@ namespace MindSageWeb.Controllers
         /// <param name="id">Discussion's id</param>
         /// <param name="body">Request information</param>
         [HttpPut("{id}")]
-        public void Put(string id, RemoveDiscussionRequest body)
+        public void Put(string id, UpdateDiscussionRequest body)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
                 && body != null
@@ -140,11 +140,19 @@ namespace MindSageWeb.Controllers
             var selectedDiscussion = selectedComment.Discussions.FirstOrDefault(it => it.id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
             if (selectedDiscussion == null) return;
 
-            var canDeleteTheDiscussion = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase)
-                || selectedDiscussion.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
-            if (!canDeleteTheDiscussion) return;
+            var canUpsertTheDiscussion = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase)
+                    || selectedDiscussion.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
+            if (!canUpsertTheDiscussion) return;
 
-            selectedDiscussion.DeletedDate = now;
+            if (body.IsDelete)
+            {
+                selectedDiscussion.DeletedDate = now;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(body.Description)) return;
+                selectedDiscussion.Description = body.Description;
+            }
             _commentRepo.UpsertComment(selectedComment);
         }
 

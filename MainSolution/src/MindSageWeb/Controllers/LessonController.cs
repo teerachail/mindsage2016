@@ -185,7 +185,8 @@ namespace MindSageWeb.Controllers
                     ClassRoomId = it.ClassRoomId,
                     LessonId = it.LessonId,
                     CreatedByUserProfileId = it.CreatedByUserProfileId,
-                    TotalDiscussions = (it.Discussions ?? Enumerable.Empty<Comment.Discussion>()).Count(),
+                    TotalDiscussions = (it.Discussions ?? Enumerable.Empty<Comment.Discussion>())
+                        .Where(dit => !dit.DeletedDate.HasValue).Count(),
                     CreatedDate = it.CreatedDate
                 }).ToList();
 

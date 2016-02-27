@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace MindSageWeb.Repositories.Models
 {
-    public class RemoveDiscussionRequest
+    public class UpdateDiscussionRequest
     {
         #region Properties
 
@@ -14,6 +14,8 @@ namespace MindSageWeb.Repositories.Models
         public string LessonId { get; set; }
         public string CommentId { get; set; }
         public string UserProfileId { get; set; }
+        public bool IsDelete { get; set; }
+        public string Description { get; set; }
 
         #endregion Properties
     }

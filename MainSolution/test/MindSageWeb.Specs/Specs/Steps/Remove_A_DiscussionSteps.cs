@@ -20,7 +20,7 @@ namespace MindSageWeb.Specs.Steps
             mockCommentRepo.Setup(it => it.UpsertComment(It.IsAny<Comment>()));
 
             var discussionCtrl = ScenarioContext.Current.Get<DiscussionController>();
-            var body = new RemoveDiscussionRequest
+            var body = new UpdateDiscussionRequest
             {
                 ClassRoomId = classRoomId,
                 LessonId = lessonId,

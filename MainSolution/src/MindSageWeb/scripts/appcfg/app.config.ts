@@ -14,6 +14,7 @@ module app {
         CreateDiscussionUrl: string;
         LikeCommentUrl: string;
         LikeDiscussionUrl: string;
+        UpdateDiscussionUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -30,6 +31,7 @@ module app {
         public CreateDiscussionUrl: string;
         public LikeCommentUrl: string;
         public LikeDiscussionUrl: string;
+        public UpdateDiscussionUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -47,6 +49,7 @@ module app {
             this.CreateDiscussionUrl = apiUrl + '/discussion';
             this.LikeCommentUrl = apiUrl + '/comment/like';
             this.LikeDiscussionUrl = apiUrl + '/discussion/like';
+            this.UpdateDiscussionUrl = apiUrl + '/discussion/:id';
         }
     }
     

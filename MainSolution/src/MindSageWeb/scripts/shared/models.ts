@@ -64,4 +64,16 @@
             public UserProfileId: string) {
         }
     }
+
+    export class UpdateDiscussionRequest {
+        constructor(
+            public id: string,
+            public ClassRoomId: string,
+            public LessonId: string,
+            public CommentId: string,
+            public UserProfileId: string,
+            public IsDelete: boolean,
+            public Description: string) {
+        }
+    }
 }

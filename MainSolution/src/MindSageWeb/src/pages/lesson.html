@@ -133,7 +133,7 @@
                                 <p>
                                     {{ discussion.Description }}
                                     <span class="comment-button" ng-click="cx.LikeDiscussion(item.id, discussion.id)"><a><i class="fi-heart size-24"></i></a></span>
-                                    <span class="comment-button"><a><i class="fi-trash size-24"></i></a></span>
+                                    <span class="comment-button" ng-click="cx.DeleteDiscussion(item.id, discussion.id)"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>
                             </div>
                         </div>
