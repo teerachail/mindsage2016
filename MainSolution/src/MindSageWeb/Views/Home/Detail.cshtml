@@ -28,13 +28,6 @@
         <p>@Model.Price.ToString("C2")</p>
         <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
     </div>
-    @foreach (var item in Model.RelatedCourses)
-    {
-        <div class="large-2 pull-10 columns purchase">
-            <p>@item.Name</p>
-            <a class="button primary large-centered" href="@Url.Action("Detail", "Home", new { @id = item.CourseId })">View</a>
-        </div>
-    }
 
     <div class="large-9 push-3 columns">
         <p class="detail-info">@Model.Name</p>
