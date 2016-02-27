@@ -44,4 +44,13 @@
             public Description: string) {
         }
     }
+
+    export class LikeCommentRequest {
+        constructor(
+            public ClassRoomId: string,
+            public LessonId: string,
+            public CommentId: string,
+            public UserProfileId: string) {
+        }
+    }
 }

@@ -64,6 +64,10 @@ module app.lessons {
             this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message);
         }
 
+        public LikeComment(commentId: string) {
+            this.commentSvc.LikeComment(this.classRoomId, this.lessonId, commentId);
+        }
+
     }
 
     angular

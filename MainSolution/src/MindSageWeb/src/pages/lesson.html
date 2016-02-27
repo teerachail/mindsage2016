@@ -100,7 +100,7 @@
             <div class="large-10 columns" data-accordion-item>
                 <p>{{ item.Description }}
                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId"><a> Edit</a></span>
-                    <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
+                    <span class="comment-button like" ng-click="cx.LikeComment(item.id)"><a><i class="fi-heart size-24"></i></a></span>
                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
                 </p>
                 <a ng-show="item.id != cx.openDiscussion" ><div ng-click="cx.showDiscussion(item)">show discussion ({{ item.TotalDiscussions }})</div></a>
