@@ -10,6 +10,10 @@
             this.userProfile = userSvc.GetClientUserProfile();
         }
 
+        public GetUserProfileId(): string {
+            return encodeURI(this.userProfile.UserProfileId);
+        }
+
     }
 
     angular

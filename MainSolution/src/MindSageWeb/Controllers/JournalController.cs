@@ -61,7 +61,6 @@ namespace MindSageWeb.Controllers
         [Route("{targetUserId}/{requestByUserId}/{classRoomId}")]
         public GetCommentRespond Get(string targetUserId, string requestByUserId, string classRoomId)
         {
-            targetUserId = requestByUserId;
             var noDataRespond = new GetCommentRespond { Comments = Enumerable.Empty<CommentInformation>() };
             var areArgumentsValid = !string.IsNullOrEmpty(targetUserId) && !string.IsNullOrEmpty(requestByUserId);
             if (!areArgumentsValid) return noDataRespond;
@@ -73,8 +72,9 @@ namespace MindSageWeb.Controllers
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
                 .Any(it => it.ToUserProfileId.Equals(targetUserId));
+            var isSelftRequest = requestByUserId == targetUserId;
 
-            if (!isFriend)
+            if (!isFriend && !isSelftRequest)
             {
                 var targetUserProfile = _userprofileRepo.GetUserProfileById(targetUserId);
                 if (requestByUserId == null) return noDataRespond;
@@ -127,9 +127,10 @@ namespace MindSageWeb.Controllers
                 .OrderByDescending(it => it.LessonWeek)
                 .ToList();
 
+            var canCreateADiscussion = isFriend || isSelftRequest;
             return new GetCommentRespond
             {
-                IsDiscussionAvailable = isFriend,
+                IsDiscussionAvailable = canCreateADiscussion,
                 Comments = comments
             };
         }

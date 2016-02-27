@@ -9,7 +9,7 @@
             <a href="#" ui-sref="app.main.lesson({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'lessonId': '{{ cx.userProfile.CurrentLessonId }}' })"><i class="fi-home size-36"></i> HOME</a>
         </li>
         <li>
-            <a href="#" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'targetUserId': '{{ cx.userProfile.UserProfileId }}' })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
+            <a href="#" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'targetUserId': '{{ cx.GetUserProfileId() }}' })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
         </li>
         <li>
             <a href="#" ui-sref="app.course.coursemap({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i class="fi-foundation size-36"></i> COURSE MAP</a>
