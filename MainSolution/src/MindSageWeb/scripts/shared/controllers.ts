@@ -14,6 +14,13 @@
     }
 
     class CourseLayoutController {
+
+        private ads: any;
+
+        static $inject = ['app.shared.ClientUserProfileService'];
+        constructor(private clientUserProfileSvc: app.shared.ClientUserProfileService) {
+            this.ads = this.clientUserProfileSvc.Advertisments;
+        }
     }
 
     class MainController {
