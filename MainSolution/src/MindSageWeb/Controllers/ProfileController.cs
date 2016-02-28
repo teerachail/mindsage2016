@@ -13,6 +13,30 @@ namespace MindSageWeb.Controllers
     [Route("api/[controller]")]
     public class ProfileController : Controller
     {
+        #region Fields
+
+        private IUserProfileRepository _userProfileRepo;
+        private IClassCalendarRepository _classCalendarRepo;
+
+        #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize Profile API
+        /// </summary>
+        /// <param name="userprofileRepo">User profile repository</param>
+        /// <param name="classCalendarRepo">Class calendar repository</param>
+        public ProfileController(IUserProfileRepository userprofileRepo, IClassCalendarRepository classCalendarRepo)
+        {
+            _userProfileRepo = userprofileRepo;
+            _classCalendarRepo = classCalendarRepo;
+        }
+
+        #endregion Constructors
+
+        #region Methods
+
         // PUT: api/profile/{user-id}
         /// <summary>
         /// Update user profile
@@ -23,6 +47,12 @@ namespace MindSageWeb.Controllers
         [Route("{id}")]
         public void Put(string id, UpdateProfileRequest body)
         {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+               && body != null
+               && !string.IsNullOrEmpty(body.Name)
+               && !string.IsNullOrEmpty(body.SchoolName);
+            if (!areArgumentsValid) return;
+
             // TODO: Not implemented
             throw new NotImplementedException();
         }
@@ -36,9 +66,23 @@ namespace MindSageWeb.Controllers
         [Route("{id}")]
         public GetUserProfileRespond Get(string id)
         {
+            var isArgumentValid = !string.IsNullOrEmpty(id);
+            if (!isArgumentValid) return null;
+
+            var userprofile = _userProfileRepo.GetUserProfileById(id);
+            if (userprofile == null) return null;
+
+            var isUserProfileDataValid = userprofile.Subscriptions != null && userprofile.Subscriptions.Any();
+            if (!isUserProfileDataValid) return new GetUserProfileRespond
+            {
+                // TODO: Not implemented
+            };
+
             // TODO: Not implemented
             throw new NotImplementedException();
         }
+
+        #endregion Methods
 
         //// GET: api/profile
         //public IEnumerable<string> Get()
