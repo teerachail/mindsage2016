@@ -129,7 +129,7 @@
                             Start Date
                         </label>
                     </div>
-                    <div ng-show="cx.courseInfo.StartDate == null">
+                    <div ng-show="cx.courseInfo.StartDate != null">
                         <div class="small-1 columns">
                             <label>
                                 <a><img width="30" src="../assets/img/logo/calendar.png" /></a>
@@ -142,7 +142,7 @@
                             </label>
                         </div>
                     </div>
-                    <div ng-show="cx.courseInfo.StartDate != null">
+                    <div ng-show="cx.courseInfo.StartDate == null">
                         <div class="small-5 columns">
                             <input type="Date" ng-model="cx.courseInfo.StartDate" />
                         </div>
