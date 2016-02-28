@@ -5,7 +5,7 @@ module app.lessons {
 
         public teacherView: boolean;
         public currentUser: any;
-        public openDiscussion: string;
+        public message: string;
         public discussions = [];
         private requestedCommentIds = [];
 
@@ -24,13 +24,9 @@ module app.lessons {
             this.teacherView = false;
         }
 
-        public showDiscussion(item: any): void {
-            this.openDiscussion = item.id;
+        public showDiscussion(item: any, open: boolean) {
             this.GetDiscussions(item);
-        }
-
-        public hideDiscussion(): void {
-            this.openDiscussion = "";
+            return !open;
         }
 
         public GetDiscussions(comment) {
@@ -103,7 +99,28 @@ module app.lessons {
             this.lessonSvc.ReadNote(this.classRoomId);
         }
 
-    }
+        public EditOpen(message: string, open: boolean) {
+            this.message = message;
+            return !open;
+        }
+
+        public SaveEdit(messageId: number, save: boolean) {
+            this.comment.Comments[messageId].Description = this.message;
+            this.EditComment(this.comment.Comments[messageId].id, this.message);
+            return !save;
+        }
+
+        public SaveEditDiscus(commentId: string, messageId: number, save: boolean) {
+            this.discussions[messageId].Description = this.message;
+            this.EditDiscussion(commentId, this.discussions[messageId].id, this.message);
+            return !save;
+        }
+
+        public CancelEdit(save: boolean) {
+            return !save;
+        }
+
+    } 
 
     angular
         .module('app.lessons')
