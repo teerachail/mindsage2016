@@ -14,6 +14,11 @@ namespace MindSageWeb.Controllers
     public class ProfileController : Controller
     {
         // PUT: api/profile/{user-id}
+        /// <summary>
+        /// Update user profile
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="body">Request's information</param>
         [HttpPut]
         [Route("{id}")]
         public void Put(string id, UpdateProfileRequest body)
@@ -23,6 +28,10 @@ namespace MindSageWeb.Controllers
         }
 
         // GET: api/profile/{user-id}
+        /// <summary>
+        /// Get user profile information
+        /// </summary>
+        /// <param name="id">User profile id</param>
         [HttpGet]
         [Route("{id}")]
         public GetUserProfileRespond Get(string id)

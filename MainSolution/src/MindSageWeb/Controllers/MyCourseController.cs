@@ -439,9 +439,29 @@ namespace MindSageWeb.Controllers
         }
 
         // GET: api/mycourse/{user-id}/{class-room-id}/info
+        /// <summary>
+        /// Get course information
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <returns></returns>
         [HttpGet]
         [Route("{id}/{classRoomId}/info")]
         public GetCourseInfoRespond GetCourseInfo(string id, string classRoomId)
+        {
+            // TODO: Not implemented
+            throw new NotImplementedException();
+        }
+
+        // PUT: api/mycourse/{user-id}
+        /// <summary>
+        /// Update course information
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="body">Request's information</param>
+        [HttpPut]
+        [Route("{id}")]
+        public void Put(string id, UpdateCourseInfoRequest body)
         {
             // TODO: Not implemented
             throw new NotImplementedException();
