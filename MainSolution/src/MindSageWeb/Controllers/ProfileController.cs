@@ -17,6 +17,7 @@ namespace MindSageWeb.Controllers
 
         private IUserProfileRepository _userProfileRepo;
         private IClassCalendarRepository _classCalendarRepo;
+        private IDateTime _dateTime;
 
         #endregion Fields
 
@@ -27,10 +28,13 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="userprofileRepo">User profile repository</param>
         /// <param name="classCalendarRepo">Class calendar repository</param>
-        public ProfileController(IUserProfileRepository userprofileRepo, IClassCalendarRepository classCalendarRepo)
+        public ProfileController(IUserProfileRepository userprofileRepo, 
+            IClassCalendarRepository classCalendarRepo,
+            IDateTime dateTime)
         {
             _userProfileRepo = userprofileRepo;
             _classCalendarRepo = classCalendarRepo;
+            _dateTime = dateTime;
         }
 
         #endregion Constructors
@@ -72,14 +76,36 @@ namespace MindSageWeb.Controllers
             var userprofile = _userProfileRepo.GetUserProfileById(id);
             if (userprofile == null) return null;
 
-            var isUserProfileDataValid = userprofile.Subscriptions != null && userprofile.Subscriptions.Any();
-            if (!isUserProfileDataValid) return new GetUserProfileRespond
+            var isUserProfileSubscriptionValid = userprofile.Subscriptions != null && userprofile.Subscriptions.Any(it => it.LastActiveDate.HasValue);
+            var userProfileInfo = new GetUserProfileRespond
             {
-                // TODO: Not implemented
+                UserProfileId = userprofile.id,
+                FullName = userprofile.Name,
+                ImageUrl = userprofile.ImageProfileUrl,
+                SchoolName = userprofile.SchoolName,
+                IsPrivateAccout = userprofile.IsPrivateAccount,
+                IsReminderOnceTime = userprofile.CourseReminder == UserProfile.ReminderFrequency.Once
             };
+            if (!isUserProfileSubscriptionValid) return userProfileInfo;
 
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var lastActiveSubscription = userprofile.Subscriptions
+                .Where(it => it.LastActiveDate.HasValue)
+                .OrderByDescending(it => it.LastActiveDate)
+                .FirstOrDefault();
+
+            userProfileInfo.CurrentClassRoomId = lastActiveSubscription.ClassRoomId;
+            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(lastActiveSubscription.ClassRoomId);
+            var isClassCalendarValid = classCalendar != null && classCalendar.LessonCalendars != null && classCalendar.LessonCalendars.Any();
+            if (!isClassCalendarValid) return userProfileInfo;
+
+            var now = _dateTime.GetCurrentTime();
+            var lessonCalendarQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue);
+
+            var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderBy(it => it.BeginDate).FirstOrDefault();
+            if (currentLesson == null) return userProfileInfo;
+            else userProfileInfo.CurrentLessonId = currentLesson.LessonId;
+
+            return userProfileInfo;
         }
 
         #endregion Methods
