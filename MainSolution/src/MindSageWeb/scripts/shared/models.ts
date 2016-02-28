@@ -5,6 +5,9 @@
         public UserProfileId: string;
         public FullName: string;
         public ImageUrl: string;
+        public SchoolName: string;
+        public IsPrivateAccout: boolean;
+        public IsReminderOnceTime: boolean;
         public CurrentClassRoomId: string;
         public CurrentLessonId: string;
         public IsTeacher: boolean;

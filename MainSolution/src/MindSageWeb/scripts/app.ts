@@ -4,7 +4,11 @@
 
             .state('app', {
                 url: '/app',
-                templateUrl: 'tmpl/layout.html'
+                templateUrl: 'tmpl/layout.html',
+                controller: 'app.shared.MainController as appcx',
+                resolve: {
+                    'userInfo': ['app.shared.GetProfileService', svc => { return svc.GetProfile() }]
+                }
             })
 
             .state('app.main', {

@@ -15,6 +15,9 @@
             this.clientUserProfile.IsTeacher = true;
         }
 
+        public UpdateUserProfile(userInfo: ClientUserProfile): void {
+            this.clientUserProfile = userInfo;
+        }
         public GetClientUserProfile(): ClientUserProfile {
             return this.clientUserProfile;
         }
