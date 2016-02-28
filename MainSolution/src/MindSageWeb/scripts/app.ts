@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus'])    
+﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings'])    
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
@@ -116,7 +116,8 @@
                 url: '/setting',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/setting.html'
+                        templateUrl: 'tmpl/setting.html',
+                        controller: 'app.settings.SettingController as cx'
                     }
                 }
             })

@@ -20,6 +20,7 @@ module app {
         UpdateDiscussionUrl: string;
         LikeLessonUrl: string;
         ReadNoteUrl: string;
+        UpdateProfileUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -42,6 +43,7 @@ module app {
         public UpdateDiscussionUrl: string;
         public LikeLessonUrl: string;
         public ReadNoteUrl: string;
+        public UpdateProfileUrl: string;
         
 
         static $inject = ['defaultUrl'];
@@ -66,6 +68,7 @@ module app {
             this.UpdateDiscussionUrl = apiUrl + '/discussion/:id';
             this.LikeLessonUrl = apiUrl + '/lesson/like';
             this.ReadNoteUrl = apiUrl + '/lesson/readnote';
+            this.UpdateProfileUrl = apiUrl + '/profile/:id';
         }
     }
     

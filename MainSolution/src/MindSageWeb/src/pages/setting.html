@@ -16,7 +16,7 @@
                     <div class="small-8 columns">
                         <label>
                             Name
-                            <input type="text">
+                            <input ng-model="Name" type="text">
                         </label>
                         <label>
                             Email
@@ -50,8 +50,13 @@
                     <div class="small-6 columns">
                         <label>
                             School
-                            <input type="text">
+                            <input ng-model="SchoolName" type="text">
                         </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-6 columns">
+                        <div class="button" ng-click="cx.UpdateProfile(Name, SchoolName,false,true)">Save</div>
                     </div>
                 </div>
             </div>

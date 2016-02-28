@@ -15,7 +15,7 @@ namespace MindSageWeb.Controllers
     {
         // PUT: api/profile/{user-id}
         [HttpPut]
-        [Route("like")]
+        [Route("{id}")]
         public void Put(string id, UpdateProfileRequest body)
         {
             // TODO: Not implemented
