@@ -58,10 +58,16 @@
                     </div>
                     <div>
                         <h4 class="extra-header">Extra learning</h4>
+                        <ul>
+                            <li>
+                                <p>Primary</p>
+                                <div ng-click="mcx.ChangeVideo(cx.content.PrimaryContentURL)">{{ cx.content.PrimaryContentURL }}</div>
+                            </li>
+                        </ul>
                         <ul ng-repeat="item in cx.content.ExtraContentUrls">
                             <li class="extra">
                                 <p>Extra {{ $index + 1 }}</p>
-                                <a>{{ item }}</a>
+                                <div ng-click="mcx.ChangeVideo(item)">{{ item }}</div>
                             </li>
                         </ul>
                     </div>
