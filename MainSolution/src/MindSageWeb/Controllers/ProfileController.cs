@@ -22,6 +22,15 @@ namespace MindSageWeb.Controllers
             throw new NotImplementedException();
         }
 
+        // GET: api/profile/{user-id}
+        [HttpGet]
+        [Route("{id}")]
+        public GetUserProfileRespond Get(string id)
+        {
+            // TODO: Not implemented
+            throw new NotImplementedException();
+        }
+
         //// GET: api/profile
         //public IEnumerable<string> Get()
         //{
