@@ -95,7 +95,7 @@
         </div>
         <a class="small-2 large-2 columns">Edit</a>
         <div class="small-6 large-4 columns">
-            <a class="viewlist" ui-sref="app.course.studentlist">View Student List</a>
+            <a class="viewlist" ui-sref="app.course.teacherlist({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })">View Student List</a>
         </div>
         <div class="control undisplay" data-tab-content>
             <div class="large-12">
