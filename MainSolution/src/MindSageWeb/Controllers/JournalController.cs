@@ -125,6 +125,7 @@ namespace MindSageWeb.Controllers
                 })
                 .Where(it => it != null)
                 .OrderByDescending(it => it.LessonWeek)
+                .ThenByDescending(it => it.CreatedDate)
                 .ToList();
 
             var canCreateADiscussion = isFriend || isSelftRequest;
