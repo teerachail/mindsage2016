@@ -63,7 +63,7 @@ namespace MindSageWeb.Controllers
 
             var userProfile = _userProfileRepo.GetUserProfileById(id);
             var isUserProfileValid = userProfile != null && !userProfile.DeletedDate.HasValue;
-            if (isUserProfileValid) return;
+            if (!isUserProfileValid) return;
 
             userProfile.Name = body.Name;
             userProfile.SchoolName = body.SchoolName;
