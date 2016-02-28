@@ -449,8 +449,41 @@ namespace MindSageWeb.Controllers
         [Route("{id}/{classRoomId}/info")]
         public GetCourseInfoRespond GetCourseInfo(string id, string classRoomId)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var isArgumentValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
+            if (!isArgumentValid) return null;
+
+            var userProfile = _userprofileRepo.GetUserProfileById(id);
+            if (userProfile == null || userProfile.DeletedDate.HasValue) return null;
+
+            var classRoom = _classRoomRepo.GetClassRoomById(classRoomId);
+            if (classRoom == null || classRoom.DeletedDate.HasValue) return null;
+
+            var isUserProfileDataValid = userProfile.Subscriptions != null
+                && userProfile.Subscriptions.Any();
+            if (!isUserProfileDataValid) return null;
+
+            var lastSubscription = userProfile.Subscriptions.OrderByDescending(x => x.LastActiveDate).FirstOrDefault(x => !x.DeletedDate.HasValue);
+            if (lastSubscription == null) return null;
+
+            var courseInfoRespond = new GetCourseInfoRespond()
+            {
+                UserProfileId = id,
+                ClassRoomId = classRoomId,
+                IsTeacher = lastSubscription.Role == UserProfile.AccountRole.Teacher,
+                ClassName = lastSubscription.ClassRoomName,
+                NumberOfStudents = 0,
+            };
+
+            if (lastSubscription.Role == UserProfile.AccountRole.Teacher)
+            {
+                var studentKey = _studentKeyRepo.GetStudentKeyByClassRoomId(classRoomId);
+                if (studentKey != null && !studentKey.DeletedDate.HasValue) courseInfoRespond.CurrentStudentCode = studentKey.Code;
+            }
+
+            var classCarlendar = _classCalendarRepo.GetClassCalendarByClassRoomId(lastSubscription.ClassRoomId);
+            if (classCarlendar != null && !classCarlendar.DeletedDate.HasValue) courseInfoRespond.StartDate = classCarlendar.BeginDate;
+
+            return courseInfoRespond;
         }
 
         // PUT: api/mycourse/{user-id}

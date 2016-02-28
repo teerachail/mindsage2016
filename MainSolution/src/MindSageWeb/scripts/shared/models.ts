@@ -11,6 +11,10 @@
         public CurrentClassRoomId: string;
         public CurrentLessonId: string;
         public IsTeacher: boolean;
+        public ClassName: string;
+        public CurrentStudentCode: string;
+        public NumberOfStudents: number;
+        public StartDate: any;
     }
 
     export class GetCommentsRequest {
