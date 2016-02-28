@@ -17,6 +17,11 @@
         public StartDate: any;
     }
 
+    export class Advertisment {
+        public ImageUrl: string;
+        public LinkUrl: string;
+    }
+
     export class GetCommentsRequest {
         constructor(
             public id: string,

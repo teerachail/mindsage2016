@@ -2,6 +2,8 @@
     'use strict';
 
     export class ClientUserProfileService {
+
+        public Advertisments: Advertisment[];
         private clientUserProfile: ClientUserProfile;
 
         constructor() {

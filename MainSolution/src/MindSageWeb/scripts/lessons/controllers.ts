@@ -13,6 +13,7 @@ module app.lessons {
         constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.teacherView = false;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
+            this.userprofileSvc.Advertisments = this.content.Advertisments;
         }
 
         public selectTeacherView(): void {
