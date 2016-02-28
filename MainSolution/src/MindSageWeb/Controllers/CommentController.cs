@@ -128,7 +128,15 @@ namespace MindSageWeb.Controllers
             var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
             if (!isCommentOwner) return;
 
-            selectedComment.DeletedDate = now;
+            if (body.IsDelete)
+            {
+                selectedComment.DeletedDate = now;
+            }
+            else
+            {
+                if (string.IsNullOrEmpty(body.Description)) return;
+                selectedComment.Description = body.Description;
+            }
             _commentRepo.UpsertComment(selectedComment);
         }
 
