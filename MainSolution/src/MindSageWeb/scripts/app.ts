@@ -11,7 +11,8 @@
                 url: '/main',
                 views: {
                     'mainContent': {
-                        templateUrl: 'tmpl/lesson_layout.html'
+                        templateUrl: 'tmpl/lesson_layout.html',
+                        controller: 'app.shared.LessonLayoutController as mcx'
                     }
                 }
             })
@@ -38,7 +39,8 @@
                 url: '/course/:classRoomId',
                 views: {
                     'mainContent': {
-                        templateUrl: 'tmpl/course_layout.html'
+                        templateUrl: 'tmpl/course_layout.html',
+                        controller: 'app.shared.CourseLayoutController as mcx'
                     }
                 }
             })
