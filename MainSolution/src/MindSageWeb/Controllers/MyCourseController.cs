@@ -438,6 +438,15 @@ namespace MindSageWeb.Controllers
             _userActivityRepo.UpsertUserActivity(userActivity);
         }
 
+        // GET: api/mycourse/{user-id}/{class-room-id}/info
+        [HttpGet]
+        [Route("{id}/{classRoomId}/info")]
+        public GetCourseInfoRespond GetCourseInfo(string id, string classRoomId)
+        {
+            // TODO: Not implemented
+            throw new NotImplementedException();
+        }
+
         #endregion Methods
 
         //// GET: api/mycourse
