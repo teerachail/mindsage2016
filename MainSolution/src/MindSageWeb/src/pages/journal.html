@@ -20,7 +20,11 @@
 
                 <div class="large-2 columns user-img"><img class="thumbnail" src="{{ cx.userprofile.ImageUrl }}"></div>
                 <div class="large-10 columns">
-                    <textarea rows="3"  placeholder="Add a comment to your Jounal"></textarea>
+                    <textarea  ng-model="message" rows="3"  placeholder="Add a comment to your Jounal"></textarea>
+
+                    <div class="float-right">
+                        <button ng-click="cx.CreateNewComment(message)" class="button">Post</button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -42,9 +46,9 @@
                             <div class="large-10 columns" data-accordion-item>
                                 <p>
                                     {{ comment.Description }}
-                                    <span class="comment-button" ng-show="cx.currentUser.UserProfileId == comment.CreatedByUserProfileId"><a> Edit</a></span>
+                                    <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId"><a> Edit</a></span>
                                     <span class="comment-button like"><a><i class="fi-heart size-24"></i></a></span>
-                                    <span class="comment-button" ng-show="cx.currentUser.UserProfileId == comment.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
+                                    <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>
                                 <a ng-show="comment.id != cx.openDiscussion"><div ng-click="cx.showDiscussion(comment)">show discussion ({{ comment.TotalDiscussions }})</div></a>
                                 <a ng-show="comment.id == cx.openDiscussion"><div ng-click="cx.hideDiscussion()">hide discussion ({{ comment.TotalDiscussions }})</div></a>
@@ -96,6 +100,75 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <div class="large-offset-2 large-9 columns">
+                                <h4>{{ comment.CreatorDisplayName }}<span class="comment-time"></span></h4>
+                            </div>
+                            <div class="large-2 columns"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ comment.CreatorImageUrl }}"></div>
+                            <div class="large-10 columns" data-accordion-item>
+                                <p ng-show="!isclose">
+                                    {{ comment.Description }}
+                                    <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId" ng-click="isclose = cx.EditOpen(comment.Description,isclose)"><a> Edit</a></span>
+                                    <span class="comment-button like" ng-click="cx.LikeComment(comment.id)"><a><i class="fi-heart size-24"></i></a></span>
+                                    <span class="comment-button" ng-click="cx.DeleteComment(comment.id)" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
+                                </p>
+                                <div ng-show="isclose">
+                                    <textarea ng-model="cx.message"></textarea>
+                                    <button ng-click="isclose = cx.SaveEdit(comment.id, isclose)" class="button">Save</button>
+                                    <button ng-click="isclose = cx.CancelEdit(isclose)" class="button">Cancel</button>
+                                </div>
+                                <a ng-click="discusClose = cx.showDiscussion(comment)">
+                                    <p ng-show="!discusClose">show discussion ({{ comment.TotalDiscussions }})</p>
+                                    <p ng-show="discusClose">hide discussion ({{ comment.TotalDiscussions }})</p>
+                                </a>
+                                <div class="undisplay" data-tab-content>
+
+                                    <div class="discussion">
+                                        <div class="row">
+                                            <div class="large-offset-2 large-9 columns">
+                                                <h4>{{ cx.currentUser.FullName }}</h4>
+                                            </div>
+
+                                            <div class="large-2 columns user-img"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.currentUser.ImageUrl }}"></div>
+                                            <div class="large-10 columns">
+                                                <textarea ng-model="discussionMsg" rows="3"></textarea>
+
+                                                <div class="float-right">
+                                                    <button ng-click="cx.CreateNewDiscussion(comment.id, discussionMsg)" class="button">Post</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="discussion">
+                                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id }" class="row">
+                                            <div class="large-offset-2 large-9 columns">
+                                                <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
+                                            </div>
+                                            <div class="large-2 columns"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
+                                            <div class="large-10 columns">
+                                                <p ng-show="!discussion_isclose">
+                                                    {{ discussion.Description }}
+                                                    <span class="comment-button" ng-show="cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="discussion_isclose = cx.EditOpen(discussion.Description,discussion_isclose)"><a> Edit</a></span>
+                                                    <span class="comment-button like" ng-click="cx.LikeComment(comment.id)"><a><i class="fi-heart size-24"></i></a></span>
+                                                    <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId || cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId"
+                                                          ng-click="cx.DeleteComment(comment.id)"><a><i class="fi-trash size-24"></i></a></span>
+                                                </p>
+                                                <div ng-show="discussion_isclose">
+                                                    <textarea ng-model="cx.message"></textarea>
+                                                    <button ng-click="discussion_isclose = cx.SaveEditDiscus(comment.id, discussion.id, discussion_isclose)" class="button">Save</button>
+                                                    <button ng-click="discussion_isclose = cx.CancelEdit(discussion_isclose)" class="button">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+
+
                         </div>
                     </div>
                 </div>

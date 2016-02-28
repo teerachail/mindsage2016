@@ -105,14 +105,15 @@ module app.lessons {
         }
 
         public SaveEdit(messageId: number, save: boolean) {
-            this.comment.Comments[messageId].Description = this.message;
-            this.EditComment(this.comment.Comments[messageId].id, this.message);
+            this.comment.Comments.filter(it=> it.id == messageId)[0].Description = this.message;
+            this.EditComment(this.comment.Comments.filter(it=> it.id == messageId)[0].id, this.message);
             return !save;
         }
 
         public SaveEditDiscus(commentId: string, messageId: number, save: boolean) {
-            this.discussions[messageId].Description = this.message;
-            this.EditDiscussion(commentId, this.discussions[messageId].id, this.message);
+
+            this.discussions.filter(it=> it.id == messageId)[0].Description = this.message;
+            this.EditDiscussion(commentId, this.discussions.filter(it=> it.id == messageId)[0].id, this.message);
             return !save;
         }
 

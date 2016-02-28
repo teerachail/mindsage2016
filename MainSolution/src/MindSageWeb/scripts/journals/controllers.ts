@@ -4,10 +4,13 @@ module app.journals {
     class JournalController {
 
         private userprofile: any;
+        public message: string;
         public openDiscussion: string;
+        public discussions = [];
+        private requestedCommentIds = [];
 
-        static $inject = ['$scope', 'content', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService'];
-        constructor(private $scope, public content, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService) {
+        static $inject = ['$scope', 'content', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
+        constructor(private $scope, public content, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.userprofile = this.svc.GetClientUserProfile();
         }
 
@@ -28,15 +31,101 @@ module app.journals {
             var qry = this.content.Comments.filter(it=> it.LessonWeek == week);
             return qry;
         }
-
-        public showDiscussion(item: any): void {
-            this.openDiscussion = item.id;
+        
+        public showDiscussion(item: any, open: boolean) {
+            this.GetDiscussions(item);
+            return !open;
         }
 
-        public hideDiscussion(): void {
-            this.openDiscussion = "";
+        public GetDiscussions(comment) {
+            if (comment == null) return;
+
+            const NoneDiscussion = 0;
+            if (comment.TotalDiscussions <= NoneDiscussion) return;
+            if (this.requestedCommentIds.filter(it=> it == comment.id).length > NoneDiscussion) return;
+
+            this.requestedCommentIds.push(comment.id);
+            this.discussionSvc
+                .GetDiscussions(comment.LessonId, comment.ClassRoomId, comment.id)
+                .then(it=> {
+                    if (it == null) return;
+                    for (var index = 0; index < it.length; index++) {
+                        this.discussions.push(it[index]);
+                    }
+                });
         }
 
+        public CreateNewComment(message: string) {
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
+            this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message);
+        }
+
+        public CreateNewDiscussion(commentId: string, message: string) {
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
+            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message);
+        }
+
+        public LikeComment(commentId: string) {
+            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            this.commentSvc.LikeComment(local.ClassRoomId, local.LessonId, commentId);
+        }
+
+        public LikeDiscussion(commentId: string, discussionId: string) {
+            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            this.discussionSvc.LikeDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId);
+        }
+
+        public DeleteComment(commentId: string) {
+            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            this.commentSvc.UpdateComment(local.ClassRoomId, local.LessonId, commentId, true, null);
+        }
+
+        public DeleteDiscussion(commentId: string, discussionId: string) {
+            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId, true, null);
+        }
+
+        public EditComment(commentId: string, message: string) {
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
+            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            this.commentSvc.UpdateComment(local.ClassRoomId, local.LessonId, commentId, false, message);
+        }
+
+        public EditDiscussion(commentId: string, discussionId: string, message: string) {
+            const NoneContentLength = 0;
+            if (message.length <= NoneContentLength) return;
+
+            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId, false, message);
+        }
+
+        public EditOpen(message: string, open: boolean) {
+            this.message = message;
+            return !open;
+        }
+
+        public SaveEdit(messageId: number, save: boolean) {
+            this.content.Comments.filter(it=> it.id == messageId)[0].Description = this.message;
+            this.EditComment(this.content.Comments.filter(it=> it.id == messageId)[0].id, this.message);
+            return !save;
+        }
+
+        public SaveEditDiscus(commentId: string, messageId: number, save: boolean) {
+            this.discussions.filter(it=> it.id == messageId)[0].Description = this.message;
+            this.EditDiscussion(commentId, this.discussions.filter(it=> it.id == messageId)[0].id, this.message);
+            return !save;
+        }
+
+        public CancelEdit(save: boolean) {
+            return !save;
+        }
     }
 
     angular
