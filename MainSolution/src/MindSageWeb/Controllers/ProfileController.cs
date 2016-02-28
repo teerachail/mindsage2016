@@ -57,8 +57,21 @@ namespace MindSageWeb.Controllers
                && !string.IsNullOrEmpty(body.SchoolName);
             if (!areArgumentsValid) return;
 
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            // HACK: Uncomment it when we done the authentication
+            //var currentUserId = User.Identity.Name;
+            //if (currentUserId != id) return;
+
+            var userProfile = _userProfileRepo.GetUserProfileById(id);
+            var isUserProfileValid = userProfile != null && !userProfile.DeletedDate.HasValue;
+            if (isUserProfileValid) return;
+
+            userProfile.Name = body.Name;
+            userProfile.SchoolName = body.SchoolName;
+            userProfile.IsPrivateAccount = body.IsPrivate;
+            userProfile.CourseReminder = body.IsReminderOnceTime ? 
+                UserProfile.ReminderFrequency.Once: 
+                UserProfile.ReminderFrequency.Twice;
+            _userProfileRepo.UpsertUserProfile(userProfile);
         }
 
         // GET: api/profile/{user-id}
