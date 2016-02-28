@@ -2,9 +2,12 @@
     'use strict';
     
     class SettingController {
+        
+        private userInfo;
 
-        static $inject = ['$scope', 'app.settings.ProfileService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private profileSvc: app.settings.ProfileService, private getprofileSvc: app.shared.GetProfileService) {
+        static $inject = ['$scope', 'app.settings.ProfileService', 'app.shared.GetProfileService', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, private profileSvc: app.settings.ProfileService, private getprofileSvc: app.shared.GetProfileService, private clientProfileSvc: app.shared.ClientUserProfileService) {
+            this.userInfo = this.clientProfileSvc.GetClientUserProfile();
         }
 
         public UpdateProfile(name: string, schoolName: string, isPrivate: boolean, isReminderOnceTime: boolean) {
