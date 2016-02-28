@@ -496,8 +496,70 @@ namespace MindSageWeb.Controllers
         [Route("{id}")]
         public void Put(string id, UpdateCourseInfoRequest body)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var isArgumentValid = !string.IsNullOrEmpty(id)
+                && body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.ClassName)
+                && !string.IsNullOrEmpty(body.ChangedStudentCode);
+            if (!isArgumentValid) return;
+
+            var userprofile = _userprofileRepo.GetUserProfileById(id);
+            if (userprofile == null) return;
+
+            var isUserprofileValid = userprofile.Subscriptions != null && userprofile.Subscriptions.Any();
+            if (!isUserprofileValid) return;
+
+            var isCanUpdateCourse = userprofile.Subscriptions.Any(it => it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
+            if (!isCanUpdateCourse) return;
+
+            var now = _dateTime.GetCurrentTime();
+            var isRequestUpdateStudentCode = !string.IsNullOrEmpty(body.ChangedStudentCode);
+            if (isRequestUpdateStudentCode)
+            {
+                var selectedStudentKeyObj = _studentKeyRepo.GetStudentKeyByClassRoomId(body.ClassRoomId);
+                if (selectedStudentKeyObj != null)
+                {
+
+                    if (!selectedStudentKeyObj.DeletedDate.HasValue)
+                    {
+                        selectedStudentKeyObj.DeletedDate = now;
+                        _studentKeyRepo.UpsertStudentKey(selectedStudentKeyObj);
+                    }
+
+                    var newStudentKey = new StudentKey
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        Grade = selectedStudentKeyObj.Grade,
+                        Code = body.ChangedStudentCode,
+                        CourseCatalogId = selectedStudentKeyObj.CourseCatalogId,
+                        ClassRoomId = selectedStudentKeyObj.ClassRoomId,
+                        CreatedDate = now
+                    };
+                    _studentKeyRepo.UpsertStudentKey(newStudentKey);
+                }
+            }
+
+            var isRequestUpdateClassName = !string.IsNullOrEmpty(body.ClassName);
+            if (isRequestUpdateClassName)
+            {
+                var classRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
+                if (classRoom != null)
+                {
+                    classRoom.Name = body.ClassName;
+                    _classRoomRepo.UpsertClassRoom(classRoom);
+                }
+            }
+
+            if (body.BeginDate.HasValue)
+            {
+                var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+                var canUpdateClassCalendar = classCalendar != null;
+                if (!canUpdateClassCalendar) return;
+
+                classCalendar.BeginDate = body.BeginDate.Value;
+                classCalendar.LastCalculateRequest = now;
+                _classCalendarRepo.UpsertClassCalendar(classCalendar);
+            }
         }
 
         #endregion Methods

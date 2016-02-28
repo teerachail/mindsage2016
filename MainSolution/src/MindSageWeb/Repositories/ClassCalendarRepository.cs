@@ -43,6 +43,8 @@ namespace MindSageWeb.Repositories
              .Set(it => it.ExpiredDate, data.ExpiredDate)
              .Set(it => it.CloseDate, data.CloseDate)
              .Set(it => it.ClassRoomId, data.ClassRoomId)
+             .Set(it => it.LastCalculateRequest, data.LastCalculateRequest)
+             .Set(it => it.LastCalculateComplete, data.LastCalculateComplete)
              .Set(it => it.CreatedDate, data.CreatedDate)
              .Set(it => it.DeletedDate, data.DeletedDate)
              .Set(it => it.LessonCalendars, data.LessonCalendars)

@@ -16,6 +16,8 @@ namespace MindSageWeb.Repositories.Models
         public DateTime? ExpiredDate { get; set; }
         public DateTime? CloseDate { get; set; }
         public string ClassRoomId { get; set; }
+        public DateTime LastCalculateRequest { get; set; }
+        public DateTime? LastCalculateComplete { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
