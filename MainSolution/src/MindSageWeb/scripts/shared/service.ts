@@ -128,9 +128,40 @@
         }
     }
 
+    interface IGetProfileResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+       GetProfile(data: T): T;
+    }
+    interface IGetCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetCourse(data: T): T;
+    }
+    export class GetProfileService {
+
+        private getProfileSvc: IGetProfileResourceClass<any>;
+        private getCourseSvc: IGetCourseResourceClass<any>;
+
+        static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
+        constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
+            this.getProfileSvc = <IGetProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, { 'id': '@id' });
+            this.getCourseSvc = <IGetCourseResourceClass<any>>$resource(appConfig.GetCourserofileUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
+
+        }
+
+        public GetProfile(): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            return this.getProfileSvc.get(new GetUserProfileRequest(userId)).$promise;
+        }
+
+        public GetCourse(): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            return this.getCourseSvc.get(new GetCourseRequest(userId,classroomId)).$promise;
+        }
+
+    }
     angular
         .module('app.shared')
         .service('app.shared.ClientUserProfileService', ClientUserProfileService)
         .service('app.shared.CommentService', CommentService)
-        .service('app.shared.DiscussionService', DiscussionService);
+        .service('app.shared.DiscussionService', DiscussionService)
+        .service('app.shared.GetProfileService', GetProfileService);
 }

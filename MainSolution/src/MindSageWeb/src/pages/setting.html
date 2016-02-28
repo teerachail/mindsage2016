@@ -5,7 +5,7 @@
         </div>
     </div>
 
-    <div class="settting-edit clearfix" data-accordion-item>
+    <div class="settting-edit clearfix" data-accordion-item ng-init="IsPrivate = false">
         <div class="small-4 large-2 columns">
             <p>User Info</p>
         </div>
@@ -56,7 +56,48 @@
                 </div>
                 <div class="row">
                     <div class="small-6 columns">
-                        <div class="button" ng-click="cx.UpdateProfile(Name, SchoolName,false,true)">Save</div>
+                        <label>
+                            <input ng-model="IsPrivate" type="checkbox" value=true>
+                            Private account
+                        </label>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="small-3 columns">
+                        Reminder
+                    </div>
+                    <div class="small-3 columns">
+                        <label>
+                            <input ng-model="IsReminderOnceTime" type="radio" value=true>
+                            ReminderOnceTime
+                        </label>
+                    </div>
+                    <div class="small-3 columns">
+                        <label>
+                            <input ng-model="IsReminderOnceTime" type="radio" value=false>
+                            ReminderTwiceTime
+                        </label>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-6 columns">
+                        <div class="button" ng-click="cx.UpdateProfile(Name, SchoolName,IsPrivate,IsReminderOnceTime)">Save</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-6 columns">
+                        <div class="button" ng-click="cx.GetProfile()">Get User Profile</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-6 columns">
+                        <div class="button" ng-click="cx.GetCourse()">Get Course Infomation</div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="small-6 columns">
+                        <div class="button" ng-click="">Update classroom student code</div>
                     </div>
                 </div>
             </div>

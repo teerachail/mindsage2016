@@ -21,6 +21,8 @@ module app {
         LikeLessonUrl: string;
         ReadNoteUrl: string;
         UpdateProfileUrl: string;
+        GetUserProfileUrl: string;
+        GetCourserofileUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -44,6 +46,8 @@ module app {
         public LikeLessonUrl: string;
         public ReadNoteUrl: string;
         public UpdateProfileUrl: string;
+        public GetUserProfileUrl: string;
+        public GetCourserofileUrl: string;
         
 
         static $inject = ['defaultUrl'];
@@ -69,6 +73,8 @@ module app {
             this.LikeLessonUrl = apiUrl + '/lesson/like';
             this.ReadNoteUrl = apiUrl + '/lesson/readnote';
             this.UpdateProfileUrl = apiUrl + '/profile/:id';
+            this.GetUserProfileUrl = apiUrl + '/profile/:id';
+            this.GetCourserofileUrl = apiUrl + '/mycourse/:id/:classRoomId/info';
         }
     }
     

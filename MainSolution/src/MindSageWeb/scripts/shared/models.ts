@@ -87,4 +87,19 @@
             public Description: string) {
         }
     }
+    export class GetUserProfileRequest {
+        constructor(
+            public id: string) {
+        }
+    }
+    export class GetCourseRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string) {
+        }
+    }
+    
+    
+
+
 }
