@@ -16,6 +16,12 @@
         public GetCourse() {
             this.getprofileSvc.GetCourse();
         }
+        public UpdateCoursee(ClassName: string, ChangedStudentCode :string) {
+            this.profileSvc.UpdateCourse(ClassName, ChangedStudentCode);
+        }
+        public DeleteCourse(ClassRoomId: string) {
+            this.profileSvc.DeleteCourse(ClassRoomId);
+        }
     }
 
     angular

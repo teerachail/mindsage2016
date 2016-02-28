@@ -23,6 +23,9 @@ module app {
         UpdateProfileUrl: string;
         GetUserProfileUrl: string;
         GetCourserofileUrl: string;
+        UpdateCourseUrl: string;
+        DeleteCourseUrl: string;
+        
     }
 
     export class AppConfig implements IAppConfig {
@@ -48,7 +51,8 @@ module app {
         public UpdateProfileUrl: string;
         public GetUserProfileUrl: string;
         public GetCourserofileUrl: string;
-        
+        public UpdateCourseUrl: string;
+        public DeleteCourseUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -75,6 +79,8 @@ module app {
             this.UpdateProfileUrl = apiUrl + '/profile/:id';
             this.GetUserProfileUrl = apiUrl + '/profile/:id';
             this.GetCourserofileUrl = apiUrl + '/mycourse/:id/:classRoomId/info';
+            this.UpdateCourseUrl = apiUrl + '/mycourse/:id';
+            this.DeleteCourseUrl = apiUrl + '/mycourse/leave';
         }
     }
     
