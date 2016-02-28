@@ -29,6 +29,9 @@
         public DeleteCourse() {
             this.profileSvc.DeleteCourse(this.courseInfo.ClassRoomId);
         }
+        public StudenMessageEdit(Message: string) {
+            this.profileSvc.StudenMessageEdit(Message);
+        }
     }
 
     angular

@@ -10,11 +10,15 @@
     interface IDeletePCoursetResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         DeleteCourse(data: T): T;
     }
+    interface IStudenMessageEditsetResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        StudenMessageEdit(data: T): T;
+    }
     export class ProfileService {
 
         private svc: IUpdateProfileResourceClass<any>;
         private updateCoursesvc: IUpdatePCoursetResourceClass<any>;
         private deleteCoursesvc: IDeletePCoursetResourceClass<any>;
+        private studenMessageEditsvc: IStudenMessageEditsetResourceClass<any>;
         
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
@@ -27,6 +31,9 @@
             }, { UpdateCourse: { method: 'PUT' } });
             this.deleteCoursesvc = <IDeletePCoursetResourceClass<any>>$resource(appConfig.DeleteCourseUrl, {
                 'ClassRoomId': '@ClassRoomId', 'UserProfileId': '@UserProfileId'
+            });
+            this.studenMessageEditsvc = <IStudenMessageEditsetResourceClass<any>>$resource(appConfig.StudenMessageEditUrl, {
+                'ClassRoomId': '@ClassRoomId', 'UserProfileId': '@UserProfileId', 'Message':'@Message'
             });
         }
 
@@ -43,6 +50,11 @@
         public DeleteCourse(ClassRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             return this.deleteCoursesvc.save(new DeleteCourseRequest(ClassRoomId, userId)).$promise;
+        }
+        public StudenMessageEdit(Message: string): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            return this.studenMessageEditsvc.save(new StudenMessageEditRequest(classroomId, userId, Message)).$promise;
         }
     }
 

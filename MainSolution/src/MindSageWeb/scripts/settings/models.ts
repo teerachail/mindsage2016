@@ -24,4 +24,12 @@
             public ClassRoomId: string,
             public UserProfileId: string) { }
     }
+
+    export class StudenMessageEditRequest {
+        constructor(
+            public ClassRoomId: string,
+            public UserProfileId: string,
+            public Message: string) { }
+    }
+    
 }
