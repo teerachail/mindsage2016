@@ -24,6 +24,14 @@ module app.lessons {
             public LessonId: string,
             public UserProfileId: string) {
         }
+
+    }
+    export class ReadNoteRequest {
+        constructor(
+            public ClassRoomId: string,
+            public UserProfileId: string) {
+        }
+
     }
 
 }

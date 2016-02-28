@@ -97,6 +97,11 @@ module app.lessons {
         public LikeLesson() {
             this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
         }
+
+        public ReadNote() {
+            this.lessonSvc.ReadNote(this.classRoomId);
+        }
+
     }
 
     angular
