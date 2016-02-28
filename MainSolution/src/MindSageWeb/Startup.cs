@@ -71,6 +71,7 @@ namespace MindSageWeb
             services.AddTransient<IStudentKeyRepository, StudentKeyRepository>();
             services.AddTransient<IUserActivityRepository, UserActivityRepository>();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
 
             services.AddTransient<Controllers.CourseController, Controllers.CourseController>();
 

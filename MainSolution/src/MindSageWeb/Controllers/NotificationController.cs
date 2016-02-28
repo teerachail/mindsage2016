@@ -2,6 +2,7 @@
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MindSageWeb.Controllers
@@ -50,8 +51,15 @@ namespace MindSageWeb.Controllers
         [Route("{id}/{classRoomId}")]
         public int Get(string id, string classRoomId)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            const int NoneNotification = 0;
+            var areArgumentsValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
+            if (!areArgumentsValid) return NoneNotification;
+
+            var notifications = _notificationRepo.GetNotificationByUserIdAndClassRoomId(id, classRoomId).ToList();
+            var anyNotification = notifications != null && notifications.Any(it => !it.HideDate.HasValue);
+            if (!anyNotification) return NoneNotification;
+
+            return notifications.Where(it => !it.HideDate.HasValue).Count();
         }
 
         // GET: api/notification/{user-id}/{class-room-id}/content
@@ -62,10 +70,82 @@ namespace MindSageWeb.Controllers
         /// <param name="classRoomId">Class room id</param>
         [HttpGet]
         [Route("{id}/{classRoomId}/content")]
-        public int GetContent(string id, string classRoomId)
+        public IEnumerable<NotificationRespond> GetContent(string id, string classRoomId)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var areArgumentsValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
+            if (!areArgumentsValid) return Enumerable.Empty<NotificationRespond>();
+
+            var notifications = _notificationRepo.GetNotificationByUserIdAndClassRoomId(id, classRoomId).ToList();
+            var anyNotification = notifications != null && notifications.Any(it => !it.HideDate.HasValue);
+            if (!anyNotification) return Enumerable.Empty<NotificationRespond>();
+
+            var now = _dateTime.GetCurrentTime();
+            var unreadedMsgs = notifications.Where(it => !it.HideDate.HasValue).ToList();
+            unreadedMsgs.ForEach(it =>
+            {
+                it.HideDate = now;
+                _notificationRepo.Upsert(it);
+            });
+
+            const int LastRetrieveDays = 7;
+            var needToReachQry = unreadedMsgs
+                .Where(it => it.LastReadedDate.HasValue || it.LastReadedDate < it.LastUpdateDate)
+                .Where(it => Math.Abs(it.CreatedDate.Date.Subtract(now).Days) <= LastRetrieveDays);
+
+            var relatedUserProfiles = needToReachQry
+                .SelectMany(it => it.ByUserProfileId)
+                .Where(it => it != null)
+                .Distinct()
+                .Select(it => _userProfileRepo.GetUserProfileById(it))
+                .Where(it => it != null)
+                .ToList();
+
+            var result = needToReachQry
+                .Select(it =>
+                {
+                    var fromUserProfile = relatedUserProfiles
+                        .Where(uProfile => it.ByUserProfileId.Contains(uProfile.id))
+                        .Select(uProfile => new NotificationRespond.ActionInformation
+                        {
+                            FromUserProfileId = uProfile.id,
+                            FromUserProfileName = uProfile.Name
+                        }).ToList();
+
+                    NotificationRespond.NotificationTag tag;
+                    switch (it.Tag)
+                    {
+                        case Notification.NotificationTag.Reminder:
+                            tag = NotificationRespond.NotificationTag.Reminder;
+                            break;
+                        case Notification.NotificationTag.TopicOfTheDay:
+                            tag = NotificationRespond.NotificationTag.TOTD;
+                            break;
+                        case Notification.NotificationTag.FriendCreateNewComment:
+                            tag = NotificationRespond.NotificationTag.Comment;
+                            break;
+                        case Notification.NotificationTag.SomeOneLikesYourComment:
+                            tag = NotificationRespond.NotificationTag.Like;
+                            break;
+                        case Notification.NotificationTag.SomeOneLikesYourDiscussion:
+                            tag = NotificationRespond.NotificationTag.Like;
+                            break;
+                        case Notification.NotificationTag.SomeOneCreateDiscussionInYourComment:
+                            tag = NotificationRespond.NotificationTag.Reminder;
+                            break;
+                        default: return null;
+                    }
+
+                    return new NotificationRespond
+                    {
+                        id = it.id,
+                        Tag = tag,
+                        FromUserProfiles = fromUserProfile,
+                        Message = it.Message
+                    };
+                })
+                .Where(it=>it!=null).ToList();
+
+            return result;
         }
 
         #endregion Methods
