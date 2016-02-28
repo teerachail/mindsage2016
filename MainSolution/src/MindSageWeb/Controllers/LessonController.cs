@@ -331,8 +331,19 @@ namespace MindSageWeb.Controllers
         [Route("readnote")]
         public void ReadNote(ReadNoteRequest body)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.UserProfileId);
+            if (!areArgumentsValid) return;
+
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
+            if (!canAccessToTheClassRoom) return;
+
+            var userActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
+            if (userActivity == null) return;
+
+            userActivity.HideClassRoomMessageDate = _dateTime.GetCurrentTime();
+            _userActivityRepo.UpsertUserActivity(userActivity);
         }
 
         #endregion Methods
