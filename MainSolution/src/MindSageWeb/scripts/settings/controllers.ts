@@ -4,26 +4,30 @@
     class SettingController {
         
         private userInfo;
+        public ClassName: string;
+        public CurrentStudentCode: string;
 
-        static $inject = ['$scope', 'app.settings.ProfileService', 'app.shared.GetProfileService', 'app.shared.ClientUserProfileService'];
-        constructor(private $scope, private profileSvc: app.settings.ProfileService, private getprofileSvc: app.shared.GetProfileService, private clientProfileSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['$scope', 'app.settings.ProfileService', 'courseInfo', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, private profileSvc: app.settings.ProfileService, public courseInfo, private clientProfileSvc: app.shared.ClientUserProfileService) {
             this.userInfo = this.clientProfileSvc.GetClientUserProfile();
+            this.ClassName = this.courseInfo.ClassName;
+            this.CurrentStudentCode = this.courseInfo.CurrentStudentCode;
         }
 
         public UpdateProfile(name: string, schoolName: string, isPrivate: boolean, isReminderOnceTime: boolean) {
-            this.profileSvc.UpdateProfile(name, schoolName, isPrivate, isReminderOnceTime);
+            if (name != null && name != "")
+                this.profileSvc.UpdateProfile(name, schoolName, isPrivate, isReminderOnceTime);
         }
-        public GetProfile() {
-            this.getprofileSvc.GetProfile();
+
+        public UpdateCoursee(ClassName: string, ChangedStudentCode: string, BeginDate: Date) {
+            if (this.courseInfo.ClassName == ClassName) ClassName = null;
+            if (this.courseInfo.CurrentStudentCode == ChangedStudentCode) ChangedStudentCode = null;
+            if (ClassName != null || ChangedStudentCode != null)
+                this.profileSvc.UpdateCourse(ClassName, ChangedStudentCode, BeginDate);
         }
-        public GetCourse() {
-            this.getprofileSvc.GetCourse();
-        }
-        public UpdateCoursee(ClassName: string, ChangedStudentCode :string) {
-            this.profileSvc.UpdateCourse(ClassName, ChangedStudentCode);
-        }
-        public DeleteCourse(ClassRoomId: string) {
-            this.profileSvc.DeleteCourse(ClassRoomId);
+
+        public DeleteCourse() {
+            this.profileSvc.DeleteCourse(this.courseInfo.ClassRoomId);
         }
     }
 

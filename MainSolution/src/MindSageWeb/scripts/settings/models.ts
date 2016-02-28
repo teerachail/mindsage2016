@@ -15,7 +15,8 @@
             public id: string,
             public classRoomId: string,
             public ClassName: string,
-            public ChangedStudentCode: string) { }
+            public ChangedStudentCode: string,
+            public BeginDate: Date) { }
     }
 
     export class DeleteCourseRequest {

@@ -23,7 +23,7 @@
                 'id': '@id', 'Name': '@Name', 'SchoolName': '@SchoolName', 'IsPrivate': '@IsPrivate', 'IsReminderOnceTime': '@IsReminderOnceTime'
             }, { UpdateProfile: { method: 'PUT' } });
             this.updateCoursesvc = <IUpdatePCoursetResourceClass<any>>$resource(appConfig.UpdateCourseUrl, {
-                'id': '@id', 'classRoomId': '@classRoomId', 'ClassName': '@ClassName', 'ChangedStudentCode': '@ChangedStudentCode'
+                'id': '@id', 'classRoomId': '@classRoomId', 'ClassName': '@ClassName', 'ChangedStudentCode': '@ChangedStudentCode', 'BeginDate': '@BeginDate'
             }, { UpdateCourse: { method: 'PUT' } });
             this.deleteCoursesvc = <IDeletePCoursetResourceClass<any>>$resource(appConfig.DeleteCourseUrl, {
                 'ClassRoomId': '@ClassRoomId', 'UserProfileId': '@UserProfileId'
@@ -35,10 +35,10 @@
             return this.svc.UpdateProfile(new UpdateProfileRequest(userId, name, schoolName, isPrivate, isReminderOnceTime)).$promise;
         }
 
-        public UpdateCourse(ClassName: string, ChangedStudentCode: string): ng.IPromise<any> {
+        public UpdateCourse(ClassName: string, ChangedStudentCode: string, BeginDate: Date): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
-            return this.updateCoursesvc.UpdateCourse(new UpdateCourseRequest(userId, classroomId, ClassName, ChangedStudentCode)).$promise;
+            return this.updateCoursesvc.UpdateCourse(new UpdateCourseRequest(userId, classroomId, ClassName, ChangedStudentCode, BeginDate)).$promise;
         }
         public DeleteCourse(ClassRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;

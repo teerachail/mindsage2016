@@ -16,17 +16,17 @@
                     <div class="small-8 columns">
                         <label>
                             Name
-                            <input ng-model="Name" type="text">
+                            <input ng-model="cx.userInfo.FullName" type="text">
                         </label>
                         <label>
                             Email
-                            <input type="email">
+                            <input ng-model="cx.userInfo.UserProfileId" type="email" disabled>
                         </label>
                     </div>
 
                     <div class="small-4 columns">
                         <div class="small-12 small-centered center">
-                            <div><img class="thumbnail" src="http://placehold.it/100x100"></div>
+                            <div><img class="thumbnail" style="width: 100px; height: 100px;" src="{{ cx.userInfo.ImageUrl }}"></div>
                             <div><a>Edit</a></div>
                         </div>
                     </div>
@@ -34,30 +34,15 @@
                 <div class="row">
                     <div class="small-6 columns">
                         <label>
-                            Enter Password
-                            <input type="text">
-                        </label>
-                    </div>
-
-                    <div class="small-6 columns">
-                        <label>
-                            Re-Enter Password
-                            <input type="text">
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-6 columns">
-                        <label>
                             School
-                            <input ng-model="SchoolName" type="text">
+                            <input ng-model="cx.userInfo.SchoolName" type="text">
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-6 columns">
                         <label>
-                            <input ng-model="IsPrivate" type="checkbox" value=true>
+                            <input ng-model="cx.userInfo.IsPrivateAccout" type="checkbox">
                             Private account
                         </label>
                     </div>
@@ -69,40 +54,35 @@
                     </div>
                     <div class="small-3 columns">
                         <label>
-                            <input ng-model="IsReminderOnceTime" type="radio" value=true>
+                            <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=true>
                             ReminderOnceTime
                         </label>
                     </div>
                     <div class="small-3 columns">
                         <label>
-                            <input ng-model="IsReminderOnceTime" type="radio" value=false>
+                            <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=false>
                             ReminderTwiceTime
                         </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-6 columns">
-                        <div class="button" ng-click="cx.UpdateProfile(Name, SchoolName,IsPrivate,IsReminderOnceTime)">Save</div>
+                        <label>
+                            Enter Password
+                            <input type="text" disabled>
+                        </label>
+                    </div>
+
+                    <div class="small-6 columns">
+                        <label>
+                            Re-Enter Password
+                            <input type="text" disabled>
+                        </label>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-6 columns">
-                        <div class="button" ng-click="cx.GetProfile()">Get User Profile</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-6 columns">
-                        <div class="button" ng-click="cx.GetCourse()">Get Course Infomation</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-6 columns">
-                        <div class="button" ng-click="cx.UpdateCoursee('Hello Corse','ABCDE')">Update classroom student code</div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-6 columns">
-                        <div class="button" ng-click="cx.DeleteCourse('ClassRoom01')">Theacher Delete Course</div>
+                        <button class="button" ng-click="cx.UpdateProfile(cx.userInfo.FullName, cx.userInfo.SchoolName,cx.userInfo.IsPrivateAccout,cx.userInfo.IsReminderOnceTime)">Save</button>
                     </div>
                 </div>
             </div>
@@ -123,14 +103,14 @@
                     <div class="small-8 columns">
                         <label>
                             Class Name
-                            <input type="text">
+                            <input ng-model="cx.ClassName" type="text">
                         </label>
                     </div>
 
                     <div class="small-4 columns">
                         <label class="have-help-text">
                             Class Code
-                            <input type="text">
+                            <input ng-model="cx.CurrentStudentCode" type="text">
                             <a class="help-text">What is this?</a>
                         </label>
                     </div>
@@ -139,21 +119,9 @@
                 <div class="row">
                     <div class="small-3 columns">
                         <label>
-                            Number of Students
+                            Number of Students {{ cx.courseInfo.NumberOfStudents }}
                         </label>
                     </div>
-
-                    <div class="small-2 small-pull-7 columns">
-                        <label>
-                            <select required>
-                                <option value="25">25</option>
-                                <option value="30">30</option>
-                                <option value="35">35</option>
-                                <option value="40">40</option>
-                            </select>
-                        </label>
-                    </div>
-
                 </div>
                 <div class="row">
                     <div class="small-4 columns">
@@ -161,43 +129,44 @@
                             Start Date
                         </label>
                     </div>
+                    <div ng-show="cx.courseInfo.StartDate == null">
+                        <div class="small-1 columns">
+                            <label>
+                                <a><img width="30" src="../assets/img/logo/calendar.png" /></a>
+                            </label>
+                        </div>
 
-                    <div class="small-1 columns">
-                        <label>
-                            <a><img width="30" src="../assets/img/logo/calendar.png" /></a>
-                        </label>
+                        <div class="small-4 columns">
+                            <label>
+                                <a>{{ cx.courseInfo.StartDate }}</a>
+                            </label>
+                        </div>
                     </div>
-
-                    <div class="small-4 columns">
-                        <label>
-                            <a>September 18,2016</a>
-                        </label>
+                    <div ng-show="cx.courseInfo.StartDate != null">
+                        <div class="small-5 columns">
+                            <input type="Date" ng-model="cx.courseInfo.StartDate" />
+                        </div>
                     </div>
-
-                    <div class="small-3 columns">
-                        <label>
-                            For All Classes <input class="checkbox" type="checkbox">
-                        </label>
-                    </div>
-
-                </div>
-                <div class="row">
-                    <div class="small-4 columns">
+                    <div class="small-12 columns">
                         <label>
                             Set Off Days and Vacations<a><img width="30" src="../assets/img/logo/calendar.png" /></a>
                         </label>
                     </div>
 
-                    
+                    <div class="row">
+                        <div class="small-6 columns">
+                            <button class="button" ng-click="cx.DeleteCourse()">Delete Course</button>
+                            <button class="button" ng-click="cx.UpdateCoursee(cx.ClassName, cx.CurrentStudentCode, cx.courseInfo.StartDate)">Save</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
     <div class="large-10 large-centered">
         <p>Student Message</p>
         <textarea rows="3"></textarea>
-        <a class="button primary large-centered float-right" href="#">SEND</a>
+        <button class="button primary float-right">SEND</button>
     </div>
 </div>
 <script>

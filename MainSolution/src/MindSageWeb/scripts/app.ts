@@ -123,7 +123,10 @@
                 views: {
                     'courseContent': {
                         templateUrl: 'tmpl/setting.html',
-                        controller: 'app.settings.SettingController as cx'
+                        controller: 'app.settings.SettingController as cx',
+                        resolve: {
+                            'courseInfo': ['app.shared.GetProfileService', svc => { return svc.GetCourse() }]
+                        }
                     }
                 }
             })
