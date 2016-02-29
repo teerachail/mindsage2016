@@ -33,7 +33,7 @@
                                 <button type="submit" class="secondary hollow button radius">LOG OUT</button>
                             </li>
                             <li class="has-form">
-                                <a href="/my" class="secondary hollow button radius">My Course</a>
+                                <a asp-controller="My" asp-action="Index" class="secondary hollow button radius">My Course</a>
                             </li>
                         </ul>
                     </form>
@@ -42,10 +42,10 @@
                 {
                     <ul class="menu">
                         <li class="has-form">
-                            <a class="secondary hollow button radius" data-open="loginModal">LOGIN</a>
+                            <a asp-controller="Account" asp-action="Login" class="secondary hollow button radius" data-open="loginModal">LOGIN</a>
                         </li>
                         <li class="has-form">
-                            <a class="hollow button radius" data-open="registerModal">SIGNUP</a>
+                            <a asp-controller="Account" asp-action="Register" class="hollow button radius">SIGNUP</a>
                         </li>
                     </ul>
                 }
