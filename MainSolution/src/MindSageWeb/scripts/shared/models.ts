@@ -118,11 +118,24 @@
             public TotalLikes: number,
             public TotalDiscussions: number,
             public CreatorImageUrl: string,
-            public CreatorDisplayName: string) {
+            public CreatorDisplayName: string,
+            public ClassRoomId: string,
+            public LessonId: string,
+            public CreatedByUserProfileId: string) {
         }
     }
 
-
+    export class Discussion {
+        constructor(
+            public id: string,
+            public CommentId: string,
+            public Description: string,
+            public TotalLikes: number,
+            public CreatorImageUrl: string,
+            public CreatorDisplayName: string,
+            public CreatedByUserProfileId: string) {
+        }
+    }
     export class GetAllCourseRequest {
         constructor(
             public id: string) {

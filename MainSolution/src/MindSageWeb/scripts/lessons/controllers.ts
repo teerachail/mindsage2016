@@ -52,7 +52,7 @@ module app.lessons {
             if (message.length <= NoneContentLength) return;
 
             var userprofile = this.userprofileSvc.GetClientUserProfile();
-            var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName);
+            var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId);
             this.comment.Comments.push(newComment);
             this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message)
                 .then(it=> {
@@ -68,7 +68,23 @@ module app.lessons {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message);
+            var userprofile = this.userprofileSvc.GetClientUserProfile();
+            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId);
+            this.discussions.push(newDiscussion);
+            this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
+            
+            this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message)
+                .then(it=> {
+                    if (it == null) {
+                        var removeIndex = this.discussions.indexOf(newDiscussion);
+                        if (removeIndex > -1) this.discussions.splice(removeIndex, 1);
+                        this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
+                    }
+                    else newDiscussion.id = it.ActualCommentId;
+                    var removeIndex = this.discussions.indexOf(newDiscussion);
+                    if (removeIndex > -1) alert(it.ActualCommentId);
+                    alert(this.discussions[removeIndex].id);
+                });
         }
 
         public LikeComment(commentId: string) {
@@ -79,12 +95,17 @@ module app.lessons {
             this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
         }
 
-        public DeleteComment(commentId: string) {
-            this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, commentId, true, null);
+        public DeleteComment(comment: any) {
+            var removeIndex = this.comment.Comments.indexOf(comment);
+            if (removeIndex > -1) this.comment.Comments.splice(removeIndex, 1);
+            this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, comment.id, true, null);
         }
 
-        public DeleteDiscussion(commentId: string, discussionId: string) {
-            this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, true, null);
+        public DeleteDiscussion(commentId: string, discussion: any) {
+            var removeIndex = this.discussions.indexOf(discussion);
+            if (removeIndex > -1) this.discussions.splice(removeIndex, 1);
+            this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
+            this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussion.id, true, null);
         }
 
         public EditComment(commentId: string, message: string) {

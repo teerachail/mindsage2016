@@ -94,7 +94,7 @@
         <a class="small-2 large-2 columns" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.ClassName, cx.CurrentStudentCode, cx.courseInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
 
         <div class="small-6 large-4 columns">
-            <a class="viewlist" ui-sref="app.course.teacherlist({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })">View Student List</a>
+            <a class="viewlist" href="#" ui-sref="app.course.teacherlist({ 'classRoomId': '{{ cx.userInfo.CurrentClassRoomId }}' })">View Student List</a>
         </div>
         <div class="control undisplay" data-tab-content>
             <div class="large-12">

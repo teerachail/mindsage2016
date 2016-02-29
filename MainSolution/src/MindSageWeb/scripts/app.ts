@@ -50,8 +50,8 @@
                 }
             })
 
-            .state('app.course.nitification', {
-                url: '/nitification',
+            .state('app.course.notification', {
+                url: '/notification',
                 views: {
                     'courseContent': {
                         templateUrl: 'tmpl/notification.html'
@@ -67,7 +67,8 @@
                         controller: 'app.journals.JournalController as cx',
                         resolve: {
                             'content': ['$stateParams', 'app.journals.JournalService',
-                                (params, svc) => { return svc.GetComments(params.classRoomId, params.targetUserId) }]
+                                (params, svc) => { return svc.GetComments(params.classRoomId, params.targetUserId) }],
+                            'targetUserId': ['$stateParams', params => { return params.targetUserId }]
                         }
                     }
                 }
