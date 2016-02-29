@@ -5,20 +5,19 @@
             <h1 class="lesson-header">Notification</h1>
         </div>
     </div>
-    <div class="list">
-        <div class="callout">
-            <p><img class="listIcon" src="../assets/img/icon/social_participation.png" />test<a href="#"><i class="fi-trash size-24 float-right"></i></a></p>
+    <div class="list" data-accordion data-allow-all-closed="true">
+        <div class="callout" data-accordion-item>
+            <a>
+                <p>
+                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span>test </span><span>name</span>
+                </p>
+            </a>
+            <div class="undisplay" data-tab-content>
+                I would start <a href="#">name</a>
+            </div>
         </div>
-        <div class="callout">
-            <p><img class="listIcon" src="../assets/img/icon/notifications_inactive.png" />test <a href="">NAME</a><a href="#"><i class="fi-trash size-24 float-right"></i></a></p>
-        </div>
-        <div class="callout">
-            <p>
-                <img class="listIcon" src="../assets/img/icon/like_inactive.png" />test <a href="">NAME</a><a href="#"><i class="fi-trash size-24 float-right"></i></a></p>
-        </div>
-        <div class="callout">
-            <p><img class="listIcon" src="../assets/img/icon/friend_request_pending.png" />test <a href="">NAME</a><a href="#"><i class="fi-trash size-24 float-right"></i></a></p>
-        </div>
-    </div>
-    
+    </div> <!--list-->
 </div>
+<script>
+    $(document).foundation();
+</script>
