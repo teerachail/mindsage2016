@@ -58,7 +58,7 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="body">Request information</param>
         [HttpPost]
-        public void Post(PostNewDiscussionRequest body)
+        public PostNewDiscussionRespond Post(PostNewDiscussionRequest body)
         {
             var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.ClassRoomId)
@@ -66,36 +66,37 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(body.Description)
                 && !string.IsNullOrEmpty(body.LessonId)
                 && !string.IsNullOrEmpty(body.UserProfileId);
-            if (!areArgumentsValid) return;
+            if (!areArgumentsValid) return null;
 
             UserProfile userprofile;
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
-            if (!canAccessToTheClassRoom) return;
+            if (!canAccessToTheClassRoom) return null;
 
             var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
-            if (!canAccessToTheClassLesson) return;
+            if (!canAccessToTheClassLesson) return null;
 
             var selectedComment = _commentRepo.GetCommentById(body.CommentId);
-            if (selectedComment == null) return;
+            if (selectedComment == null) return null;
 
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
-            if (selectedUserActivity == null) return;
+            if (selectedUserActivity == null) return null;
 
             var selectedLesson = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId == body.LessonId);
-            if (selectedLesson == null) return;
+            if (selectedLesson == null) return null;
 
             var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
             if (!isCommentOwner)
             {
                 var canPostNewDiscussion = _userprofileRepo.CheckAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
-                if (!canPostNewDiscussion) return;
+                if (!canPostNewDiscussion) return null;
             }
 
+            var id = Guid.NewGuid().ToString();
             var discussions = selectedComment.Discussions.ToList();
             var newDiscussion = new Comment.Discussion
             {
-                id = Guid.NewGuid().ToString(),
+                id = id,
                 CreatedByUserProfileId = body.UserProfileId,
                 CreatorDisplayName = userprofile.Name,
                 CreatorImageUrl = userprofile.ImageProfileUrl,
@@ -108,6 +109,7 @@ namespace MindSageWeb.Controllers
 
             selectedLesson.ParticipationAmount++;
             _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+            return new PostNewDiscussionRespond { ActualCommentId = id };
         }
 
         // PUT: api/discussion/{discusion-id}
