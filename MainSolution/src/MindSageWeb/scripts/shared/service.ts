@@ -139,16 +139,21 @@
     interface IGetCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetCourse(data: T): T;
     }
+    interface IGetAllCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetAllCourse(data: T): T;
+    }
+
     export class GetProfileService {
 
         private getProfileSvc: IGetProfileResourceClass<any>;
         private getCourseSvc: IGetCourseResourceClass<any>;
+        private getAllCourseSvc: IGetAllCourseResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
             this.getProfileSvc = <IGetProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, { 'id': '@id' });
             this.getCourseSvc = <IGetCourseResourceClass<any>>$resource(appConfig.GetCourserofileUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
-
+            this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id'});
         }
 
         public GetProfile(): ng.IPromise<any> {
@@ -161,6 +166,11 @@
             var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
             return this.getCourseSvc.get(new GetCourseRequest(userId,classroomId)).$promise;
         }
+        public GetAllCourse(): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            return this.getCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
+        }
+
 
     }
     angular

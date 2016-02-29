@@ -123,4 +123,13 @@
     }
 
 
+    export class GetAllCourseRequest {
+        constructor(
+            public id: string) {
+        }
+    }
+
+    
+
+
 }

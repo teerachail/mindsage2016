@@ -7,8 +7,8 @@
         public ClassName: string;
         public CurrentStudentCode: string;
 
-        static $inject = ['$scope', 'app.settings.ProfileService', 'courseInfo', 'app.shared.ClientUserProfileService'];
-        constructor(private $scope, private profileSvc: app.settings.ProfileService, public courseInfo, private clientProfileSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['$scope', 'app.settings.ProfileService', 'courseInfo', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
+        constructor(private $scope, private profileSvc: app.settings.ProfileService, public courseInfo, private clientProfileSvc: app.shared.ClientUserProfileService, private getProfile: app.shared.GetProfileService) {
             this.userInfo = this.clientProfileSvc.GetClientUserProfile();
             this.ClassName = this.courseInfo.ClassName;
             this.CurrentStudentCode = this.courseInfo.CurrentStudentCode;
@@ -32,6 +32,10 @@
         public StudenMessageEdit(Message: string) {
             this.profileSvc.StudenMessageEdit(Message);
         }
+        public GetAllCourse() {
+            this.getProfile.GetAllCourse();
+        }
+
     }
 
     angular
