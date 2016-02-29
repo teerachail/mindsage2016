@@ -55,11 +55,11 @@
                 url: '/notification',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/notification.html',
-                        controller: 'app.notification.NotificationController as cx',
-                        resolve: {
-                            'notification': ['app.shared.GetProfileService', svc => { return svc.GetNotificationContent() }]
-                        }
+                        templateUrl: 'tmpl/notification.html'
+                        //controller: 'app.notification.NotificationController as cx',
+                        //resolve: {
+                        //    'notification': ['app.shared.GetProfileService', svc => { return svc.GetNotificationContent() }]
+                        //}
                     }
                 }
             })
