@@ -5,8 +5,8 @@
         
         private userProfile: any;
 
-        static $inject = ['$scope', 'app.shared.ClientUserProfileService'];
-        constructor(private $scope, private userSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['$scope', 'app.shared.ClientUserProfileService', 'app.sidemenus.SideMenuService'];
+        constructor(private $scope, private userSvc: app.shared.ClientUserProfileService, private sideMenuSvc: app.sidemenus.SideMenuService) {
             this.userProfile = userSvc.GetClientUserProfile();
         }
 
@@ -14,6 +14,9 @@
             return encodeURI(this.userProfile.UserProfileId);
         }
 
+        public ChangeTab(name: string) {
+            this.sideMenuSvc.CurrentTabName = name;
+        }
     }
 
     angular
