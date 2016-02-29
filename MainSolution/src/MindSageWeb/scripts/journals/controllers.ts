@@ -93,11 +93,23 @@ module app.journals {
         }
 
         public LikeComment(commentId: string) {
+           
+            var setIndex = this.likes.LikeCommentIds.indexOf(commentId);
+            const ElementNotFound = -1;
+            if (setIndex <= ElementNotFound) this.likes.LikeCommentIds.push(commentId);
+            else this.likes.LikeCommentIds.splice(setIndex, 1);
+
             var local = this.content.Comments.filter(it=> it.id == commentId)[0];
             this.commentSvc.LikeComment(local.ClassRoomId, local.LessonId, commentId);
+
         }
 
         public LikeDiscussion(commentId: string, discussionId: string) {
+            var setIndex = this.likes.LikeDiscussionIds.indexOf(discussionId);
+            const ElementNotFound = -1;
+            if (setIndex <= ElementNotFound) this.likes.LikeDiscussionIds.push(discussionId);
+            else this.likes.LikeDiscussionIds.splice(setIndex, 1);
+
             var local = this.content.Comments.filter(it=> it.id == commentId)[0];
             this.discussionSvc.LikeDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId);
         }
