@@ -34,8 +34,7 @@
                             'comment': ['$stateParams', 'app.shared.CommentService',
                                 (params, svc) => { return svc.GetComments(params.lessonId, params.classRoomId) }],
                             'classRoomId': ['$stateParams', params => { return params.classRoomId }],
-                            'lessonId': ['$stateParams', params => { return params.lessonId }],
-                            'likes': ['app.shared.GetProfileService', svc => { return svc.GetLike() }]
+                            'lessonId': ['$stateParams', params => { return params.lessonId }]
                         }
                     }
                 }
