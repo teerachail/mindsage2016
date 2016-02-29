@@ -6,11 +6,12 @@ module app.journals {
         private userprofile: any;
         public message: string;
         public openDiscussion: string;
+        public MyComments = [];
         public discussions = [];
         private requestedCommentIds = [];
 
-        static $inject = ['$scope', 'content', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
-        constructor(private $scope, public content, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
+        static $inject = ['$scope', 'content', 'targetUserId', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
+        constructor(private $scope, public content, public targetUserId, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.userprofile = this.svc.GetClientUserProfile();
         }
 
@@ -59,15 +60,36 @@ module app.journals {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message);
+            var newComment = new app.shared.Comment('MOCK', message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId);
+            this.MyComments.push(newComment);
+            this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message)
+                .then(it=> {
+                    if (it == null) {
+                        var removeIndex = this.content.Comments.indexOf(newComment);
+                        if (removeIndex > -1) this.content.Comments.splice(removeIndex, 1);
+                    }
+                    else newComment.id = it.ActualCommentId;
+                    
+                });
         }
 
         public CreateNewDiscussion(commentId: string, message: string) {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
-
+            
+            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId);
+            this.discussions.push(newDiscussion);
+            this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
             var local = this.content.Comments.filter(it=> it.id == commentId)[0];
-            this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message);
+            this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message)
+                .then(it=> {
+                    if (it == null) {
+                        var removeIndex = this.discussions.indexOf(newDiscussion);
+                        if (removeIndex > -1) this.discussions.splice(removeIndex, 1);
+                        this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
+                    }
+                    else newDiscussion.id = it.ActualCommentId;
+                });
         }
 
         public LikeComment(commentId: string) {
@@ -80,14 +102,22 @@ module app.journals {
             this.discussionSvc.LikeDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId);
         }
 
-        public DeleteComment(commentId: string) {
-            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
-            this.commentSvc.UpdateComment(local.ClassRoomId, local.LessonId, commentId, true, null);
+        public DeleteComment(comment: any) {
+            var removeIndex = this.content.Comments.indexOf(comment);
+            if (removeIndex > -1) this.content.Comments.splice(removeIndex, 1);
+            else {
+                removeIndex = this.MyComments.indexOf(comment);
+                if (removeIndex > -1) this.MyComments.splice(removeIndex, 1);
+            }
+            this.commentSvc.UpdateComment(comment.ClassRoomId, comment.LessonId, comment.id, true, null);
         }
 
-        public DeleteDiscussion(commentId: string, discussionId: string) {
+        public DeleteDiscussion(commentId: string, discussion: any) {
+            var removeIndex = this.discussions.indexOf(discussion);
+            if (removeIndex > -1) this.discussions.splice(removeIndex, 1);
+            this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
             var local = this.content.Comments.filter(it=> it.id == commentId)[0];
-            this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId, true, null);
+            this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussion.id, true, null);
         }
 
         public EditComment(commentId: string, message: string) {

@@ -107,6 +107,12 @@ namespace MindSageWeb.Controllers
             if (selectedUserActivity == null) return null;
             var selectedLessonActivity = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId.Equals(id, StringComparison.CurrentCultureIgnoreCase));
             if (selectedLessonActivity == null) return null;
+
+            var selectedSubscription = userprofile.Subscriptions.FirstOrDefault(it => it.ClassRoomId == classRoomId);
+            if (selectedSubscription == null) return null;
+            selectedSubscription.LastActiveDate = now;
+            _userprofileRepo.UpsertUserProfile(userprofile);
+
             var shouldUpdateSawPrimaryContent = !selectedLessonActivity.SawContentIds.Contains(selectedLessonCatalog.PrimaryContentURL);
             if (shouldUpdateSawPrimaryContent)
             {

@@ -82,7 +82,7 @@
         </p>
     </div>
 
-    <div class="comment" ng-show="!cx.teacherView">
+    <div class="comment">
         <div class="row">
             <div class="large-offset-2 large-9 columns">
                 <h4>{{ cx.currentUser.FullName }}</h4>
@@ -109,7 +109,7 @@
                     {{ item.Description }}
                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId" ng-click="isclose = cx.EditOpen(item.Description,isclose)"><a> Edit</a></span>
                     <span class="comment-button like" ng-click="cx.LikeComment(item.id)"><a><i class="fi-heart size-24"></i></a></span>
-                    <span class="comment-button" ng-click="cx.DeleteComment(item.id)" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
+                    <span class="comment-button" ng-click="cx.DeleteComment(item)" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId"><a><i class="fi-trash size-24"></i></a></span>
                 </p>
                 <div ng-show="isclose">
                     <textarea ng-model="cx.message"></textarea>
@@ -151,7 +151,7 @@
                                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == discussion.CreatedByUserProfileId" ng-click="discussion_isclose = cx.EditOpen(discussion.Description,discussion_isclose)"><a> Edit</a></span>
                                     <span class="comment-button like" ng-click="cx.LikeComment(item.id)"><a><i class="fi-heart size-24"></i></a></span>
                                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId || cx.currentUser.UserProfileId == discussion.CreatedByUserProfileId"
-                                          ng-click="cx.DeleteComment(item.id)"><a><i class="fi-trash size-24"></i></a></span>
+                                          ng-click="cx.DeleteDiscussion(item.id, discussion)"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>
                                 <div ng-show="discussion_isclose">
                                     <textarea ng-model="cx.message"></textarea>

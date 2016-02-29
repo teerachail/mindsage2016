@@ -29,10 +29,9 @@ module app.lessons {
 
         }
 
-
-        public GetContent(id: string, classRoomId: string): ng.IPromise<any> {
+        public GetContent(lessonId: string, classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.getLessonSvc.get(new LessonContentRequest(id, classRoomId, userId)).$promise;
+            return this.getLessonSvc.get(new LessonContentRequest(lessonId, classRoomId, userId)).$promise;
         }
         
         public LikeLesson(classRoomId: string, lessonId: string): ng.IPromise<any> {
