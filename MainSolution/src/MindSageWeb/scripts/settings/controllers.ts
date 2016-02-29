@@ -7,11 +7,16 @@
         public ClassName: string;
         public CurrentStudentCode: string;
 
-        static $inject = ['$scope', 'app.settings.ProfileService', 'courseInfo', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private profileSvc: app.settings.ProfileService, public courseInfo, private clientProfileSvc: app.shared.ClientUserProfileService, private getProfile: app.shared.GetProfileService) {
+        static $inject = ['$scope', '$state', 'app.settings.ProfileService', 'courseInfo', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService', 'app.sidemenus.SideMenuService'];
+        constructor(private $scope, private $state, private profileSvc: app.settings.ProfileService, public courseInfo, private clientProfileSvc: app.shared.ClientUserProfileService, private getProfile: app.shared.GetProfileService, private sideMenuSvc: app.sidemenus.SideMenuService) {
             this.userInfo = this.clientProfileSvc.GetClientUserProfile();
             this.ClassName = this.courseInfo.ClassName;
             this.CurrentStudentCode = this.courseInfo.CurrentStudentCode;
+        }
+
+        public OpenStudentListPage(name: string) {
+            this.sideMenuSvc.CurrentTabName = name;
+            this.$state.go("app.course.teacherlist", { 'classRoomId': this.userInfo.CurrentClassRoomId }, { inherit: false });
         }
 
         public UpdateProfile(name: string, schoolName: string, isPrivate: boolean, isReminderOnceTime: boolean) {
