@@ -115,6 +115,13 @@ namespace MindSageWeb
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
+            var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
+            app.UseGoogleAuthentication(options =>
+            {
+                options.ClientId = appConfig.GoogleClinetId;
+                options.ClientSecret = appConfig.GoogleClientSecret;
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
