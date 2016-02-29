@@ -168,7 +168,7 @@
         }
         public GetAllCourse(): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.getCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
+            return this.getAllCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
         }
 
 
