@@ -41,7 +41,9 @@
         public GetNotificationContent() {
             this.getProfile.GetNotificationContent();
         }
-        
+        public GetLike() {
+            this.getProfile.GetLike();
+        }
         
     }
 

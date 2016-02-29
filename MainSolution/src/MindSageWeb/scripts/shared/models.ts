@@ -135,9 +135,20 @@
             public classRoomId: string) {
         }
     }
-    
 
-    
+    export class GetNotificationContentRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string) {
+        }
+    }
 
+    export class GetLikeRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string,
+            public lessonId: string) {
+        }
+    }
 
 }

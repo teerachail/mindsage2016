@@ -29,7 +29,7 @@ module app {
         GetAllCourserofileUrl: string;
         GetNotificationNumberUrl: string;
         GetNotificationContentUrl: string;
-        
+        GetLiketUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -61,6 +61,7 @@ module app {
         public GetAllCourserofileUrl: string;
         public GetNotificationNumberUrl: string;
         public GetNotificationContentUrl: string;
+        public GetLiketUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -93,6 +94,7 @@ module app {
             this.GetAllCourserofileUrl = apiUrl + '/mycourse/:id/courses';
             this.GetNotificationNumberUrl = apiUrl + '/notification/:id/:classRoomId'
             this.GetNotificationContentUrl = apiUrl + '/notification/:id/:classRoomId/content'
+            this.GetLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/:lessonId'
         }
     }
     
