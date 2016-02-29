@@ -8,10 +8,5 @@ namespace MindSageWeb.Repositories.Models
 {
     public class LikeLesson : LikeContent
     {
-        #region Properties
-
-        public string ClassRoomId { get; set; }
-
-        #endregion Properties
     }
 }

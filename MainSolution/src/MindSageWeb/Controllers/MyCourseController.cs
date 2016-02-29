@@ -631,6 +631,44 @@ namespace MindSageWeb.Controllers
             };
         }
 
+        // GET: api/mycourse/{user-id}/{class-room-id}/alllikes
+        /// <summary>
+        /// Get likes 
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <param name="lessonId">Lesson id</param>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/alllikes")]
+        public GetLikeRespond GetAllLikes(string id, string classRoomId)
+        {
+            var invalidDataRespond = new GetLikeRespond
+            {
+                LikeCommentIds = Enumerable.Empty<string>(),
+                LikeDiscussionIds = Enumerable.Empty<string>()
+            };
+            var areArgumentsValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
+            if (!areArgumentsValid) return invalidDataRespond;
+
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId);
+            if (!canAccessToTheClassRoom) return invalidDataRespond;
+
+            var now = _dateTime.GetCurrentTime();
+
+            var likeComments = _likeCommentRepo.GetLikeCommentsByUserProfileIdAndClassRoomId(id, classRoomId);
+            if (likeComments == null) return invalidDataRespond;
+            var likeDiscussions = _likeDiscussionRepo.GetLikeDiscussionsByUserProfileIdAndClassRoomId(id, classRoomId);
+            if (likeDiscussions == null) return invalidDataRespond;
+
+            var likeCommentIds = likeComments.Where(it => !it.DeletedDate.HasValue).Select(it => it.CommentId).ToList();
+            var likeDiscussionIds = likeDiscussions.Where(it => !it.DeletedDate.HasValue).Select(it => it.DiscussionId).ToList();
+            return new GetLikeRespond
+            {
+                LikeCommentIds = likeCommentIds,
+                LikeDiscussionIds = likeDiscussionIds
+            };
+        }
+
         #endregion Methods
 
         //// GET: api/mycourse

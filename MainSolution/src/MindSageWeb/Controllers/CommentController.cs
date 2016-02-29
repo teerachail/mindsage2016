@@ -203,6 +203,7 @@ namespace MindSageWeb.Controllers
                 var newLike = new LikeComment
                 {
                     id = Guid.NewGuid().ToString(),
+                    ClassRoomId = body.ClassRoomId,
                     LessonId = body.LessonId,
                     CommentId = body.CommentId,
                     LikedByUserProfileId = body.UserProfileId,

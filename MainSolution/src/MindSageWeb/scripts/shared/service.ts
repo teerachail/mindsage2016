@@ -152,6 +152,9 @@
     interface IGetLikeClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetLike(data: T): T;
     }
+    interface IGetAllLikeClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetAllLike(data: T): T;
+    }
 
     export class GetProfileService {
 
@@ -161,6 +164,7 @@
         private getNotificationNumberSvc: IGetNotificationNumberClass<any>;
         private getNotificationContentSvc: IGetNotificationContentClass<any>;
         private getLikeSvc: IGetLikeClass<any>;
+        private getAllLikeSvc: IGetAllLikeClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
@@ -169,7 +173,8 @@
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getNotificationNumberSvc = <IGetNotificationNumberClass<any>>$resource(appConfig.GetNotificationNumberUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
             this.getNotificationContentSvc = <IGetNotificationContentClass<any>>$resource(appConfig.GetNotificationContentUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
-            this.getLikeSvc = <IGetLikeClass<any>>$resource(appConfig.GetLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'lessonId': '@lessonId'});
+            this.getLikeSvc = <IGetLikeClass<any>>$resource(appConfig.GetLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'lessonId': '@lessonId' });
+            this.getAllLikeSvc = <IGetAllLikeClass<any>>$resource(appConfig.GetAllLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
         }
 
         public GetProfile(): ng.IPromise<any> {
@@ -201,6 +206,12 @@
             var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
             var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentLessonId;
             return this.getLikeSvc.get(new GetLikeRequest(userId, classroomId, lessonId)).$promise;
+        }
+        public GetAllLike(): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentLessonId;
+            return this.getAllLikeSvc.get(new GetAllLikeRequest(userId, classroomId)).$promise;
         }
 
 

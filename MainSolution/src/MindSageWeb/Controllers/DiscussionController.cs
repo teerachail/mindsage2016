@@ -222,6 +222,7 @@ namespace MindSageWeb.Controllers
                 var newLike = new LikeDiscussion
                 {
                     id = Guid.NewGuid().ToString(),
+                    ClassRoomId = body.ClassRoomId,
                     LessonId = body.LessonId,
                     CommentId = body.CommentId,
                     DiscussionId = body.DiscussionId,

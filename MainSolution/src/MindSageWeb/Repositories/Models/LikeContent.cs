@@ -13,6 +13,7 @@ namespace MindSageWeb.Repositories.Models
         public string id { get; set; }
         public string LessonId { get; set; }
         public string LikedByUserProfileId { get; set; }
+        public string ClassRoomId { get; set; }
         public DateTime LastNotifyRequest { get; set; }
         public DateTime? LastNotifyComplete { get; set; }
         public DateTime CreatedDate { get; set; }

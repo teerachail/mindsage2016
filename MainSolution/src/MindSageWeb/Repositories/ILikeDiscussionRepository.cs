@@ -33,6 +33,13 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonId">รหัส lesson </param>
         IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndLesson(string userprofileId, string lessonId);
 
+        /// <summary>
+        /// ขอรายการ Like discussion จากรหัสผู้ใช้และรหัส class room
+        /// </summary>
+        /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>
+        /// <param name="classRoomId">รหัส class room id</param>
+        IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndClassRoomId(string userprofileId, string classRoomId);
+
         #endregion Methods
     }
 }

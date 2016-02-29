@@ -73,7 +73,8 @@
                         resolve: {
                             'content': ['$stateParams', 'app.journals.JournalService',
                                 (params, svc) => { return svc.GetComments(params.classRoomId, params.targetUserId) }],
-                            'targetUserId': ['$stateParams', params => { return params.targetUserId }]
+                            'targetUserId': ['$stateParams', params => { return params.targetUserId }],
+                            'likes': ['app.shared.GetProfileService', svc => { return svc.GetAllLike() }]
                         }
                     }
                 }

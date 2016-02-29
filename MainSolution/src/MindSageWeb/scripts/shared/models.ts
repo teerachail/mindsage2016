@@ -172,4 +172,11 @@
         }
     }
 
+    export class GetAllLikeRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string) {
+        }
+    }
+
 }

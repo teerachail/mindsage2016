@@ -40,13 +40,14 @@ namespace MindSageWeb.Repositories
         public void UpsertLikeComment(LikeComment data)
         {
             var update = Builders<LikeComment>.Update
-              .Set(it => it.CommentId, data.CommentId)
-              .Set(it => it.LessonId, data.LessonId)
-              .Set(it => it.LikedByUserProfileId, data.LikedByUserProfileId)
-              .Set(it => it.LastNotifyRequest, data.LastNotifyRequest)
-              .Set(it => it.LastNotifyComplete, data.LastNotifyComplete)
-              .Set(it => it.CreatedDate, data.CreatedDate)
-              .Set(it => it.DeletedDate, data.DeletedDate);
+                .Set(it => it.ClassRoomId, data.ClassRoomId)
+                .Set(it => it.CommentId, data.CommentId)
+                .Set(it => it.LessonId, data.LessonId)
+                .Set(it => it.LikedByUserProfileId, data.LikedByUserProfileId)
+                .Set(it => it.LastNotifyRequest, data.LastNotifyRequest)
+                .Set(it => it.LastNotifyComplete, data.LastNotifyComplete)
+                .Set(it => it.CreatedDate, data.CreatedDate)
+                .Set(it => it.DeletedDate, data.DeletedDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
             MongoAccess.MongoUtil.Instance.GetCollection<LikeComment>(TableName)
@@ -62,6 +63,19 @@ namespace MindSageWeb.Repositories
         {
             var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeComment>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && it.LikedByUserProfileId == userprofileId)
+                .ToEnumerable();
+            return qry;
+        }
+
+        /// <summary>
+        /// ขอรายการ Like comment จากรหัสผู้ใช้และรหัส class room
+        /// </summary>
+        /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>
+        /// <param name="classRoomId">รหัส class room</param>
+        public IEnumerable<LikeComment> GetLikeCommentsByUserProfileIdAndClassRoomId(string userprofileId, string classRoomId)
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeComment>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.LikedByUserProfileId == userprofileId)
                 .ToEnumerable();
             return qry;
         }
