@@ -9,7 +9,8 @@
         <div class="small-4 large-2 columns">
             <p>User Info</p>
         </div>
-        <a class="small-2 large-2 columns">Edit</a>
+        <a class="small-2 large-2 columns" ng-show="!explan" ng-click="explan = !explan">Edit</a>
+        <a class="small-2 large-2 columns" ng-show="explan" ng-click="cx.UpdateProfile(cx.userInfo.FullName, cx.userInfo.SchoolName,cx.userInfo.IsPrivateAccout,cx.userInfo.IsReminderOnceTime) ; explan = !explan">Save</a>
         <div class="control undisplay" data-tab-content>
             <div class="large-12">
                 <div class="row">
@@ -18,10 +19,7 @@
                             Name
                             <input ng-model="cx.userInfo.FullName" type="text">
                         </label>
-                        <label>
-                            Email
-                            <input ng-model="cx.userInfo.UserProfileId" type="email" disabled>
-                        </label>
+                           <p>Email : {{cx.userInfo.UserProfileId}}</p>
                     </div>
 
                     <div class="small-4 columns">
@@ -82,7 +80,6 @@
                 </div>
                 <div class="row">
                     <div class="small-6 columns">
-                        <button class="button" ng-click="cx.UpdateProfile(cx.userInfo.FullName, cx.userInfo.SchoolName,cx.userInfo.IsPrivateAccout,cx.userInfo.IsReminderOnceTime)">Save</button>
                     </div>
                 </div>
             </div>
@@ -93,7 +90,9 @@
         <div class="small-4 large-2 columns">
             <p>Class Info</p>
         </div>
-        <a class="small-2 large-2 columns">Edit</a>
+        <a class="small-2 large-2 columns" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
+        <a class="small-2 large-2 columns" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.ClassName, cx.CurrentStudentCode, cx.courseInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
+
         <div class="small-6 large-4 columns">
             <a class="viewlist" ui-sref="app.course.teacherlist({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })">View Student List</a>
         </div>
@@ -156,7 +155,6 @@
                     <div class="row">
                         <div class="small-6 columns">
                             <button class="button" ng-click="cx.DeleteCourse()">Delete Course</button>
-                            <button class="button" ng-click="cx.UpdateCoursee(cx.ClassName, cx.CurrentStudentCode, cx.courseInfo.StartDate)">Save</button>
                         </div>
                     </div>
                 </div>
