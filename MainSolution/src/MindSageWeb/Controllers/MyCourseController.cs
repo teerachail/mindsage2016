@@ -620,12 +620,14 @@ namespace MindSageWeb.Controllers
             var likeDiscussions = _likeDiscussionRepo.GetLikeDiscussionsByUserProfileIdAndLesson(id, lessonId);
             if (likeDiscussions == null) return invalidDataRespond;
 
+            var likeCommentIds = likeComments.Where(it => !it.DeletedDate.HasValue).Select(it => it.CommentId).ToList();
+            var likeDiscussionIds = likeDiscussions.Where(it => !it.DeletedDate.HasValue).Select(it => it.DiscussionId).ToList();
             return new GetLikeRespond
             {
                 LessonId = lessonId,
                 IsLikedLesson = likeLessons.Any(it => !it.DeletedDate.HasValue),
-                LikeCommentIds = likeComments.Where(it => !it.DeletedDate.HasValue).Select(it => it.id).ToList(),
-                LikeDiscussionIds = likeDiscussions.Where(it => !it.DeletedDate.HasValue).Select(it => it.id).ToList(),
+                LikeCommentIds = likeCommentIds,
+                LikeDiscussionIds = likeDiscussionIds
             };
         }
 

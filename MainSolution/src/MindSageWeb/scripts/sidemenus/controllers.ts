@@ -29,9 +29,7 @@
             //userProfile.NumberOfStudents
             //userProfile.StartDate
             this.userSvc.UpdateUserProfile(userProfile);
-
             this.$state.go("app.main.lesson", { 'classRoomId': classRoomId, 'lessonId': lessonId }, { inherit: false });
-            //ui-sref="app.main.lesson({ 'classRoomId': '{{ item.ClassRoomId }}', 'lessonId': '{{ item.LessonId }}' })"
         }
     }
 

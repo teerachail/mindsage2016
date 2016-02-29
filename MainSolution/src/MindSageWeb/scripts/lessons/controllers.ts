@@ -9,8 +9,8 @@ module app.lessons {
         public discussions = [];
         private requestedCommentIds = [];
 
-        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
-        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
+        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'likes', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
+        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, public likes, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.teacherView = false;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
             this.userprofileSvc.Advertisments = this.content.Advertisments;
@@ -81,18 +81,25 @@ module app.lessons {
                         this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
                     }
                     else newDiscussion.id = it.ActualCommentId;
-                    var removeIndex = this.discussions.indexOf(newDiscussion);
-                    if (removeIndex > -1) alert(it.ActualCommentId);
-                    alert(this.discussions[removeIndex].id);
                 });
         }
 
         public LikeComment(commentId: string) {
             this.commentSvc.LikeComment(this.classRoomId, this.lessonId, commentId);
+
+            var removeIndex = this.likes.LikeCommentIds.indexOf(commentId);
+            const ElementNotFound = -1;
+            if (removeIndex <= ElementNotFound) this.likes.LikeCommentIds.push(commentId);
+            else this.likes.LikeCommentIds.splice(removeIndex, 1);
         }
 
         public LikeDiscussion(commentId: string, discussionId: string) {
             this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
+
+            var removeIndex = this.likes.LikeDiscussionIds.indexOf(discussionId);
+            const ElementNotFound = -1;
+            if (removeIndex <= ElementNotFound) this.likes.LikeDiscussionIds.push(discussionId);
+            else this.likes.LikeDiscussionIds.splice(removeIndex, 1);
         }
 
         public DeleteComment(comment: any) {
@@ -123,6 +130,7 @@ module app.lessons {
         }
 
         public LikeLesson() {
+            this.likes.IsLikedLesson = !this.likes.IsLikedLesson;
             this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
         }
 
