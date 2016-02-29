@@ -4,9 +4,10 @@
         <div class="large-6 columns">
             <h1 class="lesson-header">Notification</h1>
         </div>
-    </div>
+    </div>    
+    {{cx.notification.length}}
+    <div ng-show="cx.notification == null"><p> Have no notification </p></div>
     <div class="list" data-accordion data-allow-all-closed="true">
-
         <div ng-repeat="item in cx.notification" class="callout" data-accordion-item>
             <a>
                 <p ng-show="item.Tag == 0">
