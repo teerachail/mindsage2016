@@ -4,10 +4,18 @@
     class SideMenuController {
         
         private userProfile: any;
+        public notification: number;
 
-        static $inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'app.sidemenus.SideMenuService'];
-        constructor(private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private sideMenuSvc: app.sidemenus.SideMenuService) {
+        static $inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'app.sidemenus.SideMenuService', 'app.shared.GetProfileService'];
+        constructor(private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private sideMenuSvc: app.sidemenus.SideMenuService, private notificationSvc: app.shared.GetProfileService) {
             this.userProfile = userSvc.GetClientUserProfile();
+            this.notificationSvc.GetNotificationNumber()
+                .then(it=> {
+                    if (it == null) {
+                        this.notification = 0;
+                    }
+                    else this.notification = it.notificationTotal;
+                });
         }
 
         public GetUserProfileId(): string {

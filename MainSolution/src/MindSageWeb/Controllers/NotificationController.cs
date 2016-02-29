@@ -49,17 +49,17 @@ namespace MindSageWeb.Controllers
         /// <param name="classRoomId">Class room id</param>
         [HttpGet]
         [Route("{id}/{classRoomId}")]
-        public int Get(string id, string classRoomId)
+        public GetNotificationRespond Get(string id, string classRoomId)
         {
             const int NoneNotification = 0;
             var areArgumentsValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
-            if (!areArgumentsValid) return NoneNotification;
+            if (!areArgumentsValid) return new GetNotificationRespond { notificationTotal = NoneNotification };
 
             var notifications = _notificationRepo.GetNotificationByUserIdAndClassRoomId(id, classRoomId).ToList();
             var anyNotification = notifications != null && notifications.Any(it => !it.HideDate.HasValue);
-            if (!anyNotification) return NoneNotification;
+            if (!anyNotification) return new GetNotificationRespond { notificationTotal = NoneNotification };
 
-            return notifications.Where(it => !it.HideDate.HasValue).Count();
+            return new GetNotificationRespond { notificationTotal = notifications.Where(it => !it.HideDate.HasValue).Count() };
         }
 
         // GET: api/notification/{user-id}/{class-room-id}/content

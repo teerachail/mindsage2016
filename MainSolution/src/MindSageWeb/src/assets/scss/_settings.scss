@@ -985,8 +985,10 @@ $topbar-input-width: 200px;
     .callout{
         margin-bottom:0;
         .listIcon{
-            width:30px;
+            width: 30px;
+            height: 30px;
             margin-right:1rem;
+            margin-bottom:1rem;
         } 
         p{
             margin-bottom:0;

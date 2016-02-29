@@ -94,10 +94,10 @@ module app {
             this.DeleteCourseUrl = apiUrl + '/mycourse/leave';
             this.StudenMessageEditUrl = apiUrl + '/mycourse/message';
             this.GetAllCourserofileUrl = apiUrl + '/mycourse/:id/courses';
-            this.GetNotificationNumberUrl = apiUrl + '/notification/:id/:classRoomId'
-            this.GetNotificationContentUrl = apiUrl + '/notification/:id/:classRoomId/content'
-            this.GetLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/:lessonId'
-            this.GetAllLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/alllikes'
+            this.GetNotificationNumberUrl = apiUrl + '/notification/:id/:classRoomId';
+            this.GetNotificationContentUrl = apiUrl + '/notification/:id/:classRoomId/content';
+            this.GetLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/:lessonId';
+            this.GetAllLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/alllikes';
         }
     }
     
