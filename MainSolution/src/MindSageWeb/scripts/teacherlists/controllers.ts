@@ -3,11 +3,14 @@
 
     class teacherlistsController {
         static $inject = ['$scope', 'list', 'classRoomId', 'app.teacherlists.TeacherListService'];
-        constructor(private $scope, public list, public classRoomId: string, private teacherlistsSvc: app.teacherlists.TeacherListService) {
+        constructor(private $scope, public list: any[], public classRoomId: string, private teacherlistsSvc: app.teacherlists.TeacherListService) {
         }
 
-        public RemoveStd(removeId: string) {
-            this.teacherlistsSvc.RemoveStudent(this.classRoomId, removeId);
+        public RemoveStd(removeObj: any) {
+            this.teacherlistsSvc.RemoveStudent(this.classRoomId, removeObj.id);
+
+            var removeIndex = this.list.indexOf(removeObj);
+            this.list.splice(removeIndex, 1);
         }
 
     }

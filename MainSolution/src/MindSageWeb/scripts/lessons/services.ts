@@ -29,7 +29,6 @@ module app.lessons {
 
         }
 
-
         public GetContent(lessonId: string, classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             return this.getLessonSvc.get(new LessonContentRequest(lessonId, classRoomId, userId)).$promise;
