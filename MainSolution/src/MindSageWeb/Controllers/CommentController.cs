@@ -58,32 +58,33 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="body">Request information</param>
         [HttpPost]
-        public void Post(PostNewCommentRequest body)
+        public PostNewCommentRespond Post(PostNewCommentRequest body)
         {
             var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.ClassRoomId)
                 && !string.IsNullOrEmpty(body.Description)
                 && !string.IsNullOrEmpty(body.LessonId)
                 && !string.IsNullOrEmpty(body.UserProfileId);
-            if (!areArgumentsValid) return;
+            if (!areArgumentsValid) return null;
 
             UserProfile userprofile;
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
-            if (!canAccessToTheClassRoom) return;
+            if (!canAccessToTheClassRoom) return null;
 
             var now = _dateTime.GetCurrentTime();
             var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
-            if (!canAccessToTheClassLesson) return;
+            if (!canAccessToTheClassLesson) return null;
 
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
-            if (selectedUserActivity == null) return;
+            if (selectedUserActivity == null) return null;
 
             var selectedLesson = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId == body.LessonId);
-            if (selectedLesson == null) return;
+            if (selectedLesson == null) return null;
 
+            var id = Guid.NewGuid().ToString();
             var newComment = new Comment
             {
-                id = Guid.NewGuid().ToString(),
+                id = id,
                 ClassRoomId = body.ClassRoomId,
                 CreatedByUserProfileId = body.UserProfileId,
                 Description = body.Description,
@@ -97,6 +98,7 @@ namespace MindSageWeb.Controllers
 
             selectedLesson.CreatedCommentAmount++;
             _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+            return new PostNewCommentRespond { ActualCommentId = id };
         }
 
         // PUT: api/comment/{comment-id}

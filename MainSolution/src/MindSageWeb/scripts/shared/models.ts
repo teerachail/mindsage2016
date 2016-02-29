@@ -111,7 +111,16 @@
         }
     }
     
-    
+    export class Comment {
+        constructor(
+            public id: string,
+            public Description: string,
+            public TotalLikes: number,
+            public TotalDiscussions: number,
+            public CreatorImageUrl: string,
+            public CreatorDisplayName: string) {
+        }
+    }
 
 
 }

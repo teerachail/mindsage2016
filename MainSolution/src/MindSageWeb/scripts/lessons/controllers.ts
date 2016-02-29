@@ -51,7 +51,17 @@ module app.lessons {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message);
+            var userprofile = this.userprofileSvc.GetClientUserProfile();
+            var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName);
+            this.comment.Comments.push(newComment);
+            this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message)
+                .then(it=> {
+                    if (it == null) {
+                        var removeIndex = this.comment.Comments.indexOf(newComment);
+                        if (removeIndex > -1) this.comment.Comments.splice(removeIndex, 1);
+                    }
+                    else newComment.id = it.ActualCommentId;
+                });
         }
 
         public CreateNewDiscussion(commentId: string, message: string) {
