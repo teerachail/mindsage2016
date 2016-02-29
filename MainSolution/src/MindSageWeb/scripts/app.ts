@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings'])    
+﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings'])    
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
@@ -54,7 +54,11 @@
                 url: '/notification',
                 views: {
                     'courseContent': {
-                        templateUrl: 'tmpl/notification.html'
+                        templateUrl: 'tmpl/notification.html',
+                        controller: 'app.notification.NotificationController as cx',
+                        resolve: {
+                            'notification': ['app.shared.GetProfileService', svc => { return svc.GetNotificationContent() }]
+                        }
                     }
                 }
             })
