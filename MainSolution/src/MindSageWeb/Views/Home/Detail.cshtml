@@ -288,11 +288,15 @@
                 </form>
             </div>
 
-            <input type="radio" name="payment" value="Code" id="Code"><label for="Code">Use Key Code</label>
-            <input type="text" />
-            <div class="text-center">
-                <button type="submit" class="button large text-center">PURCHASE</button>
-            </div>
+            <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
+                @Html.Hidden("grade", Model.Grade)
+                @Html.Hidden("courseId", Model.id)
+                <input type="radio" name="payment" value="Code" id="Code"><label for="Code">Use Key Code</label>
+                <input name="id" type="text" />
+                <div class="text-center">
+                    <button type="submit" class="button large text-center">PURCHASE</button>
+                </div>
+            </form>
         </div>
     </div>
     <button class="close-button" data-close aria-label="Close modal" type="button">

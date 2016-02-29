@@ -40,10 +40,12 @@ namespace MindSageWeb.Controllers
             return View();
         }
 
-        public IActionResult Detail(string id)
+        public IActionResult Detail(string id, bool isCouponInvalid = false)
         {
             var selectedCourse = _courseCtrl.GetCourseDetail(id);
             if (selectedCourse == null) return RedirectToAction("Error");
+
+            ViewBag.IsCouponInvalid = isCouponInvalid;
 
             return View(selectedCourse);
         }

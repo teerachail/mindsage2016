@@ -115,6 +115,7 @@ namespace MindSageWeb.Controllers
             var result = new GetCourseDetailRespond
             {
                 id = selectedCourse.id,
+                Grade = selectedCourse.Grade,
                 GroupName = selectedCourse.GroupName,
                 CreatedDate = selectedCourse.CreatedDate,
                 Description = selectedCourse.FullDescription,

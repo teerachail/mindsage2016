@@ -388,30 +388,35 @@ namespace MindSageWeb.Controllers
         /// <param name="body">Request's information</param>
         [HttpPost]
         [Route("addcourse")]
-        public void AddCourse(AddCourseRequest body)
+        public AddCourseRespond AddCourse(AddCourseRequest body)
         {
+            var addCourseFailRespond = new AddCourseRespond
+            {
+                Code = body.Code,
+                Grade = body.Grade,
+            };
             var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.UserProfileId)
                 && !string.IsNullOrEmpty(body.Code)
                 && !string.IsNullOrEmpty(body.Grade);
-            if (!areArgumentsValid) return;
+            if (!areArgumentsValid) return addCourseFailRespond;
 
             var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(body.Code, body.Grade);
-            if (selectedStudentKey == null) return;
+            if (selectedStudentKey == null) return addCourseFailRespond;
 
             var selectedClassRoom = _classRoomRepo.GetClassRoomById(selectedStudentKey.ClassRoomId);
-            if (selectedClassRoom == null) return;
+            if (selectedClassRoom == null) return addCourseFailRespond;
 
             var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(selectedStudentKey.ClassRoomId);
-            if (selectedClassCalendar == null) return;
+            if (selectedClassCalendar == null) return addCourseFailRespond;
 
             var selectedUserProfile = _userprofileRepo.GetUserProfileById(body.UserProfileId);
-            if (selectedUserProfile == null) return;
+            if (selectedUserProfile == null) return addCourseFailRespond;
 
             var lessonCatalogs = selectedClassRoom.Lessons
                 .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))
                 .ToList();
-            if (lessonCatalogs.Any(it => it == null)) return;
+            if (lessonCatalogs.Any(it => it == null)) return addCourseFailRespond;
 
             var now = _dateTime.GetCurrentTime();
             var subscriptions = selectedUserProfile.Subscriptions.ToList();
@@ -419,6 +424,7 @@ namespace MindSageWeb.Controllers
             {
                 id = Guid.NewGuid().ToString(),
                 Role = UserProfile.AccountRole.Student,
+                LastActiveDate = now,
                 ClassRoomId = selectedClassRoom.id,
                 ClassCalendarId = selectedClassCalendar.id,
                 CreatedDate = now,
@@ -458,6 +464,13 @@ namespace MindSageWeb.Controllers
                 LessonActivities = lessonActivities
             };
             _userActivityRepo.UpsertUserActivity(userActivity);
+
+            return new AddCourseRespond
+            {
+                Code = body.Code,
+                Grade = body.Grade,
+                IsSuccess = true
+            };
         }
 
         // GET: api/mycourse/{user-id}/{class-room-id}/info
