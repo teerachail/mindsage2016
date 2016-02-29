@@ -493,7 +493,6 @@ namespace MindSageWeb.Controllers
                 ClassRoomId = classRoomId,
                 IsTeacher = lastSubscription.Role == UserProfile.AccountRole.Teacher,
                 ClassName = lastSubscription.ClassRoomName,
-                NumberOfStudents = 0,
             };
 
             if (lastSubscription.Role == UserProfile.AccountRole.Teacher)
@@ -505,6 +504,7 @@ namespace MindSageWeb.Controllers
             var classCarlendar = _classCalendarRepo.GetClassCalendarByClassRoomId(lastSubscription.ClassRoomId);
             if (classCarlendar != null && !classCarlendar.DeletedDate.HasValue) courseInfoRespond.StartDate = classCarlendar.BeginDate;
 
+            courseInfoRespond.NumberOfStudents = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).Count();
             return courseInfoRespond;
         }
 
