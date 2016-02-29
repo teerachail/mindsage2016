@@ -984,7 +984,11 @@ $topbar-input-width: 200px;
 }
 .list{
     .callout{
-        margin-bottom:0; 
+        margin-bottom:0;
+        .listIcon{
+            width:30px;
+            margin-right:1rem;
+        } 
     }
 }
 
