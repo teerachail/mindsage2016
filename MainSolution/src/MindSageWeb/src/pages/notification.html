@@ -6,17 +6,88 @@
         </div>
     </div>
     <div class="list" data-accordion data-allow-all-closed="true">
-        <div class="callout" data-accordion-item>
+
+        <div ng-repeat="item in cx.notification" class="callout" data-accordion-item>
             <a>
-                <p>
-                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span>test </span><span>name</span>
+                <p ng-show="item.Tag == 0">
+                    <img class="listIcon" src="../assets/img/icon/friend_request_pending.png" /><span> Reminder </span>
+                </p>
+                <p ng-show="item.Tag == 1">
+                    <img class="listIcon" src="../assets/img/icon/notifications_inactive.png" /><span> TOTD </span>
+                </p>
+                <p ng-show="item.Tag == 2">
+                    <img class="listIcon" src="../assets/img/icon/like_inactive.png" /><span> Like: </span>
+                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
+                </p>
+                <p ng-show="item.Tag == 3">
+                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Comment: </span>
+                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
+                </p>
+                <p ng-show="item.Tag == 4">
+                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Discussion: </span>
+                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
                 </p>
             </a>
             <div class="undisplay" data-tab-content>
-                I would start <a href="#">name</a>
+                <div class="snall-12">
+                    <p ng-show="item.Tag > 1" ng-repeat="name in item.FromUserProfiles">
+                        <span ng-show="!$first && !$last">, </span>
+                        <span ng-show="$last && $first != $last"> and </span>
+                        <a ng-click="cx.OpenJournalPage('Journal', item.FromUserProfileId)">{{ name.FromUserProfileName }}</a>
+                    </p>
+                    <p>{{ item.Message }}</p>
+                </div>
             </div>
         </div>
+
+        <!--<div ng-show="!show" class="callout" data-accordion-item>
+            <a>
+                <p>
+                    <img class="listIcon" src="../assets/img/icon/like_inactive.png" /><span> Like </span>
+                    <span><span ng-show="!$first">,</span>{{ name }}</span>
+                    <i ng-click="show = !show" class="fi-trash size-24 float-right"></i>
+                </p>
+            </a>
+            <div class="undisplay" data-tab-content>
+                <div class="snall-12">
+                    <p ng-show="tag > 1"><span ng-show="!$first">,</span><a href="#">{{ name }}</a></p>
+                    <p>AAAAA</p>
+                </div>
+            </div>
         </div>
+
+        <div ng-show="!show" class="callout" data-accordion-item>
+            <a>
+                <p>
+                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Discussion </span>
+                    <span><span ng-show="!$first">,</span>{{ name }}</span>
+                    <i ng-click="show = !show" class="fi-trash size-24 float-right"></i>
+                </p>
+            </a>
+            <div class="undisplay" data-tab-content>
+                <div class="snall-12">
+                    <p ng-show="tag > 1"><span ng-show="!$first">,</span><a href="#">{{ name }}</a></p>
+                    <p>AAAAA</p>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="!show" class="callout" data-accordion-item>
+            <a>
+                <p>
+                    <img class="listIcon" src="../assets/img/icon/friend_request_pending.png" /><span> Reminder </span><i ng-click="show = !show" class="fi-trash size-24 float-right"></i>
+                </p>
+            </a>
+            <div class="undisplay" data-tab-content>
+                <div class="snall-12">
+                    <p ng-show="tag > 1"><span ng-show="!$first">,</span><a href="#">{{ name }}</a></p>
+                    <p>AAAAA</p>
+                </div>
+            </div>
+        </div>-->
+
+    </div>
+</div>
 <script>
     $(document).foundation();
 </script>
