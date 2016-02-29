@@ -27,13 +27,20 @@
         <div class="purchase">
             <p>@Model.Name</p>
             <p>@Model.Price.ToString("C2")</p>
-            <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
+            @if(User.Identity.IsAuthenticated)
+            {
+                <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
+            }
+            else
+            {
+                <a class="button primary large-centered" asp-controller="Account" asp-action="Login" asp-route-ReturnUrl="@Url.Action("Detail","Home",new { @id = Model.id })">PURCHASE</a>
+            }
         </div>
         @foreach (var item in Model.RelatedCourses)
         {
             <div class="purchase">
                 <p>@item.Name</p>
-                <a class="button primary large-centered" href="@Url.Action("Detail", "Home", new { @id = item.CourseId })">View</a>
+                <a class="button primary large-centered" asp-action="Detail" asp-controller="Home" asp-route-id="@item.CourseId">View</a>
             </div>
         }
     </div>
