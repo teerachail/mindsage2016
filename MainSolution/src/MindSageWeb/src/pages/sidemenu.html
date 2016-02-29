@@ -25,9 +25,8 @@
         </li>
     </ul>
 
-    <div class="reveal tiny" id="classModal" data-reveal>
+    <div class="reveal" id="classModal" data-reveal>
         <div class="modal-head"><h4 class="text-center">CLASS LIST</h4></div>
-        <div class="row">
             <div class="medium-10 medium-centered large-10 large-centered columns">
                 <a href="#" 
                    ng-class="{'large expanded button': item.ClassRoomId == cx.userSvc.clientUserProfile.CurrentClassRoomId,
@@ -37,7 +36,6 @@
                     {{ item.Name }}
                 </a>
             </div>
-        </div>
         <button class="close-button" data-close aria-label="Close modal" type="button">
             <span aria-hidden="true">&times;</span>
         </button>
