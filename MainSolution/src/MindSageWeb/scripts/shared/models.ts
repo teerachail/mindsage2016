@@ -129,6 +129,14 @@
         }
     }
 
+    export class GetNotificationNumberRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string) {
+        }
+    }
+    
+
     
 
 

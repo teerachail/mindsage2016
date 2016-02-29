@@ -35,7 +35,10 @@
         public GetAllCourse() {
             this.getProfile.GetAllCourse();
         }
-
+        public GetNotificationNumber() {
+            this.getProfile.GetNotificationNumber();
+        }
+        
     }
 
     angular

@@ -27,6 +27,7 @@ module app {
         DeleteCourseUrl: string;
         StudenMessageEditUrl: string;
         GetAllCourserofileUrl: string;
+        GetNotificationNumberUrl: string;
         
     }
 
@@ -57,6 +58,7 @@ module app {
         public DeleteCourseUrl: string;
         public StudenMessageEditUrl: string;
         public GetAllCourserofileUrl: string;
+        public GetNotificationNumberUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -87,6 +89,7 @@ module app {
             this.DeleteCourseUrl = apiUrl + '/mycourse/leave';
             this.StudenMessageEditUrl = apiUrl + '/mycourse/message';
             this.GetAllCourserofileUrl = apiUrl + '/mycourse/:id/courses';
+            this.GetNotificationNumberUrl = apiUrl + '/notification/:id/:classRoomId'
         }
     }
     
