@@ -194,6 +194,7 @@ var app;
             this.TeacherListUrl = apiUrl + '/mycourse/:userId/:classRoomId/students';
             this.GetDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/:commentId/discussions/:userId';
             this.CreateCommentUrl = apiUrl + '/comment';
+            this.CreateDiscussionUrl = apiUrl + '/discussion';
         }
         AppConfig.$inject = ['defaultUrl'];
         return AppConfig;
@@ -211,10 +212,12 @@ var app;
     (function (coursemaps) {
         'use strict';
         var CourseMapController = (function () {
-            function CourseMapController($scope, content, status) {
+            function CourseMapController($scope, content, status, userSvc) {
                 this.$scope = $scope;
                 this.content = content;
                 this.status = status;
+                this.userSvc = userSvc;
+                this.userProfile = userSvc.GetClientUserProfile();
             }
             CourseMapController.prototype.HaveAnyComments = function (lessonId) {
                 var qry = this.status.filter(function (it) { return it.LessonId == lessonId; });
@@ -230,7 +233,7 @@ var app;
                 else
                     return qry[0].IsReadedAllContents;
             };
-            CourseMapController.$inject = ['$scope', 'content', 'status'];
+            CourseMapController.$inject = ['$scope', 'content', 'status', 'app.shared.ClientUserProfileService'];
             return CourseMapController;
         })();
         angular
@@ -399,6 +402,8 @@ var app;
             };
             LessonController.prototype.GetDiscussions = function (comment) {
                 var _this = this;
+                if (comment == null)
+                    return;
                 var NoneDiscussion = 0;
                 if (comment.TotalDiscussions <= NoneDiscussion)
                     return;
@@ -416,10 +421,16 @@ var app;
                 });
             };
             LessonController.prototype.CreateNewComment = function (message) {
+                var NoneContentLength = 0;
+                if (message.length <= NoneContentLength)
+                    return;
                 this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message);
             };
             LessonController.prototype.CreateNewDiscussion = function (commentId, message) {
-                alert('CommentId:' + commentId + ', Message:' + message);
+                var NoneContentLength = 0;
+                if (message.length <= NoneContentLength)
+                    return;
+                this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message);
             };
             LessonController.$inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService'];
             return LessonController;
@@ -519,6 +530,17 @@ var app;
             return CreateCommentRequest;
         })();
         shared.CreateCommentRequest = CreateCommentRequest;
+        var CreateDiscussionRequest = (function () {
+            function CreateDiscussionRequest(ClassRoomId, LessonId, CommentId, UserProfileId, Description) {
+                this.ClassRoomId = ClassRoomId;
+                this.LessonId = LessonId;
+                this.CommentId = CommentId;
+                this.UserProfileId = UserProfileId;
+                this.Description = Description;
+            }
+            return CreateDiscussionRequest;
+        })();
+        shared.CreateDiscussionRequest = CreateDiscussionRequest;
     })(shared = app.shared || (app.shared = {}));
 })(app || (app = {}));
 var app;
@@ -566,11 +588,17 @@ var app;
             function DiscussionService(appConfig, $resource, userprofileSvc) {
                 this.$resource = $resource;
                 this.userprofileSvc = userprofileSvc;
-                this.svc = $resource(appConfig.GetDiscussionUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'commentId': '@commentId', 'userId': '@userId' });
+                this.getDiscussionSvc = $resource(appConfig.GetDiscussionUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'commentId': '@commentId', 'userId': '@userId' });
+                this.createDiscussionSvc = $resource(appConfig.CreateDiscussionUrl, {
+                    'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'CommentId': '@CommentId', 'UserProfileId': '@UserProfileId', 'Description': '@Description' });
             }
             DiscussionService.prototype.GetDiscussions = function (lessonId, classRoomId, commentId) {
                 var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-                return this.svc.query(new shared.GetDiscussionRequest(lessonId, classRoomId, commentId, userId)).$promise;
+                return this.getDiscussionSvc.query(new shared.GetDiscussionRequest(lessonId, classRoomId, commentId, userId)).$promise;
+            };
+            DiscussionService.prototype.CreateDiscussion = function (classRoomId, lessonId, commentId, message) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.createDiscussionSvc.save(new shared.CreateDiscussionRequest(classRoomId, lessonId, commentId, userId, message)).$promise;
             };
             DiscussionService.$inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
             return DiscussionService;
