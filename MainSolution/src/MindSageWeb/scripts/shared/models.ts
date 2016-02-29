@@ -135,7 +135,15 @@
             public classRoomId: string) {
         }
     }
-
+    export class CourseCatalog {
+        public id: string;
+        public ImageUrl: string;
+        public Name: string;
+        public ClassRoomId: string;
+        public LessonId: string;
+        public GroupName: string;
+        public Description: string;
+    }
     export class GetNotificationContentRequest {
         constructor(
             public id: string,

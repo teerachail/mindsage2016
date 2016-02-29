@@ -3,7 +3,7 @@
         {{ cx.userProfile.FullName }}
     </h1>
     <a href="#" ui-sref="app.course.nitification"><i class="fi-mail size-36"></i><span class="badge">1</span></a>
-    <a class="float-right" href="#" data-open="classModal"><i class="fi-list size-36"></i></a>
+    <a class="float-right" href="#" data-open="classModal" ng-show="cx.userSvc.AllCourses.length > 1" ><i class="fi-list size-36"></i></a>
     <ul class="vertical menu menu-bg">
         <li ng-class="{'active': 'Home' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('Home')">
             <a href="#" ui-sref="app.main.lesson({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'lessonId': '{{ cx.userProfile.CurrentLessonId }}' })"><i class="fi-home size-36"></i> HOME</a>
@@ -24,4 +24,22 @@
             <a href="#" ui-sref="app.course.config({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i class="fi-widget size-36"></i> SETTING</a>
         </li>
     </ul>
+
+    <div class="reveal tiny" id="classModal" data-reveal>
+        <div class="modal-head"><h4 class="text-center">CLASS LIST</h4></div>
+        <div class="row">
+            <div class="medium-10 medium-centered large-10 large-centered columns">
+                <a href="#" 
+                   ng-class="{'large expanded button': item.ClassRoomId == cx.userSvc.clientUserProfile.CurrentClassRoomId,
+                   'large hollow expanded button': item.ClassRoomId != cx.userSvc.clientUserProfile.CurrentClassRoomId}" 
+                   ng-repeat="item in cx.userSvc.AllCourses" 
+                   ng-click="cx.ChangeClassRoom(item.ClassRoomId, item.LessonId, item.Name)">
+                    {{ item.Name }}
+                </a>
+            </div>
+        </div>
+        <button class="close-button" data-close aria-label="Close modal" type="button">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
 </div>

@@ -24,8 +24,8 @@
     }
 
     class MainController {
-        static $inject = ['userInfo', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
-        constructor(private userInfo, private userProfileSvc: app.shared.ClientUserProfileService, private getUserProfileSvc: app.shared.GetProfileService) {
+        static $inject = ['userInfo', 'allCourse', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
+        constructor(private userInfo, private allCourse, private userProfileSvc: app.shared.ClientUserProfileService, private getUserProfileSvc: app.shared.GetProfileService) {
             if (userInfo == null) return;
             var userProfile = this.userProfileSvc.GetClientUserProfile();
             userProfile.UserProfileId = this.userInfo.UserProfileId;
@@ -48,6 +48,7 @@
                     this.userProfileSvc.UpdateUserProfile(userProfile);
                 });
             }
+            this.userProfileSvc.AllCourses = allCourse;
         }
     }
 

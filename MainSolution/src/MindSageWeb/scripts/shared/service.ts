@@ -4,6 +4,7 @@
     export class ClientUserProfileService {
 
         public Advertisments: Advertisment[];
+        public AllCourses: CourseCatalog[];
         private clientUserProfile: ClientUserProfile;
 
         constructor() {

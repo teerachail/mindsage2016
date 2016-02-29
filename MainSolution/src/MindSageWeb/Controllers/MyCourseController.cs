@@ -219,7 +219,7 @@ namespace MindSageWeb.Controllers
             var subscriptionQry = selectedUserProfile.Subscriptions.Where(it => !it.DeletedDate.HasValue);
 
             var now = _dateTime.GetCurrentTime();
-            var availableClassRoomIdQry = subscriptionQry
+            var availableClassRooms = subscriptionQry
                 .Select(it => _classCalendarRepo.GetClassCalendarByClassRoomId(it.ClassRoomId))
                 .Where(it => it != null)
                 .Where(it => it.BeginDate.Date <= now.Date)
@@ -227,15 +227,28 @@ namespace MindSageWeb.Controllers
                 .Where(it => !it.CloseDate.HasValue)
                 .Where(it => it.ExpiredDate.HasValue)
                 .Where(it => it.ExpiredDate.Value.Date > now.Date)
-                .Select(it => it.ClassRoomId);
+                .ToList();
 
             var availableSubscriptions = subscriptionQry
-                .Where(it => availableClassRoomIdQry.Contains(it.ClassRoomId))
-                .Select(it => new CourseCatalogRespond
+                .Where(it => availableClassRooms.Any(cc=>cc.ClassRoomId == it.ClassRoomId))
+                .Select(subscription =>
                 {
-                    id = it.id,
-                    Name = it.ClassRoomName,
-                }).ToList();
+                    var classCalendar = availableClassRooms.FirstOrDefault(cc => cc.ClassRoomId == subscription.ClassRoomId);
+                    if (classCalendar == null) return null;
+                    var isClassCalendarValid = classCalendar != null && classCalendar.LessonCalendars != null && classCalendar.LessonCalendars.Any();
+                    if (!isClassCalendarValid) return null;
+                    var lessonCalendarQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue);
+                    var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderBy(it => it.BeginDate).FirstOrDefault();
+                    if (currentLesson == null) return null;
+
+                    return new CourseCatalogRespond
+                    {
+                        id = subscription.id,
+                        Name = subscription.ClassRoomName,
+                        ClassRoomId = subscription.ClassRoomId,
+                        LessonId = currentLesson.LessonId
+                    };
+                }).Where(it => it != null).ToList();
 
             return availableSubscriptions;
         }
