@@ -145,6 +145,9 @@
     interface IGetNotificationNumberClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetAllCourse(data: T): T;
     }
+    interface IGetNotificationContentClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetCourseContent(data: T): T;
+    }
 
     export class GetProfileService {
 
@@ -152,6 +155,7 @@
         private getCourseSvc: IGetCourseResourceClass<any>;
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
         private getNotificationNumberSvc: IGetNotificationNumberClass<any>;
+        private getNotificationContentSvc: IGetNotificationContentClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
@@ -159,6 +163,7 @@
             this.getCourseSvc = <IGetCourseResourceClass<any>>$resource(appConfig.GetCourserofileUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getNotificationNumberSvc = <IGetNotificationNumberClass<any>>$resource(appConfig.GetNotificationNumberUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
+            this.getNotificationContentSvc = <IGetNotificationContentClass<any>>$resource(appConfig.GetNotificationContentUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
         }
 
         public GetProfile(): ng.IPromise<any> {
@@ -179,6 +184,11 @@
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
             return this.getNotificationNumberSvc.get(new GetNotificationNumberRequest(userId, classroomId)).$promise;
+        }
+        public GetNotificationContent(): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            return this.getNotificationContentSvc.query(new GetNotificationNumberRequest(userId, classroomId)).$promise;
         }
 
 

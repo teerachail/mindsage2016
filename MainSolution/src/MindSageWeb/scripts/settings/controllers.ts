@@ -38,6 +38,10 @@
         public GetNotificationNumber() {
             this.getProfile.GetNotificationNumber();
         }
+        public GetNotificationContent() {
+            this.getProfile.GetNotificationContent();
+        }
+        
         
     }
 
