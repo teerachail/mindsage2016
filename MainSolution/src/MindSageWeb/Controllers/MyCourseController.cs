@@ -21,6 +21,9 @@ namespace MindSageWeb.Controllers
         private IUserActivityRepository _userActivityRepo;
         private IStudentKeyRepository _studentKeyRepo;
         private ILessonCatalogRepository _lessonCatalogRepo;
+        private ILikeLessonRepository _likeLessonRepo;
+        private ILikeCommentRepository _likeCommentRepo;
+        private ILikeDiscussionRepository _likeDiscussionRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -42,6 +45,9 @@ namespace MindSageWeb.Controllers
             IClassRoomRepository classRoomRepo,
             IStudentKeyRepository studentKeyRepo,
             ILessonCatalogRepository lessonCatalogRepo,
+            ILikeLessonRepository likeLessonRepo,
+            ILikeCommentRepository likeCommentRepo,
+            ILikeDiscussionRepository likeDiscussionRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -50,6 +56,9 @@ namespace MindSageWeb.Controllers
             _classRoomRepo = classRoomRepo;
             _studentKeyRepo = studentKeyRepo;
             _lessonCatalogRepo = lessonCatalogRepo;
+            _likeLessonRepo = likeLessonRepo;
+            _likeCommentRepo = likeCommentRepo;
+            _likeDiscussionRepo = likeDiscussionRepo;
             _dateTime = dateTime;
         }
 
@@ -560,6 +569,51 @@ namespace MindSageWeb.Controllers
                 classCalendar.LastCalculateRequest = now;
                 _classCalendarRepo.UpsertClassCalendar(classCalendar);
             }
+        }
+
+        // GET: api/mycourse/{user-id}/{class-room-id}/{lesson-id}
+        /// <summary>
+        /// Get likes 
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <param name="lessonId">Lesson id</param>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/{lessonId}")]
+        public GetLikeRespond GetLikes(string id, string classRoomId, string lessonId)
+        {
+            var invalidDataRespond = new GetLikeRespond
+            {
+                LessonId = lessonId,
+                LikeCommentIds = Enumerable.Empty<string>(),
+                LikeDiscussionIds = Enumerable.Empty<string>()
+            };
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId)
+                && !string.IsNullOrEmpty(lessonId);
+            if (!areArgumentsValid) return invalidDataRespond;
+
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId);
+            if (!canAccessToTheClassRoom) return invalidDataRespond;
+
+            var now = _dateTime.GetCurrentTime();
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, lessonId, now);
+            if (!canAccessToTheClassLesson) return invalidDataRespond;
+
+            var likeLessons = _likeLessonRepo.GetLikeLessonsByUserProfileIdAndLesson(id, lessonId);
+            if (likeLessons == null) return invalidDataRespond;
+            var likeComments = _likeCommentRepo.GetLikeCommentsByUserProfileIdAndLesson(id, lessonId);
+            if (likeComments == null) return invalidDataRespond;
+            var likeDiscussions = _likeDiscussionRepo.GetLikeDiscussionsByUserProfileIdAndLesson(id, lessonId);
+            if (likeDiscussions == null) return invalidDataRespond;
+
+            return new GetLikeRespond
+            {
+                LessonId = lessonId,
+                IsLikedLesson = likeLessons.Any(it => !it.DeletedDate.HasValue),
+                LikeCommentIds = likeComments.Where(it => !it.DeletedDate.HasValue).Select(it => it.id).ToList(),
+                LikeDiscussionIds = likeDiscussions.Where(it => !it.DeletedDate.HasValue).Select(it => it.id).ToList(),
+            };
         }
 
         #endregion Methods

@@ -54,6 +54,18 @@ namespace MindSageWeb.Repositories
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
+        /// <summary>
+        /// ขอรายการ Like discussion จากรหัสผู้ใช้และรหัส lesson
+        /// </summary>
+        /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>
+        /// <param name="lessonId">รหัส lesson </param>
+        public IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndLesson(string userprofileId, string lessonId)
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
+                            .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && it.LikedByUserProfileId == userprofileId)
+                            .ToEnumerable();
+            return qry;
+        }
         #endregion ILikeDiscussionRepository members
     }
 }

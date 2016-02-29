@@ -26,6 +26,13 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูล like discussion ที่จะดำเนินการ</param>
         void UpsertLikeDiscussion(LikeDiscussion data);
 
+        /// <summary>
+        /// ขอรายการ Like discussion จากรหัสผู้ใช้และรหัส lesson
+        /// </summary>
+        /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>
+        /// <param name="lessonId">รหัส lesson </param>
+        IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndLesson(string userprofileId, string lessonId);
+
         #endregion Methods
     }
 }

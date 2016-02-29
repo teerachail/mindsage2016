@@ -26,6 +26,13 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่จะทำการอัพเดทหรือเพิ่ม</param>
         void UpsertLikeLesson(LikeLesson data);
 
+        /// <summary>
+        /// ขอรายการ Like lesson จากรหัสผู้ใช้และรหัส lesson
+        /// </summary>
+        /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>
+        /// <param name="lessonId">รหัส lesson </param>
+        IEnumerable<LikeLesson> GetLikeLessonsByUserProfileIdAndLesson(string userprofileId, string lessonId);
+
         #endregion Methods
     }
 }
