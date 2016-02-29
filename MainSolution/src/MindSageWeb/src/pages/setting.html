@@ -117,28 +117,22 @@
                 </div>
                 <div class="row">
                     <div class="small-3 columns">
-                        <label>
+                        <p>
                             Number of Students {{ cx.courseInfo.NumberOfStudents }}
-                        </label>
+                        </p>
                     </div>
                 </div>
                 <div class="row">
-                    <div class="small-4 columns">
-                        <label>
-                            Start Date
-                        </label>
+                    <div class="small-3 columns">
+                        <p>
+                            Start Date <img width="30" src="../assets/img/logo/calendar.png" />
+                        </p>
                     </div>
                     <div ng-show="cx.courseInfo.StartDate != null">
-                        <div class="small-1 columns">
-                            <label>
-                                <a><img width="30" src="../assets/img/logo/calendar.png" /></a>
-                            </label>
-                        </div>
-
-                        <div class="small-4 columns">
-                            <label>
+                        <div class="small-9 columns">
+                            <p>
                                 <a>{{ cx.courseInfo.StartDate }}</a>
-                            </label>
+                            </p>
                         </div>
                     </div>
                     <div ng-show="cx.courseInfo.StartDate == null">
@@ -147,12 +141,12 @@
                         </div>
                     </div>
                     <div class="small-12 columns">
-                        <label>
-                            Set Off Days and Vacations<a><img width="30" src="../assets/img/logo/calendar.png" /></a>
-                        </label>
+                        <p>
+                            Set Off Days and Vacations <a><img width="30" src="../assets/img/logo/calendar.png" /></a>
+                        </p>
                     </div>
 
-                    <div class="row">
+                    <div>
                         <div class="small-6 columns">
                             <button class="button" ng-click="cx.DeleteCourse()">Delete Course</button>
                         </div>

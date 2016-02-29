@@ -597,7 +597,6 @@ $topbar-input-width: 200px;
   text-align: center;
   font-size: 1.2rem;
   padding: 4rem;
-  margin-top:4rem;
   p {
     &.slogan {
       color: #8d9093;
@@ -661,7 +660,7 @@ $topbar-input-width: 200px;
 }
 
 .content-section {
-    padding: 50px 0 0;
+    padding: 50px 0 50px 0;
     clear: both;
 }
 

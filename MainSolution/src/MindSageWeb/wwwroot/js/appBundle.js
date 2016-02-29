@@ -45,8 +45,8 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
                 }
             }
         })
-            .state('app.course.nitification', {
-            url: '/nitification',
+            .state('app.course.notification', {
+            url: '/notification',
             views: {
                 'courseContent': {
                     templateUrl: 'tmpl/notification.html'
@@ -61,7 +61,8 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
                     controller: 'app.journals.JournalController as cx',
                     resolve: {
                         'content': ['$stateParams', 'app.journals.JournalService',
-                            function (params, svc) { return svc.GetComments(params.classRoomId, params.targetUserId); }]
+                            function (params, svc) { return svc.GetComments(params.classRoomId, params.targetUserId); }],
+                        'targetUserId': ['$stateParams', function (params) { return params.targetUserId; }]
                     }
                 }
             }
@@ -332,13 +333,15 @@ var app;
     (function (journals) {
         'use strict';
         var JournalController = (function () {
-            function JournalController($scope, content, svc, discussionSvc, commentSvc, lessonSvc) {
+            function JournalController($scope, content, targetUserId, svc, discussionSvc, commentSvc, lessonSvc) {
                 this.$scope = $scope;
                 this.content = content;
+                this.targetUserId = targetUserId;
                 this.svc = svc;
                 this.discussionSvc = discussionSvc;
                 this.commentSvc = commentSvc;
                 this.lessonSvc = lessonSvc;
+                this.MyComments = [];
                 this.discussions = [];
                 this.requestedCommentIds = [];
                 this.userprofile = this.svc.GetClientUserProfile();
@@ -384,17 +387,43 @@ var app;
                 });
             };
             JournalController.prototype.CreateNewComment = function (message) {
+                var _this = this;
                 var NoneContentLength = 0;
                 if (message.length <= NoneContentLength)
                     return;
-                this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message);
+                var newComment = new app.shared.Comment('MOCK', message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId);
+                this.MyComments.push(newComment);
+                this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message)
+                    .then(function (it) {
+                    if (it == null) {
+                        var removeIndex = _this.content.Comments.indexOf(newComment);
+                        if (removeIndex > -1)
+                            _this.content.Comments.splice(removeIndex, 1);
+                    }
+                    else
+                        newComment.id = it.ActualCommentId;
+                });
             };
             JournalController.prototype.CreateNewDiscussion = function (commentId, message) {
+                var _this = this;
                 var NoneContentLength = 0;
                 if (message.length <= NoneContentLength)
                     return;
+                var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId);
+                this.discussions.push(newDiscussion);
+                this.content.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions++;
                 var local = this.content.Comments.filter(function (it) { return it.id == commentId; })[0];
-                this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message);
+                this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message)
+                    .then(function (it) {
+                    if (it == null) {
+                        var removeIndex = _this.discussions.indexOf(newDiscussion);
+                        if (removeIndex > -1)
+                            _this.discussions.splice(removeIndex, 1);
+                        _this.content.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions--;
+                    }
+                    else
+                        newDiscussion.id = it.ActualCommentId;
+                });
             };
             JournalController.prototype.LikeComment = function (commentId) {
                 var local = this.content.Comments.filter(function (it) { return it.id == commentId; })[0];
@@ -404,13 +433,24 @@ var app;
                 var local = this.content.Comments.filter(function (it) { return it.id == commentId; })[0];
                 this.discussionSvc.LikeDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId);
             };
-            JournalController.prototype.DeleteComment = function (commentId) {
-                var local = this.content.Comments.filter(function (it) { return it.id == commentId; })[0];
-                this.commentSvc.UpdateComment(local.ClassRoomId, local.LessonId, commentId, true, null);
+            JournalController.prototype.DeleteComment = function (comment) {
+                var removeIndex = this.content.Comments.indexOf(comment);
+                if (removeIndex > -1)
+                    this.content.Comments.splice(removeIndex, 1);
+                else {
+                    removeIndex = this.MyComments.indexOf(comment);
+                    if (removeIndex > -1)
+                        this.MyComments.splice(removeIndex, 1);
+                }
+                this.commentSvc.UpdateComment(comment.ClassRoomId, comment.LessonId, comment.id, true, null);
             };
-            JournalController.prototype.DeleteDiscussion = function (commentId, discussionId) {
+            JournalController.prototype.DeleteDiscussion = function (commentId, discussion) {
+                var removeIndex = this.discussions.indexOf(discussion);
+                if (removeIndex > -1)
+                    this.discussions.splice(removeIndex, 1);
+                this.content.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions--;
                 var local = this.content.Comments.filter(function (it) { return it.id == commentId; })[0];
-                this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId, true, null);
+                this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussion.id, true, null);
             };
             JournalController.prototype.EditComment = function (commentId, message) {
                 var NoneContentLength = 0;
@@ -443,7 +483,7 @@ var app;
             JournalController.prototype.CancelEdit = function (save) {
                 return !save;
             };
-            JournalController.$inject = ['$scope', 'content', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
+            JournalController.$inject = ['$scope', 'content', 'targetUserId', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
             return JournalController;
         })();
         angular
@@ -493,219 +533,6 @@ var app;
             .module('app.journals')
             .service('app.journals.JournalService', JournalService);
     })(journals = app.journals || (app.journals = {}));
-})(app || (app = {}));
-var app;
-(function (app) {
-    var lessons;
-    (function (lessons) {
-        'use strict';
-        var LessonController = (function () {
-            function LessonController($scope, content, classRoomId, lessonId, comment, userprofileSvc, discussionSvc, commentSvc, lessonSvc) {
-                this.$scope = $scope;
-                this.content = content;
-                this.classRoomId = classRoomId;
-                this.lessonId = lessonId;
-                this.comment = comment;
-                this.userprofileSvc = userprofileSvc;
-                this.discussionSvc = discussionSvc;
-                this.commentSvc = commentSvc;
-                this.lessonSvc = lessonSvc;
-                this.discussions = [];
-                this.requestedCommentIds = [];
-                this.teacherView = false;
-                this.currentUser = this.userprofileSvc.GetClientUserProfile();
-                this.userprofileSvc.Advertisments = this.content.Advertisments;
-            }
-            LessonController.prototype.selectTeacherView = function () {
-                this.teacherView = true;
-            };
-            LessonController.prototype.selectStdView = function () {
-                this.teacherView = false;
-            };
-            LessonController.prototype.showDiscussion = function (item, open) {
-                this.GetDiscussions(item);
-                return !open;
-            };
-            LessonController.prototype.GetDiscussions = function (comment) {
-                var _this = this;
-                if (comment == null)
-                    return;
-                var NoneDiscussion = 0;
-                if (comment.TotalDiscussions <= NoneDiscussion)
-                    return;
-                if (this.requestedCommentIds.filter(function (it) { return it == comment.id; }).length > NoneDiscussion)
-                    return;
-                this.requestedCommentIds.push(comment.id);
-                this.discussionSvc
-                    .GetDiscussions(this.lessonId, this.classRoomId, comment.id)
-                    .then(function (it) {
-                    if (it == null)
-                        return;
-                    for (var index = 0; index < it.length; index++) {
-                        _this.discussions.push(it[index]);
-                    }
-                });
-            };
-            LessonController.prototype.CreateNewComment = function (message) {
-                var _this = this;
-                var NoneContentLength = 0;
-                if (message.length <= NoneContentLength)
-                    return;
-                var userprofile = this.userprofileSvc.GetClientUserProfile();
-                var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName);
-                this.comment.Comments.push(newComment);
-                this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message)
-                    .then(function (it) {
-                    if (it == null) {
-                        var removeIndex = _this.comment.Comments.indexOf(newComment);
-                        if (removeIndex > -1)
-                            _this.comment.Comments.splice(removeIndex, 1);
-                    }
-                    else
-                        newComment.id = it.ActualCommentId;
-                });
-            };
-            LessonController.prototype.CreateNewDiscussion = function (commentId, message) {
-                var NoneContentLength = 0;
-                if (message.length <= NoneContentLength)
-                    return;
-                this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message);
-            };
-            LessonController.prototype.LikeComment = function (commentId) {
-                this.commentSvc.LikeComment(this.classRoomId, this.lessonId, commentId);
-            };
-            LessonController.prototype.LikeDiscussion = function (commentId, discussionId) {
-                this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
-            };
-            LessonController.prototype.DeleteComment = function (commentId) {
-                this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, commentId, true, null);
-            };
-            LessonController.prototype.DeleteDiscussion = function (commentId, discussionId) {
-                this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, true, null);
-            };
-            LessonController.prototype.EditComment = function (commentId, message) {
-                var NoneContentLength = 0;
-                if (message.length <= NoneContentLength)
-                    return;
-                this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, commentId, false, message);
-            };
-            LessonController.prototype.EditDiscussion = function (commentId, discussionId, message) {
-                var NoneContentLength = 0;
-                if (message.length <= NoneContentLength)
-                    return;
-                this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, false, message);
-            };
-            LessonController.prototype.LikeLesson = function () {
-                this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
-            };
-            LessonController.prototype.ReadNote = function () {
-                this.lessonSvc.ReadNote(this.classRoomId);
-            };
-            LessonController.prototype.EditOpen = function (message, open) {
-                this.message = message;
-                return !open;
-            };
-            LessonController.prototype.SaveEdit = function (messageId, save) {
-                this.comment.Comments.filter(function (it) { return it.id == messageId; })[0].Description = this.message;
-                this.EditComment(this.comment.Comments.filter(function (it) { return it.id == messageId; })[0].id, this.message);
-                return !save;
-            };
-            LessonController.prototype.SaveEditDiscus = function (commentId, messageId, save) {
-                this.discussions.filter(function (it) { return it.id == messageId; })[0].Description = this.message;
-                this.EditDiscussion(commentId, this.discussions.filter(function (it) { return it.id == messageId; })[0].id, this.message);
-                return !save;
-            };
-            LessonController.prototype.CancelEdit = function (save) {
-                return !save;
-            };
-            LessonController.$inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
-            return LessonController;
-        })();
-        angular
-            .module('app.lessons')
-            .controller('app.lessons.LessonController', LessonController);
-    })(lessons = app.lessons || (app.lessons = {}));
-})(app || (app = {}));
-var app;
-(function (app) {
-    var lessons;
-    (function (lessons) {
-        'use strict';
-        var LessonContentRequest = (function () {
-            function LessonContentRequest(id, classRoomId, userId) {
-                this.id = id;
-                this.classRoomId = classRoomId;
-                this.userId = userId;
-            }
-            return LessonContentRequest;
-        })();
-        lessons.LessonContentRequest = LessonContentRequest;
-        var LessonDiscussionRequest = (function () {
-            function LessonDiscussionRequest(id, classRoomId, commentId, userId) {
-                this.id = id;
-                this.classRoomId = classRoomId;
-                this.commentId = commentId;
-                this.userId = userId;
-            }
-            return LessonDiscussionRequest;
-        })();
-        lessons.LessonDiscussionRequest = LessonDiscussionRequest;
-        var LikeLessonRequest = (function () {
-            function LikeLessonRequest(ClassRoomId, LessonId, UserProfileId) {
-                this.ClassRoomId = ClassRoomId;
-                this.LessonId = LessonId;
-                this.UserProfileId = UserProfileId;
-            }
-            return LikeLessonRequest;
-        })();
-        lessons.LikeLessonRequest = LikeLessonRequest;
-        var ReadNoteRequest = (function () {
-            function ReadNoteRequest(ClassRoomId, UserProfileId) {
-                this.ClassRoomId = ClassRoomId;
-                this.UserProfileId = UserProfileId;
-            }
-            return ReadNoteRequest;
-        })();
-        lessons.ReadNoteRequest = ReadNoteRequest;
-    })(lessons = app.lessons || (app.lessons = {}));
-})(app || (app = {}));
-var app;
-(function (app) {
-    var lessons;
-    (function (lessons) {
-        'use strict';
-        var LessonService = (function () {
-            function LessonService(appConfig, $resource, userprofileSvc) {
-                this.$resource = $resource;
-                this.userprofileSvc = userprofileSvc;
-                this.getLessonSvc = $resource(appConfig.LessonUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
-                this.likeLessonSvc = $resource(appConfig.LikeLessonUrl, {
-                    'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'UserProfileId': '@UserProfileId'
-                });
-                this.readNoteSvc = $resource(appConfig.ReadNoteUrl, {
-                    'ClassRoomId': '@ClassRoomId', 'UserProfileId': '@UserProfileId'
-                });
-            }
-            LessonService.prototype.GetContent = function (id, classRoomId) {
-                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-                return this.getLessonSvc.get(new lessons.LessonContentRequest(id, classRoomId, userId)).$promise;
-            };
-            LessonService.prototype.LikeLesson = function (classRoomId, lessonId) {
-                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-                return this.likeLessonSvc.save(new lessons.LikeLessonRequest(classRoomId, lessonId, userId)).$promise;
-            };
-            LessonService.prototype.ReadNote = function (classRoomId) {
-                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-                return this.readNoteSvc.save(new lessons.ReadNoteRequest(classRoomId, userId)).$promise;
-            };
-            LessonService.$inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
-            return LessonService;
-        })();
-        lessons.LessonService = LessonService;
-        angular
-            .module('app.lessons')
-            .service('app.lessons.LessonService', LessonService);
-    })(lessons = app.lessons || (app.lessons = {}));
 })(app || (app = {}));
 var app;
 (function (app) {
@@ -855,6 +682,245 @@ var app;
             .module('app.settings')
             .service('app.settings.ProfileService', ProfileService);
     })(settings = app.settings || (app.settings = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var lessons;
+    (function (lessons) {
+        'use strict';
+        var LessonController = (function () {
+            function LessonController($scope, content, classRoomId, lessonId, comment, userprofileSvc, discussionSvc, commentSvc, lessonSvc) {
+                this.$scope = $scope;
+                this.content = content;
+                this.classRoomId = classRoomId;
+                this.lessonId = lessonId;
+                this.comment = comment;
+                this.userprofileSvc = userprofileSvc;
+                this.discussionSvc = discussionSvc;
+                this.commentSvc = commentSvc;
+                this.lessonSvc = lessonSvc;
+                this.discussions = [];
+                this.requestedCommentIds = [];
+                this.teacherView = false;
+                this.currentUser = this.userprofileSvc.GetClientUserProfile();
+                this.userprofileSvc.Advertisments = this.content.Advertisments;
+            }
+            LessonController.prototype.selectTeacherView = function () {
+                this.teacherView = true;
+            };
+            LessonController.prototype.selectStdView = function () {
+                this.teacherView = false;
+            };
+            LessonController.prototype.showDiscussion = function (item, open) {
+                this.GetDiscussions(item);
+                return !open;
+            };
+            LessonController.prototype.GetDiscussions = function (comment) {
+                var _this = this;
+                if (comment == null)
+                    return;
+                var NoneDiscussion = 0;
+                if (comment.TotalDiscussions <= NoneDiscussion)
+                    return;
+                if (this.requestedCommentIds.filter(function (it) { return it == comment.id; }).length > NoneDiscussion)
+                    return;
+                this.requestedCommentIds.push(comment.id);
+                this.discussionSvc
+                    .GetDiscussions(this.lessonId, this.classRoomId, comment.id)
+                    .then(function (it) {
+                    if (it == null)
+                        return;
+                    for (var index = 0; index < it.length; index++) {
+                        _this.discussions.push(it[index]);
+                    }
+                });
+            };
+            LessonController.prototype.CreateNewComment = function (message) {
+                var _this = this;
+                var NoneContentLength = 0;
+                if (message.length <= NoneContentLength)
+                    return;
+                var userprofile = this.userprofileSvc.GetClientUserProfile();
+                var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId);
+                this.comment.Comments.push(newComment);
+                this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message)
+                    .then(function (it) {
+                    if (it == null) {
+                        var removeIndex = _this.comment.Comments.indexOf(newComment);
+                        if (removeIndex > -1)
+                            _this.comment.Comments.splice(removeIndex, 1);
+                    }
+                    else
+                        newComment.id = it.ActualCommentId;
+                });
+            };
+            LessonController.prototype.CreateNewDiscussion = function (commentId, message) {
+                var _this = this;
+                var NoneContentLength = 0;
+                if (message.length <= NoneContentLength)
+                    return;
+                var userprofile = this.userprofileSvc.GetClientUserProfile();
+                var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId);
+                this.discussions.push(newDiscussion);
+                this.comment.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions++;
+                this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message)
+                    .then(function (it) {
+                    if (it == null) {
+                        var removeIndex = _this.discussions.indexOf(newDiscussion);
+                        if (removeIndex > -1)
+                            _this.discussions.splice(removeIndex, 1);
+                        _this.comment.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions--;
+                    }
+                    else
+                        newDiscussion.id = it.ActualCommentId;
+                    var removeIndex = _this.discussions.indexOf(newDiscussion);
+                    if (removeIndex > -1)
+                        alert(it.ActualCommentId);
+                    alert(_this.discussions[removeIndex].id);
+                });
+            };
+            LessonController.prototype.LikeComment = function (commentId) {
+                this.commentSvc.LikeComment(this.classRoomId, this.lessonId, commentId);
+            };
+            LessonController.prototype.LikeDiscussion = function (commentId, discussionId) {
+                this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
+            };
+            LessonController.prototype.DeleteComment = function (comment) {
+                var removeIndex = this.comment.Comments.indexOf(comment);
+                if (removeIndex > -1)
+                    this.comment.Comments.splice(removeIndex, 1);
+                this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, comment.id, true, null);
+            };
+            LessonController.prototype.DeleteDiscussion = function (commentId, discussion) {
+                var removeIndex = this.discussions.indexOf(discussion);
+                if (removeIndex > -1)
+                    this.discussions.splice(removeIndex, 1);
+                this.comment.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions--;
+                this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussion.id, true, null);
+            };
+            LessonController.prototype.EditComment = function (commentId, message) {
+                var NoneContentLength = 0;
+                if (message.length <= NoneContentLength)
+                    return;
+                this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, commentId, false, message);
+            };
+            LessonController.prototype.EditDiscussion = function (commentId, discussionId, message) {
+                var NoneContentLength = 0;
+                if (message.length <= NoneContentLength)
+                    return;
+                this.discussionSvc.UpdateDiscussion(this.classRoomId, this.lessonId, commentId, discussionId, false, message);
+            };
+            LessonController.prototype.LikeLesson = function () {
+                this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
+            };
+            LessonController.prototype.ReadNote = function () {
+                this.lessonSvc.ReadNote(this.classRoomId);
+            };
+            LessonController.prototype.EditOpen = function (message, open) {
+                this.message = message;
+                return !open;
+            };
+            LessonController.prototype.SaveEdit = function (messageId, save) {
+                this.comment.Comments.filter(function (it) { return it.id == messageId; })[0].Description = this.message;
+                this.EditComment(this.comment.Comments.filter(function (it) { return it.id == messageId; })[0].id, this.message);
+                return !save;
+            };
+            LessonController.prototype.SaveEditDiscus = function (commentId, messageId, save) {
+                this.discussions.filter(function (it) { return it.id == messageId; })[0].Description = this.message;
+                this.EditDiscussion(commentId, this.discussions.filter(function (it) { return it.id == messageId; })[0].id, this.message);
+                return !save;
+            };
+            LessonController.prototype.CancelEdit = function (save) {
+                return !save;
+            };
+            LessonController.$inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
+            return LessonController;
+        })();
+        angular
+            .module('app.lessons')
+            .controller('app.lessons.LessonController', LessonController);
+    })(lessons = app.lessons || (app.lessons = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var lessons;
+    (function (lessons) {
+        'use strict';
+        var LessonContentRequest = (function () {
+            function LessonContentRequest(id, classRoomId, userId) {
+                this.id = id;
+                this.classRoomId = classRoomId;
+                this.userId = userId;
+            }
+            return LessonContentRequest;
+        })();
+        lessons.LessonContentRequest = LessonContentRequest;
+        var LessonDiscussionRequest = (function () {
+            function LessonDiscussionRequest(id, classRoomId, commentId, userId) {
+                this.id = id;
+                this.classRoomId = classRoomId;
+                this.commentId = commentId;
+                this.userId = userId;
+            }
+            return LessonDiscussionRequest;
+        })();
+        lessons.LessonDiscussionRequest = LessonDiscussionRequest;
+        var LikeLessonRequest = (function () {
+            function LikeLessonRequest(ClassRoomId, LessonId, UserProfileId) {
+                this.ClassRoomId = ClassRoomId;
+                this.LessonId = LessonId;
+                this.UserProfileId = UserProfileId;
+            }
+            return LikeLessonRequest;
+        })();
+        lessons.LikeLessonRequest = LikeLessonRequest;
+        var ReadNoteRequest = (function () {
+            function ReadNoteRequest(ClassRoomId, UserProfileId) {
+                this.ClassRoomId = ClassRoomId;
+                this.UserProfileId = UserProfileId;
+            }
+            return ReadNoteRequest;
+        })();
+        lessons.ReadNoteRequest = ReadNoteRequest;
+    })(lessons = app.lessons || (app.lessons = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var lessons;
+    (function (lessons) {
+        'use strict';
+        var LessonService = (function () {
+            function LessonService(appConfig, $resource, userprofileSvc) {
+                this.$resource = $resource;
+                this.userprofileSvc = userprofileSvc;
+                this.getLessonSvc = $resource(appConfig.LessonUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId' });
+                this.likeLessonSvc = $resource(appConfig.LikeLessonUrl, {
+                    'ClassRoomId': '@ClassRoomId', 'LessonId': '@LessonId', 'UserProfileId': '@UserProfileId'
+                });
+                this.readNoteSvc = $resource(appConfig.ReadNoteUrl, {
+                    'ClassRoomId': '@ClassRoomId', 'UserProfileId': '@UserProfileId'
+                });
+            }
+            LessonService.prototype.GetContent = function (lessonId, classRoomId) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.getLessonSvc.get(new lessons.LessonContentRequest(lessonId, classRoomId, userId)).$promise;
+            };
+            LessonService.prototype.LikeLesson = function (classRoomId, lessonId) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.likeLessonSvc.save(new lessons.LikeLessonRequest(classRoomId, lessonId, userId)).$promise;
+            };
+            LessonService.prototype.ReadNote = function (classRoomId) {
+                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+                return this.readNoteSvc.save(new lessons.ReadNoteRequest(classRoomId, userId)).$promise;
+            };
+            LessonService.$inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
+            return LessonService;
+        })();
+        lessons.LessonService = LessonService;
+        angular
+            .module('app.lessons')
+            .service('app.lessons.LessonService', LessonService);
+    })(lessons = app.lessons || (app.lessons = {}));
 })(app || (app = {}));
 var app;
 (function (app) {
@@ -1041,17 +1107,33 @@ var app;
         })();
         shared.GetCourseRequest = GetCourseRequest;
         var Comment = (function () {
-            function Comment(id, Description, TotalLikes, TotalDiscussions, CreatorImageUrl, CreatorDisplayName) {
+            function Comment(id, Description, TotalLikes, TotalDiscussions, CreatorImageUrl, CreatorDisplayName, ClassRoomId, LessonId, CreatedByUserProfileId) {
                 this.id = id;
                 this.Description = Description;
                 this.TotalLikes = TotalLikes;
                 this.TotalDiscussions = TotalDiscussions;
                 this.CreatorImageUrl = CreatorImageUrl;
                 this.CreatorDisplayName = CreatorDisplayName;
+                this.ClassRoomId = ClassRoomId;
+                this.LessonId = LessonId;
+                this.CreatedByUserProfileId = CreatedByUserProfileId;
             }
             return Comment;
         })();
         shared.Comment = Comment;
+        var Discussion = (function () {
+            function Discussion(id, CommentId, Description, TotalLikes, CreatorImageUrl, CreatorDisplayName, CreatedByUserProfileId) {
+                this.id = id;
+                this.CommentId = CommentId;
+                this.Description = Description;
+                this.TotalLikes = TotalLikes;
+                this.CreatorImageUrl = CreatorImageUrl;
+                this.CreatorDisplayName = CreatorDisplayName;
+                this.CreatedByUserProfileId = CreatedByUserProfileId;
+            }
+            return Discussion;
+        })();
+        shared.Discussion = Discussion;
         var GetAllCourseRequest = (function () {
             function GetAllCourseRequest(id) {
                 this.id = id;
@@ -1392,8 +1474,10 @@ var app;
                 this.classRoomId = classRoomId;
                 this.teacherlistsSvc = teacherlistsSvc;
             }
-            teacherlistsController.prototype.RemoveStd = function (removeId) {
-                this.teacherlistsSvc.RemoveStudent(this.classRoomId, removeId);
+            teacherlistsController.prototype.RemoveStd = function (removeObj) {
+                this.teacherlistsSvc.RemoveStudent(this.classRoomId, removeObj.id);
+                var removeIndex = this.list.indexOf(removeObj);
+                this.list.splice(removeIndex, 1);
             };
             teacherlistsController.$inject = ['$scope', 'list', 'classRoomId', 'app.teacherlists.TeacherListService'];
             return teacherlistsController;
