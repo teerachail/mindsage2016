@@ -7,7 +7,7 @@
     <div class="medium-6 medium-centered large-4 large-centered columns">
         <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form" data-abide novalidate>
             <h4>Create a new account.</h4>
-            <div asp-validation-summary="ValidationSummary.All" data-abide-error class="alert callout" style="display: none;"></div>
+            <div asp-validation-summary="ValidationSummary.All" data-abide-error class="form-error"></div>
             <label asp-for="Email">
                 Email
                 <input asp-for="Email" required pattern="email" />
@@ -20,7 +20,7 @@
             </label>
             <label asp-for="ConfirmPassword">
                 Confirm Password
-                <input asp-for="ConfirmPassword" required pattern="alpha_numeric" data-equalto="Password" />
+                <input asp-for="ConfirmPassword" required data-equalto="Password" />
                 <span asp-validation-for="ConfirmPassword" class="form-error"></span>
             </label>
             <button type="submit" class="button expanded">Register</button>

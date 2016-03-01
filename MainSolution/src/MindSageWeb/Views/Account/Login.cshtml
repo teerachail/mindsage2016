@@ -14,7 +14,7 @@
             <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form" data-abide novalidate>
                 <div class="row column log-in-form">
                     <h4>LOG IN</h4>
-                    <div asp-validation-summary="ValidationSummary.All" data-abide-error class="alert callout" style="display: none;"></div>
+                    <div asp-validation-summary="ValidationSummary.All" data-abide-error class="form-error"></div>
                     <label asp-for="Email">
                         Email
                         <input asp-for="Email" required pattern="email"/>
@@ -22,7 +22,7 @@
                     </label>
                     <label asp-for="Password">
                         Password
-                        <input asp-for="Password" required pattern="password"/>
+                        <input asp-for="Password" required/>
                         <span asp-validation-for="Password" class="form-error"></span>
                     </label>
                     <input asp-for="RememberMe" />
