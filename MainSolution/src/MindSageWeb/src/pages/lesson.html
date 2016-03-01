@@ -61,13 +61,13 @@
                         <ul>
                             <li>
                                 <p>Primary</p>
-                                <div ng-click="mcx.ChangeVideo(cx.content.PrimaryContentURL)">{{ cx.content.PrimaryContentURL }}</div>
+                                <div><a ng-click="mcx.ChangeVideo(cx.content.PrimaryContentURL)">{{ cx.content.PrimaryContentURL }}</a></div>
                             </li>
                         </ul>
                         <ul ng-repeat="item in cx.content.ExtraContentUrls">
                             <li class="extra">
                                 <p>Extra {{ $index + 1 }}</p>
-                                <div ng-click="mcx.ChangeVideo(item)">{{ item }}</div>
+                                <div><a ng-click="mcx.ChangeVideo(item)">{{ item }}</a></div>
                             </li>
                         </ul>
                     </div>
