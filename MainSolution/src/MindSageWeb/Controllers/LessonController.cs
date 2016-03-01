@@ -162,23 +162,44 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(userId);
             if (!areArgumentsValid) return null;
 
-            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId);
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return null;
 
+            var userSubscription = userprofile.Subscriptions
+                .Where(it=>!it.DeletedDate.HasValue)
+                .FirstOrDefault(it => it.ClassRoomId == classRoomId);
+            if (userSubscription == null) return null;
+            var isTeacher = userSubscription.Role == UserProfile.AccountRole.Teacher;
+
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            var canAccessToTheClassLesson =  isTeacher || _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
             if (!canAccessToTheClassLesson) return null;
 
-            var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(userId);
-            if (friendRequests == null) return null;
-
-            var friendIds = friendRequests
+            var allUsersInCourse = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId)
                 .Where(it => !it.DeletedDate.HasValue)
-                .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
-                .Select(it => it.ToUserProfileId);
+                .ToList();
 
+            var filterByCreatorNames = Enumerable.Empty<string>();
+            if (isTeacher)
+            {
+                filterByCreatorNames = allUsersInCourse.Select(it => it.id).ToList();
+            }
+            else
+            {
+                var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(userId);
+                if (friendRequests == null) return null;
+
+                var teacherIds = allUsersInCourse
+                    .Where(it => it.Subscriptions.Any(s => s.ClassRoomId == classRoomId && s.Role == UserProfile.AccountRole.Teacher))
+                    .Select(it => it.id);
+                var friendIds = friendRequests
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
+                    .Select(it => it.ToUserProfileId);
+                filterByCreatorNames = friendIds.Union(new string[] { userId }).Union(teacherIds).Distinct();
+            }
             var order = 1;
-            var filterByCreatorNames = friendIds.Union(new string[] { userId });
             var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames)
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)

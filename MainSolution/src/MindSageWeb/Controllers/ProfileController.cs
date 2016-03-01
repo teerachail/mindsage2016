@@ -47,9 +47,10 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public GetProfileRespond Get()
         {
+            var userProfileName = User.Identity.Name;
             return new GetProfileRespond
             {
-                UserProfileId = User.Identity.Name
+                UserProfileId = userProfileName
             };
         }
 
