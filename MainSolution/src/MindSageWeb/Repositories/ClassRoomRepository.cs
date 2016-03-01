@@ -42,6 +42,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.CourseCatalogId, data.CourseCatalogId)
              .Set(it => it.DeletedDate, data.DeletedDate)
              .Set(it => it.Message, data.Message)
+             .Set(it => it.Lessons, data.Lessons)
              .Set(it => it.LastUpdatedMessageDate, data.LastUpdatedMessageDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
