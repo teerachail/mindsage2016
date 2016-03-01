@@ -18,14 +18,14 @@
                     <div ng-repeat="lesson in item.LessonStatus" class="column lesson-icon">
                         <div ng-show="!cx.userProfile.IsTeacher">
                             <a href="#" ng-show="!lesson.IsLocked" ui-sref="app.main.lesson({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'lessonId': '{{ lesson.LessonId }}' })">
-                                <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)" class="thumbnail" src="../assets/img/icon/blue.png" width="100">
-                                <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId)" class="thumbnail" ssrc="../assets/img/icon/bluewithpencil.png" width="100">
-                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" class="thumbnail" src="../assets/img/icon/green.png" width="100">
-                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" class="thumbnail" src="../assets/img/icon/greenwithpencil.png" width="100">
-                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" class="thumbnail" src="../assets/img/icon/orange.png" width="100">
-                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" class="thumbnail" src="../assets/img/icon/orangewithpencil.png" width="100">
+                                <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)"  src="../assets/img/icon/blue.png" width="100">
+                                <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId)"  ssrc="../assets/img/icon/bluewithpencil.png" width="100">
+                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)"  src="../assets/img/icon/green.png" width="100">
+                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)"  src="../assets/img/icon/greenwithpencil.png" width="100">
+                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)"  src="../assets/img/icon/orange.png" width="100">
+                                <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)"  src="../assets/img/icon/orangewithpencil.png" width="100">
                             </a>
-                            <img ng-show="lesson.IsLocked" class="thumbnail" src="../assets/img/icon/black.png" width="100">
+                            <img ng-show="lesson.IsLocked"  src="../assets/img/icon/black.png" width="100">
                         </div>
                         <div ng-show="cx.userProfile.IsTeacher">
                             <a href="#" ui-sref="app.main.lesson({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'lessonId': '{{ lesson.LessonId }}' })">
