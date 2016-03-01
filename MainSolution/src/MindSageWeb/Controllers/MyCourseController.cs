@@ -505,7 +505,7 @@ namespace MindSageWeb.Controllers
             var courseInfoRespond = new GetCourseInfoRespond()
             {
                 UserProfileId = id,
-                ClassRoomId = classRoomId,
+                ClassRoomId = classRoom.Name,
                 IsTeacher = lastSubscription.Role == UserProfile.AccountRole.Teacher,
                 ClassName = lastSubscription.ClassRoomName,
             };
