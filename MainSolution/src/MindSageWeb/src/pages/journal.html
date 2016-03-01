@@ -62,7 +62,7 @@
                                     <button ng-click="isclose = cx.SaveEdit(comment.id, isclose)" class="button">Save</button>
                                     <button ng-click="isclose = cx.CancelEdit(isclose)" class="button">Cancel</button>
                                 </div>
-                                <a ng-click="discusClose = cx.showDiscussion(comment)">
+                                <a ng-click="discusClose = cx.showDiscussion(comment, discusClose)">
                                     <p ng-show="!discusClose">show discussion ({{ comment.TotalDiscussions }})</p>
                                     <p ng-show="discusClose">hide discussion ({{ comment.TotalDiscussions }})</p>
                                 </a>
@@ -86,7 +86,7 @@
                                     </div>
 
                                     <div class="discussion">
-                                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id } | orderBy: '-Order'" class="row">
+                                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id } | orderBy: 'Order'" class="row">
                                             <div class="large-offset-2 large-9 columns">
                                                 <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
                                             </div>
@@ -131,7 +131,7 @@
                                     <button ng-click="isclose = cx.SaveEdit(comment.id, isclose)" class="button">Save</button>
                                     <button ng-click="isclose = cx.CancelEdit(isclose)" class="button">Cancel</button>
                                 </div>
-                                <a ng-click="discusClose = cx.showDiscussion(comment)">
+                                <a ng-click="discusClose = cx.showDiscussion(comment, discusClose)">
                                     <p ng-show="!discusClose">show discussion ({{ comment.TotalDiscussions }})</p>
                                     <p ng-show="discusClose">hide discussion ({{ comment.TotalDiscussions }})</p>
                                 </a>

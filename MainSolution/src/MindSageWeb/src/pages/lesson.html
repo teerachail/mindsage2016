@@ -11,12 +11,12 @@
         </div>
     </div>
 
-    <div ng-show="{{ cx.content.CourseMessage!=null }}" class="alert callout" data-closable>
+    <div ng-show="{{ cx.content.CourseMessage!=null }}" class="callout warning" data-closable>
         <div class="row">
-            <div class="large-1 columns">
+            <div class="small-1 columns">
                 <i class="fi-alert size-36"></i>
             </div>
-            <div class="large-12 control columns">
+            <div class="small-10 small-pull-1 columns">
                 <p>{{ cx.content.CourseMessage }}</p>
             </div>
         </div>
@@ -118,7 +118,7 @@
                     <button ng-click="isclose = cx.SaveEdit(item.id, isclose)" class="button">Save</button>
                     <button ng-click="isclose = cx.CancelEdit(isclose)" class="button">Cancel</button>
                 </div>
-                <a ng-click="discusClose = cx.showDiscussion(item)">
+                <a ng-click="discusClose = cx.showDiscussion(item, discusClose)">
                     <p ng-show="!discusClose">show discussion ({{ item.TotalDiscussions }})</p>
                     <p ng-show="discusClose">hide discussion ({{ item.TotalDiscussions }})</p>
                 </a>
@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="discussion">
-                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: item.id } | orderBy: 'Order'" class="row">
+                        <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }" class="row">
                             <div class="large-offset-2 large-9 columns">
                                 <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
                             </div>
