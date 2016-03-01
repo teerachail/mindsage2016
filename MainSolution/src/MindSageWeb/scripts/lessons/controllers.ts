@@ -14,6 +14,8 @@ module app.lessons {
         constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
             this.teacherView = false;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
+            this.currentUser.CurrentDisplayLessonId = lessonId;
+            this.userprofileSvc.UpdateUserProfile(this.currentUser);
             this.userprofileSvc.Advertisments = this.content.Advertisments;
             this.getProfileSvc.GetLike().then(it=> this.likes = it);
         }
