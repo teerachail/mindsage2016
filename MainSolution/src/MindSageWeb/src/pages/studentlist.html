@@ -16,8 +16,8 @@
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 1" data-equalizer-watch>
-            <button class="button" ng-click="cx.ConfirmFriendRequest(item.UserProfileId, item.RequestId)">Confirm</button>
-            <button class="button secondary" ng-click="cx.DeleteFriendRequest(item.UserProfileId, item.RequestId)">Delete Request</button>
+            <button class="button" ng-click="cx.ConfirmFriendRequest(item)">Confirm</button>
+            <button class="button secondary" ng-click="cx.DeleteFriendRequest(item)">Delete Request</button>
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 2" data-equalizer-watch>
