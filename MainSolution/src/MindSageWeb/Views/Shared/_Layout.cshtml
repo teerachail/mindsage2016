@@ -25,22 +25,37 @@
                 </ul>
             </div>
             <div class="top-bar-right">
-                <ul class="menu">
-
-                    <li class="has-form">
-                        <a class="secondary hollow button radius" data-open="loginModal">LOGIN</a>
-                    </li>
-                    <li class="has-form">
-                        <a class="hollow button radius" data-open="registerModal">SIGNUP</a>
-                    </li>
-                </ul>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+                        <ul class="menu">
+                            <li class="has-form">
+                                <button type="submit" class="secondary hollow button radius">LOG OUT</button>
+                            </li>
+                            <li class="has-form">
+                                <a asp-controller="My" asp-action="Index" class="hollow button radius">My Course</a>
+                            </li>
+                        </ul>
+                    </form>
+                }
+                else
+                {
+                    <ul class="menu">
+                        <li class="has-form">
+                            <a asp-controller="Account" asp-action="Login" class="secondary hollow button radius" data-open="loginModal">LOGIN</a>
+                        </li>
+                        <li class="has-form">
+                            <a asp-controller="Account" asp-action="Register" class="hollow button radius">SIGNUP</a>
+                        </li>
+                    </ul>
+                }
             </div>
         </div>
     </div>
 
     @RenderBody()
 
-    <div class="reveal tiny" id="loginModal" data-reveal>
+    @*<div class="reveal tiny" id="loginModal" data-reveal>
         <div class="modal-head"><h4 class="text-center">LOGIN</h4></div>
         <div class="row">
             <div class="medium-10 medium-centered large-10 large-centered columns">
@@ -65,7 +80,7 @@
         <button class="close-button" data-close aria-label="Close modal" type="button">
             <span aria-hidden="true">&times;</span>
         </button>
-    </div>
+    </div>*@
     <div class="reveal tiny" id="registerModal" data-reveal>
         <div class="modal-head"><h4 class="text-center">SIGNUP</h4></div>
         <div class="row">

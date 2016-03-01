@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using MindSageWeb.Models;
 using MindSageWeb.Services;
 using MindSageWeb.ViewModels.Account;
+using MindSageWeb.Repositories;
 
 namespace MindSageWeb.Controllers
 {
@@ -23,19 +24,25 @@ namespace MindSageWeb.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IDateTime _dateTime;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IUserProfileRepository userprofileRepo,
+            IDateTime dateTime)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _userProfileRepo = userprofileRepo;
+            _dateTime = dateTime;
         }
 
         //
@@ -213,6 +220,19 @@ namespace MindSageWeb.Controllers
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        const string DefaultProfileImageUrl = "http://placehold.it/100x100";
+                        var newUserProfile = new Repositories.Models.UserProfile
+                        {
+                            id = model.Email,
+                            CourseReminder = Repositories.Models.UserProfile.ReminderFrequency.Once,
+                            CreatedDate = _dateTime.GetCurrentTime(),
+                            ImageProfileUrl = DefaultProfileImageUrl,
+                            IsEnableNotification = true,
+                            Name = info.ProviderDisplayName ?? model.Email,
+                            Subscriptions = Enumerable.Empty<Repositories.Models.UserProfile.Subscription>()
+                        };
+                        _userProfileRepo.UpsertUserProfile(newUserProfile);
+
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);

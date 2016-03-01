@@ -8,12 +8,14 @@ module app.lessons {
         public message: string;
         public discussions = [];
         private requestedCommentIds = [];
+        private likes: any;
 
-        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'likes', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
-        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, public likes, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
+        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
+        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
             this.teacherView = false;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
             this.userprofileSvc.Advertisments = this.content.Advertisments;
+            this.getProfileSvc.GetLike().then(it=> this.likes = it);
         }
 
         public selectTeacherView(): void {

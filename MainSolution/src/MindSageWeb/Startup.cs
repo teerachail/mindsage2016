@@ -73,6 +73,7 @@ namespace MindSageWeb
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
             services.AddTransient<INotificationRepository, NotificationRepository>();
 
+            services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();
             services.AddTransient<Controllers.CourseController, Controllers.CourseController>();
 
             services.AddSwaggerGen();
@@ -114,6 +115,13 @@ namespace MindSageWeb
             app.UseIdentity();
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
+
+            var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
+            app.UseGoogleAuthentication(options =>
+            {
+                options.ClientId = appConfig.GoogleClinetId;
+                options.ClientSecret = appConfig.GoogleClientSecret;
+            });
 
             app.UseMvc(routes =>
             {

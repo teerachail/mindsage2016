@@ -11,6 +11,7 @@ namespace MindSageWeb.Repositories.Models
 
         public string id { get; set; }
         public string GroupName { get; set; }
+        public string Grade { get; set; }
         public string Name { get; set; }
         public double Price { get; set; }
         public string Title { get; set; }

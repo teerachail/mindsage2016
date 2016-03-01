@@ -11,11 +11,11 @@
             // HACK: User profile information
             this.clientUserProfile = new ClientUserProfile();
             this.clientUserProfile.UserProfileId = 'sakul@mindsage.com';
-            this.clientUserProfile.ImageUrl = 'http://placehold.it/100x100';
-            this.clientUserProfile.FullName = 'Sakul Jaruthanaset';
-            this.clientUserProfile.CurrentClassRoomId = "ClassRoom01";
-            this.clientUserProfile.CurrentLessonId = "Lesson01";
-            this.clientUserProfile.IsTeacher = true;
+            //this.clientUserProfile.ImageUrl = 'http://placehold.it/100x100';
+            //this.clientUserProfile.FullName = 'Sakul Jaruthanaset';
+            //this.clientUserProfile.CurrentClassRoomId = "ClassRoom01";
+            //this.clientUserProfile.CurrentLessonId = "Lesson01";
+            //this.clientUserProfile.IsTeacher = true;
         }
 
         public UpdateUserProfile(userInfo: ClientUserProfile): void {
@@ -155,6 +155,9 @@
     interface IGetAllLikeClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetAllLike(data: T): T;
     }
+    interface IGetUserIdResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetUserId(data: T): T;
+    }
 
     export class GetProfileService {
 
@@ -165,6 +168,7 @@
         private getNotificationContentSvc: IGetNotificationContentClass<any>;
         private getLikeSvc: IGetLikeClass<any>;
         private getAllLikeSvc: IGetAllLikeClass<any>;
+        private getUserIdSvc: IGetUserIdResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
@@ -175,11 +179,17 @@
             this.getNotificationContentSvc = <IGetNotificationContentClass<any>>$resource(appConfig.GetNotificationContentUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
             this.getLikeSvc = <IGetLikeClass<any>>$resource(appConfig.GetLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'lessonId': '@lessonId' });
             this.getAllLikeSvc = <IGetAllLikeClass<any>>$resource(appConfig.GetAllLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
+            this.getUserIdSvc = <IGetUserIdResourceClass<any>>$resource(appConfig.GetUserIdUrl, { });
         }
 
         public GetProfile(): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            return this.getProfileSvc.get(new GetUserProfileRequest(userId)).$promise;
+            return this.GetUserId().then(it=> {
+                var userProfile = this.userprofileSvc.GetClientUserProfile();
+                userProfile.UserProfileId = it.UserProfileId;
+                alert(userProfile.UserProfileId);
+                this.userprofileSvc.UpdateUserProfile(userProfile);
+                return this.getProfileSvc.get(new GetUserProfileRequest(it.UserProfileId)).$promise;
+            });
         }
 
         public GetCourse(): ng.IPromise<any> {
@@ -213,7 +223,9 @@
             var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentLessonId;
             return this.getAllLikeSvc.get(new GetAllLikeRequest(userId, classroomId)).$promise;
         }
-
+        public GetUserId(): ng.IPromise<any> {
+            return this.getUserIdSvc.get().$promise;
+        }
 
     }
     angular
