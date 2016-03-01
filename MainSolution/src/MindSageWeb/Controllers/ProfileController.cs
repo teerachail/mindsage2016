@@ -127,7 +127,7 @@ namespace MindSageWeb.Controllers
             var now = _dateTime.GetCurrentTime();
             var lessonCalendarQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue);
 
-            var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderBy(it => it.BeginDate).FirstOrDefault();
+            var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderByDescending(it => it.BeginDate).FirstOrDefault();
             if (currentLesson == null) return userProfileInfo;
             else userProfileInfo.CurrentLessonId = currentLesson.LessonId;
 
