@@ -3,7 +3,7 @@
     ViewData["Title"] = "Register";
 }
 
-<div class="row content-section">
+<div class="row content-section main-section-hight">
     <div class="medium-6 medium-centered large-4 large-centered columns">
         <form asp-controller="Account" asp-action="Register" method="post" class="form-horizontal" role="form" data-abide novalidate>
             <h4>Create a new account.</h4>
@@ -23,8 +23,7 @@
                 <input asp-for="ConfirmPassword" required data-equalto="Password" />
                 <span asp-validation-for="ConfirmPassword" class="form-error"></span>
             </label>
-            <button type="submit" class="button expanded">Register</button>
-
+                <button type="submit" class="button expanded">Register</button>
         </form>
     </div>
 </div>
