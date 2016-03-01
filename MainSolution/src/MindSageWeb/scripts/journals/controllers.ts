@@ -9,11 +9,14 @@ module app.journals {
         public MyComments = [];
         public discussions = [];
         private requestedCommentIds = [];
+        private target: string;
 
         static $inject = ['$scope', 'content', 'targetUserId', 'likes', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
         constructor(private $scope, public content, public targetUserId, private likes, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.userprofile = this.svc.GetClientUserProfile();
+            this.target = targetUserId;
         }
+
 
         public GetWeeks() {
             var usedWeekNo = {};
