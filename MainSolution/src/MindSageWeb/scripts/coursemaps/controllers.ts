@@ -5,8 +5,8 @@
 
         private userProfile: any;
 
-        static $inject = ['$scope', 'content', 'status', 'app.shared.ClientUserProfileService'];
-        constructor(private $scope, public content, public status, private userSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['$scope','$state', 'content', 'status', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, private $state, public content, public status, private userSvc: app.shared.ClientUserProfileService) {
             this.userProfile = userSvc.GetClientUserProfile();
         }
 
@@ -20,6 +20,13 @@
             var qry = this.status.filter(it=> it.LessonId == lessonId);
             if (qry.length <= 0) return false;
             else return qry[0].IsReadedAllContents;
+        }
+
+        public ChangeLesson(lessonId: string) {
+            alert(lessonId);
+            var userprofile = this.userSvc.GetClientUserProfile();
+            userprofile.CurrentLessonId = lessonId;
+            this.$state.go("app.main.lesson", { 'classRoomId': userprofile.CurrentClassRoomId, 'lessonId': lessonId }, { inherit: false });
         }
 
     }
