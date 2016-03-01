@@ -7,6 +7,7 @@
     </div>
 
     <div class="jounal">
+        
         <div class="input-group">
             <span class="input-group-label"><i class="fi-magnifying-glass size-24"></i></span>
             <input class="input-group-field" type="text" placeholder="search" ng-model="search.$">
@@ -44,7 +45,7 @@
                     <div class="comment">
                         <label ng-show="(cx.GetComments(item) | filter:search).length == 0">no comment</label>
 
-                        <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.GetWeeks()[0]" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
+                        <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.GetWeeks()[0] && cx.target == cx.userprofile.UserProfileId" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
                             <div class="large-offset-2 large-9 columns">
                                 <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ comment.LessonWeek }}</span></h4>
                             </div>
