@@ -99,8 +99,8 @@
         </div>
     </div>
 
-    <div class="comment" ng-show="!cx.teacherView">
-        <div class="row" ng-repeat="item in cx.comment.Comments" data-accordion data-allow-all-closed="true" on-finish-render>
+    <div class="comment">
+        <div class="row" ng-repeat="item in cx.comment.Comments | orderBy: 'Order'" data-accordion data-allow-all-closed="true" on-finish-render>
             <div class="large-offset-2 large-9 columns">
                 <h4>{{ item.CreatorDisplayName }}<span class="comment-time"></span></h4>
             </div>
@@ -142,7 +142,7 @@
                     </div>
 
                     <div class="discussion">
-                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: item.id }" class="row">
+                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: item.id } | orderBy: 'Order'" class="row">
                             <div class="large-offset-2 large-9 columns">
                                 <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
                             </div>

@@ -121,7 +121,8 @@
             public CreatorDisplayName: string,
             public ClassRoomId: string,
             public LessonId: string,
-            public CreatedByUserProfileId: string) {
+            public CreatedByUserProfileId: string,
+            public Order: number) {
         }
     }
 
@@ -133,7 +134,8 @@
             public TotalLikes: number,
             public CreatorImageUrl: string,
             public CreatorDisplayName: string,
-            public CreatedByUserProfileId: string) {
+            public CreatedByUserProfileId: string,
+            public Order: number) {
         }
     }
     export class GetAllCourseRequest {

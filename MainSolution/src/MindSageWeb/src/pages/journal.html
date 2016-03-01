@@ -44,7 +44,7 @@
                     <div class="comment">
                         <label ng-show="(cx.GetComments(item) | filter:search).length == 0">no comment</label>
 
-                        <div ng-repeat="comment in cx.MyComments" ng-show="item == cx.GetWeeks()[0]" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
+                        <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.GetWeeks()[0]" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
                             <div class="large-offset-2 large-9 columns">
                                 <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ comment.LessonWeek }}</span></h4>
                             </div>
@@ -86,7 +86,7 @@
                                     </div>
 
                                     <div class="discussion">
-                                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id }" class="row">
+                                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id } | orderBy: '-Order'" class="row">
                                             <div class="large-offset-2 large-9 columns">
                                                 <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
                                             </div>
@@ -112,7 +112,7 @@
                         </div>
 
 
-                        <div ng-repeat="comment in cx.GetComments(item) | filter:search" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
+                        <div ng-repeat="comment in cx.GetComments(item) | filter:search  | orderBy: 'Order'" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
                             <div class="large-offset-2 large-9 columns">
                                 <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ comment.LessonWeek }}</span></h4>
                             </div>
@@ -155,7 +155,7 @@
                                     </div>
 
                                     <div class="discussion">
-                                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id }" class="row">
+                                        <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id } | orderBy: '-Order'" class="row">
                                             <div class="large-offset-2 large-9 columns">
                                                 <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
                                             </div>

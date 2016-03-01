@@ -177,6 +177,7 @@ namespace MindSageWeb.Controllers
                 .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
                 .Select(it => it.ToUserProfileId);
 
+            var order = 1;
             var filterByCreatorNames = friendIds.Union(new string[] { userId });
             var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames)
                 .Where(it => !it.DeletedDate.HasValue)
@@ -184,6 +185,7 @@ namespace MindSageWeb.Controllers
                 .Select(it => new CommentInformation
                 {
                     id = it.id,
+                    Order = order++,
                     Description = it.Description,
                     TotalLikes = it.TotalLikes,
                     CreatorImageUrl = it.CreatorImageUrl,
@@ -242,12 +244,14 @@ namespace MindSageWeb.Controllers
             var canAccessToTheComment = selectedComment != null && !selectedComment.DeletedDate.HasValue;
             if (!canAccessToTheComment) return null;
 
+            var order = 1;
             var discussions = (selectedComment.Discussions ?? Enumerable.Empty<Comment.Discussion>())
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)
                 .Select(it => new GetDiscussionRespond
                 {
                     id = it.id,
+                    Order = order++,
                     CommentId = commentId,
                     Description = it.Description,
                     TotalLikes = it.TotalLikes,

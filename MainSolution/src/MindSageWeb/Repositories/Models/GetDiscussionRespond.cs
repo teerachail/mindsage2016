@@ -10,6 +10,7 @@ namespace MindSageWeb.Repositories.Models
         #region Properties
 
         public string id { get; set; }
+        public int Order { get; set; }
         public string CommentId { get; set; }
         public string Description { get; set; }
         public int TotalLikes { get; set; }

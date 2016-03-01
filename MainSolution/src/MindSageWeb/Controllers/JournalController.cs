@@ -107,7 +107,7 @@ namespace MindSageWeb.Controllers
                 {
                     var selectedLessonCatalog = lessons.FirstOrDefault(l => l.LessonId == it.LessonId);
                     if (selectedLessonCatalog == null) return null;
-
+                    var order = 1;
                     return new CommentInformation
                     {
                         ClassRoomId = it.ClassRoomId,
@@ -117,6 +117,7 @@ namespace MindSageWeb.Controllers
                         CreatorImageUrl = it.CreatorImageUrl,
                         Description = it.Description,
                         id = it.id,
+                        Order = order++,
                         LessonId = it.LessonId,
                         LessonWeek = selectedLessonCatalog.LessonCatalog.Order,
                         TotalDiscussions = it.Discussions.Count(),

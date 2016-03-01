@@ -60,7 +60,7 @@ module app.journals {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            var newComment = new app.shared.Comment('MOCK', message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId);
+            var newComment = new app.shared.Comment('MOCK', message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId, 0 - this.MyComments.length);
             this.MyComments.push(newComment);
             this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message)
                 .then(it=> {
@@ -76,8 +76,8 @@ module app.journals {
         public CreateNewDiscussion(commentId: string, message: string) {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
-            
-            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId);
+
+            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId, 0 - this.discussions.length);
             this.discussions.push(newDiscussion);
             this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
             var local = this.content.Comments.filter(it=> it.id == commentId)[0];

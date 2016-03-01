@@ -52,7 +52,7 @@ module app.lessons {
             if (message.length <= NoneContentLength) return;
 
             var userprofile = this.userprofileSvc.GetClientUserProfile();
-            var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId);
+            var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId, 0 - this.comment.Comments.length);
             this.comment.Comments.push(newComment);
             this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message)
                 .then(it=> {
@@ -69,7 +69,7 @@ module app.lessons {
             if (message.length <= NoneContentLength) return;
 
             var userprofile = this.userprofileSvc.GetClientUserProfile();
-            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId);
+            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - this.discussions.length);
             this.discussions.push(newDiscussion);
             this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
             
