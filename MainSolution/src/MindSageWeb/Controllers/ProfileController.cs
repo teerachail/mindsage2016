@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNet.Mvc;
+﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Mvc;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using System;
@@ -10,6 +11,7 @@ namespace MindSageWeb.Controllers
     /// <summary>
     /// Profile API
     /// </summary>
+    [Authorize]
     [Route("api/[controller]")]
     public class ProfileController : Controller
     {
@@ -40,6 +42,16 @@ namespace MindSageWeb.Controllers
         #endregion Constructors
 
         #region Methods
+
+        // GET: api/profile
+        [HttpGet]
+        public GetProfileRespond Get()
+        {
+            return new GetProfileRespond
+            {
+                UserProfileId = User.Identity.Name
+            };
+        }
 
         // PUT: api/profile/{user-id}
         /// <summary>
