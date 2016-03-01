@@ -246,7 +246,8 @@ namespace MindSageWeb.Controllers
                         id = subscription.id,
                         Name = subscription.ClassRoomName,
                         ClassRoomId = subscription.ClassRoomId,
-                        LessonId = currentLesson.LessonId
+                        LessonId = currentLesson.LessonId,
+                        CourseCatalogId = subscription.CourseCatalogId
                     };
                 }).Where(it => it != null).ToList();
 
@@ -429,6 +430,7 @@ namespace MindSageWeb.Controllers
                 ClassCalendarId = selectedClassCalendar.id,
                 CreatedDate = now,
                 ClassRoomName = selectedClassRoom.Name,
+                CourseCatalogId = selectedClassRoom.CourseCatalogId
             });
             selectedUserProfile.Subscriptions = subscriptions;
             _userprofileRepo.UpsertUserProfile(selectedUserProfile);

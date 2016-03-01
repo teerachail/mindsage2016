@@ -27,13 +27,20 @@
         <div class="purchase">
             <p>@Model.Name</p>
             <p>@Model.Price.ToString("C2")</p>
-            @if(User.Identity.IsAuthenticated)
-            {
-                <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
-            }
-            else
-            {
-                <a class="button primary large-centered" asp-controller="Account" asp-action="Login" asp-route-ReturnUrl="@Url.Action("Detail","Home",new { @id = Model.id })">PURCHASE</a>
+            @{
+                var isAlreadyHaveThisCourse = (bool)ViewBag.IsAlreadyHaveThisCourse;
+                if (isAlreadyHaveThisCourse)
+                {
+                    <a class="button primary large-centered" >Already have it</a>
+                }
+                else if (User.Identity.IsAuthenticated)
+                {
+                    <a class="button primary large-centered" data-open="purchaseModal">PURCHASE</a>
+                }
+                else
+                {
+                    <a class="button primary large-centered" asp-controller="Account" asp-action="Login" asp-route-ReturnUrl="@Url.Action("Detail","Home",new { @id = Model.id })">PURCHASE</a>
+                }
             }
         </div>
         @foreach (var item in Model.RelatedCourses)

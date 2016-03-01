@@ -56,7 +56,8 @@ namespace MindSageWeb.Controllers
                     id = it.id,
                     Name = it.GroupName,
                     Description = it.ShortDescription,
-                    ImageUrl = it.ImageUrl,
+                    FullImageUrl = it.FullImageUrl,
+                    ThumbnailImageUrl = it.ThumbnailImageUrl,
                 }).ToList();
             return result;
         }
@@ -85,7 +86,8 @@ namespace MindSageWeb.Controllers
                     Name = it.Name,
                     GroupName = it.GroupName,
                     Description = it.ShortDescription,
-                    ImageUrl = it.ImageUrl,
+                    FullImageUrl = it.FullImageUrl,
+                    ThumbnailImageUrl = it.ThumbnailImageUrl,
                 }).ToList();
             return result;
         }
@@ -120,7 +122,7 @@ namespace MindSageWeb.Controllers
                 CreatedDate = selectedCourse.CreatedDate,
                 Description = selectedCourse.FullDescription,
                 DescriptionImageUrl = selectedCourse.DescriptionImageUrl,
-                ImageUrl = selectedCourse.ImageUrl,
+                ImageUrl = selectedCourse.FullImageUrl,
                 Name = selectedCourse.Name,
                 Price = selectedCourse.Price,
                 Title = selectedCourse.Title,
