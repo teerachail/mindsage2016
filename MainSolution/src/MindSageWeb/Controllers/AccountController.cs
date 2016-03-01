@@ -122,6 +122,7 @@ namespace MindSageWeb.Controllers
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    createNewUserProfile(model.Email);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
@@ -220,19 +221,7 @@ namespace MindSageWeb.Controllers
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
-                        const string DefaultProfileImageUrl = "http://placehold.it/100x100";
-                        var newUserProfile = new Repositories.Models.UserProfile
-                        {
-                            id = model.Email,
-                            CourseReminder = Repositories.Models.UserProfile.ReminderFrequency.Once,
-                            CreatedDate = _dateTime.GetCurrentTime(),
-                            ImageProfileUrl = DefaultProfileImageUrl,
-                            IsEnableNotification = true,
-                            Name = info.ProviderDisplayName ?? model.Email,
-                            Subscriptions = Enumerable.Empty<Repositories.Models.UserProfile.Subscription>()
-                        };
-                        _userProfileRepo.UpsertUserProfile(newUserProfile);
-
+                        createNewUserProfile(model.Email);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
@@ -243,6 +232,22 @@ namespace MindSageWeb.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
             return View(model);
+        }
+
+        private void createNewUserProfile(string email)
+        {
+            const string DefaultProfileImageUrl = "http://placehold.it/100x100";
+            var newUserProfile = new Repositories.Models.UserProfile
+            {
+                id = email,
+                CourseReminder = Repositories.Models.UserProfile.ReminderFrequency.Once,
+                CreatedDate = _dateTime.GetCurrentTime(),
+                ImageProfileUrl = DefaultProfileImageUrl,
+                IsEnableNotification = true,
+                Name = email,
+                Subscriptions = Enumerable.Empty<Repositories.Models.UserProfile.Subscription>()
+            };
+            _userProfileRepo.UpsertUserProfile(newUserProfile);
         }
 
         // GET: /Account/ConfirmEmail

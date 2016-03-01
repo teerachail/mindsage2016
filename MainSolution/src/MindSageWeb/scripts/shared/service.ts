@@ -8,14 +8,7 @@
         private clientUserProfile: ClientUserProfile;
 
         constructor() {
-            // HACK: User profile information
             this.clientUserProfile = new ClientUserProfile();
-            this.clientUserProfile.UserProfileId = 'sakul@mindsage.com';
-            //this.clientUserProfile.ImageUrl = 'http://placehold.it/100x100';
-            //this.clientUserProfile.FullName = 'Sakul Jaruthanaset';
-            //this.clientUserProfile.CurrentClassRoomId = "ClassRoom01";
-            //this.clientUserProfile.CurrentLessonId = "Lesson01";
-            //this.clientUserProfile.IsTeacher = true;
         }
 
         public UpdateUserProfile(userInfo: ClientUserProfile): void {
