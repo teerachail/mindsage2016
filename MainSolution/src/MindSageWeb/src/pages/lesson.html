@@ -79,7 +79,7 @@
     <div>
         <p>
             <span class="comment-button" ng-show="!cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.LikeLesson()"></i></a>{{ cx.content.TotalLikes }} people like this</span>
-            <span class="comment-button like" ng-show="cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.LikeLesson()"></i></a>{{ cx.content.TotalLikes }} people like this</span>
+            <span class="comment-button like" ng-show="cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.DisLikeLesson()"></i></a>{{ cx.content.TotalLikes }} people like this</span>
         </p>
     </div>
 
@@ -109,8 +109,8 @@
                 <p ng-show="!isclose">
                     {{ item.Description }}
                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId" ng-click="isclose = cx.EditOpen(item.Description,isclose)"><a> Edit</a></span>
-                    <span class="comment-button" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id)"><a><i class="fi-heart size-24"></i></a></span>
-                    <span class="comment-button like" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) != -1" ng-click="cx.LikeComment(item.id)"><a><i class="fi-heart size-24"></i></a></span>
+                    <span class="comment-button" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><i class="fi-heart size-24"></i></a> {{ item.TotalLikes }} people like this</span>
+                    <span class="comment-button like" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) != -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><i class="fi-heart size-24"></i></a> {{ item.TotalLikes }} people like this</span>
                     <span class="comment-button" ng-click="cx.DeleteComment(item)" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId || cx.currentUser.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
                 </p>
                 <div ng-show="isclose">
@@ -151,8 +151,8 @@
                                 <p ng-show="!discussion_isclose">
                                     {{ discussion.Description }}
                                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == discussion.CreatedByUserProfileId" ng-click="discussion_isclose = cx.EditOpen(discussion.Description,discussion_isclose)"><a> Edit</a></span>
-                                    <span class="comment-button" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id)"><a><i class="fi-heart size-24"></i></a></span>
-                                    <span class="comment-button like" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id)"><a><i class="fi-heart size-24"></i></a></span>
+                                    <span class="comment-button" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
+                                    <span class="comment-button like" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
                                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId || cx.currentUser.UserProfileId == discussion.CreatedByUserProfileId || cx.currentUser.IsTeacher"
                                           ng-click="cx.DeleteDiscussion(item.id, discussion)"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>
