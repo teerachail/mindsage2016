@@ -186,7 +186,6 @@
             return this.GetUserId().then(it=> {
                 var userProfile = this.userprofileSvc.GetClientUserProfile();
                 userProfile.UserProfileId = it.UserProfileId;
-                alert(userProfile.UserProfileId);
                 this.userprofileSvc.UpdateUserProfile(userProfile);
                 return this.getProfileSvc.get(new GetUserProfileRequest(it.UserProfileId)).$promise;
             });
