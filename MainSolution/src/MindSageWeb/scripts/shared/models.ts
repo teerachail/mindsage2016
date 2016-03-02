@@ -10,6 +10,7 @@
         public IsReminderOnceTime: boolean;
         public CurrentClassRoomId: string;
         public CurrentLessonId: string;
+        public CurrentDisplayLessonId: string;
         public IsTeacher: boolean;
         public ClassName: string;
         public CurrentStudentCode: string;

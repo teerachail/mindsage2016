@@ -21,14 +21,6 @@
             if (qry.length <= 0) return false;
             else return qry[0].IsReadedAllContents;
         }
-
-        public ChangeLesson(lessonId: string) {
-            alert(lessonId);
-            var userprofile = this.userSvc.GetClientUserProfile();
-            userprofile.CurrentLessonId = lessonId;
-            this.$state.go("app.main.lesson", { 'classRoomId': userprofile.CurrentClassRoomId, 'lessonId': lessonId }, { inherit: false });
-        }
-
     }
 
     angular

@@ -206,7 +206,7 @@
         public GetLike(): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
-            var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentLessonId;
+            var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentDisplayLessonId;
             return this.getLikeSvc.get(new GetLikeRequest(userId, classroomId, lessonId)).$promise;
         }
         public GetAllLike(): ng.IPromise<any> {

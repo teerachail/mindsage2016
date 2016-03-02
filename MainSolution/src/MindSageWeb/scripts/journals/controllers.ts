@@ -95,8 +95,12 @@ module app.journals {
                 });
         }
 
-        public LikeComment(commentId: string) {
-           
+        public LikeComment(commentId: string, IsLike: number) {
+            if (IsLike == -1)
+                this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes++;
+            else
+                this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes--;
+
             var setIndex = this.likes.LikeCommentIds.indexOf(commentId);
             const ElementNotFound = -1;
             if (setIndex <= ElementNotFound) this.likes.LikeCommentIds.push(commentId);
@@ -107,7 +111,13 @@ module app.journals {
 
         }
 
-        public LikeDiscussion(commentId: string, discussionId: string) {
+        public LikeDiscussion(commentId: string, discussionId: string, IsLike: number) {
+            if (IsLike == -1)
+                this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes++;
+            else
+                this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes--;
+
+
             var setIndex = this.likes.LikeDiscussionIds.indexOf(discussionId);
             const ElementNotFound = -1;
             if (setIndex <= ElementNotFound) this.likes.LikeDiscussionIds.push(discussionId);

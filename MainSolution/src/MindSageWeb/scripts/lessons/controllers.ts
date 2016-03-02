@@ -14,6 +14,8 @@ module app.lessons {
         constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
             this.teacherView = false;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
+            this.currentUser.CurrentDisplayLessonId = lessonId;
+            this.userprofileSvc.UpdateUserProfile(this.currentUser);
             this.userprofileSvc.Advertisments = this.content.Advertisments;
             this.getProfileSvc.GetLike().then(it=> this.likes = it);
         }
@@ -86,7 +88,12 @@ module app.lessons {
                 });
         }
 
-        public LikeComment(commentId: string) {
+        public LikeComment(commentId: string, IsLike: number) {
+            if (IsLike == -1)
+                this.comment.Comments.filter(it=> it.id == commentId)[0].TotalLikes++;
+            else
+                this.comment.Comments.filter(it=> it.id == commentId)[0].TotalLikes--;
+
             this.commentSvc.LikeComment(this.classRoomId, this.lessonId, commentId);
 
             var removeIndex = this.likes.LikeCommentIds.indexOf(commentId);
@@ -95,7 +102,12 @@ module app.lessons {
             else this.likes.LikeCommentIds.splice(removeIndex, 1);
         }
 
-        public LikeDiscussion(commentId: string, discussionId: string) {
+        public LikeDiscussion(commentId: string, discussionId: string, IsLike: number) {
+            if (IsLike == -1)
+                this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes++;
+            else
+                this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes--;
+
             this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
 
             var removeIndex = this.likes.LikeDiscussionIds.indexOf(discussionId);
@@ -133,6 +145,13 @@ module app.lessons {
 
         public LikeLesson() {
             this.likes.IsLikedLesson = !this.likes.IsLikedLesson;
+            this.content.TotalLikes++;
+            this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
+        }
+
+        public DisLikeLesson() {
+            this.likes.IsLikedLesson = !this.likes.IsLikedLesson;
+            this.content.TotalLikes--;
             this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
         }
 

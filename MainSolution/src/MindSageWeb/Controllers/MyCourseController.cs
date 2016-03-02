@@ -505,9 +505,9 @@ namespace MindSageWeb.Controllers
             var courseInfoRespond = new GetCourseInfoRespond()
             {
                 UserProfileId = id,
-                ClassRoomId = classRoomId,
+                ClassRoomId = classRoom.id,
                 IsTeacher = lastSubscription.Role == UserProfile.AccountRole.Teacher,
-                ClassName = lastSubscription.ClassRoomName,
+                ClassName = classRoom.Name,
             };
 
             if (lastSubscription.Role == UserProfile.AccountRole.Teacher)
@@ -535,9 +535,7 @@ namespace MindSageWeb.Controllers
         {
             var isArgumentValid = !string.IsNullOrEmpty(id)
                 && body != null
-                && !string.IsNullOrEmpty(body.ClassRoomId)
-                && !string.IsNullOrEmpty(body.ClassName)
-                && !string.IsNullOrEmpty(body.ChangedStudentCode);
+                && !string.IsNullOrEmpty(body.ClassRoomId);
             if (!isArgumentValid) return;
 
             var userprofile = _userprofileRepo.GetUserProfileById(id);

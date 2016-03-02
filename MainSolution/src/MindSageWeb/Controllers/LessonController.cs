@@ -80,7 +80,7 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(classRoomId)
                 && !string.IsNullOrEmpty(userId);
             if (!areArgumentsValid) return null;
-
+            
             UserProfile userprofile;
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return null;
@@ -123,6 +123,9 @@ namespace MindSageWeb.Controllers
             }
 
             var isTeacher = subscription.Role == UserProfile.AccountRole.Teacher;
+            var isDisplayTeacherMsg = selectedUserActivity.HideClassRoomMessageDate.HasValue ?
+                selectedClassRoom.LastUpdatedMessageDate > selectedUserActivity.HideClassRoomMessageDate.Value :
+                true;
 
             return new LessonContentRespond
             {
@@ -140,7 +143,7 @@ namespace MindSageWeb.Controllers
                 ShortTeacherLessonPlan = isTeacher ? selectedLessonCatalog.ShortTeacherLessonPlan : string.Empty,
                 Title = selectedLessonCatalog.Title,
                 UnitNo = selectedLessonCatalog.UnitNo,
-                CourseMessage = selectedClassRoom.Message,
+                CourseMessage = isDisplayTeacherMsg ? selectedClassRoom.Message : null,
                 IsTeacher = isTeacher,
                 TotalLikes = selectedLesson.TotalLikes
             };
