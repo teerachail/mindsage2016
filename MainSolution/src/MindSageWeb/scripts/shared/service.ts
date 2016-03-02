@@ -4,7 +4,7 @@
     export class ClientUserProfileService {
 
         public Advertisments: Advertisment[];
-        public AllCourses: CourseCatalog[];
+        public allAvailableCourses: CourseCatalog[];
         private clientUserProfile: ClientUserProfile;
         private isWaittingForUserProfileRespond: boolean;
         private getUserProfileSvc: IGetUserProfileResourceClass<any>;
@@ -40,22 +40,22 @@
             else return this.clientUserProfile;
         }
 
-        public GetAllCourses(): CourseCatalog[] {
-            if (this.AllCourses == null) {
+        public GetAllAvailableCourses(): CourseCatalog[] {
+            if (this.allAvailableCourses == null) {
                 if (this.isWaittingForAllCourses) return;
                 else {
                     this.isWaittingForAllCourses = true;
                     this.getAllCourseSvc.get().$promise.then(respond => {
-                        if (respond == null) return this.GetAllCourses();
+                        if (respond == null) return this.GetAllAvailableCourses();
                         else {
                             this.isWaittingForAllCourses = false;
-                            this.AllCourses = respond;
-                            return this.AllCourses;
+                            this.allAvailableCourses = respond;
+                            return this.allAvailableCourses;
                         }
                     });
                 }
             }
-            else return this.AllCourses;
+            else return this.allAvailableCourses;
         }
     }
 

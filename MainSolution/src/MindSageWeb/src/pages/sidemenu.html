@@ -3,7 +3,7 @@
         {{ cx.userProfile.FullName }}
     </h1>
     <a href="#" ui-sref="app.course.notification({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i ng-click="cx.ChangeTab('')" class="fi-mail size-36"></i><span ng-show="cx.notification > 0" class="badge">{{ cx.notification }}</span></a>
-    <a class="float-right" href="#" data-open="classModal" ng-show="cx.userSvc.AllCourses.length > 1" ><i class="fi-list size-36"></i></a>
+    <a class="float-right" href="#" data-open="classModal" ng-show="cx.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
     <ul class="vertical menu menu-bg">
         <li ng-class="{'active': 'Home' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('Home')">
             <a href="#" ui-sref="app.main.lesson({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'lessonId': '{{ cx.userProfile.CurrentLessonId }}' })"><i class="fi-home size-36"></i> HOME</a>
@@ -31,7 +31,7 @@
                 <a href="#" 
                    ng-class="{'large expanded button': item.ClassRoomId == cx.userSvc.clientUserProfile.CurrentClassRoomId,
                    'large hollow expanded button': item.ClassRoomId != cx.userSvc.clientUserProfile.CurrentClassRoomId}" 
-                   ng-repeat="item in cx.userSvc.AllCourses" 
+                   ng-repeat="item in cx.AllAvailableCourses" 
                    ng-click="cx.ChangeClassRoom(item.ClassRoomId, item.LessonId, item.Name)">
                     {{ item.Name }}
                 </a>

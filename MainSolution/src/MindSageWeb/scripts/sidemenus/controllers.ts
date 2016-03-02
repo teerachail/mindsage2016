@@ -5,6 +5,7 @@
         
         private userProfile: any;
         public notification: number;
+        public AllAvailableCourses: any;
 
         static $inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'app.sidemenus.SideMenuService', 'app.shared.GetProfileService'];
         constructor(private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private sideMenuSvc: app.sidemenus.SideMenuService, private notificationSvc: app.shared.GetProfileService) {
@@ -16,6 +17,7 @@
                     }
                     else this.notification = it.notificationTotal;
                 });
+            this.AllAvailableCourses = this.userSvc.GetAllAvailableCourses();
         }
 
         public GetUserProfileId(): string {

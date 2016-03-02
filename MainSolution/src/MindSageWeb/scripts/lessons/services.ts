@@ -26,7 +26,6 @@ module app.lessons {
             this.readNoteSvc = <IReadNoteContentResourceClass<any>>$resource(appConfig.ReadNoteUrl, {
                 'ClassRoomId': '@ClassRoomId', 'UserProfileId': '@UserProfileId'
             });
-
         }
 
         public GetContent(lessonId: string, classRoomId: string): ng.IPromise<any> {
