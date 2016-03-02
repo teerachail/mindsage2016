@@ -5,11 +5,6 @@
             .state('app', {
                 url: '/app',
                 templateUrl: 'tmpl/layout.html',
-                controller: 'app.shared.MainController as appcx',
-                resolve: {
-                    'userInfo': ['app.shared.GetProfileService', svc => { return svc.GetProfile() }],
-                    'allCourse': ['app.shared.GetProfileService', svc => { return svc.GetAllCourse() }]
-                }
             })
 
             .state('app.main', {

@@ -6,16 +6,56 @@
         public Advertisments: Advertisment[];
         public AllCourses: CourseCatalog[];
         private clientUserProfile: ClientUserProfile;
+        private isWaittingForUserProfileRespond: boolean;
+        private getUserProfileSvc: IGetUserProfileResourceClass<any>;
+        private isWaittingForAllCourses: boolean;
+        private getAllCourseSvc: IGetAllCourseResourceClass<any>;
 
-        constructor() {
-            this.clientUserProfile = new ClientUserProfile();
+        static $inject = ['appConfig', '$resource'];
+        constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService) {
+            this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, {});
+            this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
         }
 
-        public UpdateUserProfile(userInfo: ClientUserProfile): void {
-            this.clientUserProfile = userInfo;
+        public UpdateUserProfile(userProfile): void {
+            if (userProfile == null) return;
+            this.clientUserProfile = userProfile;
         }
+
         public GetClientUserProfile(): ClientUserProfile {
-            return this.clientUserProfile;
+            if (this.clientUserProfile == null || this.clientUserProfile.UserProfileId == null) {
+                if (this.isWaittingForUserProfileRespond) return;
+                else {
+                    this.isWaittingForUserProfileRespond = true;
+                    this.getUserProfileSvc.get().$promise.then(respond => {
+                        if (respond == null) return this.GetClientUserProfile();
+                        else {
+                            this.isWaittingForUserProfileRespond = false;
+                            this.clientUserProfile = respond;
+                            return this.clientUserProfile;
+                        }
+                    });
+                }
+            }
+            else return this.clientUserProfile;
+        }
+
+        public GetAllCourses(): CourseCatalog[] {
+            if (this.AllCourses == null) {
+                if (this.isWaittingForAllCourses) return;
+                else {
+                    this.isWaittingForAllCourses = true;
+                    this.getAllCourseSvc.get().$promise.then(respond => {
+                        if (respond == null) return this.GetAllCourses();
+                        else {
+                            this.isWaittingForAllCourses = false;
+                            this.AllCourses = respond;
+                            return this.AllCourses;
+                        }
+                    });
+                }
+            }
+            else return this.AllCourses;
         }
     }
 
@@ -127,9 +167,6 @@
         }
     }
 
-    interface IGetProfileResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
-       GetProfile(data: T): T;
-    }
     interface IGetCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetCourse(data: T): T;
     }
@@ -148,42 +185,34 @@
     interface IGetAllLikeClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetAllLike(data: T): T;
     }
-    interface IGetUserIdResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
-        GetUserId(data: T): T;
+    interface IGetUserProfileResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetUserProfile(data: T): T;
     }
 
     export class GetProfileService {
 
-        private getProfileSvc: IGetProfileResourceClass<any>;
         private getCourseSvc: IGetCourseResourceClass<any>;
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
         private getNotificationNumberSvc: IGetNotificationNumberClass<any>;
         private getNotificationContentSvc: IGetNotificationContentClass<any>;
         private getLikeSvc: IGetLikeClass<any>;
         private getAllLikeSvc: IGetAllLikeClass<any>;
-        private getUserIdSvc: IGetUserIdResourceClass<any>;
+        private getUserProfileSvc: IGetUserProfileResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
-            this.getProfileSvc = <IGetProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, { 'id': '@id' });
             this.getCourseSvc = <IGetCourseResourceClass<any>>$resource(appConfig.GetCourserofileUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getNotificationNumberSvc = <IGetNotificationNumberClass<any>>$resource(appConfig.GetNotificationNumberUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
             this.getNotificationContentSvc = <IGetNotificationContentClass<any>>$resource(appConfig.GetNotificationContentUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
             this.getLikeSvc = <IGetLikeClass<any>>$resource(appConfig.GetLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'lessonId': '@lessonId' });
             this.getAllLikeSvc = <IGetAllLikeClass<any>>$resource(appConfig.GetAllLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
-            this.getUserIdSvc = <IGetUserIdResourceClass<any>>$resource(appConfig.GetUserIdUrl, { });
+            this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, { });
         }
 
-        public GetProfile(): ng.IPromise<any> {
-            return this.GetUserId().then(it=> {
-                var userProfile = this.userprofileSvc.GetClientUserProfile();
-                userProfile.UserProfileId = it.UserProfileId;
-                this.userprofileSvc.UpdateUserProfile(userProfile);
-                return this.getProfileSvc.get(new GetUserProfileRequest(it.UserProfileId)).$promise;
-            });
+        public GetUserProfile(): ng.IPromise<any> {
+            return this.getUserProfileSvc.get().$promise;
         }
-
         public GetCourse(): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
@@ -215,11 +244,8 @@
             var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentLessonId;
             return this.getAllLikeSvc.get(new GetAllLikeRequest(userId, classroomId)).$promise;
         }
-        public GetUserId(): ng.IPromise<any> {
-            return this.getUserIdSvc.get().$promise;
-        }
-
     }
+
     angular
         .module('app.shared')
         .service('app.shared.ClientUserProfileService', ClientUserProfileService)

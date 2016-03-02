@@ -45,13 +45,11 @@ namespace MindSageWeb.Controllers
 
         // GET: api/profile
         [HttpGet]
-        public GetProfileRespond Get()
+        public GetUserProfileRespond Get()
         {
             var userProfileName = User.Identity.Name;
-            return new GetProfileRespond
-            {
-                UserProfileId = userProfileName
-            };
+            var result = Get(userProfileName);
+            return result;
         }
 
         // PUT: api/profile/{user-id}

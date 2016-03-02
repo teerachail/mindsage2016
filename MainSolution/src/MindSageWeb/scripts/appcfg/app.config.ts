@@ -21,7 +21,6 @@ module app {
         LikeLessonUrl: string;
         ReadNoteUrl: string;
         UpdateProfileUrl: string;
-        GetUserProfileUrl: string;
         GetCourserofileUrl: string;
         UpdateCourseUrl: string;
         DeleteCourseUrl: string;
@@ -31,7 +30,7 @@ module app {
         GetNotificationContentUrl: string;
         GetLiketUrl: string;
         GetAllLiketUrl: string;
-        GetUserIdUrl: string;
+        GetUserProfileUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -55,7 +54,6 @@ module app {
         public LikeLessonUrl: string;
         public ReadNoteUrl: string;
         public UpdateProfileUrl: string;
-        public GetUserProfileUrl: string;
         public GetCourserofileUrl: string;
         public UpdateCourseUrl: string;
         public DeleteCourseUrl: string;
@@ -65,7 +63,7 @@ module app {
         public GetNotificationContentUrl: string;
         public GetLiketUrl: string;
         public GetAllLiketUrl: string;
-        public GetUserIdUrl: string;
+        public GetUserProfileUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -90,7 +88,6 @@ module app {
             this.LikeLessonUrl = apiUrl + '/lesson/like';
             this.ReadNoteUrl = apiUrl + '/lesson/readnote';
             this.UpdateProfileUrl = apiUrl + '/profile/:id';
-            this.GetUserProfileUrl = apiUrl + '/profile/:id';
             this.GetCourserofileUrl = apiUrl + '/mycourse/:id/:classRoomId/info';
             this.UpdateCourseUrl = apiUrl + '/mycourse/:id';
             this.DeleteCourseUrl = apiUrl + '/mycourse/leave';
@@ -100,7 +97,7 @@ module app {
             this.GetNotificationContentUrl = apiUrl + '/notification/:id/:classRoomId/content';
             this.GetLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/:lessonId';
             this.GetAllLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/alllikes';
-            this.GetUserIdUrl = apiUrl + '/profile';
+            this.GetUserProfileUrl = apiUrl + '/profile';
         }
     }
     
