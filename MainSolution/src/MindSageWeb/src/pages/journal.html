@@ -43,7 +43,7 @@
                 <a class="accordion-title">Week {{ item }}</a>
                 <div class="accordion-content" data-tab-content>
                     <div class="comment">
-                        <label ng-show="(cx.GetComments(item) | filter:search).length == 0">no comment</label>
+                        <label ng-show="(cx.GetComments(item) | filter:search).length == 0 && cx.MyComments.length == 0">no comment</label>
 
                         <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.GetWeeks()[0] && cx.target == cx.userprofile.UserProfileId" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
                             <div class="large-offset-2 large-9 columns">

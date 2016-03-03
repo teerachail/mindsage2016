@@ -28,6 +28,9 @@ module app.journals {
                 lessonWeeks.push(lessonWeekNo);
                 usedWeekNo[lessonWeekNo] = 1;
             }
+            if (lessonWeeks.length == 0 && this.MyComments.length > 0) {
+                lessonWeeks.push("new");
+            }
             return lessonWeeks;
         }
 
