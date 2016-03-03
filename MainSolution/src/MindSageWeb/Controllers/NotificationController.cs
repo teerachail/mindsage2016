@@ -81,11 +81,6 @@ namespace MindSageWeb.Controllers
 
             var now = _dateTime.GetCurrentTime();
             var unreadedMsgs = notifications.Where(it => !it.HideDate.HasValue).ToList();
-            unreadedMsgs.ForEach(it =>
-            {
-                it.HideDate = now;
-                _notificationRepo.Upsert(it);
-            });
 
             const int LastRetrieveDays = 7;
             var needToReachQry = unreadedMsgs
