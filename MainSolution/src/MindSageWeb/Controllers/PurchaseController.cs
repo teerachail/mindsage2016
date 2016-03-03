@@ -30,7 +30,7 @@ namespace MindSageWeb.Controllers
         #endregion Constructors
 
         #region Methods
-        
+
         /// <summary>
         /// Add new course using a code
         /// </summary>
@@ -53,6 +53,30 @@ namespace MindSageWeb.Controllers
             return RedirectToAction("Detail", "Home", new { @id = courseId, isCouponInvalid = true });
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Index()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Confirm()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult Finished()
+        {
+            return View();
+        }
+
         #endregion Methods
+
+
     }
+
 }

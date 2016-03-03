@@ -31,7 +31,7 @@
                 var isAlreadyHaveThisCourse = (bool)ViewBag.IsAlreadyHaveThisCourse;
                 if (isAlreadyHaveThisCourse)
                 {
-                    <a class="button primary large-centered" >Already have it</a>
+                    <a class="button primary large-centered">Already have it</a>
                 }
                 else if (User.Identity.IsAuthenticated)
                 {
@@ -209,92 +209,6 @@
     <div class="row">
         <div class="medium-10 medium-centered large-10 large-centered columns">
             <input type="radio" name="payment" value="Paypal" id="Paypal" checked="checked" required><label for="Paypal">Pay with Paypal</label>
-            <div>
-                <form class="large-12columns">
-
-                    <div class="row">
-                        <div class="large-6 columns">
-                            <label>
-                                First Name
-                                <input type="text" name="cardholder" placeholder="" />
-                            </label>
-                        </div>
-                        <div class="large-6 columns">
-                            <label>
-                                Last Name
-                                <input type="text" name="cardholder" placeholder="" />
-                            </label>
-                        </div>
-                        <div class="large-8 columns">
-                            <label>
-                                Card Number
-                                <input type="text" name="cardnumber" placeholder="" />
-                            </label>
-                        </div>
-                        <div class="large-4 columns">
-                            <label>
-                                Card Type
-                                <select id="card" required>
-                                    <option value="visa">Visa</option>
-                                    <option value="mastercard">Master Card</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="large-4 columns">
-                            <label>
-                                Exp Month
-                                <input type="text" name="expmonth" placeholder="MM" />
-                            </label>
-                        </div>
-                        <div class="large-4 columns">
-                            <label>
-                                Exp Year
-                                <input type="text" name="expyear" placeholder="YYYY" />
-                            </label>
-                        </div>
-                        <div class="large-4 columns">
-                            <label>
-                                CVC Code
-                                <input type="text" name="cvccode" placeholder="ex: 123" />
-                            </label>
-                        </div>
-                        <div class="large-12 columns">
-                            <label>
-                                Billing Address
-                                <input type="text" name="address" placeholder="" />
-                            </label>
-                        </div>
-                        <div class="large-6 columns">
-                            <label>
-                                State
-                                <input type="text" name="cardholder" placeholder="" />
-                            </label>
-                        </div>
-                        <div class="large-6 columns">
-                            <label>
-                                City
-                                <input type="text" name="cardholder" placeholder="" />
-                            </label>
-                        </div>
-                        <div class="large-8 columns">
-                            <label>
-                                Country
-                                <select id="contry" required>
-                                    <option value="USA">USA</option>
-                                    <option value="UK">UK</option>
-                                </select>
-                            </label>
-                        </div>
-                        <div class="large-4 columns">
-                            <label>
-                                Zip Code
-                                <input type="text" name="address" placeholder="" />
-                            </label>
-                        </div>
-                    </div><!--/row-->
-                </form>
-            </div>
-
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 @Html.Hidden("grade", Model.Grade)
                 @Html.Hidden("courseId", Model.id)

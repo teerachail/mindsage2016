@@ -169,3 +169,799 @@ $font-path: "../fonts/foundation-icons/foundation-icons";
     margin-right: 0.5rem;
   }
 }
+
+// fixed and add more
+@mixin vertical-align {
+    position: relative;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+}
+
+.img-overlay {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    background-color: #fff;
+    opacity: 0;
+    -webkit-transition: all 300ms ease-in-out;
+    transition: all 300ms ease-in-out;
+}
+
+.hero {
+    position: relative;
+    background: url('https://lh3.googleusercontent.com/7CxxYcvby5rZ-PnijydhEIMDIa_m7I6__uLIxkvmdDp-2OqSQgNpeqAgAm3rNC92_z_aCoQ4FQMGl7Qb5W98tYmod1GJjEwp-a_AFkB_bUoPfUzD43cWN2jOXZNfJpKM-bnlzuju038WNJXwDqi2_O1rr69dbzLa5djcitiWreQkkcqXW8tdIyamlDnCwe_XxletH4Ua-c_5_Evl0i01t0J2z1MewgIl0mxKNg1H86FzRCe22Qo4rf_aiVBAovtzGpufbJpe4YRZg1Lnx1CpOsFYui_HNBtWeKdk94hE6GGPNlKe4Rtg2z-j8f8sa28ARxQOcl5ZnZBfhGcOvXHrInYEe794tnanM9urdo8mRrjomTqZvNBprVrHGjW8GWh184EfcGoAxprsL3Kj3GvbJClObYWAuqQKIbWIvTMfcvZUqWyuXvkajQ18vMd29-qZRi3eepGDGw8rwXtWFsmFkNNjg3XlcdDH7O4MnzswDf_b9YLE7Ar-kNmRl9ZDOVN0_HUgOUXMMXbE5w2DYI3sNimqQ35eS1fOVEqgVoI0LwdKVndCSkPcR2QzKlxUYVg2_C8o=w1732-h974-no') no-repeat center center;
+    background-size: cover;
+    height: 50vh;
+    overflow: hidden;
+
+    &:hover {
+        .img-overlay {
+            opacity: .4;
+        }
+    }
+
+    &:hover {
+        h1 {
+            color: #000;
+        }
+    }
+
+    h1 {
+        z-index: 3;
+        color: #fff;
+        text-align: center;
+        @include vertical-align;
+    }
+}
+
+.footer {
+    background-color: #292c2f;
+    text-align: center;
+    font-size: 1.2rem;
+    padding: 4rem;
+
+    p {
+        &.slogan {
+            color: #8d9093;
+            font-size: 1.8rem;
+            margin: 0 0 1rem;
+        }
+
+        &.copywrite {
+            color: #8f9296;
+            font-size: 0.875rem;
+            margin: 0;
+        }
+    }
+
+    .links a {
+        list-style: none;
+        font-weight: bold;
+        color: #ffffff;
+        padding: 3rem 0 2rem;
+        margin: 0;
+
+        &::after {
+            content: "";
+            padding: 0 0.4rem 0 0.8rem;
+        }
+
+        &:last-child::after {
+            content: "";
+            padding: 0 0.4rem 0 0.8rem;
+        }
+    }
+}
+
+.has-form {
+    padding: 0 .9375rem;
+}
+
+/*a.button {
+    padding: .55rem 2rem;
+    letter-spacing: 1px;
+    border-width: thin;
+    border-color: $dark-gray;
+    background-color: $hight-dark-gray;
+    color: $dark-gray;
+}*/
+
+/*a.button.outline {
+    color: $primary-color;
+    border-color: $primary-color;
+    &:hover {
+                color: $white !important;
+            }
+}*/
+
+.inner::before {
+    position: absolute;
+    z-index: 3;
+    left: 50%;
+    margin-left: -50px;
+    content: '';
+    display: block;
+    border-style: solid;
+    border-width: 35px 50px 0;
+    border-color: #FFF transparent transparent;
+}
+
+.content-section {
+    padding: 50px 0 50px 0;
+    clear: both;
+}
+.main-section-hight {
+    min-height: 40rem;
+}
+
+
+
+.image-wrapper {
+    width: 100%;
+    height: 100%;
+    border: 1px solid rgba(0,0,0,0.04);
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    border-radius: $global-radius;
+}
+
+.image-overlay-content {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    overflow: hidden;
+    top: 0;
+    left: 0;
+}
+
+// modifier classes
+
+.overlay-fade-in {
+
+    p {
+        letter-spacing: 0.15em;
+        color: #f4f4f4;
+        font-size: 28px;
+        opacity: 0;
+        transition: all 0.2s linear;
+    }
+
+    img {
+        transition: all 0.2s linear;
+    }
+
+    .image-overlay-content {
+        opacity: 0;
+        background-color: rgba(0,0,0, 0.4);
+        transition: all 0.4s ease-in-out;
+    }
+
+    h2 {
+        color: #f2f2f2;
+        font-size: 1.8rem;
+        margin-top: 40%;
+        opacity: 0;
+        transition: all 0.2s ease-in-out;
+        background: rgba(0,0,0,0.7);
+    }
+
+    .button {
+        display: inline-block;
+        text-decoration: none;
+        padding: 7px 14px;
+        background: #FFF;
+        color: #222;
+        text-transform: uppercase;
+        box-shadow: 0 0 1px #000;
+        position: relative;
+        border: 1px solid #999;
+        opacity: 0;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 0 5px #000;
+        }
+    }
+
+    &:hover img {
+        transform: scale(1.2);
+    }
+
+    &:hover .image-overlay-content {
+        opacity: 1;
+    }
+
+    &:hover h2, p, .button {
+        opacity: 1;
+    }
+
+    &:hover p {
+        transition-delay: 0.1s;
+    }
+
+    &:hover .button {
+        transition-delay: 0.2s;
+    }
+}
+
+
+
+
+
+
+
+
+
+.overlay-slide-in-left {
+
+    img {
+        transition: all 0.3s ease-in-out;
+    }
+
+    .image-overlay-content {
+        background-image: url(http://www.awwwards.com/awards/images/2015/04/pattern.jpg);
+        background-color: rgba(0,0,0,0.3);
+        transform: translateX(-110%);
+        opacity: 1;
+        transition: all 0.4s ease-in-out;
+        box-shadow: 0 0 7px #ccc;
+    }
+
+    h2 {
+        font-size: 1.8rem;
+        background: rgba(255, 255, 255, 0.7);
+        margin-top: 40%;
+        color: #000;
+        box-shadow: 0px 1px 1px rgba(0,0,0,0.1);
+    }
+
+    p {
+        opacity: 0;
+        color: #333;
+        transition: all 0.2s linear;
+    }
+
+    .button {
+        display: inline-block;
+        text-decoration: none;
+        padding: 7px 14px;
+        background: #000;
+        color: #fff;
+        text-transform: uppercase;
+        box-shadow: 0 0 1px #000;
+        position: relative;
+        border-radius: 7px;
+
+        &:hover {
+            background-color: #444;
+        }
+    }
+
+    &:hover .image-overlay-content {
+        transform: translateX(0px);
+    }
+
+    &:hover img {
+        transform: translateX(80%);
+        transition-delay: 0.1s;
+    }
+
+    &:hover p {
+        opacity: 1;
+        transition-delay: 0.4s;
+    }
+}
+
+
+.overlay-fade-in-new-background {
+
+    .button {
+        display: inline-block;
+        text-decoration: none;
+        padding: 7px 14px;
+        background: #000;
+        color: #fff;
+        text-transform: uppercase;
+        border-radius: 5px;
+        box-shadow: 0 0 1px #000;
+        position: relative;
+        opacity: 0;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+            box-shadow: 0 0 5px #fff;
+            background-color: #222;
+        }
+    }
+
+    p {
+        font-size: 28px;
+    }
+
+    .image-overlay-content {
+        background-image: url(http://subtlepatterns.com/patterns/gplaypattern.png);
+        transition: all 0.4s ease-in-out;
+
+        h2 {
+            color: #fff;
+            font-size: 1.6rem;
+            opacity: 1;
+            transition: all 0.2s ease-in-out;
+        }
+
+        h1 {
+            color: #fff;
+            margin-top: 30%;
+            opacity: 1;
+            transition: all 0.2s ease-in-out;
+        }
+
+        p {
+            opacity: 0;
+            color: #000;
+            transition: all 0.2s linear;
+        }
+
+        .button {
+            opacity: 0;
+            transition: all 0.2s linear;
+        }
+    }
+
+    img {
+        transition: all 0.2s ease-in-out;
+    }
+
+    &:hover img {
+        // filter: url("data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\'><filter id=\'grayscale\'><feColorMatrix type=\'matrix\' values=\'0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0.3333 0.3333 0.3333 0 0 0 0 0 1 0\'/></filter></svg>#grayscale");
+        // filter: gray;
+        //-webkit-filter: grayscale(100%);
+        transform: scale(1.5);
+    }
+
+    &:hover .image-overlay-content {
+        background-color: rgba(255,255,255, 0.7);
+
+        p, .button {
+            opacity: 1;
+        }
+    }
+
+    &:hover h1 {
+        color: #000;
+    }
+
+    &:hover h2 {
+        color: #000;
+    }
+
+    &:hover p {
+        transition-delay: 0.1s;
+    }
+
+    &:hover .button {
+        transition-delay: 0.2s;
+    }
+}
+//================================
+.hero {
+    background: url('http://wallpoper.com/images/00/34/39/15/circuit-pcb_00343915.jpg') no-repeat center center;
+    background-size: cover;
+    height: 100vh;
+
+    &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        background-image: linear-gradient(to bottom right,#002f4b,#dc4225);
+        opacity: .8;
+    }
+
+    .intro {
+        padding: 3rem;
+        position: relative;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    h1 {
+        color: #fff;
+        font-size: 1.5rem;
+        line-height: 1.5em;
+        letter-spacing: -0.025em;
+        font-weight: 300;
+        text-align: center;
+    }
+
+    p {
+        color: #fff;
+        line-height: 1.75em;
+        font-weight: 200;
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .tech-img {
+        background: url('http://static.pexels.com/wp-content/uploads/2015/02/apple-hand-iphone-6-4322-525x350.jpg') no-repeat center center;
+        background-size: cover;
+        height: 9rem;
+        width: 9rem;
+        border-radius: 50%;
+        display: block;
+        margin: 0 auto;
+    }
+
+    @media only screen and (min-width: 40.063em) {
+        .tech-img {
+            height: 18rem;
+            width: 18rem;
+        }
+
+        h1 {
+            padding-top: 4.5rem;
+            text-align: right;
+            font-size: 2.5rem;
+        }
+
+        p {
+            text-align: right;
+        }
+    }
+}
+
+.middleblock {
+    @extend .callout;
+    background: transparent !important;
+    border: none !important;
+
+    button {
+        margin-bottom: 0;
+    }
+}
+
+.list {
+    .callout {
+        margin-bottom: 0;
+
+        .listIcon {
+            width: 30px;
+            height: 30px;
+            margin-right: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 0;
+        }
+
+        span {
+            color: $body-font-color;
+        }
+    }
+}
+
+
+///////////////////////////////////////////////////////////////////////////
+.size-12 {
+    font-size: 12px;
+}
+
+.size-14 {
+    font-size: 14px;
+}
+
+.size-16 {
+    font-size: 16px;
+}
+
+.size-18 {
+    font-size: 18px;
+}
+
+.size-21 {
+    font-size: 21px;
+}
+
+.size-24 {
+    font-size: 24px;
+}
+
+.size-36 {
+    font-size: 36px;
+}
+
+.size-48 {
+    font-size: 48px;
+}
+
+.size-60 {
+    font-size: 60px;
+}
+
+.size-72 {
+    font-size: 72px;
+}
+///////////////////////////////////////////////////////////////////////////
+.main-bg {
+    background-color: $light-gray;
+}
+
+.learning-video {
+    background-color: $black;
+    max-height: 720px;
+
+    & iframe {
+        max-height: 720px;
+        width: auto;
+    }
+}
+
+.menu-bg {
+    background-color: $white;
+}
+
+li a {
+    color: $hight-dark-gray;
+}
+
+li.active {
+    background-color: $primary-color;
+
+    & a {
+        color: $white;
+    }
+}
+
+.detail-header {
+    font-size: 1.8em;
+    color: $black;
+}
+
+p.detail-info {
+    border-bottom: solid 3px $black;
+}
+
+.purchase {
+    background-color: $white;
+    text-align: center;
+    padding: 4rem;
+
+    & p {
+        line-height: 120%;
+        font-size: 1.5em;
+        font-weight: bold;
+        color: $primary-color;
+        text-align: left;
+    }
+}
+
+.lesson-header {
+    font-size: 1.8em;
+    font-weight: bold;
+    color: $primary-color;
+    word-wrap: break-word;
+}
+
+.view-select {
+    text-align: right;
+
+    & a {
+        color: $black;
+    }
+
+    & a.active {
+        color: $primary-color;
+    }
+}
+
+.accordion {
+    margin-bottom: 3em;
+    border-bottom: solid 10px $success-color !important;
+
+    & .title {
+        border-bottom-width: 0;
+        padding: 1.25rem 1rem;
+        padding-top: 0;
+        padding-bottom: 0;
+        display: block;
+        font-size: 0.75rem;
+        position: relative;
+    }
+
+    & h2 {
+        color: $white;
+        font-size: 1.5em;
+        font-weight: bold;
+        margin-top: 1em;
+        margin-left: -15px;
+        margin-bottom: 1em;
+        padding: 0.2em 0.9em 0 0.9em;
+        background-color: $success-color;
+        float: left;
+    }
+
+    & h3 {
+        font-size: 1.5em;
+    }
+
+    & .float-right {
+        margin-right: 2em;
+    }
+
+    & a {
+        margin-top: 0.5em;
+    }
+
+    & .icon {
+        color: $black;
+    }
+
+    & .detail {
+        margin-left: 3em;
+        margin-right: 3em;
+    }
+
+    & .lesson-map {
+        margin-bottom: 1.5em;
+        margin-left: 0px !important;
+        margin-right: 0px !important;
+    }
+
+    & .week-info {
+        color: $success-color;
+        border-bottom: solid 1px $success-color;
+    }
+
+    & .lesson-icon p {
+        text-align: center;
+    }
+
+    & img.icon {
+        margin-top: 1em;
+    }
+
+    & .lesson-icon {
+        text-align: center;
+        padding: 0;
+
+        & img {
+            margin-bottom: 0px;
+        }
+    }
+
+    & .extra-header {
+        font-size: 1.3em;
+    }
+
+    & .extra {
+        margin-bottom: 15px;
+
+        & p {
+            margin-bottom: 0.2em;
+        }
+    }
+}
+
+.have-like {
+    margin-bottom: 1em;
+}
+
+.jounal {
+    background-color: $white;
+    margin-bottom: 3em;
+    padding: 1em;
+}
+
+.setting {
+    & a {
+        color: $dark-gray;
+        padding-right: 3em;
+    }
+
+    & .viewlist {
+        color: $primary-color;
+    }
+
+    & .settting-edit {
+        border-bottom: solid 2px $dark-gray;
+        margin-bottom: 1em;
+    }
+
+    & .center {
+        text-align: center;
+
+        & a {
+            padding: 0;
+        }
+    }
+
+    & .have-help-text input {
+        margin-bottom: 0;
+    }
+
+    & .checkbox {
+        width: 1.5em;
+        height: 1.5em;
+    }
+}
+
+.undisplay {
+    display: none;
+}
+
+.control {
+    clear: both;
+    padding-top: 10px;
+    margin: 0;
+}
+
+.comment {
+    & .comment-time {
+        font-size: 0.5em;
+    }
+
+    & .discussion {
+        & .large-9 {
+            float: left !important;
+        }
+    }
+
+    & a.close {
+        color: $black;
+    }
+
+    & .user {
+        text-align: center;
+    }
+
+    & .fi-x {
+        margin-right: 0.7em;
+    }
+}
+
+.comment-button a {
+    color: $dark-gray;
+}
+
+.like a {
+    color: $alert-color;
+}
+
+.partner {
+    background-color: $white;
+    padding: 2rem;
+}
+
+textarea {
+    resize: none;
+    overflow: hidden !important;
+}
+
+.modal-head {
+    background-color: #68b6e3;
+
+    h4 {
+        color: $white;
+        padding: 0.2em;
+    }
+}
+
+.reveal {
+    p {
+        color: #68b6e3;
+    }
+
+    label {
+        color: #68b6e3;
+    }
+}
+
+.form-error {
+    display: block !important;
+}
