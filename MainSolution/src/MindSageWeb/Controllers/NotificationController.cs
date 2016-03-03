@@ -89,7 +89,7 @@ namespace MindSageWeb.Controllers
 
             const int LastRetrieveDays = 7;
             var needToReachQry = unreadedMsgs
-                .Where(it => it.LastReadedDate.HasValue || it.LastReadedDate < it.LastUpdateDate)
+                .Where(it => !it.LastReadedDate.HasValue || it.LastReadedDate < it.LastUpdateDate)
                 .Where(it => Math.Abs(it.CreatedDate.Date.Subtract(now).Days) <= LastRetrieveDays);
 
             var relatedUserProfiles = needToReachQry
@@ -143,7 +143,7 @@ namespace MindSageWeb.Controllers
                         Message = it.Message
                     };
                 })
-                .Where(it=>it!=null).ToList();
+                .Where(it => it != null).ToList();
 
             return result;
         }
