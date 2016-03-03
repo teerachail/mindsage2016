@@ -7,7 +7,7 @@
     </div>    
     <div ng-show="cx.notification.length == 0"><p> Have no notification </p></div>
     <div class="list" data-accordion data-allow-all-closed="true">
-        <div ng-repeat="item in cx.notification" class="callout" data-accordion-item>
+        <div  ng-repeat="item in cx.displayNpotifications"  class="callout" data-accordion-item on-finish-render>
             <a>
                 <p ng-show="item.Tag == 0">
                     <img class="listIcon" src="../assets/img/icon/friend_request_pending.png" /><span> Reminder </span>
@@ -17,25 +17,24 @@
                 </p>
                 <p ng-show="item.Tag == 2">
                     <img class="listIcon" src="../assets/img/icon/like_inactive.png" /><span> Like: </span>
-                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
+                    <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
                 </p>
                 <p ng-show="item.Tag == 3">
                     <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Comment: </span>
-                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
+                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ item.FromUserProfileName }}</span>
                 </p>
                 <p ng-show="item.Tag == 4">
                     <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Discussion: </span>
                     <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
                 </p>
             </a>
+
             <div class="undisplay" data-tab-content>
                 <div class="snall-12">
-                    <p ng-show="item.Tag > 1" ng-repeat="name in item.FromUserProfiles">
-                        <span ng-show="!$first && !$last">, </span>
-                        <span ng-show="$last && $first != $last"> and </span>
-                        <a ng-click="cx.OpenJournalPage('Journal', item.FromUserProfileId)">{{ name.FromUserProfileName }}</a>
+                    <p>
+                        <a ng-show="item.Tag > 1" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
+                        {{ item.Message }}
                     </p>
-                    <p>{{ item.Message }}</p>
                 </div>
             </div>
         </div>
@@ -88,6 +87,3 @@
 
     </div>
 </div>
-<script>
-    $(document).foundation();
-</script>
