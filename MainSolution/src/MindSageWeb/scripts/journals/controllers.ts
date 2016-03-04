@@ -9,27 +9,29 @@ module app.journals {
         public MyComments = [];
         public discussions = [];
         private requestedCommentIds = [];
-        private target: string;
 
         static $inject = ['$scope', 'content', 'targetUserId', 'likes', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
         constructor(private $scope, public content, public targetUserId, private likes, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.userprofile = this.svc.GetClientUserProfile();
-            this.target = targetUserId;
         }
 
 
         public GetWeeks() {
             var usedWeekNo = {};
             var lessonWeeks = [];
+
+            if (this.MyComments.length != 0) {
+                var NewCommentlessonWeekNo = this.userprofile.CurrentLessonNo;
+                lessonWeeks.push(NewCommentlessonWeekNo);
+                usedWeekNo[NewCommentlessonWeekNo] = 1;
+            }
+
             for (var index = 0; index < this.content.Comments.length; index++) {
+
                 var lessonWeekNo = this.content.Comments[index].LessonWeek;
                 if (usedWeekNo.hasOwnProperty(lessonWeekNo)) continue;
-
                 lessonWeeks.push(lessonWeekNo);
                 usedWeekNo[lessonWeekNo] = 1;
-            }
-            if (lessonWeeks.length == 0 && this.MyComments.length > 0) {
-                lessonWeeks.push("new");
             }
             return lessonWeeks;
         }

@@ -17,6 +17,7 @@ namespace MindSageWeb.Repositories.Models
         public bool IsReminderOnceTime { get; set; }
         public string CurrentClassRoomId { get; set; }
         public string CurrentLessonId { get; set; }
+        public int CurrentLessonNo { get; set; }
 
         #endregion Properties
     }
