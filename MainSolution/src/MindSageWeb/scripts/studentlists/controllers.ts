@@ -3,8 +3,14 @@
 
     class studentlistsController {
         private nStatus: number;
+        public targetUser: any;
+
         static $inject = ['$scope', 'list', 'classRoomId', 'app.studentlists.StudentListService'];
         constructor(private $scope, public list: any[], public classRoomId: string, private listsSvc: app.studentlists.StudentListService) {
+        }
+
+        public targetData(friendObj: any) {
+            this.targetUser = friendObj;
         }
 
         public SendFriendRequest(friendObj: any) {
