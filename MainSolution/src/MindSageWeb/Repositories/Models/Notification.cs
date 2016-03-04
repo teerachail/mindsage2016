@@ -1,10 +1,13 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace MindSageWeb.Repositories.Models
 {
+    [BsonDiscriminator(RootClass = true)]
+    [BsonKnownTypes(typeof(CommentNotification), typeof(DiscussionNotification))]
     public class Notification
     {
         #region Properties
