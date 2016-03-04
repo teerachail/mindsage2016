@@ -75,6 +75,8 @@ namespace MindSageWeb.Controllers
                 .OrderBy(it => it.id)
                 .Select(it =>
                 {
+                    var isTeacher = it.Subscriptions.Where(s => !s.DeletedDate.HasValue && s.ClassRoomId == classRoomId)
+                    .Any(s => s.Role == UserProfile.AccountRole.Teacher);
                     var selectedRequest = friendRequests.FirstOrDefault(req => req.ToUserProfileId.Equals(it.id));
                     var status = selectedRequest == null ? FriendRequest.RelationStatus.Unfriend : selectedRequest.Status;
                     var result = new GetFriendListRespond
@@ -83,7 +85,8 @@ namespace MindSageWeb.Controllers
                         Name = it.Name,
                         ImageUrl = it.ImageProfileUrl,
                         Status = status,
-                        RequestId = selectedRequest == null ? null : selectedRequest.id
+                        RequestId = selectedRequest == null ? null : selectedRequest.id,
+                        IsTeacher = isTeacher
                     };
                     return result;
                 })
