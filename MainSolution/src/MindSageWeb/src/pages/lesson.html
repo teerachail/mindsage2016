@@ -93,7 +93,7 @@
                 <textarea ng-model="message" rows="3"></textarea>
 
                 <div class="float-right">
-                    <button ng-click="cx.CreateNewComment(message)" class="button">Post</button>
+                    <button ng-click="message = cx.CreateNewComment(message)" class="button">Post</button>
                 </div>
             </div>
         </div>
@@ -135,7 +135,7 @@
                                 <textarea ng-model="discussionMsg" rows="3"></textarea>
 
                                 <div class="float-right">
-                                    <button ng-click="cx.CreateNewDiscussion(item.id, discussionMsg)" class="button">Post</button>
+                                    <button ng-click="discussionMsg = cx.CreateNewDiscussion(item.id, discussionMsg)" class="button">Post</button>
                                 </div>
                             </div>
                         </div>

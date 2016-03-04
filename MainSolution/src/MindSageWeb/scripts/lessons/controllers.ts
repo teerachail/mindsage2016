@@ -53,38 +53,38 @@ module app.lessons {
 
         public CreateNewComment(message: string) {
             const NoneContentLength = 0;
-            if (message.length <= NoneContentLength) return;
+            if (message.length <= NoneContentLength) return message;
 
-            var userprofile = this.userprofileSvc.GetClientUserProfile();
-            var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId, 0 - this.comment.Comments.length);
-            this.comment.Comments.push(newComment);
             this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message)
                 .then(it=> {
                     if (it == null) {
-                        var removeIndex = this.comment.Comments.indexOf(newComment);
-                        if (removeIndex > -1) this.comment.Comments.splice(removeIndex, 1);
+                        return message;
                     }
-                    else newComment.id = it.ActualCommentId;
+                    else {
+                        var userprofile = this.userprofileSvc.GetClientUserProfile();
+                        var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId, 0 - this.comment.Comments.length);
+                        this.comment.Comments.push(newComment);
+                        return "";
+                    }
                 });
         }
 
         public CreateNewDiscussion(commentId: string, message: string) {
             const NoneContentLength = 0;
-            if (message.length <= NoneContentLength) return;
+            if (message.length <= NoneContentLength) return message;
 
-            var userprofile = this.userprofileSvc.GetClientUserProfile();
-            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - this.discussions.length);
-            this.discussions.push(newDiscussion);
-            this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
-            
             this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message)
                 .then(it=> {
                     if (it == null) {
-                        var removeIndex = this.discussions.indexOf(newDiscussion);
-                        if (removeIndex > -1) this.discussions.splice(removeIndex, 1);
-                        this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
+                        return message;
                     }
-                    else newDiscussion.id = it.ActualCommentId;
+                    else {
+                        var userprofile = this.userprofileSvc.GetClientUserProfile();
+                        var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - this.discussions.length);
+                        this.discussions.push(newDiscussion);
+                        this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
+                        return "";
+                    }
                 });
         }
 

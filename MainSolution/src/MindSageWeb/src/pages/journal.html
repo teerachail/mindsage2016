@@ -18,7 +18,7 @@
                     <textarea  ng-model="message" rows="3"  placeholder="Add a comment to your Jounal"></textarea>
 
                     <div class="float-right">
-                        <button ng-click="cx.CreateNewComment(message)" class="button">Post</button>
+                        <button ng-click="message = cx.CreateNewComment(message)" class="button">Post</button>
                     </div>
                 </div>
             </div>
@@ -41,7 +41,7 @@
 
                         <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.userprofile.CurrentLessonNo && cx.targetUserId == cx.userprofile.UserProfileId" class="row" data-accordion data-allow-all-closed="true" on-finish-render>
                             <div class="large-offset-2 large-9 columns">
-                                <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ comment.LessonWeek }}</span></h4>
+                                <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ cx.userprofile.CurrentLessonNo }}</span></h4>
                             </div>
                             <div class="large-2 columns"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ comment.CreatorImageUrl }}"></div>
 
@@ -75,7 +75,7 @@
                                                 <textarea ng-model="discussionMsg" rows="3"></textarea>
 
                                                 <div class="float-right">
-                                                    <button ng-click="cx.CreateNewDiscussion(comment.id, discussionMsg)" class="button">Post</button>
+                                                    <button ng-click="discussionMsg = cx.CreateNewDiscussion(comment.id, discussionMsg)" class="button">Post</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -145,7 +145,7 @@
                                                 <textarea ng-model="discussionMsg" rows="3"></textarea>
 
                                                 <div class="float-right">
-                                                    <button ng-click="cx.CreateNewDiscussion(comment.id, discussionMsg)" class="button">Post</button>
+                                                    <button ng-click="discussionMsg = cx.CreateNewDiscussion(comment.id, discussionMsg)" class="button">Post</button>
                                                 </div>
                                             </div>
                                         </div>

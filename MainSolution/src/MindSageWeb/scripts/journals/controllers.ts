@@ -68,15 +68,16 @@ module app.journals {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            var newComment = new app.shared.Comment('MOCK', message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId, 0 - this.MyComments.length);
-            this.MyComments.push(newComment);
             this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message)
                 .then(it=> {
                     if (it == null) {
-                        var removeIndex = this.content.Comments.indexOf(newComment);
-                        if (removeIndex > -1) this.content.Comments.splice(removeIndex, 1);
+                        return message;
                     }
-                    else newComment.id = it.ActualCommentId;
+                    else { 
+                        var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId, 0 - this.MyComments.length);
+                        this.MyComments.push(newComment);
+                        return "";
+                    }
                     
                 });
         }
@@ -85,18 +86,17 @@ module app.journals {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId, 0 - this.discussions.length);
-            this.discussions.push(newDiscussion);
-            this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
             var local = this.content.Comments.filter(it=> it.id == commentId)[0];
             this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message)
                 .then(it=> {
                     if (it == null) {
-                        var removeIndex = this.discussions.indexOf(newDiscussion);
-                        if (removeIndex > -1) this.discussions.splice(removeIndex, 1);
-                        this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
+                        return message;
                     }
-                    else newDiscussion.id = it.ActualCommentId;
+
+                    var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId, 0 - this.discussions.length);
+                    this.discussions.push(newDiscussion);
+                    this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
+                    return "";
                 });
         }
 
