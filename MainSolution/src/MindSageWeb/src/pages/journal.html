@@ -85,6 +85,9 @@
                                         <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id } | orderBy: 'Order'" class="row">
                                             <div class="large-offset-2 large-9 columns">
                                                 <h4>{{ discussion.CreatorDisplayName }}<span class="comment-time"></span></h4>
+                                                <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2" data-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+
                                             </div>
                                             <div class="large-2 columns"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
                                             <div class="large-10 columns">

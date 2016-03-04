@@ -1,9 +1,10 @@
-angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings'])
+angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings', 'app.main'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app', {
             url: '/app',
             templateUrl: 'tmpl/layout.html',
+            controller: 'app.main.MainController as acx'
         })
             .state('app.main', {
             url: '/main',
@@ -89,8 +90,6 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
                     templateUrl: 'tmpl/studentlist.html',
                     controller: 'app.studentlists.studentlistsController as cx',
                     resolve: {
-                        'list': ['$stateParams', 'app.studentlists.StudentListService',
-                            function (params, svc) { return svc.GetStudentList(params.classRoomId); }],
                         'classRoomId': ['$stateParams', function (params) { return params.classRoomId; }]
                     }
                 }
@@ -149,14 +148,6 @@ var module = angular.module('appDirectives', [])
 (function () {
     'use strict';
     angular
-        .module('app.inits', [
-        "ngResource",
-        'app.shared'
-    ]);
-})();
-(function () {
-    'use strict';
-    angular
         .module('app.journals', [
         "ngResource",
         'app.shared'
@@ -166,6 +157,14 @@ var module = angular.module('appDirectives', [])
     'use strict';
     angular
         .module('app.lessons', [
+        "ngResource",
+        'app.shared'
+    ]);
+})();
+(function () {
+    'use strict';
+    angular
+        .module('app.main', [
         "ngResource",
         'app.shared'
     ]);
@@ -347,27 +346,6 @@ var app;
 })(app || (app = {}));
 var app;
 (function (app) {
-    var inits;
-    (function (inits) {
-        'use strict';
-        var InitializeController = (function () {
-            function InitializeController(userProfile, clientSvc) {
-                this.userProfile = userProfile;
-                this.clientSvc = clientSvc;
-                alert('x');
-                this.clientSvc.UpdateUserProfile(userProfile);
-                //var x = this.clientSvc.GetClientUserProfile();
-            }
-            InitializeController.$inject = ['userProfile', 'app.shared.ClientUserProfileService'];
-            return InitializeController;
-        })();
-        angular
-            .module('app.inits')
-            .controller('app.inits.InitializeController', InitializeController);
-    })(inits = app.inits || (app.inits = {}));
-})(app || (app = {}));
-var app;
-(function (app) {
     var journals;
     (function (journals) {
         'use strict';
@@ -385,11 +363,15 @@ var app;
                 this.discussions = [];
                 this.requestedCommentIds = [];
                 this.userprofile = this.svc.GetClientUserProfile();
-                this.target = targetUserId;
             }
             JournalController.prototype.GetWeeks = function () {
                 var usedWeekNo = {};
                 var lessonWeeks = [];
+                if (this.MyComments.length != 0) {
+                    var NewCommentlessonWeekNo = this.userprofile.CurrentLessonNo;
+                    lessonWeeks.push(NewCommentlessonWeekNo);
+                    usedWeekNo[NewCommentlessonWeekNo] = 1;
+                }
                 for (var index = 0; index < this.content.Comments.length; index++) {
                     var lessonWeekNo = this.content.Comments[index].LessonWeek;
                     if (usedWeekNo.hasOwnProperty(lessonWeekNo))
@@ -432,17 +414,16 @@ var app;
                 var NoneContentLength = 0;
                 if (message.length <= NoneContentLength)
                     return;
-                var newComment = new app.shared.Comment('MOCK', message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId, 0 - this.MyComments.length);
-                this.MyComments.push(newComment);
                 this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message)
                     .then(function (it) {
                     if (it == null) {
-                        var removeIndex = _this.content.Comments.indexOf(newComment);
-                        if (removeIndex > -1)
-                            _this.content.Comments.splice(removeIndex, 1);
+                        return message;
                     }
-                    else
-                        newComment.id = it.ActualCommentId;
+                    else {
+                        var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, _this.userprofile.ImageUrl, _this.userprofile.FullName, _this.userprofile.CurrentClassRoomId, _this.userprofile.CurrentLessonId, _this.userprofile.UserProfileId, 0 - _this.MyComments.length);
+                        _this.MyComments.push(newComment);
+                        return "";
+                    }
                 });
             };
             JournalController.prototype.CreateNewDiscussion = function (commentId, message) {
@@ -450,20 +431,16 @@ var app;
                 var NoneContentLength = 0;
                 if (message.length <= NoneContentLength)
                     return;
-                var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId, 0 - this.discussions.length);
-                this.discussions.push(newDiscussion);
-                this.content.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions++;
                 var local = this.content.Comments.filter(function (it) { return it.id == commentId; })[0];
                 this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message)
                     .then(function (it) {
                     if (it == null) {
-                        var removeIndex = _this.discussions.indexOf(newDiscussion);
-                        if (removeIndex > -1)
-                            _this.discussions.splice(removeIndex, 1);
-                        _this.content.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions--;
+                        return message;
                     }
-                    else
-                        newDiscussion.id = it.ActualCommentId;
+                    var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, _this.userprofile.ImageUrl, _this.userprofile.FullName, _this.userprofile.UserProfileId, 0 - _this.discussions.length);
+                    _this.discussions.push(newDiscussion);
+                    _this.content.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions++;
+                    return "";
                 });
             };
             JournalController.prototype.LikeComment = function (commentId, IsLike) {
@@ -656,40 +633,37 @@ var app;
                 var _this = this;
                 var NoneContentLength = 0;
                 if (message.length <= NoneContentLength)
-                    return;
-                var userprofile = this.userprofileSvc.GetClientUserProfile();
-                var newComment = new app.shared.Comment('MOCK', message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId, 0 - this.comment.Comments.length);
-                this.comment.Comments.push(newComment);
+                    return message;
                 this.commentSvc.CreateNewComment(this.classRoomId, this.lessonId, message)
                     .then(function (it) {
                     if (it == null) {
-                        var removeIndex = _this.comment.Comments.indexOf(newComment);
-                        if (removeIndex > -1)
-                            _this.comment.Comments.splice(removeIndex, 1);
+                        return message;
                     }
-                    else
-                        newComment.id = it.ActualCommentId;
+                    else {
+                        var userprofile = _this.userprofileSvc.GetClientUserProfile();
+                        var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, userprofile.ImageUrl, userprofile.FullName, _this.classRoomId, _this.lessonId, userprofile.UserProfileId, 0 - _this.comment.Comments.length);
+                        _this.comment.Comments.push(newComment);
+                        return "";
+                    }
                 });
             };
             LessonController.prototype.CreateNewDiscussion = function (commentId, message) {
                 var _this = this;
                 var NoneContentLength = 0;
                 if (message.length <= NoneContentLength)
-                    return;
-                var userprofile = this.userprofileSvc.GetClientUserProfile();
-                var newDiscussion = new app.shared.Discussion('DiscussionMOCK', commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - this.discussions.length);
-                this.discussions.push(newDiscussion);
-                this.comment.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions++;
+                    return message;
                 this.discussionSvc.CreateDiscussion(this.classRoomId, this.lessonId, commentId, message)
                     .then(function (it) {
                     if (it == null) {
-                        var removeIndex = _this.discussions.indexOf(newDiscussion);
-                        if (removeIndex > -1)
-                            _this.discussions.splice(removeIndex, 1);
-                        _this.comment.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions--;
+                        return message;
                     }
-                    else
-                        newDiscussion.id = it.ActualCommentId;
+                    else {
+                        var userprofile = _this.userprofileSvc.GetClientUserProfile();
+                        var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - _this.discussions.length);
+                        _this.discussions.push(newDiscussion);
+                        _this.comment.Comments.filter(function (it) { return it.id == commentId; })[0].TotalDiscussions++;
+                        return "";
+                    }
                 });
             };
             LessonController.prototype.LikeComment = function (commentId, IsLike) {
@@ -842,7 +816,6 @@ var app;
                 });
             }
             LessonService.prototype.GetContent = function (lessonId, classRoomId) {
-                alert('Get lesson content');
                 var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
                 return this.getLessonSvc.get(new lessons.LessonContentRequest(lessonId, classRoomId, userId)).$promise;
             };
@@ -865,6 +838,48 @@ var app;
 })(app || (app = {}));
 var app;
 (function (app) {
+    var main;
+    (function (main) {
+        'use strict';
+        var MainController = (function () {
+            function MainController(listsSvc, userSvc) {
+                this.listsSvc = listsSvc;
+                this.userSvc = userSvc;
+            }
+            MainController.prototype.FriendsStatus = function (friendId) {
+                if (this.userSvc.GetClientUserProfile().UserProfileId == friendId)
+                    return 2;
+                return this.userSvc.GetFriendLists().filter(function (it) { return it.UserProfileId == friendId; })[0].Status;
+            };
+            MainController.prototype.targetData = function (friendId) {
+                var targetObj = this.userSvc.GetFriendLists().filter(function (it) { return it.UserProfileId == friendId; })[0];
+                if (targetObj == null)
+                    return;
+                else
+                    this.targetUser = targetObj;
+            };
+            MainController.prototype.SendFriendRequest = function (friendObj) {
+                this.userSvc.GetFriendLists().filter(function (it) { return it == friendObj; })[0].Status = 0;
+                this.listsSvc.SendFriendRequest(friendObj.UserProfileId, null, false);
+            };
+            MainController.prototype.ConfirmFriendRequest = function (friendObj) {
+                this.userSvc.GetFriendLists().filter(function (it) { return it == friendObj; })[0].Status = 2;
+                this.listsSvc.SendFriendRequest(friendObj.UserProfileId, friendObj.RequestId, true);
+            };
+            MainController.prototype.DeleteFriendRequest = function (friendObj) {
+                this.userSvc.GetFriendLists().filter(function (it) { return it == friendObj; })[0].Status = 3;
+                this.listsSvc.SendFriendRequest(friendObj.UserProfileId, friendObj.RequestId, false);
+            };
+            MainController.$inject = ['app.studentlists.StudentListService', 'app.shared.ClientUserProfileService'];
+            return MainController;
+        })();
+        angular
+            .module('app.main')
+            .controller('app.main.MainController', MainController);
+    })(main = app.main || (app.main = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
     var notification;
     (function (notification_1) {
         'use strict';
@@ -877,10 +892,14 @@ var app;
                 this.getProfile = getProfile;
                 this.sideMenuSvc = sideMenuSvc;
                 this.userInfo = userSvc.GetClientUserProfile();
+                this.displayNpotifications = this.notification.filter(function (it) { return it.FromUserProfiles != null; });
             }
             NotificationController.prototype.OpenJournalPage = function (name, userId) {
                 this.sideMenuSvc.CurrentTabName = name;
                 this.$state.go("app.course.teacherlist", { 'classRoomId': this.userInfo.CurrentClassRoomId, 'targetUserId': userId }, { inherit: false });
+            };
+            NotificationController.prototype.GetFirstLiker = function (name) {
+                return name[0];
             };
             NotificationController.$inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'notification', 'app.shared.GetProfileService', 'app.sidemenus.SideMenuService'];
             return NotificationController;
@@ -1284,6 +1303,14 @@ var app;
             return GetAllLikeRequest;
         })();
         shared.GetAllLikeRequest = GetAllLikeRequest;
+        var GetFriendListRequest = (function () {
+            function GetFriendListRequest(userId, classRoomId) {
+                this.userId = userId;
+                this.classRoomId = classRoomId;
+            }
+            return GetFriendListRequest;
+        })();
+        shared.GetFriendListRequest = GetFriendListRequest;
     })(shared = app.shared || (app.shared = {}));
 })(app || (app = {}));
 var app;
@@ -1296,6 +1323,7 @@ var app;
                 this.$resource = $resource;
                 this.getUserProfileSvc = $resource(appConfig.GetUserProfileUrl, {});
                 this.getAllCourseSvc = $resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
+                this.getStudentListsvc = $resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
             }
             ClientUserProfileService.prototype.UpdateUserProfile = function (userProfile) {
                 if (userProfile == null)
@@ -1323,26 +1351,49 @@ var app;
                 else
                     return this.clientUserProfile;
             };
-            ClientUserProfileService.prototype.GetAllCourses = function () {
+            ClientUserProfileService.prototype.GetAllAvailableCourses = function () {
                 var _this = this;
-                if (this.AllCourses == null) {
+                if (this.allAvailableCourses == null) {
                     if (this.isWaittingForAllCourses)
                         return;
                     else {
                         this.isWaittingForAllCourses = true;
                         this.getAllCourseSvc.get().$promise.then(function (respond) {
                             if (respond == null)
-                                return _this.GetAllCourses();
+                                return _this.GetAllAvailableCourses();
                             else {
                                 _this.isWaittingForAllCourses = false;
-                                _this.AllCourses = respond;
-                                return _this.AllCourses;
+                                _this.allAvailableCourses = respond;
+                                return _this.allAvailableCourses;
                             }
                         });
                     }
                 }
                 else
-                    return this.AllCourses;
+                    return this.allAvailableCourses;
+            };
+            ClientUserProfileService.prototype.GetFriendLists = function () {
+                var _this = this;
+                if (this.friendList == null) {
+                    if (this.isWaittingForFriendList)
+                        return;
+                    else {
+                        this.isWaittingForFriendList = true;
+                        var userId = this.clientUserProfile.UserProfileId;
+                        var classRoomId = this.clientUserProfile.CurrentClassRoomId;
+                        this.getStudentListsvc.query(new shared.GetFriendListRequest(userId, classRoomId)).$promise.then(function (respond) {
+                            if (respond == null)
+                                return _this.GetFriendLists();
+                            else {
+                                _this.isWaittingForFriendList = false;
+                                _this.friendList = respond;
+                                return _this.friendList;
+                            }
+                        });
+                    }
+                }
+                else
+                    return this.friendList;
             };
             ClientUserProfileService.$inject = ['appConfig', '$resource'];
             return ClientUserProfileService;
@@ -1364,7 +1415,6 @@ var app;
                 }, { UpdateComment: { method: 'PUT' } });
             }
             CommentService.prototype.GetComments = function (lessonId, classRoomId) {
-                alert('Get comment');
                 var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
                 return this.getCommentSvc.get(new shared.GetCommentsRequest(lessonId, classRoomId, userId)).$promise;
             };
@@ -1499,6 +1549,8 @@ var app;
                     else
                         _this.notification = it.notificationTotal;
                 });
+                this.AllAvailableCourses = this.userSvc.GetAllAvailableCourses();
+                this.userSvc.GetFriendLists();
             }
             SideMenuController.prototype.GetUserProfileId = function () {
                 return encodeURI(this.userProfile.UserProfileId);
@@ -1550,28 +1602,12 @@ var app;
     (function (studentlists) {
         'use strict';
         var studentlistsController = (function () {
-            function studentlistsController($scope, list, classRoomId, listsSvc) {
+            function studentlistsController($scope, classRoomId, userSvc) {
                 this.$scope = $scope;
-                this.list = list;
                 this.classRoomId = classRoomId;
-                this.listsSvc = listsSvc;
+                this.userSvc = userSvc;
             }
-            studentlistsController.prototype.SendFriendRequest = function (friendObj) {
-                var EditIndex = this.list.indexOf(friendObj);
-                this.list[EditIndex].Status = 0;
-                this.listsSvc.SendFriendRequest(friendObj.UserProfileId, null, false);
-            };
-            studentlistsController.prototype.ConfirmFriendRequest = function (friendObj) {
-                var EditIndex = this.list.indexOf(friendObj);
-                this.list[EditIndex].Status = 2;
-                this.listsSvc.SendFriendRequest(friendObj.UserProfileId, friendObj.RequestId, true);
-            };
-            studentlistsController.prototype.DeleteFriendRequest = function (friendObj) {
-                var EditIndex = this.list.indexOf(friendObj);
-                this.list[EditIndex].Status = 3;
-                this.listsSvc.SendFriendRequest(friendObj.UserProfileId, friendObj.RequestId, false);
-            };
-            studentlistsController.$inject = ['$scope', 'list', 'classRoomId', 'app.studentlists.StudentListService'];
+            studentlistsController.$inject = ['$scope', 'classRoomId', 'app.shared.ClientUserProfileService'];
             return studentlistsController;
         })();
         angular
@@ -1584,14 +1620,12 @@ var app;
     var studentlists;
     (function (studentlists) {
         'use strict';
-        var GetFriendListRequest = (function () {
-            function GetFriendListRequest(userId, classRoomId) {
-                this.userId = userId;
-                this.classRoomId = classRoomId;
-            }
-            return GetFriendListRequest;
-        })();
-        studentlists.GetFriendListRequest = GetFriendListRequest;
+        //export class GetFriendListRequest {
+        //    constructor(
+        //        public userId: string,
+        //        public classRoomId: string) {
+        //    }
+        //}
         var SendFriendRequest = (function () {
             function SendFriendRequest(FromUserProfileId, ToUserProfileId, RequestId, IsAccept) {
                 this.FromUserProfileId = FromUserProfileId;
@@ -1613,13 +1647,13 @@ var app;
             function StudentListService(appConfig, $resource, userprofileSvc) {
                 this.$resource = $resource;
                 this.userprofileSvc = userprofileSvc;
-                this.GetStudentListsvc = $resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
+                //this.GetStudentListsvc = <IStudentListResourceClass<any>>$resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
                 this.SendFriendRequestsvc = $resource(appConfig.SendFriendRequestUrl, { 'FromUserProfileId': '@FromUserProfileId', 'ToUserProfileId': '@ToUserProfileId', 'RequestId': '@RequestId', 'IsAccept': '@IsAccept' });
             }
-            StudentListService.prototype.GetStudentList = function (classRoomId) {
-                var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-                return this.GetStudentListsvc.query(new studentlists.GetFriendListRequest(userId, classRoomId)).$promise;
-            };
+            //public GetStudentList(classRoomId: string): ng.IPromise<any> {
+            //    var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            //    return this.GetStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise;
+            //}
             StudentListService.prototype.SendFriendRequest = function (ToUserProfileId, RequestId, IsAccept) {
                 var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
                 return this.SendFriendRequestsvc.save(new studentlists.SendFriendRequest(userId, ToUserProfileId, RequestId, IsAccept)).$promise;
@@ -1711,4 +1745,3 @@ var app;
             .service('app.teacherlists.TeacherListService', TeacherListService);
     })(teacherlists = app.teacherlists || (app.teacherlists = {}));
 })(app || (app = {}));
-//# sourceMappingURL=appBundle.js.map

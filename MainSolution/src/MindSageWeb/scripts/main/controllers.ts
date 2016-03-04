@@ -9,6 +9,11 @@ module app.main {
         constructor(private listsSvc: app.studentlists.StudentListService, private userSvc: app.shared.ClientUserProfileService) {
         }
         
+        public FriendsStatus(friendId: string) {
+            if (this.userSvc.GetClientUserProfile().UserProfileId == friendId) return 2;
+            return this.userSvc.GetFriendLists().filter(it=> it.UserProfileId == friendId)[0].Status; 
+        }
+
         public targetData(friendId: string) {
             var targetObj = this.userSvc.GetFriendLists().filter(it=> it.UserProfileId == friendId)[0]; 
             if (targetObj == null)

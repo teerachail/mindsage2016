@@ -102,6 +102,7 @@
     <div class="comment">
         <div class="row" ng-repeat="item in cx.comment.Comments | orderBy: 'Order'" data-accordion data-allow-all-closed="true" on-finish-render>
             <div class="large-offset-2 large-9 columns">
+                <a ></a>
                 <a href="#" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ item.CreatedByUserProfileId }}' })"><h4>{{ item.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
             </div>
             <div class="large-2 columns"><img class="thumbnail"  style="width: 5em; height: 5em;" src="{{ item.CreatorImageUrl }}"></div>
@@ -144,7 +145,8 @@
                     <div class="discussion">
                         <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }" class="row">
                             <div class="large-offset-2 large-9 columns">
-                                <a href="#" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2" data-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                             </div>
                             <div class="large-2 columns"><img class="thumbnail"  style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
                             <div class="large-10 columns">
