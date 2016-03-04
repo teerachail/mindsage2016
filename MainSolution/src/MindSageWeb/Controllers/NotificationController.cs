@@ -118,14 +118,13 @@ namespace MindSageWeb.Controllers
                         case Notification.NotificationTag.FriendCreateNewComment:
                             tag = NotificationRespond.NotificationTag.Comment;
                             break;
+                        case Notification.NotificationTag.FriendLikesALesson:
                         case Notification.NotificationTag.SomeOneLikesYourComment:
-                            tag = NotificationRespond.NotificationTag.Like;
-                            break;
                         case Notification.NotificationTag.SomeOneLikesYourDiscussion:
                             tag = NotificationRespond.NotificationTag.Like;
                             break;
                         case Notification.NotificationTag.SomeOneCreateDiscussionInYourComment:
-                            tag = NotificationRespond.NotificationTag.Reminder;
+                            tag = NotificationRespond.NotificationTag.Discussion;
                             break;
                         default: return null;
                     }
@@ -141,6 +140,12 @@ namespace MindSageWeb.Controllers
                 .Where(it => it != null).ToList();
 
             return result;
+        }
+
+        [HttpGet]
+        public void SendNotification()
+        {
+
         }
 
         #endregion Methods

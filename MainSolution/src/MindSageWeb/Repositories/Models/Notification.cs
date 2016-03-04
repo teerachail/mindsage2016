@@ -32,6 +32,7 @@ namespace MindSageWeb.Repositories.Models
             Reminder,
             TopicOfTheDay,
             FriendCreateNewComment,
+            FriendLikesALesson,
             SomeOneLikesYourComment,
             SomeOneLikesYourDiscussion,
             SomeOneCreateDiscussionInYourComment,
