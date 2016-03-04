@@ -4,9 +4,9 @@
             <h1 class="lesson-header">CLASS LIST</h1>
         </div>
     </div>
-    <div class="row" ng-repeat="item in cx.list" data-equalizer>
+    <div class="row" ng-repeat="item in cx.userSvc.GetFriendLists()" data-equalizer>
         <div class="small-6 column callout" data-equalizer-watch>
-            <a ng-show="item.Status != 2" data-open="Modal" ng-click="cx.targetData(item)">
+            <a ng-show="item.Status != 2" data-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
                 <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
             <a ng-show="item.Status == 2" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.classRoomId }}', 'targetUserId': '{{ item.UserProfileId }}' })">
@@ -19,8 +19,8 @@
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 1" data-equalizer-watch>
-            <button class="button" ng-click="cx.ConfirmFriendRequest(item)">Confirm</button>
-            <button class="button secondary" ng-click="cx.DeleteFriendRequest(item)">Delete Request</button>
+            <button class="button" ng-click="acx.ConfirmFriendRequest(item)">Confirm</button>
+            <button class="button secondary" ng-click="acx.DeleteFriendRequest(item)">Delete Request</button>
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 2" data-equalizer-watch>
@@ -28,7 +28,7 @@
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 3" data-equalizer-watch>
-            <button class="button secondary" ng-click="cx.SendFriendRequest(item)">Friend Request</button>
+            <button class="button secondary" ng-click="acx.SendFriendRequest(item)">Friend Request</button>
         </div>
     </div>
 
@@ -67,39 +67,6 @@
             <img src="http://placehold.it/50?text=Friend+image">
         </div>
     </div>-->
-</div>
-
-<div class="reveal tiny" id="Modal" data-reveal>
-    <div class="modal-head"><h4 class="text-center">Warning</h4></div>
-    <div class="row">
-        <div class="medium-10 medium-centered large-10 large-centered columns">
-            <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
-                <div class="text-center">
-                    <div data-equalizer-watch ng-show="cx.targetUser.Status == 0">
-                        Need to be Friend with {{ cx.targetUser.Name }}.
-                        Alrealy send Friend Request.
-                        <button class="button disabled secondary">Friend Request Sent</button>
-                    </div>
-
-                    <div data-equalizer-watch ng-show="cx.targetUser.Status == 1">
-                        Need to be Friend with {{ cx.targetUser.Name }}.
-                        You have Request form another side.
-                        <button class="button" ng-click="cx.ConfirmFriendRequest(cx.targetUser)">Confirm</button>
-                        <button class="button secondary" ng-click="cx.DeleteFriendRequest(cx.targetUser)">Delete Request</button>
-                    </div>
-
-                    <div data-equalizer-watch ng-show="cx.targetUser.Status == 3">
-                        <p>Need to be Friend with {{ cx.targetUser.Name }}.</p>
-                        <p>Send Friend Request, please.</p>
-                        <button class="button secondary" ng-click="cx.SendFriendRequest(cx.targetUser)">Friend Request</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-    </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>
 
 <script>

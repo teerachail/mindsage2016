@@ -1,8 +1,12 @@
 ﻿module app.shared {
     'use strict';
 
+    interface IStudentListResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetStudentList(data: T): T;
+    }
     export class ClientUserProfileService {
 
+        private friendList;
         public Advertisments: Advertisment[];
         public allAvailableCourses: CourseCatalog[];
         private clientUserProfile: ClientUserProfile;
@@ -10,11 +14,14 @@
         private getUserProfileSvc: IGetUserProfileResourceClass<any>;
         private isWaittingForAllCourses: boolean;
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
+        private isWaittingForFriendList: boolean;
+        private getStudentListsvc: IStudentListResourceClass<any>;
 
         static $inject = ['appConfig', '$resource'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService) {
             this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, {});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
+            this.getStudentListsvc = <IStudentListResourceClass<any>>$resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
         }
 
         public UpdateUserProfile(userProfile): void {
@@ -56,6 +63,26 @@
                 }
             }
             else return this.allAvailableCourses;
+        }
+
+        public GetFriendLists() {
+            if (this.friendList == null) {
+                if (this.isWaittingForFriendList) return;
+                else {
+                    this.isWaittingForFriendList = true;
+                    var userId = this.clientUserProfile.UserProfileId;
+                    var classRoomId = this.clientUserProfile.CurrentClassRoomId;
+                    this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise.then(respond=> {
+                        if (respond == null) return this.GetFriendLists();
+                        else {
+                            this.isWaittingForFriendList = false;
+                            this.friendList = respond;
+                            return this.friendList;
+                        }
+                    });
+                }
+            }
+            else return this.friendList;
         }
     }
 

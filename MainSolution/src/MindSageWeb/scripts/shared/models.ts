@@ -184,4 +184,10 @@
         }
     }
 
+    export class GetFriendListRequest {
+        constructor(
+            public userId: string,
+            public classRoomId: string) {
+        }
+    }
 }

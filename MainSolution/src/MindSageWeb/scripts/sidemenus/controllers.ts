@@ -18,7 +18,9 @@
                     else this.notification = it.notificationTotal;
                 });
             this.AllAvailableCourses = this.userSvc.GetAllAvailableCourses();
+            this.userSvc.GetFriendLists();
         }
+        
 
         public GetUserProfileId(): string {
             return encodeURI(this.userProfile.UserProfileId);

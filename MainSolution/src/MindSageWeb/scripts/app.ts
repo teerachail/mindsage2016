@@ -1,10 +1,11 @@
-﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings'])    
+﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings','app.main'])    
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
             .state('app', {
                 url: '/app',
                 templateUrl: 'tmpl/layout.html',
+                controller: 'app.main.MainController as acx'
             })
 
             .state('app.main', {
@@ -97,8 +98,6 @@
                         templateUrl: 'tmpl/studentlist.html',
                         controller: 'app.studentlists.studentlistsController as cx',
                         resolve: {
-                            'list': ['$stateParams', 'app.studentlists.StudentListService',
-                                (params, svc) => { return svc.GetStudentList(params.classRoomId) }],
                             'classRoomId': ['$stateParams', params => { return params.classRoomId }]
                         }
                     }
