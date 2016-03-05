@@ -175,8 +175,7 @@ namespace MindSageWeb.Controllers
             sendNotifyLikeComments(now);
             //var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
             sendNotifyLikeLessons(now);
-            
-            //var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
+            sendNotifyComments(now);
             //var requiredNotifyDiscussions = _commentRepo.GetRequireNotifyDiscussions().ToList();
             //var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay().ToList();
             // TODO: Reminder
@@ -228,7 +227,6 @@ namespace MindSageWeb.Controllers
             if (!requiredNotifyLikeLesson.Any()) return;
 
             var userProfileIds = requiredNotifyLikeLesson.Select(it => it.LikedByUserProfileId).Distinct();
-            var relatedUserProfiles = _userProfileRepo.GetUserProfileById(userProfileIds).ToList();
             var friendsRelated = _friendRequestRepo.GetFriendRequestByUserProfileId(userProfileIds).ToList();
             const string Message = "Like a lesson";
             var notifyLikeLessons = requiredNotifyLikeLesson.Select(it =>
@@ -256,6 +254,42 @@ namespace MindSageWeb.Controllers
             {
                 it.LastNotifyComplete = now;
                 _likeLessonRepo.UpsertLikeLesson(it);
+            });
+        }
+        private void sendNotifyComments(DateTime now)
+        {
+            var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
+            if (!requiredNotifyComments.Any()) return;
+
+            var userprofildIds = requiredNotifyComments.Select(it => it.CreatedByUserProfileId).Distinct();
+            var relatedUserProfileds = _friendRequestRepo.GetFriendRequestByUserProfileId(userprofildIds).ToList();
+            const string Message = "Create new comment.";
+            var notifyCreateComments = requiredNotifyComments.Select(it =>
+            {
+                var friends = relatedUserProfileds
+                    .Where(f => !f.DeletedDate.HasValue)
+                    .Where(f => f.FromUserProfileId == it.CreatedByUserProfileId)
+                    .Where(f => f.Status == FriendRequest.RelationStatus.Friend)
+                    .Select(f => new CommentNotification
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        ByUserProfileId = new List<string> { it.CreatedByUserProfileId },
+                        ClassRoomId = it.ClassRoomId,
+                        CommentId  = it.id,
+                        CreatedDate = now,
+                        LastUpdateDate = now,
+                        LessonId = it.LessonId,
+                        Message = Message,
+                        Tag = Notification.NotificationTag.FriendCreateNewComment,
+                        ToUserProfileId = f.ToUserProfileId
+                    });
+                return friends;
+            }).Where(it => it.Any()).SelectMany(it => it).ToList();
+            notifyCreateComments.ForEach(it => _notificationRepo.Upsert(it));
+            requiredNotifyComments.ForEach(it =>
+            {
+                it.LastNotifyComplete = now;
+                _commentRepo.UpsertComment(it);
             });
         }
 
