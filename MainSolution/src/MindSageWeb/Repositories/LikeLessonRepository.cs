@@ -66,6 +66,17 @@ namespace MindSageWeb.Repositories
             return qry;
         }
 
+        /// <summary>
+        /// ขอรายการ Like lesson ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        public IEnumerable<LikeLesson> GetRequireNotifyLikeLessons()
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeLesson>(TableName)
+               .Find(it => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue)
+               .ToEnumerable();
+            return qry;
+        }
+
         #endregion ILikeLessonRepository members
     }
 }

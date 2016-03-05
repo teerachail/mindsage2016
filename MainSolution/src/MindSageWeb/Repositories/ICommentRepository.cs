@@ -40,6 +40,16 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส Class room ที่ต้องการค้นหา</param>
         IEnumerable<Comment> GetCommentsByUserProfileId(string userprofileId, string classRoomId);
 
+        /// <summary>
+        /// ขอรายการ Like comment ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        IEnumerable<Comment> GetRequireNotifyComments();
+
+        /// <summary>
+        /// ขอรายการ Like discussion ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        IEnumerable<Comment.Discussion> GetRequireNotifyDiscussions();
+
         #endregion Methods
     }
 }

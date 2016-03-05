@@ -17,6 +17,11 @@ namespace MindSageWeb.Controllers
 
         private IUserProfileRepository _userProfileRepo;
         private INotificationRepository _notificationRepo;
+        private ILikeLessonRepository _likeLessonRepo;
+        private ILikeCommentRepository _likeCommentRepo;
+        private ILikeDiscussionRepository _likeDiscussionRepo;
+        private ICommentRepository _commentRepo;
+        private IClassCalendarRepository _classCalendarRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -28,12 +33,27 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="userprofileRepo">User profile repository</param>
         /// <param name="notificationRepo">Notification repository</param>
+        /// <param name="commentRepo">Comment repository</param>
+        /// <param name="likeCommentRepo">Like comment repository</param>
+        /// <param name="likeDiscussionRepo">Like discussion repository</param>
+        /// <param name="likeLessonRepo">Like lesson repository</param>
+        /// <param name="classCalendarRepo">Class calendar repository</param>
         public NotificationController(IUserProfileRepository userprofileRepo,
             INotificationRepository notificationRepo,
+            ILikeLessonRepository likeLessonRepo,
+            ILikeCommentRepository likeCommentRepo,
+            ILikeDiscussionRepository likeDiscussionRepo,
+            ICommentRepository commentRepo,
+            IClassCalendarRepository classCalendarRepo,
             IDateTime dateTime)
         {
             _userProfileRepo = userprofileRepo;
             _notificationRepo = notificationRepo;
+            _likeCommentRepo = likeCommentRepo;
+            _likeDiscussionRepo = likeDiscussionRepo;
+            _likeLessonRepo = likeLessonRepo;
+            _commentRepo = commentRepo;
+            _classCalendarRepo = classCalendarRepo;
             _dateTime = dateTime;
         }
 
@@ -145,7 +165,15 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public void SendNotification()
         {
-
+            // Lesson
+            var requiredNotifyLikeComments = _likeCommentRepo.GetRequireNotifyLikeComments().ToList();
+            var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
+            var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
+            var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
+            var requiredNotifyDiscussions = _commentRepo.GetRequireNotifyDiscussions().ToList();
+            var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay().ToList();
+            // TODO: Reminder
+            int a = 3;
         }
 
         #endregion Methods

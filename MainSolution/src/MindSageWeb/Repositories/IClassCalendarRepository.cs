@@ -26,6 +26,11 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
         void UpsertClassCalendar(ClassCalendar data);
 
+        /// <summary>
+        /// ขอรายการ topic of the day ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        IEnumerable<RequireSendTopicOfTheDay> GetRequireNotifyTopicOfTheDay();
+
         #endregion Methods
     }
 }

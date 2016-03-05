@@ -63,8 +63,8 @@ namespace MindSageWeb.Repositories
         public IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndLesson(string userprofileId, string lessonId)
         {
             var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
-                            .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && it.LikedByUserProfileId == userprofileId)
-                            .ToEnumerable();
+                .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && it.LikedByUserProfileId == userprofileId)
+                .ToEnumerable();
             return qry;
         }
 
@@ -76,8 +76,19 @@ namespace MindSageWeb.Repositories
         public IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndClassRoomId(string userprofileId, string classRoomId)
         {
             var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
-                            .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.LikedByUserProfileId == userprofileId)
-                            .ToEnumerable();
+                .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.LikedByUserProfileId == userprofileId)
+                .ToEnumerable();
+            return qry;
+        }
+
+        /// <summary>
+        /// ขอรายการ Like discussion ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        public IEnumerable<LikeDiscussion> GetRequireNotifyLikeDiscussions()
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue)
+                .ToEnumerable();
             return qry;
         }
 

@@ -40,6 +40,11 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room id</param>
         IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndClassRoomId(string userprofileId, string classRoomId);
 
+        /// <summary>
+        /// ขอรายการ Like discussion ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        IEnumerable<LikeDiscussion> GetRequireNotifyLikeDiscussions();
+
         #endregion Methods
     }
 }

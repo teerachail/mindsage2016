@@ -80,6 +80,17 @@ namespace MindSageWeb.Repositories
             return qry;
         }
 
+        /// <summary>
+        /// ขอรายการ Like comment ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        public IEnumerable<LikeComment> GetRequireNotifyLikeComments()
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeComment>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue)
+                .ToEnumerable();
+            return qry;
+        }
+
         #endregion ILikeCommentRepository members
     }
 }

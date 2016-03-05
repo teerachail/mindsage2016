@@ -34,6 +34,8 @@ namespace MindSageWeb.Repositories.Models
             public int Order { get; set; }
             public string SemesterGroupName { get; set; }
             public DateTime BeginDate { get; set; }
+            public DateTime ReminderDate { get; set; }
+            public DateTime? SendReminderDate { get; set; }
             public string LessonId { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime? DeletedDate { get; set; }

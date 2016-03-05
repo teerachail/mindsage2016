@@ -33,6 +33,11 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonId">รหัส lesson </param>
         IEnumerable<LikeLesson> GetLikeLessonsByUserProfileIdAndLesson(string userprofileId, string lessonId);
 
+        /// <summary>
+        /// ขอรายการ Like lesson ที่ต้องนำไปสร้าง notification
+        /// </summary>
+        IEnumerable<LikeLesson> GetRequireNotifyLikeLessons();
+
         #endregion Methods
     }
 }
