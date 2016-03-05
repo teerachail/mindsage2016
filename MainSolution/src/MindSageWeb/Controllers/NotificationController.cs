@@ -166,14 +166,58 @@ namespace MindSageWeb.Controllers
         public void SendNotification()
         {
             // Lesson
-            var requiredNotifyLikeComments = _likeCommentRepo.GetRequireNotifyLikeComments().ToList();
-            var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
-            var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
-            var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
-            var requiredNotifyDiscussions = _commentRepo.GetRequireNotifyDiscussions().ToList();
-            var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay().ToList();
+            var now = _dateTime.GetCurrentTime();
+
+            sendNotifyLikeComments(now);
+
+
+            //var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
+            //var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
+            //var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
+            //var requiredNotifyDiscussions = _commentRepo.GetRequireNotifyDiscussions().ToList();
+            //var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay().ToList();
             // TODO: Reminder
             int a = 3;
+        }
+
+        private void sendNotifyLikeComments(DateTime now)
+        {
+            var requiredNotifyLikeComments = _likeCommentRepo.GetRequireNotifyLikeComments().ToList();
+            if (!requiredNotifyLikeComments.Any()) return;
+            var commentIds = requiredNotifyLikeComments.Select(it => it.CommentId).Distinct().ToList();
+            var comments = _commentRepo.GetCommentById(commentIds).ToList();
+            var userProfileIds = comments.Select(it => it.CreatedByUserProfileId).Distinct();
+            var relatedUserProfiles = _userProfileRepo.GetUserProfileById(userProfileIds).ToList();
+            const string LikeCommentMessage = "Like your comment.";
+            var notifyComments = requiredNotifyLikeComments.Select(it =>
+            {
+                var comment = comments.FirstOrDefault(c => c.id == it.CommentId);
+                if (comment == null) return null;
+                var userprofile = relatedUserProfiles.FirstOrDefault(u => u.id == comment.CreatedByUserProfileId);
+                if (userprofile == null) return null;
+                if (it.LikedByUserProfileId == userprofile.id) return null;
+                return new CommentNotification
+                {
+                    id = Guid.NewGuid().ToString(),
+                    LastUpdateDate = now,
+                    ToUserProfileId = userprofile.id,
+                    ClassRoomId = it.ClassRoomId,
+                    LessonId = it.LessonId,
+                    CreatedDate = now,
+                    Message = LikeCommentMessage,
+                    ByUserProfileId = new List<string> { it.LikedByUserProfileId },
+                    CommentId = it.CommentId,
+                    TotalLikes = 1,
+                    Tag = Notification.NotificationTag.SomeOneLikesYourComment
+                };
+            }).Where(it => it != null).ToList();
+            int a = 3;
+            notifyComments.ForEach(it => _notificationRepo.Upsert(it));
+            requiredNotifyLikeComments.ForEach(it =>
+            {
+                it.LastNotifyComplete = now;
+                _likeCommentRepo.UpsertLikeComment(it);
+            });
         }
 
         #endregion Methods

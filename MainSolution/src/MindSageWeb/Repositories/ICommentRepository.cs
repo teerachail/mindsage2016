@@ -34,6 +34,12 @@ namespace MindSageWeb.Repositories
         Comment GetCommentById(string commentId);
 
         /// <summary>
+        /// ขอข้อมูล comment จากรหัส comment
+        /// </summary>
+        /// <param name="commentIds">รหัส comment ที่ต้องการขอข้อมูล</param>
+        IEnumerable<Comment> GetCommentById(IEnumerable<string> commentIds);
+
+        /// <summary>
         /// ขอข้อมูล comment จากรหัสผู้ใช้
         /// </summary>
         /// <param name="userprofileId">รหัสผู้ใช้ที่ต้องการค้นหา</param>

@@ -38,6 +38,18 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอข้อมูล comment จากรหัส comment
         /// </summary>
+        /// <param name="commentIds">รหัส comment ที่ต้องการขอข้อมูล</param>
+        public IEnumerable<Comment> GetCommentById(IEnumerable<string> commentIds)
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && commentIds.Contains(it.id))
+                .ToEnumerable();
+            return qry;
+        }
+
+        /// <summary>
+        /// ขอข้อมูล comment จากรหัส comment
+        /// </summary>
         /// <param name="commentId">รหัส comment ที่ต้องการขอข้อมูล</param>
         public IEnumerable<Comment> GetCommentsByLessonId(string lessonId, IEnumerable<string> creatorProfiles)
         {
