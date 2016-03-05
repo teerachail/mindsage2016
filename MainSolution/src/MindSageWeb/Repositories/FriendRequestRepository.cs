@@ -34,6 +34,18 @@ namespace MindSageWeb.Repositories
         }
 
         /// <summary>
+        /// ขอข้อมูลการขอเป็นเพื่อนจากรหัสบัญชีผู้ใช้
+        /// </summary>
+        /// <param name="userprofileId">รหัสบัญชีผู้ใช้ที่ต้องการขอข้อมูล</param>
+        public IEnumerable<FriendRequest> GetFriendRequestByUserProfileId(IEnumerable<string> userprofileIds)
+        {
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && userprofileIds.Contains(it.FromUserProfileId))
+                .ToEnumerable();
+            return qry;
+        }
+
+        /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูลการขอเป็นเพื่อน
         /// </summary>
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>

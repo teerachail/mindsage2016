@@ -22,6 +22,7 @@ namespace MindSageWeb.Controllers
         private ILikeDiscussionRepository _likeDiscussionRepo;
         private ICommentRepository _commentRepo;
         private IClassCalendarRepository _classCalendarRepo;
+        private IFriendRequestRepository _friendRequestRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -38,6 +39,7 @@ namespace MindSageWeb.Controllers
         /// <param name="likeDiscussionRepo">Like discussion repository</param>
         /// <param name="likeLessonRepo">Like lesson repository</param>
         /// <param name="classCalendarRepo">Class calendar repository</param>
+        /// <param name="friendRequestRepo">Friend request repository</param>
         public NotificationController(IUserProfileRepository userprofileRepo,
             INotificationRepository notificationRepo,
             ILikeLessonRepository likeLessonRepo,
@@ -45,6 +47,7 @@ namespace MindSageWeb.Controllers
             ILikeDiscussionRepository likeDiscussionRepo,
             ICommentRepository commentRepo,
             IClassCalendarRepository classCalendarRepo,
+            IFriendRequestRepository friendRequestRepo,
             IDateTime dateTime)
         {
             _userProfileRepo = userprofileRepo;
@@ -54,6 +57,7 @@ namespace MindSageWeb.Controllers
             _likeLessonRepo = likeLessonRepo;
             _commentRepo = commentRepo;
             _classCalendarRepo = classCalendarRepo;
+            _friendRequestRepo = friendRequestRepo;
             _dateTime = dateTime;
         }
 
@@ -169,10 +173,9 @@ namespace MindSageWeb.Controllers
             var now = _dateTime.GetCurrentTime();
 
             sendNotifyLikeComments(now);
-
-
             //var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
-            //var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
+            sendNotifyLikeLessons(now);
+            
             //var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
             //var requiredNotifyDiscussions = _commentRepo.GetRequireNotifyDiscussions().ToList();
             //var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay().ToList();
@@ -184,11 +187,12 @@ namespace MindSageWeb.Controllers
         {
             var requiredNotifyLikeComments = _likeCommentRepo.GetRequireNotifyLikeComments().ToList();
             if (!requiredNotifyLikeComments.Any()) return;
-            var commentIds = requiredNotifyLikeComments.Select(it => it.CommentId).Distinct().ToList();
+
+            var commentIds = requiredNotifyLikeComments.Select(it => it.CommentId).Distinct();
             var comments = _commentRepo.GetCommentById(commentIds).ToList();
             var userProfileIds = comments.Select(it => it.CreatedByUserProfileId).Distinct();
             var relatedUserProfiles = _userProfileRepo.GetUserProfileById(userProfileIds).ToList();
-            const string LikeCommentMessage = "Like your comment.";
+            const string Message = "Like your comment.";
             var notifyComments = requiredNotifyLikeComments.Select(it =>
             {
                 var comment = comments.FirstOrDefault(c => c.id == it.CommentId);
@@ -204,19 +208,54 @@ namespace MindSageWeb.Controllers
                     ClassRoomId = it.ClassRoomId,
                     LessonId = it.LessonId,
                     CreatedDate = now,
-                    Message = LikeCommentMessage,
+                    Message = Message,
                     ByUserProfileId = new List<string> { it.LikedByUserProfileId },
                     CommentId = it.CommentId,
                     TotalLikes = 1,
                     Tag = Notification.NotificationTag.SomeOneLikesYourComment
                 };
             }).Where(it => it != null).ToList();
-            int a = 3;
             notifyComments.ForEach(it => _notificationRepo.Upsert(it));
             requiredNotifyLikeComments.ForEach(it =>
             {
                 it.LastNotifyComplete = now;
                 _likeCommentRepo.UpsertLikeComment(it);
+            });
+        }
+        private void sendNotifyLikeLessons(DateTime now)
+        {
+            var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
+            if (!requiredNotifyLikeLesson.Any()) return;
+
+            var userProfileIds = requiredNotifyLikeLesson.Select(it => it.LikedByUserProfileId).Distinct();
+            var relatedUserProfiles = _userProfileRepo.GetUserProfileById(userProfileIds).ToList();
+            var friendsRelated = _friendRequestRepo.GetFriendRequestByUserProfileId(userProfileIds).ToList();
+            const string Message = "Like a lesson";
+            var notifyLikeLessons = requiredNotifyLikeLesson.Select(it =>
+            {
+                var friends = friendsRelated
+                    .Where(f => !f.DeletedDate.HasValue)
+                    .Where(f => f.FromUserProfileId == it.LikedByUserProfileId && f.Status == FriendRequest.RelationStatus.Friend)
+                    .Select(f => new Notification
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        ByUserProfileId = new List<string> { it.LikedByUserProfileId },
+                        ClassRoomId = it.ClassRoomId,
+                        CreatedDate = now,
+                        LastUpdateDate = now,
+                        LessonId = it.LessonId,
+                        Message = Message,
+                        Tag = Notification.NotificationTag.FriendLikesALesson,
+                        TotalLikes = 1,
+                        ToUserProfileId = f.ToUserProfileId
+                    });
+                return friends;
+            }).Where(it => it.Any()).SelectMany(it => it).ToList();
+            notifyLikeLessons.ForEach(it => _notificationRepo.Upsert(it));
+            requiredNotifyLikeLesson.ForEach(it =>
+            {
+                it.LastNotifyComplete = now;
+                _likeLessonRepo.UpsertLikeLesson(it);
             });
         }
 
