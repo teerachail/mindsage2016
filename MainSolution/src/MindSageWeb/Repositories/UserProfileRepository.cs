@@ -57,6 +57,25 @@ namespace MindSageWeb.Repositories
         }
 
         /// <summary>
+        /// ขอข้อมูล User profile จากรหัส class room
+        /// </summary>
+        /// <param name="classRoomIds">รหัส class room ที่จะทำการขอข้อมูล</param>
+        public IEnumerable<UserProfile> GetUserProfilesByClassRoomId(IEnumerable<string> classRoomIds)
+        {
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+               .Find(it => !it.DeletedDate.HasValue && it.Subscriptions.Any())
+               .ToEnumerable()
+               .Where(it =>
+               {
+                   var subscriptionIds = it.Subscriptions
+                    .Where(subscription => !subscription.DeletedDate.HasValue)
+                    .Select(subscription => subscription.ClassRoomId);
+                   return classRoomIds.Any(cid => subscriptionIds.Contains(cid));
+               });
+            return result;
+        }
+
+        /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูลผู้ใช้
         /// </summary>
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>

@@ -29,7 +29,8 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอรายการ topic of the day ที่ต้องนำไปสร้าง notification
         /// </summary>
-        IEnumerable<RequireSendTopicOfTheDay> GetRequireNotifyTopicOfTheDay();
+        /// <param name="currentTime">Current time</param>
+        IEnumerable<ClassCalendar> GetRequireNotifyTopicOfTheDay(DateTime currentTime);
 
         #endregion Methods
     }

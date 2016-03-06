@@ -43,8 +43,8 @@ namespace MindSageWeb.Repositories
              .Set(it => it.ExpiredDate, data.ExpiredDate)
              .Set(it => it.CloseDate, data.CloseDate)
              .Set(it => it.ClassRoomId, data.ClassRoomId)
-             .Set(it => it.LastCalculateRequest, data.LastCalculateRequest)
-             .Set(it => it.LastCalculateComplete, data.LastCalculateComplete)
+             .Set(it => it.LastCalculateHolidayRequest, data.LastCalculateHolidayRequest)
+             .Set(it => it.LastCalculateHolidayComplete, data.LastCalculateHolidayComplete)
              .Set(it => it.CreatedDate, data.CreatedDate)
              .Set(it => it.DeletedDate, data.DeletedDate)
              .Set(it => it.LessonCalendars, data.LessonCalendars)
@@ -58,21 +58,13 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอรายการ topic of the day ที่ต้องนำไปสร้าง notification
         /// </summary>
-        public IEnumerable<RequireSendTopicOfTheDay> GetRequireNotifyTopicOfTheDay()
+        /// <param name="currentTime">Current time</param>
+        public IEnumerable<ClassCalendar> GetRequireNotifyTopicOfTheDay(DateTime currentTime)
         {
-            var classCalendarQry = MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(TableName)
-                .Find(it => !it.DeletedDate.HasValue && !it.ExpiredDate.HasValue && !it.CloseDate.HasValue && it.LessonCalendars.Any(l => !l.SendReminderDate.HasValue))/* it.ClassRoomId == classRoomId)*/
-                .ToEnumerable();
-
-            var qry = from classCalendar in classCalendarQry
-                    from lessonCalendar in classCalendar.LessonCalendars
-                    where !lessonCalendar.SendReminderDate.HasValue
-                    select new RequireSendTopicOfTheDay
-                    {
-                        ClassRoomId = classCalendar.ClassRoomId,
-                        LessonId = lessonCalendar.LessonId
-                    };
-                
+            var qry = MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && !it.CloseDate.HasValue && it.LessonCalendars.Any(l => !l.SendTopicOfTheDayDate.HasValue))/* it.ClassRoomId == classRoomId)*/
+                .ToEnumerable()
+                .Where(c => c.LessonCalendars.Any(it => !it.SendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.Date >= currentTime.Date));
             return qry;
         }
 

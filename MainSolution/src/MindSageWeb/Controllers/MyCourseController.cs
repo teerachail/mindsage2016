@@ -592,7 +592,7 @@ namespace MindSageWeb.Controllers
                 if (!canUpdateClassCalendar) return;
 
                 classCalendar.BeginDate = body.BeginDate.Value;
-                classCalendar.LastCalculateRequest = now;
+                classCalendar.LastCalculateHolidayRequest = now;
                 _classCalendarRepo.UpsertClassCalendar(classCalendar);
             }
         }
