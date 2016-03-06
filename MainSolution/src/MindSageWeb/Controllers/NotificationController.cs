@@ -172,16 +172,51 @@ namespace MindSageWeb.Controllers
             // Lesson
             var now = _dateTime.GetCurrentTime();
 
+            sendNotifyLikeLessons(now);
             sendNotifyLikeComments(now);
             sendNotifyLikeDiscussions(now);
-            sendNotifyLikeLessons(now);
-            sendNotifyComments(now);
-            sendNotifyDiscussions(now);
+            sendNotifyNewComments(now);
+            sendNotifyNewDiscussions(now);
             //var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay().ToList();
             // TODO: Reminder
             int a = 3;
         }
 
+        private void sendNotifyLikeLessons(DateTime now)
+        {
+            var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
+            if (!requiredNotifyLikeLesson.Any()) return;
+
+            var userProfileIds = requiredNotifyLikeLesson.Select(it => it.LikedByUserProfileId).Distinct();
+            var friendsRelated = _friendRequestRepo.GetFriendRequestByUserProfileId(userProfileIds).ToList();
+            const string Message = "Like a lesson";
+            var notifyLikeLessons = requiredNotifyLikeLesson.Select(it =>
+            {
+                var friends = friendsRelated
+                    .Where(f => !f.DeletedDate.HasValue)
+                    .Where(f => f.FromUserProfileId == it.LikedByUserProfileId && f.Status == FriendRequest.RelationStatus.Friend)
+                    .Select(f => new Notification
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        ByUserProfileId = new List<string> { it.LikedByUserProfileId },
+                        ClassRoomId = it.ClassRoomId,
+                        CreatedDate = now,
+                        LastUpdateDate = now,
+                        LessonId = it.LessonId,
+                        Message = Message,
+                        Tag = Notification.NotificationTag.FriendLikesALesson,
+                        TotalLikes = 1,
+                        ToUserProfileId = f.ToUserProfileId
+                    });
+                return friends;
+            }).Where(it => it.Any()).SelectMany(it => it).ToList();
+            notifyLikeLessons.ForEach(it => _notificationRepo.Upsert(it));
+            requiredNotifyLikeLesson.ForEach(it =>
+            {
+                it.LastNotifyComplete = now;
+                _likeLessonRepo.UpsertLikeLesson(it);
+            });
+        }
         private void sendNotifyLikeComments(DateTime now)
         {
             var requiredNotifyLikeComments = _likeCommentRepo.GetRequireNotifyLikeComments().ToList();
@@ -259,42 +294,7 @@ namespace MindSageWeb.Controllers
                 _likeDiscussionRepo.UpsertLikeDiscussion(it);
             });
         }
-        private void sendNotifyLikeLessons(DateTime now)
-        {
-            var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
-            if (!requiredNotifyLikeLesson.Any()) return;
-
-            var userProfileIds = requiredNotifyLikeLesson.Select(it => it.LikedByUserProfileId).Distinct();
-            var friendsRelated = _friendRequestRepo.GetFriendRequestByUserProfileId(userProfileIds).ToList();
-            const string Message = "Like a lesson";
-            var notifyLikeLessons = requiredNotifyLikeLesson.Select(it =>
-            {
-                var friends = friendsRelated
-                    .Where(f => !f.DeletedDate.HasValue)
-                    .Where(f => f.FromUserProfileId == it.LikedByUserProfileId && f.Status == FriendRequest.RelationStatus.Friend)
-                    .Select(f => new Notification
-                    {
-                        id = Guid.NewGuid().ToString(),
-                        ByUserProfileId = new List<string> { it.LikedByUserProfileId },
-                        ClassRoomId = it.ClassRoomId,
-                        CreatedDate = now,
-                        LastUpdateDate = now,
-                        LessonId = it.LessonId,
-                        Message = Message,
-                        Tag = Notification.NotificationTag.FriendLikesALesson,
-                        TotalLikes = 1,
-                        ToUserProfileId = f.ToUserProfileId
-                    });
-                return friends;
-            }).Where(it => it.Any()).SelectMany(it => it).ToList();
-            notifyLikeLessons.ForEach(it => _notificationRepo.Upsert(it));
-            requiredNotifyLikeLesson.ForEach(it =>
-            {
-                it.LastNotifyComplete = now;
-                _likeLessonRepo.UpsertLikeLesson(it);
-            });
-        }
-        private void sendNotifyComments(DateTime now)
+        private void sendNotifyNewComments(DateTime now)
         {
             var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
             if (!requiredNotifyComments.Any()) return;
@@ -330,7 +330,7 @@ namespace MindSageWeb.Controllers
                 _commentRepo.UpsertComment(it);
             });
         }
-        private void sendNotifyDiscussions(DateTime now)
+        private void sendNotifyNewDiscussions(DateTime now)
         {
             var relatedComments = _commentRepo.GetRequireNotifyDiscussions().ToList();
             if (!relatedComments.Any()) return;
