@@ -54,7 +54,7 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอรายการ Like discussion ที่ต้องนำไปสร้าง notification
         /// </summary>
-        IEnumerable<Comment.Discussion> GetRequireNotifyDiscussions();
+        IEnumerable<Comment> GetRequireNotifyDiscussions();
 
         #endregion Methods
     }

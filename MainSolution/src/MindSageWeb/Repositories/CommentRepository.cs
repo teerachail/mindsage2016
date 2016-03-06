@@ -111,13 +111,11 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอรายการ Like discussion ที่ต้องนำไปสร้าง notification
         /// </summary>
-        public IEnumerable<Comment.Discussion> GetRequireNotifyDiscussions()
+        public IEnumerable<Comment> GetRequireNotifyDiscussions()
         {
             var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
-               .Find(it => !it.DeletedDate.HasValue && it.Discussions.Any(d => !it.LastNotifyComplete.HasValue))
-               .ToEnumerable()
-               .SelectMany(it => it.Discussions)
-               .Where(it => !it.LastNotifyComplete.HasValue);
+               .Find(it => !it.DeletedDate.HasValue && it.Discussions.Any(d => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue))
+               .ToEnumerable();
             return qry;
         }
 

@@ -176,7 +176,7 @@ namespace MindSageWeb.Controllers
             sendNotifyLikeDiscussions(now);
             sendNotifyLikeLessons(now);
             sendNotifyComments(now);
-            //var requiredNotifyDiscussions = _commentRepo.GetRequireNotifyDiscussions().ToList();
+            sendNotifyDiscussions(now);
             //var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay().ToList();
             // TODO: Reminder
             int a = 3;
@@ -329,6 +329,40 @@ namespace MindSageWeb.Controllers
                 it.LastNotifyComplete = now;
                 _commentRepo.UpsertComment(it);
             });
+        }
+        private void sendNotifyDiscussions(DateTime now)
+        {
+            var relatedComments = _commentRepo.GetRequireNotifyDiscussions().ToList();
+            if (!relatedComments.Any()) return;
+
+            const string Message = "Create a discussion in you comment.";
+            var requiredNotifyDiscussions = relatedComments.SelectMany(it => it.Discussions)
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => !it.LastNotifyComplete.HasValue)
+                .ToList();
+            var discussions = requiredNotifyDiscussions
+                .Select(dis =>
+                {
+                    var comment = relatedComments.FirstOrDefault(it => it.Discussions.Any(d => d.id == dis.id));
+                    if (comment == null) return null;
+                    return new DiscussionNotification
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        ByUserProfileId = new List<string> { dis.CreatedByUserProfileId },
+                        ClassRoomId = comment.ClassRoomId,
+                        CommentId = comment.id,
+                        CreatedDate = now,
+                        DiscussionId = dis.id,
+                        LastUpdateDate = now,
+                        LessonId = comment.LessonId,
+                        Message = Message,
+                        Tag = Notification.NotificationTag.SomeOneCreateDiscussionInYourComment,
+                        ToUserProfileId = comment.CreatedByUserProfileId
+                    };
+                }).Where(it => it != null).ToList();
+            discussions.ForEach(it => _notificationRepo.Upsert(it));
+            requiredNotifyDiscussions.ForEach(it => it.LastNotifyComplete = now);
+            relatedComments.ForEach(it => _commentRepo.UpsertComment(it));
         }
 
         #endregion Methods
