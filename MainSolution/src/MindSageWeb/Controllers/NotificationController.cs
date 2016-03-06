@@ -173,7 +173,7 @@ namespace MindSageWeb.Controllers
             var now = _dateTime.GetCurrentTime();
 
             sendNotifyLikeComments(now);
-            //var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
+            sendNotifyLikeDiscussions(now);
             sendNotifyLikeLessons(now);
             sendNotifyComments(now);
             //var requiredNotifyDiscussions = _commentRepo.GetRequireNotifyDiscussions().ToList();
@@ -219,6 +219,44 @@ namespace MindSageWeb.Controllers
             {
                 it.LastNotifyComplete = now;
                 _likeCommentRepo.UpsertLikeComment(it);
+            });
+        }
+        private void sendNotifyLikeDiscussions(DateTime now)
+        {
+            var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
+            if (!requiredNotifyLikeDiscussions.Any()) return;
+
+            var commentIds = requiredNotifyLikeDiscussions.Select(it => it.CommentId).Distinct();
+            var relatedDiscussions = _commentRepo.GetCommentById(commentIds)
+                .Where(it=>!it.DeletedDate.HasValue)
+                .SelectMany(it => it.Discussions)
+                .Where(it=>!it.DeletedDate.HasValue)
+                .ToList();
+            const string Message = "Like your discussion.";
+            var notifyDiscussions = requiredNotifyLikeDiscussions.Select(it =>
+            {
+                var discussion = relatedDiscussions.FirstOrDefault(d => d.id == it.DiscussionId);
+                if (discussion == null) return null;
+
+                return new Notification
+                {
+                    id = Guid.NewGuid().ToString(),
+                    ByUserProfileId = new List<string> { it.LikedByUserProfileId },
+                    ClassRoomId = it.ClassRoomId,
+                    CreatedDate = now,
+                    LastUpdateDate = now,
+                    LessonId = it.LessonId,
+                    Message = Message,
+                    Tag = Notification.NotificationTag.SomeOneLikesYourDiscussion,
+                    TotalLikes = 1,
+                    ToUserProfileId = discussion.CreatedByUserProfileId
+                };
+            }).Where(it => it != null).ToList();
+            notifyDiscussions.ForEach(it => _notificationRepo.Upsert(it));
+            requiredNotifyLikeDiscussions.ForEach(it =>
+            {
+                it.LastNotifyComplete = now;
+                _likeDiscussionRepo.UpsertLikeDiscussion(it);
             });
         }
         private void sendNotifyLikeLessons(DateTime now)
