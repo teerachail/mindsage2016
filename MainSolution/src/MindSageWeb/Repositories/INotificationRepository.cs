@@ -26,6 +26,12 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
         void Upsert(Notification data);
 
+        /// <summary>
+        /// เพิ่มข้อมูล notification
+        /// </summary>
+        /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
+        void Insert(IEnumerable<Notification> data);
+
         #endregion Methods
     }
 }

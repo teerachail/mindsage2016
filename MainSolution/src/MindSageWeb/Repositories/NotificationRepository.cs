@@ -58,6 +58,16 @@ namespace MindSageWeb.Repositories
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
+        /// <summary>
+        /// เพิ่มข้อมูล notification
+        /// </summary>
+        /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
+        public void Insert(IEnumerable<Notification> data)
+        {
+            MongoAccess.MongoUtil.Instance.GetCollection<Notification>(TableName)
+                .InsertMany(data);
+        }
+
         #endregion INotificationRepository members
     }
 }

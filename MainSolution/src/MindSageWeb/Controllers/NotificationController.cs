@@ -210,7 +210,7 @@ namespace MindSageWeb.Controllers
                     });
                 return friends;
             }).Where(it => it.Any()).SelectMany(it => it).ToList();
-            notifyLikeLessons.ForEach(it => _notificationRepo.Upsert(it));
+            _notificationRepo.Insert(notifyLikeLessons);
             requiredNotifyLikeLesson.ForEach(it =>
             {
                 it.LastNotifyComplete = now;
@@ -249,7 +249,7 @@ namespace MindSageWeb.Controllers
                     Tag = Notification.NotificationTag.SomeOneLikesYourComment
                 };
             }).Where(it => it != null).ToList();
-            notifyComments.ForEach(it => _notificationRepo.Upsert(it));
+            _notificationRepo.Insert(notifyComments);
             requiredNotifyLikeComments.ForEach(it =>
             {
                 it.LastNotifyComplete = now;
@@ -287,7 +287,7 @@ namespace MindSageWeb.Controllers
                     ToUserProfileId = discussion.CreatedByUserProfileId
                 };
             }).Where(it => it != null).ToList();
-            notifyDiscussions.ForEach(it => _notificationRepo.Upsert(it));
+            _notificationRepo.Insert(notifyDiscussions);
             requiredNotifyLikeDiscussions.ForEach(it =>
             {
                 it.LastNotifyComplete = now;
@@ -323,7 +323,7 @@ namespace MindSageWeb.Controllers
                     });
                 return friends;
             }).Where(it => it.Any()).SelectMany(it => it).ToList();
-            notifyCreateComments.ForEach(it => _notificationRepo.Upsert(it));
+            _notificationRepo.Insert(notifyCreateComments);
             requiredNotifyComments.ForEach(it =>
             {
                 it.LastNotifyComplete = now;
@@ -360,7 +360,7 @@ namespace MindSageWeb.Controllers
                         ToUserProfileId = comment.CreatedByUserProfileId
                     };
                 }).Where(it => it != null).ToList();
-            discussions.ForEach(it => _notificationRepo.Upsert(it));
+            _notificationRepo.Insert(discussions);
             requiredNotifyDiscussions.ForEach(it => it.LastNotifyComplete = now);
             relatedComments.ForEach(it => _commentRepo.UpsertComment(it));
         }
@@ -376,12 +376,14 @@ namespace MindSageWeb.Controllers
                       where !classCalendar.CloseDate.HasValue
                       from lessonCalendar in classCalendar.LessonCalendars
                       where !lessonCalendar.DeletedDate.HasValue
+                      where !lessonCalendar.SendTopicOfTheDayDate.HasValue
+                      where lessonCalendar.RequiredSendTopicOfTheDayDate.Date <= now.Date
                       from student in students
                       where !student.DeletedDate.HasValue
                       from subscription in student.Subscriptions
                       where !subscription.DeletedDate.HasValue
                       where subscription.ClassRoomId == classCalendar.ClassRoomId
-                      where subscription.Role!= UserProfile.AccountRole.Teacher
+                      where subscription.Role != UserProfile.AccountRole.Teacher
                       select new Notification
                       {
                           id = Guid.NewGuid().ToString(),
@@ -394,18 +396,14 @@ namespace MindSageWeb.Controllers
                           Tag = Notification.NotificationTag.TopicOfTheDay,
                           ToUserProfileId = student.id
                       };
-            var topicOfTheDays = qry.ToList();
-            topicOfTheDays.ForEach(it => _notificationRepo.Upsert(it));
+            _notificationRepo.Insert(qry);
 
             var reqUpdateLessons = from classCalendar in requiredNotifyTOTD
                                    where !classCalendar.CloseDate.HasValue
                                    from lessonCalendar in classCalendar.LessonCalendars
                                    where !lessonCalendar.DeletedDate.HasValue
                                    select lessonCalendar;
-            foreach (var item in reqUpdateLessons)
-            {
-                item.SendTopicOfTheDayDate = now;
-            }
+            foreach (var item in reqUpdateLessons) item.SendTopicOfTheDayDate = now;
             requiredNotifyTOTD.ForEach(it => _classCalendarRepo.UpsertClassCalendar(it));
         }
 
