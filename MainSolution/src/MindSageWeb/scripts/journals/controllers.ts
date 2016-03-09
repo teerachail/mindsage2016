@@ -5,7 +5,9 @@ module app.journals {
 
         private userprofile: any;
         public message: string;
-        public openDiscussion: string;
+        public targetComment: any;
+        public targetDiscussion: any;
+        public deleteComment: boolean;
         public MyComments = [];
         public discussions = [];
         private requestedCommentIds = [];
@@ -132,7 +134,8 @@ module app.journals {
             this.discussionSvc.LikeDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId);
         }
 
-        public DeleteComment(comment: any) {
+        public DeleteComment() {
+            var comment = this.targetComment; 
             var removeIndex = this.content.Comments.indexOf(comment);
             if (removeIndex > -1) this.content.Comments.splice(removeIndex, 1);
             else {
@@ -142,7 +145,9 @@ module app.journals {
             this.commentSvc.UpdateComment(comment.ClassRoomId, comment.LessonId, comment.id, true, null);
         }
 
-        public DeleteDiscussion(commentId: string, discussion: any) {
+        public DeleteDiscussion() {
+            var commentId = this.targetComment.id;
+            var discussion = this.targetDiscussion;
             var removeIndex = this.discussions.indexOf(discussion);
             if (removeIndex > -1) this.discussions.splice(removeIndex, 1);
             this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions--;
@@ -185,6 +190,18 @@ module app.journals {
 
         public CancelEdit(save: boolean) {
             return !save;
+        }
+
+        public deleteComfirm(comment: string) {
+            this.targetComment = comment;
+            this.targetDiscussion = null;
+            this.deleteComment = true;
+        }
+
+        public deleteDisComfirm(comment: string, discussion: string) {
+            this.targetComment = comment;
+            this.targetDiscussion = discussion;
+            this.deleteComment = false;
         }
     }
 
