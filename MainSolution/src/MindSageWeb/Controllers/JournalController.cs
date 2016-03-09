@@ -65,21 +65,25 @@ namespace MindSageWeb.Controllers
             var areArgumentsValid = !string.IsNullOrEmpty(targetUserId) && !string.IsNullOrEmpty(requestByUserId);
             if (!areArgumentsValid) return noDataRespond;
 
-            var friends = _friendRequestRepo.GetFriendRequestByUserProfileId(requestByUserId);
-            if (friends == null || !friends.Any()) return noDataRespond;
-
-            var isFriend = friends
-                .Where(it => !it.DeletedDate.HasValue)
-                .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
-                .Any(it => it.ToUserProfileId.Equals(targetUserId));
             var isSelftRequest = requestByUserId == targetUserId;
-
-            if (!isFriend && !isSelftRequest)
+            var isFriend = false;
+            if (!isSelftRequest)
             {
-                var targetUserProfile = _userprofileRepo.GetUserProfileById(targetUserId);
-                if (requestByUserId == null) return noDataRespond;
+                var friends = _friendRequestRepo.GetFriendRequestByUserProfileId(requestByUserId);
+                if (friends == null || !friends.Any()) return noDataRespond;
 
-                if (targetUserProfile.IsPrivateAccount) return new GetCommentRespond { IsPrivateAccount = true };
+                isFriend = friends
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
+                    .Any(it => it.ToUserProfileId.Equals(targetUserId));
+
+                if (!isFriend && !isSelftRequest)
+                {
+                    var targetUserProfile = _userprofileRepo.GetUserProfileById(targetUserId);
+                    if (requestByUserId == null) return noDataRespond;
+
+                    if (targetUserProfile.IsPrivateAccount) return new GetCommentRespond { IsPrivateAccount = true };
+                }
             }
 
             var userComments = _commentRepo.GetCommentsByUserProfileId(targetUserId, classRoomId).ToList();
