@@ -64,8 +64,7 @@ namespace MindSageWeb.Controllers
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
                && body != null
-               && !string.IsNullOrEmpty(body.Name)
-               && !string.IsNullOrEmpty(body.SchoolName);
+               && !string.IsNullOrEmpty(body.Name);
             if (!areArgumentsValid) return;
 
             // HACK: Uncomment it when we done the authentication
