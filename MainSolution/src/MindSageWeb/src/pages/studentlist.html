@@ -20,7 +20,7 @@
 
         <div class="small-6 column middleblock" ng-show="item.Status == 1" data-equalizer-watch>
             <button class="button" ng-click="acx.ConfirmFriendRequest(item)">Confirm</button>
-            <button class="button secondary" ng-click="acx.DeleteFriendRequest(item)">Delete Request</button>
+            <button class="button secondary" ng-click="acx.targetData(item.UserProfileId)" data-open="DeleteFriendModel">Delete Request</button>
         </div>
 
         <div class="small-6 column middleblock" ng-show="item.Status == 2" data-equalizer-watch>
@@ -31,42 +31,6 @@
             <button class="button secondary" ng-click="acx.SendFriendRequest(item)">Friend Request</button>
         </div>
     </div>
-
-    
-
-    <!--<div class="row" data-equalizer>
-        <div class="small-6 column callout" data-equalizer-watch>
-            <img src="http://placeimg.com/50/50/people"> Name
-        </div>
-        <div class="small-6 column middleblock" data-equalizer-watch>
-            <button class="button secondary">Friend Request</button>
-        </div>
-    </div>
-    <div class="row" data-equalizer>
-        <div class="small-6 column callout" data-equalizer-watch>
-            <img src="http://placeimg.com/50/50/people/grayscale"> Name
-        </div>
-        <div class="small-6 column middleblock" data-equalizer-watch>
-            <button class="button">Confirm</button>
-            <button class="button secondary">Delete Request</button>
-        </div>
-    </div>
-    <div class="row" data-equalizer>
-        <div class="small-6 column callout" data-equalizer-watch>
-            <img src="http://placeimg.com/50/50/people/sepia"> Name
-        </div>
-        <div class="small-6 column middleblock" data-equalizer-watch>
-            <button class="button disabled secondary">Friend Request Sent</button>
-        </div>
-    </div>
-    <div class="row" data-equalizer>
-        <div class="small-6 column callout" data-equalizer-watch>
-            <img src="http://placeimg.com/50/50/people/sepia"> Name
-        </div>
-        <div class="small-6 column middleblock" data-equalizer-watch>
-            <img src="http://placehold.it/50?text=Friend+image">
-        </div>
-    </div>-->
 </div>
 
 <script>

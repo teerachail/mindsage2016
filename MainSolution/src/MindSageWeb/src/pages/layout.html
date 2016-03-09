@@ -4,7 +4,7 @@
 
 <div class="reveal tiny" id="Modal" data-reveal>
     <div class="modal-head"><h4 class="text-center">Warning</h4></div>
-    <div class="row">
+    <div>
         <div class="medium-10 medium-centered large-10 large-centered columns">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
@@ -18,13 +18,40 @@
                         Need to be Friend with {{ acx.targetUser.Name }}.
                         You have Request form another side.
                         <button class="button" ng-click="acx.ConfirmFriendRequest(acx.targetUser)">Confirm</button>
-                        <button class="button secondary" ng-click="acx.DeleteFriendRequest(acx.targetUser)">Delete Request</button>
+                        <button class="button secondary" data-open="DeleteFriendModel">Delete Request</button>
+                    </div>
+
+                    <div data-equalizer-watch ng-show="acx.targetUser.Status == 2">
+                        Click your friend's name for go to journal page
+                        <a ui-sref="app.course.journal({ 'classRoomId': '{{ cx.classRoomId }}', 'targetUserId': '{{ acx.targetUser.UserProfileId }}' })">
+                            {{ item.Name }}
+                        </a>
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 3">
-                        <p>Need to be Friend with {{ acx.targetUser.Name }}.</p>
-                        <p>Send Friend Request, please.</p>
-                        <button class="button secondary" ng-click="acx.SendFriendRequest(acx.targetUser)">Friend Request</button>
+                       <p>Need to be Friend with {{ acx.targetUser.Name }}.</p>
+                       <p>Send Friend Request, please.</p>
+                       <button class="button secondary" ng-click="acx.SendFriendRequest(acx.targetUser)">Friend Request</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
+<div class="reveal tiny" id="DeleteFriendModel" data-reveal>
+    <div class="modal-head"><h4 class="text-center">Confirm</h4></div>
+    <div>
+        <div class="medium-10 medium-centered large-10 large-centered columns">
+            <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
+                <div class="text-center">
+                    <div data-equalizer-watch>
+                        <p>Confirm to delete</p>
+                        <button class="button alert" ng-click="acx.DeleteFriendRequest(acx.targetUser)" data-close>Confirm</button>
+                        <button class="button" data-close>Cancel</button>
                     </div>
                 </div>
             </form>

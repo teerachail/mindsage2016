@@ -4,9 +4,11 @@ module app.main {
     class MainController {
 
         public targetUser: any;
+        public classRoomId: string;
 
         static $inject = ['app.studentlists.StudentListService', 'app.shared.ClientUserProfileService'];
         constructor(private listsSvc: app.studentlists.StudentListService, private userSvc: app.shared.ClientUserProfileService) {
+            this.classRoomId = this.userSvc.GetClientUserProfile().CurrentClassRoomId;
         }
         
         public FriendsStatus(friendId: string) {
