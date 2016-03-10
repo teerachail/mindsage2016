@@ -21,10 +21,10 @@
         </li>
     </ul>
 </div>
-
+<br />
 <div class="row content-section">
     <div class="large-3 pull-9 columns">
-        <div class="purchase">
+        <div class="callout">
             <p>@Model.Name</p>
             <p>@Model.Price.ToString("C2")</p>
             @{
@@ -53,6 +53,7 @@
     </div>
     <div class="large-9 push-3 columns">
         <p class="detail-info">@Model.Name</p>
+        <hr />
         <h1 class="detail-header">@Model.Title</h1>
         <p>
             @Model.Description
@@ -63,15 +64,15 @@
                 <h2 class="detail-header">@Model.TotalWeeks Week Courses</h2>
             </div>
             <div class="large-6 columns">
-                <img class="thumbnail" src="@Model.DescriptionImageUrl">
+                <img src="@Model.DescriptionImageUrl">
             </div>
         </div>
         @foreach (var semester in Model.Semesters)
         {
             <h1 class="lesson-header">@semester.Name</h1>
 
-            <div class="lesson-bg accordion">
-                <div class="row" data-accordion data-allow-all-closed="true">
+            <div class="lesson-bg callout">
+                <div data-accordion data-allow-all-closed="true">
                     <div class="title">
                         <h2>INTRO</h2>
                         <div class="clearfix"></div>
@@ -89,7 +90,7 @@
                         {
                             foreach (var lesson in unit.Lessons)
                             {
-                                <div class="undisplay" data-tab-content>
+                                <div class="accordion-content" data-tab-content >
                                     <div>
                                         <p>WEEK @lesson.Order</p>
                                         @foreach (var content in lesson.Contents)
@@ -115,8 +116,8 @@
 
             @foreach (var unit in semester.Units)
             {
-                <div class="lesson-bg accordion">
-                    <div class="row" data-accordion data-allow-all-closed="true">
+                <div class="lesson-bg callout">
+                    <div data-accordion data-allow-all-closed="true">
                         <div class="small-4 title">
                             <h2>UNIT @unit.UnitNo</h2>
                             <div class="clearfix"></div>
@@ -132,7 +133,7 @@
                             </a>
                             @foreach (var lesson in unit.Lessons)
                             {
-                                <div class="undisplay" data-tab-content>
+                                <div class="accordion-content" data-tab-content>
                                     <div>
                                         <p>WEEK @lesson.Order</p>
                                         @foreach (var content in lesson.Contents)

@@ -34,10 +34,10 @@
                     var haveAnyCourse = (bool)(ViewBag.HaveAnyCourse?? false);
                     <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
                         <ul class="menu">
-                            <li class="has-form">
+                            <li class="menu-text">
                                 <button type="submit" class="secondary hollow button radius">LOG OUT</button>
                             </li>
-                            <li class="has-form">
+                            <li>
                                 @if (haveAnyCourse)
                                 {
                                     <a asp-controller="My" asp-action="Index" class="hollow button radius">My Course</a>
@@ -53,10 +53,10 @@
                 else
                 {
                     <ul class="menu">
-                        <li class="has-form">
+                        <li class="menu-text">
                             <a asp-controller="Account" asp-action="Login" class="secondary hollow button radius">LOGIN</a>
                         </li>
-                        <li class="has-form">
+                        <li>
                             <a asp-controller="Account" asp-action="Register" class="hollow button radius">SIGNUP</a>
                         </li>
                     </ul>
