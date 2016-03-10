@@ -13,7 +13,6 @@
 /// <reference path="lib/fastclick/lib/fastclick.js" />
 /// <reference path="lib/foundation-apps/dist/js/foundation-apps.js" />
 /// <reference path="lib/foundation-apps/dist/js/foundation-apps-templates.js" />
-/// <reference path="lib/foundation-datepicker/js/foundation-datepicker.js" />
 /// <reference path="lib/hammerjs/hammer.js" />
 /// <reference path="lib/jquery/dist/jquery.js" />
 /// <reference path="lib/jquery-validation/dist/jquery.validate.js" />
