@@ -1,4 +1,4 @@
-angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings', 'app.main'])
+angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings', 'app.main', 'app.calendar'])
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider, $urlRouterProvider) {
         $stateProvider
             .state('app', {
@@ -120,9 +120,26 @@ angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlis
                     }
                 }
             }
+        })
+            .state('app.course.calendar', {
+            url: '/calendar',
+            views: {
+                'courseContent': {
+                    templateUrl: 'tmpl/calendar.html',
+                    controller: 'app.calendar.CarlendarController as cx'
+                }
+            }
         });
         $urlRouterProvider.otherwise('/app/main/lesson/Lesson01/ClassRoom01');
     }]);
+(function () {
+    'use strict';
+    angular
+        .module('app.calendar', [
+        "ngResource",
+        'app.shared'
+    ]);
+})();
 (function () {
     'use strict';
     angular
@@ -261,6 +278,256 @@ var app;
         .module('app')
         .constant('defaultUrl', 'http://localhost:4147')
         .service('appConfig', AppConfig);
+})(app || (app = {}));
+var app;
+(function (app) {
+    var calendar;
+    (function (calendar) {
+        'use strict';
+        var CourseInformation = (function () {
+            function CourseInformation() {
+            }
+            return CourseInformation;
+        })();
+        var LessonInfo = (function () {
+            function LessonInfo() {
+            }
+            return LessonInfo;
+        })();
+        var CarlendarController = (function () {
+            function CarlendarController($scope, $state) {
+                this.$scope = $scope;
+                this.$state = $state;
+                this.date = new Date();
+                this.monthdays = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
+                this.monthAllNames = new Array("Jan", "Feb", "Mar", "Apl", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+                this.today = new Date();
+                this.selected = new Array(this.today);
+                this.firstClick = true;
+                this.holiday = [];
+                this.Lesson = [];
+                this.Lesson2 = [];
+                this.Lesson3 = [];
+                this.Lessons = [];
+                this.allweeks = []; // array for push week
+                this.month = this.today.getMonth();
+                this.year = this.today.getFullYear();
+                this.setCalendar(this.month, this.year);
+                this.fisrtSelected = new Date(this.today.toDateString());
+                //-----------Mock Data ----------------------
+                this.holiday.push(new Date('3/26/2016'), new Date('3/1/2016'), new Date('4/1/2016'));
+                this.Lesson.push("Lesson01", 1, new Date('3/24/2016'));
+                this.Lesson2.push("Lesson02", 2, new Date('3/30/2016'));
+                this.Lesson3.push("Lesson03", 3, new Date('4/5/2016'));
+                this.Lessons.push(this.Lesson, this.Lesson2, this.Lesson3);
+                this.EndCourseDate = new Date('4/9/2016');
+                //---------------------------------
+                this.courseInformation = {
+                    BeginDate: new Date('3/24/2016'),
+                    EndDate: new Date('4/9/2016'),
+                    Lessons: [
+                        {
+                            Name: 'Lesson01',
+                            Order: 1,
+                            BeginDate: new Date('3/24/2016')
+                        },
+                        {
+                            Name: 'Lesson02',
+                            Order: 2,
+                            BeginDate: new Date('3/30/2016')
+                        },
+                        {
+                            Name: 'Lesson03',
+                            Order: 3,
+                            BeginDate: new Date('4/5/2016')
+                        },
+                    ],
+                    Holidays: [
+                        new Date('3/26/2016'), new Date('3/1/2016'), new Date('4/1/2016'),
+                    ]
+                };
+            }
+            CarlendarController.prototype.setCalendar = function (month, year) {
+                this.monthNames = this.monthAllNames[this.month];
+                var firstDay = new Date((month + 1) + '/1/' + year);
+                var days = this.monthdays[month]; // total day
+                if (month == 1) {
+                    if (year % 4 == 0)
+                        days = 29;
+                }
+                var start = firstDay.getDay(); // start day off week
+                if (start < 0)
+                    start += 7;
+                var weeks = Math.floor((start + days) / 7); // total week on month
+                if ((start + days) % 7 != 0)
+                    weeks++;
+                var jumped = 0;
+                var inserted = 1;
+                for (var j = 1; j <= weeks; j++) {
+                    var allday = [];
+                    for (var i = 1; i <= 7; i++) {
+                        if (jumped < start || inserted > days) {
+                            var pDate = new Date(firstDay.toDateString());
+                            pDate.setDate(pDate.getDate() - start + jumped);
+                            var preDate = new Date();
+                            allday.push(pDate);
+                            jumped++;
+                        }
+                        else {
+                            var date = new Date(firstDay.toDateString());
+                            firstDay.setDate(firstDay.getDate() + 1);
+                            allday.push(date);
+                            inserted++;
+                        }
+                    }
+                    this.allweeks.push(allday);
+                }
+            };
+            CarlendarController.prototype.nextMount = function () {
+                this.month++;
+                if (this.month > 11) {
+                    this.month = 0;
+                    this.year++;
+                }
+                this.allweeks = [];
+                this.setCalendar(this.month, this.year);
+            };
+            CarlendarController.prototype.prevMount = function () {
+                this.month--;
+                if (this.month < 0) {
+                    this.month = 11;
+                    this.year--;
+                }
+                this.allweeks = [];
+                this.setCalendar(this.month, this.year);
+            };
+            CarlendarController.prototype.CheckToday = function (day) {
+                return this.today.toDateString() == day.toDateString();
+            };
+            CarlendarController.prototype.IsHoliday = function (day) {
+                for (var i = 0; i < this.holiday.length; i++) {
+                    if (this.holiday[i].toDateString() == day.toDateString())
+                        return true;
+                }
+                return false;
+            };
+            CarlendarController.prototype.IsStartLesson = function (day) {
+                for (var i = 0; i < this.courseInformation.Lessons.length; i++) {
+                    if (day.toDateString() == this.Lessons[i][2].toDateString())
+                        return this.Lessons[i][0];
+                }
+                return "";
+            };
+            CarlendarController.prototype.IsOdd = function (day) {
+                for (var i = 0; i < this.courseInformation.Lessons.length; i += 2) {
+                    if (i == this.courseInformation.Lessons.length - 1) {
+                        if (day >= this.courseInformation.Lessons[i].BeginDate &&
+                            day <= this.courseInformation.EndDate &&
+                            !this.OnSelected(day) &&
+                            !this.IsHoliday(day))
+                            return true;
+                    }
+                    else {
+                        if (day >= this.courseInformation.Lessons[i].BeginDate &&
+                            day < this.courseInformation.Lessons[i + 1].BeginDate &&
+                            !this.OnSelected(day) &&
+                            !this.IsHoliday(day))
+                            return true;
+                    }
+                }
+            };
+            CarlendarController.prototype.IsEven = function (day) {
+                for (var i = 1; i < this.courseInformation.Lessons.length; i += 2) {
+                    if (i == this.courseInformation.Lessons.length - 1) {
+                        if (day >= this.courseInformation.Lessons[i].BeginDate &&
+                            day <= this.courseInformation.EndDate &&
+                            !this.OnSelected(day) &&
+                            !this.IsHoliday(day))
+                            return true;
+                    }
+                    else {
+                        if (day >= this.courseInformation.Lessons[i].BeginDate &&
+                            day < this.courseInformation.Lessons[i + 1].BeginDate &&
+                            !this.OnSelected(day) &&
+                            !this.IsHoliday(day))
+                            return true;
+                    }
+                }
+            };
+            CarlendarController.prototype.IsOddEven = function (day) {
+                for (var i = 0; i < this.courseInformation.Lessons.length; i++) {
+                    if (i == this.courseInformation.Lessons.length - 1) {
+                        if (day >= this.courseInformation.Lessons[i].BeginDate &&
+                            day <= this.courseInformation.EndDate &&
+                            !this.OnSelected(day) &&
+                            !this.IsHoliday(day))
+                            return true;
+                    }
+                    else {
+                        if (day >= this.Lessons[i][2] &&
+                            day < this.courseInformation.Lessons[i + 1].BeginDate &&
+                            !this.OnSelected(day) &&
+                            !this.IsHoliday(day))
+                            return true;
+                    }
+                }
+            };
+            CarlendarController.prototype.Selected = function (day) {
+                if (this.firstClick) {
+                    this.selected = [];
+                    this.selected.push(day);
+                    this.firstClick = !this.firstClick;
+                    this.fisrtSelected = new Date(this.selected[0].toDateString());
+                    this.lastSelected = null;
+                }
+                else {
+                    var countDaySelect = (+day - +this.selected[0]) / 1000 / 60 / 60 / 24;
+                    if (day < this.selected[0]) {
+                        var dayTemp = day;
+                        day = this.selected[0];
+                        this.selected[0] = dayTemp;
+                        countDaySelect = countDaySelect * -1;
+                    }
+                    var daySelect = new Date(this.selected[0].toDateString());
+                    for (var i = 0; i < countDaySelect; i++) {
+                        this.selected.push(daySelect);
+                        var daySelect = new Date(daySelect.setDate(daySelect.getDate() + 1));
+                    }
+                    this.firstClick = !this.firstClick;
+                    this.fisrtSelected = new Date(this.selected[0].toDateString());
+                    this.lastSelected = new Date(this.selected[this.selected.length - 1].toDateString());
+                }
+            };
+            CarlendarController.prototype.OnSelected = function (day) {
+                for (var i = 0; i < this.selected.length; i++) {
+                    if (this.selected[i].toDateString() == day.toDateString())
+                        return true;
+                }
+                return false;
+            };
+            CarlendarController.$inject = ['$scope', '$state'];
+            return CarlendarController;
+        })();
+        angular
+            .module('app.calendar')
+            .controller('app.calendar.CarlendarController', CarlendarController);
+    })(calendar = app.calendar || (app.calendar = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var calendar;
+    (function (calendar) {
+        'use strict';
+    })(calendar = app.calendar || (app.calendar = {}));
+})(app || (app = {}));
+var app;
+(function (app) {
+    var calendar;
+    (function (calendar) {
+        'use strict';
+        angular
+            .module('app.calendar');
+    })(calendar = app.calendar || (app.calendar = {}));
 })(app || (app = {}));
 var app;
 (function (app) {
@@ -471,7 +738,8 @@ var app;
                 var local = this.content.Comments.filter(function (it) { return it.id == commentId; })[0];
                 this.discussionSvc.LikeDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId);
             };
-            JournalController.prototype.DeleteComment = function (comment) {
+            JournalController.prototype.DeleteComment = function () {
+                var comment = this.targetComment;
                 var removeIndex = this.content.Comments.indexOf(comment);
                 if (removeIndex > -1)
                     this.content.Comments.splice(removeIndex, 1);
@@ -482,7 +750,9 @@ var app;
                 }
                 this.commentSvc.UpdateComment(comment.ClassRoomId, comment.LessonId, comment.id, true, null);
             };
-            JournalController.prototype.DeleteDiscussion = function (commentId, discussion) {
+            JournalController.prototype.DeleteDiscussion = function () {
+                var commentId = this.targetComment.id;
+                var discussion = this.targetDiscussion;
                 var removeIndex = this.discussions.indexOf(discussion);
                 if (removeIndex > -1)
                     this.discussions.splice(removeIndex, 1);
@@ -520,6 +790,16 @@ var app;
             };
             JournalController.prototype.CancelEdit = function (save) {
                 return !save;
+            };
+            JournalController.prototype.deleteComfirm = function (comment) {
+                this.targetComment = comment;
+                this.targetDiscussion = null;
+                this.deleteComment = true;
+            };
+            JournalController.prototype.deleteDisComfirm = function (comment, discussion) {
+                this.targetComment = comment;
+                this.targetDiscussion = discussion;
+                this.deleteComment = false;
             };
             JournalController.$inject = ['$scope', 'content', 'targetUserId', 'likes', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
             return JournalController;
@@ -692,13 +972,16 @@ var app;
                 else
                     this.likes.LikeDiscussionIds.splice(removeIndex, 1);
             };
-            LessonController.prototype.DeleteComment = function (comment) {
+            LessonController.prototype.DeleteComment = function () {
+                var comment = this.targetComment;
                 var removeIndex = this.comment.Comments.indexOf(comment);
                 if (removeIndex > -1)
                     this.comment.Comments.splice(removeIndex, 1);
                 this.commentSvc.UpdateComment(this.classRoomId, this.lessonId, comment.id, true, null);
             };
-            LessonController.prototype.DeleteDiscussion = function (commentId, discussion) {
+            LessonController.prototype.DeleteDiscussion = function () {
+                var commentId = this.targetComment.id;
+                var discussion = this.targetDiscussion;
                 var removeIndex = this.discussions.indexOf(discussion);
                 if (removeIndex > -1)
                     this.discussions.splice(removeIndex, 1);
@@ -746,6 +1029,16 @@ var app;
             };
             LessonController.prototype.CancelEdit = function (save) {
                 return !save;
+            };
+            LessonController.prototype.deleteComfirm = function (comment) {
+                this.targetComment = comment;
+                this.targetDiscussion = null;
+                this.deleteComment = true;
+            };
+            LessonController.prototype.deleteDisComfirm = function (comment, discussion) {
+                this.targetComment = comment;
+                this.targetDiscussion = discussion;
+                this.deleteComment = false;
             };
             LessonController.$inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
             return LessonController;
@@ -845,6 +1138,7 @@ var app;
             function MainController(listsSvc, userSvc) {
                 this.listsSvc = listsSvc;
                 this.userSvc = userSvc;
+                this.classRoomId = this.userSvc.GetClientUserProfile().CurrentClassRoomId;
             }
             MainController.prototype.FriendsStatus = function (friendId) {
                 if (this.userSvc.GetClientUserProfile().UserProfileId == friendId)
@@ -1745,3 +2039,4 @@ var app;
             .service('app.teacherlists.TeacherListService', TeacherListService);
     })(teacherlists = app.teacherlists || (app.teacherlists = {}));
 })(app || (app = {}));
+//# sourceMappingURL=appBundle.js.map
