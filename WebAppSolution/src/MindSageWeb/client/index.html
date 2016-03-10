@@ -1,31 +1,53 @@
 ﻿<!doctype html>
 <html lang="en" ng-app="application">
-  <head>
+<head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Foundation for Apps</title>
-      <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
-      <link href="./lib/owlcarousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
-      <link href="./lib/owlcarousel/owl-carousel/owl.theme.css" rel="stylesheet" />
-      <link href="./lib/foundation-datepicker/css/foundation-datepicker.css" rel="stylesheet" />
-      <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
-      <script src="./lib/jquery/dist/jquery.js"></script>
+    <link href="./assets/css/app.css" rel="stylesheet" type="text/css">
+    <link href="./lib/owlcarousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
+    <link href="./lib/owlcarousel/owl-carousel/owl.theme.css" rel="stylesheet" />
+    <link href="./lib/foundation-datepicker/css/foundation-datepicker.css" rel="stylesheet" />
+    <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
+    <script src="./lib/jquery/dist/jquery.js"></script>
     <script src="./assets/js/foundation.js"></script>
     <script src="./assets/js/templates.js"></script>
     <script src="./assets/js/routes.js"></script>
     <script src="./assets/js/app.js"></script>
     <script src="./lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
-      <script src="./lib/foundation-datepicker/js/foundation-datepicker.js"></script>
-  </head>
-  <body>
+    <script src="./lib/foundation-datepicker/js/foundation-datepicker.js"></script>
+</head>
+<body>
     <div class="grid-frame vertical">
-      <div class="grid-content shrink" style="padding: 0;">
-        <ul class="primary condense menu-bar">
-          <li><a ui-sref="home"><strong>Foundation for Apps</strong></a></li>
-        </ul>
-      </div>
-      <div ui-view class="grid-content">
-      </div>
+
+        <div class="dark title-bar">
+            <div class="center title"><a ui-sref="home">zMusic</a></div>
+            <span class="left hide-for-medium"><a zf-toggle="sub-nav">Menu</a></span>
+            <span class="right"><a ui-sref="settings">Settings</a></span>
+        </div>
+
+        <div class="dark shrink title-bar">
+            <div class="center title">Productivity</div>
+            <span class="left"><a zf-open="projects">Projects</a></span>
+            <span class="right"><a zf-open="profile">Profile</a></span>
+        </div>
+
+
+
+
+
+
+        <div class="grid-content shrink" style="padding: 0;">
+            <ul class="primary condense menu-bar">
+                <li><a ui-sref="home"><strong>Foundation for Apps</strong></a></li>
+            </ul>
+        </div>
+        <div ui-view class="grid-content">
+        </div>
+
+
+
+
     </div>
-  </body>
+</body>
 </html>
