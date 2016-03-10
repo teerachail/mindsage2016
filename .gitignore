@@ -234,3 +234,13 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+
+
+# For WebAppSolution
+# folders
+WebAppSolution/src/MindSageWeb/wwwroot/assets/
+WebAppSolution/src/MindSageWeb/wwwroot/templates/
+WebAppSolution/src/MindSageWeb/client/assets/js/
+# files
+WebAppSolution/src/MindSageWeb/wwwroot/index.html
+WebAppSolution/src/MindSageWeb/MindSageWeb.xproj.user
