@@ -6,9 +6,7 @@
         static $inject = ['$scope', 'classRoomId', 'app.shared.ClientUserProfileService'];
         constructor(private $scope, public classRoomId: string, private userSvc: app.shared.ClientUserProfileService) {
         }
-
-        //UserProfileId
-        //RequestId
+        
     }
 
     angular

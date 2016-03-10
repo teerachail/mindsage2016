@@ -149,7 +149,7 @@
 
                     <div>
                         <div class="small-6 columns">
-                            <button class="button" ng-click="cx.DeleteCourse()">Delete Course</button>
+                            <button class="button" data-open="ConfirmModel">Delete Course</button>
                         </div>
                     </div>
                 </div>
@@ -161,6 +161,27 @@
         <textarea rows="3" ng-model="studentMessage"></textarea><button class="button primary float-right" ng-click="cx.StudenMessageEdit(studentMessage)">SEND</button>
     </div>
 </div>
+
+<div class="reveal tiny" id="ConfirmModel" data-reveal>
+    <div class="modal-head"><h4 class="text-center">Confirm</h4></div>
+    <div>
+        <div class="medium-10 medium-centered large-10 large-centered columns">
+            <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
+                <div class="text-center">
+                    <div data-equalizer-watch>
+                        <p>Confirm to remove course</p>
+                        <button class="button alert" ng-click="cx.DeleteCourse()" data-close>Confirm</button>
+                        <button class="button" data-close>Cancel</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <button class="close-button" data-close aria-label="Close modal" type="button">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+
 <script>
     $(document).foundation();
 </script>

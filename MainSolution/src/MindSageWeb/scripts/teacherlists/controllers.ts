@@ -2,14 +2,20 @@
     'use strict';
 
     class teacherlistsController {
+        public targetId: any;
+
         static $inject = ['$scope', 'list', 'classRoomId', 'app.teacherlists.TeacherListService'];
         constructor(private $scope, public list: any[], public classRoomId: string, private teacherlistsSvc: app.teacherlists.TeacherListService) {
         }
 
-        public RemoveStd(removeObj: any) {
-            this.teacherlistsSvc.RemoveStudent(this.classRoomId, removeObj.id);
+        public targetStd(Std: any) {
+            this.targetId = Std;
+        }
 
-            var removeIndex = this.list.indexOf(removeObj);
+        public RemoveStd() {
+            this.teacherlistsSvc.RemoveStudent(this.classRoomId, this.targetId.id);
+
+            var removeIndex = this.list.indexOf(this.targetId);
             this.list.splice(removeIndex, 1);
         }
 

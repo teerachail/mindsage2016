@@ -590,6 +590,14 @@ $topbar-input-width: 200px;
     background: #ffae00;
 }
 
+.day.dodd , .days.dodd  {
+    background: #eee53f;
+}
+
+.day.deven, .days.deven {
+    background:#ffdf63;
+}
+
 /* -------------------------------------------- End Edited -------------------------------------------- */
 @media only screen {
     .calendar .small-1 {
