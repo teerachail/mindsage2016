@@ -1,4 +1,4 @@
-﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings','app.main'])    
+﻿angular.module('app', ['ui.router', 'app.shared', 'app.lessons', 'app.studentlists', 'app.coursemaps', 'app.notification', 'app.journals', 'app.teacherlists', 'appDirectives', 'app.sidemenus', 'app.settings', 'app.main', 'app.calendar'])    
     .config(['$stateProvider', '$urlRouterProvider', function ($stateProvider: angular.ui.IStateProvider, $urlRouterProvider: angular.ui.IUrlRouterProvider) {
         $stateProvider
 
@@ -128,6 +128,16 @@
                         resolve: {
                             'courseInfo': ['app.shared.GetProfileService', svc => { return svc.GetCourse() }]
                         }
+                    }
+                }
+            })
+
+            .state('app.course.calendar', {
+                url: '/calendar',
+                views: {
+                    'courseContent': {
+                        templateUrl: 'tmpl/calendar.html',
+                        controller: 'app.calendar.CarlendarController as cx'
                     }
                 }
             })

@@ -1,0 +1,18 @@
+﻿---
+name: carou
+url: /carou
+---
+
+<div class="owl-carousel owl-theme">
+</div>
+
+<script>
+    $(function () {
+        $(".owl-carousel").owlCarousel({
+            autoPlay: true,
+            slideSpeed: 300,
+            jsonPath: 'api/demo',
+            singleItem: true
+        });
+    });
+</script>

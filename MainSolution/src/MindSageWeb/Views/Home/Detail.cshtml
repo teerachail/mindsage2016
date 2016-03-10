@@ -205,18 +205,19 @@
     </div>
 </div>
 
-<div class="reveal tiny" id="purchaseModal" data-reveal>
+<div class="reveal tiny" id="purchaseModal" data-reveal ng-init="purchaseMethod = 'Paypal'">
     <div class="modal-head"><h4 class="text-center">COMPLETE PAYMENT</h4></div>
     <div class="row">
         <div class="medium-10 medium-centered large-10 large-centered columns">
-            <input type="radio" name="payment" value="Paypal" id="Paypal" checked="checked" required><label for="Paypal">Pay with Paypal</label>
+            <input type="radio" ng-model="purchaseMethod" name="payment" value="Paypal" id="Paypal"><label for="Paypal">Pay with Paypal</label>
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 @Html.Hidden("grade", Model.Grade)
                 @Html.Hidden("courseId", Model.id)
-                <input type="radio" name="payment" value="Code" id="Code"><label for="Code">Use Key Code</label>
+                <input type="radio" ng-model="purchaseMethod" name="payment" value="Code" id="Code"><label for="Code">Use Key Code</label>
                 <input name="id" type="text" />
                 <div class="text-center">
-                    <button type="submit" class="button large text-center">PURCHASE</button>
+                    <button ng-show="purchaseMethod == 'Code'" type="submit" class="button large text-center">PURCHASE</button>
+                    <a asp-controller="purchase" asp-action="index" asp-route-id="@Model.id" ng-show="purchaseMethod == 'Paypal'" class="button large text-center">GO</a>
                 </div>
             </form>
         </div>

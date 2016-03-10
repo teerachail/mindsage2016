@@ -1,0 +1,19 @@
+﻿<div class="large-8 push-4 large-offset-1 columns">
+    <ul class="calendar">
+        <li class="title"><span class="button" ng-click="cx.prevMount()"><<<</span>{{cx.monthNames}} {{cx.year}}<span class="button" ng-click="cx.nextMount()">>>></span></li>
+        <li class="day-header">
+            <div class="large-1 day">Sun</div>
+            <div class="large-1 day">Mon</div>
+            <div class="large-1 day">Tue</div>
+            <div class="large-1 day">Wed</div>
+            <div class="large-1 day">Thu</div>
+            <div class="large-1 day">Fri</div>
+            <div class="large-1 day">Sat</div>
+        </li>
+
+        <li class="week" ng-repeat="week in cx.allweeks">
+            <div class="large-1 day" ng-repeat="day in week"  ng-class="{'today':cx.CheckToday(day),'holiday':cx.IsHoliday(day),'selected':cx.OnSelected(day),'previous-month': day.getMonth()<cx.month,'next-month': day.getMonth()>cx.month }"  ng-click="cx.Selected(day)">{{day.getDate()}}</div>
+        </li>
+        <!-- Repeat for additional weeks -->
+    </ul>
+</div>
