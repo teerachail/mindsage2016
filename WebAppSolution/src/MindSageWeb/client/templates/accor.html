@@ -1,0 +1,35 @@
+﻿---
+name: accor
+url: /accor
+controller: application.DemoController as cx
+---
+
+<div class="grid-container">
+    <h1>Accordion for Apps!</h1>
+    <h2>{{ cx.Message }}</h2>
+
+    <div ng-repeat="d in cx.data">
+        <h3>{{ d.Topic }}</h3>
+        <zf-accordion>
+            <zf-accordion-item title="{{ d.Name }}">
+                {{ d.Detail }}
+            </zf-accordion-item>
+        </zf-accordion>
+    </div>
+
+    <button type="button" ng-click="cx.AddNewData()">Add New Data</button>
+
+    <hr />
+    <zf-accordion>
+        <zf-accordion-item title="outer">
+            <zf-accordion>
+                <zf-accordion-item title="Inner1">
+                    Inner content
+                </zf-accordion-item>
+                <zf-accordion-item title="Inner2">
+                    Inner content 2
+                </zf-accordion-item>
+            </zf-accordion>
+        </zf-accordion-item>
+    </zf-accordion>
+</div>

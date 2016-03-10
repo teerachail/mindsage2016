@@ -1,6 +1,6 @@
 ﻿{
   "userSecretsId": "aspnet5-MindSageWeb-056561b7-6fbb-41a7-b988-3348bed9d834",
-  "version": "1.0.0-*",
+  "version": "0.8.0-*",
   "compilationOptions": {
     "emitEntryPoint": true
   },
@@ -46,6 +46,6 @@
     "**.vspscc"
   ],
   "scripts": {
-    "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ]
+    "prepublish": [ "npm install", "bower install", "gulp build --production" ]
   }
 }

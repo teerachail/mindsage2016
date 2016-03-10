@@ -1,0 +1,16 @@
+﻿{
+  "compilerOptions": {
+    "noImplicitAny": false,
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+    "inlineSourceMap": false,
+    "inlineSources": false,
+    "out": "client/assets/js/app.js",
+    "target": "es5"
+  },
+  "exclude": [
+    "typings/browser.d.ts",
+    "typings/browser"
+  ]
+}
