@@ -1,6 +1,8 @@
+wwwroot/lib/
 wwwroot/assets/
 wwwroot/templates/
 client/assets/js/
 
 wwwroot/index.html
+wwwroot/_references.js
 MindSageWeb.xproj.user
