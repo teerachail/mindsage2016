@@ -18,36 +18,79 @@
     <script src="./lib/foundation-datepicker/js/foundation-datepicker.js"></script>
 </head>
 <body>
-    <div class="grid-frame vertical">
-
         <div class="dark title-bar">
-            <div class="center title"><a ui-sref="home">zMusic</a></div>
-            <span class="left hide-for-medium"><a zf-toggle="sub-nav">Menu</a></span>
-            <span class="right"><a ui-sref="settings">Settings</a></span>
+            <div class="left"></div>
+            <div class="center title">
+            <a class="float-left" zf-open="home"><img src="http://www.mindsage.org/assets/img/logo.png" /></a>
+            <a class="float-right info hollow button">SIGNUP</a>
+            <a class="float-right secondary hollow button">LOGIN</a>
+            </div>
+            <div class="right"></div>
         </div>
-
-        <div class="dark shrink title-bar">
-            <div class="center title">Productivity</div>
-            <span class="left"><a zf-open="projects">Projects</a></span>
-            <span class="right"><a zf-open="profile">Profile</a></span>
+        <div ui-view class="clearfix">
         </div>
-
-
-
-
-
-
-        <div class="grid-content shrink" style="padding: 0;">
-            <ul class="primary condense menu-bar">
-                <li><a ui-sref="home"><strong>Foundation for Apps</strong></a></li>
-            </ul>
+    <footer class="footer">
+        <div class="grid-block align-justify">
+            <!-- col 1 -->
+            <div class="small-12 medium-6 large-3 grid-block vertical">
+                <div class="logo">
+                    <a href="assets/img/logo.png">
+                        <img width="160" src="http://www.mindsage.org/assets/img/logo.png">
+                    </a>
+                </div>
+                <p class="footer-links">
+                    <a href="#">Home</a>
+                    <a href="#">Pricing</a>
+                    <a href="#">About</a>
+                    <a href="#">FAQ</a>
+                </p>
+                <ul class="inline-list social">
+                    <a href="#"><i class="fi-social-facebook"></i></a>
+                    <a href="#"><i class="fi-social-twitter"></i></a>
+                    <a href="#"><i class="fi-social-linkedin"></i></a>
+                    <a href="#"><i class="fi-social-github"></i></a>
+                </ul>
+                <p class="copywrite">Copywrite © 2016</p>
+            </div>
+            <!-- col 2 -->
+            <div class="small-12 medium-6 large-3 grid-block vertical">
+                <h3 class="about">About Mind Sage</h3>
+                <p class="about subheader">MindSage is a teacher-friendly soft skills training course that utilizes microlessons and a metacognitive approach.</p>
+                <p class="about subheader">It can be integrated into any existing curriculum.</p>
+            </div>
+            <!-- col 3 -->
+            <div class="small-12 medium-12 large-5 columns">
+                <h3 class="contact">Let's talk</h3>
+                <form class="footer-form ng-pristine ng-valid">
+                    <div class="row">
+                        <div class="columns">
+                            <label>
+                                <input type="email" id="email" placeholder="Email Address">
+                            </label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="columns">
+                            <label>
+                                <textarea rows="5" id="message" placeholder="What's on your mind?"></textarea>
+                            </label>
+                        </div>
+                        <div class="row">
+                            <div class="medium-9 columns">
+                                <button class="submit" type="submit" value="Submit">Send</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <!--
+                <ul class="contact-address">
+                    <li><p><i class="fa fa-map"></i>1595 Spring Street New Britain, CT 06051</p></li>
+                    <li><p><i class="fa fa-phone-square"></i>+1-656-453-9966</p></li>
+                    <li><p><i class="fa fa-envelope-square"></i>contact@emperor.com</p></li>
+                </ul>
+                -->
+            </div>
         </div>
-        <div ui-view class="grid-content">
-        </div>
-
-
-
-
-    </div>
+    </footer>
 </body>
 </html>
