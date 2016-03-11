@@ -67,6 +67,11 @@ namespace MindSageWeb.Controllers
             var result = allUserCourseCatalogIds.Contains(courseCatalogId);
             return result;
         }
+        public static bool CanAddNewCourseCatalog(this MyCourseController ctrl, string userprofileId, string courseCatalogId)
+        {
+            var allUserCourseCatalogIds = Enumerable.Empty<string>();
+            return ctrl.CanAddNewCourseCatalog(userprofileId, courseCatalogId);
+        }
 
         #endregion Methods
     }
