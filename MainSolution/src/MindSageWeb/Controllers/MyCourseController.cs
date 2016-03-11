@@ -709,13 +709,11 @@ namespace MindSageWeb.Controllers
         /// <param name="body">Start date's information</param>
         [HttpPost]
         [Route("startdate")]
-        public SetStartDateRespond SetStartDate(SetStartDateRequest body)
+        public GetCourseScheduleRespond SetStartDate(SetStartDateRequest body)
         {
             // TODO: Not implemented
             throw new NotImplementedException();
         }
-
-
 
         //// GET: api/mycourse
         //public IEnumerable<string> Get()
