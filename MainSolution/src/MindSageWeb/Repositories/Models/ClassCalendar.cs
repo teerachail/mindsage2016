@@ -23,6 +23,7 @@ namespace MindSageWeb.Repositories.Models
 
         public IEnumerable<LessonCalendar> LessonCalendars { get; set; }
         public IEnumerable<Holiday> Holidays { get; set; }
+        public IEnumerable<DateTime> ShiftDays { get; set; }
 
         #endregion Properties
 

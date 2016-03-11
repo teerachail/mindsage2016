@@ -702,31 +702,13 @@ namespace MindSageWeb.Controllers
             var areArgumentValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentValid) return null;
 
-            UserProfile userprofile;
-            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId, out userprofile);
-            if (!canAccessToTheClassRoom) return null;
-            var isTeacher = userprofile.Subscriptions
-                .Where(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId)
-                .Any(it => it.Role == UserProfile.AccountRole.Teacher);
-            if (!isTeacher) return null;
+            var canAccessToCourse = validateAccessToCourseScheduleManagement(id, classRoomId);
+            if (!canAccessToCourse) return null;
 
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
             if (classCalendar == null) return null;
 
-            const int LessonDuration = 5;
-            var runningLessonId = 1;
-            var result =  new GetCourseScheduleRespond
-            {
-                IsComplete = true,
-                BeginDate = classCalendar.BeginDate,
-                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).Last().BeginDate.AddDays(LessonDuration),
-                Lessons = classCalendar.LessonCalendars.Select(it => new LessonSchedule
-                {
-                    BeginDate = it.BeginDate,
-                    Name = string.Format("Lesson {0}", runningLessonId++)
-                }).ToList(),
-                Holidays = classCalendar.Holidays.Where(it => !it.DeletedDate.HasValue).Select(it => it.HolidayDate).ToList()
-            };
+            var result = getCourseSchedule(classCalendar, true);
             return result;
         }
 
@@ -739,8 +721,94 @@ namespace MindSageWeb.Controllers
         [Route("startdate")]
         public GetCourseScheduleRespond SetStartDate(SetStartDateRequest body)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.UserProfileId)
+                && !string.IsNullOrEmpty(body.ClassRoomId);
+            if (!areArgumentsValid) return null;
+
+            var canAccessToCourse = validateAccessToCourseScheduleManagement(body.UserProfileId, body.ClassRoomId);
+            if (!canAccessToCourse) return null;
+
+            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+            if (classCalendar == null) return null;
+
+            classCalendar.BeginDate = body.BeginDate;
+            calculateCourseSchedule(classCalendar);
+            _classCalendarRepo.UpsertClassCalendar(classCalendar);
+
+            var result = getCourseSchedule(classCalendar, true);
+            return result;
+        }
+
+        private GetCourseScheduleRespond getCourseSchedule(ClassCalendar classCalendar, bool isComplete)
+        {
+            const int LessonDuration = 5;
+            var runningLessonId = 1;
+            var holidays = classCalendar.Holidays ?? Enumerable.Empty<ClassCalendar.Holiday>();
+            var result = new GetCourseScheduleRespond
+            {
+                IsComplete = isComplete,
+                BeginDate = classCalendar.BeginDate,
+                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).Last().BeginDate.AddDays(LessonDuration),
+                Lessons = classCalendar.LessonCalendars.Select(it => new LessonSchedule
+                {
+                    BeginDate = it.BeginDate,
+                    Name = string.Format("Lesson {0}", runningLessonId++)
+                }).ToList(),
+                Holidays = holidays.Where(it => !it.DeletedDate.HasValue).Select(it => it.HolidayDate).ToList()
+            };
+            return result;
+        }
+        private bool validateAccessToCourseScheduleManagement(string userprofileId, string classRoomId)
+        {
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo
+                .CheckAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out userprofile);
+            if (!canAccessToTheClassRoom) return false;
+            var isTeacher = userprofile.Subscriptions
+                .Where(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId)
+                .Any(it => it.Role == UserProfile.AccountRole.Teacher);
+            return isTeacher;
+        }
+        private void calculateCourseSchedule(ClassCalendar classCalendar)
+        {
+            var areArgumentsValid = classCalendar != null
+                && classCalendar.BeginDate.HasValue
+                && classCalendar.LessonCalendars != null
+                && classCalendar.LessonCalendars.Any();
+            if (!areArgumentsValid) return;
+
+            const int LessonDuration = 5;
+            var currentBeginDate = classCalendar.BeginDate.Value.Date;
+            var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>()).Select(it => it.Date);
+            var holidays = (classCalendar.Holidays ?? Enumerable.Empty<ClassCalendar.Holiday>())
+                .Where(it => !it.DeletedDate.HasValue)
+                .Select(it => it.HolidayDate.Date);
+            var lessonQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue).OrderBy(it => it.Order);
+            foreach (var lesson in lessonQry)
+            {
+                while (true)
+                {
+                    var beginDate = currentBeginDate;
+                    var endDate = currentBeginDate.AddDays(LessonDuration);
+                    var lessonRange = Enumerable.Range(0, LessonDuration).Select(it => beginDate.AddDays(it).Date);
+                    var availableRange = lessonRange.Except(holidays);
+                    if (availableRange.Any())
+                    {
+                        lesson.BeginDate = availableRange.First();
+                        var totalShiftDayInLessonRange = lessonRange.Intersect(shiftDays).Count();
+                        var nextBeginDate = endDate.AddDays(totalShiftDayInLessonRange);
+                        currentBeginDate = nextBeginDate;
+                        break;
+                    }
+                    else
+                    {
+                        const int ShiftOneDayForNextLesson = 1;
+                        var nextBeginDate = endDate.AddDays(ShiftOneDayForNextLesson);
+                        currentBeginDate = nextBeginDate;
+                    }
+                }
+            }
         }
 
         //// GET: api/mycourse
