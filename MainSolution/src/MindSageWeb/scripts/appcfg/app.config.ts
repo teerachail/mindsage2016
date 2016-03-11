@@ -32,6 +32,9 @@ module app {
         GetAllLiketUrl: string;
         GetUserProfileUrl: string;
         CourseScheduleUrl: string;
+        CourseStartDateUrl: string;
+        CourseScheduleRangeUrl: string;
+        CourseScheduleWeekUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -66,6 +69,9 @@ module app {
         public GetAllLiketUrl: string;
         public GetUserProfileUrl: string;
         public CourseScheduleUrl: string;
+        public CourseStartDateUrl: string;
+        public CourseScheduleRangeUrl: string;
+        public CourseScheduleWeekUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -101,6 +107,9 @@ module app {
             this.GetAllLiketUrl = apiUrl + '/mycourse/:id/:classRoomId/alllikes';
             this.GetUserProfileUrl = apiUrl + '/profile';
             this.CourseScheduleUrl = apiUrl + '/mycourse/:id/:classRoomId/schedule';
+            this.CourseStartDateUrl = apiUrl + '/mycourse/startdate';
+            this.CourseScheduleRangeUrl = apiUrl + '/mycourse/schedulerange';
+            this.CourseScheduleWeekUrl = apiUrl + '/mycourse/scheduleweek';
         }
     }
     

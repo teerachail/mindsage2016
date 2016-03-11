@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 
 namespace MindSageWeb.Repositories.Models
 {
-    public class SetStartDateRequest
+    public class SetScheduleWithRangeRespond : GetCourseScheduleRespond
     {
         #region Properties
 
-        public string id { get; set; }
-        public string ClassRoomId { get; set; }
-        public DateTime? BeginDate { get; set; }
+        public bool IsComplete { get; set; }
 
         #endregion Properties
+
     }
 }

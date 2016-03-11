@@ -137,7 +137,10 @@
                 views: {
                     'courseContent': {
                         templateUrl: 'tmpl/calendar.html',
-                        controller: 'app.calendar.CarlendarController as cx'
+                        controller: 'app.calendar.CarlendarController as cx',
+                        resolve: {
+                            'courseSchedule': ['app.calendar.CourseScheduleService', svc => { return svc.GetCourseSchedule() }]
+                        }
                     }
                 }
             })
