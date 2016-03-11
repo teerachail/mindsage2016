@@ -99,10 +99,10 @@
 
 // Application Colors
 // $primary-color: #00558b;
-// $secondary-color: #f1f1f1;
+// $secondary-color: #777;
 // $alert-color: #F04124;
-// $info-color: #A0D3E8;
-// $success-color: #43AC6A;
+// $info-color: #2199e8;
+// $success-color: #a7cf4a;
 // $warning-color: #F08A24;
 // $dark-color: #232323;
 // $gray: #dfdfdf;
@@ -263,9 +263,9 @@ $success-color: #a7cf4a;
 // 7. Accordion
 // - - - - - - - - - - - - - - -
 
-// $accordion-border: 1px solid $gray-dark;
+ $accordion-border: none;
 
-// $accordion-title-background: $gray-light;
+ $accordion-title-background: #fff;
 // $accordion-title-background-hover: smartscale($accordion-title-background, 5%);
 // $accordion-title-background-active: smartscale($accordion-title-background, 3%);
 // $accordion-title-color: isitlight($accordion-title-background);
