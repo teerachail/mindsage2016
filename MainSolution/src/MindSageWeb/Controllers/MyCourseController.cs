@@ -412,7 +412,10 @@ namespace MindSageWeb.Controllers
             if (selectedClassCalendar == null) return addCourseFailRespond;
 
             var selectedUserProfile = _userprofileRepo.GetUserProfileById(body.UserProfileId);
-            if (selectedUserProfile == null) return addCourseFailRespond;
+            var canUseTheCode = selectedUserProfile != null
+                && selectedUserProfile.Subscriptions != null
+                && selectedUserProfile.Subscriptions.All(it => it.ClassRoomId != selectedStudentKey.ClassRoomId);
+            if (!canUseTheCode) return addCourseFailRespond;
 
             var lessonCatalogs = selectedClassRoom.Lessons
                 .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))

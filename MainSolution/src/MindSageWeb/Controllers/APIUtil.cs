@@ -1,6 +1,7 @@
 ﻿using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace MindSageWeb.Controllers
@@ -52,6 +53,19 @@ namespace MindSageWeb.Controllers
             var canPostNewDiscussion = selectedCommentOwnerProfile != null
                 && !selectedCommentOwnerProfile.IsPrivateAccount;
             return canPostNewDiscussion;
+        }
+
+
+        public static IEnumerable<string> GetAllUserCoursCatalogIds(this MyCourseController ctrl, string userprofileId)
+        {
+            var qry = ctrl.GetAllCourses(userprofileId).Select(it => it.CourseCatalogId);
+            return qry;
+        }
+        public static bool CanAddNewCourseCatalog(this MyCourseController ctrl, string userprofileId, string courseCatalogId, out IEnumerable<string> allUserCourseCatalogIds)
+        {
+            allUserCourseCatalogIds = ctrl.GetAllUserCoursCatalogIds(userprofileId);
+            var result = allUserCourseCatalogIds.Contains(courseCatalogId);
+            return result;
         }
 
         #endregion Methods
