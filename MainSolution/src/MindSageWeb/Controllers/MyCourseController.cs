@@ -412,7 +412,10 @@ namespace MindSageWeb.Controllers
             if (selectedClassCalendar == null) return addCourseFailRespond;
 
             var selectedUserProfile = _userprofileRepo.GetUserProfileById(body.UserProfileId);
-            if (selectedUserProfile == null) return addCourseFailRespond;
+            var canUseTheCode = selectedUserProfile != null
+                && selectedUserProfile.Subscriptions != null
+                && selectedUserProfile.Subscriptions.All(it => it.ClassRoomId != selectedStudentKey.ClassRoomId);
+            if (!canUseTheCode) return addCourseFailRespond;
 
             var lessonCatalogs = selectedClassRoom.Lessons
                 .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))
@@ -683,6 +686,36 @@ namespace MindSageWeb.Controllers
         }
 
         #endregion Methods
+
+        // GET: api/mycourse/{user-id}/{class-room-id}/schedule
+        /// <summary>
+        /// Get course schedule
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <returns></returns>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/schedule")]
+        public GetCourseScheduleRespond GetCourseSchedule(string id, string classRoomId)
+        {
+            // TODO: Not implemented
+            throw new NotImplementedException();
+        }
+
+        // POST: api/mycourse/startdate
+        /// <summary>
+        /// Add or change startdate
+        /// </summary>
+        /// <param name="body">Start date's information</param>
+        [HttpPost]
+        [Route("startdate")]
+        public SetStartDateRespond SetStartDate(SetStartDateRequest body)
+        {
+            // TODO: Not implemented
+            throw new NotImplementedException();
+        }
+
+
 
         //// GET: api/mycourse
         //public IEnumerable<string> Get()

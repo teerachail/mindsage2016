@@ -74,6 +74,9 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public IActionResult Index(string id)
         {
+            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, id);
+            if(!canAddNewCourse) return View("Error");
+
             // HACK: Create tracking form
             var model = new PurchaseCourseViewModel { CourseId = id };
             return View(model);
@@ -100,6 +103,9 @@ namespace MindSageWeb.Controllers
         [HttpPost]
         public IActionResult Confirm(PurchaseCourseConfirmViewModel model)
         {
+            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, model.CourseId);
+            if (!canAddNewCourse) return View("Error");
+
             // HACK: Validate tracking form
             // TODO: Pay with Paypal
             //addNewSubscriptionToUser(model.CourseId);

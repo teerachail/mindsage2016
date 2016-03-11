@@ -19,7 +19,7 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.HaveAnyCourse = getAllUserCourses().Any();
+            ViewBag.HaveAnyCourse = _myCourseCtrl.GetAllUserCoursCatalogIds(User.Identity.Name).Any();
             var availableCourses = _courseCtrl.GetAvailableCourseGroups();
             return View(availableCourses);
         }
@@ -47,22 +47,15 @@ namespace MindSageWeb.Controllers
         {
             var selectedCourse = _courseCtrl.GetCourseDetail(id);
             if (selectedCourse == null) return RedirectToAction("Error");
-
-            var allUserCourses = getAllUserCourses();
-            var isAlreadyHaveThisCourse = allUserCourses.Contains(selectedCourse.id);
-            ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveThisCourse;
-            ViewBag.IsCouponInvalid = isCouponInvalid;
+            
+            var allUserCourses = Enumerable.Empty<string>();
+            var isAlreadyHaveSelectedCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses);
+            
+            ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
             ViewBag.HaveAnyCourse = allUserCourses.Any();
+            ViewBag.IsCouponInvalid = isCouponInvalid;
 
             return View(selectedCourse);
-        }
-
-        private IEnumerable<string> getAllUserCourses()
-        {
-            var userId = User.Identity.IsAuthenticated ? User.Identity.Name : string.Empty;
-            var qry = _myCourseCtrl.GetAllCourses(userId)
-                .Select(it => it.CourseCatalogId);
-            return qry;
         }
     }
 }
