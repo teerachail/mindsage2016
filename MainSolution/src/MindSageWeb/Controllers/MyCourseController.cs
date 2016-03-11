@@ -222,7 +222,8 @@ namespace MindSageWeb.Controllers
             var availableClassRooms = subscriptionQry
                 .Select(it => _classCalendarRepo.GetClassCalendarByClassRoomId(it.ClassRoomId))
                 .Where(it => it != null)
-                .Where(it => it.BeginDate.Date <= now.Date)
+                .Where(it => it.BeginDate.HasValue)
+                .Where(it => it.BeginDate <= now.Date)
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => !it.CloseDate.HasValue)
                 .Where(it => it.ExpiredDate.HasValue)
@@ -698,8 +699,35 @@ namespace MindSageWeb.Controllers
         [Route("{id}/{classRoomId}/schedule")]
         public GetCourseScheduleRespond GetCourseSchedule(string id, string classRoomId)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            var areArgumentValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
+            if (!areArgumentValid) return null;
+
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId, out userprofile);
+            if (!canAccessToTheClassRoom) return null;
+            var isTeacher = userprofile.Subscriptions
+                .Where(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId)
+                .Any(it => it.Role == UserProfile.AccountRole.Teacher);
+            if (!isTeacher) return null;
+
+            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
+            if (classCalendar == null) return null;
+
+            const int LessonDuration = 5;
+            var runningLessonId = 1;
+            var result =  new GetCourseScheduleRespond
+            {
+                IsComplete = true,
+                BeginDate = classCalendar.BeginDate,
+                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).Last().BeginDate.AddDays(LessonDuration),
+                Lessons = classCalendar.LessonCalendars.Select(it => new LessonSchedule
+                {
+                    BeginDate = it.BeginDate,
+                    Name = string.Format("Lesson {0}", runningLessonId++)
+                }).ToList(),
+                Holidays = classCalendar.Holidays.Where(it => !it.DeletedDate.HasValue).Select(it => it.HolidayDate).ToList()
+            };
+            return result;
         }
 
         // POST: api/mycourse/startdate
@@ -709,13 +737,11 @@ namespace MindSageWeb.Controllers
         /// <param name="body">Start date's information</param>
         [HttpPost]
         [Route("startdate")]
-        public SetStartDateRespond SetStartDate(SetStartDateRequest body)
+        public GetCourseScheduleRespond SetStartDate(SetStartDateRequest body)
         {
             // TODO: Not implemented
             throw new NotImplementedException();
         }
-
-
 
         //// GET: api/mycourse
         //public IEnumerable<string> Get()

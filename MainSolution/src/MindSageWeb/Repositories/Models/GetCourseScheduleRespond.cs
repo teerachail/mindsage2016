@@ -9,20 +9,22 @@ namespace MindSageWeb.Repositories.Models
     {
         #region Properties
 
+        public bool IsComplete { get; set; }
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
-        public IEnumerable<Lesson> Lessons { get; set; }
-        public IEnumerable<DateTime?> Holidays { get; set; }
+        public IEnumerable<LessonSchedule> Lessons { get; set; }
+        public IEnumerable<DateTime> Holidays { get; set; }
+
         #endregion Properties
+    }
 
-        public class Lesson
-        {
-            #region Properties
+    public class LessonSchedule
+    {
+        #region Properties
 
-            public string Name { get; set; }
-            public DateTime? BeginDate { get; set; }
- 
-            #endregion Properties
-        }
+        public string Name { get; set; }
+        public DateTime? BeginDate { get; set; }
+
+        #endregion Properties
     }
 }

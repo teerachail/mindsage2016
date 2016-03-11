@@ -11,7 +11,7 @@ namespace MindSageWeb.Repositories.Models
         #region Properties
 
         public string id { get; set; }
-        public DateTime BeginDate { get; set; }
+        public DateTime? BeginDate { get; set; }
         public bool IsWeekendHoliday { get; set; }
         public DateTime? ExpiredDate { get; set; }
         public DateTime? CloseDate { get; set; }

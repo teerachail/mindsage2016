@@ -66,21 +66,10 @@
                 </div>
                 <div class="row">
                     <div class="small-6 columns">
-                        <label>
-                            Enter Password
-                            <input type="text" disabled>
-                        </label>
+                        <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{cx.userInfo.CurrentClassRoomId}}">Change Password</a>
                     </div>
-
                     <div class="small-6 columns">
-                        <label>
-                            Re-Enter Password
-                            <input type="text" disabled>
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-6 columns">
+                        <a class="button" ng-show="!cx.userInfo.HasPassword" href="../Manage/SetPassword/{{cx.userInfo.CurrentClassRoomId}}">Set Password</a>
                     </div>
                 </div>
             </div>
