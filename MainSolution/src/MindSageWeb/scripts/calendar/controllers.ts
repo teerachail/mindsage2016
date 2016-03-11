@@ -9,7 +9,6 @@
     }
     class LessonInfo {
         public Name: string;
-        public Order: number;
         public BeginDate: Date;
     }
 
@@ -27,6 +26,7 @@
         public fisrtSelected: Date;
         public lastSelected: Date;
         //-----------Mock Data ----------------------
+        public selectDay = new Array("NO", "NO", "NO", "NO", "NO", "NO", "NO");
         public Sifht: boolean;
         public EndCourseDate: Date;
         private holiday = [];
@@ -40,13 +40,15 @@
         public Order: number;
         public Start: Date;
         public BeginDate: Date;
+        public TestCalendarData :any ;
         //---------------------------------
         //public today = new Date('8/18/2016');
         public month; // month
         public allweeks = []; // array for push week
         public monthNames: string;
-        static $inject = ['$scope', '$state'];
-        constructor(private $scope, private $state) {
+        static $inject = ['$scope', '$state','app.calendar.CourseScheduleService'];
+        constructor(private $scope, private $state, private courseInformationT: app.calendar.CourseScheduleService) {
+            this.TestCalendarData = this.courseInformationT.GetCourseSchedule();
             this.month = this.today.getMonth();
             this.year = this.today.getFullYear();
             this.setCalendar(this.month, this.year);
@@ -65,17 +67,14 @@
                 Lessons: [
                     {
                         Name: 'Lesson01',
-                        Order: 1,
                         BeginDate: new Date('3/24/2016')
                     },
                     {
                         Name: 'Lesson02',
-                        Order: 2,
                         BeginDate: new Date('3/30/2016')
                     },
                     {
                         Name: 'Lesson03',
-                        Order: 3,
                         BeginDate: new Date('4/5/2016')
                     },
                 ],
@@ -189,25 +188,6 @@
                 }
                 else {
                     if (day >= this.courseInformation.Lessons[i].BeginDate &&
-                        day < this.courseInformation.Lessons[i + 1].BeginDate &&
-                        !this.OnSelected(day) &&
-                        !this.IsHoliday(day)
-                    ) return true;
-                }
-            }
-        }
-
-        public IsOddEven(day: Date) {
-            for (var i = 0; i < this.courseInformation.Lessons.length; i ++) {
-                if (i == this.courseInformation.Lessons.length - 1) {
-                    if (day >= this.courseInformation.Lessons[i].BeginDate &&
-                        day <= this.courseInformation.EndDate &&
-                        !this.OnSelected(day) &&
-                        !this.IsHoliday(day)
-                    ) return true; 
-                }
-                else {
-                    if (day >= this.Lessons[i][2] &&
                         day < this.courseInformation.Lessons[i + 1].BeginDate &&
                         !this.OnSelected(day) &&
                         !this.IsHoliday(day)
