@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
+using MindSageWeb.Models;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using System;
 using System.Linq;
-
+using System.Threading.Tasks;
 
 namespace MindSageWeb.Controllers
 {
@@ -20,6 +22,7 @@ namespace MindSageWeb.Controllers
         private IUserProfileRepository _userProfileRepo;
         private IClassCalendarRepository _classCalendarRepo;
         private IDateTime _dateTime;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         #endregion Fields
 
@@ -32,11 +35,13 @@ namespace MindSageWeb.Controllers
         /// <param name="classCalendarRepo">Class calendar repository</param>
         public ProfileController(IUserProfileRepository userprofileRepo, 
             IClassCalendarRepository classCalendarRepo,
-            IDateTime dateTime)
+            IDateTime dateTime,
+            UserManager<ApplicationUser> userManager)
         {
             _userProfileRepo = userprofileRepo;
             _classCalendarRepo = classCalendarRepo;
             _dateTime = dateTime;
+            _userManager = userManager;
         }
 
         #endregion Constructors
@@ -98,11 +103,13 @@ namespace MindSageWeb.Controllers
 
             var userprofile = _userProfileRepo.GetUserProfileById(id);
             if (userprofile == null) return null;
-
+            var currentUser = System.Security.Claims.PrincipalExtensions.GetUserId(HttpContext.User);
+            var user = _userManager.FindByIdAsync(currentUser).Result;
             var isUserProfileSubscriptionValid = userprofile.Subscriptions != null && userprofile.Subscriptions.Any(it => it.LastActiveDate.HasValue);
             var userProfileInfo = new GetUserProfileRespond
             {
                 UserProfileId = userprofile.id,
+                HasPassword = _userManager.HasPasswordAsync(user).Result,
                 FullName = userprofile.Name,
                 ImageUrl = userprofile.ImageProfileUrl,
                 SchoolName = userprofile.SchoolName,

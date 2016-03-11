@@ -10,6 +10,7 @@ namespace MindSageWeb.Repositories.Models
         #region Properties
 
         public string UserProfileId { get; set; }
+        public bool HasPassword { get; set; }
         public string FullName { get; set; }
         public string ImageUrl { get; set; }
         public string SchoolName { get; set; }

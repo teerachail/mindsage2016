@@ -195,9 +195,10 @@ namespace MindSageWeb.Controllers
         //
         // GET: /Manage/ChangePassword
         [HttpGet]
-        public IActionResult ChangePassword()
+        public IActionResult ChangePassword(string id)
         {
-            return View();
+            var model = new ChangePasswordViewModel { ClassRoom = id };
+            return View(model);
         }
 
         //
@@ -211,6 +212,7 @@ namespace MindSageWeb.Controllers
                 return View(model);
             }
             var user = await GetCurrentUserAsync();
+            var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
             if (user != null)
             {
                 var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
@@ -218,20 +220,21 @@ namespace MindSageWeb.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User changed their password successfully.");
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
+                    return Redirect(redirectURL);
                 }
                 AddErrors(result);
                 return View(model);
             }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            return Redirect(redirectURL);
         }
 
         //
         // GET: /Manage/SetPassword
         [HttpGet]
-        public IActionResult SetPassword()
+        public IActionResult SetPassword(string id)
         {
-            return View();
+            var model = new SetPasswordViewModel { ClassRoom = id };
+            return View(model);
         }
 
         //
@@ -246,18 +249,19 @@ namespace MindSageWeb.Controllers
             }
 
             var user = await GetCurrentUserAsync();
+            var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
             if (user != null)
             {
                 var result = await _userManager.AddPasswordAsync(user, model.NewPassword);
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
+                    return Redirect(redirectURL);
                 }
                 AddErrors(result);
                 return View(model);
             }
-            return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+            return Redirect(redirectURL);
         }
 
         //GET: /Manage/ManageLogins
