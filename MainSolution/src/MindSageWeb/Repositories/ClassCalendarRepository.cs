@@ -48,7 +48,8 @@ namespace MindSageWeb.Repositories
              .Set(it => it.CreatedDate, data.CreatedDate)
              .Set(it => it.DeletedDate, data.DeletedDate)
              .Set(it => it.LessonCalendars, data.LessonCalendars)
-             .Set(it => it.Holidays, data.Holidays);
+             .Set(it => it.Holidays, data.Holidays)
+             .Set(it => it.ShiftDays, data.ShiftDays);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
             MongoAccess.MongoUtil.Instance.GetCollection<ClassCalendar>(TableName)

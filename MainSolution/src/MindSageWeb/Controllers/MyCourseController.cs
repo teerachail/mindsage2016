@@ -744,7 +744,6 @@ namespace MindSageWeb.Controllers
         {
             const int LessonDuration = 5;
             var runningLessonId = 1;
-            var holidays = classCalendar.Holidays ?? Enumerable.Empty<ClassCalendar.Holiday>();
             var result = new GetCourseScheduleRespond
             {
                 IsComplete = isComplete,
@@ -755,7 +754,7 @@ namespace MindSageWeb.Controllers
                     BeginDate = it.BeginDate,
                     Name = string.Format("Lesson {0}", runningLessonId++)
                 }).ToList(),
-                Holidays = holidays.Where(it => !it.DeletedDate.HasValue).Select(it => it.HolidayDate).ToList()
+                Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>()
             };
             return result;
         }
@@ -781,9 +780,7 @@ namespace MindSageWeb.Controllers
             const int LessonDuration = 5;
             var currentBeginDate = classCalendar.BeginDate.Value.Date;
             var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>()).Select(it => it.Date);
-            var holidays = (classCalendar.Holidays ?? Enumerable.Empty<ClassCalendar.Holiday>())
-                .Where(it => !it.DeletedDate.HasValue)
-                .Select(it => it.HolidayDate.Date);
+            var holidays = (classCalendar.Holidays ?? Enumerable.Empty<DateTime>()).Select(it => it.Date);
             var lessonQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue).OrderBy(it => it.Order);
             foreach (var lesson in lessonQry)
             {
