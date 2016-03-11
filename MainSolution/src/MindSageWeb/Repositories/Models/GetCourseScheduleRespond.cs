@@ -13,7 +13,7 @@ namespace MindSageWeb.Repositories.Models
         public DateTime? BeginDate { get; set; }
         public DateTime? EndDate { get; set; }
         public IEnumerable<LessonSchedule> Lessons { get; set; }
-        public IEnumerable<DateTime?> Holidays { get; set; }
+        public IEnumerable<DateTime> Holidays { get; set; }
 
         #endregion Properties
     }
