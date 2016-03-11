@@ -67,22 +67,26 @@
 
         public GetFriendLists() {
             if (this.friendList == null) {
-                if (this.isWaittingForFriendList) return;
-                else {
-                    this.isWaittingForFriendList = true;
-                    var userId = this.clientUserProfile.UserProfileId;
-                    var classRoomId = this.clientUserProfile.CurrentClassRoomId;
-                    this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise.then(respond=> {
-                        if (respond == null) return this.GetFriendLists();
-                        else {
-                            this.isWaittingForFriendList = false;
-                            this.friendList = respond;
-                            return this.friendList;
-                        }
-                    });
-                }
+                this.ReloadFriendLists();
             }
             else return this.friendList;
+        }
+
+        public ReloadFriendLists() {
+            if (this.isWaittingForFriendList) return this.friendList;
+            else {
+                this.isWaittingForFriendList = true;
+                var userId = this.clientUserProfile.UserProfileId;
+                var classRoomId = this.clientUserProfile.CurrentClassRoomId;
+                this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise.then(respond=> {
+                    if (respond == null) return this.GetFriendLists();
+                    else {
+                        this.isWaittingForFriendList = false;
+                        this.friendList = respond;
+                        return this.friendList;
+                    }
+                });
+            }
         }
     }
 
