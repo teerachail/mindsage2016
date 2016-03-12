@@ -156,6 +156,7 @@ Scenario: User request comment's discussion Then system send the comment's discu
         {
             "Id": "DiscussionId03",
 			"CommentId": "Comment03",
+			"Order": 1,
             "Description": "Discussion03",
             "TotalLikes": 300,
             "CreatedByUserProfileId": "sakul@mindsage.com",
@@ -163,6 +164,7 @@ Scenario: User request comment's discussion Then system send the comment's discu
         },
 		{
             "Id": "DiscussionId02",
+			"Order": 2,
 			"CommentId": "Comment03",
             "Description": "Discussion02",
             "TotalLikes": 200,

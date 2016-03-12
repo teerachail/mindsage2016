@@ -17,6 +17,8 @@ namespace MindSageWeb.Specs.Steps
         [When(@"UserProfile '(.*)' open the lesson '(.*)' of ClassRoom: '(.*)'")]
         public void WhenUserProfileOpenTheLessonOfClassRoom(string userprofileId, string lessonId, string classRoomId)
         {
+            var mockUserProfileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
+            mockUserProfileRepo.Setup(it => it.UpsertUserProfile(It.IsAny<UserProfile>()));
             var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
             mockUserActivityRepo.Setup(it => it.UpsertUserActivity(It.IsAny<UserActivity>()));
 
@@ -38,6 +40,16 @@ namespace MindSageWeb.Specs.Steps
             Assert.Equal(expected.CourseMessage, actual.CourseMessage);
             Assert.Equal(expected.TotalLikes, actual.TotalLikes);
             Assert.Equal(expected.IsTeacher, actual.IsTeacher);
+        }
+
+        [Then(@"System update last active class room is '(.*)' for user '(.*)'")]
+        public void ThenSystemUpdateLastActiveClassRoomIsForUser(string classRoomId, string userprofileId)
+        {
+            var mockUserProfileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
+            mockUserProfileRepo.Verify(it => it.UpsertUserProfile(It.Is<UserProfile>(actual =>
+                actual.id == userprofileId
+                && actual.Subscriptions.OrderBy(s => s.LastActiveDate).First().ClassRoomId == classRoomId
+            )));
         }
     }
 }

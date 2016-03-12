@@ -146,28 +146,36 @@ Scenario: User request friend list Then system send friend list back
     """
     [
 		{
-			"id": "bank@mindsage.com",
+			"UserProfileId": "bank@mindsage.com",
 			"Name": "Bank",
 			"ImageUrl": "bank.jpg",
-			"Status": "Unfriend"
+			"Status": "Unfriend",
+			"RequestId": "FriendRequest04",
+			"IsTeacher": false
 		},
 		{
-			"id": "earn@mindsage.com",
+			"UserProfileId": "earn@mindsage.com",
 			"Name": "Earn",
 			"ImageUrl": "earn.jpg",
-			"Status": "SendRequest"
+			"Status": "SendRequest",
+			"RequestId": "FriendRequest01",
+			"IsTeacher": false
 		},
 		{
-			"id": "joker@mindsage.com",
+			"UserProfileId": "joker@mindsage.com",
 			"Name": "Joker",
 			"ImageUrl": "joker.jpg",
-			"Status": "ReceiveRequest"
+			"Status": "ReceiveRequest",
+			"RequestId": "FriendRequest02",
+			"IsTeacher": false
 		},
 		{
-			"id": "perawatt@mindsage.com",
+			"UserProfileId": "perawatt@mindsage.com",
 			"Name": "Perawatt",
 			"ImageUrl": "perawatt.jpg",
-			"Status": "Friend"
+			"Status": "Friend",
+			"RequestId": "FriendRequest03",
+			"IsTeacher": false
 		},
     ]
     """ 

@@ -258,6 +258,9 @@ this.FeatureBackground();
 }
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 192
+ testRunner.And("System update last active class room is \'ClassRoom01\' for user \'sakul@mindsage.co" +
+                    "m\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

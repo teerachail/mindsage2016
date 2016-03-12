@@ -51,6 +51,18 @@ Background: Initialize mocking data
 				},
 			]
 		},
+		{
+			"id": "earn@mindsage.com",
+			"Subscriptions":
+			[
+				{
+					"id": "Subscription02",
+					"Role": "Student",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+				},
+			]
+		},
     ]
     """  
     And System have FriendRequest collection with JSON format are
@@ -159,6 +171,7 @@ Scenario: User request lesson's comments Then system send the lesson's comments 
 		[
 			{
 				"id": "Comment03",
+				"Order": 1,
 				"ClassRoomId": "ClassRoom01",
 				"CreatedByUserProfileId": "earn@mindsage.com",
 				"Description": "Msg03",
@@ -169,6 +182,7 @@ Scenario: User request lesson's comments Then system send the lesson's comments 
 			},
 			{
 				"id": "Comment02",
+				"Order": 2,
 				"ClassRoomId": "ClassRoom01",
 				"CreatedByUserProfileId": "sakul@mindsage.com",
 				"Description": "Msg02",

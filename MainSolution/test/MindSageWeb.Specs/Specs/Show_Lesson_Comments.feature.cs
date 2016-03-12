@@ -100,16 +100,39 @@ namespace SpecFlow.GeneratedTests.Specs
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 39
- testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
-                    "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
-                    "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""sakul@mindsage.com"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""earn@mindsage.com"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 56
+#line 68
     testRunner.And("System have FriendRequest collection with JSON format are", "[\r\n    {\r\n        \"id\": \"FriendRequest01\",\r\n\"FromUserProfileId\": \"sakul@mindsage." +
                     "com\",\r\n\"ToUserProfileId\": \"earn@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDa" +
                     "te\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 69
+#line 81
     testRunner.And("System have Comment collection with JSON format are", "[\r\n    {\r\n        \"id\": \"Comment01\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n    " +
                     "    \"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n        \"Description\": \"Msg" +
                     "01\",\r\n        \"TotalLikes\": 0,\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": " +
@@ -159,17 +182,17 @@ namespace SpecFlow.GeneratedTests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request lesson\'s comments Then system send the lesson\'s comments back", new string[] {
                         "mock"});
-#line 150
+#line 162
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 151
+#line 163
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 152
+#line 164
     testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson02\' of Cl" +
                     "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 153
+#line 165
     testRunner.Then("System send lesson\'s comment with JSON format is", @"{
 ""IsPrivateAccount"": false,
 ""IsDiscussionAvailable"": true,
@@ -177,6 +200,7 @@ this.FeatureBackground();
 [
 {
 ""id"": ""Comment03"",
+""Order"": 1,
 ""ClassRoomId"": ""ClassRoom01"",
 ""CreatedByUserProfileId"": ""earn@mindsage.com"",
 ""Description"": ""Msg03"",
@@ -187,6 +211,7 @@ this.FeatureBackground();
 },
 {
 ""id"": ""Comment02"",
+""Order"": 2,
 ""ClassRoomId"": ""ClassRoom01"",
 ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
 ""Description"": ""Msg02"",

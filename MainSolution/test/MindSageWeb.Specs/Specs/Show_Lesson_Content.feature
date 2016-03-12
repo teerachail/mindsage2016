@@ -189,3 +189,4 @@ Scenario: User open a course's lesson Then system send the selected lesson's con
 		]
 	}
     """  
+	And System update last active class room is 'ClassRoom01' for user 'sakul@mindsage.com'

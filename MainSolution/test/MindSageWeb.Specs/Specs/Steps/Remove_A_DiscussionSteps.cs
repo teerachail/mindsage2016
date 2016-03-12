@@ -25,7 +25,8 @@ namespace MindSageWeb.Specs.Steps
                 ClassRoomId = classRoomId,
                 LessonId = lessonId,
                 CommentId = commentId,
-                UserProfileId = userprofileId
+                UserProfileId = userprofileId,
+                IsDelete = true
             };
             discussionCtrl.Put(discussionId, body);
         }
