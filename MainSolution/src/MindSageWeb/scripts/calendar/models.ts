@@ -40,6 +40,10 @@
         ) {
         }
     }
-
-    
+    export class ApplyToAllCourseRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string) {
+        }
+    }
 }

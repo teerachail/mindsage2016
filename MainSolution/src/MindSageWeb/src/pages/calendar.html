@@ -23,43 +23,40 @@
             <!-- Repeat for additional weeks -->
         </ul>
         <div style="border-bottom: solid 2px #8a8a8a;">
+            <h5>Select Day</h5>
             <div class="text-center row"><h5 class="columns">{{cx.fisrtSelected | date:"MM/dd/yyyy"}}</h5><h5 ng-show="cx.lastSelected" class="columns"> - {{cx.lastSelected | date:"MM/dd/yyyy"}}</h5></div>
             <div class="row" ng-init="IsHoliday=true">
                     <div class="large-3 columns"><input  ng-model="IsHoliday" type="radio" value="true" ng-checked="true"> Set Holiday</div>
                     <div class="large-3 columns end"><input  ng-model="IsHoliday" type="radio" value="false"> Unset Holiday</div>
             </div>
-            <div  ng-init="Sifht = false">
+            <div>
                 <input ng-model="Sifht" type="checkbox">Sift
             </div>
             <div class="button" ng-click="cx.SetCourseScheduleRange(IsHoliday,Sifht)">Submit</div>
             <div class="button large-offset-1">Cancel</div> 
         </div>
-        <h5>Select Week Days</h5>
         <div style="border-bottom: solid 2px #8a8a8a;">
-            <div class="row">
-                <div ng-init="sun = false">
-                    <input ng-model="sun" type="checkbox">Sun
-                </div>
-                <div ng-init="mon = false">
-                    <input ng-model="mon" type="checkbox">Mon
-                </div>
-                <div ng-init="tue = false">
-                    <input ng-model="tue" type="checkbox">Tue
-                </div>
-                <div ng-init="wed = false">
-                    <input ng-model="wed" type="checkbox">Wed
-                </div>
-                <div ng-init="tur = false">
-                    <input ng-model="tur" type="checkbox">Tur
-                </div>
-                <div ng-init="fri = false">
-                    <input ng-model="fri" type="checkbox">Fri
-                </div>
-                <div ng-init="sat = false">
-                    <input ng-model="sat" type="checkbox">Sat
-                </div>
+            <h5>Select Week Days</h5>
+                <input ng-model="sun"  type="checkbox"> Sun
+                <input ng-model="mon" type="checkbox"> Mon
+                <input ng-model="tue" type="checkbox"> Tue
+                <input ng-model="wed" type="checkbox"> Wed
+                <input ng-model="tur" type="checkbox"> Tur
+                <input ng-model="fri" type="checkbox"> Fri
+                <input ng-model="sat" type="checkbox"> Sat
+            <div class="row" ng-init="IsHolidayWeek=true">
+                <div class="large-3 columns"><input ng-model="IsHolidayWeek" type="radio" value="true" ng-checked="true"> Set Holiday</div>
+                <div class="large-3 columns end"><input ng-model="IsHolidayWeek" type="radio" value="false"> Unset Holiday</div>
             </div>
+            <div>
+                <input ng-model="SifhtWeek" type="checkbox">Sift
+            </div>
+            <div class="button" ng-click="cx.SetCourseScheduleWeek(IsHoliday,SifhtWeek,sun,mon,tue,wed,tur,fri,sat)">Submit</div>
+            <div class="button large-offset-1">Cancel</div> 
         </div>
-
+        <div>
+            <h5>Set Apply to all course</h5>
+            <div class="button" ng-click="cx.ApplyToAllCourse()">Apply to all course</div>
+        </div>
     </div>
 </div>

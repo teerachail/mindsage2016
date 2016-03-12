@@ -173,11 +173,17 @@
         public SetStartDate(starDate: Date) {
             this.courseScheduleService.SetCourseStartDate(starDate);
         }
+
         public SetCourseScheduleRange(isHoliday: boolean, isShift: boolean) {
             this.courseScheduleService.SetCourseScheduleRange(isHoliday, isShift, this.fisrtSelected, this.lastSelected);
         }
+
         public SetCourseScheduleWeek(isHoliday: boolean, isShift: boolean, isSunday: boolean, isMonday: boolean, isTuesday: boolean, isWednesday: boolean, isTursday: boolean, isFriday: boolean, isSaturday: boolean) {
             this.courseScheduleService.SetCourseScheduleWeek(isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isTursday, isFriday, isSaturday);
+        }
+
+        public ApplyToAllCourse() {
+            this.courseScheduleService.ApplyToAllCourse();
         }
 
     }

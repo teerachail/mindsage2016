@@ -12,12 +12,16 @@
     interface ISetCourseScheduleWeekResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         SetCourseScheduleWeek(data: T): T;
     }
+    interface IApplyToAllCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        ApplyToAllCourse(data: T): T;
+    }
     export class CourseScheduleService {
 
         private getCourseScheduleSvc: IGetCourseScheduleResourceClass<any>;
         private setCourseStartDateSvc: ISetCourseStartDateResourceClass<any>;
         private setCourseScheduleRangeSvc: ISetCourseScheduleRangeResourceClass<any>;
         private setCourseScheduleWeekSvc: ISetCourseScheduleWeekResourceClass<any>;
+        private applyToAllCourseSvc: IApplyToAllCourseResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
@@ -31,6 +35,7 @@
                 'id': '@id', 'classRoomId': '@classRoomId', 'isHoliday': '@isHoliday', 'isShift': '@isShift',
                 'isSunday': '@isSunday', 'isMonday': '@isMonday', 'isTuesday': '@isTuesday', 'isWednesday': '@isWednesday', 'isTursday': '@isTursday', 'isFriday': '@isFriday', 'isSaturday': 'isSaturday'
             });
+            this.applyToAllCourseSvc = <IApplyToAllCourseResourceClass<any>>$resource(appConfig.ApplyToAllCourseUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
         }
 
         public GetCourseSchedule(): ng.IPromise<any> {
@@ -54,6 +59,11 @@
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             var classRoomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
             return this.setCourseScheduleWeekSvc.save(new SetCourseScheduleWeekRequest(userId, classRoomId, isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isTursday, isFriday, isSaturday)).$promise;
+        }
+        public ApplyToAllCourse(): ng.IPromise<any> {
+            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var classRoomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            return this.applyToAllCourseSvc.save(new ApplyToAllCourseRequest(userId, classRoomId)).$promise;
         }
 
     }
