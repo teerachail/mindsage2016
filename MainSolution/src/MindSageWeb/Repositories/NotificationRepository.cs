@@ -64,6 +64,8 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
         public void Insert(IEnumerable<Notification> data)
         {
+            if (!data.Any()) return;
+
             MongoAccess.MongoUtil.Instance.GetCollection<Notification>(TableName)
                 .InsertMany(data);
         }

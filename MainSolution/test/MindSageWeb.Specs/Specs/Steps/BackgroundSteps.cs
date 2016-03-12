@@ -24,6 +24,7 @@ namespace MindSageWeb.Specs.Steps
             var likeCommentRepo = mock.Create<ILikeCommentRepository>();
             var likeDiscussionRepo = mock.Create<ILikeDiscussionRepository>();
             var studentKeyRepo = mock.Create<IStudentKeyRepository>();
+            var notificationRepo = mock.Create<INotificationRepository>();
             var dateTime = mock.Create<IDateTime>();
 
             ScenarioContext.Current.Set(classRoomRepo);
@@ -37,7 +38,18 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(likeCommentRepo);
             ScenarioContext.Current.Set(likeDiscussionRepo);
             ScenarioContext.Current.Set(studentKeyRepo);
+            ScenarioContext.Current.Set(notificationRepo);
             ScenarioContext.Current.Set(dateTime);
+
+            var notificationCtrl = new NotificationController(userprofileRepo.Object,
+                notificationRepo.Object,
+                likeLessonRepo.Object,
+                likeCommentRepo.Object,
+                likeDiscussionRepo.Object,
+                commentRepo.Object,
+                classCalendarRepo.Object,
+                friendRequestRepo.Object,
+                dateTime.Object);
 
             var myCourseCtrl = new LessonController(classCalendarRepo.Object,
                 userprofileRepo.Object,
@@ -47,6 +59,7 @@ namespace MindSageWeb.Specs.Steps
                 commentRepo.Object,
                 friendRequestRepo.Object,
                 userActivityRepo.Object,
+                notificationCtrl,
                 dateTime.Object);
 
             var commentCtrl = new CommentController(classCalendarRepo.Object,
@@ -54,6 +67,7 @@ namespace MindSageWeb.Specs.Steps
                 commentRepo.Object,
                 userActivityRepo.Object,
                 likeCommentRepo.Object,
+                notificationCtrl,
                 dateTime.Object);
 
             var discussionCtrl = new DiscussionController(classCalendarRepo.Object,
@@ -61,6 +75,7 @@ namespace MindSageWeb.Specs.Steps
                 commentRepo.Object,
                 userActivityRepo.Object,
                 likeDiscussionRepo.Object,
+                notificationCtrl,
                 dateTime.Object);
 
             var mycourseCtrl = new MyCourseController(classCalendarRepo.Object,
@@ -80,6 +95,7 @@ namespace MindSageWeb.Specs.Steps
                 userActivityRepo.Object,
                 dateTime.Object);
 
+            ScenarioContext.Current.Set(notificationCtrl);
             ScenarioContext.Current.Set(myCourseCtrl);
             ScenarioContext.Current.Set(commentCtrl);
             ScenarioContext.Current.Set(discussionCtrl);

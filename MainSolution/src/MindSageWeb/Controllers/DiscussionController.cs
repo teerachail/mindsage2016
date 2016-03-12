@@ -14,6 +14,7 @@ namespace MindSageWeb.Controllers
     {
         #region Fields
 
+        private NotificationController _notificationCtrl;
         private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
         private ICommentRepository _commentRepo;
@@ -33,11 +34,13 @@ namespace MindSageWeb.Controllers
         /// <param name="commentRepo">Comment repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
         /// <param name="likeDiscussionRepo">Like discussion repository</param>
+        /// <param name="notificationCtrl">Notification API</param>
         public DiscussionController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             ICommentRepository commentRepo,
             IUserActivityRepository userActivityRepo,
             ILikeDiscussionRepository likeDiscussionRepo,
+            NotificationController notificationCtrl,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -46,6 +49,7 @@ namespace MindSageWeb.Controllers
             _userActivityRepo = userActivityRepo;
             _likeDiscussionRepo = likeDiscussionRepo;
             _dateTime = dateTime;
+            _notificationCtrl = notificationCtrl;
         }
 
         #endregion Constructors
@@ -109,6 +113,7 @@ namespace MindSageWeb.Controllers
 
             selectedLesson.ParticipationAmount++;
             _userActivityRepo.UpsertUserActivity(selectedUserActivity);
+            _notificationCtrl.SendNotification();
             return new PostNewDiscussionRespond { ActualCommentId = id };
         }
 
@@ -235,6 +240,7 @@ namespace MindSageWeb.Controllers
 
             selectedDiscussion.TotalLikes = likeDiscussions.Where(it => !it.DeletedDate.HasValue).Count();
             _commentRepo.UpsertComment(selectedComment);
+            _notificationCtrl.SendNotification();
         }
 
         #endregion Methods

@@ -15,6 +15,7 @@ namespace MindSageWeb.Controllers
     {
         #region Fields
 
+        private NotificationController _notificationCtrl;
         private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
         private IClassRoomRepository _classRoomRepo;
@@ -40,6 +41,7 @@ namespace MindSageWeb.Controllers
         /// <param name="commentRepo">Comment repository</param>
         /// <param name="friendRequestRepo">Friend request repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
+        /// <param name="notificationCtrl">Notificaotion API</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IClassRoomRepository classRoomRepo,
@@ -48,6 +50,7 @@ namespace MindSageWeb.Controllers
             ICommentRepository commentRepo,
             IFriendRequestRepository friendRequestRepo,
             IUserActivityRepository userActivityRepo,
+            NotificationController notificationCtrl,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -354,6 +357,7 @@ namespace MindSageWeb.Controllers
             var selectedLesson = selectedClassRoom.Lessons.First(it => it.id == body.LessonId);
             selectedLesson.TotalLikes = likeLessons.Where(it => !it.DeletedDate.HasValue).Count();
             _classRoomRepo.UpsertClassRoom(selectedClassRoom);
+            _notificationCtrl.SendNotification();
         }
 
         // POST: api/lesson/readnote
