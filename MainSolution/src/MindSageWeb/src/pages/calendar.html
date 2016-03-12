@@ -34,5 +34,32 @@
             <div class="button" ng-click="cx.SetCourseScheduleRange(IsHoliday,Sifht)">Submit</div>
             <div class="button large-offset-1">Cancel</div> 
         </div>
+        <h5>Select Week Days</h5>
+        <div style="border-bottom: solid 2px #8a8a8a;">
+            <div class="row">
+                <div ng-init="sun = false">
+                    <input ng-model="sun" type="checkbox">Sun
+                </div>
+                <div ng-init="mon = false">
+                    <input ng-model="mon" type="checkbox">Mon
+                </div>
+                <div ng-init="tue = false">
+                    <input ng-model="tue" type="checkbox">Tue
+                </div>
+                <div ng-init="wed = false">
+                    <input ng-model="wed" type="checkbox">Wed
+                </div>
+                <div ng-init="tur = false">
+                    <input ng-model="tur" type="checkbox">Tur
+                </div>
+                <div ng-init="fri = false">
+                    <input ng-model="fri" type="checkbox">Fri
+                </div>
+                <div ng-init="sat = false">
+                    <input ng-model="sat" type="checkbox">Sat
+                </div>
+            </div>
+        </div>
+
     </div>
 </div>
