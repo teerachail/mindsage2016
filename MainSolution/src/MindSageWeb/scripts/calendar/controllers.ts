@@ -22,6 +22,14 @@
             this.year = this.today.getFullYear();
             this.setCalendar(this.month, this.year);
             this.fisrtSelected = new Date(this.today.toDateString());
+            ////-----------------null Begin date---------------------
+            //this.courseInformation.BeginDate = null;
+        }
+        public setBeginDate() {
+            if (this.courseInformation.BeginDate == null) {
+                return new Date();
+            }
+            else return new Date(this.courseInformation.BeginDate);
         }
 
         public setCalendar(month: number, year: number) {
@@ -171,19 +179,29 @@
         }
 
         public SetStartDate(starDate: Date) {
-            this.courseScheduleService.SetCourseStartDate(starDate);
+            this.courseScheduleService.SetCourseStartDate(starDate)
+                .then(it=> {
+                    it.Lessons.BeginDate
+                    this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);
+                });
         }
 
         public SetCourseScheduleRange(isHoliday: boolean, isShift: boolean) {
-            this.courseScheduleService.SetCourseScheduleRange(isHoliday, isShift, this.fisrtSelected, this.lastSelected);
+            this.courseInformation = this.courseScheduleService.SetCourseScheduleRange(isHoliday, isShift, this.fisrtSelected, this.lastSelected).then(it=> {
+                it.Lessons.BeginDate
+                this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);
+            });
         }
 
         public SetCourseScheduleWeek(isHoliday: boolean, isShift: boolean, isSunday: boolean, isMonday: boolean, isTuesday: boolean, isWednesday: boolean, isTursday: boolean, isFriday: boolean, isSaturday: boolean) {
-            this.courseScheduleService.SetCourseScheduleWeek(isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isTursday, isFriday, isSaturday);
+            this.courseScheduleService.SetCourseScheduleWeek(isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isTursday, isFriday, isSaturday).then(it=> {
+                it.Lessons.BeginDate
+                this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);
+            });
         }
 
         public ApplyToAllCourse() {
-            this.courseScheduleService.ApplyToAllCourse();
+            this.courseScheduleService.ApplyToAllCourse()
         }
 
     }

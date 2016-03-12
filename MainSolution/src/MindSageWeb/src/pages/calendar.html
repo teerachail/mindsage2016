@@ -1,10 +1,10 @@
 ﻿<div class="large-8 push-4 large-offset-1 columns">
     <label class="large-4">
         Begin Date
-        <input ng-model="BeginDate" type="date">
+        <input ng-model="BeginDate" type="date"ng-init="BeginDate = cx.setBeginDate()">
     </label>
     <div class="button" ng-click="cx.SetStartDate(BeginDate)">Set Begin Date</div>
-    <div  ng-show="BeginDate">
+    <div  ng-show="cx.courseInformation.BeginDate">
         <ul class="calendar">
             <li class="title"><span class="button" ng-click="cx.prevMount()"><<<</span>{{cx.monthNames}} {{cx.year}}<span class="button" ng-click="cx.nextMount()">>>></span></li>
             <li class="day-header">

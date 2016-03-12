@@ -46,4 +46,21 @@
             public classRoomId: string) {
         }
     }
+
+    export class Calendar {
+        constructor(
+            public IsComplete: boolean ,
+            public BeginDate: Date,
+            public EndDate: Date,
+            public Lessons: LessonSchedule[],
+            public Holidays = []) {
+        }
+    }
+
+    export class LessonSchedule {
+        constructor(
+            public Name: string,
+            public BeginDate: Date) {
+        }
+    }
 }
