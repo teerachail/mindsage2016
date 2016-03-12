@@ -26,16 +26,16 @@
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
             this.getCourseScheduleSvc = <IGetCourseScheduleResourceClass<any>>$resource(appConfig.CourseScheduleUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
-            this.setCourseStartDateSvc = <ISetCourseStartDateResourceClass<any>>$resource(appConfig.CourseStartDateUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'beginDate': '@beginDate' });
+            this.setCourseStartDateSvc = <ISetCourseStartDateResourceClass<any>>$resource(appConfig.CourseStartDateUrl, { 'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId', 'beginDate': '@beginDate' });
             this.setCourseScheduleRangeSvc = <ISetCourseScheduleRangeResourceClass<any>>$resource(appConfig.CourseScheduleRangeUrl, {
-                'id': '@id', 'classRoomId': '@classRoomId', 'isHoliday': '@isHoliday', 'isShift': '@isShift',
+                'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId', 'isHoliday': '@isHoliday', 'isShift': '@isShift',
                 'fromDate': '@fromDate', 'toDate': '@toDate'
             });
             this.setCourseScheduleWeekSvc = <ISetCourseScheduleWeekResourceClass<any>>$resource(appConfig.CourseScheduleWeekUrl, {
-                'id': '@id', 'classRoomId': '@classRoomId', 'isHoliday': '@isHoliday', 'isShift': '@isShift',
+                'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId', 'isHoliday': '@isHoliday', 'isShift': '@isShift',
                 'isSunday': '@isSunday', 'isMonday': '@isMonday', 'isTuesday': '@isTuesday', 'isWednesday': '@isWednesday', 'isTursday': '@isTursday', 'isFriday': '@isFriday', 'isSaturday': 'isSaturday'
             });
-            this.applyToAllCourseSvc = <IApplyToAllCourseResourceClass<any>>$resource(appConfig.ApplyToAllCourseUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
+            this.applyToAllCourseSvc = <IApplyToAllCourseResourceClass<any>>$resource(appConfig.ApplyToAllCourseUrl, { 'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId' });
         }
 
         public GetCourseSchedule(): ng.IPromise<any> {

@@ -9,9 +9,9 @@ namespace MindSageWeb.Repositories.Models
     {
         #region Properties
 
-        public string id { get; set; }
+        public string UserProfileId { get; set; }
         public string ClassRoomId { get; set; }
-        public DateTime? BeginDate { get; set; }
+        public DateTime BeginDate { get; set; }
 
         #endregion Properties
     }

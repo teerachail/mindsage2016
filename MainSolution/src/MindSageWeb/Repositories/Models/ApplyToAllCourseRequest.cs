@@ -8,7 +8,7 @@ namespace MindSageWeb.Repositories.Models
     public class ApplyToAllCourseRequest
     {
         #region Properties
-        public string id { get; set; }
+        public string UserProfileId { get; set; }
         public string ClassRoomId { get; set; }
         #endregion Properties
     }

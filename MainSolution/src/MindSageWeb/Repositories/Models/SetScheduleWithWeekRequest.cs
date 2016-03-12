@@ -9,7 +9,7 @@ namespace MindSageWeb.Repositories.Models
     {
         #region Properties
 
-        public string id { get; set; }
+        public string UserProfileId { get; set; }
         public string ClassRoomId { get; set; }
         public bool IsHoliday { get; set; }
         public bool IsShift { get; set; }

@@ -8,7 +8,7 @@
     }
     export class SetCourseStartDateRequest {
         constructor(
-            public id: string,
+            public userProfileId: string,
             public classRoomId: string,
             public beginDate: Date)
          {
@@ -16,7 +16,7 @@
     }
     export class SetCourseScheduleRangeRequest {
         constructor(
-            public id: string,
+            public userProfileId: string,
             public classRoomId: string,
             public isHoliday: boolean,
             public isShift: boolean,
@@ -26,7 +26,7 @@
     }
     export class SetCourseScheduleWeekRequest {
         constructor(
-            public id: string,
+            public userProfileId: string,
             public classRoomId: string,
             public isHoliday: boolean,
             public isShift: boolean,
@@ -42,7 +42,7 @@
     }
     export class ApplyToAllCourseRequest {
         constructor(
-            public id: string,
+            public userProfileId: string,
             public classRoomId: string) {
         }
     }

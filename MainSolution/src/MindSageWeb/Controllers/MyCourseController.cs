@@ -740,6 +740,45 @@ namespace MindSageWeb.Controllers
             return result;
         }
 
+        // POST: api/mycourse/schedulerange
+        /// <summary>
+        /// Edit Schedule with range
+        /// </summary>
+        /// <param name="body">Start date's information</param>
+        [HttpPost]
+        [Route("schedulerange")]
+        public GetCourseScheduleRespond SetScheduleWithRange(SetScheduleWithRangeRequest body)
+        {
+            // TODO: Not implemented 
+            throw new NotImplementedException();
+        }
+
+        // POST: api/mycourse/scheduleweek
+        /// <summary>
+        /// Edit Schedule with week days
+        /// </summary>
+        /// <param name="body">Start date's information</param>
+        [HttpPost]
+        [Route("scheduleweek")]
+        public GetCourseScheduleRespond SetScheduleWithWeek(SetScheduleWithWeekRequest body)
+        {
+            // TODO: Not implemented 
+            throw new NotImplementedException();
+        }
+
+        // POST: api/mycourse/applytoall
+        /// <summary>
+        /// Set schedule apply to all course.
+        /// </summary>
+        /// <param name="body">Start date's information</param>
+        [HttpPost]
+        [Route("applytoall")]
+        public void ApplyToAllCourse(ApplyToAllCourseRequest body)
+        {
+            // TODO: Not implemented 
+            throw new NotImplementedException();
+        }
+
         private GetCourseScheduleRespond getCourseSchedule(ClassCalendar classCalendar, bool isComplete)
         {
             const int LessonDuration = 5;
