@@ -749,8 +749,42 @@ namespace MindSageWeb.Controllers
         [Route("schedulerange")]
         public GetCourseScheduleRespond SetScheduleWithRange(SetScheduleWithRangeRequest body)
         {
-            // TODO: Not implemented 
-            throw new NotImplementedException();
+            var areArgumentValid = body != null
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.UserProfileId);
+            if (!areArgumentValid) return null;
+
+            var canAccessToCourse = validateAccessToCourseScheduleManagement(body.UserProfileId, body.ClassRoomId);
+            if (!canAccessToCourse) return null;
+
+            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+            if (classCalendar == null) return null;
+
+            var dateRange = Enumerable.Empty<DateTime>();
+            var isMoreThanOneDay = body.ToDate.HasValue;
+            if (isMoreThanOneDay)
+            {
+                var isTodayIsCorrect = body.ToDate.Value.Date > body.FromDate.Date;
+                var fromDate = isTodayIsCorrect ? body.FromDate.Date : body.ToDate.Value.Date;
+                var toDate = isTodayIsCorrect ? body.ToDate.Value.Date : body.FromDate.Date;
+                const int ShiftOneDay = 1;
+                var diffDays = (toDate - fromDate).Days + ShiftOneDay;
+                dateRange = Enumerable.Range(0, diffDays).Select(it => new DateTime(fromDate.Year, fromDate.Month, fromDate.Day + it));
+            }
+            else dateRange = new List<DateTime> { body.FromDate.Date };
+
+            var holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
+            holidays = body.IsHoliday ? holidays.Union(dateRange) : holidays.Except(dateRange);
+            classCalendar.Holidays = holidays.Distinct();
+
+            var shiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
+            shiftDays = body.IsShift ? shiftDays.Union(dateRange) : shiftDays.Except(dateRange);
+            classCalendar.ShiftDays = shiftDays.Distinct();
+
+            _classCalendarRepo.UpsertClassCalendar(classCalendar);
+
+            var result = getCourseSchedule(classCalendar, true);
+            return result;
         }
 
         // POST: api/mycourse/scheduleweek
