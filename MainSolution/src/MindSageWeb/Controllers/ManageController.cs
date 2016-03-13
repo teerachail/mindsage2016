@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using MindSageWeb.Models;
 using MindSageWeb.Services;
 using MindSageWeb.ViewModels.Manage;
+using MindSageWeb.Repositories;
 
 namespace MindSageWeb.Controllers
 {
@@ -21,19 +22,22 @@ namespace MindSageWeb.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly IImageUploader _imageUploader;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
+        ILoggerFactory loggerFactory,
+        IImageUploader imageUploader)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _imageUploader = imageUploader;
         }
 
         //
@@ -227,6 +231,37 @@ namespace MindSageWeb.Controllers
             }
             return Redirect(redirectURL);
         }
+        
+        //
+        // GET: /Manage/ChangeProfileImag/:classroomid
+        [HttpGet]
+        public IActionResult ChangeProfileImage(string id)
+        {
+
+            var model = new ChangeProfileImageViewModel { ClassRoom = id };
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeProfileImage/:classroomid
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeProfileImage(ChangeProfileImageViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            //var user = await GetCurrentUserAsync();
+            var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
+            //if (user != null)
+            //{
+            //    var AzurePath = _imageUploader.Upload(model.ImagePath.OpenReadStream());
+            //}
+            return Redirect(redirectURL);
+        }
+
 
         //
         // GET: /Manage/SetPassword
