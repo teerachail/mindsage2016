@@ -22,22 +22,19 @@ namespace MindSageWeb.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
-        private readonly IImageUploader _imageUploader;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
-        ILoggerFactory loggerFactory,
-        IImageUploader imageUploader)
+        ILoggerFactory loggerFactory)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
-            _imageUploader = imageUploader;
         }
 
         //
@@ -248,18 +245,34 @@ namespace MindSageWeb.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangeProfileImage(ChangeProfileImageViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                return View(model);
+                var user = await GetCurrentUserAsync();
+                if (user != null)
+                {
+                    using (var fileStream = model.ImagePath.OpenReadStream())
+                    {
+                        var storageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=mindsage;AccountKey=Xhaa5/DoM4usU0teA7pvQr/X7qo6g+6Vx+OGIvvzJb2obg6kpwH4dP5AWX0YKGuXxa+tNAQivwRuKYGphaWcEg==;BlobEndpoint=https://mindsage.blob.core.windows.net/");
+                        var blobClient = storageAccount.CreateCloudBlobClient();
+
+                        const string ContainerName = "userprofileimage";
+                        var container = blobClient.GetContainerReference(ContainerName);
+
+                        await container.CreateIfNotExistsAsync();
+
+                        var blob = container.GetBlockBlobReference(Guid.NewGuid().ToString());
+                        blob.Properties.ContentType = model.ImagePath.ContentType;
+                        await blob.UploadFromStreamAsync(fileStream);
+                        var fileUrl = blob.Uri.AbsolutePath;
+                        // TODO: Update user profile image
+                    }
+
+                    var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
+                    return Redirect(redirectURL);
+                }
             }
 
-            //var user = await GetCurrentUserAsync();
-            var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
-            //if (user != null)
-            //{
-            //    var AzurePath = _imageUploader.Upload(model.ImagePath.OpenReadStream());
-            //}
-            return Redirect(redirectURL);
+            return View(model);
         }
 
 

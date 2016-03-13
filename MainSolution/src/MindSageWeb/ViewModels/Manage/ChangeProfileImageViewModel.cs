@@ -10,9 +10,10 @@ namespace MindSageWeb.ViewModels.Manage
     public class ChangeProfileImageViewModel
     {
         [Required]
-        [DataType(DataType.Url)]
         [Display(Name = "Profile's image")]
         public IFormFile ImagePath { get; set; }
+
+        [Required]
         public string ClassRoom { get; set; }
     }
 }
