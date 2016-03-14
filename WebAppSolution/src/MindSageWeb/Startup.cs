@@ -11,6 +11,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MindSageWeb.Models;
 using MindSageWeb.Services;
+using MindSageWeb.Repositories;
 
 namespace MindSageWeb
 {
@@ -38,6 +39,9 @@ namespace MindSageWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
+            MongoAccess.MongoUtil.Instance.Initialize(appConfig);
+
             // Add framework services.
             services.AddEntityFramework()
                 .AddSqlServer()
@@ -53,6 +57,27 @@ namespace MindSageWeb
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
+
+            services.AddTransient<IClassCalendarRepository, ClassCalendarRepository>();
+            services.AddTransient<IClassRoomRepository, ClassRoomRepository>();
+            services.AddTransient<ICommentRepository, CommentRepository>();
+            services.AddTransient<ICourseCatalogRepository, CourseCatalogRepository>();
+            services.AddTransient<IDateTime, ServerDateTime>();
+            services.AddTransient<IFriendRequestRepository, FriendRequestRepository>();
+            services.AddTransient<ILessonCatalogRepository, LessonCatalogRepository>();
+            services.AddTransient<ILikeCommentRepository, LikeCommentRepository>();
+            services.AddTransient<ILikeDiscussionRepository, LikeDiscussionRepository>();
+            services.AddTransient<ILikeLessonRepository, LikeLessonRepository>();
+            services.AddTransient<IStudentKeyRepository, StudentKeyRepository>();
+            services.AddTransient<IUserActivityRepository, UserActivityRepository>();
+            services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<INotificationRepository, NotificationRepository>();
+
+            //services.AddTransient<Controllers.NotificationController, Controllers.NotificationController>();
+            //services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();
+            //services.AddTransient<Controllers.CourseController, Controllers.CourseController>();
+
+            services.AddSwaggerGen();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -92,12 +117,22 @@ namespace MindSageWeb
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
+            var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
+            app.UseGoogleAuthentication(options =>
+            {
+                options.ClientId = appConfig.GoogleClinetId;
+                options.ClientSecret = appConfig.GoogleClientSecret;
+            });
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSwaggerGen();
+            app.UseSwaggerUi();
         }
 
         // Entry point for the application.
