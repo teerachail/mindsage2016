@@ -8,9 +8,20 @@ namespace MindSageWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private CourseController _courseCtrl;
+        private MyCourseController _myCourseCtrl;
+
+        public HomeController(CourseController courseCtrl, MyCourseController myCourseCtrl)
+        {
+            _courseCtrl = courseCtrl;
+            _myCourseCtrl = myCourseCtrl;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            ViewBag.HaveAnyCourse = _myCourseCtrl.GetAllUserCoursCatalogIds(User.Identity.Name).Any();
+            var availableCourses = _courseCtrl.GetAvailableCourseGroups();
+            return View(availableCourses);
         }
 
         public IActionResult About()
@@ -30,6 +41,21 @@ namespace MindSageWeb.Controllers
         public IActionResult Error()
         {
             return View();
+        }
+
+        public IActionResult Detail(string id, bool isCouponInvalid = false)
+        {
+            var selectedCourse = _courseCtrl.GetCourseDetail(id);
+            if (selectedCourse == null) return RedirectToAction("Error");
+            
+            var allUserCourses = Enumerable.Empty<string>();
+            var isAlreadyHaveSelectedCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses);
+            
+            ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
+            ViewBag.HaveAnyCourse = allUserCourses.Any();
+            ViewBag.IsCouponInvalid = isCouponInvalid;
+
+            return View(selectedCourse);
         }
     }
 }

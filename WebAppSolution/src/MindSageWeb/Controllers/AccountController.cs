@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using MindSageWeb.Models;
 using MindSageWeb.Services;
 using MindSageWeb.ViewModels.Account;
+using MindSageWeb.Repositories;
 
 namespace MindSageWeb.Controllers
 {
@@ -23,19 +24,25 @@ namespace MindSageWeb.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private readonly IUserProfileRepository _userProfileRepo;
+        private readonly IDateTime _dateTime;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ISmsSender smsSender,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            IUserProfileRepository userprofileRepo,
+            IDateTime dateTime)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
+            _userProfileRepo = userprofileRepo;
+            _dateTime = dateTime;
         }
 
         //
@@ -115,6 +122,7 @@ namespace MindSageWeb.Controllers
                     //await _emailSender.SendEmailAsync(model.Email, "Confirm your account",
                     //    "Please confirm your account by clicking this link: <a href=\"" + callbackUrl + "\">link</a>");
                     await _signInManager.SignInAsync(user, isPersistent: false);
+                    createNewUserProfile(model.Email);
                     _logger.LogInformation(3, "User created a new account with password.");
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
@@ -213,6 +221,7 @@ namespace MindSageWeb.Controllers
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {
+                        createNewUserProfile(model.Email);
                         await _signInManager.SignInAsync(user, isPersistent: false);
                         _logger.LogInformation(6, "User created an account using {Name} provider.", info.LoginProvider);
                         return RedirectToLocal(returnUrl);
@@ -223,6 +232,22 @@ namespace MindSageWeb.Controllers
 
             ViewData["ReturnUrl"] = returnUrl;
             return View(model);
+        }
+
+        private void createNewUserProfile(string email)
+        {
+            const string DefaultProfileImageUrl = "http://placehold.it/100x100";
+            var newUserProfile = new Repositories.Models.UserProfile
+            {
+                id = email,
+                CourseReminder = Repositories.Models.UserProfile.ReminderFrequency.Once,
+                CreatedDate = _dateTime.GetCurrentTime(),
+                ImageProfileUrl = DefaultProfileImageUrl,
+                IsEnableNotification = true,
+                Name = email,
+                Subscriptions = Enumerable.Empty<Repositories.Models.UserProfile.Subscription>()
+            };
+            _userProfileRepo.UpsertUserProfile(newUserProfile);
         }
 
         // GET: /Account/ConfirmEmail

@@ -10,6 +10,7 @@ using Microsoft.Extensions.Logging;
 using MindSageWeb.Models;
 using MindSageWeb.Services;
 using MindSageWeb.ViewModels.Manage;
+using MindSageWeb.Repositories;
 
 namespace MindSageWeb.Controllers
 {
@@ -195,9 +196,10 @@ namespace MindSageWeb.Controllers
         //
         // GET: /Manage/ChangePassword
         [HttpGet]
-        public IActionResult ChangePassword()
+        public IActionResult ChangePassword(string id)
         {
-            return View();
+            var model = new ChangePasswordViewModel { ClassRoom = id };
+            return View(model);
         }
 
         //
@@ -210,6 +212,7 @@ namespace MindSageWeb.Controllers
             {
                 return View(model);
             }
+
             var user = await GetCurrentUserAsync();
             if (user != null)
             {
@@ -218,12 +221,59 @@ namespace MindSageWeb.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User changed their password successfully.");
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
+                    var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
+                    return Redirect(redirectURL);
                 }
                 AddErrors(result);
                 return View(model);
             }
             return RedirectToAction(nameof(Index), new { Message = ManageMessageId.Error });
+        }
+        
+        //
+        // GET: /Manage/ChangeProfileImag/:classroomid
+        [HttpGet]
+        public IActionResult ChangeProfileImage(string id)
+        {
+
+            var model = new ChangeProfileImageViewModel { ClassRoom = id };
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeProfileImage/:classroomid
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeProfileImage(ChangeProfileImageViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await GetCurrentUserAsync();
+                if (user != null)
+                {
+                    using (var fileStream = model.ImagePath.OpenReadStream())
+                    {
+                        var storageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=mindsage;AccountKey=Xhaa5/DoM4usU0teA7pvQr/X7qo6g+6Vx+OGIvvzJb2obg6kpwH4dP5AWX0YKGuXxa+tNAQivwRuKYGphaWcEg==;BlobEndpoint=https://mindsage.blob.core.windows.net/");
+                        var blobClient = storageAccount.CreateCloudBlobClient();
+
+                        const string ContainerName = "userprofileimage";
+                        var container = blobClient.GetContainerReference(ContainerName);
+
+                        await container.CreateIfNotExistsAsync();
+
+                        var blob = container.GetBlockBlobReference(Guid.NewGuid().ToString());
+                        blob.Properties.ContentType = model.ImagePath.ContentType;
+                        await blob.UploadFromStreamAsync(fileStream);
+                        var fileUrl = blob.Uri.AbsolutePath;
+                        // TODO: Update user profile image
+                    }
+
+                    var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
+                    return Redirect(redirectURL);
+                }
+            }
+
+            return View(model);
         }
 
         //
