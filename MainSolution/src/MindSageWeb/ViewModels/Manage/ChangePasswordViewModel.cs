@@ -24,6 +24,7 @@ namespace MindSageWeb.ViewModels.Manage
         [Compare("NewPassword", ErrorMessage = "The new password and confirmation password do not match.")]
         public string ConfirmPassword { get; set; }
 
+        [Required]
         public string ClassRoom { get; set; }
     }
 }
