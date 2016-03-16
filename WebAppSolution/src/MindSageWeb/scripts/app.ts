@@ -13,7 +13,17 @@
         'foundation.accordion',
 
         //custom controllers
-        'app.shared'
+        'app.shared',
+        'app.lessons',
+        'app.studentlists',
+        'app.coursemaps',
+        'app.notification',
+        'app.journals',
+        'app.teacherlists',
+        'app.sidemenus',
+        'app.settings',
+        'app.main',
+        'app.calendar'
     ])
         .config(config)
         .run(run)
