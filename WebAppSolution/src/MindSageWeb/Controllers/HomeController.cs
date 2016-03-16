@@ -19,9 +19,10 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Index()
         {
-            ViewBag.HaveAnyCourse = _myCourseCtrl.GetAllUserCoursCatalogIds(User.Identity.Name).Any();
-            var availableCourses = _courseCtrl.GetAvailableCourseGroups();
-            return View(availableCourses);
+            //ViewBag.HaveAnyCourse = _myCourseCtrl.GetAllUserCoursCatalogIds(User.Identity.Name).Any();
+            //var availableCourses = _courseCtrl.GetAvailableCourseGroups();
+            //return View(availableCourses);
+            return View();
         }
 
         public IActionResult About()
@@ -45,12 +46,13 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Detail(string id, bool isCouponInvalid = false)
         {
-            var selectedCourse = _courseCtrl.GetCourseDetail(id);
+            var selectedCourse = _courseCtrl?.GetCourseDetail(id);
             if (selectedCourse == null) return RedirectToAction("Error");
-            
+
             var allUserCourses = Enumerable.Empty<string>();
-            var isAlreadyHaveSelectedCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses);
-            
+            var isAlreadyLoggedIn = User?.Identity?.IsAuthenticated ?? false;
+            var isAlreadyHaveSelectedCourse = isAlreadyLoggedIn ? _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses) : false;
+
             ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
             ViewBag.HaveAnyCourse = allUserCourses.Any();
             ViewBag.IsCouponInvalid = isCouponInvalid;
