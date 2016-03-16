@@ -1,0 +1,93 @@
+---
+name: app.course.notification
+url: /notification
+---
+<div class="large-8 push-4 large-offset-1 columns">
+
+    <div class="row">
+        <div class="large-6 columns">
+            <h1 class="lesson-header">Notification</h1>
+        </div>
+    </div>    
+    <div ng-show="cx.notification.length == 0"><p> Have no notification </p></div>
+    <div class="list" data-accordion data-allow-all-closed="true">
+        <div  ng-repeat="item in cx.displayNpotifications"  class="callout" data-accordion-item on-finish-render>
+            <a>
+                <p ng-show="item.Tag == 0">
+                    <img class="listIcon" src="../assets/img/icon/friend_request_pending.png" /><span> Reminder </span>
+                </p>
+                <p ng-show="item.Tag == 1">
+                    <img class="listIcon" src="../assets/img/icon/notifications_inactive.png" /><span> TOTD </span>
+                </p>
+                <p ng-show="item.Tag == 2">
+                    <img class="listIcon" src="../assets/img/icon/like_inactive.png" /><span> Like: </span>
+                    <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
+                </p>
+                <p ng-show="item.Tag == 3">
+                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Comment: </span>
+                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ item.FromUserProfileName }}</span>
+                </p>
+                <p ng-show="item.Tag == 4">
+                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Discussion: </span>
+                    <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
+                </p>
+            </a>
+
+            <div class="undisplay" data-tab-content>
+                <div class="snall-12">
+                    <p>
+                        <a ng-show="item.Tag > 1" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
+                        {{ item.Message }}
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!--<div ng-show="!show" class="callout" data-accordion-item>
+            <a>
+                <p>
+                    <img class="listIcon" src="../assets/img/icon/like_inactive.png" /><span> Like </span>
+                    <span><span ng-show="!$first">,</span>{{ name }}</span>
+                    <i ng-click="show = !show" class="fi-trash size-24 float-right"></i>
+                </p>
+            </a>
+            <div class="undisplay" data-tab-content>
+                <div class="snall-12">
+                    <p ng-show="tag > 1"><span ng-show="!$first">,</span><a href="#">{{ name }}</a></p>
+                    <p>AAAAA</p>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="!show" class="callout" data-accordion-item>
+            <a>
+                <p>
+                    <img class="listIcon" src="../assets/img/icon/social_participation.png" /><span> Discussion </span>
+                    <span><span ng-show="!$first">,</span>{{ name }}</span>
+                    <i ng-click="show = !show" class="fi-trash size-24 float-right"></i>
+                </p>
+            </a>
+            <div class="undisplay" data-tab-content>
+                <div class="snall-12">
+                    <p ng-show="tag > 1"><span ng-show="!$first">,</span><a href="#">{{ name }}</a></p>
+                    <p>AAAAA</p>
+                </div>
+            </div>
+        </div>
+
+        <div ng-show="!show" class="callout" data-accordion-item>
+            <a>
+                <p>
+                    <img class="listIcon" src="../assets/img/icon/friend_request_pending.png" /><span> Reminder </span><i ng-click="show = !show" class="fi-trash size-24 float-right"></i>
+                </p>
+            </a>
+            <div class="undisplay" data-tab-content>
+                <div class="snall-12">
+                    <p ng-show="tag > 1"><span ng-show="!$first">,</span><a href="#">{{ name }}</a></p>
+                    <p>AAAAA</p>
+                </div>
+            </div>
+        </div>-->
+
+    </div>
+</div>

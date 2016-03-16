@@ -1,0 +1,17 @@
+---
+name: app.main
+url: /main
+---
+<div>
+    <div>
+        <div>
+            <iframe width="560" height="315" ng-src="{{ mcx.RunningVideoUrl }}" frameborder="0" allowfullscreen></iframe>
+        </div>
+    </div>
+</div>
+<div>
+    <div ng-include="'/templates/sidemenu.html'"></div>
+    <div ui-view class="clearfix">
+    </div>
+</div>
+
