@@ -14,6 +14,7 @@
 
         //custom controllers
         'app.shared',
+        'app.preparings',
         'app.lessons',
         'app.studentlists',
         'app.coursemaps',

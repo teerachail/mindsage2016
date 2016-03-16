@@ -17,11 +17,43 @@
         private isWaittingForFriendList: boolean;
         private getStudentListsvc: IStudentListResourceClass<any>;
 
-        static $inject = ['appConfig', '$resource'];
-        constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService) {
+        static $inject = ['appConfig', '$resource', '$q'];
+        constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private $q) {
             this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, {});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getStudentListsvc = <IStudentListResourceClass<any>>$resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
+        }
+
+        private isPrepareUserProfileComplete: boolean;
+        private isWaittingForPrepareUserProfile: boolean;
+        public IsPrepareAllUserProfileCompleted(): boolean {
+            if (!this.isPrepareUserProfileComplete) {
+                if (!this.isWaittingForPrepareUserProfile) {
+                    this.isWaittingForPrepareUserProfile = true;
+                    this.getUserProfileSvc.get().$promise.then(it => {
+                        this.clientUserProfile = it;
+                        this.$q.all([
+                            this.getAllCourses(),
+                            this.getFriendLists()
+                        ]).then(data => {
+                            this.allAvailableCourses = data[0];
+                            this.friendList = data[1];
+                            this.isWaittingForPrepareUserProfile = false;
+                            this.isPrepareUserProfileComplete = true;
+                        }, error=> this.isWaittingForPrepareUserProfile = false);
+                    }, error=> this.isWaittingForPrepareUserProfile = false);
+                }
+            }
+            return this.isPrepareUserProfileComplete;
+        }
+        private getAllCourses(): ng.IPromise<any> {
+            var userId = this.clientUserProfile.UserProfileId;
+            return this.getAllCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
+        }
+        private getFriendLists(): ng.IPromise<any> {
+            var userId = this.clientUserProfile.UserProfileId;
+            var classRoomId = this.clientUserProfile.CurrentClassRoomId;
+            return this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise;
         }
 
         public UpdateUserProfile(userProfile): void {
