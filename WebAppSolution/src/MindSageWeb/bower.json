@@ -8,6 +8,10 @@
     "jquery-validation-unobtrusive": "3.2.4",
     "foundation-apps": "~1.2.0",
     "owlcarousel": "~1.3.2",
-    "foundation-datepicker": "~1.5.0"
+    "foundation-datepicker": "~1.5.0",
+    "angular-resource": "~1.5.1"
+  },
+  "resolutions": {
+    "angular": "1.5.1-build.4664+sha.a4e60cb"
   }
 }
