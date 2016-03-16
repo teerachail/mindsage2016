@@ -3,6 +3,7 @@
   "devDependencies": {},
   "ambientDevDependencies": {
     "angular": "github:DefinitelyTyped/DefinitelyTyped/angularjs/angular.d.ts#c2ae01b0b4c046a7f986183c792fbccedec0b1fc",
+    "angularjs/legacy/angular-resource": "registry:dt/angularjs/legacy/angular-resource#1.3.0+20160220205416",
     "fastclick": "github:DefinitelyTyped/DefinitelyTyped/fastclick/fastclick.d.ts#67d3e3547f2b3ebd4b683d78b7670e018a09ab4d",
     "foundation-sites": "github:DefinitelyTyped/DefinitelyTyped/foundation-sites/foundation-sites.d.ts#4a9a8a49ea59703baea9fe7aff3810d55663793a",
     "jquery": "github:DefinitelyTyped/DefinitelyTyped/jquery/jquery.d.ts#661fc869669af796c6048483e999dce5732eed72"
