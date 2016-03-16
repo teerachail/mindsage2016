@@ -15,6 +15,7 @@
         //custom controllers
         'app.shared',
         'app.preparings',
+        'app.layouts',
         'app.lessons',
         'app.studentlists',
         'app.coursemaps',
@@ -23,7 +24,6 @@
         'app.teacherlists',
         'app.sidemenus',
         'app.settings',
-        'app.main',
         'app.calendar'
     ])
         .config(config)

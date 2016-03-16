@@ -1,7 +1,7 @@
-module app.main {
+module app.layouts {
     'use strict';
 
-    class MainController {
+    class AppLayoutController {
 
         public targetUser: any;
         public classRoomId: string;
@@ -40,7 +40,31 @@ module app.main {
         }
     }
 
+    class LessonLayoutController {
+        public RunningVideoUrl: string;
+
+        static $inject = ['$sce'];
+        constructor(private $sce) {
+        }
+
+        public ChangeVideo(url: string) {
+            this.RunningVideoUrl = this.$sce.trustAsResourceUrl(url);
+        }
+    }
+
+    class CourseLayoutController {
+
+        private ads: any;
+
+        static $inject = ['app.shared.ClientUserProfileService'];
+        constructor(private clientUserProfileSvc: app.shared.ClientUserProfileService) {
+            this.ads = this.clientUserProfileSvc.Advertisments;
+        }
+    }
+
     angular
-        .module('app.main')
-        .controller('app.main.MainController', MainController);
+        .module('app.layouts')
+        .controller('app.layouts.AppLayoutController', AppLayoutController)
+        .controller('app.layouts.LessonLayoutController', LessonLayoutController)
+        .controller('app.layouts.CourseLayoutController', CourseLayoutController);
 }
