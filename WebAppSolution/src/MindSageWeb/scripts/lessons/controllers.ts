@@ -13,14 +13,56 @@ module app.lessons {
         private requestedCommentIds = [];
         private likes: any;
 
-        static $inject = ['$scope', 'content', 'classRoomId', 'lessonId', 'comment', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
-        constructor(private $scope, public content, public classRoomId: string, public lessonId: string, public comment, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
-            this.teacherView = false;
+        private content;
+        private comment;
+        private lessonId;
+        private classRoomId;
+        private isWaittingForGetLessonContent: boolean;
+        private isPrepareLessonContentComplete: boolean;
+
+        static $inject = ['$q', '$scope', '$stateParams', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
+        constructor(private $q, private $scope, private $stateParams, private waitRespondTime, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
+            this.prepareUserprofile();
+        }
+
+        private prepareUserprofile(): void {
+            if (!this.userprofileSvc.IsPrepareAllUserProfileCompleted()) {
+                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
+                return;
+            }
+
+            //this.teacherView = false;
+            this.lessonId = this.$stateParams.lessonId;
+            this.classRoomId = this.$stateParams.classRoomId;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
-            this.currentUser.CurrentDisplayLessonId = lessonId;
+            this.currentUser.CurrentDisplayLessonId = this.lessonId;
             this.userprofileSvc.UpdateUserProfile(this.currentUser);
-            this.userprofileSvc.Advertisments = this.content.Advertisments;
-            this.getProfileSvc.GetLike().then(it=> this.likes = it);
+            this.teacherView = this.currentUser.IsTeacher;
+
+            this.prepareLessonContents();
+        }
+
+        private prepareLessonContents(): void {
+            var shouldRequestLessonContent = !this.isPrepareLessonContentComplete && !this.isWaittingForGetLessonContent;
+            if (shouldRequestLessonContent) {
+                this.isWaittingForGetLessonContent = true;
+                this.$q.all([
+                    this.getProfileSvc.GetLike(),
+                    this.lessonSvc.GetContent(this.lessonId, this.classRoomId),
+                    this.commentSvc.GetComments(this.lessonId, this.classRoomId)
+                ]).then(data => {
+                    this.likes = data[0];
+                    this.content = data[1];
+                    this.comment = data[2];
+                    this.userprofileSvc.Advertisments = this.content.Advertisments;
+                    this.isWaittingForGetLessonContent = false;
+                    this.isPrepareLessonContentComplete = true;
+                    }, error => {
+                        console.log('Load lesson content failed');
+                        this.isWaittingForGetLessonContent = false;
+                        setTimeout(it=> this.prepareLessonContents(), this.waitRespondTime);
+                    });
+            }
         }
 
         public selectTeacherView(): void {

@@ -1,6 +1,7 @@
 ---
 name: app.main.lesson
 url: /lesson/:lessonId/:classRoomId
+controller: 'app.lessons.LessonController as cx'
 ---
 
 <div class="large-8 push-4 large-offset-1 columns" ng-init="mcx.ChangeVideo(cx.content.PrimaryContentURL)">

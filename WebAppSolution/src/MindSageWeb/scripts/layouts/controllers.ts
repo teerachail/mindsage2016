@@ -6,8 +6,16 @@ module app.layouts {
         public targetUser: any;
         public classRoomId: string;
 
-        static $inject = ['app.studentlists.StudentListService', 'app.shared.ClientUserProfileService'];
-        constructor(private listsSvc: app.studentlists.StudentListService, private userSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['waitRespondTime', 'app.studentlists.StudentListService', 'app.shared.ClientUserProfileService'];
+        constructor(private waitRespondTime, private listsSvc: app.studentlists.StudentListService, private userSvc: app.shared.ClientUserProfileService) {
+            this.prepareUserprofile();
+        }
+
+        private prepareUserprofile(): void {
+            if (!this.userSvc.IsPrepareAllUserProfileCompleted()) {
+                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
+                return;
+            }
             this.classRoomId = this.userSvc.GetClientUserProfile().CurrentClassRoomId;
         }
         

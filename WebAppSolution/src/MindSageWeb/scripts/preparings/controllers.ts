@@ -3,15 +3,15 @@ module preparings.main {
 
     class PreparingController {
 
-        static $inject = ['$state', 'app.shared.ClientUserProfileService'];
-        constructor(private $state, private userSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['$state', 'app.shared.ClientUserProfileService', 'waitRespondTime'];
+        constructor(private $state, private userSvc: app.shared.ClientUserProfileService, private waitRespondTime) {
             this.prepareUserProfile();
         }
 
         private prepareUserProfile(): void {
             var isCompleted = this.userSvc.IsPrepareAllUserProfileCompleted();
             if (!isCompleted) {
-                setTimeout(it => this.prepareUserProfile(), 777);
+                setTimeout(it => this.prepareUserProfile(), this.waitRespondTime);
                 return;
             }
 

@@ -16,12 +16,14 @@
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
         private isWaittingForFriendList: boolean;
         private getStudentListsvc: IStudentListResourceClass<any>;
+        private getCourseSvc: IGetCourseResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', '$q'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private $q) {
             this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, {});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getStudentListsvc = <IStudentListResourceClass<any>>$resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
+            this.getCourseSvc = <IGetCourseResourceClass<any>>$resource(appConfig.GetCourserofileUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
         }
 
         private isPrepareUserProfileComplete: boolean;
@@ -34,10 +36,17 @@
                         this.clientUserProfile = it;
                         this.$q.all([
                             this.getAllCourses(),
-                            this.getFriendLists()
+                            this.getFriendLists(),
+                            this.getCourseInfo()
                         ]).then(data => {
                             this.allAvailableCourses = data[0];
                             this.friendList = data[1];
+                            var courseInfoRespond = data[2];
+                            this.clientUserProfile.IsTeacher = courseInfoRespond.IsTeacher;
+                            this.clientUserProfile.ClassName = courseInfoRespond.ClassName;
+                            this.clientUserProfile.CurrentStudentCode = courseInfoRespond.CurrentStudentCode;
+                            this.clientUserProfile.NumberOfStudents = courseInfoRespond.NumberOfStudents;
+                            this.clientUserProfile.StartDate = courseInfoRespond.StartDate;
                             this.isWaittingForPrepareUserProfile = false;
                             this.isPrepareUserProfileComplete = true;
                         }, error=> this.isWaittingForPrepareUserProfile = false);
@@ -54,6 +63,11 @@
             var userId = this.clientUserProfile.UserProfileId;
             var classRoomId = this.clientUserProfile.CurrentClassRoomId;
             return this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise;
+        }
+        private getCourseInfo(): ng.IPromise<any> {
+            var userId = this.clientUserProfile.UserProfileId;
+            var classRoomId = this.clientUserProfile.CurrentClassRoomId;
+            return this.getCourseSvc.get(new GetCourseRequest(userId, classRoomId)).$promise;
         }
 
         public UpdateUserProfile(userProfile): void {
