@@ -1,7 +1,7 @@
 ﻿(function () {
     'use strict';
 
-    angular.module('application', [
+    angular.module('app', [
         'ui.router',
         'ngAnimate',
 
@@ -10,7 +10,10 @@
         'foundation.dynamicRouting',
         'foundation.dynamicRouting.animations',
 
-        'foundation.accordion'
+        'foundation.accordion',
+
+        //custom controllers
+        'app.shared'
     ])
         .config(config)
         .run(run)
