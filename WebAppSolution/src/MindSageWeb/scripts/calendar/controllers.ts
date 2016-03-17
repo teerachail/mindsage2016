@@ -16,19 +16,52 @@
         public month; // month
         public allweeks = []; // array for push week
         public monthNames: string;
-        static $inject = ['$scope', '$state', 'courseSchedule', 'app.calendar.CourseScheduleService'];
-        constructor(private $scope, private $state, private courseInformation: any, private courseScheduleService: app.calendar.CourseScheduleService) {
+        private courseInformation: any;
+        private isWaittingForGetCourseScheduleContent: boolean;
+        private isPrepareCourseScheduleContentComplete: boolean;
+
+        static $inject = ['$scope', 'waitRespondTime', 'app.calendar.CourseScheduleService', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, private waitRespondTime, private courseScheduleService: app.calendar.CourseScheduleService, private clientProfileSvc: app.shared.ClientUserProfileService) {
+            this.prepareUserprofile();
+        }
+
+        private prepareUserprofile(): void {
+            if (!this.clientProfileSvc.IsPrepareAllUserProfileCompleted()) {
+                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
+                return;
+            }
+
+            this.prepareCourseScheduleContents();
+        }
+        private prepareCourseScheduleContents(): void {
+            var shouldRequestCourseScheduleContent = !this.isPrepareCourseScheduleContentComplete && !this.isWaittingForGetCourseScheduleContent;
+            if (shouldRequestCourseScheduleContent) {
+                this.isWaittingForGetCourseScheduleContent = true;
+                this.courseScheduleService.GetCourseSchedule().then(respond => {
+                    if (respond != null) {
+                        this.courseInformation = respond;
+                        this.prepareSchedule();
+                    }
+                    this.isWaittingForGetCourseScheduleContent = false;
+                    this.isPrepareCourseScheduleContentComplete = true;
+                }, error => {
+                    console.log('Load course schedule content failed, retrying ...');
+                    this.isWaittingForGetCourseScheduleContent = false;
+                    setTimeout(it=> this.prepareCourseScheduleContents(), this.waitRespondTime);
+                });
+            }
+        }
+        private prepareSchedule(): void {
             this.month = this.today.getMonth();
             this.year = this.today.getFullYear();
             this.setCalendar(this.month, this.year);
             this.fisrtSelected = new Date(this.today.toDateString());
-            ////-----------------null Begin date---------------------
+            //-----------------null Begin date---------------------
             //this.courseInformation.BeginDate = null;
         }
+
         public setBeginDate() {
-            if (this.courseInformation.BeginDate == null) {
-                return new Date();
-            }
+            if (this.courseInformation.BeginDate == null) return new Date();
             else return new Date(this.courseInformation.BeginDate);
         }
 
@@ -47,6 +80,7 @@
             var jumped = 0;
             var inserted = 1;
 
+            var allWeeks = [];
             for (var j = 1; j <= weeks; j++) {
                 var allday = [];
                 for (var i = 1; i <= 7; i++) {
@@ -64,8 +98,9 @@
                         inserted++;
                     }
                 }
-                this.allweeks.push(allday);
+                allWeeks.push(allday);
             }
+            this.allweeks = allWeeks;
         }
 
         public nextMount() {
@@ -93,6 +128,7 @@
         }
 
         public IsHoliday(day: Date) {
+            if (!this.isPrepareCourseScheduleContentComplete) return false;
             for (var i = 0; i < this.courseInformation.Holidays.length; i++) {
                 if (new Date(this.courseInformation.Holidays[i]).toDateString() == day.toDateString()) return true;
             }
@@ -100,6 +136,7 @@
         }
 
         public IsStartLesson(day: Date) {
+            if (!this.isPrepareCourseScheduleContentComplete) return "";
             for (var i = 0; i < this.courseInformation.Lessons.length; i++) {
                 if (day.toDateString() == new Date(this.courseInformation.Lessons[i].BeginDate).toDateString()) return this.courseInformation.Lessons[i].Name;
             }
@@ -107,6 +144,7 @@
         }
 
         public IsOdd(day: Date) {
+            if (!this.isPrepareCourseScheduleContentComplete) return false;
             for (var i = 0; i < this.courseInformation.Lessons.length; i += 2) {
                 if (i == this.courseInformation.Lessons.length - 1) {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
@@ -126,6 +164,7 @@
         }
 
         public IsEven(day: Date) {
+            if (!this.isPrepareCourseScheduleContentComplete) return false;
             for (var i = 1; i < this.courseInformation.Lessons.length; i += 2) {
                 if (i == this.courseInformation.Lessons.length - 1) {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
@@ -179,6 +218,7 @@
         }
 
         public SetStartDate(starDate: Date) {
+            if (!this.isPrepareCourseScheduleContentComplete) return;
             this.courseScheduleService.SetCourseStartDate(starDate)
                 .then(it=> {
                     it.Lessons.BeginDate
@@ -187,6 +227,7 @@
         }
 
         public SetCourseScheduleRange(isHoliday: boolean, isShift: boolean) {
+            if (!this.isPrepareCourseScheduleContentComplete) return;
             this.courseInformation = this.courseScheduleService.SetCourseScheduleRange(isHoliday, isShift, this.fisrtSelected, this.lastSelected).then(it=> {
                 it.Lessons.BeginDate
                 this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);
@@ -194,6 +235,7 @@
         }
 
         public SetCourseScheduleWeek(isHoliday: boolean, isShift: boolean, isSunday: boolean, isMonday: boolean, isTuesday: boolean, isWednesday: boolean, isTursday: boolean, isFriday: boolean, isSaturday: boolean) {
+            if (!this.isPrepareCourseScheduleContentComplete) return;
             this.courseScheduleService.SetCourseScheduleWeek(isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isTursday, isFriday, isSaturday).then(it=> {
                 it.Lessons.BeginDate
                 this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);

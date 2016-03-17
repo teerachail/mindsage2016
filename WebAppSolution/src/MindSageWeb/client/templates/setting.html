@@ -24,8 +24,7 @@ controller: 'app.settings.SettingController as cx'
                             Name
                             <input ng-model="cx.userInfo.FullName" type="text">
                         </label>
-                            <p>Email : {{ cx.userInfo.UserProfileId }}</p>
-                            <a class="button" ui-sref="app.course.calendar({ classRoomId: cx.userProfile.CurrentClassRoomId })">Go calendar</a>
+                        <p>Email : {{ cx.userInfo.UserProfileId }}</p>
                     </div>
 
                     <div class="small-4 columns">
@@ -86,7 +85,7 @@ controller: 'app.settings.SettingController as cx'
             <p>Class Info</p>
         </div>
         <a class="small-2 large-2 columns" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
-        <a class="small-2 large-2 columns" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.userInfo.ClassName, cx.userprofile.CurrentStudentCode, cx.userInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
+        <a class="small-2 large-2 columns" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.userInfo.ClassName, cx.userInfo.CurrentStudentCode, cx.userInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
 
         <div class="small-6 large-4 columns">
             <a class="viewlist" ui-sref="app.course.teacherlist({ classRoomId: cx.userInfo.CurrentClassRoomId })">View Student List</a>
@@ -104,7 +103,7 @@ controller: 'app.settings.SettingController as cx'
                     <div class="small-4 columns">
                         <label class="have-help-text">
                             Class Code
-                            <input ng-model="cx.userprofile.CurrentStudentCode" type="text">
+                            <input ng-model="cx.userInfo.CurrentStudentCode" type="text">
                             <a class="help-text">What is this?</a>
                         </label>
                     </div>
@@ -120,7 +119,7 @@ controller: 'app.settings.SettingController as cx'
                 <div class="row">
                     <div class="small-3 columns">
                         <p>
-                            Start Date <a ui-sref="app.course.calendar({ classRoomId: cx.userProfile.CurrentClassRoomId })"><img width="30" src="../assets/img/logo/calendar.png" /></a>
+                            Start Date <img width="30" src="../assets/img/logo/calendar.png" />
                         </p>
                     </div>
                     <div class="small-9 columns">
@@ -130,7 +129,8 @@ controller: 'app.settings.SettingController as cx'
                     </div>
                     <div class="small-12 columns">
                         <p>
-                            Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.userProfile.CurrentClassRoomId })"><img width="30" src="../assets/img/logo/calendar.png" /></a>
+                            Set Off Days and Vacations <img width="30" src="../assets/img/logo/calendar.png" />
+                            <a class="button" ui-sref="app.course.calendar({ classRoomId: cx.userInfo.CurrentClassRoomId })">Go calendar</a>
                         </p>
                     </div>
 

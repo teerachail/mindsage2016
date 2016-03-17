@@ -1,15 +1,16 @@
 ﻿---
 name: app.course.calendar
 url: /calendar
+controller: 'app.calendar.CarlendarController as cx'
 ---
 <div class="large-8 push-4 large-offset-1 columns">
     <label class="large-4">
         Begin Date
         <input ng-model="cx.BeginDate" type="date">
     </label>
-    <div  ng-show="cx.BeginDate">
+    <div ng-show="cx.isPrepareCourseScheduleContentComplete && (cx.courseInformation.BeginDate != null)">
         <ul class="calendar">
-            <li class="title"><span class="button" ng-click="cx.prevMount()"><<<</span>{{cx.monthNames}} {{cx.year}}<span class="button" ng-click="cx.nextMount()">>>></span></li>
+            <li class="title"><span class="button" ng-click="cx.prevMount()"><<<</span>{{ cx.monthNames }} {{ cx.year }}<span class="button" ng-click="cx.nextMount()">>>></span></li>
             <li class="day-header">
                 <div class="large-1 day">Sun</div>
                 <div class="large-1 day">Mon</div>
@@ -21,12 +22,12 @@ url: /calendar
             </li>
 
             <li class="week" ng-repeat="week in cx.allweeks">
-                <div class="large-1 day" ng-repeat="day in week"  ng-class="{'today':cx.CheckToday(day),'holiday':cx.IsHoliday(day),'previous-month': day.getMonth()<cx.month,'next-month': day.getMonth()>cx.month ,'dodd':cx.IsOdd(day),'deven':cx.IsEven(day),'selected':cx.OnSelected(day)}"  ng-click="cx.Selected(day)">{{day.getDate()}} <span>{{cx.IsStartLesson(day)}}</span></div>
+                <div class="large-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day), 'holiday': cx.IsHoliday(day), 'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'dodd': cx.IsOdd(day), 'deven': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} <span>{{ cx.IsStartLesson(day) }}</span></div>
             </li>
             <!-- Repeat for additional weeks -->
         </ul>
         <div class="row">
-            <div class="large-6 large-offset-3 columns"><h5>{{cx.fisrtSelected | date:"MM/dd/yyyy"}}</h5><h5 ng-show="cx.lastSelected"> - {{cx.lastSelected | date:"MM/dd/yyyy"}}</h5></div>
+            <div class="large-6 large-offset-3 columns"><h5>{{ cx.fisrtSelected | date:"MM/dd/yyyy" }}</h5><h5 ng-show="cx.lastSelected"> - {{ cx.lastSelected | date:"MM/dd/yyyy" }}</h5></div>
         </div>
         <div class="row">
             <label class="large-3 columns">
@@ -34,7 +35,7 @@ url: /calendar
             </label>
             <label class="large-9 columns">
                 <input ng-model="cx.Sifht" type="checkbox">Sift
-                {{cx.Sifht}}
+                {{ cx.Sifht }}
             </label>
         </div>
         <label class="large-4">
@@ -55,6 +56,6 @@ url: /calendar
         <label class="large-4">
             <input ng-model="cx.selectDay[6]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Saturday
         </label>
-        {{cx.selectDay}}
+        {{ cx.selectDay }}
     </div>
 </div>
