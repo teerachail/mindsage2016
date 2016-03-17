@@ -8,54 +8,33 @@
     ViewData["Title"] = "Log in";
 }
 
-<h2>@ViewData["Title"].</h2>
-<div class="row">
-    <div class="col-md-8">
+<div class="grid-block">
+    <div class="grid-container large-3">
         <section>
-            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form">
-                <h4>Use a local account to log in.</h4>
-                <hr />
-                <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Email" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="Email" class="form-control" />
-                        <span asp-validation-for="Email" class="text-danger"></span>
-                    </div>
+            <form asp-controller="Account" asp-action="Login" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="form-horizontal" role="form" data-abide novalidate>
+                <div class="row column log-in-form">
+                    <h4>LOG IN</h4>
+                    <div asp-validation-summary="ValidationSummary.All" data-abide-error class="form-error"></div>
+                    <label asp-for="Email">
+                        Email
+                        <input asp-for="Email" required pattern="email"/>
+                        <span asp-validation-for="Email" class="form-error"></span>
+                    </label>
+                    <label asp-for="Password">
+                        Password
+                        <input asp-for="Password" required/>
+                        <span asp-validation-for="Password" class="form-error"></span>
+                    </label>
+                    <label>
+                        <input asp-for="RememberMe" />
+                        <label asp-for="RememberMe"></label>
+                    </label>
+                    <button type="submit" class="button large expand">Log in</button>
                 </div>
-                <div class="form-group">
-                    <label asp-for="Password" class="col-md-2 control-label"></label>
-                    <div class="col-md-10">
-                        <input asp-for="Password" class="form-control" />
-                        <span asp-validation-for="Password" class="text-danger"></span>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <div class="checkbox">
-                            <input asp-for="RememberMe" />
-                            <label asp-for="RememberMe"></label>
-                        </div>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <div class="col-md-offset-2 col-md-10">
-                        <button type="submit" class="btn btn-default">Log in</button>
-                    </div>
-                </div>
-                <p>
-                    <a asp-action="Register">Register as a new user?</a>
-                </p>
-                <p>
-                    <a asp-action="ForgotPassword">Forgot your password?</a>
-                </p>
             </form>
         </section>
-    </div>
-    <div class="col-md-4">
         <section>
-            <h4>Use another service to log in.</h4>
-            <hr />
+            
             @{
                 var loginProviders = SignInManager.GetExternalAuthenticationSchemes().ToList();
                 if (loginProviders.Count == 0)
@@ -74,7 +53,7 @@
                             <p>
                                 @foreach (var provider in loginProviders)
                                 {
-                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account">@provider.AuthenticationScheme</button>
+                                    <button type="submit"  class="button large alert expand" name="provider" value="@provider.AuthenticationScheme" title="Log in using your @provider.DisplayName account"><img zf-iconic="" icon="flag" size="medium" class="iconic-color-secondary"> @provider.AuthenticationScheme</button>
                                 }
                             </p>
                         </div>
@@ -82,6 +61,12 @@
                 }
             }
         </section>
+        <p class="text-center">
+            <a asp-action="Register">Register as a new user</a>
+        </p>
+        <p class="text-center">
+            <a asp-action="ForgotPassword">Forgot your password</a>
+        </p>
     </div>
 </div>
 
