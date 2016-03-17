@@ -5,166 +5,152 @@ controller: 'app.settings.SettingController as cx'
 ---
 <div class="large-8 push-4 large-offset-1 columns setting" data-accordion data-multi-expand="true" data-allow-all-closed="true">
     <div class="row">
-        <div class="large-6 columns">
-            <h1 class="lesson-header">SETTING</h1>
-        </div>
+        <h1>SETTING</h1>
     </div>
 
-    <div class="settting-edit clearfix" data-accordion-item ng-init="IsPrivate = false">
-        <div class="small-4 large-2 columns">
-            <p>User Info</p>
+    <div class="settting-edit" data-accordion-item ng-init="IsPrivate = false">
+        <div class="clearfix grid-block">
+            <div class="small-4 large-2 grid-content">
+                <p>User Info</p>
+            </div>
+            <a class="small-2 large-2 grid-content" ng-show="!explan" ng-click="explan = !explan">Edit</a>
+            <a class="small-2 large-2 grid-content" ng-show="explan" ng-click="cx.UpdateProfile(cx.userInfo.FullName, cx.userInfo.SchoolName,cx.userInfo.IsPrivateAccout,cx.userInfo.IsReminderOnceTime) ; explan = !explan">Save</a>
         </div>
-        <a class="small-2 large-2 columns" ng-show="!explan" ng-click="explan = !explan">Edit</a>
-        <a class="small-2 large-2 columns" ng-show="explan" ng-click="cx.UpdateProfile(cx.userInfo.FullName, cx.userInfo.SchoolName,cx.userInfo.IsPrivateAccout,cx.userInfo.IsReminderOnceTime) ; explan = !explan">Save</a>
-        <div class="control undisplay" data-tab-content>
-            <div class="large-12">
-                <div class="row">
-                    <div class="small-8 columns">
-                        <label>
-                            Name
-                            <input ng-model="cx.userInfo.FullName" type="text">
-                        </label>
-                        <p>Email : {{ cx.userInfo.UserProfileId }}</p>
-                    </div>
-
-                    <div class="small-4 columns">
-                        <div class="small-12 small-centered center">
-                            <div><img class="thumbnail" style="width: 100px; height: 100px;" src="{{ cx.userInfo.ImageUrl }}"></div>
-                            <div><a>Edit</a></div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-6 columns">
-                        <label>
-                            School
-                            <input ng-model="cx.userInfo.SchoolName" type="text">
-                        </label>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-6 columns">
-                        <label>
-                            <input ng-model="cx.userInfo.IsPrivateAccout" type="checkbox">
-                            Private account
-                        </label>
-                    </div>
+        <div data-tab-content>
+            <div class="grid-block">
+                <div class="grid-content">
+                    <label>
+                        Name
+                        <input ng-model="cx.userInfo.FullName" type="text">
+                    </label>
+                    <p>Email : {{ cx.userInfo.UserProfileId }}</p>
                 </div>
 
-                <div class="row">
-                    <div class="small-3 columns">
-                        Reminder
-                    </div>
-                    <div class="small-3 columns">
-                        <label>
-                            <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=true>
-                            ReminderOnceTime
-                        </label>
-                    </div>
-                    <div class="small-3 columns">
-                        <label>
-                            <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=false>
-                            ReminderTwiceTime
-                        </label>
+                <div class="align-center grid-block">
+                    <div>
+                        <div><img class="thumbnail" style="width: 100px; height: 100px;" src="{{ cx.userInfo.ImageUrl }}"></div>
+                        <div class="align-center grid-block"><a href="../Manage/ChangeProfileImage/{{ cx.userInfo.CurrentClassRoomId }}">Edit</a></div>
                     </div>
                 </div>
-                <div class="row">
-                    <div class="small-6 columns">
-                        <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{ cx.userInfo.CurrentClassRoomId }}">Change Password</a>
-                    </div>
-                    <div class="small-6 columns">
-                        <a class="button" ng-show="!cx.userInfo.HasPassword" href="../Manage/SetPassword/{{ cx.userInfo.CurrentClassRoomId }}">Set Password</a>
-                    </div>
+            </div>
+            <div class="grid-content">
+                <label>
+                    School
+                    <input ng-model="cx.userInfo.SchoolName" type="text">
+                </label>
+            </div>
+            <div class="grid-content">
+                <label>
+                    <input ng-model="cx.userInfo.IsPrivateAccout" type="checkbox">
+                    Private account
+                </label>
+            </div>
+            <div class="grid-block">
+                <div class="grid-content">
+                    Reminder
+                </div>
+                <div class="grid-content">
+                    <label>
+                        <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=true>
+                        ReminderOnceTime
+                    </label>
+                </div>
+                <div class="grid-content">
+                    <label>
+                        <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=false>
+                        ReminderTwiceTime
+                    </label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-6 grid-content">
+                    <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{ cx.userInfo.CurrentClassRoomId }}">Change Password</a>
+                </div>
+                <div class="small-6 grid-content">
+                    <a class="button" ng-show="!cx.userInfo.HasPassword" href="../Manage/SetPassword/{{ cx.userInfo.CurrentClassRoomId }}">Set Password</a>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="settting-edit clearfix" ng-show = "cx.userInfo.IsTeacher" data-accordion-item>
-        <div class="small-4 large-2 columns">
-            <p>Class Info</p>
+    <div class="settting-edit" ng-show="cx.userInfo.IsTeacher" data-accordion-item>
+        <div class="clearfix grid-block">
+            <div class="small-4 large-2 grid-content">
+                <p>Class Info</p>
+            </div>
+            <a class="small-2 large-2 grid-content" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
+            <a class="small-2 large-2 grid-content" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.userInfo.ClassName, cx.userInfo.CurrentStudentCode, cx.userInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
         </div>
-        <a class="small-2 large-2 columns" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
-        <a class="small-2 large-2 columns" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.userInfo.ClassName, cx.userInfo.CurrentStudentCode, cx.userInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
-
-        <div class="small-6 large-4 columns">
+        <div class="small-6 large-4 grid-content">
             <a class="viewlist" ui-sref="app.course.teacherlist({ classRoomId: cx.userInfo.CurrentClassRoomId })">View Student List</a>
         </div>
-        <div class="control undisplay" data-tab-content>
-            <div class="large-12">
-                <div class="row">
-                    <div class="small-8 columns">
-                        <label>
-                            Class Name
-                            <input ng-model="cx.userInfo.ClassName" type="text">
-                        </label>
-                    </div>
-
-                    <div class="small-4 columns">
-                        <label class="have-help-text">
-                            Class Code
-                            <input ng-model="cx.userInfo.CurrentStudentCode" type="text">
-                            <a class="help-text">What is this?</a>
-                        </label>
-                    </div>
-
+        <div data-tab-content>
+            <div class="grid-block">
+                <div class="grid-content">
+                    <label>
+                        Class Name
+                        <input ng-model="cx.userInfo.ClassName" type="text">
+                    </label>
                 </div>
-                <div class="row">
-                    <div class="small-3 columns">
-                        <p>
-                            Number of Students {{ cx.userInfo.NumberOfStudents }}
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="small-3 columns">
-                        <p>
-                            Start Date <img width="30" src="../assets/img/logo/calendar.png" />
-                        </p>
-                    </div>
-                    <div class="small-9 columns">
-                        <p>
-                            {{ cx.userInfo.StartDate }}
-                        </p>
-                    </div>
-                    <div class="small-12 columns">
-                        <p>
-                            Set Off Days and Vacations <img width="30" src="../assets/img/logo/calendar.png" />
-                            <a class="button" ui-sref="app.course.calendar({ classRoomId: cx.userInfo.CurrentClassRoomId })">Go calendar</a>
-                        </p>
-                    </div>
 
-                    <div>
-                        <div class="small-6 columns">
-                            <button class="button" data-open="ConfirmModel">Delete Course</button>
-                        </div>
+                <div class="grid-content">
+                    <label class="have-help-text">
+                        Class Code
+                        <input ng-model="cx.userInfo.CurrentStudentCode" type="text">
+                        <a class="help-text">What is this?</a>
+                    </label>
+                </div>
+            </div>
+            <div class="grid-content">
+                <p>
+                    Number of Students {{ cx.userInfo.NumberOfStudents }}
+                </p>
+            </div>
+            <div class="grid-block">
+                <div class="grid-content">
+                    <p>
+                        Start Date <img width="30" src="../assets/img/logo/calendar.png" />
+                    </p>
+                </div>
+                <div class="grid-content">
+                    <p>
+                        {{ cx.userInfo.StartDate }}
+                    </p>
+                </div>
+                <div class="grid-content">
+                    <p>
+                        Set Off Days and Vacations <img width="30" src="../assets/img/logo/calendar.png" />
+                        <a class="button" ui-sref="app.course.calendar({ classRoomId: cx.userInfo.CurrentClassRoomId })">Go calendar</a>
+                    </p>
+                </div>
+                <div>
+                    <div class="grid-content">
+                        <button class="button" zf-open="ConfirmModel">Delete Course</button>
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    <div class="large-10 large-centered" ng-show = "cx.userInfo.IsTeacher">
+    <div class="align-center grid-block clearfix" ng-show="cx.userInfo.IsTeacher">
         <p>Student Message</p>
         <textarea rows="3" ng-model="studentMessage"></textarea><button class="button primary float-right" ng-click="cx.StudenMessageEdit(studentMessage)">SEND</button>
     </div>
 </div>
 
-<div class="reveal tiny" id="ConfirmModel" data-reveal>
-    <div class="modal-head"><h4 class="text-center">Confirm</h4></div>
+<div zf-modal="" id="ConfirmModel">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Confirm</h4>
     <div>
         <div class="medium-10 medium-centered large-10 large-centered columns">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
                     <div data-equalizer-watch>
                         <p>Confirm to remove course</p>
-                        <button class="button alert" ng-click="cx.DeleteCourse()" data-close>Confirm</button>
-                        <button class="button" data-close>Cancel</button>
+                        <button class="button alert" ng-click="cx.DeleteCourse()" zf-close="">Confirm</button>
+                        <button class="button" zf-close="">Cancel</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>

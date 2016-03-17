@@ -5,38 +5,34 @@ controller: 'app.teacherlists.teacherlistsController as cx'
 ---
 <div class="large-7 push-5 large-offset-1 columns list">
     <div class="row">
-        <div class="large-6 columns">
-            <h1 class="lesson-header">CLASS LIST</h1>
-        </div>
+        <h1>CLASS LIST</h1>
     </div>
-    <div class="row" ng-repeat="item in cx.list" data-equalizer>
-            <div class="small-6 column callout" data-equalizer-watch>
-                <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
-                    <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                </a>
-            </div>
-        <div class="small-6 column middleblock" data-equalizer-watch>
-            <button class="button" ng-click="cx.targetStd(item)" data-open="ConfirmModel">Remove student</button>
+    <div class="grid-block" ng-repeat="item in cx.list" data-equalizer>
+        <div class="small-6 grid-content callout" data-equalizer-watch>
+            <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
+                <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
+            </a>
+        </div>
+        <div class="small-6 grid-content middleblock" data-equalizer-watch>
+            <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
         </div>
     </div>
 </div>
 
-<div class="reveal tiny" id="ConfirmModel" data-reveal>
-    <div class="modal-head"><h4 class="text-center">Confirm</h4></div>
+<div zf-modal="" id="ConfirmModel">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Confirm</h4>
     <div>
         <div class="medium-10 medium-centered large-10 large-centered columns">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
-                    <div data-equalizer-watch>
+                    <div>
                         <p>Confirm to remove student</p>
-                        <button class="button alert" ng-click="cx.RemoveStd()" data-close>Confirm</button>
-                        <button class="button" data-close>Cancel</button>
+                        <button class="button alert" ng-click="cx.RemoveStd()" zf-close="">Confirm</button>
+                        <button class="button" zf-close="">Cancel</button>
                     </div>
                 </div>
             </form>
         </div>
     </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>
