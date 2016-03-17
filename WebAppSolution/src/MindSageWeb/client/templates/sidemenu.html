@@ -6,22 +6,22 @@
     <a class="float-right" href="#" data-open="classModal" ng-show="cx.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
     <ul class="vertical menu menu-bg">
         <li ng-class="{'active': 'Home' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('Home')">
-            <a href="#" ui-sref="app.main.lesson({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'lessonId': '{{ cx.userProfile.CurrentLessonId }}' })"><i class="fi-home size-36"></i> HOME</a>
+            <a ui-sref="app.main.lesson({ classRoomId: cx.userProfile.CurrentClassRoomId, lessonId: cx.userProfile.CurrentLessonId })"><i class="fi-home size-36"></i> HOME</a>
         </li>
         <li ng-class="{'active': 'Journal' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('Journal')">
-            <a href="#" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}', 'targetUserId': '{{ cx.GetUserProfileId() }}' })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
+            <a ui-sref="app.course.journal({ classRoomId: cx.userProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
         </li>
         <li ng-class="{'active': 'CourseMap' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('CourseMap')">
-            <a href="#" ui-sref="app.course.coursemap({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i class="fi-foundation size-36"></i> COURSE MAP</a>
+            <a ui-sref="app.course.coursemap({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-foundation size-36"></i> COURSE MAP</a>
         </li>
         <li ng-show="!cx.userProfile.IsTeacher" ng-class="{'active': 'StudentList' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('StudentList')">
-            <a href="#" ui-sref="app.course.studentlist({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i class="fi-torsos-all size-36"></i> CLASS</a>
+            <a ui-sref="app.course.studentlist({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
         </li>
         <li ng-show="cx.userProfile.IsTeacher" ng-class="{'active': 'StudentList' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('StudentList')">
-            <a href="#" ui-sref="app.course.teacherlist({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i class="fi-torsos-all size-36"></i> CLASS</a>
+            <a ui-sref="app.course.teacherlist({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
         </li>
         <li ng-class="{'active': 'Setting' == cx.sideMenuSvc.CurrentTabName}" ng-click="cx.ChangeTab('Setting')">
-            <a href="#" ui-sref="app.course.config({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i class="fi-widget size-36"></i> SETTING</a>
+            <a ui-sref="app.course.config({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-widget size-36"></i> SETTING</a>
         </li>
     </ul>
 

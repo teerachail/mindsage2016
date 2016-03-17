@@ -3,9 +3,12 @@
 
     class SideMenuController {
         
+        private currentUserId: string;
         private userProfile: shared.ClientUserProfile;
         public notification: number;
         public AllAvailableCourses: shared.CourseCatalog[] = [];
+        private isGetNotificationCompleted: boolean;
+        private isWaittingForGetNotification: boolean;
 
         static $inject = ['$scope', '$state', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.sidemenus.SideMenuService', 'app.shared.GetProfileService'];
         constructor(private $scope, private $state, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService, private sideMenuSvc: app.sidemenus.SideMenuService, private notificationSvc: app.shared.GetProfileService) {
@@ -21,11 +24,9 @@
 
             this.userProfile = this.userSvc.GetClientUserProfile();
             this.AllAvailableCourses = this.userSvc.GetAllAvailableCourses();
+            this.currentUserId = encodeURI(this.userProfile.UserProfileId);
             this.loadNotifications();
         }
-
-        private isGetNotificationCompleted: boolean;
-        private isWaittingForGetNotification: boolean;
         private loadNotifications(): void {
             var shouldRequestUserNotifications = !this.isGetNotificationCompleted && !this.isWaittingForGetNotification;
             if (shouldRequestUserNotifications) {
@@ -41,11 +42,6 @@
                         setTimeout(it => this.loadNotifications(), this.waitRespondTime);
                     });
             }
-        }
-        
-
-        public GetUserProfileId(): string {
-            return encodeURI(this.userProfile.UserProfileId);
         }
 
         public ChangeTab(name: string) {
