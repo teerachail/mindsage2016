@@ -221,8 +221,12 @@ namespace MindSageWeb.Controllers
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation(3, "User changed their password successfully.");
-                    var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
-                    return Redirect(redirectURL);
+                    if (string.IsNullOrEmpty(model.ClassRoom)) return RedirectToAction(nameof(Index), new { Message = ManageMessageId.ChangePasswordSuccess });
+                    else
+                    {
+                        var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";
+                        return Redirect(redirectURL);
+                    }
                 }
                 AddErrors(result);
                 return View(model);
@@ -279,9 +283,10 @@ namespace MindSageWeb.Controllers
         //
         // GET: /Manage/SetPassword
         [HttpGet]
-        public IActionResult SetPassword()
+        public IActionResult SetPassword(string id)
         {
-            return View();
+            var model = new SetPasswordViewModel { ClassRoom = id };
+            return View(model);
         }
 
         //
@@ -302,7 +307,12 @@ namespace MindSageWeb.Controllers
                 if (result.Succeeded)
                 {
                     await _signInManager.SignInAsync(user, isPersistent: false);
-                    return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
+                    if (string.IsNullOrEmpty(model.ClassRoom)) return RedirectToAction(nameof(Index), new { Message = ManageMessageId.SetPasswordSuccess });
+                    else
+                    {
+                        var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";
+                        return Redirect(redirectURL);
+                    }
                 }
                 AddErrors(result);
                 return View(model);
