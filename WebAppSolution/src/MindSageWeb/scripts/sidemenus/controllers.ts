@@ -10,8 +10,8 @@
         private isGetNotificationCompleted: boolean;
         private isWaittingForGetNotification: boolean;
 
-        static $inject = ['$scope', '$state', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.sidemenus.SideMenuService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private $state, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService, private sideMenuSvc: app.sidemenus.SideMenuService, private notificationSvc: app.shared.GetProfileService) {
+        static $inject = ['$scope', '$state', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
+        constructor(private $scope, private $state, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService, private notificationSvc: app.shared.GetProfileService) {
             this.userProfile = new shared.ClientUserProfile();
             this.prepareUserprofile();
         }
@@ -44,10 +44,6 @@
             }
         }
 
-        public ChangeTab(name: string) {
-            this.sideMenuSvc.CurrentTabName = name;
-        }
-
         public ChangeClassRoom(classRoomId: string, lessonId: string, className: string) {
             var userProfile = this.userSvc.GetClientUserProfile();
             userProfile.CurrentClassRoomId = classRoomId;
@@ -59,6 +55,7 @@
             //userProfile.NumberOfStudents
             //userProfile.StartDate
             this.userSvc.UpdateUserProfile(userProfile);
+            console.log('Change class room: ' + classRoomId + ', lessonId: ' + lessonId);
             this.$state.go("app.main.lesson", { 'classRoomId': classRoomId, 'lessonId': lessonId }, { inherit: false });
         }
     }
