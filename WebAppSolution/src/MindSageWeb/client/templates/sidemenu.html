@@ -3,30 +3,31 @@
         {{ cx.userProfile.FullName }}
     </h1>
     <a href="#" ui-sref="app.course.notification({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i ng-click="cx.ChangeTab('')" class="fi-mail size-36"></i><span ng-show="cx.notification > 0" class="badge">{{ cx.notification }}</span></a>
-    <a class="float-right" href="#" data-open="classModal" ng-show="cx.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
-    <ul class="side-nav">
-        <li ui-sref-active="active">
-            <a ui-sref="app.main.lesson({ classRoomId: cx.userProfile.CurrentClassRoomId, lessonId: cx.userProfile.CurrentLessonId })"><i class="fi-home size-36"></i> HOME</a>
+    <a class="float-right" zf-open="classModal" ng-show="cx.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
+    <ul>
+        <li>
+            <a ui-sref-active="primary label" ui-sref="app.main.lesson({ classRoomId: cx.userProfile.CurrentClassRoomId, lessonId: cx.userProfile.CurrentLessonId })"><i class="fi-home size-36"></i> HOME</a>
         </li>
-        <li ui-sref-active="active">
-            <a ui-sref="app.course.journal({ classRoomId: cx.userProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
+        <li>
+            <a ui-sref-active="primary label" ui-sref="app.course.journal({ classRoomId: cx.userProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
         </li>
-        <li ui-sref-active="active">
-            <a ui-sref="app.course.coursemap({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-foundation size-36"></i> COURSE MAP</a>
+        <li>
+            <a ui-sref-active="primary label" ui-sref="app.course.coursemap({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-foundation size-36"></i> COURSE MAP</a>
         </li>
         <li ui-sref-active="active" ng-show="!cx.userProfile.IsTeacher">
-            <a ui-sref="app.course.studentlist({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
+            <a ui-sref-active="primary label" ui-sref="app.course.studentlist({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
         </li>
         <li ui-sref-active="active" ng-show="cx.userProfile.IsTeacher">
-            <a ui-sref="app.course.teacherlist({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
+            <a ui-sref-active="primary label" ui-sref="app.course.teacherlist({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
         </li>
-        <li ui-sref-active="active">
-            <a ui-sref="app.course.config({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-widget size-36"></i> SETTING</a>
+        <li>
+            <a ui-sref-active="primary label" ui-sref="app.course.config({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-widget size-36"></i> SETTING</a>
         </li>
     </ul>
 
-    <div class="reveal" id="classModal" data-reveal>
-        <div class="modal-head"><h4 class="text-center">CLASS LIST</h4></div>
+    <div zf-modal="" id="classModal">
+        <a zf-close="" class="close-button">x</a>
+        <h4 class="text-center">CLASS LIST</h4>
             <div class="medium-10 medium-centered large-10 large-centered columns">
                 <a href="#" 
                    ng-class="{'large expanded button': item.ClassRoomId == cx.userSvc.clientUserProfile.CurrentClassRoomId,
@@ -36,8 +37,6 @@
                     {{ item.Name }}
                 </a>
             </div>
-        <button class="close-button" data-close aria-label="Close modal" type="button">
-            <span aria-hidden="true">&times;</span>
-        </button>
+        
     </div>
 </div>

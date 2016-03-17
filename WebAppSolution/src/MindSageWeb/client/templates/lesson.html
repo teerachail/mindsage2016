@@ -151,7 +151,7 @@ controller: 'app.lessons.LessonController as cx'
                     <div class="discussion">
                         <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }" class="row">
                             <div class="large-offset-2 large-9 columns">
-                                <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2" data-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                 <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                             </div>
                             <div class="large-2 columns"><img class="thumbnail"  style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
@@ -162,7 +162,7 @@ controller: 'app.lessons.LessonController as cx'
                                     <span class="comment-button" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
                                     <span class="comment-button like" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
                                     <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId || cx.currentUser.UserProfileId == discussion.CreatedByUserProfileId || cx.currentUser.IsTeacher"
-                                          data-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><i class="fi-trash size-24"></i></a></span>
+                                          zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><i class="fi-trash size-24"></i></a></span>
                                 </p>
                                 <div ng-show="discussion_isclose">
                                     <textarea ng-model="cx.message"></textarea>
@@ -178,10 +178,10 @@ controller: 'app.lessons.LessonController as cx'
     </div>
 </div>
 
-<div class="reveal tiny" id="ConfirmModel" data-reveal>
-    <div class="modal-head"><h4 class="text-center">Confirm</h4></div>
-    <div>
-        <div class="medium-10 medium-centered large-10 large-centered columns">
+<div zf-modal="" id="ConfirmModel" data-reveal>
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Confirm</h4>
+        <div>
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
                     <div data-equalizer-watch>
@@ -193,8 +193,4 @@ controller: 'app.lessons.LessonController as cx'
                 </div>
             </form>
         </div>
-    </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>

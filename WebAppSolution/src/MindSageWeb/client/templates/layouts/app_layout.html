@@ -9,8 +9,9 @@ controller: 'app.layouts.AppLayoutController as acx'
     </div>
 </div>
 
-<div class="reveal tiny" id="Modal" data-reveal>
-    <div class="modal-head"><h4 class="text-center">Warning</h4></div>
+<div zf-modal="" id="Modal">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Warning</h4>
     <div>
         <div class="medium-10 medium-centered large-10 large-centered columns">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
@@ -44,13 +45,11 @@ controller: 'app.layouts.AppLayoutController as acx'
             </form>
         </div>
     </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>
 
-<div class="reveal tiny" id="DeleteFriendModel" data-reveal>
-    <div class="modal-head"><h4 class="text-center">Confirm</h4></div>
+<div zf-modal="" id="DeleteFriendModel">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Confirm</h4>
     <div>
         <div class="medium-10 medium-centered large-10 large-centered columns">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
@@ -64,7 +63,4 @@ controller: 'app.layouts.AppLayoutController as acx'
             </form>
         </div>
     </div>
-    <button class="close-button" data-close aria-label="Close modal" type="button">
-        <span aria-hidden="true">&times;</span>
-    </button>
 </div>
