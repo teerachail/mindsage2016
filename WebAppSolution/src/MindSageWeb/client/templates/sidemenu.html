@@ -2,7 +2,7 @@
     <h1 class="lesson-header">
         {{ cx.userProfile.FullName }}
     </h1>
-    <a href="#" ui-sref="app.course.notification({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i ng-click="cx.ChangeTab('')" class="fi-mail size-36"></i><span ng-show="cx.notification > 0" class="badge">{{ cx.notification }}</span></a>
+    <a ui-sref-active="primary label" ui-sref="app.course.notification({ classRoomId: cx.userProfile.CurrentClassRoomId })"><i class="fi-mail size-36"></i><span ng-show="cx.notification > 0" class="badge">{{ cx.notification }}</span></a>
     <a class="float-right" zf-open="classModal" ng-show="cx.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
     <ul>
         <li>
