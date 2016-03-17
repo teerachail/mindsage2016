@@ -236,6 +236,9 @@ namespace MindSageWeb.Controllers
 
         private void createNewUserProfile(string email)
         {
+            var isUserExisting = _userProfileRepo.GetUserProfileById(email) != null;
+            if (isUserExisting) return;
+
             const string DefaultProfileImageUrl = "http://placehold.it/100x100";
             var newUserProfile = new Repositories.Models.UserProfile
             {
