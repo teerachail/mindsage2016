@@ -1,10 +1,10 @@
-<div class="large-3 pull-9 columns" ng-controller="app.sidemenus.SideMenuController as cx">
+<div class="grid-content medium-6 block-list ng-scope" ng-controller="app.sidemenus.SideMenuController as cx">
     <h1 class="lesson-header">
         {{ cx.userProfile.FullName }}
     </h1>
     <a href="#" ui-sref="app.course.notification({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><i ng-click="cx.ChangeTab('')" class="fi-mail size-36"></i><span ng-show="cx.notification > 0" class="badge">{{ cx.notification }}</span></a>
     <a class="float-right" href="#" data-open="classModal" ng-show="cx.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
-    <ul class="vertical menu menu-bg">
+    <ul class="side-nav">
         <li ui-sref-active="active">
             <a ui-sref="app.main.lesson({ classRoomId: cx.userProfile.CurrentClassRoomId, lessonId: cx.userProfile.CurrentLessonId })"><i class="fi-home size-36"></i> HOME</a>
         </li>
