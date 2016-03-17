@@ -31,7 +31,6 @@ module app.lessons {
                 return;
             }
 
-            //this.teacherView = false;
             this.lessonId = this.$stateParams.lessonId;
             this.classRoomId = this.$stateParams.classRoomId;
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
@@ -57,11 +56,11 @@ module app.lessons {
                     this.userprofileSvc.Advertisments = this.content.Advertisments;
                     this.isWaittingForGetLessonContent = false;
                     this.isPrepareLessonContentComplete = true;
-                    }, error => {
-                        console.log('Load lesson content failed');
-                        this.isWaittingForGetLessonContent = false;
-                        setTimeout(it=> this.prepareLessonContents(), this.waitRespondTime);
-                    });
+                }, error => {
+                    console.log('Load lesson content failed, retrying ...');
+                    this.isWaittingForGetLessonContent = false;
+                    setTimeout(it=> this.prepareLessonContents(), this.waitRespondTime);
+                });
             }
         }
 

@@ -29,29 +29,28 @@
         private isPrepareUserProfileComplete: boolean;
         private isWaittingForPrepareUserProfile: boolean;
         public IsPrepareAllUserProfileCompleted(): boolean {
-            if (!this.isPrepareUserProfileComplete) {
-                if (!this.isWaittingForPrepareUserProfile) {
-                    this.isWaittingForPrepareUserProfile = true;
-                    this.getUserProfileSvc.get().$promise.then(it => {
-                        this.clientUserProfile = it;
-                        this.$q.all([
-                            this.getAllCourses(),
-                            this.getFriendLists(),
-                            this.getCourseInfo()
-                        ]).then(data => {
-                            this.allAvailableCourses = data[0];
-                            this.friendList = data[1];
-                            var courseInfoRespond = data[2];
-                            this.clientUserProfile.IsTeacher = courseInfoRespond.IsTeacher;
-                            this.clientUserProfile.ClassName = courseInfoRespond.ClassName;
-                            this.clientUserProfile.CurrentStudentCode = courseInfoRespond.CurrentStudentCode;
-                            this.clientUserProfile.NumberOfStudents = courseInfoRespond.NumberOfStudents;
-                            this.clientUserProfile.StartDate = courseInfoRespond.StartDate;
-                            this.isWaittingForPrepareUserProfile = false;
-                            this.isPrepareUserProfileComplete = true;
-                        }, error=> this.isWaittingForPrepareUserProfile = false);
-                    }, error=> this.isWaittingForPrepareUserProfile = false);
-                }
+            var shouldPrepareUserProfile = !this.isPrepareUserProfileComplete && !this.isWaittingForPrepareUserProfile;
+            if (shouldPrepareUserProfile) {
+                this.isWaittingForPrepareUserProfile = true;
+                this.getUserProfileSvc.get().$promise.then(it => {
+                    this.clientUserProfile = it;
+                    this.$q.all([
+                        this.getAllCourses(),
+                        this.getFriendLists(),
+                        this.getCourseInfo()
+                    ]).then(data => {
+                        this.allAvailableCourses = data[0];
+                        this.friendList = data[1];
+                        var courseInfoRespond = data[2];
+                        this.clientUserProfile.IsTeacher = courseInfoRespond.IsTeacher;
+                        this.clientUserProfile.ClassName = courseInfoRespond.ClassName;
+                        this.clientUserProfile.CurrentStudentCode = courseInfoRespond.CurrentStudentCode;
+                        this.clientUserProfile.NumberOfStudents = courseInfoRespond.NumberOfStudents;
+                        this.clientUserProfile.StartDate = courseInfoRespond.StartDate;
+                        this.isWaittingForPrepareUserProfile = false;
+                        this.isPrepareUserProfileComplete = true;
+                    }, error => this.isWaittingForPrepareUserProfile = false);
+                }, error => this.isWaittingForPrepareUserProfile = false);
             }
             return this.isPrepareUserProfileComplete;
         }
@@ -79,6 +78,7 @@
             if (this.clientUserProfile == null || this.clientUserProfile.UserProfileId == null) {
                 if (this.isWaittingForUserProfileRespond) return;
                 else {
+                    console.log('Obsolate load user profile');
                     this.isWaittingForUserProfileRespond = true;
                     this.getUserProfileSvc.get().$promise.then(respond => {
                         if (respond == null) return this.GetClientUserProfile();
@@ -97,6 +97,7 @@
             if (this.allAvailableCourses == null) {
                 if (this.isWaittingForAllCourses) return;
                 else {
+                    console.log('Obsolate load all available courses');
                     this.isWaittingForAllCourses = true;
                     this.getAllCourseSvc.get().$promise.then(respond => {
                         if (respond == null) return this.GetAllAvailableCourses();
@@ -121,6 +122,7 @@
         public ReloadFriendLists() {
             if (this.isWaittingForFriendList) return this.friendList;
             else {
+                console.log('Obsolate load Friend list');
                 this.isWaittingForFriendList = true;
                 var userId = this.clientUserProfile.UserProfileId;
                 var classRoomId = this.clientUserProfile.CurrentClassRoomId;
