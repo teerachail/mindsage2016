@@ -1,6 +1,7 @@
 ---
 name: app.course.config
 url: /setting
+controller: 'app.settings.SettingController as cx'
 ---
 <div class="large-8 push-4 large-offset-1 columns setting" data-accordion data-multi-expand="true" data-allow-all-closed="true">
     <div class="row">
@@ -23,8 +24,8 @@ url: /setting
                             Name
                             <input ng-model="cx.userInfo.FullName" type="text">
                         </label>
-                           <p>Email : {{cx.userInfo.UserProfileId}}</p>
-                            <div class="button" href="#" ui-sref="app.course.calendar({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })">Go calendar</div>
+                            <p>Email : {{ cx.userInfo.UserProfileId }}</p>
+                            <a class="button" ui-sref="app.course.calendar({ classRoomId: cx.userProfile.CurrentClassRoomId })">Go calendar</a>
                     </div>
 
                     <div class="small-4 columns">
@@ -70,10 +71,10 @@ url: /setting
                 </div>
                 <div class="row">
                     <div class="small-6 columns">
-                        <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{cx.userInfo.CurrentClassRoomId}}">Change Password</a>
+                        <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{ cx.userInfo.CurrentClassRoomId }}">Change Password</a>
                     </div>
                     <div class="small-6 columns">
-                        <a class="button" ng-show="!cx.userInfo.HasPassword" href="../Manage/SetPassword/{{cx.userInfo.CurrentClassRoomId}}">Set Password</a>
+                        <a class="button" ng-show="!cx.userInfo.HasPassword" href="../Manage/SetPassword/{{ cx.userInfo.CurrentClassRoomId }}">Set Password</a>
                     </div>
                 </div>
             </div>
@@ -85,10 +86,10 @@ url: /setting
             <p>Class Info</p>
         </div>
         <a class="small-2 large-2 columns" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
-        <a class="small-2 large-2 columns" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.ClassName, cx.CurrentStudentCode, cx.courseInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
+        <a class="small-2 large-2 columns" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.userInfo.ClassName, cx.userprofile.CurrentStudentCode, cx.userInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
 
         <div class="small-6 large-4 columns">
-            <div class="viewlist" ng-click="cx.OpenStudentListPage('StudentList')">View Student List</div>
+            <a class="viewlist" ui-sref="app.course.teacherlist({ classRoomId: cx.userInfo.CurrentClassRoomId })">View Student List</a>
         </div>
         <div class="control undisplay" data-tab-content>
             <div class="large-12">
@@ -96,14 +97,14 @@ url: /setting
                     <div class="small-8 columns">
                         <label>
                             Class Name
-                            <input ng-model="cx.ClassName" type="text">
+                            <input ng-model="cx.userInfo.ClassName" type="text">
                         </label>
                     </div>
 
                     <div class="small-4 columns">
                         <label class="have-help-text">
                             Class Code
-                            <input ng-model="cx.CurrentStudentCode" type="text">
+                            <input ng-model="cx.userprofile.CurrentStudentCode" type="text">
                             <a class="help-text">What is this?</a>
                         </label>
                     </div>
@@ -112,31 +113,24 @@ url: /setting
                 <div class="row">
                     <div class="small-3 columns">
                         <p>
-                            Number of Students {{ cx.courseInfo.NumberOfStudents }}
+                            Number of Students {{ cx.userInfo.NumberOfStudents }}
                         </p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="small-3 columns">
                         <p>
-                            Start Date <a href="#" ui-sref="app.course.calendar({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><img width="30" src="../assets/img/logo/calendar.png" /></a>
+                            Start Date <a ui-sref="app.course.calendar({ classRoomId: cx.userProfile.CurrentClassRoomId })"><img width="30" src="../assets/img/logo/calendar.png" /></a>
                         </p>
                     </div>
-                    <div ng-show="cx.courseInfo.StartDate != null">
-                        <div class="small-9 columns">
-                            <p>
-                                <a>{{ cx.courseInfo.StartDate }}</a>
-                            </p>
-                        </div>
-                    </div>
-                    <div ng-show="cx.courseInfo.StartDate == null">
-                        <div class="small-5 columns">
-                            <input type="Date" ng-model="cx.courseInfo.StartDate" />
-                        </div>
+                    <div class="small-9 columns">
+                        <p>
+                            {{ cx.userInfo.StartDate }}
+                        </p>
                     </div>
                     <div class="small-12 columns">
                         <p>
-                            Set Off Days and Vacations <a href="#" ui-sref="app.course.calendar({ 'classRoomId': '{{ cx.userProfile.CurrentClassRoomId }}' })"><img width="30" src="../assets/img/logo/calendar.png" /></a>
+                            Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.userProfile.CurrentClassRoomId })"><img width="30" src="../assets/img/logo/calendar.png" /></a>
                         </p>
                     </div>
 
@@ -174,7 +168,3 @@ url: /setting
         <span aria-hidden="true">&times;</span>
     </button>
 </div>
-
-<script>
-    $(document).foundation();
-</script>
