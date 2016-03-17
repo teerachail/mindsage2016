@@ -1,6 +1,7 @@
 ---
 name: app.course.studentlist
 url: /studentlist
+controller: 'app.studentlists.studentlistsController as cx'
 ---
 <div class="large-7 push-5 large-offset-1 columns list">
     <div class="row">
@@ -8,12 +9,12 @@ url: /studentlist
             <h1 class="lesson-header">CLASS LIST</h1>
         </div>
     </div>
-    <div class="row" ng-repeat="item in cx.userSvc.GetFriendLists()" ng-show="!item.IsTeacher" data-equalizer>
+    <div class="row" ng-repeat="item in cx.friendList" ng-show="!item.IsTeacher" data-equalizer>
         <div class="small-6 column callout" data-equalizer-watch>
             <a ng-show="item.Status != 2" data-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
                 <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
-            <a ng-show="item.Status == 2" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.classRoomId }}', 'targetUserId': '{{ item.UserProfileId }}' })">
+            <a ng-show="item.Status == 2" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
                 <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
         </div>
@@ -36,7 +37,3 @@ url: /studentlist
         </div>
     </div>
 </div>
-
-<script>
-    $(document).foundation();
-</script>
