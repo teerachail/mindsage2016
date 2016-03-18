@@ -25,9 +25,18 @@
             <div class="left"></div>
             <div class="center title">
                 <a class="float-left" asp-action="index" asp-controller="home"><img src="http://www.mindsage.org/assets/img/logo.png" /></a>
-                <a class="float-right info hollow button">SIGNUP</a>
-                <a class="float-right secondary hollow button">LOGIN</a>
-                <a href="/my#!/preparing" class="float-right secondary hollow button">My course</a>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+                        <a href="/my#!/preparing" class="float-right secondary hollow button">My Course</a>
+                        <button type="submit" class="float-right secondary hollow button">LOG OUT</button>
+                    </form>
+                }
+                else
+                {
+                    <a asp-controller="Account" asp-action="Register" class="float-right info hollow button">SIGNUP</a>
+                    <a asp-controller="Account" asp-action="Login" class="float-right secondary hollow button">LOGIN</a>
+                }
             </div>
             <div class="right"></div>
         </div>
