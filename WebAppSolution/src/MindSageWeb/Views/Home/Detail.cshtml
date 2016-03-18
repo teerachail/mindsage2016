@@ -14,7 +14,7 @@
                             var isAlreadyHaveThisCourse = (bool)ViewBag.IsAlreadyHaveThisCourse;
                             if (isAlreadyHaveThisCourse)
                             {
-                                <a class="button expand large">Go to my course</a>
+                                <a asp-action="entercourse" asp-controller="my" asp-route-id="@Model.id" class="button expand large">Go to my course</a>
                             }
                             else if (User.Identity.IsAuthenticated)
                             {
@@ -31,7 +31,7 @@
                 {
                     <div class="card-section">
                         <h2>@item.Name</h2>
-                        <a class="button expand">VIEW</a>
+                        <a asp-action="detail" asp-controller="home" asp-route-id="@item.CourseId" class="button expand">VIEW</a>
                     </div>
                 }
             </div>

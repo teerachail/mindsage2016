@@ -19,9 +19,6 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Index()
         {
-            //ViewBag.HaveAnyCourse = _myCourseCtrl.GetAllUserCoursCatalogIds(User.Identity.Name).Any();
-            //var availableCourses = _courseCtrl.GetAvailableCourseGroups();
-            //return View(availableCourses);
             return View();
         }
 
@@ -54,7 +51,6 @@ namespace MindSageWeb.Controllers
             var isAlreadyHaveSelectedCourse = isAlreadyLoggedIn ? !_myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses) : false;
 
             ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
-            ViewBag.HaveAnyCourse = allUserCourses.Any();
             ViewBag.IsCouponInvalid = isCouponInvalid;
 
             return View(selectedCourse);
