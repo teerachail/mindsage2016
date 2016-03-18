@@ -479,36 +479,50 @@ namespace MindSageWeb.Controllers
             };
         }
 
-        // GET: api/mycourse/{user-id}/{class-room-id}/info
+        // POST: api/mycourse/changecourse
         /// <summary>
-        /// Get course information
+        /// Change course
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
         /// <returns></returns>
-        [HttpGet]
-        [Route("{id}/{classRoomId}/info")]
-        public GetCourseInfoRespond GetCourseInfo(string id, string classRoomId)
+        [HttpPost]
+        [Route("changecourse")]
+        public GetCourseInfoRespond ChangeCourse(ChangeCourseRequest body)
         {
-            var isArgumentValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
+            var isArgumentValid = body != null && !string.IsNullOrEmpty(body.UserProfileId) && !string.IsNullOrEmpty(body.ClassRoomId);
             if (!isArgumentValid) return null;
 
-            var userProfile = _userprofileRepo.GetUserProfileById(id);
+            var userprofileId = body.UserProfileId;
+            var classRoomId = body.ClassRoomId;
+
+            var userProfile = _userprofileRepo.GetUserProfileById(userprofileId);
             if (userProfile == null || userProfile.DeletedDate.HasValue) return null;
 
             var classRoom = _classRoomRepo.GetClassRoomById(classRoomId);
             if (classRoom == null || classRoom.DeletedDate.HasValue) return null;
 
             var isUserProfileDataValid = userProfile.Subscriptions != null
-                && userProfile.Subscriptions.Any();
+                && userProfile.Subscriptions.Any()
+                && userProfile.Subscriptions.Where(it => !it.DeletedDate.HasValue).Any(it => it.ClassRoomId == classRoomId);
             if (!isUserProfileDataValid) return null;
 
-            var lastSubscription = userProfile.Subscriptions.OrderByDescending(x => x.LastActiveDate).FirstOrDefault(x => !x.DeletedDate.HasValue);
+            var selectedSubscription = userProfile.Subscriptions
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .FirstOrDefault(it => it.ClassRoomId == classRoomId);
+            if (selectedSubscription != null)
+            {
+                var now = _dateTime.GetCurrentTime();
+                selectedSubscription.LastActiveDate = now;
+                _userprofileRepo.UpsertUserProfile(userProfile);
+            }
+
+            var lastSubscription = userProfile.Subscriptions.OrderByDescending(it => it.LastActiveDate).FirstOrDefault(it => !it.DeletedDate.HasValue);
             if (lastSubscription == null) return null;
 
             var courseInfoRespond = new GetCourseInfoRespond()
             {
-                UserProfileId = id,
+                UserProfileId = userprofileId,
                 ClassRoomId = classRoom.id,
                 IsTeacher = lastSubscription.Role == UserProfile.AccountRole.Teacher,
                 ClassName = classRoom.Name,

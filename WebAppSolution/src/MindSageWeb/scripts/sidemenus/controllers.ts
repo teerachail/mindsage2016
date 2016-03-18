@@ -11,7 +11,7 @@
         private isWaittingForGetNotification: boolean;
 
         static $inject = ['$scope', '$state', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private $state, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService, private notificationSvc: app.shared.GetProfileService) {
+        constructor(private $scope, private $state, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService, private profileSvc: app.shared.GetProfileService) {
             this.userProfile = new shared.ClientUserProfile();
             this.prepareUserprofile();
         }
@@ -31,32 +31,30 @@
             var shouldRequestUserNotifications = !this.isGetNotificationCompleted && !this.isWaittingForGetNotification;
             if (shouldRequestUserNotifications) {
                 this.isWaittingForGetNotification = true;
-                this.notificationSvc.GetNotificationNumber()
+                this.profileSvc.GetNotificationNumber()
                     .then(respond => {
                         this.isGetNotificationCompleted = true;
                         this.isWaittingForGetNotification = false;
                         if (respond == null) this.notification = 0;
                         else this.notification = respond.notificationTotal;
-                    }, error=> {
+                    }, error => {
                         this.isWaittingForGetNotification = false;
                         setTimeout(it => this.loadNotifications(), this.waitRespondTime);
                     });
             }
         }
 
-        public ChangeClassRoom(classRoomId: string, lessonId: string, className: string) {
-            var userProfile = this.userSvc.GetClientUserProfile();
-            userProfile.CurrentClassRoomId = classRoomId;
-            userProfile.CurrentLessonId = lessonId;
-            userProfile.ClassName = className;
-            // TODO: Update user profile
-            //userProfile.CurrentStudentCode
-            //userProfile.IsTeacher
-            //userProfile.NumberOfStudents
-            //userProfile.StartDate
-            this.userSvc.UpdateUserProfile(userProfile);
-            console.log('Change class room: ' + classRoomId + ', lessonId: ' + lessonId);
-            this.$state.go("app.main.lesson", { 'classRoomId': classRoomId, 'lessonId': lessonId }, { inherit: false });
+        public ChangeCourse(classRoomId: string, lessonId: string) {
+            this.userSvc.ChangeCourse(classRoomId).then(respond => {
+                this.userSvc.UpdateCourseInformation(respond);
+                var userProfile = this.userSvc.GetClientUserProfile();
+                userProfile.CurrentLessonId = lessonId;
+                this.userSvc.UpdateUserProfile(userProfile);
+                this.$state.go("app.main.lesson", { 'classRoomId': classRoomId, 'lessonId': lessonId }, { inherit: false });
+            }, error => {
+                console.log('Change course failed, retrying ...');
+                setTimeout(it => this.ChangeCourse(classRoomId, lessonId), this.waitRespondTime);
+            });
         }
     }
 

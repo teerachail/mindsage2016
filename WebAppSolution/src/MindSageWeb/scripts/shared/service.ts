@@ -1,6 +1,9 @@
 ﻿module app.shared {
     'use strict';
 
+    interface IGetCourseInfoResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetCourse(data: T): T;
+    }
     interface IStudentListResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetStudentList(data: T): T;
     }
@@ -16,14 +19,14 @@
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
         private isWaittingForFriendList: boolean;
         private getStudentListsvc: IStudentListResourceClass<any>;
-        private getCourseSvc: IGetCourseResourceClass<any>;
+        private getCourseSvc: IGetCourseInfoResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', '$q'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private $q) {
             this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, {});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getStudentListsvc = <IStudentListResourceClass<any>>$resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
-            this.getCourseSvc = <IGetCourseResourceClass<any>>$resource(appConfig.GetCourserofileUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
+            this.getCourseSvc = <IGetCourseInfoResourceClass<any>>$resource(appConfig.ChangeCourseUrl, { 'UserProfileId': '@UserProfileId', 'ClassRoomId': '@ClassRoomId' });
         }
 
         private isPrepareUserProfileComplete: boolean;
@@ -37,16 +40,11 @@
                     this.$q.all([
                         this.getAllCourses(),
                         this.getFriendLists(),
-                        this.getCourseInfo()
+                        this.getCourseInfo(this.clientUserProfile.CurrentClassRoomId)
                     ]).then(data => {
                         this.allAvailableCourses = data[0];
                         this.friendList = data[1];
-                        var courseInfoRespond = data[2];
-                        this.clientUserProfile.IsTeacher = courseInfoRespond.IsTeacher;
-                        this.clientUserProfile.ClassName = courseInfoRespond.ClassName;
-                        this.clientUserProfile.CurrentStudentCode = courseInfoRespond.CurrentStudentCode;
-                        this.clientUserProfile.NumberOfStudents = courseInfoRespond.NumberOfStudents;
-                        this.clientUserProfile.StartDate = courseInfoRespond.StartDate;
+                        this.UpdateCourseInformation(data[2]);
                         this.isWaittingForPrepareUserProfile = false;
                         this.isPrepareUserProfileComplete = true;
                     }, error => this.isWaittingForPrepareUserProfile = false);
@@ -63,10 +61,22 @@
             var classRoomId = this.clientUserProfile.CurrentClassRoomId;
             return this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise;
         }
-        private getCourseInfo(): ng.IPromise<any> {
+        private getCourseInfo(classRoomId: string): ng.IPromise<any> {
             var userId = this.clientUserProfile.UserProfileId;
-            var classRoomId = this.clientUserProfile.CurrentClassRoomId;
-            return this.getCourseSvc.get(new GetCourseRequest(userId, classRoomId)).$promise;
+            return this.getCourseSvc.save(new ChangeCourseRequest(userId, classRoomId)).$promise;
+        }
+        public UpdateCourseInformation(courseInfo: any): void {
+            if (courseInfo == null) return;
+            this.clientUserProfile.CurrentClassRoomId = courseInfo.ClassRoomId;
+            this.clientUserProfile.IsTeacher = courseInfo.IsTeacher;
+            this.clientUserProfile.ClassName = courseInfo.ClassName;
+            this.clientUserProfile.CurrentStudentCode = courseInfo.CurrentStudentCode;
+            this.clientUserProfile.NumberOfStudents = courseInfo.NumberOfStudents;
+            this.clientUserProfile.StartDate = courseInfo.StartDate;
+        }
+
+        public ChangeCourse(classRoomId: string): ng.IPromise<any> {
+            return this.getCourseInfo(classRoomId);
         }
 
         public UpdateUserProfile(userProfile): void {
@@ -246,9 +256,7 @@
         }
     }
 
-    interface IGetCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
-        GetCourse(data: T): T;
-    }
+    
     interface IGetAllCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetAllCourse(data: T): T;
     }
@@ -269,7 +277,6 @@
     }
     export class GetProfileService {
 
-        private getCourseSvc: IGetCourseResourceClass<any>;
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
         private getNotificationNumberSvc: IGetNotificationNumberClass<any>;
         private getNotificationContentSvc: IGetNotificationContentClass<any>;
@@ -279,7 +286,6 @@
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
-            this.getCourseSvc = <IGetCourseResourceClass<any>>$resource(appConfig.GetCourserofileUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getNotificationNumberSvc = <IGetNotificationNumberClass<any>>$resource(appConfig.GetNotificationNumberUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
             this.getNotificationContentSvc = <IGetNotificationContentClass<any>>$resource(appConfig.GetNotificationContentUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
@@ -291,11 +297,7 @@
         public GetUserProfile(): ng.IPromise<any> {
             return this.getUserProfileSvc.get().$promise;
         }
-        public GetCourse(): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
-            return this.getCourseSvc.get(new GetCourseRequest(userId,classroomId)).$promise;
-        }
+
         public GetAllCourse(): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             return this.getAllCourseSvc.query(new GetAllCourseRequest(userId)).$promise;

@@ -190,4 +190,11 @@
             public classRoomId: string) {
         }
     }
+
+    export class ChangeCourseRequest {
+        constructor(
+            public UserProfileId: string,
+            public ClassRoomId: string) {
+        }
+    }
 }

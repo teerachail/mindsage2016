@@ -29,14 +29,13 @@
         <a zf-close="" class="close-button">x</a>
         <h4 class="text-center">CLASS LIST</h4>
             <div class="medium-10 medium-centered large-10 large-centered columns">
-                <a href="#" 
+                <a href="#" zf-close=""
                    ng-class="{'large expanded button': item.ClassRoomId == cx.userSvc.clientUserProfile.CurrentClassRoomId,
                    'large hollow expanded button': item.ClassRoomId != cx.userSvc.clientUserProfile.CurrentClassRoomId}" 
                    ng-repeat="item in cx.AllAvailableCourses" 
-                   ng-click="cx.ChangeClassRoom(item.ClassRoomId, item.LessonId, item.Name)">
+                   ng-click="cx.ChangeCourse(item.ClassRoomId, item.LessonId)">
                     {{ item.Name }}
                 </a>
             </div>
-        
     </div>
 </div>

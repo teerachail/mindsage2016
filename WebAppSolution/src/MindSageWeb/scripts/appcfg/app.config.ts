@@ -21,7 +21,7 @@ module app {
         LikeLessonUrl: string;
         ReadNoteUrl: string;
         UpdateProfileUrl: string;
-        GetCourserofileUrl: string;
+        ChangeCourseUrl: string;
         UpdateCourseUrl: string;
         DeleteCourseUrl: string;
         StudenMessageEditUrl: string;
@@ -59,7 +59,7 @@ module app {
         public LikeLessonUrl: string;
         public ReadNoteUrl: string;
         public UpdateProfileUrl: string;
-        public GetCourserofileUrl: string;
+        public ChangeCourseUrl: string;
         public UpdateCourseUrl: string;
         public DeleteCourseUrl: string;
         public StudenMessageEditUrl: string;
@@ -98,7 +98,7 @@ module app {
             this.LikeLessonUrl = apiUrl + '/lesson/like';
             this.ReadNoteUrl = apiUrl + '/lesson/readnote';
             this.UpdateProfileUrl = apiUrl + '/profile/:id';
-            this.GetCourserofileUrl = apiUrl + '/mycourse/:id/:classRoomId/info';
+            this.ChangeCourseUrl = apiUrl + '/mycourse/changecourse';
             this.UpdateCourseUrl = apiUrl + '/mycourse/:id';
             this.DeleteCourseUrl = apiUrl + '/mycourse/leave';
             this.StudenMessageEditUrl = apiUrl + '/mycourse/message';
