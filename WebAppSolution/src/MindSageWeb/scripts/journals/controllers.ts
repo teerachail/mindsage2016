@@ -10,7 +10,9 @@ module app.journals {
         public deleteComment: boolean;
         public MyComments = [];
         public discussions = [];
+        public EditId: string;
         private requestedCommentIds = [];
+
 
         private content: any;
         private targetUserId: any;
@@ -140,18 +142,28 @@ module app.journals {
         }
 
         public LikeComment(commentId: string, IsLike: number) {
-            if (IsLike == -1)
-                this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes++;
-            else
-                this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes--;
+            if (this.content.Comments.filter(it=> it.id == commentId).length == 0) {
+                if (IsLike == -1)
+                    this.MyComments.filter(it=> it.id == commentId)[0].TotalLikes++;
+                else
+                    this.MyComments.filter(it=> it.id == commentId)[0].TotalLikes--;
+            }
+            else {
+                if (IsLike == -1)
+                    this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes++;
+                else
+                    this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes--;
+            }
 
             var setIndex = this.likes.LikeCommentIds.indexOf(commentId);
             const ElementNotFound = -1;
             if (setIndex <= ElementNotFound) this.likes.LikeCommentIds.push(commentId);
             else this.likes.LikeCommentIds.splice(setIndex, 1);
 
-            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
-            this.commentSvc.LikeComment(local.ClassRoomId, local.LessonId, commentId);
+            var ClassRoomId = this.userprofile.CurrentClassRoomId;
+            var LessonId = this.userprofile.CurrentLessonId;
+            
+            this.commentSvc.LikeComment(ClassRoomId, LessonId, commentId);
 
         }
 
@@ -208,25 +220,29 @@ module app.journals {
             this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId, false, message);
         }
 
-        public EditOpen(message: string, open: boolean) {
-            this.message = message;
-            return !open;
+        public EditOpen(message: any, open: boolean) {
+            this.message = message.Description;
+            this.EditId = message.id;
         }
 
-        public SaveEdit(messageId: number, save: boolean) {
+        public SaveEdit(messageId: number) {
             this.content.Comments.filter(it=> it.id == messageId)[0].Description = this.message;
             this.EditComment(this.content.Comments.filter(it=> it.id == messageId)[0].id, this.message);
-            return !save;
+            this.EditId = null;
         }
 
-        public SaveEditDiscus(commentId: string, messageId: number, save: boolean) {
+        public SaveEditDiscus(commentId: string, messageId: number) {
             this.discussions.filter(it=> it.id == messageId)[0].Description = this.message;
             this.EditDiscussion(commentId, this.discussions.filter(it=> it.id == messageId)[0].id, this.message);
-            return !save;
+            this.EditId = null;
         }
 
-        public CancelEdit(save: boolean) {
-            return !save;
+        public CancelEdit() {
+            this.EditId = null;
+        }
+
+        public IsEdit(id: string) {
+            return this.EditId == id;
         }
 
         public deleteComfirm(comment: string) {
