@@ -11,49 +11,47 @@ controller: 'app.calendar.CarlendarController as cx'
     <div ng-show="cx.isPrepareCourseScheduleContentComplete && (cx.courseInformation.BeginDate != null)">
         <ul class="calendar">
             <li class="title"><span class="button" ng-click="cx.prevMount()"><<<</span>{{ cx.monthNames }} {{ cx.year }}<span class="button" ng-click="cx.nextMount()">>>></span></li>
-            <li class="day-header">
-                <div class="large-1 day">Sun</div>
-                <div class="large-1 day">Mon</div>
-                <div class="large-1 day">Tue</div>
-                <div class="large-1 day">Wed</div>
-                <div class="large-1 day">Thu</div>
-                <div class="large-1 day">Fri</div>
-                <div class="large-1 day">Sat</div>
+            <li class="day-header grid-block small-up-7">
+                <div class="small-1 day">Sun</div>
+                <div class="small-1 day">Mon</div>
+                <div class="small-1 day">Tue</div>
+                <div class="small-1 day">Wed</div>
+                <div class="small-1 day">Thu</div>
+                <div class="small-1 day">Fri</div>
+                <div class="small-1 day">Sat</div>
             </li>
 
-            <li class="week" ng-repeat="week in cx.allweeks">
-                <div class="large-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day), 'holiday': cx.IsHoliday(day), 'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'dodd': cx.IsOdd(day), 'deven': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} <span>{{ cx.IsStartLesson(day) }}</span></div>
+            <li class="week grid-block small-up-7" ng-repeat="week in cx.allweeks">
+                <div class="small-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day), 'holiday': cx.IsHoliday(day), 'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'dodd': cx.IsOdd(day), 'deven': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} <span>{{ cx.IsStartLesson(day) }}</span></div>
             </li>
             <!-- Repeat for additional weeks -->
         </ul>
-        <div class="row">
-            <div class="large-6 large-offset-3 columns"><h5>{{ cx.fisrtSelected | date:"MM/dd/yyyy" }}</h5><h5 ng-show="cx.lastSelected"> - {{ cx.lastSelected | date:"MM/dd/yyyy" }}</h5></div>
+        <div class="grid-block">
+            <div class="large-6 large-offset-3"><h5>{{ cx.fisrtSelected | date:"MM/dd/yyyy" }}</h5><h5 ng-show="cx.lastSelected"> - {{ cx.lastSelected | date:"MM/dd/yyyy" }}</h5></div>
         </div>
-        <div class="row">
-            <label class="large-3 columns">
-                <input ng-model="cx.selectDay[0]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Sunday
-            </label>
-            <label class="large-9 columns">
-                <input ng-model="cx.Sifht" type="checkbox">Sift
-                {{ cx.Sifht }}
-            </label>
-        </div>
-        <label class="large-4">
+        <label class="grid-content">
+            <input ng-model="cx.Sifht" type="checkbox">Sift
+            {{ cx.Sifht }}
+        </label>
+        <label class="grid-content shrink">
+            <input ng-model="cx.selectDay[0]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Sunday
+        </label>
+        <label class="grid-block">
             <input ng-model="cx.selectDay[1]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Monday
         </label>
-        <label class="large-4">
+        <label class="grid-block">
             <input ng-model="cx.selectDay[2]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Tuesday
         </label>
-        <label class="large-4">
+        <label class="grid-block">
             <input ng-model="cx.selectDay[3]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Wednesday
         </label>
-        <label class="large-4">
+        <label class="grid-block">
             <input ng-model="cx.selectDay[4]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Thursday
         </label>
-        <label class="large-4">
+        <label class="grid-block">
             <input ng-model="cx.selectDay[5]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Friday
         </label>
-        <label class="large-4">
+        <label class="grid-block">
             <input ng-model="cx.selectDay[6]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Saturday
         </label>
         {{ cx.selectDay }}
