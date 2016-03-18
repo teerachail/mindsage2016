@@ -62,7 +62,11 @@ namespace MindSageWeb.Controllers
             };
 
             var result = _myCourseCtrl.AddCourse(body);
-            if (result.IsSuccess) return RedirectToAction("Index", "My");
+            if (result.IsSuccess)
+            {
+                var redirectURL = $"/my#!/preparing";
+                return Redirect(redirectURL);
+            }
 
             return RedirectToAction("Detail", "Home", new { @id = courseId, isCouponInvalid = true });
         }
