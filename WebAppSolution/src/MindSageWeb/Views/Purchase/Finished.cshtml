@@ -1,0 +1,36 @@
+﻿@model MindSageWeb.ViewModels.PurchaseCourse.CoursePurchasedViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row content-section main-section-hight">
+    <div class="medium-6 medium-centered large-6 large-centered columns">
+        <h4>Thank You For Purchase</h4>
+        <div class="callout clearfix">
+            <div class="columns">
+                <div class="float-left"><img width="100" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" /></div>
+                <div class="float-right"><h5>$500</h5></div>
+            </div>
+            <hr />
+
+            <div class="columns">
+                <h5>Billing Address</h5>
+                <p>
+                    919/2
+                    Village No.27 Sub-district:Sila
+                    KHON KEAN, KhonKaen 40000 Thailand
+                </p>
+            </div>
+            <hr />
+            <div class="columns">
+                <h5>Pay With</h5>
+                <div class="float-left"><h5><i class="fi-credit-card"></i> VISA x-0932</h5></div>
+                <div class="float-right"><h5>$500</h5></div>
+            </div>
+        </div>
+        <div class="callout clearfix">
+            <a asp-controller="My" asp-action="Index" class="button large expanded">Go to my course</a>
+            <a asp-controller="Home" asp-action="Index" class="button large expanded">Go to home</a>
+        </div>
+    </div>
+</div>

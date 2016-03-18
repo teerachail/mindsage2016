@@ -1,0 +1,101 @@
+﻿@using MindSageWeb.ViewModels.PurchaseCourse
+@model MindSageWeb.ViewModels.PurchaseCourse.PurchaseCourseViewModel
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="row content-section main-section-hight">
+    <div class="medium-6 medium-centered large-6 large-centered columns">
+        <h4>Link a card</h4>
+        <form class="large-12columns" asp-controller="purchase" asp-action="index" method="post" role="form">
+            @Html.HiddenFor(it => it.CourseId)
+            <div class="row">
+                <div class="large-6 columns">
+                    <label>
+                        First Name
+                        <input asp-for="CreditCardInfo.FirstName"/>
+                        <span asp-validation-for="CreditCardInfo.FirstName" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        Last Name
+                        <input asp-for="CreditCardInfo.LastName"/>
+                        <span asp-validation-for="CreditCardInfo.LastName" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-8 columns">
+                    <label>
+                        Card Number
+                        <input asp-for="CreditCardInfo.CardNumber" />
+                        <span asp-validation-for="CreditCardInfo.CardNumber" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <label>
+                        Card Type
+                        <select asp-for="CreditCardInfo.CardType" asp-items="Html.GetEnumSelectList<CreditCardType>()"></select>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <label>
+                        Exp Month
+                        <input asp-for="CreditCardInfo.ExpiredMonth" placeholder="MM" />
+                        <span asp-validation-for="CreditCardInfo.ExpiredMonth" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <label>
+                        Exp Year
+                        <input asp-for="CreditCardInfo.ExpiredYear" placeholder="YYYY" />
+                        <span asp-validation-for="CreditCardInfo.ExpiredYear" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <label>
+                        CVV Code
+                        <input asp-for="CreditCardInfo.CVV" placeholder="ex: 123"/>
+                        <span asp-validation-for="CreditCardInfo.CVV" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-12 columns">
+                    <label>
+                        Billing Address
+                        <input asp-for="PrimaryAddress.Address" />
+                        <span asp-validation-for="PrimaryAddress.Address" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        State
+                        <input asp-for="PrimaryAddress.State" />
+                        <span asp-validation-for="PrimaryAddress.State" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-6 columns">
+                    <label>
+                        City
+                        <input asp-for="PrimaryAddress.City" />
+                        <span asp-validation-for="PrimaryAddress.City" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="large-8 columns">
+                    <label>
+                        Country
+                        <select asp-for="PrimaryAddress.Country" asp-items="Html.GetEnumSelectList<Country>()"></select>
+                    </label>
+                </div>
+                <div class="large-4 columns">
+                    <label>
+                        Zip Code
+                        <input asp-for="PrimaryAddress.ZipCode" />
+                        <span asp-validation-for="PrimaryAddress.ZipCode" class="form-error"></span>
+                    </label>
+                </div>
+                <div class="columns">
+                    <button type="submit" class="button large">Purchase</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

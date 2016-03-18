@@ -51,7 +51,7 @@ namespace MindSageWeb.Controllers
 
             var allUserCourses = Enumerable.Empty<string>();
             var isAlreadyLoggedIn = User?.Identity?.IsAuthenticated ?? false;
-            var isAlreadyHaveSelectedCourse = isAlreadyLoggedIn ? _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses) : false;
+            var isAlreadyHaveSelectedCourse = isAlreadyLoggedIn ? !_myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses) : false;
 
             ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
             ViewBag.HaveAnyCourse = allUserCourses.Any();

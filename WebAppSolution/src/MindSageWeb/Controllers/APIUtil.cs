@@ -64,13 +64,13 @@ namespace MindSageWeb.Controllers
         public static bool CanAddNewCourseCatalog(this MyCourseController ctrl, string userprofileId, string courseCatalogId, out IEnumerable<string> allUserCourseCatalogIds)
         {
             allUserCourseCatalogIds = ctrl.GetAllUserCoursCatalogIds(userprofileId);
-            var result = allUserCourseCatalogIds.Contains(courseCatalogId);
+            var result = !allUserCourseCatalogIds.Contains(courseCatalogId);
             return result;
         }
         public static bool CanAddNewCourseCatalog(this MyCourseController ctrl, string userprofileId, string courseCatalogId)
         {
             var allUserCourseCatalogIds = Enumerable.Empty<string>();
-            return ctrl.CanAddNewCourseCatalog(userprofileId, courseCatalogId);
+            return ctrl.CanAddNewCourseCatalog(userprofileId, courseCatalogId, out allUserCourseCatalogIds);
         }
 
         #endregion Methods

@@ -18,7 +18,7 @@
                             }
                             else if (User.Identity.IsAuthenticated)
                             {
-                                <a class="button expand large">PURCHASE</a>
+                                <a class="button expand large" zf-open="purchaseModal">PURCHASE</a>
                             }
                             else
                             {
@@ -31,7 +31,7 @@
                 {
                     <div class="card-section">
                         <h2>@item.Name</h2>
-                        <a class="button expand large">VIEW</a>
+                        <a class="button expand">VIEW</a>
                     </div>
                 }
             </div>
@@ -62,6 +62,26 @@
                     </div>
                 </div>
             </div>
+        </div>
+    </div>
+</div>
+
+<div zf-modal="" id="purchaseModal">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">COMPLETE PAYMENT</h4>
+    <div class="row">
+        <div class="medium-10 medium-centered large-10 large-centered columns" ng-init="purchaseMethod = 'Paypal'">
+            <input type="radio" ng-model="purchaseMethod" name="payment" value="Paypal" id="Paypal"><label for="Paypal">Pay with Paypal</label>
+            <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
+                @Html.Hidden("grade", Model.Grade)
+                @Html.Hidden("courseId", Model.id)
+                <input type="radio" ng-model="purchaseMethod" name="payment" value="Code" id="Code"><label for="Code">Use Key Code</label>
+                <input name="id" type="text" />
+                <div class="text-center">
+                    <button ng-show="purchaseMethod == 'Code'" type="submit" class="button large text-center">PURCHASE</button>
+                    <a asp-controller="purchase" asp-action="index" asp-route-id="@Model.id" ng-show="purchaseMethod == 'Paypal'" class="button large text-center">GO</a>
+                </div>
+            </form>
         </div>
     </div>
 </div>
