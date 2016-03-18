@@ -147,8 +147,8 @@ controller: 'app.lessons.LessonController as cx'
                                 <div class="grid-block">
                                     <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
                                     <div class="grid-content">
-                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
-                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.currentUser.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.currentUser.IsTeacher" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                         <p ng-show="!cx.IsEdit(discussion.id)">
                                             {{ discussion.Description }}
                                             <span class="comment-button" ng-show="cx.currentUser.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>

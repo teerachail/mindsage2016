@@ -9,10 +9,10 @@ controller: 'app.studentlists.studentlistsController as cx'
     </div>
     <div class="grid-block" ng-repeat="item in cx.friendList" ng-show="!item.IsTeacher" data-equalizer>
         <div class="small-6 grid-content callout" data-equalizer-watch>
-            <a ng-show="item.Status != 2" data-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
+            <a ng-show="item.Status != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
                 <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
-            <a ng-show="item.Status == 2" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
+            <a ng-show="item.Status == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
                 <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
         </div>
@@ -23,7 +23,7 @@ controller: 'app.studentlists.studentlistsController as cx'
 
         <div class="small-6 grid-content middleblock" ng-show="item.Status == 1" data-equalizer-watch>
             <button class="button" ng-click="acx.ConfirmFriendRequest(item)">Confirm</button>
-            <button class="button secondary" ng-click="acx.targetData(item.UserProfileId)" data-open="DeleteFriendModel">Delete Request</button>
+            <button class="button secondary" ng-click="acx.targetData(item.UserProfileId)" zf-open="DeleteFriendModel">Delete Request</button>
         </div>
 
         <div class="small-6 grid-content middleblock" ng-show="item.Status == 2" data-equalizer-watch>

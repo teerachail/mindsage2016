@@ -5,7 +5,7 @@ controller: 'app.journals.JournalController as cx'
 ---
 <div class="large-8 push-4 large-offset-1 columns">
 
-    <div class="jounal">
+    <div>
         
         <div class="inline-label">
             <span class="form-label"><i class="fi-magnifying-glass size-24"></i></span>
@@ -78,8 +78,8 @@ controller: 'app.journals.JournalController as cx'
                                             <div class="grid-block">
                                                 <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
                                                 <div class="grid-content">
-                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
-                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                     <p ng-show="!cx.IsEdit(discussion.id)">
                                                         {{ discussion.Description }}
                                                         <span class="comment-button" ng-show="cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
@@ -144,8 +144,8 @@ controller: 'app.journals.JournalController as cx'
                                             <div class="grid-block">
                                                 <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
                                                 <div class="grid-content">
-                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
-                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                    <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                     <p ng-show="!cx.IsEdit(discussion.id)">
                                                         {{ discussion.Description }}
                                                         <span class="comment-button" ng-show="cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>

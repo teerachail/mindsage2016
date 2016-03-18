@@ -5,11 +5,13 @@
 
         private classRoomId: string;
         private friendList: any[] = [];
+        public userprofile: any;
 
         static $inject = ['$scope', '$stateParams', 'waitRespondTime', 'app.shared.ClientUserProfileService'];
         constructor(private $scope, private $stateParams, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService) {
             this.classRoomId = $stateParams.classRoomId;
             this.prepareUserprofile();
+            this.userprofile = this.userSvc.GetClientUserProfile();
         }
         
         private prepareUserprofile(): void {

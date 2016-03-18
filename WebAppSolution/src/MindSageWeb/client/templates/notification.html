@@ -9,31 +9,32 @@ controller: 'app.notification.NotificationController as cx'
         <h1>Notification</h1>
     </div>    
     <div ng-show="cx.notification.length == 0"><p> Have no notification </p></div>
-    <div ng-repeat="item in cx.displayNpotifications"  class="callout" ng-click="isclose = !isclose">
+    <div ng-repeat="item in cx.displayNpotifications"  class="callout">
         <a>
-            <p ng-show="item.Tag == 0">
+            <p ng-show="item.Tag == 0" ng-click="isclose = !isclose">
                 <img class="listIcon" style="width: 5em; height: 5em;" src="../assets/img/icon/friend_request_pending.png" /><span> Reminder </span>
             </p>
-            <p ng-show="item.Tag == 1">
+            <p ng-show="item.Tag == 1" ng-click="isclose = !isclose">
                 <img class="listIcon" style="width: 5em; height: 5em;" src="../assets/img/icon/notifications_inactive.png" /><span> TOTD </span>
             </p>
-            <p ng-show="item.Tag == 2">
+            <p ng-show="item.Tag == 2" ng-click="isclose = !isclose">
                 <img class="listIcon" style="width: 5em; height: 5em;" src="../assets/img/icon/like_inactive.png" /><span> Like: </span>
                 <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
             </p>
-            <p ng-show="item.Tag == 3">
+            <p ng-show="item.Tag == 3" ng-click="isclose = !isclose">
                 <img class="listIcon" style="width: 5em; height: 5em;" src="../assets/img/icon/social_participation.png" /><span> Comment: </span>
-                <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ item.FromUserProfileName }}</span>
+                <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
             </p>
-            <p ng-show="item.Tag == 4">
+            <p ng-show="item.Tag == 4" ng-click="isclose = !isclose">
                 <img class="listIcon" style="width: 5em; height: 5em;" src="../assets/img/icon/social_participation.png" /><span> Discussion: </span>
-                <span ng-repeat="name in item.FromUserProfiles"><span ng-show="!$first">,</span>{{ name.FromUserProfileName }}</span>
+                <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
             </p>
         </a>
     
         <div ng-show="isclose">
             <p>
-                <a ng-show="item.Tag > 1" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
+                <a ng-show="item.Tag > 1 && acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) != 2 && !cx.userInfo.IsTeacher" zf-open="Modal">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
+                <a ng-show="item.Tag > 1 && (acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) == 2 || cx.userInfo.IsTeacher)" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
                 {{ item.Message }}
             </p>
         </div>
