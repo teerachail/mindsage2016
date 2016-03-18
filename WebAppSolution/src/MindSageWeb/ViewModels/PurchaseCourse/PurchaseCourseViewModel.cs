@@ -12,5 +12,6 @@ namespace MindSageWeb.ViewModels.PurchaseCourse
         public string CourseId { get; set; }
         public CreditCard CreditCardInfo { get; set; }
         public BillingAddress PrimaryAddress { get; set; }
+        public double TotalChargeAmount { get; set; }
     }
 }

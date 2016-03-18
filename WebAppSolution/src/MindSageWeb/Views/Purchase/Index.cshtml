@@ -13,117 +13,120 @@
                 <div class="large-6 columns">
                     <label>
                         First Name
-                        <input asp-for="CreditCardInfo.FirstName" />
+                        <input asp-for="CreditCardInfo.FirstName" ng-model="firstname"/>
                         <span asp-validation-for="CreditCardInfo.FirstName" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-6 columns">
                     <label>
                         Last Name
-                        <input asp-for="CreditCardInfo.LastName" />
+                        <input asp-for="CreditCardInfo.LastName" ng-model="lastname"/>
                         <span asp-validation-for="CreditCardInfo.LastName" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-8 columns">
                     <label>
                         Card Number
-                        <input asp-for="CreditCardInfo.CardNumber" />
+                        <input asp-for="CreditCardInfo.CardNumber" ng-model="creditcardNo" ng-minlength="13" ng-maxlength="20" placeholder="your credit card without dash '-'" />
                         <span asp-validation-for="CreditCardInfo.CardNumber" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-4 columns">
                     <label>
                         Card Type
-                        <select asp-for="CreditCardInfo.CardType" asp-items="Html.GetEnumSelectList<CreditCardType>()"></select>
+                        <select asp-for="CreditCardInfo.CardType" asp-items="Html.GetEnumSelectList<CreditCardType>()" ng-model="cardtype"></select>
                     </label>
                 </div>
                 <div class="large-4 columns">
                     <label>
                         Exp Month
-                        <input asp-for="CreditCardInfo.ExpiredMonth" placeholder="MM" />
+                        <input asp-for="CreditCardInfo.ExpiredMonth" placeholder="MM" ng-model="expmonth"/>
                         <span asp-validation-for="CreditCardInfo.ExpiredMonth" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-4 columns">
                     <label>
                         Exp Year
-                        <input asp-for="CreditCardInfo.ExpiredYear" placeholder="YYYY" />
+                        <input asp-for="CreditCardInfo.ExpiredYear" placeholder="YYYY" ng-model="expyear"/>
                         <span asp-validation-for="CreditCardInfo.ExpiredYear" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-4 columns">
                     <label>
                         CVV Code
-                        <input asp-for="CreditCardInfo.CVV" placeholder="ex: 123" />
+                        <input asp-for="CreditCardInfo.CVV" placeholder="ex: 123" ng-model="cvv"/>
                         <span asp-validation-for="CreditCardInfo.CVV" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-12 columns">
                     <label>
                         Billing Address
-                        <input asp-for="PrimaryAddress.Address" />
+                        <input asp-for="PrimaryAddress.Address" ng-model="address" />
                         <span asp-validation-for="PrimaryAddress.Address" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-6 columns">
                     <label>
                         State
-                        <input asp-for="PrimaryAddress.State" />
+                        <input asp-for="PrimaryAddress.State" ng-model="state" />
                         <span asp-validation-for="PrimaryAddress.State" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-6 columns">
                     <label>
                         City
-                        <input asp-for="PrimaryAddress.City" />
+                        <input asp-for="PrimaryAddress.City" ng-model="city"/>
                         <span asp-validation-for="PrimaryAddress.City" class="form-error"></span>
                     </label>
                 </div>
                 <div class="large-8 columns">
                     <label>
                         Country
-                        <select asp-for="PrimaryAddress.Country" asp-items="Html.GetEnumSelectList<Country>()"></select>
+                        <select asp-for="PrimaryAddress.Country" asp-items="Html.GetEnumSelectList<Country>()" ng-model="country"></select>
                     </label>
                 </div>
                 <div class="large-4 columns">
                     <label>
                         Zip Code
-                        <input asp-for="PrimaryAddress.ZipCode" />
+                        <input asp-for="PrimaryAddress.ZipCode" ng-model="zipcode" />
                         <span asp-validation-for="PrimaryAddress.ZipCode" class="form-error"></span>
                     </label>
                 </div>
                 <div class="columns">
-                    <button zf-open="confirmModal" class="button large">Purchase</button>
+                    <button ng-disabled="address==null || state==null || city==null || country==null || 
+                            cardtype==null || creditcardNo==null || firstname==null || lastname==null || 
+                            expmonth==null || expyear==null || cvv==null || zipcode==null"
+                            zf-open="confirmModal" class="button large">Next</button>
+                </div>
+            </div>
+
+            <div zf-modal="" id="confirmModal">
+                <a zf-close="" class="close-button">x</a>
+                <h4>Payment Detail</h4>
+                <div class="callout clearfix">
+                    <div class="columns">
+                        <div class="float-left"><img width="100" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" /></div>
+                        <div class="float-right"><h5>@Model.TotalChargeAmount.ToString("C2")</h5></div>
+                    </div>
+                    <hr />
+
+                    <div class="columns">
+                        <h5>Billing Address</h5>
+                        <address>
+                            {{ address }} {{ state }} {{ city }} {{ country==0? 'USA' : '' }} {{ zipcode }}
+                        </address>
+                    </div>
+                    <hr />
+                    <div class="columns">
+                        <h5>Pay With</h5>
+                        <div class="float-left"><h5><i class="fi-credit-card"></i>{{ cardtype==0? 'Visa' : 'Master Card' }} x-{{ creditcardNo.substring( creditcardNo.length-4, creditcardNo.length ) }}</h5></div>
+                        <div class="float-right"><h5>@Model.TotalChargeAmount.ToString("C2")</h5></div>
+                    </div>
+                    <div class="column">
+                        <button type="submit" class="button large expanded">Pay now</button>
+                    </div>
                 </div>
             </div>
         </form>
-    </div>
-</div>
-
-<div zf-modal="" id="confirmModal">
-    <a zf-close="" class="close-button">x</a>
-    <h4>Payment Detail</h4>
-    <div class="callout clearfix">
-        <div class="columns">
-            <div class="float-left"><img width="100" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" /></div>
-            <div class="float-right"><h5>Model.TotalChargeAmount.ToString("C2")</h5></div>
-        </div>
-        <hr />
-
-        <div class="columns">
-            <h5>Billing Address</h5>
-            <address>
-                Model.PrimaryAddress.AddressSummary
-            </address>
-        </div>
-        <hr />
-        <div class="columns">
-            <h5>Pay With</h5>
-            <div class="float-left"><h5><i class="fi-credit-card"></i> Model.CreditCardInfo.CardType x-Model.CreditCardInfo.LastFourDigits</h5></div>
-            <div class="float-right"><h5>Model.TotalChargeAmount.ToString("C2")</h5></div>
-        </div>
-        <div class="column">
-            <a asp-controller="purchase" asp-action="Finished" class="button large expanded">Pay now</a>
-        </div>
     </div>
 </div>

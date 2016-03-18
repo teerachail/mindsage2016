@@ -78,63 +78,54 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public IActionResult Index(string id)
         {
-            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, id);
-            if(!canAddNewCourse) return View("Error");
+            var selectedCourse = _courseCtrl.GetCourseDetail(id);
+            if (selectedCourse == null) return View("Error");
 
-            // HACK: Create tracking form
-            var model = new PurchaseCourseViewModel { CourseId = id };
+            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, id);
+            if (!canAddNewCourse) return RedirectToAction("entercourse", "my", new { @id = id });
+
+            var model = new PurchaseCourseViewModel
+            {
+                CourseId = id,
+                TotalChargeAmount = selectedCourse.Price
+            };
             return View(model);
         }
 
         [HttpPost]
         public IActionResult Index(PurchaseCourseViewModel model)
         {
+            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, model.CourseId);
+            if (!canAddNewCourse) return RedirectToAction("entercourse", "my", new { @id = model.CourseId });
+
             if (ModelState.IsValid)
             {
-                // HACK: Validate tracking form
                 var selectedCourse = _courseCtrl.GetCourseDetail(model.CourseId);
                 if (selectedCourse == null) return View("Error");
 
-                var data = new PurchaseCourseConfirmViewModel(model)
+                // TODO: Pay with Paypal
+                // TODO: Check self purchase class room id (if it doesn't existing then create it)
+                // TODO: Create new class calendar
+                var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
+                var subscriptions = selectedUserProfile.Subscriptions.ToList();
+                var now = _dateTime.GetCurrentTime();
+                var newSubscription = new UserProfile.Subscription
                 {
-                    TotalChargeAmount = selectedCourse.Price
+                    id = Guid.NewGuid().ToString(),
+                    Role = UserProfile.AccountRole.SelfPurchaser,
+                    LastActiveDate = now,
+                    ClassRoomId = "SELFPURCHASE_CLASS_ROOM_ID", // HACK: Set selfpurchase class room id
+                    ClassCalendarId = "CLASS_CALENDAR_ID", // HACK: Set class's calendar id
+                    CreatedDate = now,
+                    ClassRoomName = "CLASS_ROOM_NAME", // HACK: Class room name
+                    CourseCatalogId = model.CourseId
                 };
-                return View("Confirm", data);
+                subscriptions.Add(newSubscription);
+                selectedUserProfile.Subscriptions = subscriptions;
+                // TODO: Update user profile
+                return RedirectToAction("Finished", new { @id = newSubscription.id });
             }
             return View(model);
-        }
-
-        [HttpPost]
-        public IActionResult Confirm(PurchaseCourseConfirmViewModel model)
-        {
-            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, model.CourseId);
-            if (!canAddNewCourse) return View("Error");
-
-            // HACK: Validate tracking form
-            // TODO: Pay with Paypal
-            //addNewSubscriptionToUser(model.CourseId);
-            return RedirectToAction("Finished", new { @id = "TrackingId01" });
-        }
-
-        private void addNewSubscriptionToUser(string courseCatalogId)
-        {
-            // TODO: Check self purchase class room id (if it doesn't existing then create it)
-            // TODO: Create new class calendar
-            var userProfileId = User.Identity.Name;
-            var selectedUserProfile = _userprofileRepo.GetUserProfileById(userProfileId);
-            var subscriptions = selectedUserProfile.Subscriptions.ToList();
-            var now = _dateTime.GetCurrentTime();
-            subscriptions.Add(new UserProfile.Subscription
-            {
-                id = Guid.NewGuid().ToString(),
-                Role = UserProfile.AccountRole.SelfPurchaser,
-                LastActiveDate = now,
-                ClassRoomId = "SELFPURCHASE_CLASS_ROOM_ID", // HACK: Set selfpurchase class room id
-                ClassCalendarId = "CLASS_CALENDAR_ID", // HACK: Set class's calendar id
-                CreatedDate = now,
-                ClassRoomName = "CLASS_ROOM_NAME", // HACK: Class room name
-                CourseCatalogId = courseCatalogId
-            });
         }
 
         /// <summary>
