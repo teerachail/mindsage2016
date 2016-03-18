@@ -220,7 +220,7 @@ module app.journals {
             this.discussionSvc.UpdateDiscussion(local.ClassRoomId, local.LessonId, commentId, discussionId, false, message);
         }
 
-        public EditOpen(message: any, open: boolean) {
+        public EditOpen(message: any) {
             this.message = message.Description;
             this.EditId = message.id;
         }

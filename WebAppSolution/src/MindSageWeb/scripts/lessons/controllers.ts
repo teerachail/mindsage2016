@@ -10,6 +10,7 @@ module app.lessons {
         public targetDiscussion: any;
         public deleteComment: boolean;
         public discussions = [];
+        public EditId: string;
         private requestedCommentIds = [];
         private likes: any;
 
@@ -206,26 +207,30 @@ module app.lessons {
             this.lessonSvc.ReadNote(this.classRoomId);
         }
 
-        public EditOpen(message: string, open: boolean) {
-            this.message = message;
-            return !open;
+        public EditOpen(message: any) {
+            this.message = message.Description;
+            this.EditId = message.id;
         }
 
-        public SaveEdit(messageId: number, save: boolean) {
+        public SaveEdit(messageId: number) {
             this.comment.Comments.filter(it=> it.id == messageId)[0].Description = this.message;
             this.EditComment(this.comment.Comments.filter(it=> it.id == messageId)[0].id, this.message);
-            return !save;
+            this.EditId = null;
         }
 
-        public SaveEditDiscus(commentId: string, messageId: number, save: boolean) {
+        public SaveEditDiscus(commentId: string, messageId: number) {
 
             this.discussions.filter(it=> it.id == messageId)[0].Description = this.message;
             this.EditDiscussion(commentId, this.discussions.filter(it=> it.id == messageId)[0].id, this.message);
-            return !save;
+            this.EditId = null;
         }
 
-        public CancelEdit(save: boolean) {
-            return !save;
+        public CancelEdit() {
+            this.EditId = null;
+        }
+
+        public IsEdit(id: string) {
+            return this.EditId == id;
         }
 
         public deleteComfirm(comment: string) {

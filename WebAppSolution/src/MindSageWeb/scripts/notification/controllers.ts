@@ -45,7 +45,7 @@
         }
 
         public OpenJournalPage(name: string, userId: string) {
-            this.$state.go("app.course.teacherlist", { 'classRoomId': this.userInfo.CurrentClassRoomId, 'targetUserId': userId }, { inherit: false });
+            this.$state.go("app.course.journal", { 'classRoomId': this.userInfo.CurrentClassRoomId, 'targetUserId': userId }, { inherit: false });
         }
 
         public GetFirstLiker(name: any) {
