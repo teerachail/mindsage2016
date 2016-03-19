@@ -95,14 +95,14 @@ namespace MindSageWeb.Controllers
             var lessonIds = userComments.Select(it => it.LessonId).Distinct();
 
             var lessonQry = from it in selectedClassRoom.Lessons
-                          where it != null
-                          where lessonIds.Contains(it.id)
-                          select new
-                          {
-                              LessonId = it.id,
-                              LessonCatalogId = it.LessonCatalogId,
-                              LessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId)
-                          };
+                            where it != null
+                            where lessonIds.Contains(it.id)
+                            select new
+                            {
+                                LessonId = it.id,
+                                LessonCatalogId = it.LessonCatalogId,
+                                LessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId)
+                            };
             var lessons = lessonQry.Where(it => it.LessonCatalog != null).ToList();
 
             var comments = userComments
@@ -124,7 +124,7 @@ namespace MindSageWeb.Controllers
                         Order = order++,
                         LessonId = it.LessonId,
                         LessonWeek = selectedLessonCatalog.LessonCatalog.Order,
-                        TotalDiscussions = it.Discussions.Count(),
+                        TotalDiscussions = it.Discussions.Where(dc => !dc.DeletedDate.HasValue).Count(),
                         TotalLikes = it.TotalLikes
                     };
                 })

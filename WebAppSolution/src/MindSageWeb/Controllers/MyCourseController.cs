@@ -79,7 +79,13 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(classRoomId);
             if (!areArgumentsValid) return Enumerable.Empty<CourseMapContentRespond>();
 
-            if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId)) return Enumerable.Empty<CourseMapContentRespond>();
+            UserProfile userprofile;
+            if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId, out userprofile)) return Enumerable.Empty<CourseMapContentRespond>();
+
+            var isSelfPurchase = userprofile.Subscriptions
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.ClassRoomId == classRoomId)
+                .Any(it => it.Role == UserProfile.AccountRole.SelfPurchaser);
 
             var now = _dateTime.GetCurrentTime();
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
@@ -87,8 +93,7 @@ namespace MindSageWeb.Controllers
                 && classCalendar.LessonCalendars != null
                 && !classCalendar.DeletedDate.HasValue
                 && !classCalendar.CloseDate.HasValue
-                && classCalendar.ExpiredDate.HasValue
-                && classCalendar.ExpiredDate.Value.Date > now.Date;
+                && (classCalendar.ExpiredDate.HasValue && classCalendar.ExpiredDate.Value.Date > now.Date) || isSelfPurchase;
             if (!canAccessToTheClassRoom) return Enumerable.Empty<CourseMapContentRespond>();
 
             var result = classCalendar.LessonCalendars
@@ -132,7 +137,7 @@ namespace MindSageWeb.Controllers
             var canAccessUserActivit = selectedUserActivity != null
                 && selectedUserActivity.LessonActivities != null
                 && !selectedUserActivity.DeletedDate.HasValue;
-            if (!canAccessUserActivit) Enumerable.Empty<CourseMapStatusRespond>();
+            if (!canAccessUserActivit) return Enumerable.Empty<CourseMapStatusRespond>();
 
             const int NoneComment = 0;
             var result = selectedUserActivity.LessonActivities
