@@ -51,7 +51,6 @@ namespace MindSageWeb.Repositories
         {
             var update = Builders<ClassCalendar>.Update
              .Set(it => it.BeginDate, data.BeginDate)
-             .Set(it => it.IsWeekendHoliday, data.IsWeekendHoliday)
              .Set(it => it.ExpiredDate, data.ExpiredDate)
              .Set(it => it.CloseDate, data.CloseDate)
              .Set(it => it.ClassRoomId, data.ClassRoomId)
