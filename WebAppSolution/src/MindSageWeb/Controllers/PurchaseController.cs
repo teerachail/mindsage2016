@@ -15,6 +15,10 @@ namespace MindSageWeb.Controllers
     {
         #region Fields
 
+        private IUserActivityRepository _userActivityRepo;
+        private ILessonCatalogRepository _lessonCatalogRepo;
+        private IClassCalendarRepository _classCalendarRepo;
+        private IClassRoomRepository _classRoomRepo;
         private IUserProfileRepository _userprofileRepo;
         private IDateTime _dateTime;
         private CourseController _courseCtrl;
@@ -30,14 +34,26 @@ namespace MindSageWeb.Controllers
         /// <param name="courseCtrl">Course API</param>
         /// <param name="myCourseCtrl">MyCourse API</param>
         /// <param name="userProfileRepo">User profile repository</param>
+        /// <param name="classRoomRepo">Class room repository</param>
+        /// <param name="classCalendarRepo">Class calendar repository</param>
+        /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
+        /// <param name="userActivityRepo">User activity repository</param>
         public PurchaseController(CourseController courseCtrl, 
             MyCourseController myCourseCtrl,
             IUserProfileRepository userProfileRepo,
+            IClassRoomRepository classRoomRepo,
+            IClassCalendarRepository classCalendarRepo,
+            ILessonCatalogRepository lessonCatalogRepo,
+            IUserActivityRepository userActivityRepo,
             IDateTime dateTime)
         {
             _courseCtrl = courseCtrl;
             _myCourseCtrl = myCourseCtrl;
             _userprofileRepo = userProfileRepo;
+            _classRoomRepo = classRoomRepo;
+            _classCalendarRepo = classCalendarRepo;
+            _lessonCatalogRepo = lessonCatalogRepo;
+            _userActivityRepo = userActivityRepo;
             _dateTime = dateTime;
         }
 
@@ -103,29 +119,95 @@ namespace MindSageWeb.Controllers
                 var selectedCourse = _courseCtrl.GetCourseDetail(model.CourseId);
                 if (selectedCourse == null) return View("Error");
 
-                // TODO: Pay with Paypal
-                // TODO: Check self purchase class room id (if it doesn't existing then create it)
-                // TODO: Create new class calendar
+                var selectedClassRoom = _classRoomRepo.GetPublicClassRoomByCourseCatalogId(model.CourseId);
+                if (selectedClassRoom == null) return View("Error");
+
                 var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
-                var subscriptions = selectedUserProfile.Subscriptions.ToList();
+                if (selectedUserProfile == null) return View("Error");
+
+                // TODO: Pay with Paypal
+
                 var now = _dateTime.GetCurrentTime();
-                var newSubscription = new UserProfile.Subscription
-                {
-                    id = Guid.NewGuid().ToString(),
-                    Role = UserProfile.AccountRole.SelfPurchaser,
-                    LastActiveDate = now,
-                    ClassRoomId = "SELFPURCHASE_CLASS_ROOM_ID", // HACK: Set selfpurchase class room id
-                    ClassCalendarId = "CLASS_CALENDAR_ID", // HACK: Set class's calendar id
-                    CreatedDate = now,
-                    ClassRoomName = "CLASS_ROOM_NAME", // HACK: Class room name
-                    CourseCatalogId = model.CourseId
-                };
-                subscriptions.Add(newSubscription);
-                selectedUserProfile.Subscriptions = subscriptions;
-                // TODO: Update user profile
-                return RedirectToAction("Finished", new { @id = newSubscription.id });
+                var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogById(selectedClassRoom.Lessons.Select(it => it.LessonCatalogId)).ToList();
+                var newClassCalendar = createClassCalendar(selectedClassRoom, lessonCatalogs, now);
+                newClassCalendar.CalculateCourseSchedule();
+
+                var newSubscriptionId = string.Empty;
+                selectedUserProfile.Subscriptions = addNewSelfPurchaseSubscription(
+                    selectedUserProfile.Subscriptions, selectedClassRoom,
+                    newClassCalendar.id, model.CourseId, 
+                    now, out newSubscriptionId);
+
+                var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, newClassCalendar, lessonCatalogs, now);
+
+                _classCalendarRepo.UpsertClassCalendar(newClassCalendar);
+                _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+                _userActivityRepo.UpsertUserActivity(userActivity);
+
+                return RedirectToAction("Finished", new { @id = newSubscriptionId });
             }
             return View(model);
+        }
+
+        private IEnumerable<UserProfile.Subscription> addNewSelfPurchaseSubscription(IEnumerable<UserProfile.Subscription> subscriptions, ClassRoom selectedClassRoom, string classCalendarId, string courseCatalogId, DateTime currentTime, out string newSubscriptionId)
+        {
+            newSubscriptionId = Guid.NewGuid().ToString();
+            var newSubscriptions = subscriptions.ToList();
+            var newSubscription = new UserProfile.Subscription
+            {
+                id = newSubscriptionId,
+                Role = UserProfile.AccountRole.SelfPurchaser,
+                LastActiveDate = currentTime,
+                ClassRoomId = selectedClassRoom.id,
+                ClassCalendarId = classCalendarId,
+                CreatedDate = currentTime,
+                ClassRoomName = selectedClassRoom.Name,
+                CourseCatalogId = courseCatalogId
+            };
+            newSubscriptions.Add(newSubscription);
+            return newSubscriptions;
+        }
+
+        private ClassCalendar createClassCalendar(ClassRoom classRoom, IEnumerable<LessonCatalog> lessonCatalogs, DateTime currentTime)
+        {
+            var lessonOrderRunner = 1;
+            var lessonCalendars = classRoom.Lessons.Select(it =>
+            {
+                var lessonCatalog = lessonCatalogs.FirstOrDefault(lc => lc.id == it.LessonCatalogId);
+                if (lessonCatalog == null) return null;
+
+                var topicOfTheDays = lessonCatalog.TopicOfTheDays.Select(totd => new ClassCalendar.TopicOfTheDay
+                {
+                    id = Guid.NewGuid().ToString(),
+                    CreatedDate = currentTime,
+                    Message = totd.Message,
+                    SendOnDay = totd.SendOnDay,
+                    RequiredSendTopicOfTheDayDate = currentTime
+                }).ToList();
+
+                var result = new ClassCalendar.LessonCalendar
+                {
+                    id = Guid.NewGuid().ToString(),
+                    Order = lessonOrderRunner++,
+                    BeginDate = currentTime.Date,
+                    CreatedDate = currentTime,
+                    LessonId = it.id,
+                    SemesterGroupName = lessonCatalog.SemesterName,
+                    TopicOfTheDays = topicOfTheDays
+                };
+                return result;
+            }).Where(it => it != null).ToList();
+            var classCalendar = new ClassCalendar
+            {
+                id = Guid.NewGuid().ToString(),
+                BeginDate = currentTime.Date,
+                ClassRoomId = classRoom.id,
+                CreatedDate = currentTime,
+                Holidays = Enumerable.Empty<DateTime>(),
+                ShiftDays = Enumerable.Empty<DateTime>(),
+                LessonCalendars = lessonCalendars,
+            };
+            return classCalendar;
         }
 
         /// <summary>
@@ -135,7 +217,7 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public IActionResult Finished(string id)
         {
-            // HACK: Get tracking information
+            // HACK: Show billing address
             var model = new CoursePurchasedViewModel
             {
                 AddressSummary = "Pimankhondopark Building 2 room number 989/148 Khonkean Naimung USA 40000",

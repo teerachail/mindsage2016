@@ -16,8 +16,6 @@ namespace MindSageWeb.Repositories.Models
         public DateTime? ExpiredDate { get; set; }
         public DateTime? CloseDate { get; set; }
         public string ClassRoomId { get; set; }
-        public DateTime LastCalculateHolidayRequest { get; set; }
-        public DateTime? LastCalculateHolidayComplete { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
@@ -35,10 +33,23 @@ namespace MindSageWeb.Repositories.Models
             public int Order { get; set; }
             public string SemesterGroupName { get; set; }
             public DateTime BeginDate { get; set; }
-            public string TopicOfTheDayMessage { get; set; }
+            public IEnumerable<TopicOfTheDay> TopicOfTheDays { get; set; }
+            public string LessonId { get; set; }
+            public DateTime CreatedDate { get; set; }
+            public DateTime? DeletedDate { get; set; }
+
+            #endregion Properties
+        }
+
+        public class TopicOfTheDay
+        {
+            #region Properties
+
+            public string id { get; set; }
+            public string Message { get; set; }
+            public int SendOnDay { get; set; }
             public DateTime RequiredSendTopicOfTheDayDate { get; set; }
             public DateTime? SendTopicOfTheDayDate { get; set; }
-            public string LessonId { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime? DeletedDate { get; set; }
 

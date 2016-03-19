@@ -42,12 +42,27 @@ namespace MindSageWeb.Repositories
              .Set(it => it.CourseCatalogId, data.CourseCatalogId)
              .Set(it => it.DeletedDate, data.DeletedDate)
              .Set(it => it.Message, data.Message)
+             .Set(it => it.IsPublic, data.IsPublic)
              .Set(it => it.Lessons, data.Lessons)
              .Set(it => it.LastUpdatedMessageDate, data.LastUpdatedMessageDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
             MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
+        }
+
+        /// <summary>
+        /// ขอข้อมูล public class room จากรหัส course catalog
+        /// </summary>
+        /// <param name="courseCatalogId">รหัส course catalog ที่ต้องการขอ</param>
+        public ClassRoom GetPublicClassRoomByCourseCatalogId(string courseCatalogId)
+        {
+            var result = MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(TableName)
+               .Find(it => !it.DeletedDate.HasValue && it.IsPublic && it.CourseCatalogId == courseCatalogId)
+               .ToEnumerable()
+               .OrderByDescending(it => it.CreatedDate)
+               .FirstOrDefault();
+            return result;
         }
 
         #endregion IClassRoomRepository members

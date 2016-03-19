@@ -20,6 +20,12 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonCatalogId">รหัส Lesson catalog ที่ต้องการ</param>
         LessonCatalog GetLessonCatalogById(string lessonCatalogId);
 
+        /// <summary>
+        /// ขอข้อมูล Lesson catalog จากรหัส
+        /// </summary>
+        /// <param name="lessonCatalogId">รหัส Lesson catalog ที่ต้องการ</param>
+        IEnumerable<LessonCatalog> GetLessonCatalogById(IEnumerable<string> lessonCatalogIds);
+
         #endregion Methods
     }
 }

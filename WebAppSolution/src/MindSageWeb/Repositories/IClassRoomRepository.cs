@@ -26,6 +26,12 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่จะทำการอัพเดท</param>
         void UpsertClassRoom(ClassRoom data);
 
+        /// <summary>
+        /// ขอข้อมูล public class room จากรหัส course catalog
+        /// </summary>
+        /// <param name="courseCatalogId">รหัส course catalog ที่ต้องการขอ</param>
+        ClassRoom GetPublicClassRoomByCourseCatalogId(string courseCatalogId);
+
         #endregion Methods
     }
 }

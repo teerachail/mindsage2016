@@ -21,6 +21,12 @@ namespace MindSageWeb.Repositories
         ClassCalendar GetClassCalendarByClassRoomId(string classRoomId);
 
         /// <summary>
+        /// ขอข้อมูล Class calendar จากรหัส Class room
+        /// </summary>
+        /// <param name="classRoomId">รหัส Class room ที่ต้องการขอข้อมูล</param>
+        IEnumerable<ClassCalendar> GetClassCalendarByClassRoomId(IEnumerable<string> classRoomIds);
+
+        /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูล Class calendar
         /// </summary>
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
