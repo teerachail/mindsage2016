@@ -100,7 +100,8 @@ module app.journals {
                 .then(it=> {
                     if (it == null) return;
                     for (var index = 0; index < it.length; index++) {
-                        this.discussions.push(it[index]);
+                        if (this.discussions.filter(dis => dis.id == it[index].id).length == 0)
+                            this.discussions.push(it[index]);
                     }
                 });
         }
@@ -127,7 +128,12 @@ module app.journals {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            var local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            var local
+            if (this.content.Comments.filter(it=> it.id == commentId).length == 0)
+                local = this.MyComments.filter(it=> it.id == commentId)[0];
+            else
+                local = this.content.Comments.filter(it=> it.id == commentId)[0];
+
             this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message)
                 .then(it=> {
                     if (it == null) {

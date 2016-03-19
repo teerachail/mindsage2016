@@ -26,12 +26,12 @@ controller: 'app.layouts.AppLayoutController as acx'
                         Need to be Friend with {{ acx.targetUser.Name }}.
                         You have Request form another side.
                         <button class="button" ng-click="acx.ConfirmFriendRequest(acx.targetUser)">Confirm</button>
-                        <button class="button secondary" data-open="DeleteFriendModel">Delete Request</button>
+                        <button class="button secondary" zf-open="DeleteFriendModel">Delete Request</button>
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 2">
                         Click your friend's name for go to journal page
-                        <a ui-sref="app.course.journal({ 'classRoomId': '{{ cx.classRoomId }}', 'targetUserId': '{{ acx.targetUser.UserProfileId }}' })">
+                        <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: acx.targetUser.UserProfileId })">
                             {{ item.Name }}
                         </a>
                     </div>
@@ -56,8 +56,8 @@ controller: 'app.layouts.AppLayoutController as acx'
                 <div class="text-center">
                     <div data-equalizer-watch>
                         <p>Confirm to delete</p>
-                        <button class="button alert" ng-click="acx.DeleteFriendRequest(acx.targetUser)" data-close>Confirm</button>
-                        <button class="button" data-close>Cancel</button>
+                        <button class="button alert" ng-click="acx.DeleteFriendRequest(acx.targetUser)" zf-close="">Confirm</button>
+                        <button class="button" zf-close="">Cancel</button>
                     </div>
                 </div>
             </form>

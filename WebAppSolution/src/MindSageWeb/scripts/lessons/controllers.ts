@@ -91,7 +91,8 @@ module app.lessons {
                 .then(it=> {
                     if (it == null) return;
                     for (var index = 0; index < it.length; index++) {
-                        this.discussions.push(it[index]);
+                        if (this.discussions.filter(dis => dis.id == it[index].id).length == 0)
+                            this.discussions.push(it[index]);
                     }
                 });
         }

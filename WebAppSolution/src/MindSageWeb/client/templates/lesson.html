@@ -115,7 +115,7 @@ controller: 'app.lessons.LessonController as cx'
                         <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId" ng-click="cx.EditOpen(item)"><a> Edit</a></span>
                         <span class="comment-button" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><i class="fi-heart size-24"></i></a> {{ item.TotalLikes }} people like this</span>
                         <span class="comment-button like" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) != -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><i class="fi-heart size-24"></i></a> {{ item.TotalLikes }} people like this</span>
-                        <span class="comment-button" data-open="ConfirmModel" ng-click="cx.deleteComfirm(item)" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId || cx.currentUser.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
+                        <span class="comment-button" zf-open="ConfirmModel" ng-click="cx.deleteComfirm(item)" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId || cx.currentUser.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
                     </p>
                     <div ng-show="cx.IsEdit(item.id)">
                         <textarea ng-model="cx.message"></textarea>
@@ -173,17 +173,17 @@ controller: 'app.lessons.LessonController as cx'
     </div>
 </div>
 
-<div zf-modal="" id="ConfirmModel" data-reveal>
+<div zf-modal="" id="ConfirmModel">
     <a zf-close="" class="close-button">x</a>
     <h4 class="text-center">Confirm</h4>
         <div>
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
-                    <div data-equalizer-watch>
+                    <div>
                         <p>Confirm to delete</p>
-                        <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()" data-close>Confirm</button>
-                        <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()" data-close>Confirm</button>
-                        <button class="button" data-close>Cancel</button>
+                        <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()" zf-close="">Confirm</button>
+                        <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()" zf-close="">Confirm</button>
+                        <button class="button" zf-close="">Cancel</button>
                     </div>
                 </div>
             </form>
