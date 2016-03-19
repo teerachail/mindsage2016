@@ -69,8 +69,8 @@
 <div zf-modal="" id="purchaseModal">
     <a zf-close="" class="close-button">x</a>
     <h4 class="text-center">COMPLETE PAYMENT</h4>
-    <div class="row">
-        <div class="medium-10 medium-centered large-10 large-centered columns" ng-init="purchaseMethod = 'Paypal'">
+    <div class="grid-block">
+        <div class="medium-10 large-10 grid-container" ng-init="purchaseMethod = 'Paypal'">
             <input type="radio" ng-model="purchaseMethod" name="payment" value="Paypal" id="Paypal"><label for="Paypal">Pay with Paypal</label>
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 @Html.Hidden("grade", Model.Grade)

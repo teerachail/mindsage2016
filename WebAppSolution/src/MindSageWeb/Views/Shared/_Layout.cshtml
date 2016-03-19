@@ -29,8 +29,8 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
-                        <a href="/my#!/preparing" class="float-right secondary hollow button">My Course</a>
                         <button type="submit" class="float-right secondary hollow button">LOG OUT</button>
+                        <a href="/my#!/preparing" class="float-right secondary hollow button">My Course</a>
                     </form>
                 }
                 else
