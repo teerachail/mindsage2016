@@ -913,7 +913,8 @@ namespace MindSageWeb.Controllers
         }
         private bool validateAccessToCourseScheduleManagement(string userprofileId, string classRoomId)
         {
-            return validateAccessToCourseScheduleManagement(userprofileId, classRoomId);
+            UserProfile userprofile;
+            return validateAccessToCourseScheduleManagement(userprofileId, classRoomId, out userprofile);
         }
         private bool validateAccessToCourseScheduleManagement(string userprofileId, string classRoomId, out UserProfile userprofile)
         {
