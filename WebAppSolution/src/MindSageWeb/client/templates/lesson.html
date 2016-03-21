@@ -6,78 +6,67 @@ controller: 'app.lessons.LessonController as cx'
 
 <div class="large-8 push-4 large-offset-1 columns" ng-init="mcx.ChangeVideo(cx.content.PrimaryContentURL)">
 
-    <div class="row">
-        <div class="columns">
-            <h1 class="lesson-header">SEMESTER {{ cx.content.SemesterName }}</h1>
+    <div class="grid-block clearfix">
+        <div class="grid-content float-left">
+            <h1>SEMESTER {{ cx.content.SemesterName }}</h1>
         </div>
-        <div ng-show="cx.content.IsTeacher" class="large-6 columns view-select">
+        <div ng-show="cx.content.IsTeacher" class="grid-content float-right">
             <a ng-class="{ 'active': cx.teacherView }" ng-click="cx.selectTeacherView()">TEACHER VIEW</a>
             <span>|</span>
             <a ng-class="{ 'active': !cx.teacherView }" ng-click="cx.selectStdView()">STUDENT VIEW</a>
         </div>
     </div>
 
-    <div ng-show="{{ cx.content.CourseMessage!=null }}" class="callout warning" data-closable>
-        <div class="row">
-            <div class="small-1 columns">
+    <div class="card alert" ng-show="{{ cx.content.CourseMessage!=null }}">
+        <div class="card-section clearfix">
+            <a ng-click="cx.ReadNote()" class="close-button">x</a>
+            <div class="grid-content float-left">
                 <i class="fi-alert size-36"></i>
             </div>
-            <div class="small-10 small-pull-1 columns">
+            <div class="grid-content float-right">
                 <p>{{ cx.content.CourseMessage }}</p>
             </div>
         </div>
-        <button class="close-button" aria-label="Dismiss alert" type="button" data-close>
-            <span aria-hidden="true" ng-click="cx.ReadNote()">&times;</span>
-        </button>
     </div>
 
-    <div class="lesson-bg callout have-like">
-        <div data-accordion data-allow-all-closed="true">
-            <div class="title">
-                <h2>Week {{ cx.content.Order }}</h2>
-            </div>
 
-            <div ng-show="cx.teacherView" class="detail control" data-accordion-item>
-                <h3>{{ cx.content.Title }}</h3>
-                <p class="week-info"></p>
-                <p>{{ cx.content.ShortTeacherLessonPlan }}</p>
-                <a>
-                    <p> > More Details</p>
-                </a>
-                <div class="accordion-content" data-tab-content>
-                    <div>
-                        <p>{{ cx.content.FullTeacherLessonPlan }}</p>
-                    </div>
-                </div>
-            </div>
+    <div>
+        <h2>Week {{ cx.content.Order }}</h2>
 
-            <div ng-show="!cx.teacherView" class="detail control" data-accordion-item>
-                <h3>{{ cx.content.Title }}</h3>
-                <p class="week-info"></p>
-                <p>{{ cx.content.ShortDescription }}</p>
-                <a>
-                    <p> > More Details</p>
-                </a>
-                <div class="accordion-content" data-tab-content>
-                    <div>
-                        <p>{{ cx.content.FullDescription }}</p>
-                    </div>
-                    <div>
-                        <h4 class="extra-header">Extra learning</h4>
-                        <ul>
-                            <li>
-                                <p>Primary</p>
-                                <div><a ng-click="mcx.ChangeVideo(cx.content.PrimaryContentURL)">{{ cx.content.PrimaryContentURL }}</a></div>
-                            </li>
-                        </ul>
-                        <ul ng-repeat="item in cx.content.ExtraContentUrls">
-                            <li class="extra">
-                                <p>Extra {{ $index + 1 }}</p>
-                                <div><a ng-click="mcx.ChangeVideo(item)">{{ item }}</a></div>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+        <div ng-show="cx.teacherView">
+            <h3>{{ cx.content.Title }}</h3>
+            <p>{{ cx.content.ShortTeacherLessonPlan }}</p>
+            <a ng-click="openTeacherDestail = !openTeacherDestail">
+                <p ng-hide="openTeacherDestail"> <img zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success"> More Details</p>
+                <p ng-show="openTeacherDestail"> <img zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success"> Hide Details</p>
+            </a>
+            <div ng-show="openTeacherDestail">
+                <p>{{ cx.content.FullTeacherLessonPlan }}</p>
+            </div>
+        </div>
+
+        <div ng-show="!cx.teacherView">
+            <h3>{{ cx.content.Title }}</h3>
+            <p>{{ cx.content.ShortDescription }}</p>
+            <a ng-click="openStudentDestail = !openStudentDestail">
+                <p ng-hide="openTeacherDestail"> <img zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success"> More Details</p>
+                <p ng-show="openTeacherDestail"> <img zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success"> Hide Details</p>
+            </a>
+            <div ng-show="openStudentDestail">
+                <p>{{ cx.content.FullDescription }}</p>
+                <h4 class="extra-header">Extra learning</h4>
+                <ul>
+                    <li>
+                        <p>Primary</p>
+                        <div><a ng-click="mcx.ChangeVideo(cx.content.PrimaryContentURL)">{{ cx.content.PrimaryContentURL }}</a></div>
+                    </li>
+                </ul>
+                <ul ng-repeat="item in cx.content.ExtraContentUrls">
+                    <li class="extra">
+                        <p>Extra {{ $index + 1 }}</p>
+                        <div><a ng-click="mcx.ChangeVideo(item)">{{ item }}</a></div>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
@@ -147,7 +136,8 @@ controller: 'app.lessons.LessonController as cx'
                                 <div class="grid-block">
                                     <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
                                     <div class="grid-content">
-                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.currentUser.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.currentUser.IsTeacher" zf-open="Modal"
+                                        ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                         <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.currentUser.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                         <p ng-show="!cx.IsEdit(discussion.id)">
                                             {{ discussion.Description }}
@@ -155,7 +145,7 @@ controller: 'app.lessons.LessonController as cx'
                                             <span class="comment-button" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
                                             <span class="comment-button like" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
                                             <span class="comment-button" ng-show="cx.currentUser.UserProfileId == item.CreatedByUserProfileId || cx.currentUser.UserProfileId == discussion.CreatedByUserProfileId || cx.currentUser.IsTeacher"
-                                                  zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><i class="fi-trash size-24"></i></a></span>
+                                            zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><i class="fi-trash size-24"></i></a></span>
                                         </p>
                                         <div ng-show="cx.IsEdit(discussion.id)">
                                             <textarea ng-model="cx.message"></textarea>
@@ -176,16 +166,16 @@ controller: 'app.lessons.LessonController as cx'
 <div zf-modal="" id="ConfirmModel">
     <a zf-close="" class="close-button">x</a>
     <h4 class="text-center">Confirm</h4>
-        <div>
-            <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
-                <div class="text-center">
-                    <div>
-                        <p>Confirm to delete</p>
-                        <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()" zf-close="">Confirm</button>
-                        <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()" zf-close="">Confirm</button>
-                        <button class="button" zf-close="">Cancel</button>
-                    </div>
+    <div>
+        <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
+            <div class="text-center">
+                <div>
+                    <p>Confirm to delete</p>
+                    <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()" zf-close="">Confirm</button>
+                    <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()" zf-close="">Confirm</button>
+                    <button class="button" zf-close="">Cancel</button>
                 </div>
-            </form>
-        </div>
+            </div>
+        </form>
+    </div>
 </div>

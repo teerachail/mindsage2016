@@ -37,7 +37,7 @@ module app.lessons {
             this.currentUser = this.userprofileSvc.GetClientUserProfile();
             this.currentUser.CurrentDisplayLessonId = this.lessonId;
             this.userprofileSvc.UpdateUserProfile(this.currentUser);
-            this.teacherView = this.currentUser.IsTeacher;
+            this.teacherView = false;
 
             this.prepareLessonContents();
         }
