@@ -3,6 +3,8 @@ name: app.course.journal
 url: /journal/:targetUserId
 controller: 'app.journals.JournalController as cx'
 ---
+
+<br />
 <div class="large-8 push-4 large-offset-1 columns">
 
     <div>
@@ -39,9 +41,9 @@ controller: 'app.journals.JournalController as cx'
                 <div class="comment">
                     <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.userprofile.CurrentLessonNo && cx.targetUserId == cx.userprofile.UserProfileId">
                         <div class="grid-block">
-                            <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ comment.CreatorImageUrl }}"></div>
+                            <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ comment.CreatorImageUrl }}"></div>
 
-                            <div class="grid-content">
+                            <div class="grid-content large-10">
                                 <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ cx.userprofile.CurrentLessonNo }}</span></h4>
                                 <p ng-show="!cx.IsEdit(comment.id)">
                                     {{ comment.Description }}
@@ -62,8 +64,8 @@ controller: 'app.journals.JournalController as cx'
                                 <div ng-show="discusClose">
                                     <div class="clearfix" ng-show="cx.content.IsDiscussionAvailable">
                                         <div class="grid-block">
-                                            <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.userprofile.ImageUrl }}"></div>
-                                            <div class="grid-content">
+                                            <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.userprofile.ImageUrl }}"></div>
+                                            <div class="grid-content large-10">
                                                 <h4>{{ cx.userprofile.FullName }}</h4>
                                                 <textarea ng-model="discussionMsg" rows="3"></textarea>
                                             </div>
@@ -76,8 +78,8 @@ controller: 'app.journals.JournalController as cx'
                                     <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id } | orderBy: 'Order'" class="row">
                                         <div class="discussion">
                                             <div class="grid-block">
-                                                <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
-                                                <div class="grid-content">
+                                                <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
+                                                <div class="grid-content large-10">
                                                     <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                     <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                     <p ng-show="!cx.IsEdit(discussion.id)">
@@ -105,8 +107,8 @@ controller: 'app.journals.JournalController as cx'
 
                     <div ng-repeat="comment in cx.GetComments(item) | filter:search  | orderBy: 'Order'">
                         <div class="grid-block">
-                            <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ comment.CreatorImageUrl }}"></div>
-                            <div class="grid-content">
+                            <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ comment.CreatorImageUrl }}"></div>
+                            <div class="grid-content large-10">
                                 <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ comment.LessonWeek }}</span></h4>
                                 <p ng-show="!cx.IsEdit(comment.id)">
                                     {{ comment.Description }}
@@ -128,8 +130,8 @@ controller: 'app.journals.JournalController as cx'
 
                                     <div class="clearfix" ng-show="cx.content.IsDiscussionAvailable">
                                         <div class="grid-block">
-                                            <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.userprofile.ImageUrl }}"></div>
-                                            <div class="grid-content">
+                                            <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.userprofile.ImageUrl }}"></div>
+                                            <div class="grid-content large-10">
                                                 <h4>{{ cx.userprofile.FullName }}</h4>
                                                 <textarea ng-model="discussionMsg" rows="3"></textarea>
                                             </div>
@@ -142,8 +144,8 @@ controller: 'app.journals.JournalController as cx'
                                     <div class="discussion">
                                         <div ng-repeat="discussion in cx.discussions | filter: { CommentId: comment.id } | orderBy: '-Order'" class="row">
                                             <div class="grid-block">
-                                                <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
-                                                <div class="grid-content">
+                                                <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
+                                                <div class="grid-content large-10">
                                                     <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                     <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                     <p ng-show="!cx.IsEdit(discussion.id)">
@@ -173,15 +175,13 @@ controller: 'app.journals.JournalController as cx'
     </div>
 </div>
 
-<div zf-modal="" id="ConfirmModel">
+<div zf-modal="" id="ConfirmModel" class="tiny dialog">
     <a zf-close="" class="close-button">x</a>
-    <h4 class="text-center">Confirm</h4>
-    <div>
-        <div class="medium-10 medium-centered large-10 large-centered columns">
-            <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
+    <h4 class="text-center">Confirm to delete</h4>
+        <div class="medium-10 large-10 text-center grid-container">
+            <form asp-controller="Purchase" asp-action="UserCode" method="post">
                 <div class="text-center">
                     <div data-equalizer-watch>
-                        <p>Confirm to delete</p>
                         <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()"  zf-close="" >Confirm</button>
                         <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()"  zf-close="">Confirm</button>
                         <button class="button"  zf-close="">Cancel</button>
@@ -189,5 +189,4 @@ controller: 'app.journals.JournalController as cx'
                 </div>
             </form>
         </div>
-    </div>
 </div>
