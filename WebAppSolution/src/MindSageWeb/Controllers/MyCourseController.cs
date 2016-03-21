@@ -795,14 +795,6 @@ namespace MindSageWeb.Controllers
         [Route("scheduleweek")]
         public GetCourseScheduleRespond SetScheduleWithWeek(SetScheduleWithWeekRequest body)
         {
-            body.ClassRoomId = "ClassRoom01";
-            body.UserProfileId = "sakul@mindsage.com";
-            body.IsHoliday = true;
-            body.IsShift = true;
-            body.IsSaturday = true;
-            body.IsFriday = true;
-            body.IsMonday = true;
-
             var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.UserProfileId)
                 && !string.IsNullOrEmpty(body.ClassRoomId);
