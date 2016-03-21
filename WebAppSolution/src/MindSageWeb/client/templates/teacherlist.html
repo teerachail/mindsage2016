@@ -14,9 +14,13 @@ controller: 'app.teacherlists.teacherlistsController as cx'
                 <img src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
         </div>
-        <div class="small-6 grid-content middleblock" data-equalizer-watch>
+        <div class="small-6 grid-content noscroll" data-equalizer-watch>
+            <a class="button noscroll" href="#" zf-popup-toggle="{{ item.Name }}">Open Popup</a>
             <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
         </div>
+        <zf-popup id="{{ item.Name }}" class="padding">
+            {{ item.Name }}
+        </zf-popup>
     </div>
 </div>
 
