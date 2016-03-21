@@ -17,7 +17,7 @@ namespace MindSageWeb.Repositories.Models
         public bool IsMonday { get; set; }
         public bool IsTuesday { get; set; }
         public bool IsWednesday { get; set; }
-        public bool IsTursday { get; set; }
+        public bool IsThursday { get; set; }
         public bool IsFriday { get; set; }
         public bool IsSaturday { get; set; }
 

@@ -15,6 +15,7 @@ namespace MindSageWeb.Controllers
     {
         #region Fields
 
+        private const int LessonDuration = 5;
         private IClassRoomRepository _classRoomRepo;
         private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
@@ -794,8 +795,63 @@ namespace MindSageWeb.Controllers
         [Route("scheduleweek")]
         public GetCourseScheduleRespond SetScheduleWithWeek(SetScheduleWithWeekRequest body)
         {
-            // TODO: Not implemented 
-            throw new NotImplementedException();
+            body.ClassRoomId = "ClassRoom01";
+            body.UserProfileId = "sakul@mindsage.com";
+            body.IsHoliday = true;
+            body.IsShift = true;
+            body.IsSaturday = true;
+            body.IsFriday = true;
+            body.IsMonday = true;
+
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.UserProfileId)
+                && !string.IsNullOrEmpty(body.ClassRoomId);
+            if (!areArgumentsValid) return null;
+
+            var canAccessToCourse = validateAccessToCourseScheduleManagement(body.UserProfileId, body.ClassRoomId);
+            if (!canAccessToCourse) return null;
+
+            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+            if (classCalendar == null) return null;
+
+            if (!classCalendar.BeginDate.HasValue) return null;
+            var beginDate = classCalendar.BeginDate.Value.Date;
+            if (beginDate == null) return null;
+            var endedDate = classCalendar.LessonCalendars
+                .Where(it => !it.DeletedDate.HasValue)
+                .OrderBy(it => it.Order)
+                .LastOrDefault()?.BeginDate.AddDays(LessonDuration);
+            if (endedDate == null) return null;
+
+            const int ShiftOneDay = 1;
+            var diffDays = (int)(Math.Abs((beginDate.Date - endedDate.Value.Date).TotalDays + ShiftOneDay));
+            var dateRange = Enumerable.Range(0, diffDays).Select(it => beginDate.AddDays(it));
+
+            classCalendar.Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
+            classCalendar.ShiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
+
+            if (body.IsSunday) setHolidayAndShiftDate(classCalendar,body, DayOfWeek.Sunday, dateRange);
+            if (body.IsMonday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Monday, dateRange);
+            if (body.IsTuesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Tuesday, dateRange);
+            if (body.IsWednesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Wednesday, dateRange);
+            if (body.IsThursday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Thursday, dateRange);
+            if (body.IsFriday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Friday, dateRange);
+            if (body.IsSaturday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Saturday, dateRange);
+
+            classCalendar.Holidays = classCalendar.Holidays.Distinct();
+            classCalendar.ShiftDays = classCalendar.ShiftDays.Distinct();
+
+            _classCalendarRepo.UpsertClassCalendar(classCalendar);
+
+            var result = getCourseSchedule(classCalendar, true);
+            return result;
+        }
+
+        private void setHolidayAndShiftDate(ClassCalendar classCalendar, SetScheduleWithWeekRequest body, DayOfWeek day, IEnumerable<DateTime> dateRange)
+        {
+            var qry = dateRange.Where(it => it.DayOfWeek == day);
+            classCalendar.Holidays = body.IsHoliday ? classCalendar.Holidays.Union(qry) : classCalendar.Holidays.Except(qry);
+            classCalendar.ShiftDays = body.IsShift ? classCalendar.ShiftDays.Union(qry) : classCalendar.ShiftDays.Except(qry);
         }
 
         // POST: api/mycourse/applytoall
@@ -813,14 +869,13 @@ namespace MindSageWeb.Controllers
 
         private GetCourseScheduleRespond getCourseSchedule(ClassCalendar classCalendar, bool isComplete)
         {
-            const int LessonDuration = 5;
             var runningLessonId = 1;
             var result = new GetCourseScheduleRespond
             {
                 IsComplete = isComplete,
                 BeginDate = classCalendar.BeginDate,
-                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).Last().BeginDate.AddDays(LessonDuration),
-                Lessons = classCalendar.LessonCalendars.Select(it => new LessonSchedule
+                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).LastOrDefault()?.BeginDate.AddDays(LessonDuration),
+                Lessons = classCalendar.LessonCalendars?.Select(it => new LessonSchedule
                 {
                     BeginDate = it.BeginDate,
                     Name = string.Format("Lesson {0}", runningLessonId++)
