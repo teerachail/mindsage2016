@@ -38,29 +38,91 @@
         </div>
         <div class="small-6 grid-block vertical">
             <div class="grid-block vertical">
-                <p class="detail-info">Mind Sage Middle School Program: 5th Grade</p>
+                <p class="detail-info">@Model.Name</p>
                 <hr>
-                <h1 class="detail-header">GUIDING THE NATURAL DESIRE TO BECOME INDEPENDENT THINKERS</h1>
+                <h1 class="detail-header">@Model.Title</h1>
                 <p>
-                    Middle school is a transitional period for students. They are no longer children, but entering phase were they in lift affords quite adults either. This wonderful period in life affords teachers the opportunity to build on the awareness of the Elementary MindSage course, developing and guiding the students as they natural begin to push for indepedents and control of their lives.
+                    @Model.Description
                 </p>
-                <h2 class="detail-header">11 Week Courses <img class="float-right" src="http://placehold.it/350x110"></h2>
-                <h1 class="lesson-header">SEMESTER A</h1>
-                <div class="card">
-                    <div class="card-section">
-                        <h1>INTRO</h1>
-                        <h2>Intro To 7th Grade: The NextU</h2>
-                        <p>8 Weeks</p>
-                        <p>Student's today are very familiar with mobile technology and applications. Chances are they use an average of three different mobile applications each day. We use the analogy of software developement to help 7th graders understand that they now have the opportunity to conciously create who and whay they are. They can develop the qualities of features they want to develop, or work on `bugs` they would like to eliminate in the 7.0 version of the NextU.</p>
-                        <zf-accordion auto-open="false" collapsible="true" multi-open="true">
-                            <zf-accordion-item title="> More detail">
-                                <p>
-                                    Student's today are very familiar with mobile technology and applications. Chances are they use an average of three different mobile applications each day.
-                                </p>
-                            </zf-accordion-item>
-                        </zf-accordion>
+                <h2 class="detail-header">@Model.TotalWeeks Week Courses <img class="float-right" src="@Model.DescriptionImageUrl"></h2>
+
+                @foreach (var semester in Model.Semesters)
+                {
+                    <h1 class="lesson-header">@semester.Name</h1>
+                    <div class="card">
+                        <div class="card-section">
+                            <h1>INTRO</h1>
+                            <h2>@semester.Title</h2>
+                            <p>@semester.TotalWeeks Weeks</p>
+                            <p>
+                                @semester.Description
+                            </p>
+                            <zf-accordion auto-open="false" collapsible="true" multi-open="true">
+                                <zf-accordion-item title="> More detail">
+                                    @foreach (var unit in semester.Units)
+                                    {
+                                        foreach (var lesson in unit.Lessons)
+                                        {
+                                            <div class="card-section">
+                                                <p>WEEK @lesson.Order</p>
+                                                @foreach (var content in lesson.Contents)
+                                                {
+                                                    <div class="grid-block">
+                                                        <div class="grid-content shake">
+                                                            <img src="@content.ImageUrl">
+                                                        </div>
+                                                        <div class="grid-content">
+                                                            <p>
+                                                                @content.Description
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            </div>
+                                        }
+                                    }
+                                </zf-accordion-item>
+                            </zf-accordion>
+                        </div>
                     </div>
-                </div>
+
+                    @foreach (var unit in semester.Units)
+                    {
+                        <div class="card">
+                            <div class="card-section">
+                                <h2>UNIT @unit.UnitNo</h2>
+                                <h3>@unit.Title</h3>
+                                <p class="week-info">@unit.TotalWeeks Weeks</p>
+                                <p>
+                                    @unit.Description
+                                </p>
+                                <zf-accordion auto-open="false" collapsible="true" multi-open="true">
+                                    <zf-accordion-item title="> More detail">
+                                        @foreach (var lesson in unit.Lessons)
+                                        {
+                                            <div class="card-section">
+                                                <p>WEEK @lesson.Order</p>
+                                                @foreach (var content in lesson.Contents)
+                                                {
+                                                <div class="grid-block">
+                                                    <div class="grid-content shake">
+                                                        <img src="@content.ImageUrl">
+                                                    </div>
+                                                    <div class="grid-content">
+                                                        <p>
+                                                            @content.Description
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                                }
+                                            </div>
+                                        }
+                                    </zf-accordion-item>
+                                </zf-accordion>
+                            </div>
+                        </div>
+                    }
+                } 
             </div>
         </div>
     </div>
