@@ -80,8 +80,8 @@ controller: 'app.lessons.LessonController as cx'
 
     <div class="clearfix">
         <div class="grid-block">
-            <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.currentUser.ImageUrl }}"></div>
-            <div class="grid-content">
+            <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.currentUser.ImageUrl }}"></div>
+            <div class="grid-content large-10">
                 <h4>{{ cx.currentUser.FullName }}</h4>
                 <textarea ng-model="message" rows="3"></textarea>
             </div>
@@ -94,9 +94,8 @@ controller: 'app.lessons.LessonController as cx'
     <div class="comment">
         <div ng-repeat="item in cx.comment.Comments | orderBy: 'Order'">
             <div class="grid-block">
-                <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ item.CreatorImageUrl }}"></div>
-
-                <div class="grid-content">
+                <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ item.CreatorImageUrl }}"></div>
+                <div class="grid-content large-10">
                     <h4><a href="#" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: item.CreatedByUserProfileId })">{{ item.CreatorDisplayName }}<span class="comment-time"></span></a></h4>
 
                     <p ng-show="!cx.IsEdit(item.id)">
@@ -119,9 +118,8 @@ controller: 'app.lessons.LessonController as cx'
 
                         <div class="clearfix">
                             <div class="grid-block">
-                                <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.currentUser.ImageUrl }}"></div>
-
-                                <div class="grid-content">
+                                <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.currentUser.ImageUrl }}"></div>
+                                <div class="grid-content large-10">
                                     <h4>{{ cx.currentUser.FullName }}</h4>
                                     <textarea ng-model="discussionMsg" rows="3"></textarea>
                                 </div>
@@ -134,8 +132,8 @@ controller: 'app.lessons.LessonController as cx'
                         <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }">
                             <div class="discussion">
                                 <div class="grid-block">
-                                    <div class="grid-content shrink"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
-                                    <div class="grid-content">
+                                    <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
+                                    <div class="grid-content large-10">
                                         <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.currentUser.IsTeacher" zf-open="Modal"
                                         ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                         <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.currentUser.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
@@ -163,14 +161,13 @@ controller: 'app.lessons.LessonController as cx'
     </div>
 </div>
 
-<div zf-modal="" id="ConfirmModel">
+<div zf-modal="" id="ConfirmModel" class="tiny dialog">
     <a zf-close="" class="close-button">x</a>
-    <h4 class="text-center">Confirm</h4>
+    <h4 class="text-center">Confirm to delete</h4>
     <div>
         <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
             <div class="text-center">
                 <div>
-                    <p>Confirm to delete</p>
                     <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()" zf-close="">Confirm</button>
                     <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()" zf-close="">Confirm</button>
                     <button class="button" zf-close="">Cancel</button>
