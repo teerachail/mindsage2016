@@ -33,7 +33,7 @@
             });
             this.setCourseScheduleWeekSvc = <ISetCourseScheduleWeekResourceClass<any>>$resource(appConfig.CourseScheduleWeekUrl, {
                 'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId', 'isHoliday': '@isHoliday', 'isShift': '@isShift',
-                'isSunday': '@isSunday', 'isMonday': '@isMonday', 'isTuesday': '@isTuesday', 'isWednesday': '@isWednesday', 'isTursday': '@isTursday', 'isFriday': '@isFriday', 'isSaturday': 'isSaturday'
+                'isSunday': '@isSunday', 'isMonday': '@isMonday', 'isTuesday': '@isTuesday', 'isWednesday': '@isWednesday', 'isThursday': '@isThursday', 'isFriday': '@isFriday', 'isSaturday': 'isSaturday'
             });
             this.applyToAllCourseSvc = <IApplyToAllCourseResourceClass<any>>$resource(appConfig.ApplyToAllCourseUrl, { 'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId' });
         }
@@ -55,10 +55,10 @@
             var classRoomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
             return this.setCourseScheduleRangeSvc.save(new SetCourseScheduleRangeRequest(userId, classRoomId, isHoliday, isShift, fromDate, toDate)).$promise;
         }
-        public SetCourseScheduleWeek(isHoliday: boolean, isShift: boolean, isSunday: boolean, isMonday: boolean, isTuesday: boolean, isWednesday: boolean, isTursday: boolean, isFriday: boolean, isSaturday: boolean): ng.IPromise<any> {
+        public SetCourseScheduleWeek(isHoliday: boolean, isShift: boolean, isSunday: boolean, isMonday: boolean, isTuesday: boolean, isWednesday: boolean, isThursday: boolean, isFriday: boolean, isSaturday: boolean): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
             var classRoomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
-            return this.setCourseScheduleWeekSvc.save(new SetCourseScheduleWeekRequest(userId, classRoomId, isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isTursday, isFriday, isSaturday)).$promise;
+            return this.setCourseScheduleWeekSvc.save(new SetCourseScheduleWeekRequest(userId, classRoomId, isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday)).$promise;
         }
         public ApplyToAllCourse(): ng.IPromise<any> {
             var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;

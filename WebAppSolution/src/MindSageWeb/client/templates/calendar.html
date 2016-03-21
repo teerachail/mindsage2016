@@ -46,50 +46,79 @@ controller: 'app.calendar.CarlendarController as cx'
                         <input ng-model="SifhtRange" type="checkbox">Sift
                     </label>
                 <div class="align-left grid-block">
-                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleRange(IsHolidayRange,SifhtRange)">Submit</div>
+                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleRange(IsHolidayRange,SifhtRange)" zf-close="">Submit</div>
                     <div class="button small-4 grid-block" zf-close="">Cancle</div>
                 </div>
             </div>
 
             <div class="small-offset-2" style="border-bottom:solid #808080">
                 <h5>Select by week day</h5>
-                <label class="grid-block">
-                    <input ng-model="sun" type="checkbox">Sunday
-                </label>
-                <label class="grid-block">
-                    <input ng-model="mon" type="checkbox">Monday
-                </label>
-                <label class="grid-block">
-                    <input ng-model="tue" type="checkbox">Tuesday
-                </label>
-                <label class="grid-block">
-                    <input ng-model="wed" type="checkbox">Wednesday
-                </label>
-                <label class="grid-block">
-                    <input ng-model="thu" type="checkbox">Thursday
-                </label>
-                <label class="grid-block">
-                    <input ng-model="fri" type="checkbox">Friday
-                </label>
-                <label class="grid-block">
-                    <input ng-model="sat" type="checkbox">Saturday
-                </label>
+                <div class="grid-block">
+                    <label>
+                        <input ng-model="sun" type="checkbox">
+                        Sunday
+                    </label>
+                </div>
+                <div class="grid-block">
+                    <label>
+                        <input ng-model="mon" type="checkbox">
+                        Monday
+                    </label>
+                </div>
+                <div class="grid-block">
+                    <label>
+                        <input ng-model="tue" type="checkbox">
+                        Tuesday
+                    </label>
+                </div>
+                <div class="grid-block">
+                    <label>
+                        <input ng-model="wed" type="checkbox">
+                        Wednesday
+                    </label>
+                </div>
+                <div class="grid-block">
+                    <label>
+                        <input ng-model="thu" type="checkbox">
+                        Thursday
+                    </label>
+                </div>
+                <div class="grid-block">
+                    <label>
+                        <input ng-model="fri" type="checkbox">
+                        Friday
+                    </label>
+                </div>
+                <div class="grid-block">
+                    <label>
+                        <input ng-model="sat" type="checkbox">
+                        Saturday
+                    </label>
+                </div>
                 <div class="align-left grid-block">
                     <label class="grid-block">
-                        <input ng-model="IsHolidayWeek" type="radio" value="true" ng-checked="true">Holiday
+                        <input ng-model="IsHolidayWeek" type="radio" value="true" ng-checked="true">
+                        Holiday
                     </label>
                     <label class="grid-block">
-                        <input ng-model="IsHolidayWeek" type="radio" value="false">Not Holiday
+                        <input ng-model="IsHolidayWeek" type="radio" value="false">
+                        Not Holiday
                     </label>
                 </div>
                 <label class="grid-block">
                     <input ng-model="SifhtWeek" type="checkbox">Sift
                 </label>
                 <div class="align-left grid-block">
-                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleWeek(IsHolidayWeek,SifhtWeek,sun,mon,tue,wed,tur,fri,sat)">Submit</div>
+                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleWeek(IsHolidayWeek,SifhtWeek,sun,mon,tue,wed,thu,fri,sat)" zf-close="">Submit</div>
                     <div class="button small-4 grid-block" zf-close="">Cancle</div>
                 </div>
           </div>
-</zf-offcanvas>
+          <div class="small-offset-2 align-left ">
+              <h5>Set apply to all coureses</h5>
+              <div class="align-left button" ng-click="cx.ApplyToAllCourse()">
+                  Apply to all coureses
+              </div>
+          </div>
+        </zf-offcanvas>
     </div>
 </div>

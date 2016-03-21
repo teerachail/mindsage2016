@@ -34,7 +34,7 @@
             public isMonday: boolean,
             public isTuesday: boolean,
             public isWednesday: boolean,
-            public isTursday: boolean,
+            public isThursday: boolean,
             public isFriday: boolean,
             public isSaturday: boolean
         ) {

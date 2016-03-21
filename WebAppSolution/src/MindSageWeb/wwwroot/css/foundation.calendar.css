@@ -74,6 +74,7 @@
 .day.holiday, .days.holiday {
     background :#dd2626;
 }
+
 .day.odd:hover, .days.odd:hover {
     background: #e9c84a;
 }
