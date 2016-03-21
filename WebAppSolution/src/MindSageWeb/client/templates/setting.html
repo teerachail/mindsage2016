@@ -28,7 +28,7 @@ controller: 'app.settings.SettingController as cx'
 
                 <div class="align-center grid-block">
                     <div>
-                        <div><img class="thumbnail" style="width: 100px; height: 100px;" src="{{ cx.userInfo.ImageUrl }}"></div>
+                        <div><img class="thumbnail" src="{{ cx.userInfo.ImageUrl }}"></div>
                         <div class="align-center grid-block"><a href="../Manage/ChangeProfileImage/{{ cx.userInfo.CurrentClassRoomId }}">Edit</a></div>
                     </div>
                 </div>
@@ -63,12 +63,10 @@ controller: 'app.settings.SettingController as cx'
                 </div>
             </div>
             <div class="grid-block">
-                <div class="small-6 grid-content">
-                    <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{ cx.userInfo.CurrentClassRoomId }}">Change Password</a>
-                </div>
-                <div class="small-6 grid-content">
-                    <a class="button" ng-show="!cx.userInfo.HasPassword" href="../Manage/SetPassword/{{ cx.userInfo.CurrentClassRoomId }}">Set Password</a>
-                </div>
+                <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{ cx.userInfo.CurrentClassRoomId }}">Change Password</a>
+            </div>
+            <div class="grid-block">
+                <a class="button" ng-hide="cx.userInfo.HasPassword" href="../Manage/SetPassword/{{ cx.userInfo.CurrentClassRoomId }}">Set Password</a>
             </div>
         </div>
     </div>
@@ -109,7 +107,7 @@ controller: 'app.settings.SettingController as cx'
             <div class="grid-block">
                 <div class="grid-content shrink">
                     <p>
-                        Start Date <img width="30" src="../assets/img/logo/calendar.png" />
+                        Start Date <img src="../assets/img/logo/calendar.png" />
                     </p>
                 </div>
                 <div class="grid-content shrink">
@@ -120,7 +118,7 @@ controller: 'app.settings.SettingController as cx'
             </div>
             <div class="grid-content shrink">
                 <p>
-                    Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.userInfo.CurrentClassRoomId })"><img width="30" src="../assets/img/logo/calendar.png" /></a>
+                    Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.userInfo.CurrentClassRoomId })"><img src="../assets/img/logo/calendar.png" /></a>
                 </p>
             </div>
             <div>
@@ -132,7 +130,7 @@ controller: 'app.settings.SettingController as cx'
     </div>
     <div class="align-center grid-block clearfix" ng-show="cx.userInfo.IsTeacher">
         <p>Student Message</p>
-        <textarea rows="3" ng-model="studentMessage"></textarea><button class="button primary float-right" ng-click="cx.StudenMessageEdit(studentMessage)">SEND</button>
+        <textarea rows="3" ng-model="studentMessage"></textarea><button class="button primary float-right" ng-click="studentMessage = cx.StudenMessageEdit(studentMessage)">SEND</button>
     </div>
 </div>
 

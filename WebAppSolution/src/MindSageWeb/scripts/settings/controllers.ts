@@ -35,7 +35,11 @@
         }
 
         public StudenMessageEdit(Message: string) {
+            const NoneContentLength = 0;
+            if (Message.length <= NoneContentLength) return Message;
+
             this.profileSvc.StudenMessageEdit(Message);
+            return "";
         }
     }
 

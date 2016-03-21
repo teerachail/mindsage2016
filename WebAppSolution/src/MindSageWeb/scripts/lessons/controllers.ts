@@ -206,6 +206,7 @@ module app.lessons {
 
         public ReadNote() {
             this.lessonSvc.ReadNote(this.classRoomId);
+            this.content.CourseMessage = null;
         }
 
         public EditOpen(message: any) {

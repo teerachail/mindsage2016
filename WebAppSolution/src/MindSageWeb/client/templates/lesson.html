@@ -17,13 +17,13 @@ controller: 'app.lessons.LessonController as cx'
         </div>
     </div>
 
-    <div class="card alert" ng-show="{{ cx.content.CourseMessage!=null }}">
+    <div class="card alert" ng-show="cx.content.CourseMessage != null">
         <div class="card-section clearfix">
             <a ng-click="cx.ReadNote()" class="float-right">x</a>
             <div class="grid-content float-left">
                 <i class="fi-alert size-36"></i>
             </div>
-            <div class="grid-content float-right">
+            <div class="grid-content">
                 <p>{{ cx.content.CourseMessage }}</p>
             </div>
         </div>
@@ -54,13 +54,13 @@ controller: 'app.lessons.LessonController as cx'
                         <ul>
                             <li>
                                 <p>Primary</p>
-                                <div><a ng-click="mcx.ChangeVideo(cx.content.PrimaryContentURL)">{{ cx.content.PrimaryContentURL }}</a></div>
+                                <div><a href="{{ cx.content.PrimaryContentURL }}">{{ cx.content.PrimaryContentURL }}</a></div>
                             </li>
                         </ul>
                         <ul ng-repeat="item in cx.content.ExtraContentUrls">
                             <li class="extra">
                                 <p>Extra {{ $index + 1 }}</p>
-                                <div><a ng-click="mcx.ChangeVideo(item)">{{ item }}</a></div>
+                                <div><a href="{{ item }}">{{ item }}</a></div>
                             </li>
                         </ul>
                     </zf-accordion-item>
@@ -78,7 +78,7 @@ controller: 'app.lessons.LessonController as cx'
 
     <div class="clearfix">
         <div class="grid-block">
-            <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.currentUser.ImageUrl }}"></div>
+            <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.currentUser.ImageUrl }}"></div>
             <div class="grid-content large-10">
                 <h4>{{ cx.currentUser.FullName }}</h4>
                 <textarea ng-model="message" rows="3"></textarea>
@@ -92,7 +92,7 @@ controller: 'app.lessons.LessonController as cx'
     <div class="comment">
         <div ng-repeat="item in cx.comment.Comments | orderBy: 'Order'">
             <div class="grid-block">
-                <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ item.CreatorImageUrl }}"></div>
+                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ item.CreatorImageUrl }}"></div>
                 <div class="grid-content large-10">
                     <h4><a href="#" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: item.CreatedByUserProfileId })">{{ item.CreatorDisplayName }}<span class="comment-time"></span></a></h4>
 
@@ -116,7 +116,7 @@ controller: 'app.lessons.LessonController as cx'
 
                         <div class="clearfix">
                             <div class="grid-block">
-                                <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ cx.currentUser.ImageUrl }}"></div>
+                                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.currentUser.ImageUrl }}"></div>
                                 <div class="grid-content large-10">
                                     <h4>{{ cx.currentUser.FullName }}</h4>
                                     <textarea ng-model="discussionMsg" rows="3"></textarea>
@@ -130,7 +130,7 @@ controller: 'app.lessons.LessonController as cx'
                         <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }">
                             <div class="discussion">
                                 <div class="grid-block">
-                                    <div class="grid-content shrink large-2"><img class="thumbnail" style="width: 5em; height: 5em;" src="{{ discussion.CreatorImageUrl }}"></div>
+                                    <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ discussion.CreatorImageUrl }}"></div>
                                     <div class="grid-content large-10">
                                         <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.currentUser.IsTeacher" zf-open="Modal"
                                            ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>

@@ -7,10 +7,11 @@ controller: 'app.teacherlists.teacherlistsController as cx'
     <div class="row">
         <h1>CLASS LIST</h1>
     </div>
+    <div ng-show="cx.list.length == 0"><p> Have no member </p></div>
     <div class="grid-block" ng-repeat="item in cx.list" data-equalizer>
         <div class="small-6 grid-content callout" data-equalizer-watch>
             <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
-                <img style="width: 50px; height: 50px;" src="{{ item.ImageUrl }}"> {{ item.Name }}
+                <img src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
         </div>
         <div class="small-6 grid-content middleblock" data-equalizer-watch>
