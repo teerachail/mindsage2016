@@ -246,7 +246,7 @@ namespace MindSageWeb.Controllers
             var availableClassRooms = availablePrivateClassCalendars.Union(availablePublicClassCalendars).ToList();
 
             var availableSubscriptions = subscriptionQry
-                .Where(it => availableClassRooms.Any(cc=>cc.ClassRoomId == it.ClassRoomId))
+                .Where(it => availableClassRooms.Any(cc => cc.ClassRoomId == it.ClassRoomId))
                 .Select(subscription =>
                 {
                     var classCalendar = availableClassRooms.FirstOrDefault(cc => cc.ClassRoomId == subscription.ClassRoomId);
@@ -279,7 +279,7 @@ namespace MindSageWeb.Controllers
         [Route("message")]
         public void Post(PostNewCourseMessageRequest body)
         {
-            var areArgumentsValid = body != null 
+            var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.ClassRoomId)
                 && !string.IsNullOrEmpty(body.Message)
                 && !string.IsNullOrEmpty(body.UserProfileId);
@@ -309,7 +309,7 @@ namespace MindSageWeb.Controllers
         [Route("removestud")]
         public void RemoveStudent(RemoveStudentRequest body)
         {
-            var areArgumentsValid = body != null 
+            var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.ClassRoomId)
                 && !string.IsNullOrEmpty(body.RemoveUserProfileId)
                 && !string.IsNullOrEmpty(body.UserProfileId);
@@ -780,6 +780,7 @@ namespace MindSageWeb.Controllers
             shiftDays = body.IsShift ? shiftDays.Union(dateRange) : shiftDays.Except(dateRange);
             classCalendar.ShiftDays = shiftDays.Distinct();
 
+            classCalendar.CalculateCourseSchedule();
             _classCalendarRepo.UpsertClassCalendar(classCalendar);
 
             var result = getCourseSchedule(classCalendar, true);
@@ -822,7 +823,7 @@ namespace MindSageWeb.Controllers
             classCalendar.Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
             classCalendar.ShiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
 
-            if (body.IsSunday) setHolidayAndShiftDate(classCalendar,body, DayOfWeek.Sunday, dateRange);
+            if (body.IsSunday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Sunday, dateRange);
             if (body.IsMonday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Monday, dateRange);
             if (body.IsTuesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Tuesday, dateRange);
             if (body.IsWednesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Wednesday, dateRange);
@@ -833,6 +834,7 @@ namespace MindSageWeb.Controllers
             classCalendar.Holidays = classCalendar.Holidays.Distinct();
             classCalendar.ShiftDays = classCalendar.ShiftDays.Distinct();
 
+            classCalendar.CalculateCourseSchedule();
             _classCalendarRepo.UpsertClassCalendar(classCalendar);
 
             var result = getCourseSchedule(classCalendar, true);
@@ -855,8 +857,41 @@ namespace MindSageWeb.Controllers
         [Route("applytoall")]
         public void ApplyToAllCourse(ApplyToAllCourseRequest body)
         {
-            // TODO: Not implemented 
-            throw new NotImplementedException();
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.UserProfileId)
+                && !string.IsNullOrEmpty(body.ClassRoomId);
+            if (!areArgumentsValid) return;
+
+            UserProfile userprofile;
+            var canAccessToCourse = validateAccessToCourseScheduleManagement(body.UserProfileId, body.ClassRoomId, out userprofile);
+            if (!canAccessToCourse) return;
+
+            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+            if (classCalendar == null) return;
+
+            var reqChangeCourseScheduleClassRoomIds = userprofile.Subscriptions
+                .Where(it => it.ClassRoomId != body.ClassRoomId)
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Role == UserProfile.AccountRole.Teacher)
+                .Select(it => it.ClassRoomId);
+            if (!reqChangeCourseScheduleClassRoomIds.Any()) return;
+
+            var reqApplyScheduleClassCalendars = _classCalendarRepo.GetClassCalendarByClassRoomId(reqChangeCourseScheduleClassRoomIds)
+                .Where(it => it != null)
+                .Where(it => !it.CloseDate.HasValue)
+                .Where(it => !it.DeletedDate.HasValue)
+                .ToList();
+
+            reqApplyScheduleClassCalendars.ForEach(it =>
+            {
+                it.BeginDate = classCalendar.BeginDate;
+                it.ExpiredDate = classCalendar.ExpiredDate;
+                it.ShiftDays = classCalendar.ShiftDays;
+                it.Holidays = classCalendar.Holidays;
+                it.CalculateCourseSchedule();
+            });
+
+            reqApplyScheduleClassCalendars.ForEach(it => _classCalendarRepo.UpsertClassCalendar(it));
         }
 
         private GetCourseScheduleRespond getCourseSchedule(ClassCalendar classCalendar, bool isComplete)
@@ -878,7 +913,10 @@ namespace MindSageWeb.Controllers
         }
         private bool validateAccessToCourseScheduleManagement(string userprofileId, string classRoomId)
         {
-            UserProfile userprofile;
+            return validateAccessToCourseScheduleManagement(userprofileId, classRoomId);
+        }
+        private bool validateAccessToCourseScheduleManagement(string userprofileId, string classRoomId, out UserProfile userprofile)
+        {
             var canAccessToTheClassRoom = _userprofileRepo
                 .CheckAccessPermissionToSelectedClassRoom(userprofileId, classRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return false;
