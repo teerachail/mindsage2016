@@ -2,6 +2,7 @@
     'use strict';
 
     class CarlendarController {
+        public BeginDate: Date;
         public date = new Date();
         public year;
         public monthdays = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
@@ -54,6 +55,7 @@
         }
 
         private prepareSchedule(): void {
+            this.setStartDate();
             this.month = this.today.getMonth();
             this.year = this.today.getFullYear();
             this.setCalendar(this.month, this.year);
@@ -62,10 +64,9 @@
             //this.courseInformation.BeginDate = null;
         }
 
-        public getStartDate(): Date {
-            alert(this.courseInformation.BeginDate);
-            if (this.courseInformation.BeginDate == null) return new Date();
-            else return new Date(this.courseInformation.BeginDate);
+        public setStartDate(): void {
+            if (this.courseInformation.BeginDate == null) this.BeginDate =  new Date();
+            else this.BeginDate = new Date(this.courseInformation.BeginDate);
         }
 
         public setCalendar(month: number, year: number) {

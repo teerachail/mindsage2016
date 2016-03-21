@@ -33,7 +33,7 @@
             });
             this.setCourseScheduleWeekSvc = <ISetCourseScheduleWeekResourceClass<any>>$resource(appConfig.CourseScheduleWeekUrl, {
                 'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId', 'isHoliday': '@isHoliday', 'isShift': '@isShift',
-                'isSunday': '@isSunday', 'isMonday': '@isMonday', 'isTuesday': '@isTuesday', 'isWednesday': '@isWednesday', 'isThursday': '@isThursday', 'isFriday': '@isFriday', 'isSaturday': 'isSaturday'
+                'isSunday': '@isSunday', 'isMonday': '@isMonday', 'isTuesday': '@isTuesday', 'isWednesday': '@isWednesday', 'isThursday': '@isThursday', 'isFriday': '@isFriday', 'isSaturday': '@isSaturday'
             });
             this.applyToAllCourseSvc = <IApplyToAllCourseResourceClass<any>>$resource(appConfig.ApplyToAllCourseUrl, { 'userProfileId': '@userProfileId', 'classRoomId': '@classRoomId' });
         }

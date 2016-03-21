@@ -74,7 +74,26 @@
 .day.holiday, .days.holiday {
     background :#dd2626;
 }
-
+/*==================Not Current mount===============================*/
+/*.day.previous-month.holiday,
+.days.previous-month.holiday,
+.day.next-month.holiday,
+.days.next-month.holiday {
+    background :#ee3737;
+}
+.day.previous-month.odd,
+.days.previous-month.odd,
+.day.next-month.odd,
+.days.next-month.odd {
+    background : #fbea6c;
+}
+.day.previous-month.even,
+.days.previous-month.even,
+.day.next-month.even,
+.days.next-month.even {
+    background :#e0a71f;
+}*/
+/*=================================================*/
 .day.odd:hover, .days.odd:hover {
     background: #e9c84a;
 }
