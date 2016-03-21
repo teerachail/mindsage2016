@@ -735,6 +735,7 @@ namespace MindSageWeb.Controllers
             classCalendar.CalculateCourseSchedule();
             _classCalendarRepo.UpsertClassCalendar(classCalendar);
 
+            classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             var result = getCourseSchedule(classCalendar, true);
             return result;
         }
@@ -783,6 +784,7 @@ namespace MindSageWeb.Controllers
             classCalendar.CalculateCourseSchedule();
             _classCalendarRepo.UpsertClassCalendar(classCalendar);
 
+            classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             var result = getCourseSchedule(classCalendar, true);
             return result;
         }
@@ -837,6 +839,7 @@ namespace MindSageWeb.Controllers
             classCalendar.CalculateCourseSchedule();
             _classCalendarRepo.UpsertClassCalendar(classCalendar);
 
+            classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             var result = getCourseSchedule(classCalendar, true);
             return result;
         }

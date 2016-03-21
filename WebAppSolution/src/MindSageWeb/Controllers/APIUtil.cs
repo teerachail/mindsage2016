@@ -83,9 +83,8 @@ namespace MindSageWeb.Controllers
 
             const int ShiftOneDay = 1;
             const int LessonDuration = 5;
-            var currentBeginDate = classCalendar.BeginDate.Value.Date;
-            var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>()).Select(it => it.Date);
-            var holidays = (classCalendar.Holidays ?? Enumerable.Empty<DateTime>()).Select(it => it.Date);
+            var currentBeginDate = classCalendar.BeginDate.Value;
+            var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>());
             var lessonQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue).OrderBy(it => it.Order);
             foreach (var lesson in lessonQry)
             {
@@ -94,8 +93,8 @@ namespace MindSageWeb.Controllers
                 {
                     var beginDate = currentBeginDate;
                     var endDate = currentBeginDate.AddDays(LessonDuration);
-                    var lessonRange = Enumerable.Range(0, LessonDuration).Select(it => beginDate.AddDays(it).Date);
-                    var availableRange = lessonRange.Except(holidays);
+                    var lessonRange = Enumerable.Range(0, LessonDuration).Select(it => beginDate.AddDays(it));
+                    var availableRange = lessonRange.Except(shiftDays);
                     if (availableRange.Any())
                     {
                         lesson.BeginDate = availableRange.First();
