@@ -6,11 +6,11 @@ controller: 'app.calendar.CarlendarController as cx'
 <div class="large-8 push-4 large-offset-1 columns">
     <label class="large-4">
         Begin Date
-        <input ng-model="cx.BeginDate" type="date">
+        <input ng-model="BeginDate" type="date"ng-init="BeginDate = cx.courseInformation.BeginDate"><span class="button" ng-click="cx.SetStartDate(BeginDate)">Set begin date</span>
     </label>
     <div ng-show="cx.isPrepareCourseScheduleContentComplete && (cx.courseInformation.BeginDate != null)">
         <ul class="calendar">
-            <li class="title"><span class="button" ng-click="cx.prevMount()"><<<</span>{{ cx.monthNames }} {{ cx.year }}<span class="button" ng-click="cx.nextMount()">>>></span></li>
+            <li class="title"><span class="button fi-arrow-left" ng-click="cx.prevMount()"></span>{{ cx.monthNames }} {{ cx.year }} <span class="button fi-arrow-right" ng-click="cx.nextMount()"></span></li>
             <li class="day-header grid-block small-up-7">
                 <div class="small-1 day">Sun</div>
                 <div class="small-1 day">Mon</div>
@@ -22,38 +22,74 @@ controller: 'app.calendar.CarlendarController as cx'
             </li>
 
             <li class="week grid-block small-up-7" ng-repeat="week in cx.allweeks">
-                <div class="small-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day), 'holiday': cx.IsHoliday(day), 'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'dodd': cx.IsOdd(day), 'deven': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} <span>{{ cx.IsStartLesson(day) }}</span></div>
+                <div zf-open="selectDay" class="small-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day), 'holiday': cx.IsHoliday(day), 'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'odd': cx.IsOdd(day), 'even': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} <span>{{ cx.IsStartLesson(day) }}</span></div>
             </li>
             <!-- Repeat for additional weeks -->
         </ul>
-        <div class="grid-block">
-            <div class="large-6 large-offset-3"><h5>{{ cx.fisrtSelected | date:"MM/dd/yyyy" }}</h5><h5 ng-show="cx.lastSelected"> - {{ cx.lastSelected | date:"MM/dd/yyyy" }}</h5></div>
-        </div>
-        <label class="grid-block">
-            <input ng-model="cx.Sifht" type="checkbox">Sift
-            {{ cx.Sifht }}
-        </label>
-        <label class="grid-block">
-            <input ng-model="cx.selectDay[0]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Sunday
-        </label>
-        <label class="grid-block">
-            <input ng-model="cx.selectDay[1]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Monday
-        </label>
-        <label class="grid-block">
-            <input ng-model="cx.selectDay[2]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Tuesday
-        </label>
-        <label class="grid-block">
-            <input ng-model="cx.selectDay[3]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Wednesday
-        </label>
-        <label class="grid-block">
-            <input ng-model="cx.selectDay[4]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Thursday
-        </label>
-        <label class="grid-block">
-            <input ng-model="cx.selectDay[5]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Friday
-        </label>
-        <label class="grid-block">
-            <input ng-model="cx.selectDay[6]" type="checkbox" ng-true-value="'YES'" ng-false-value="'NO'">Saturday
-        </label>
-        {{ cx.selectDay }}
+
+        <zf-offcanvas id="selectDay" position="right">
+            <div class="small-offset-2" style="border-bottom:solid #808080">
+                <h5>Select by day</h5>
+                <div class="grid-block">
+                    <div class="align-right grid-block"><h5>{{ cx.fisrtSelected | date:"MM/dd/yyyy" }} </h5></div>
+                    <div class="align-left grid-block"><h5 ng-show="cx.lastSelected"> - {{ cx.lastSelected | date:"MM/dd/yyyy" }}</h5></div>
+                </div>
+                <div class="align-left grid-block">
+                    <label class="grid-block">
+                        <input ng-model="IsHolidayRange" type="radio" value="true" ng-checked="true">Holiday
+                    </label>
+                    <label class="grid-block">
+                        <input ng-model="IsHolidayRange" type="radio" value="false">Not Holiday
+                    </label>
+                </div>
+                    <label class="grid-block">
+                        <input ng-model="SifhtRange" type="checkbox">Sift
+                    </label>
+                <div class="align-left grid-block">
+                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleRange(IsHolidayRange,SifhtRange)">Submit</div>
+                    <div class="button small-4 grid-block" zf-close="">Cancle</div>
+                </div>
+            </div>
+
+            <div class="small-offset-2" style="border-bottom:solid #808080">
+                <h5>Select by week day</h5>
+                <label class="grid-block">
+                    <input ng-model="sun" type="checkbox">Sunday
+                </label>
+                <label class="grid-block">
+                    <input ng-model="mon" type="checkbox">Monday
+                </label>
+                <label class="grid-block">
+                    <input ng-model="tue" type="checkbox">Tuesday
+                </label>
+                <label class="grid-block">
+                    <input ng-model="wed" type="checkbox">Wednesday
+                </label>
+                <label class="grid-block">
+                    <input ng-model="thu" type="checkbox">Thursday
+                </label>
+                <label class="grid-block">
+                    <input ng-model="fri" type="checkbox">Friday
+                </label>
+                <label class="grid-block">
+                    <input ng-model="sat" type="checkbox">Saturday
+                </label>
+                <div class="align-left grid-block">
+                    <label class="grid-block">
+                        <input ng-model="IsHolidayWeek" type="radio" value="true" ng-checked="true">Holiday
+                    </label>
+                    <label class="grid-block">
+                        <input ng-model="IsHolidayWeek" type="radio" value="false">Not Holiday
+                    </label>
+                </div>
+                <label class="grid-block">
+                    <input ng-model="SifhtWeek" type="checkbox">Sift
+                </label>
+                <div class="align-left grid-block">
+                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleWeek(IsHolidayWeek,SifhtWeek,sun,mon,tue,wed,tur,fri,sat)">Submit</div>
+                    <div class="button small-4 grid-block" zf-close="">Cancle</div>
+                </div>
+          </div>
+</zf-offcanvas>
     </div>
 </div>

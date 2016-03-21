@@ -63,7 +63,31 @@
 .day.today:hover, .days.today:hover {
     background: #65ce8c;
 }
+/*==================Edit by Gen===============================*/
+.day.odd , .days.odd{
+    background : #fad95b;
+}
 
+.day.even, .days.even {
+    background :#cf960e;
+}
+.day.holiday, .days.holiday {
+    background :#dd2626;
+}
+.day.odd:hover, .days.odd:hover {
+    background: #e9c84a;
+}
+.day.even:hover, .days.even:hover {
+    background: #be850d;
+}
+.day.holiday:hover, .days.holiday:hover {
+    background: #cc1515;
+}
+.day.selected, .days.selected {
+    background :#f78668;
+}
+
+/*============================================================*/
 @media only screen {
     .calendar .small-1 {
         position: relative;

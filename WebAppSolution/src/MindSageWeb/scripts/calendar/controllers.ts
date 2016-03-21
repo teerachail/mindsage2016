@@ -33,6 +33,7 @@
 
             this.prepareCourseScheduleContents();
         }
+
         private prepareCourseScheduleContents(): void {
             var shouldRequestCourseScheduleContent = !this.isPrepareCourseScheduleContentComplete && !this.isWaittingForGetCourseScheduleContent;
             if (shouldRequestCourseScheduleContent) {
@@ -51,6 +52,7 @@
                 });
             }
         }
+
         private prepareSchedule(): void {
             this.month = this.today.getMonth();
             this.year = this.today.getFullYear();
@@ -60,7 +62,8 @@
             //this.courseInformation.BeginDate = null;
         }
 
-        public setBeginDate() {
+        public getStartDate(): Date {
+            alert(this.courseInformation.BeginDate);
             if (this.courseInformation.BeginDate == null) return new Date();
             else return new Date(this.courseInformation.BeginDate);
         }
