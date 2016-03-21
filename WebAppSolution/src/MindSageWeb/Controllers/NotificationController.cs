@@ -169,17 +169,14 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public void SendNotification()
         {
-            // Lesson
             var now = _dateTime.GetCurrentTime();
-
             sendNotifyLikeLessons(now);
             sendNotifyLikeComments(now);
             sendNotifyLikeDiscussions(now);
             sendNotifyNewComments(now);
             sendNotifyNewDiscussions(now);
             sendNotifyTopicOfTheDay(now);
-            // TODO: Reminder
-            int a = 3;
+            sendNotifyReminder(now);
         }
 
         private void sendNotifyLikeLessons(DateTime now)
@@ -187,8 +184,8 @@ namespace MindSageWeb.Controllers
             var requiredNotifyLikeLesson = _likeLessonRepo.GetRequireNotifyLikeLessons().ToList();
             if (!requiredNotifyLikeLesson.Any()) return;
 
-            var userProfileIds = requiredNotifyLikeLesson.Select(it => it.LikedByUserProfileId).Distinct();
-            var friendsRelated = _friendRequestRepo.GetFriendRequestByUserProfileId(userProfileIds).ToList();
+            var lessonLikerUserProfileIds = requiredNotifyLikeLesson.Select(it => it.LikedByUserProfileId).Distinct();
+            var friendsRelated = _friendRequestRepo.GetFriendRequestByUserProfileId(lessonLikerUserProfileIds).ToList(); // HACK: จะต้องส่งให้เฉพาะเพื่อนที่กำลังอยู่ใน course นี้เท่านั้น
             const string Message = "Like a lesson";
             var notifyLikeLessons = requiredNotifyLikeLesson.Select(it =>
             {
@@ -222,18 +219,23 @@ namespace MindSageWeb.Controllers
             var requiredNotifyLikeComments = _likeCommentRepo.GetRequireNotifyLikeComments().ToList();
             if (!requiredNotifyLikeComments.Any()) return;
 
-            var commentIds = requiredNotifyLikeComments.Select(it => it.CommentId).Distinct();
-            var comments = _commentRepo.GetCommentById(commentIds).ToList();
-            var userProfileIds = comments.Select(it => it.CreatedByUserProfileId).Distinct();
-            var relatedUserProfiles = _userProfileRepo.GetUserProfileById(userProfileIds).ToList();
+            var reqSendNotifyCommentIds = requiredNotifyLikeComments.Select(it => it.CommentId).Distinct();
+            var reqSendNotifyComments = _commentRepo.GetCommentById(reqSendNotifyCommentIds).ToList();
+
+            var commentCreatorUserProfileIds = reqSendNotifyComments.Select(it => it.CreatedByUserProfileId).Distinct();
+            var commentCreatorUserProfiles = _userProfileRepo.GetUserProfileById(commentCreatorUserProfileIds).ToList();
+
             const string Message = "Like your comment.";
             var notifyComments = requiredNotifyLikeComments.Select(it =>
             {
-                var comment = comments.FirstOrDefault(c => c.id == it.CommentId);
+                var comment = reqSendNotifyComments.FirstOrDefault(c => c.id == it.CommentId);
                 if (comment == null) return null;
-                var userprofile = relatedUserProfiles.FirstOrDefault(u => u.id == comment.CreatedByUserProfileId);
+                var userprofile = commentCreatorUserProfiles.FirstOrDefault(u => u.id == comment.CreatedByUserProfileId);
                 if (userprofile == null) return null;
                 if (it.LikedByUserProfileId == userprofile.id) return null;
+                var isLikeSelfComment = it.LikedByUserProfileId == comment.CreatedByUserProfileId;
+                if (isLikeSelfComment) return null;
+
                 return new CommentNotification
                 {
                     id = Guid.NewGuid().ToString(),
@@ -261,17 +263,20 @@ namespace MindSageWeb.Controllers
             var requiredNotifyLikeDiscussions = _likeDiscussionRepo.GetRequireNotifyLikeDiscussions().ToList();
             if (!requiredNotifyLikeDiscussions.Any()) return;
 
-            var commentIds = requiredNotifyLikeDiscussions.Select(it => it.CommentId).Distinct();
-            var relatedDiscussions = _commentRepo.GetCommentById(commentIds)
+            var relatedCommentIds = requiredNotifyLikeDiscussions.Select(it => it.CommentId).Distinct();
+            var relatedDiscussions = _commentRepo.GetCommentById(relatedCommentIds)
                 .Where(it=>!it.DeletedDate.HasValue)
                 .SelectMany(it => it.Discussions)
                 .Where(it=>!it.DeletedDate.HasValue)
                 .ToList();
+
             const string Message = "Like your discussion.";
             var notifyDiscussions = requiredNotifyLikeDiscussions.Select(it =>
             {
                 var discussion = relatedDiscussions.FirstOrDefault(d => d.id == it.DiscussionId);
                 if (discussion == null) return null;
+                var isLikeSelfDiscussion = it.LikedByUserProfileId == discussion.CreatedByUserProfileId;
+                if (isLikeSelfDiscussion) return null;
 
                 return new Notification
                 {
@@ -299,16 +304,18 @@ namespace MindSageWeb.Controllers
             var requiredNotifyComments = _commentRepo.GetRequireNotifyComments().ToList();
             if (!requiredNotifyComments.Any()) return;
 
-            var userprofildIds = requiredNotifyComments.Select(it => it.CreatedByUserProfileId).Distinct();
-            var relatedUserProfileds = _friendRequestRepo.GetFriendRequestByUserProfileId(userprofildIds).ToList();
+            var commentCreaterUserprofildIds = requiredNotifyComments.Select(it => it.CreatedByUserProfileId).Distinct();
+            var friendUserProfileds = _friendRequestRepo.GetFriendRequestByUserProfileId(commentCreaterUserprofildIds) // HACK: จะต้องส่งให้เฉพาะเพื่อนที่กำลังอยู่ใน course นี้เท่านั้น
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Status == FriendRequest.RelationStatus.Friend)
+                .ToList();
+
             const string Message = "Create new comment.";
             var notifyCreateComments = requiredNotifyComments.Select(it =>
             {
-                var friends = relatedUserProfileds
-                    .Where(f => !f.DeletedDate.HasValue)
-                    .Where(f => f.FromUserProfileId == it.CreatedByUserProfileId)
-                    .Where(f => f.Status == FriendRequest.RelationStatus.Friend)
-                    .Select(f => new CommentNotification
+                var friends = friendUserProfileds
+                    .Where(fReq => fReq.FromUserProfileId == it.CreatedByUserProfileId)
+                    .Select(fReq => new CommentNotification
                     {
                         id = Guid.NewGuid().ToString(),
                         ByUserProfileId = new List<string> { it.CreatedByUserProfileId },
@@ -319,7 +326,7 @@ namespace MindSageWeb.Controllers
                         LessonId = it.LessonId,
                         Message = Message,
                         Tag = Notification.NotificationTag.FriendCreateNewComment,
-                        ToUserProfileId = f.ToUserProfileId
+                        ToUserProfileId = fReq.ToUserProfileId
                     });
                 return friends;
             }).Where(it => it.Any()).SelectMany(it => it).ToList();
@@ -335,24 +342,28 @@ namespace MindSageWeb.Controllers
             var relatedComments = _commentRepo.GetRequireNotifyDiscussions().ToList();
             if (!relatedComments.Any()) return;
 
-            const string Message = "Create a discussion in you comment.";
             var requiredNotifyDiscussions = relatedComments.SelectMany(it => it.Discussions)
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => !it.LastNotifyComplete.HasValue)
                 .ToList();
+
+            const string Message = "Create a discussion in you comment.";
             var discussions = requiredNotifyDiscussions
-                .Select(dis =>
+                .Select(discussion =>
                 {
-                    var comment = relatedComments.FirstOrDefault(it => it.Discussions.Any(d => d.id == dis.id));
+                    var comment = relatedComments.FirstOrDefault(it => it.Discussions.Any(d => d.id == discussion.id));
                     if (comment == null) return null;
+                    var isSelfDiscussion = comment.CreatedByUserProfileId == discussion.CreatedByUserProfileId;
+                    if (isSelfDiscussion) return null;
+
                     return new DiscussionNotification
                     {
                         id = Guid.NewGuid().ToString(),
-                        ByUserProfileId = new List<string> { dis.CreatedByUserProfileId },
+                        ByUserProfileId = new List<string> { discussion.CreatedByUserProfileId },
                         ClassRoomId = comment.ClassRoomId,
                         CommentId = comment.id,
                         CreatedDate = now,
-                        DiscussionId = dis.id,
+                        DiscussionId = discussion.id,
                         LastUpdateDate = now,
                         LessonId = comment.LessonId,
                         Message = Message,
@@ -406,6 +417,10 @@ namespace MindSageWeb.Controllers
             //                       select lessonCalendar;
             //foreach (var item in reqUpdateLessons) item.SendTopicOfTheDayDate = now;
             //requiredNotifyTOTD.ForEach(it => _classCalendarRepo.UpsertClassCalendar(it));
+        }
+        private void sendNotifyReminder(DateTime now)
+        {
+            // TODO: Not implemented Reminder
         }
 
         #endregion Methods
