@@ -65,9 +65,13 @@ namespace MindSageWeb.Controllers
             var areArgumentsValid = !string.IsNullOrEmpty(targetUserId) && !string.IsNullOrEmpty(requestByUserId);
             if (!areArgumentsValid) return noDataRespond;
 
+            var userprofile = _userprofileRepo.GetUserProfileById(requestByUserId);
+            if (userprofile == null) return noDataRespond;
+            var isTeacher = (bool)userprofile.Subscriptions?.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.Role == UserProfile.AccountRole.Teacher);
+
             var isSelftRequest = requestByUserId == targetUserId;
             var isFriend = false;
-            if (!isSelftRequest)
+            if (!isSelftRequest && !isTeacher)
             {
                 var friends = _friendRequestRepo.GetFriendRequestByUserProfileId(requestByUserId);
                 if (friends == null || !friends.Any()) return noDataRespond;
@@ -133,7 +137,7 @@ namespace MindSageWeb.Controllers
                 .ThenByDescending(it => it.CreatedDate)
                 .ToList();
 
-            var canCreateADiscussion = isFriend || isSelftRequest;
+            var canCreateADiscussion = isFriend || isSelftRequest || isTeacher;
             return new GetCommentRespond
             {
                 IsDiscussionAvailable = canCreateADiscussion,
