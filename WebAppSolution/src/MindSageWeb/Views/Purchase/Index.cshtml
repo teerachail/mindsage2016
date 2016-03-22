@@ -130,7 +130,7 @@
                         </address>
                     </div>
                     <hr />
-                    <div class="columns">
+                    <div class="clearfix">
                         <h5>Pay With</h5>
                         <div class="float-left"><h5><i class="fi-credit-card"></i>{{ cardtype==0? 'Visa' : 'Master Card' }} x-{{ creditcardNo.substring( creditcardNo.length-4, creditcardNo.length ) }}</h5></div>
                         <div class="float-right"><h5>@Model.TotalChargeAmount.ToString("C2")</h5></div>
