@@ -6,38 +6,25 @@
         public targetId: any;
         private list: any[] = [];
         private classRoomId: string;
-        private isWaittingForGetTeacherListContent: boolean;
-        private isPrepareTeacherListContentComplete: boolean;
 
-        static $inject = ['$scope', 'waitRespondTime', '$stateParams', 'app.shared.ClientUserProfileService', 'app.teacherlists.TeacherListService'];
-        constructor(private $scope, private waitRespondTime, private $stateParams, private userprofileSvc: app.shared.ClientUserProfileService, private teacherlistsSvc: app.teacherlists.TeacherListService) {
+        static $inject = ['$scope', '$stateParams', 'app.shared.ClientUserProfileService', 'app.teacherlists.TeacherListService'];
+        constructor(private $scope, private $stateParams, private userprofileSvc: app.shared.ClientUserProfileService, private teacherlistsSvc: app.teacherlists.TeacherListService) {
             this.classRoomId = $stateParams.classRoomId;
             this.prepareUserprofile();
         }
 
         private prepareUserprofile(): void {
-            if (!this.userprofileSvc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
-
-            this.prepareTeacherListContents();
+            this.userprofileSvc.PrepareAllUserProfile().then(() => {
+                this.prepareTeacherListContents();
+            });
         }
 
         private prepareTeacherListContents(): void {
-            var shouldRequestLessonContent = !this.isPrepareTeacherListContentComplete && !this.isWaittingForGetTeacherListContent;
-            if (shouldRequestLessonContent) {
-                this.isWaittingForGetTeacherListContent = true;
-                this.teacherlistsSvc.GetStudentList(this.classRoomId).then(respond => {
-                    if (respond != null) this.list = respond;
-                    this.isWaittingForGetTeacherListContent = false;
-                    this.isPrepareTeacherListContentComplete = true;
-                }, error => {
-                    console.log('Load TeacherList content failed, retrying ...');
-                    this.isWaittingForGetTeacherListContent = false;
-                    setTimeout(it => this.prepareTeacherListContents(), this.waitRespondTime);
-                });
-            }
+            this.teacherlistsSvc.GetStudentList(this.classRoomId).then(respond => {
+                if (respond != null) this.list = respond;
+            }, error => {
+                console.log('Load TeacherList content failed');
+            });
         }
 
         public targetStd(Std: any) {

@@ -6,40 +6,27 @@
         private tag: any;
         private displayNpotifications;
         private notification: any[] = [];
-        private isWaittingForGetNotificationContent: boolean;
-        private isPrepareNotificationContentComplete: boolean;
 
-        static $inject = ['$scope', '$state', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private $state, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService, private getProfile: app.shared.GetProfileService) {
+        static $inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
+        constructor(private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private getProfile: app.shared.GetProfileService) {
             this.prepareUserprofile();
         }
 
         private prepareUserprofile(): void {
-            if (!this.userSvc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
-
-            this.prepareNotificationContents();
+            this.userSvc.PrepareAllUserProfile().then(() => {
+                this.prepareNotificationContents();
+            });
         }
 
         private prepareNotificationContents(): void {
-            var shouldRequestNotificationContent = !this.isPrepareNotificationContentComplete && !this.isWaittingForGetNotificationContent;
-            if (shouldRequestNotificationContent) {
-                this.isWaittingForGetNotificationContent = true;
-                this.getProfile.GetNotificationContent().then(respond => {
-                    if (respond != null) {
-                        this.notification = respond;
-                        this.displayNpotifications = this.notification.filter(it => it.FromUserProfiles != null);
-                    }
-                    this.isWaittingForGetNotificationContent = false;
-                    this.isPrepareNotificationContentComplete = true;
-                }, error => {
-                    console.log('Load notification content failed, retrying ...');
-                    this.isWaittingForGetNotificationContent = false;
-                    setTimeout(it => this.prepareNotificationContents(), this.waitRespondTime);
-                });
-            }
+            this.getProfile.GetNotificationContent().then(respond => {
+                if (respond != null) {
+                    this.notification = respond;
+                    this.displayNpotifications = this.notification.filter(it => it.FromUserProfiles != null);
+                }
+            }, error => {
+                console.log('Load notification content failed');
+            });
         }
 
         public OpenJournalPage(name: string, userId: string) {

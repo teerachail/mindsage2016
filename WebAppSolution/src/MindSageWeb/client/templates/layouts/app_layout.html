@@ -31,7 +31,7 @@ controller: 'app.layouts.AppLayoutController as acx'
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 2">
                         Click your friend's name for go to journal page
-                        <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: acx.targetUser.UserProfileId })">
+                        <a ui-sref="app.course.journal({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: acx.targetUser.UserProfileId })">
                             {{ item.Name }}
                         </a>
                     </div>

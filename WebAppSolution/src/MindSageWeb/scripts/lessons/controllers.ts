@@ -4,7 +4,7 @@ module app.lessons {
     class LessonController {
 
         public teacherView: boolean;
-        public currentUser: any;
+        //public currentUser: any;
         public message: string;
         public targetComment: any;
         public targetDiscussion: any;
@@ -18,54 +18,39 @@ module app.lessons {
         private comment;
         private lessonId;
         private classRoomId;
-        private isWaittingForGetLessonContent: boolean;
-        private isPrepareLessonContentComplete: boolean;
 
-        static $inject = ['$sce', '$q', '$scope', '$stateParams', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
-        constructor(private $sce, private $q, private $scope, private $stateParams, private waitRespondTime, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
+        static $inject = ['$sce', '$q', '$scope', '$stateParams', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
+        constructor(private $sce, private $q, private $scope, private $stateParams, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
+            this.teacherView = false;
+            this.lessonId = this.$stateParams.lessonId;
+            this.classRoomId = this.$stateParams.classRoomId;
             this.prepareUserprofile();
         }
 
         private prepareUserprofile(): void {
-            if (!this.userprofileSvc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
-
-            this.lessonId = this.$stateParams.lessonId;
-            this.classRoomId = this.$stateParams.classRoomId;
-            this.currentUser = this.userprofileSvc.GetClientUserProfile();
-            this.currentUser.CurrentDisplayLessonId = this.lessonId;
-            this.userprofileSvc.UpdateUserProfile(this.currentUser);
-            this.teacherView = false;
-
-            this.prepareLessonContents();
+            this.userprofileSvc.PrepareAllUserProfile().then(() => {
+                this.userprofileSvc.ClientUserProfile.CurrentDisplayLessonId = this.lessonId;
+                this.prepareLessonContents();
+            });
         }
 
         private prepareLessonContents(): void {
-            var shouldRequestLessonContent = !this.isPrepareLessonContentComplete && !this.isWaittingForGetLessonContent;
-            if (shouldRequestLessonContent) {
-                this.isWaittingForGetLessonContent = true;
-                this.$q.all([
-                    this.getProfileSvc.GetLike(),
-                    this.lessonSvc.GetContent(this.lessonId, this.classRoomId),
-                    this.commentSvc.GetComments(this.lessonId, this.classRoomId)
-                ]).then(data => {
-                    this.likes = data[0];
-                    this.content = data[1];
-                    this.userprofileSvc.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(data[1].PrimaryContentURL);
-                    this.comment = data[2];
-                    this.userprofileSvc.Advertisments = this.content.Advertisments;
-                    this.isWaittingForGetLessonContent = false;
-                    this.isPrepareLessonContentComplete = true;
-                }, error => {
-                    console.log('Load lesson content failed, retrying ...');
-                    this.isWaittingForGetLessonContent = false;
-                    setTimeout(it=> this.prepareLessonContents(), this.waitRespondTime);
-                });
-            }
+            this.$q.all([
+                this.getProfileSvc.GetLike(),
+                this.lessonSvc.GetContent(this.lessonId, this.classRoomId),
+                this.commentSvc.GetComments(this.lessonId, this.classRoomId)
+            ]).then(data => {
+                this.likes = data[0];
+                this.content = data[1];
+                this.userprofileSvc.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(data[1].PrimaryContentURL);
+                this.comment = data[2];
+                this.userprofileSvc.Advertisments = this.content.Advertisments;
+            }, error => {
+                console.log('Load lesson content failed');
+                this.prepareLessonContents();
+            });
         }
-
+        
         public selectTeacherView(): void {
             this.teacherView = true;
         }

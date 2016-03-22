@@ -120,6 +120,5 @@ module app {
     angular
         .module('app')
         .constant('defaultUrl', 'http://localhost:2528')
-        .constant('waitRespondTime', 777)
         .service('appConfig', AppConfig);
 }

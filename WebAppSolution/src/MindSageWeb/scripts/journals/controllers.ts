@@ -15,41 +15,31 @@ module app.journals {
         private content: any;
         private targetUserId: any;
         private likes: any;
-        private isWaittingForGetJournalContent: boolean;
         private isPrepareJournalContentComplete: boolean;
 
-        static $inject = ['$scope', '$q', 'waitRespondTime', '$stateParams', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.journals.JournalService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private $q, private waitRespondTime, private $stateParams, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private journalSvc: app.journals.JournalService, private profileSvc: app.shared.GetProfileService) {
+        static $inject = ['$scope', '$q', '$stateParams', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.journals.JournalService', 'app.shared.GetProfileService'];
+        constructor(private $scope, private $q, private $stateParams, private svc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private journalSvc: app.journals.JournalService, private profileSvc: app.shared.GetProfileService) {
             this.targetUserId = this.$stateParams.targetUserId;
             this.prepareUserprofile();
         }
 
         private prepareUserprofile(): void {
-            if (!this.svc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
-
-            this.prepareJournalContents();
+            this.svc.PrepareAllUserProfile().then(() => {
+               this.prepareJournalContents();
+            });
         }
+
         private prepareJournalContents(): void {
-            var shouldRequestJournalContent = !this.isPrepareJournalContentComplete && !this.isWaittingForGetJournalContent;
-            if (shouldRequestJournalContent) {
-                this.isWaittingForGetJournalContent = true;
-                this.$q.all([
-                    this.profileSvc.GetAllLike(),
-                    this.journalSvc.GetComments(this.$stateParams.classRoomId, this.$stateParams.targetUserId),
-                ]).then(data => {
-                    this.likes = data[0];
-                    this.content = data[1];
-                    this.isWaittingForGetJournalContent = false;
-                    this.isPrepareJournalContentComplete = true;
-                }, error => {
-                    console.log('Load journal content failed, retrying ...');
-                    this.isWaittingForGetJournalContent = false;
-                    setTimeout(it=> this.prepareJournalContents(), this.waitRespondTime);
-                });
-            }
+            this.$q.all([
+                this.profileSvc.GetAllLike(),
+                this.journalSvc.GetComments(this.$stateParams.classRoomId, this.$stateParams.targetUserId),
+            ]).then(data => {
+                this.likes = data[0];
+                this.content = data[1];
+                this.isPrepareJournalContentComplete = true;
+            }, error => {
+                console.log('Load journal content failed');
+            });
         }
 
         public GetWeeks() {

@@ -18,40 +18,29 @@
         public allweeks = []; // array for push week
         public monthNames: string;
         private courseInformation: any;
-        private isWaittingForGetCourseScheduleContent: boolean;
         private isPrepareCourseScheduleContentComplete: boolean;
 
-        static $inject = ['$scope', 'waitRespondTime', 'app.calendar.CourseScheduleService', 'app.shared.ClientUserProfileService'];
-        constructor(private $scope, private waitRespondTime, private courseScheduleService: app.calendar.CourseScheduleService, private clientProfileSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['$scope', 'app.calendar.CourseScheduleService', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, private courseScheduleService: app.calendar.CourseScheduleService, private clientProfileSvc: app.shared.ClientUserProfileService) {
             this.prepareUserprofile();
         }
 
         private prepareUserprofile(): void {
-            if (!this.clientProfileSvc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
-
-            this.prepareCourseScheduleContents();
+            this.clientProfileSvc.PrepareAllUserProfile().then(() => {
+                this.prepareCourseScheduleContents();
+            });
         }
 
         private prepareCourseScheduleContents(): void {
-            var shouldRequestCourseScheduleContent = !this.isPrepareCourseScheduleContentComplete && !this.isWaittingForGetCourseScheduleContent;
-            if (shouldRequestCourseScheduleContent) {
-                this.isWaittingForGetCourseScheduleContent = true;
-                this.courseScheduleService.GetCourseSchedule().then(respond => {
-                    if (respond != null) {
-                        this.courseInformation = respond;
-                        this.prepareSchedule();
-                    }
-                    this.isWaittingForGetCourseScheduleContent = false;
+            this.courseScheduleService.GetCourseSchedule().then(respond => {
+                if (respond != null) {
+                    this.courseInformation = respond;
                     this.isPrepareCourseScheduleContentComplete = true;
-                }, error => {
-                    console.log('Load course schedule content failed, retrying ...');
-                    this.isWaittingForGetCourseScheduleContent = false;
-                    setTimeout(it=> this.prepareCourseScheduleContents(), this.waitRespondTime);
-                });
-            }
+                    this.prepareSchedule();
+                }
+            }, error => {
+                console.log('Load course schedule content failed');
+            });
         }
 
         private prepareSchedule(): void {

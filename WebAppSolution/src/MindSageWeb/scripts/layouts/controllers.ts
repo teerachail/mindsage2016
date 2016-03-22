@@ -4,19 +4,9 @@ module app.layouts {
     class AppLayoutController {
 
         public targetUser: any;
-        public classRoomId: string;
 
-        static $inject = ['waitRespondTime', 'app.studentlists.StudentListService', 'app.shared.ClientUserProfileService'];
-        constructor(private waitRespondTime, private listsSvc: app.studentlists.StudentListService, private userSvc: app.shared.ClientUserProfileService) {
-            this.prepareUserprofile();
-        }
-
-        private prepareUserprofile(): void {
-            if (!this.userSvc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
-            this.classRoomId = this.userSvc.GetClientUserProfile().CurrentClassRoomId;
+        static $inject = ['app.studentlists.StudentListService', 'app.shared.ClientUserProfileService'];
+        constructor(private listsSvc: app.studentlists.StudentListService, private userSvc: app.shared.ClientUserProfileService) {
         }
         
         public FriendsStatus(friendId: string) {
@@ -58,25 +48,22 @@ module app.layouts {
 
     class CourseLayoutController {
 
-        static $inject = ['defaultUrl', 'waitRespondTime', 'app.shared.ClientUserProfileService'];
-        constructor(private defaultUrl, private waitRespondTime, private clientUserProfileSvc: app.shared.ClientUserProfileService) {
+        static $inject = ['defaultUrl', 'app.shared.ClientUserProfileService'];
+        constructor(private defaultUrl, private clientUserProfileSvc: app.shared.ClientUserProfileService) {
             this.prepareUserprofile();
         }
 
         private prepareUserprofile(): void {
-            if (!this.clientUserProfileSvc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
-
-            var userprofile = this.clientUserProfileSvc.GetClientUserProfile();
-            var lessonId = userprofile.CurrentLessonId;
-            var classRoomId = userprofile.CurrentClassRoomId;
-            (<any>angular.element(".owl-carousel")).owlCarousel({
-                autoPlay: true,
-                slideSpeed: 300,
-                jsonPath: this.defaultUrl + '/api/lesson/' + lessonId + '/' + classRoomId + '/ads',
-                singleItem: true
+            this.clientUserProfileSvc.PrepareAllUserProfile().then(() => {
+                var userprofile = this.clientUserProfileSvc.GetClientUserProfile();
+                var lessonId = userprofile.CurrentLessonId;
+                var classRoomId = userprofile.CurrentClassRoomId;
+                (<any>angular.element(".owl-carousel")).owlCarousel({
+                    autoPlay: true,
+                    slideSpeed: 300,
+                    jsonPath: this.defaultUrl + '/api/lesson/' + lessonId + '/' + classRoomId + '/ads',
+                    singleItem: true
+                });
             });
         }
     }

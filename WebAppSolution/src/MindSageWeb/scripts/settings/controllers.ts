@@ -3,16 +3,8 @@
     
     class SettingController {
 
-        static $inject = ['$scope', '$state', 'waitRespondTime', 'app.settings.ProfileService', 'app.shared.ClientUserProfileService'];
-        constructor(private $scope, private $state, private waitRespondTime, private profileSvc: app.settings.ProfileService, private clientProfileSvc: app.shared.ClientUserProfileService) {
-            this.prepareUserprofile();
-        }
-
-        private prepareUserprofile(): void {
-            if (!this.clientProfileSvc.IsPrepareAllUserProfileCompleted()) {
-                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
-                return;
-            }
+        static $inject = ['$scope', '$state', 'app.settings.ProfileService', 'app.shared.ClientUserProfileService'];
+        constructor(private $scope, private $state, private profileSvc: app.settings.ProfileService, private clientProfileSvc: app.shared.ClientUserProfileService) {
         }
         
         public UpdateProfile(name: string, schoolName: string, isPrivate: boolean, isReminderOnceTime: boolean) {

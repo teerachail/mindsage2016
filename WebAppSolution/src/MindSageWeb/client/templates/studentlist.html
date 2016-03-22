@@ -7,8 +7,8 @@ controller: 'app.studentlists.studentlistsController as cx'
     <div>
         <h1>CLASS LIST</h1>
     </div>
-    <div ng-show="cx.friendList.length == 0"><p> Have no member </p></div>
-    <div class="grid-block" ng-repeat="item in cx.friendList" ng-show="!item.IsTeacher" data-equalizer>
+    <div ng-show="cx.userSvc.UserInCourseList.length == 0"><p> Have no member </p></div>
+    <div class="grid-block" ng-repeat="item in cx.userSvc.UserInCourseList" ng-show="!item.IsTeacher" data-equalizer>
         <div class="small-6 grid-content callout" data-equalizer-watch>
             <a ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
                 <img src="{{ item.ImageUrl }}"> {{ item.Name }}
