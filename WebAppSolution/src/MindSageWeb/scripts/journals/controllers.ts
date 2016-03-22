@@ -138,13 +138,13 @@ module app.journals {
             if (this.content.Comments.filter(it=> it.id == commentId).length == 0) {
                 if (IsLike == -1)
                     this.MyComments.filter(it=> it.id == commentId)[0].TotalLikes++;
-                else
+                else if (this.MyComments.filter(it=> it.id == commentId)[0].TotalLikes > 0)
                     this.MyComments.filter(it=> it.id == commentId)[0].TotalLikes--;
             }
             else {
                 if (IsLike == -1)
                     this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes++;
-                else
+                else if (this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes > 0)
                     this.content.Comments.filter(it=> it.id == commentId)[0].TotalLikes--;
             }
 
@@ -164,7 +164,7 @@ module app.journals {
         public LikeDiscussion(commentId: string, discussionId: string, IsLike: number) {
             if (IsLike == -1)
                 this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes++;
-            else
+            else if (this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes > 0)
                 this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes--;
 
 

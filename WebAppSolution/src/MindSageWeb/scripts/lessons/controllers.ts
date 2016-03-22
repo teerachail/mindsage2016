@@ -123,7 +123,7 @@ module app.lessons {
         public LikeComment(commentId: string, IsLike: number) {
             if (IsLike == -1)
                 this.comment.Comments.filter(it=> it.id == commentId)[0].TotalLikes++;
-            else
+            else if (this.comment.Comments.filter(it=> it.id == commentId)[0].TotalLikes > 0)
                 this.comment.Comments.filter(it=> it.id == commentId)[0].TotalLikes--;
 
             this.commentSvc.LikeComment(this.classRoomId, this.lessonId, commentId);
@@ -137,7 +137,7 @@ module app.lessons {
         public LikeDiscussion(commentId: string, discussionId: string, IsLike: number) {
             if (IsLike == -1)
                 this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes++;
-            else
+            else if (this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes > 0)
                 this.discussions.filter(it=> it.id == discussionId)[0].TotalLikes--;
 
             this.discussionSvc.LikeDiscussion(this.classRoomId, this.lessonId, commentId, discussionId);
@@ -186,7 +186,8 @@ module app.lessons {
 
         public DisLikeLesson() {
             this.likes.IsLikedLesson = !this.likes.IsLikedLesson;
-            this.content.TotalLikes--;
+            if (this.content.TotalLikes > 0)
+                this.content.TotalLikes--;
             this.lessonSvc.LikeLesson(this.classRoomId, this.lessonId);
         }
 
