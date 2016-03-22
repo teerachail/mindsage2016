@@ -8,18 +8,21 @@ controller: 'app.teacherlists.teacherlistsController as cx'
         <h1>CLASS LIST</h1>
     </div>
     <div ng-show="cx.list.length == 0"><p> Have no member </p></div>
-    <div class="grid-block" ng-repeat="item in cx.list" data-equalizer>
-        <div class="small-6 grid-content callout" data-equalizer-watch>
+    <div class="grid-block v-align" ng-repeat="item in cx.list">
+        <div class="small-6 grid-content noscroll">
             <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
-                <img src="{{ item.ImageUrl }}"> {{ item.Name }}
+                <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
         </div>
-        <div class="small-6 grid-content noscroll" data-equalizer-watch>
+        <div class="small-6 grid-content align-center noscroll">
             <a class="button noscroll" href="#" zf-popup-toggle="{{ item.Name }}">Open Popup</a>
-            <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
+            <button class="button noscroll" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
         </div>
         <zf-popup id="{{ item.Name }}" class="padding">
-            {{ item.Name }}
+            <span><img src="../assets/img/icon/greenwithpencil.png" width="30"/> {{ item.CommentPercentage }}%</span> 
+            <span><img src="../assets/img/icon/green.png" width="30"/> {{ item.OnlineExtrasPercentage }}%</span> 
+            <span ng-hide="item.SocialParticipationPercentage==0"><img src="../assets/img/icon/social_participation.png" width="30"/> {{ item.SocialParticipationPercentage }}%</span> 
+            <span ng-show="item.SocialParticipationPercentage==0"><img src="../assets/img/icon/social_participation_no_score.png" width="30"/></span>
         </zf-popup>
     </div>
 </div>
