@@ -17,7 +17,7 @@ namespace MindSageWeb.Controllers
         private MyCourseController _myCourseCtrl;
         private ProfileController _profileCtrl;
 
-        public MyController(MyCourseController myCourseCtrl, 
+        public MyController(MyCourseController myCourseCtrl,
             ProfileController profileCtrl,
             IUserProfileRepository userprofileRepo,
             IClassCalendarRepository classCalendarRepo,
@@ -52,7 +52,7 @@ namespace MindSageWeb.Controllers
                 .LastOrDefault();
             if (subscription == null) return View("Error");
 
-            var courseInfo =_myCourseCtrl?.ChangeCourse(new Repositories.Models.ChangeCourseRequest
+            var courseInfo = _myCourseCtrl?.ChangeCourse(new Repositories.Models.ChangeCourseRequest
             {
                 UserProfileId = User.Identity.Name,
                 ClassRoomId = subscription.ClassRoomId
@@ -71,18 +71,19 @@ namespace MindSageWeb.Controllers
                 .Where(it => it.LastActiveDate.HasValue)
                 .OrderByDescending(it => it.LastActiveDate)
                 .FirstOrDefault();
-
+            if (lastActiveSubscription == null) return View("NoCourseAccess");
             var currentClassRoomId = lastActiveSubscription.ClassRoomId;
+
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(lastActiveSubscription.ClassRoomId);
             var isClassCalendarValid = classCalendar != null && classCalendar.LessonCalendars != null && classCalendar.LessonCalendars.Any();
-            if (!isClassCalendarValid) return View("Error");
+            if (!isClassCalendarValid) return View("NoCourseAccess");
 
             var now = _dateTime.GetCurrentTime();
             var lessonCalendarQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue);
 
             var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderByDescending(it => it.BeginDate).FirstOrDefault();
             var currentLessonId = currentLesson?.LessonId;
-            if (currentLessonId == null) return View("Error");
+            if (currentLessonId == null) return View("NoCourseAccess");
 
             var redirectURL = $"/my#!/app/main/lesson/{ currentLessonId }/{ currentClassRoomId }";
             return Redirect(redirectURL);
