@@ -3,7 +3,7 @@ name: app.course.calendar
 url: /calendar
 controller: 'app.calendar.CarlendarController as cx'
 ---
-<div class="large-8 push-4 large-offset-1 columns" ng-show="cx.isPrepareCourseScheduleContentComplete">
+<div class="large-8 push-4 large-offset-1 columns">
     <div class="large-4">
         <p>Begin Date <input type="text" id="datepicker" ng-model="cx.BeginDate"></p>
         <span class="button" ng-click="cx.SetStartDate(cx.BeginDate)">Set begin date</span>
@@ -48,11 +48,11 @@ controller: 'app.calendar.CarlendarController as cx'
                 </div>
                 <div class="grid-block">
                     <label>
-                        <input ng-model="SifhtRange" type="checkbox">Sift
+                        <input ng-model="ShifhtRange" type="checkbox">Shift
                     </label>
                 </div>
                 <div class="align-left grid-block">
-                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleRange(IsHolidayRange,SifhtRange)" zf-close="">Submit</div>
+                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleRange(IsHolidayRange,ShifhtRange)" zf-close="">Submit</div>
                     <div class="button small-4 grid-block" zf-close="">Cancle</div>
                 </div>
             </div>
@@ -108,11 +108,11 @@ controller: 'app.calendar.CarlendarController as cx'
                 </div>
                 <div class="grid-block">
                     <label>
-                        <input ng-model="SifhtWeek" type="checkbox">Sift
+                        <input ng-model="ShifhtWeek" type="checkbox">Shift
                     </label>
                 </div>
                 <div class="align-left grid-block">
-                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleWeek(IsHolidayWeek,SifhtWeek,sun,mon,tue,wed,thu,fri,sat)" zf-close="">Submit</div>
+                    <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleWeek(IsHolidayWeek,ShifhtWeek,sun,mon,tue,wed,thu,fri,sat)" zf-close="">Submit</div>
                     <div class="button small-4 grid-block" zf-close="">Cancle</div>
                 </div>
           </div>
