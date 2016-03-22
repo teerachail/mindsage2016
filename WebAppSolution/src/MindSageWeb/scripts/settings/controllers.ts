@@ -8,13 +8,20 @@
         }
         
         public UpdateProfile() {
-            if (this.userInfo.FullName != null && this.userInfo.FullName != "")
-                this.profileSvc.UpdateProfile(this.userInfo.FullName, this.userInfo.SchoolName, this.userInfo.IsPrivateAccout, this.userInfo.IsReminderOnceTime);
+            var FullName = this.clientProfileSvc.ClientUserProfile.FullName;
+            var SchoolName = this.clientProfileSvc.ClientUserProfile.SchoolName;
+            var IsPrivateAccout = this.clientProfileSvc.ClientUserProfile.IsPrivateAccout;
+            var IsReminderOnceTime = this.clientProfileSvc.ClientUserProfile.IsReminderOnceTime;
+            if (FullName != null && FullName != "")
+                this.profileSvc.UpdateProfile(FullName, SchoolName, IsPrivateAccout, IsReminderOnceTime);
         }
 
         public UpdateCoursee() {
             //HACK: condition for send data
-            this.profileSvc.UpdateCourse(this.userInfo.ClassName, this.userInfo.CurrentStudentCode, this.userInfo.StartDate);
+            var ClassName = this.clientProfileSvc.ClientUserProfile.ClassName;
+            var CurrentStudentCode = this.clientProfileSvc.ClientUserProfile.CurrentStudentCode;
+            var StartDate = this.clientProfileSvc.ClientUserProfile.StartDate;
+            this.profileSvc.UpdateCourse(ClassName, CurrentStudentCode, StartDate);
         }
 
         public DeleteCourse() {
