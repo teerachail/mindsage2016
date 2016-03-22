@@ -14,7 +14,7 @@ controller: 'app.settings.SettingController as cx'
                 <p>User Info</p>
             </div>
             <a class="grid-content shrink" ng-show="!explan" ng-click="explan = !explan">Edit</a>
-            <a class="grid-content shrink" ng-show="explan" ng-click="cx.UpdateProfile(cx.clientProfileSvc.ClientUserProfile.FullName, cx.clientProfileSvc.ClientUserProfile.SchoolName,cx.clientProfileSvc.ClientUserProfile.IsPrivateAccout,cx.clientProfileSvc.ClientUserProfile.IsReminderOnceTime) ; explan = !explan">Save</a>
+            <a class="grid-content shrink" ng-show="explan" ng-click="cx.UpdateProfile() ; explan = !explan">Save</a>
         </div>
         <div ng-show="explan">
             <div class="grid-block">
@@ -77,7 +77,7 @@ controller: 'app.settings.SettingController as cx'
                 <p>Class Info</p>
             </div>
             <a class="grid-content shrink" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
-            <a class="grid-content shrink" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.clientProfileSvc.ClientUserProfile.ClassName, cx.clientProfileSvc.ClientUserProfile.CurrentStudentCode, cx.clientProfileSvc.ClientUserProfile.StartDate) ; bottomexplan = !bottomexplan">Save</a>
+            <a class="grid-content shrink" ng-show="bottomexplan" ng-click="cx.UpdateCoursee() ; bottomexplan = !bottomexplan">Save</a>
             <div class="grid-content shrink">
                 <a class="viewlist" ui-sref="app.course.teacherlist({ classRoomId: cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId })">View Student List</a>
             </div>

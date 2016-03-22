@@ -7,14 +7,14 @@
         constructor(private $scope, private $state, private profileSvc: app.settings.ProfileService, private clientProfileSvc: app.shared.ClientUserProfileService) {
         }
         
-        public UpdateProfile(name: string, schoolName: string, isPrivate: boolean, isReminderOnceTime: boolean) {
-            if (name != null && name != "") this.profileSvc.UpdateProfile(name, schoolName, isPrivate, isReminderOnceTime);
+        public UpdateProfile() {
+            if (this.userInfo.FullName != null && this.userInfo.FullName != "")
+                this.profileSvc.UpdateProfile(this.userInfo.FullName, this.userInfo.SchoolName, this.userInfo.IsPrivateAccout, this.userInfo.IsReminderOnceTime);
         }
 
-        public UpdateCoursee(ClassName: string, ChangedStudentCode: string, BeginDate: Date) {
-            if (this.clientProfileSvc.ClientUserProfile.ClassName == ClassName) ClassName = null;
-            if (this.clientProfileSvc.ClientUserProfile.CurrentStudentCode == ChangedStudentCode) ChangedStudentCode = null;
-            if (ClassName != null || ChangedStudentCode != null) this.profileSvc.UpdateCourse(ClassName, ChangedStudentCode, BeginDate);
+        public UpdateCoursee() {
+            //HACK: condition for send data
+            this.profileSvc.UpdateCourse(this.userInfo.ClassName, this.userInfo.CurrentStudentCode, this.userInfo.StartDate);
         }
 
         public DeleteCourse() {
