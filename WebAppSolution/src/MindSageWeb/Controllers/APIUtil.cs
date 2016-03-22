@@ -84,7 +84,11 @@ namespace MindSageWeb.Controllers
             const int ShiftOneDay = 1;
             const int LessonDuration = 5;
             var currentBeginDate = classCalendar.BeginDate.Value;
-            var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>());
+
+            // HACK: ต้องยกเลิกการคลี่ lessonRange มาใช้ช่วงเวลาแทน
+            var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>())
+                .Select(it => new DateTime(it.Year, it.Month, it.Day).ToUniversalTime());
+            
             var lessonQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue).OrderBy(it => it.Order);
             foreach (var lesson in lessonQry)
             {
@@ -93,7 +97,7 @@ namespace MindSageWeb.Controllers
                 {
                     var beginDate = currentBeginDate;
                     var endDate = currentBeginDate.AddDays(LessonDuration);
-                    var lessonRange = Enumerable.Range(0, LessonDuration).Select(it => beginDate.AddDays(it));
+                    var lessonRange = Enumerable.Range(0, LessonDuration).Select(it => beginDate.AddDays(it).ToUniversalTime()); // HACK: ต้องยกเลิกการคลี่ lessonRange มาใช้ช่วงเวลาแทน
                     var availableRange = lessonRange.Except(shiftDays);
                     if (availableRange.Any())
                     {

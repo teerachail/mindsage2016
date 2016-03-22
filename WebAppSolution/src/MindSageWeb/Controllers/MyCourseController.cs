@@ -765,14 +765,14 @@ namespace MindSageWeb.Controllers
             var isMoreThanOneDay = body.ToDate.HasValue;
             if (isMoreThanOneDay)
             {
-                var isTodayIsCorrect = body.ToDate.Value.Date > body.FromDate.Date;
-                var fromDate = isTodayIsCorrect ? body.FromDate.Date : body.ToDate.Value.Date;
-                var toDate = isTodayIsCorrect ? body.ToDate.Value.Date : body.FromDate.Date;
+                var isTodayIsCorrect = body.ToDate.Value > body.FromDate;
+                var fromDate = isTodayIsCorrect ? body.FromDate : body.ToDate.Value;
+                var toDate = isTodayIsCorrect ? body.ToDate.Value : body.FromDate;
                 const int ShiftOneDay = 1;
                 var diffDays = (toDate - fromDate).Days + ShiftOneDay;
-                dateRange = Enumerable.Range(0, diffDays).Select(it => new DateTime(fromDate.Year, fromDate.Month, fromDate.Day + it));
+                dateRange = Enumerable.Range(0, diffDays).Select(it => new DateTime(fromDate.Year, fromDate.Month, fromDate.Day + it).ToUniversalTime());
             }
-            else dateRange = new List<DateTime> { body.FromDate.Date };
+            else dateRange = new List<DateTime> { body.FromDate.ToUniversalTime() };
 
             var holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
             holidays = body.IsHoliday ? holidays.Union(dateRange) : holidays.Except(dateRange);
@@ -811,16 +811,16 @@ namespace MindSageWeb.Controllers
             if (classCalendar == null) return null;
 
             if (!classCalendar.BeginDate.HasValue) return null;
-            var beginDate = classCalendar.BeginDate.Value.Date;
+            var beginDate = classCalendar.BeginDate.Value.ToUniversalTime();
             if (beginDate == null) return null;
             var endedDate = classCalendar.LessonCalendars
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderBy(it => it.Order)
-                .LastOrDefault()?.BeginDate.AddDays(LessonDuration);
+                .LastOrDefault()?.BeginDate.AddDays(LessonDuration).ToUniversalTime();
             if (endedDate == null) return null;
 
             const int ShiftOneDay = 1;
-            var diffDays = (int)(Math.Abs((beginDate.Date - endedDate.Value.Date).TotalDays + ShiftOneDay));
+            var diffDays = (int)(Math.Abs((beginDate - endedDate.Value).TotalDays + ShiftOneDay));
             var dateRange = Enumerable.Range(0, diffDays).Select(it => beginDate.AddDays(it));
 
             classCalendar.Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
@@ -847,7 +847,7 @@ namespace MindSageWeb.Controllers
 
         private void setHolidayAndShiftDate(ClassCalendar classCalendar, SetScheduleWithWeekRequest body, DayOfWeek day, IEnumerable<DateTime> dateRange)
         {
-            var qry = dateRange.Where(it => it.DayOfWeek == day);
+            var qry = dateRange.Where(it => it.DayOfWeek == day).Select(it => it.ToUniversalTime());
             classCalendar.Holidays = body.IsHoliday ? classCalendar.Holidays.Union(qry) : classCalendar.Holidays.Except(qry);
             classCalendar.ShiftDays = body.IsShift ? classCalendar.ShiftDays.Union(qry) : classCalendar.ShiftDays.Except(qry);
         }
@@ -905,7 +905,7 @@ namespace MindSageWeb.Controllers
             {
                 IsComplete = isComplete,
                 BeginDate = classCalendar.BeginDate,
-                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).LastOrDefault()?.BeginDate.AddDays(LessonDuration),
+                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).LastOrDefault()?.BeginDate.AddDays(LessonDuration), // HACK: คำนวณวันจบ course
                 Lessons = classCalendar.LessonCalendars?.Select(it => new LessonSchedule
                 {
                     BeginDate = it.BeginDate,
