@@ -149,7 +149,11 @@ namespace MindSageWeb.Controllers
 
             var canUpsertTheDiscussion = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase)
                     || selectedDiscussion.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
-            if (!canUpsertTheDiscussion) return;
+            if (!canUpsertTheDiscussion)
+            {
+                var isTeacher = (bool)userprofile.Subscriptions?.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
+                if (!isTeacher) return;
+            }
 
             if (body.IsDelete)
             {

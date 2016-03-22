@@ -122,7 +122,8 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(body.UserProfileId);
             if (!areArgumentsValid) return;
 
-            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId);
+            UserProfile userprofile;
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
             var now = _dateTime.GetCurrentTime();
@@ -133,7 +134,11 @@ namespace MindSageWeb.Controllers
             if (selectedComment == null) return;
 
             var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
-            if (!isCommentOwner) return;
+            if (!isCommentOwner)
+            {
+                var isTeacher = (bool)userprofile.Subscriptions?.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
+                if (!isTeacher) return;
+            }
 
             if (body.IsDelete)
             {
