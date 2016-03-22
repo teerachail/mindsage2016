@@ -15,7 +15,7 @@ controller: 'app.journals.JournalController as cx'
 
             <div class="clearfix">
                 <div class="grid-block">
-                    <div class="grid-content shrink"><img class="thumbnail" src="{{ cx.svc.ClientUserProfile.ImageUrl }}"></div>
+                    <div class="grid-content small-2 shrink"><img class="thumbnail" src="{{ cx.svc.ClientUserProfile.ImageUrl }}"></div>
                     <div class="grid-content">
                         <h4>{{ cx.svc.ClientUserProfile.FullName }}</h4>
                         <textarea ng-model="message" rows="3" placeholder="Add a comment to your Jounal"></textarea>
@@ -36,7 +36,7 @@ controller: 'app.journals.JournalController as cx'
                     <div class="comment">
                         <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.svc.ClientUserProfile.CurrentLessonNo && cx.targetUserId == cx.svc.ClientUserProfile.UserProfileId">
                             <div class="grid-block">
-                                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ comment.CreatorImageUrl }}"></div>
+                                <div class="grid-content shrink small-2"><img class="thumbnail" src="{{ comment.CreatorImageUrl }}"></div>
 
                                 <div class="grid-content large-10">
                                     <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ cx.svc.ClientUserProfile.CurrentLessonNo }}</span></h4>
