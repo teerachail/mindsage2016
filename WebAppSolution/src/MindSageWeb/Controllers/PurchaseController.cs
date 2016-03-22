@@ -80,8 +80,7 @@ namespace MindSageWeb.Controllers
             var result = _myCourseCtrl.AddCourse(body);
             if (result.IsSuccess)
             {
-                var redirectURL = $"/my#!/preparing";
-                return Redirect(redirectURL);
+                return RedirectToAction("Preparing", "My");
             }
 
             return RedirectToAction("Detail", "Home", new { @id = courseId, isCouponInvalid = true });

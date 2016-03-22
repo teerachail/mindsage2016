@@ -11,14 +11,23 @@ namespace MindSageWeb.Controllers
     [Authorize]
     public class MyController : Controller
     {
+        private IDateTime _dateTime;
+        private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
         private MyCourseController _myCourseCtrl;
+        private ProfileController _profileCtrl;
 
         public MyController(MyCourseController myCourseCtrl, 
-            IUserProfileRepository userprofileRepo)
+            ProfileController profileCtrl,
+            IUserProfileRepository userprofileRepo,
+            IClassCalendarRepository classCalendarRepo,
+            IDateTime dateTime)
         {
             _myCourseCtrl = myCourseCtrl;
+            _profileCtrl = profileCtrl;
             _userprofileRepo = userprofileRepo;
+            _classCalendarRepo = classCalendarRepo;
+            _dateTime = dateTime;
         }
 
         // GET: /<controller>/
@@ -27,17 +36,21 @@ namespace MindSageWeb.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Enter to the user's course
+        /// </summary>
+        /// <param name="id">Course catalog id</param>
         public IActionResult EnterCourse(string id)
         {
             var userprofile = _userprofileRepo?.GetUserProfileById(User.Identity.Name);
-            if (userprofile == null) return RedirectToAction("Error");
+            if (userprofile == null) return View("Error");
 
             var subscription = userprofile.Subscriptions?
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.CourseCatalogId == id)
                 .OrderBy(it => it.LastActiveDate)
                 .LastOrDefault();
-            if (subscription == null) return RedirectToAction("Error");
+            if (subscription == null) return View("Error");
 
             var courseInfo =_myCourseCtrl?.ChangeCourse(new Repositories.Models.ChangeCourseRequest
             {
@@ -45,7 +58,33 @@ namespace MindSageWeb.Controllers
                 ClassRoomId = subscription.ClassRoomId
             });
 
-            var redirectURL = $"/my#!/preparing";
+            return RedirectToAction("Preparing", "My");
+        }
+
+        public IActionResult Preparing()
+        {
+            var userprofile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
+            if (userprofile == null) return View("Error");
+
+            var lastActiveSubscription = userprofile.Subscriptions
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.LastActiveDate.HasValue)
+                .OrderByDescending(it => it.LastActiveDate)
+                .FirstOrDefault();
+
+            var currentClassRoomId = lastActiveSubscription.ClassRoomId;
+            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(lastActiveSubscription.ClassRoomId);
+            var isClassCalendarValid = classCalendar != null && classCalendar.LessonCalendars != null && classCalendar.LessonCalendars.Any();
+            if (!isClassCalendarValid) return View("Error");
+
+            var now = _dateTime.GetCurrentTime();
+            var lessonCalendarQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue);
+
+            var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderByDescending(it => it.BeginDate).FirstOrDefault();
+            var currentLessonId = currentLesson?.LessonId;
+            if (currentLessonId == null) return View("Error");
+
+            var redirectURL = $"/my#!/app/main/lesson/{ currentLessonId }/{ currentClassRoomId }";
             return Redirect(redirectURL);
         }
     }

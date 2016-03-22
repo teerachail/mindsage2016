@@ -52,7 +52,7 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public GetUserProfileRespond Get()
         {
-            var userProfileName = User.Identity.Name;
+            var userProfileName = User?.Identity?.Name;
             var result = Get(userProfileName);
             return result;
         }
@@ -119,6 +119,7 @@ namespace MindSageWeb.Controllers
             if (!isUserProfileSubscriptionValid) return userProfileInfo;
 
             var lastActiveSubscription = userprofile.Subscriptions
+                .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.LastActiveDate.HasValue)
                 .OrderByDescending(it => it.LastActiveDate)
                 .FirstOrDefault();
