@@ -3,29 +3,22 @@
     ViewData["Title"] = "Change Profile's Image";
 }
 
-<h2>@ViewData["Title"].</h2>
 
-<form asp-controller="Manage" asp-action="ChangeProfileImage" method="post"  enctype="multipart/form-data" class="form-horizontal" role="form">
-    <h4>Change Profile's Image Form</h4>
-    <hr />
-    <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
-        @Html.HiddenFor(it => it.ClassRoom)
-        @Html.DisplayFor(it => it.ImagePath)
-
-    <div class="form-group">
-        <label asp-for="ImagePath" class="col-md-2 control-label"></label>
-        <div class="col-md-10">
-            <input asp-for="ImagePath" type="file" class="form-control" /><br><br>  
+<div class="grid-block">
+    <div class="medium-6 large-4 grid-container">
+        <form asp-controller="Manage" asp-action="ChangeProfileImage" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+            <h4>Change Profile's Image Form</h4>
+            <hr />
+            <div asp-validation-summary="ValidationSummary.All" class="text-danger"></div>
+            @Html.HiddenFor(it => it.ClassRoom)
+            @Html.DisplayFor(it => it.ImagePath)
+            <label asp-for="ImagePath" class="col-md-2 control-label"></label>
+            <input asp-for="ImagePath" type="file" class="show-for-sr" /><br><br>
             <span asp-validation-for="ImagePath" class="text-danger"></span>
-        </div>
+            <button type="submit" class="button large">Upload</button>
+        </form>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <button type="submit" class="btn btn-default">Upload</button>
-        </div>
-    </div>
-</form>
-
+</div>
 @section Scripts {
     @{ await Html.RenderPartialAsync("_ValidationScriptsPartial"); }
 }
