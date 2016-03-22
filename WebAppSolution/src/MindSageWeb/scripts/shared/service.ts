@@ -10,13 +10,15 @@
     export class ClientUserProfileService {
 
         public UserInCourseList;
+        public PrimaryVideoUrl: string;
         public Advertisments: Advertisment[];
         public AllAvailableCourses: CourseCatalog[];
-        public PrimaryVideoUrl: string;
         public ClientUserProfile: ClientUserProfile;
 
         private isWaittingForAllCourses: boolean;
         private isWaittingForFriendList: boolean;
+        private isPrepareUserProfileComplete: boolean;
+        private isWaittingForPrepareUserProfile: boolean;
         private isWaittingForUserProfileRespond: boolean;
         private getCourseSvc: IGetCourseInfoResourceClass<any>;
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
@@ -31,8 +33,6 @@
             this.getCourseSvc = <IGetCourseInfoResourceClass<any>>$resource(appConfig.ChangeCourseUrl, { 'UserProfileId': '@UserProfileId', 'ClassRoomId': '@ClassRoomId' });
         }
 
-        private isPrepareUserProfileComplete: boolean = false;
-        private isWaittingForPrepareUserProfile: boolean = false;
         public PrepareAllUserProfile(): ng.IPromise<any> {
             var prom = this.$q.defer();
             var shouldPrepareUserProfile = !this.isPrepareUserProfileComplete && !this.isWaittingForPrepareUserProfile;
@@ -70,28 +70,6 @@
 
             return prom.promise;
         }
-
-        public IsPrepareAllUserProfileCompleted(): boolean {
-            //var shouldPrepareUserProfile = !this.isPrepareUserProfileComplete && !this.isWaittingForPrepareUserProfile;
-            //if (shouldPrepareUserProfile) {
-            //    this.isWaittingForPrepareUserProfile = true;
-            //    this.getUserProfileSvc.get().$promise.then(it => {
-            //        this.ClientUserProfile = it;
-            //        this.$q.all([
-            //            this.getAllCourses(),
-            //            this.getFriendLists(),
-            //            this.getCourseInfo(this.ClientUserProfile.CurrentClassRoomId)
-            //        ]).then(data => {
-            //            this.AllAvailableCourses = <CourseCatalog[]>data[0];
-            //            this.friendList = data[1];
-            //            this.UpdateCourseInformation(data[2]);
-            //            this.isWaittingForPrepareUserProfile = false;
-            //            this.isPrepareUserProfileComplete = true;
-            //        }, error => this.isWaittingForPrepareUserProfile = false);
-            //    }, error => this.isWaittingForPrepareUserProfile = false);
-            //}
-            return this.isPrepareUserProfileComplete;
-        }
         private getAllCourses(): ng.IPromise<any> {
             var userId = this.ClientUserProfile.UserProfileId;
             return this.getAllCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
@@ -117,74 +95,6 @@
 
         public ChangeCourse(classRoomId: string): ng.IPromise<any> {
             return this.getCourseInfo(classRoomId);
-        }
-
-        public UpdateUserProfile(userProfile): void {
-            if (userProfile == null) return;
-            this.ClientUserProfile = userProfile;
-        }
-
-        public GetClientUserProfile(): ClientUserProfile {
-            if (this.ClientUserProfile == null || this.ClientUserProfile.UserProfileId == null) {
-                if (this.isWaittingForUserProfileRespond) return;
-                else {
-                    console.log('Obsolate load user profile');
-                    this.isWaittingForUserProfileRespond = true;
-                    this.getUserProfileSvc.get().$promise.then(respond => {
-                        if (respond == null) return this.GetClientUserProfile();
-                        else {
-                            this.isWaittingForUserProfileRespond = false;
-                            this.ClientUserProfile = respond;
-                            return this.ClientUserProfile;
-                        }
-                    });
-                }
-            }
-            else return this.ClientUserProfile;
-        }
-
-        public GetAllAvailableCourses(): CourseCatalog[] {
-            if (this.AllAvailableCourses == null) {
-                if (this.isWaittingForAllCourses) return;
-                else {
-                    console.log('Obsolate load all available courses');
-                    this.isWaittingForAllCourses = true;
-                    this.getAllCourseSvc.get().$promise.then(respond => {
-                        if (respond == null) return this.GetAllAvailableCourses();
-                        else {
-                            this.isWaittingForAllCourses = false;
-                            this.AllAvailableCourses = respond;
-                            return this.AllAvailableCourses;
-                        }
-                    });
-                }
-            }
-            else return this.AllAvailableCourses;
-        }
-
-        public GetFriendLists() {
-            if (this.UserInCourseList == null) {
-                this.ReloadFriendLists();
-            }
-            else return this.UserInCourseList;
-        }
-
-        public ReloadFriendLists() {
-            if (this.isWaittingForFriendList) return this.UserInCourseList;
-            else {
-                console.log('Obsolate load Friend list');
-                this.isWaittingForFriendList = true;
-                var userId = this.ClientUserProfile.UserProfileId;
-                var classRoomId = this.ClientUserProfile.CurrentClassRoomId;
-                this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise.then(respond=> {
-                    if (respond == null) return this.GetFriendLists();
-                    else {
-                        this.isWaittingForFriendList = false;
-                        this.UserInCourseList = respond;
-                        return this.UserInCourseList;
-                    }
-                });
-            }
         }
     }
 

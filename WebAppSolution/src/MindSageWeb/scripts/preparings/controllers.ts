@@ -10,7 +10,7 @@ module preparings.main {
 
         private prepareUserProfile(): void {
             this.userSvc.PrepareAllUserProfile().then(() => {
-                var userprofile = this.userSvc.GetClientUserProfile();
+                var userprofile = this.userSvc.ClientUserProfile;
                 var lessonId = userprofile.CurrentLessonId;
                 var classRoomId = userprofile.CurrentClassRoomId;
                 this.$state.go('app.main.lesson', { 'lessonId': lessonId, 'classRoomId': classRoomId }, { 'location': 'replace' });

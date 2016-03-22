@@ -19,12 +19,12 @@
         }
 
         public GetContent(classRoomId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.svc.GetContent(new GetCourseMapContentRequest(userId, classRoomId)).$promise;
         }
 
         public GetLessonStatus(classRoomId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.svc.GetLessonStatus(new GetCourseMapContentRequest(userId, classRoomId)).$promise;
         }
 

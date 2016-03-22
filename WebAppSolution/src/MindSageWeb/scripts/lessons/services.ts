@@ -29,16 +29,16 @@ module app.lessons {
         }
 
         public GetContent(lessonId: string, classRoomId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.getLessonSvc.get(new LessonContentRequest(lessonId, classRoomId, userId)).$promise;
         }
         
         public LikeLesson(classRoomId: string, lessonId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.likeLessonSvc.save(new LikeLessonRequest(classRoomId, lessonId, userId)).$promise;
         }
         public ReadNote(classRoomId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.readNoteSvc.save(new ReadNoteRequest(classRoomId, userId)).$promise;
         }
     }

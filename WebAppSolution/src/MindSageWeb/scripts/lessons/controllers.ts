@@ -93,7 +93,7 @@ module app.lessons {
                         return message;
                     }
                     else {
-                        var userprofile = this.userprofileSvc.GetClientUserProfile();
+                        var userprofile = this.userprofileSvc.ClientUserProfile;
                         var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, userprofile.ImageUrl, userprofile.FullName, this.classRoomId, this.lessonId, userprofile.UserProfileId, 0 - this.comment.Comments.length);
                         this.comment.Comments.push(newComment);
                         return "";
@@ -111,7 +111,7 @@ module app.lessons {
                         return message;
                     }
                     else {
-                        var userprofile = this.userprofileSvc.GetClientUserProfile();
+                        var userprofile = this.userprofileSvc.ClientUserProfile;
                         var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - this.discussions.length);
                         this.discussions.push(newDiscussion);
                         this.comment.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;

@@ -30,9 +30,7 @@
         public ChangeCourse(classRoomId: string, lessonId: string) {
             this.userSvc.ChangeCourse(classRoomId).then(respond => {
                 this.userSvc.UpdateCourseInformation(respond);
-                var userProfile = this.userSvc.GetClientUserProfile();
-                userProfile.CurrentLessonId = lessonId;
-                this.userSvc.UpdateUserProfile(userProfile);
+                this.userSvc.ClientUserProfile.CurrentLessonId = lessonId;
                 this.$state.go("app.main.lesson", { 'classRoomId': classRoomId, 'lessonId': lessonId }, { inherit: false });
             }, error => {
                 console.log('Change course failed');

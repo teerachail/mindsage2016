@@ -38,22 +38,22 @@
         }
 
         public UpdateProfile(name: string, schoolName: string, isPrivate: boolean, isReminderOnceTime: boolean): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.svc.UpdateProfile(new UpdateProfileRequest(userId, name, schoolName, isPrivate, isReminderOnceTime)).$promise;
         }
 
         public UpdateCourse(ClassName: string, ChangedStudentCode: string, BeginDate: Date): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
+            var classroomId = this.userprofileSvc.ClientUserProfile.CurrentClassRoomId;
             return this.updateCoursesvc.UpdateCourse(new UpdateCourseRequest(userId, classroomId, ClassName, ChangedStudentCode, BeginDate)).$promise;
         }
         public DeleteCourse(ClassRoomId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.deleteCoursesvc.save(new DeleteCourseRequest(ClassRoomId, userId)).$promise;
         }
         public StudenMessageEdit(Message: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
+            var classroomId = this.userprofileSvc.ClientUserProfile.CurrentClassRoomId;
             return this.studenMessageEditsvc.save(new StudenMessageEditRequest(classroomId, userId, Message)).$promise;
         }
     }

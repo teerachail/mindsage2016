@@ -22,12 +22,12 @@
         }
 
         public GetStudentList(classRoomId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.GetStudentListsvc.query(new GetStudentListRequest(userId, classRoomId)).$promise;
         }
 
         public RemoveStudent(classRoomId: string, removeId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.RemoveStudentsvc.save(new RemoveStudentRequest(classRoomId, userId, removeId)).$promise;
         }
 

@@ -18,7 +18,7 @@ module app.journals {
         }
 
         public GetComments(classRoomId: string, targetUserId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.svc.GetComments(new GetJournalCommentsRequest(targetUserId, userId, classRoomId)).$promise;
         }
     }
