@@ -15,6 +15,7 @@ namespace MindSageWeb.Repositories.Models
         public int CommentPercentage { get; set; }
         public int OnlineExtrasPercentage { get; set; }
         public int SocialParticipationPercentage { get; set; }
+        public bool IsPrivateAccount { get; set; }
 
         #endregion Properties
     }

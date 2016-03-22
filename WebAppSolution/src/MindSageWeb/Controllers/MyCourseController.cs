@@ -193,7 +193,8 @@ namespace MindSageWeb.Controllers
                     return new GetStudentListRespond
                     {
                         id = it.id,
-                        Name = it.Name,
+                        IsPrivateAccount = it.IsPrivateAccount,
+                        Name = it.Name, 
                         ImageUrl = it.ImageProfileUrl,
                         CommentPercentage = isActivityFound ? selectedUserActivity.CommentPercentage : NoneScore,
                         OnlineExtrasPercentage = isActivityFound ? selectedUserActivity.OnlineExtrasPercentage : NoneScore,

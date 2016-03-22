@@ -23,8 +23,8 @@ controller: 'app.teacherlists.teacherlistsController as cx'
         <zf-popup id="{{ item.Name }}" class="padding">
             <span><img src="../assets/img/icon/greenwithpencil.png" width="30"/> {{ item.CommentPercentage }}%</span> 
             <span><img src="../assets/img/icon/green.png" width="30"/> {{ item.OnlineExtrasPercentage }}%</span> 
-            <span ng-hide="item.SocialParticipationPercentage==0"><img src="../assets/img/icon/social_participation.png" width="30"/> {{ item.SocialParticipationPercentage }}%</span> 
-            <span ng-show="item.SocialParticipationPercentage==0"><img src="../assets/img/icon/social_participation_no_score.png" width="30"/></span>
+            <span ng-hide="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation.png" width="30"/> {{ item.SocialParticipationPercentage }}%</span> 
+            <span ng-show="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation_no_score.png" width="30"/></span>
         </zf-popup>
     </div>
 </div>
