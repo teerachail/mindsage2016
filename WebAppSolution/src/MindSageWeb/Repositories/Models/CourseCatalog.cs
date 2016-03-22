@@ -24,6 +24,7 @@ namespace MindSageWeb.Repositories.Models
         public DateTime? DeletedDate { get; set; }
 
         public IEnumerable<Semester> Semesters { get; set; }
+        public IEnumerable<string> Advertisements { get; set; }
 
         #endregion Properties
 
