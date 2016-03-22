@@ -14,8 +14,6 @@ module preparings.main {
                 var lessonId = userprofile.CurrentLessonId;
                 var classRoomId = userprofile.CurrentClassRoomId;
                 this.$state.go('app.main.lesson', { 'lessonId': lessonId, 'classRoomId': classRoomId }, { 'location': 'replace' });
-            }, error => {
-                this.prepareUserProfile();
             });
         }
     }

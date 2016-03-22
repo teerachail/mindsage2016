@@ -28,8 +28,6 @@
         private prepareUserprofile(): void {
             this.clientProfileSvc.PrepareAllUserProfile().then(() => {
                 this.prepareCourseScheduleContents();
-            }, error=> {
-                this.prepareUserprofile();
             });
         }
 
@@ -42,7 +40,6 @@
                 }
             }, error => {
                 console.log('Load course schedule content failed');
-                this.prepareCourseScheduleContents();
             });
         }
 

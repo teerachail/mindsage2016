@@ -15,8 +15,6 @@
             this.userSvc.PrepareAllUserProfile().then(() => {
                 this.currentUserId = encodeURI(this.userSvc.ClientUserProfile.UserProfileId);
                 this.loadNotifications();
-            }, error => {
-                this.prepareUserprofile();
             });
         }
         private loadNotifications(): void {
@@ -26,7 +24,6 @@
                     else this.notification = respond.notificationTotal;
                 }, error => {
                     console.log('Load notifications content failed');
-                    this.loadNotifications();
                 });
         }
 
@@ -37,7 +34,6 @@
                 this.$state.go("app.main.lesson", { 'classRoomId': classRoomId, 'lessonId': lessonId }, { inherit: false });
             }, error => {
                 console.log('Change course failed');
-                this.ChangeCourse(classRoomId, lessonId);
             });
         }
     }

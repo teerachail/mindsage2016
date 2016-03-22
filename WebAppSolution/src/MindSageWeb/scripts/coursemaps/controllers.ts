@@ -14,8 +14,6 @@
         private prepareUserprofile(): void {
             this.userSvc.PrepareAllUserProfile().then(() => {
                 this.prepareCourseMapContents();
-            }, error => {
-                this.prepareUserprofile();
             });
         }
 
@@ -27,8 +25,7 @@
                 this.content = data[0];
                 this.status = data[1];
             }, error => {
-                console.log('Load journal content failed');
-                this.prepareCourseMapContents();
+                console.log('Load journal content failed, retrying ...');
             });
         }
 
