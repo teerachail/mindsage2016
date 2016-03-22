@@ -4,15 +4,12 @@
     class SideMenuController {
         
         private currentUserId: string;
-        private userProfile: shared.ClientUserProfile;
         public notification: number;
-        public AllAvailableCourses: shared.CourseCatalog[] = [];
         private isGetNotificationCompleted: boolean;
         private isWaittingForGetNotification: boolean;
 
         static $inject = ['$scope', '$state', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
         constructor(private $scope, private $state, private waitRespondTime, private userSvc: app.shared.ClientUserProfileService, private profileSvc: app.shared.GetProfileService) {
-            this.userProfile = new shared.ClientUserProfile();
             this.prepareUserprofile();
         }
 
@@ -22,9 +19,7 @@
                 return;
             }
 
-            this.userProfile = this.userSvc.GetClientUserProfile();
-            this.AllAvailableCourses = this.userSvc.GetAllAvailableCourses();
-            this.currentUserId = encodeURI(this.userProfile.UserProfileId);
+            this.currentUserId = encodeURI(this.userSvc.ClientUserProfile.UserProfileId);
             this.loadNotifications();
         }
         private loadNotifications(): void {

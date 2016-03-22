@@ -15,9 +15,9 @@ controller: 'app.journals.JournalController as cx'
 
             <div class="clearfix">
                 <div class="grid-block">
-                    <div class="grid-content shrink"><img class="thumbnail" src="{{ cx.userprofile.ImageUrl }}"></div>
+                    <div class="grid-content shrink"><img class="thumbnail" src="{{ cx.svc.ClientUserProfile.ImageUrl }}"></div>
                     <div class="grid-content">
-                        <h4>{{ cx.userprofile.FullName }}</h4>
+                        <h4>{{ cx.svc.ClientUserProfile.FullName }}</h4>
                         <textarea ng-model="message" rows="3" placeholder="Add a comment to your Jounal"></textarea>
                     </div>
                 </div>
@@ -38,18 +38,18 @@ controller: 'app.journals.JournalController as cx'
                 <zf-accordion-item ng-repeat="item in cx.GetWeeks()" title="Week {{ item }}" on-finish-render>
                     <label ng-show="(cx.GetComments(item) | filter:search).length == 0 && cx.MyComments.length == 0">no comment</label>
                     <div class="comment">
-                        <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.userprofile.CurrentLessonNo && cx.targetUserId == cx.userprofile.UserProfileId">
+                        <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.svc.ClientUserProfile.CurrentLessonNo && cx.targetUserId == cx.svc.ClientUserProfile.UserProfileId">
                             <div class="grid-block">
                                 <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ comment.CreatorImageUrl }}"></div>
 
                                 <div class="grid-content large-10">
-                                    <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ cx.userprofile.CurrentLessonNo }}</span></h4>
+                                    <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ cx.svc.ClientUserProfile.CurrentLessonNo }}</span></h4>
                                     <p ng-show="!cx.IsEdit(comment.id)">
                                         {{ comment.Description }}
-                                        <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId" ng-click="cx.EditOpen(comment)"><a> Edit</a></span>
+                                        <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == comment.CreatedByUserProfileId" ng-click="cx.EditOpen(comment)"><a> Edit</a></span>
                                         <span class="comment-button" ng-show="cx.likes.LikeCommentIds.indexOf(comment.id) == -1" ng-click="cx.LikeComment(comment.id, cx.likes.LikeCommentIds.indexOf(comment.id))"><a><i class="fi-heart size-24"></i></a> {{ comment.TotalLikes }} people like this</span>
                                         <span class="comment-button like" ng-show="cx.likes.LikeCommentIds.indexOf(comment.id) != -1" ng-click="cx.LikeComment(comment.id, cx.likes.LikeCommentIds.indexOf(comment.id))"><a><i class="fi-heart size-24"></i></a> {{ comment.TotalLikes }} people like this</span>
-                                        <span class="comment-button" zf-open="ConfirmModel" ng-click="cx.deleteComfirm(comment)" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId || cx.userprofile.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
+                                        <span class="comment-button" zf-open="ConfirmModel" ng-click="cx.deleteComfirm(comment)" ng-show="cx.svc.ClientUserProfile.UserProfileId == comment.CreatedByUserProfileId || cx.svc.ClientUserProfile.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
                                     </p>
                                     <div ng-show="cx.IsEdit(comment.id)">
                                         <textarea ng-model="cx.message"></textarea>
@@ -63,9 +63,9 @@ controller: 'app.journals.JournalController as cx'
                                     <div ng-show="discusClose">
                                         <div class="clearfix" ng-show="cx.content.IsDiscussionAvailable">
                                             <div class="grid-block">
-                                                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.userprofile.ImageUrl }}"></div>
+                                                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.svc.ClientUserProfile.ImageUrl }}"></div>
                                                 <div class="grid-content large-10">
-                                                    <h4>{{ cx.userprofile.FullName }}</h4>
+                                                    <h4>{{ cx.svc.ClientUserProfile.FullName }}</h4>
                                                     <textarea ng-model="discussionMsg" rows="3"></textarea>
                                                 </div>
                                             </div>
@@ -79,14 +79,14 @@ controller: 'app.journals.JournalController as cx'
                                                 <div class="grid-block">
                                                     <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ discussion.CreatorImageUrl }}"></div>
                                                     <div class="grid-content large-10">
-                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
-                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.svc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.svc.ClientUserProfile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                         <p ng-show="!cx.IsEdit(discussion.id)">
                                                             {{ discussion.Description }}
-                                                            <span class="comment-button" ng-show="cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
+                                                            <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
                                                             <span class="comment-button" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(comment.id,discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
                                                             <span class="comment-button like" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(comment.id,discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
-                                                            <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId || cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId || cx.userprofile.IsTeacher"
+                                                            <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == comment.CreatedByUserProfileId || cx.svc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId || cx.svc.ClientUserProfile.IsTeacher"
                                                                   zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(comment, discussion)"><a><i class="fi-trash size-24"></i></a></span>
                                                         </p>
                                                         <div ng-show="cx.IsEdit(discussion.id)">
@@ -111,10 +111,10 @@ controller: 'app.journals.JournalController as cx'
                                     <h4><a href="#">{{ comment.CreatorDisplayName }}</a><span class="comment-time"> week {{ comment.LessonWeek }}</span></h4>
                                     <p ng-show="!cx.IsEdit(comment.id)">
                                         {{ comment.Description }}
-                                        <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId" ng-click="cx.EditOpen(comment)"><a> Edit</a></span>
+                                        <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == comment.CreatedByUserProfileId" ng-click="cx.EditOpen(comment)"><a> Edit</a></span>
                                         <span class="comment-button" ng-show="cx.likes.LikeCommentIds.indexOf(comment.id) == -1" ng-click="cx.LikeComment(comment.id, cx.likes.LikeCommentIds.indexOf(comment.id))"><a><i class="fi-heart size-24"></i></a> {{ comment.TotalLikes }} people like this</span>
                                         <span class="comment-button like" ng-show="cx.likes.LikeCommentIds.indexOf(comment.id) != -1" ng-click="cx.LikeComment(comment.id, cx.likes.LikeCommentIds.indexOf(comment.id))"><a><i class="fi-heart size-24"></i></a> {{ comment.TotalLikes }} people like this</span>
-                                        <span class="comment-button" zf-open="ConfirmModel" ng-click="cx.deleteComfirm(comment)" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId || cx.userprofile.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
+                                        <span class="comment-button" zf-open="ConfirmModel" ng-click="cx.deleteComfirm(comment)" ng-show="cx.svc.ClientUserProfile.UserProfileId == comment.CreatedByUserProfileId || cx.svc.ClientUserProfile.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
                                     </p>
                                     <div ng-show="cx.IsEdit(comment.id)">
                                         <textarea ng-model="cx.message"></textarea>
@@ -129,9 +129,9 @@ controller: 'app.journals.JournalController as cx'
 
                                         <div class="clearfix" ng-show="cx.content.IsDiscussionAvailable">
                                             <div class="grid-block">
-                                                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.userprofile.ImageUrl }}"></div>
+                                                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.svc.ClientUserProfile.ImageUrl }}"></div>
                                                 <div class="grid-content large-10">
-                                                    <h4>{{ cx.userprofile.FullName }}</h4>
+                                                    <h4>{{ cx.svc.ClientUserProfile.FullName }}</h4>
                                                     <textarea ng-model="discussionMsg" rows="3"></textarea>
                                                 </div>
                                             </div>
@@ -145,14 +145,14 @@ controller: 'app.journals.JournalController as cx'
                                                 <div class="grid-block">
                                                     <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ discussion.CreatorImageUrl }}"></div>
                                                     <div class="grid-content large-10">
-                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
-                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) != 2 && !cx.svc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                        <a href="#" ng-show="acx.FriendsStatus(discussion.CreatedByUserProfileId) == 2 || cx.svc.ClientUserProfile.IsTeacher" ui-sref="app.course.journal({ 'classRoomId': '{{ cx.currentUser.CurrentClassRoomId }}', 'targetUserId': '{{ discussion.CreatedByUserProfileId }}' })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
                                                         <p ng-show="!cx.IsEdit(discussion.id)">
                                                             {{ discussion.Description }}
-                                                            <span class="comment-button" ng-show="cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
+                                                            <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
                                                             <span class="comment-button" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(comment.id,discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
                                                             <span class="comment-button like" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(comment.id,discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
-                                                            <span class="comment-button" ng-show="cx.userprofile.UserProfileId == comment.CreatedByUserProfileId || cx.userprofile.UserProfileId == discussion.CreatedByUserProfileId || cx.userprofile.IsTeacher"
+                                                            <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == comment.CreatedByUserProfileId || cx.svc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId || cx.svc.ClientUserProfile.IsTeacher"
                                                                   zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(comment, discussion)"><a><i class="fi-trash size-24"></i></a></span>
                                                         </p>
                                                         <div ng-show="cx.IsEdit(discussion.id)">

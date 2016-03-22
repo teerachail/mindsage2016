@@ -14,34 +14,34 @@ controller: 'app.settings.SettingController as cx'
                 <p>User Info</p>
             </div>
             <a class="grid-content shrink" ng-show="!explan" ng-click="explan = !explan">Edit</a>
-            <a class="grid-content shrink" ng-show="explan" ng-click="cx.UpdateProfile(cx.userInfo.FullName, cx.userInfo.SchoolName,cx.userInfo.IsPrivateAccout,cx.userInfo.IsReminderOnceTime) ; explan = !explan">Save</a>
+            <a class="grid-content shrink" ng-show="explan" ng-click="cx.UpdateProfile(cx.clientProfileSvc.ClientUserProfile.FullName, cx.clientProfileSvc.ClientUserProfile.SchoolName,cx.clientProfileSvc.ClientUserProfile.IsPrivateAccout,cx.clientProfileSvc.ClientUserProfile.IsReminderOnceTime) ; explan = !explan">Save</a>
         </div>
         <div ng-show="explan">
             <div class="grid-block">
                 <div class="grid-content">
                     <label>
                         Name
-                        <input ng-model="cx.userInfo.FullName" type="text">
+                        <input ng-model="cx.clientProfileSvc.ClientUserProfile.FullName" type="text">
                     </label>
-                    <p>Email : {{ cx.userInfo.UserProfileId }}</p>
+                    <p>Email : {{ cx.clientProfileSvc.ClientUserProfile.UserProfileId }}</p>
                 </div>
 
                 <div class="align-center grid-block">
                     <div>
-                        <div><img class="thumbnail" src="{{ cx.userInfo.ImageUrl }}"></div>
-                        <div class="align-center grid-block"><a href="../Manage/ChangeProfileImage/{{ cx.userInfo.CurrentClassRoomId }}">Edit</a></div>
+                        <div><img class="thumbnail" src="{{ cx.clientProfileSvc.ClientUserProfile.ImageUrl }}"></div>
+                        <div class="align-center grid-block"><a href="../Manage/ChangeProfileImage/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}">Edit</a></div>
                     </div>
                 </div>
             </div>
             <div class="grid-content">
                 <label>
                     School
-                    <input ng-model="cx.userInfo.SchoolName" type="text">
+                    <input ng-model="cx.clientProfileSvc.ClientUserProfile.SchoolName" type="text">
                 </label>
             </div>
             <div class="grid-content">
                 <label>
-                    <input ng-model="cx.userInfo.IsPrivateAccout" type="checkbox">
+                    <input ng-model="cx.clientProfileSvc.ClientUserProfile.IsPrivateAccout" type="checkbox">
                     Private account
                 </label>
             </div>
@@ -51,35 +51,35 @@ controller: 'app.settings.SettingController as cx'
                 </div>
                 <div class="grid-content">
                     <label>
-                        <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=true>
+                        <input ng-model="cx.clientProfileSvc.ClientUserProfile.IsReminderOnceTime" type="radio" ng-value=true>
                         ReminderOnceTime
                     </label>
                 </div>
                 <div class="grid-content">
                     <label>
-                        <input ng-model="cx.userInfo.IsReminderOnceTime" type="radio" ng-value=false>
+                        <input ng-model="cx.clientProfileSvc.ClientUserProfile.IsReminderOnceTime" type="radio" ng-value=false>
                         ReminderTwiceTime
                     </label>
                 </div>
             </div>
             <div class="grid-block">
-                <a class="button" ng-show="cx.userInfo.HasPassword" href="../Manage/ChangePassword/{{ cx.userInfo.CurrentClassRoomId }}">Change Password</a>
+                <a class="button" ng-show="cx.clientProfileSvc.ClientUserProfile.HasPassword" href="../Manage/ChangePassword/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}">Change Password</a>
             </div>
             <div class="grid-block">
-                <a class="button" ng-hide="cx.userInfo.HasPassword" href="../Manage/SetPassword/{{ cx.userInfo.CurrentClassRoomId }}">Set Password</a>
+                <a class="button" ng-hide="cx.clientProfileSvc.ClientUserProfile.HasPassword" href="../Manage/SetPassword/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}">Set Password</a>
             </div>
         </div>
     </div>
 
-    <div class="settting-edit" ng-show="cx.userInfo.IsTeacher">
+    <div class="settting-edit" ng-show="cx.clientProfileSvc.ClientUserProfile.IsTeacher">
         <div class="clearfix grid-block">
             <div class="grid-content shrink">
                 <p>Class Info</p>
             </div>
             <a class="grid-content shrink" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
-            <a class="grid-content shrink" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.userInfo.ClassName, cx.userInfo.CurrentStudentCode, cx.userInfo.StartDate) ; bottomexplan = !bottomexplan">Save</a>
+            <a class="grid-content shrink" ng-show="bottomexplan" ng-click="cx.UpdateCoursee(cx.clientProfileSvc.ClientUserProfile.ClassName, cx.clientProfileSvc.ClientUserProfile.CurrentStudentCode, cx.clientProfileSvc.ClientUserProfile.StartDate) ; bottomexplan = !bottomexplan">Save</a>
             <div class="grid-content shrink">
-                <a class="viewlist" ui-sref="app.course.teacherlist({ classRoomId: cx.userInfo.CurrentClassRoomId })">View Student List</a>
+                <a class="viewlist" ui-sref="app.course.teacherlist({ classRoomId: cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId })">View Student List</a>
             </div>
         </div>
         <div ng-show="bottomexplan">
@@ -87,21 +87,21 @@ controller: 'app.settings.SettingController as cx'
                 <div class="grid-content">
                     <label>
                         Class Name
-                        <input ng-model="cx.userInfo.ClassName" type="text">
+                        <input ng-model="cx.clientProfileSvc.ClientUserProfile.ClassName" type="text">
                     </label>
                 </div>
 
                 <div class="grid-content">
                     <label class="have-help-text">
                         Class Code
-                        <input ng-model="cx.userInfo.CurrentStudentCode" type="text">
+                        <input ng-model="cx.clientProfileSvc.ClientUserProfile.CurrentStudentCode" type="text">
                         <a class="help-text">What is this?</a>
                     </label>
                 </div>
             </div>
             <div class="grid-content">
                 <p>
-                    Number of Students {{ cx.userInfo.NumberOfStudents }}
+                    Number of Students {{ cx.clientProfileSvc.ClientUserProfile.NumberOfStudents }}
                 </p>
             </div>
             <div class="grid-block">
@@ -112,13 +112,13 @@ controller: 'app.settings.SettingController as cx'
                 </div>
                 <div class="grid-content shrink">
                     <p>
-                        {{ cx.userInfo.StartDate }}
+                        {{ cx.clientProfileSvc.ClientUserProfile.StartDate }}
                     </p>
                 </div>
             </div>
             <div class="grid-content shrink">
                 <p>
-                    Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.userInfo.CurrentClassRoomId })"><img src="../assets/img/logo/calendar.png" width="30"/></a>
+                    Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId })"><img src="../assets/img/logo/calendar.png" width="30"/></a>
                 </p>
             </div>
             <div>
@@ -128,7 +128,7 @@ controller: 'app.settings.SettingController as cx'
             </div>
         </div>
     </div>
-    <div class="align-center grid-block clearfix" ng-show="cx.userInfo.IsTeacher">
+    <div class="align-center grid-block clearfix" ng-show="cx.clientProfileSvc.ClientUserProfile.IsTeacher">
         <p>Student Message</p>
         <textarea rows="3" ng-model="studentMessage"></textarea><button class="button primary float-right" ng-click="studentMessage = cx.StudenMessageEdit(studentMessage)">SEND</button>
     </div>

@@ -49,9 +49,11 @@ module app.layouts {
     }
 
     class LessonLayoutController {
+
         static $inject = ['app.shared.ClientUserProfileService'];
         constructor(private clientSvc: app.shared.ClientUserProfileService) {
         }
+
     }
 
     class CourseLayoutController {

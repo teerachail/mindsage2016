@@ -3,7 +3,6 @@ module app.journals {
 
     class JournalController {
 
-        private userprofile: any;
         public message: string;
         public targetComment: any;
         public targetDiscussion: any;
@@ -12,7 +11,6 @@ module app.journals {
         public discussions = [];
         public EditId: string;
         private requestedCommentIds = [];
-
 
         private content: any;
         private targetUserId: any;
@@ -32,7 +30,6 @@ module app.journals {
                 return;
             }
 
-            this.userprofile = this.svc.GetClientUserProfile();
             this.prepareJournalContents();
         }
         private prepareJournalContents(): void {
@@ -60,7 +57,7 @@ module app.journals {
             var lessonWeeks = [];
 
             if (this.MyComments.length != 0) {
-                var NewCommentlessonWeekNo = this.userprofile.CurrentLessonNo;
+                var NewCommentlessonWeekNo = this.svc.ClientUserProfile.CurrentLessonNo;
                 lessonWeeks.push(NewCommentlessonWeekNo);
                 usedWeekNo[NewCommentlessonWeekNo] = 1;
             }
@@ -110,13 +107,14 @@ module app.journals {
             const NoneContentLength = 0;
             if (message.length <= NoneContentLength) return;
 
-            this.commentSvc.CreateNewComment(this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, message)
+            var userprofile = this.svc.ClientUserProfile;
+            this.commentSvc.CreateNewComment(userprofile.CurrentClassRoomId, userprofile.CurrentLessonId, message)
                 .then(it=> {
                     if (it == null) {
                         return message;
                     }
                     else { 
-                        var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.CurrentClassRoomId, this.userprofile.CurrentLessonId, this.userprofile.UserProfileId, 0 - this.MyComments.length);
+                        var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.CurrentClassRoomId, userprofile.CurrentLessonId, userprofile.UserProfileId, 0 - this.MyComments.length);
                         this.MyComments.push(newComment);
                         return "";
                     }
@@ -129,18 +127,17 @@ module app.journals {
             if (message.length <= NoneContentLength) return;
 
             var local
-            if (this.content.Comments.filter(it=> it.id == commentId).length == 0)
-                local = this.MyComments.filter(it=> it.id == commentId)[0];
-            else
-                local = this.content.Comments.filter(it=> it.id == commentId)[0];
+            if (this.content.Comments.filter(it=> it.id == commentId).length == 0) local = this.MyComments.filter(it=> it.id == commentId)[0];
+            else local = this.content.Comments.filter(it=> it.id == commentId)[0];
 
+            var userprofile = this.svc.ClientUserProfile;
             this.discussionSvc.CreateDiscussion(local.ClassRoomId, local.LessonId, commentId, message)
                 .then(it=> {
                     if (it == null) {
                         return message;
                     }
 
-                    var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, this.userprofile.ImageUrl, this.userprofile.FullName, this.userprofile.UserProfileId, 0 - this.discussions.length);
+                    var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - this.discussions.length);
                     this.discussions.push(newDiscussion);
                     this.content.Comments.filter(it=> it.id == commentId)[0].TotalDiscussions++;
                     return "";
@@ -166,8 +163,9 @@ module app.journals {
             if (setIndex <= ElementNotFound) this.likes.LikeCommentIds.push(commentId);
             else this.likes.LikeCommentIds.splice(setIndex, 1);
 
-            var ClassRoomId = this.userprofile.CurrentClassRoomId;
-            var LessonId = this.userprofile.CurrentLessonId;
+            var userprofile = this.svc.ClientUserProfile;
+            var ClassRoomId = userprofile.CurrentClassRoomId;
+            var LessonId = userprofile.CurrentLessonId;
             
             this.commentSvc.LikeComment(ClassRoomId, LessonId, commentId);
 

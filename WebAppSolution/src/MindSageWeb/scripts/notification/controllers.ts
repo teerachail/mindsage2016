@@ -3,7 +3,6 @@
     
     class NotificationController {
 
-        private userInfo: any;
         private tag: any;
         private displayNpotifications;
         private notification: any[] = [];
@@ -21,7 +20,6 @@
                 return;
             }
 
-            this.userInfo = this.userSvc.GetClientUserProfile();
             this.prepareNotificationContents();
         }
 
@@ -45,7 +43,7 @@
         }
 
         public OpenJournalPage(name: string, userId: string) {
-            this.$state.go("app.course.journal", { 'classRoomId': this.userInfo.CurrentClassRoomId, 'targetUserId': userId }, { inherit: false });
+            this.$state.go("app.course.journal", { 'classRoomId': this.userSvc.ClientUserProfile.CurrentClassRoomId, 'targetUserId': userId }, { inherit: false });
         }
 
         public GetFirstLiker(name: any) {

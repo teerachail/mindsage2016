@@ -10,10 +10,10 @@ controller: 'app.studentlists.studentlistsController as cx'
     <div ng-show="cx.friendList.length == 0"><p> Have no member </p></div>
     <div class="grid-block" ng-repeat="item in cx.friendList" ng-show="!item.IsTeacher" data-equalizer>
         <div class="small-6 grid-content callout" data-equalizer-watch>
-            <a ng-show="item.Status != 2 && !cx.userprofile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
+            <a ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
                 <img src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
-            <a ng-show="item.Status == 2 || cx.userprofile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
+            <a ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
                 <img src="{{ item.ImageUrl }}"> {{ item.Name }}
             </a>
         </div>

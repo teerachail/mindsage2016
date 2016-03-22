@@ -9,18 +9,21 @@
     }
     export class ClientUserProfileService {
 
-        private friendList;
+        public friendList;
         public Advertisments: Advertisment[];
-        public allAvailableCourses: CourseCatalog[];
-        private clientUserProfile: ClientUserProfile;
-        private isWaittingForUserProfileRespond: boolean;
-        private getUserProfileSvc: IGetUserProfileResourceClass<any>;
-        private isWaittingForAllCourses: boolean;
-        private getAllCourseSvc: IGetAllCourseResourceClass<any>;
-        private isWaittingForFriendList: boolean;
-        private getStudentListsvc: IStudentListResourceClass<any>;
-        private getCourseSvc: IGetCourseInfoResourceClass<any>;
+        public AllAvailableCourses: CourseCatalog[];
         public PrimaryVideoUrl: string;
+        public ClientUserProfile: ClientUserProfile;
+
+        private isWaittingForAllCourses: boolean;
+        private isWaittingForFriendList: boolean;
+        private isPrepareUserProfileComplete: boolean;
+        private isWaittingForPrepareUserProfile: boolean;
+        private isWaittingForUserProfileRespond: boolean;
+        private getCourseSvc: IGetCourseInfoResourceClass<any>;
+        private getAllCourseSvc: IGetAllCourseResourceClass<any>;
+        private getStudentListsvc: IStudentListResourceClass<any>;
+        private getUserProfileSvc: IGetUserProfileResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', '$q'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private $q) {
@@ -30,20 +33,18 @@
             this.getCourseSvc = <IGetCourseInfoResourceClass<any>>$resource(appConfig.ChangeCourseUrl, { 'UserProfileId': '@UserProfileId', 'ClassRoomId': '@ClassRoomId' });
         }
 
-        private isPrepareUserProfileComplete: boolean;
-        private isWaittingForPrepareUserProfile: boolean;
         public IsPrepareAllUserProfileCompleted(): boolean {
             var shouldPrepareUserProfile = !this.isPrepareUserProfileComplete && !this.isWaittingForPrepareUserProfile;
             if (shouldPrepareUserProfile) {
                 this.isWaittingForPrepareUserProfile = true;
                 this.getUserProfileSvc.get().$promise.then(it => {
-                    this.clientUserProfile = it;
+                    this.ClientUserProfile = it;
                     this.$q.all([
                         this.getAllCourses(),
                         this.getFriendLists(),
-                        this.getCourseInfo(this.clientUserProfile.CurrentClassRoomId)
+                        this.getCourseInfo(this.ClientUserProfile.CurrentClassRoomId)
                     ]).then(data => {
-                        this.allAvailableCourses = data[0];
+                        this.AllAvailableCourses = data[0];
                         this.friendList = data[1];
                         this.UpdateCourseInformation(data[2]);
                         this.isWaittingForPrepareUserProfile = false;
@@ -54,26 +55,26 @@
             return this.isPrepareUserProfileComplete;
         }
         private getAllCourses(): ng.IPromise<any> {
-            var userId = this.clientUserProfile.UserProfileId;
+            var userId = this.ClientUserProfile.UserProfileId;
             return this.getAllCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
         }
         private getFriendLists(): ng.IPromise<any> {
-            var userId = this.clientUserProfile.UserProfileId;
-            var classRoomId = this.clientUserProfile.CurrentClassRoomId;
+            var userId = this.ClientUserProfile.UserProfileId;
+            var classRoomId = this.ClientUserProfile.CurrentClassRoomId;
             return this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise;
         }
         private getCourseInfo(classRoomId: string): ng.IPromise<any> {
-            var userId = this.clientUserProfile.UserProfileId;
+            var userId = this.ClientUserProfile.UserProfileId;
             return this.getCourseSvc.save(new ChangeCourseRequest(userId, classRoomId)).$promise;
         }
         public UpdateCourseInformation(courseInfo: any): void {
             if (courseInfo == null) return;
-            this.clientUserProfile.CurrentClassRoomId = courseInfo.ClassRoomId;
-            this.clientUserProfile.IsTeacher = courseInfo.IsTeacher;
-            this.clientUserProfile.ClassName = courseInfo.ClassName;
-            this.clientUserProfile.CurrentStudentCode = courseInfo.CurrentStudentCode;
-            this.clientUserProfile.NumberOfStudents = courseInfo.NumberOfStudents;
-            this.clientUserProfile.StartDate = courseInfo.StartDate;
+            this.ClientUserProfile.CurrentClassRoomId = courseInfo.ClassRoomId;
+            this.ClientUserProfile.IsTeacher = courseInfo.IsTeacher;
+            this.ClientUserProfile.ClassName = courseInfo.ClassName;
+            this.ClientUserProfile.CurrentStudentCode = courseInfo.CurrentStudentCode;
+            this.ClientUserProfile.NumberOfStudents = courseInfo.NumberOfStudents;
+            this.ClientUserProfile.StartDate = courseInfo.StartDate;
         }
 
         public ChangeCourse(classRoomId: string): ng.IPromise<any> {
@@ -82,11 +83,11 @@
 
         public UpdateUserProfile(userProfile): void {
             if (userProfile == null) return;
-            this.clientUserProfile = userProfile;
+            this.ClientUserProfile = userProfile;
         }
 
         public GetClientUserProfile(): ClientUserProfile {
-            if (this.clientUserProfile == null || this.clientUserProfile.UserProfileId == null) {
+            if (this.ClientUserProfile == null || this.ClientUserProfile.UserProfileId == null) {
                 if (this.isWaittingForUserProfileRespond) return;
                 else {
                     console.log('Obsolate load user profile');
@@ -95,17 +96,17 @@
                         if (respond == null) return this.GetClientUserProfile();
                         else {
                             this.isWaittingForUserProfileRespond = false;
-                            this.clientUserProfile = respond;
-                            return this.clientUserProfile;
+                            this.ClientUserProfile = respond;
+                            return this.ClientUserProfile;
                         }
                     });
                 }
             }
-            else return this.clientUserProfile;
+            else return this.ClientUserProfile;
         }
 
         public GetAllAvailableCourses(): CourseCatalog[] {
-            if (this.allAvailableCourses == null) {
+            if (this.AllAvailableCourses == null) {
                 if (this.isWaittingForAllCourses) return;
                 else {
                     console.log('Obsolate load all available courses');
@@ -114,13 +115,13 @@
                         if (respond == null) return this.GetAllAvailableCourses();
                         else {
                             this.isWaittingForAllCourses = false;
-                            this.allAvailableCourses = respond;
-                            return this.allAvailableCourses;
+                            this.AllAvailableCourses = respond;
+                            return this.AllAvailableCourses;
                         }
                     });
                 }
             }
-            else return this.allAvailableCourses;
+            else return this.AllAvailableCourses;
         }
 
         public GetFriendLists() {
@@ -135,8 +136,8 @@
             else {
                 console.log('Obsolate load Friend list');
                 this.isWaittingForFriendList = true;
-                var userId = this.clientUserProfile.UserProfileId;
-                var classRoomId = this.clientUserProfile.CurrentClassRoomId;
+                var userId = this.ClientUserProfile.UserProfileId;
+                var classRoomId = this.ClientUserProfile.CurrentClassRoomId;
                 this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise.then(respond=> {
                     if (respond == null) return this.GetFriendLists();
                     else {
@@ -183,22 +184,22 @@
         }
 
         public GetComments(lessonId: string, classRoomId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.getCommentSvc.get(new GetCommentsRequest(lessonId, classRoomId, userId)).$promise;
         }
 
         public CreateNewComment(classRoomId: string, lessonId: string, description: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.createCommentSvc.save(new CreateCommentRequest(classRoomId, lessonId, userId, description)).$promise;
         }
 
         public LikeComment(classRoomId: string, lessonId: string, commentId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.likeCommentSvc.save(new LikeCommentRequest(classRoomId, lessonId, commentId, userId)).$promise;
         }
 
         public UpdateComment(classRoomId: string, lessonId: string, commentId: string, isDelete: boolean, message: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.updateCommentSvc.UpdateComment(new UpdateCommentRequest(commentId, classRoomId, lessonId, userId, isDelete, message)).$promise;
         }
     }
@@ -237,22 +238,22 @@
         }
 
         public GetDiscussions(lessonId: string, classRoomId: string, commentId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.getDiscussionSvc.query(new GetDiscussionRequest(lessonId, classRoomId, commentId, userId)).$promise;
         }
 
         public CreateDiscussion(classRoomId: string, lessonId: string, commentId: string, message: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.createDiscussionSvc.save(new CreateDiscussionRequest(classRoomId, lessonId, commentId, userId, message)).$promise;
         }
 
         public LikeDiscussion(classRoomId: string, lessonId: string, commentId: string, discussionId: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.likeDiscussionSvc.save(new LikeDiscussionRequest(classRoomId, lessonId, commentId, discussionId, userId)).$promise;
         }
 
         public UpdateDiscussion(classRoomId: string, lessonId: string, commentId: string, discussionId: string, isDelete: boolean, message: string): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.updateDiscussionSvc.UpdateDiscussion(new UpdateDiscussionRequest(discussionId, classRoomId, lessonId, commentId, userId, isDelete, message)).$promise;
         }
     }
@@ -300,29 +301,29 @@
         }
 
         public GetAllCourse(): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.getAllCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
         }
         public GetNotificationNumber(): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
+            var classroomId = this.userprofileSvc.ClientUserProfile.CurrentClassRoomId;
             return this.getNotificationNumberSvc.get(new GetNotificationNumberRequest(userId, classroomId)).$promise;
         }
         public GetNotificationContent(): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
+            var classroomId = this.userprofileSvc.ClientUserProfile.CurrentClassRoomId;
             return this.getNotificationContentSvc.query(new GetNotificationContentRequest(userId, classroomId)).$promise;
         }
         public GetLike(): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
-            var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentDisplayLessonId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
+            var classroomId = this.userprofileSvc.ClientUserProfile.CurrentClassRoomId;
+            var lessonId = this.userprofileSvc.ClientUserProfile.CurrentDisplayLessonId;
             return this.getLikeSvc.get(new GetLikeRequest(userId, classroomId, lessonId)).$promise;
         }
         public GetAllLike(): ng.IPromise<any> {
-            var userId = this.userprofileSvc.GetClientUserProfile().UserProfileId;
-            var classroomId = this.userprofileSvc.GetClientUserProfile().CurrentClassRoomId;
-            var lessonId = this.userprofileSvc.GetClientUserProfile().CurrentLessonId;
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
+            var classroomId = this.userprofileSvc.ClientUserProfile.CurrentClassRoomId;
+            var lessonId = this.userprofileSvc.ClientUserProfile.CurrentLessonId;
             return this.getAllLikeSvc.get(new GetAllLikeRequest(userId, classroomId)).$promise;
         }
     }

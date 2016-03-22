@@ -3,7 +3,6 @@
 
     class CourseMapController {
 
-        private userProfile: any;
         private content;
         private status;
         private isWaittingForGetCourseMapContent: boolean;
@@ -20,7 +19,6 @@
                 return;
             }
 
-            this.userProfile = this.userSvc.GetClientUserProfile();
             this.prepareCourseMapContents();
         }
         private prepareCourseMapContents(): void {

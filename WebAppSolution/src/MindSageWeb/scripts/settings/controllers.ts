@@ -3,11 +3,8 @@
     
     class SettingController {
 
-        private userInfo: shared.ClientUserProfile;
-
         static $inject = ['$scope', '$state', 'waitRespondTime', 'app.settings.ProfileService', 'app.shared.ClientUserProfileService'];
         constructor(private $scope, private $state, private waitRespondTime, private profileSvc: app.settings.ProfileService, private clientProfileSvc: app.shared.ClientUserProfileService) {
-            this.userInfo = new shared.ClientUserProfile();
             this.prepareUserprofile();
         }
 
@@ -16,8 +13,6 @@
                 setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
                 return;
             }
-
-            this.userInfo = this.clientProfileSvc.GetClientUserProfile();
         }
         
         public UpdateProfile(name: string, schoolName: string, isPrivate: boolean, isReminderOnceTime: boolean) {
@@ -25,13 +20,13 @@
         }
 
         public UpdateCoursee(ClassName: string, ChangedStudentCode: string, BeginDate: Date) {
-            if (this.userInfo.ClassName == ClassName) ClassName = null;
-            if (this.userInfo.CurrentStudentCode == ChangedStudentCode) ChangedStudentCode = null;
+            if (this.clientProfileSvc.ClientUserProfile.ClassName == ClassName) ClassName = null;
+            if (this.clientProfileSvc.ClientUserProfile.CurrentStudentCode == ChangedStudentCode) ChangedStudentCode = null;
             if (ClassName != null || ChangedStudentCode != null) this.profileSvc.UpdateCourse(ClassName, ChangedStudentCode, BeginDate);
         }
 
         public DeleteCourse() {
-            this.profileSvc.DeleteCourse(this.userInfo.CurrentClassRoomId);
+            this.profileSvc.DeleteCourse(this.clientProfileSvc.ClientUserProfile.CurrentClassRoomId);
         }
 
         public StudenMessageEdit(Message: string) {

@@ -33,8 +33,8 @@ controller: 'app.notification.NotificationController as cx'
     
         <div ng-show="isclose">
             <p>
-                <a ng-show="item.Tag > 1 && acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) != 2 && !cx.userInfo.IsTeacher" zf-open="Modal">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
-                <a ng-show="item.Tag > 1 && (acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) == 2 || cx.userInfo.IsTeacher)" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
+                <a ng-show="item.Tag > 1 && acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" zf-open="Modal">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
+                <a ng-show="item.Tag > 1 && (acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) == 2 || cx.userSvc.ClientUserProfile.IsTeacher)" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</a>
                 {{ item.Message }}
             </p>
         </div>
