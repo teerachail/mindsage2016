@@ -9,7 +9,7 @@
     }
     export class ClientUserProfileService {
 
-        public UserInCourseList;
+        public UserInCourseList: any[];
         public PrimaryVideoUrl: string;
         public Advertisments: Advertisment[];
         public AllAvailableCourses: CourseCatalog[];
@@ -48,7 +48,7 @@
                     ]).then(data => {
                         console.log('2.Get all user contents, done');
                         this.AllAvailableCourses = <CourseCatalog[]>data[0];
-                        this.UserInCourseList = data[1];
+                        this.UserInCourseList = <any[]>data[1];
                         this.UpdateCourseInformation(data[2]);
                         this.isWaittingForPrepareUserProfile = false;
                         this.isPrepareUserProfileComplete = true;

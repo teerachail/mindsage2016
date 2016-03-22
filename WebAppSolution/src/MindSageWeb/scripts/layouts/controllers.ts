@@ -8,10 +8,19 @@ module app.layouts {
         static $inject = ['app.studentlists.StudentListService', 'app.shared.ClientUserProfileService'];
         constructor(private listsSvc: app.studentlists.StudentListService, private userSvc: app.shared.ClientUserProfileService) {
         }
-        
-        public FriendsStatus(friendId: string) {
-            if (this.userSvc.ClientUserProfile.UserProfileId == friendId) return 2;
-            return this.userSvc.UserInCourseList.filter(it=> it.UserProfileId == friendId)[0].Status; 
+
+        public CanAccessToUserJournal(targetUserProfileId): boolean {
+            var isHimselfOrTeacher = this.userSvc.ClientUserProfile.UserProfileId == targetUserProfileId
+                || this.userSvc.ClientUserProfile.IsTeacher;
+            if (isHimselfOrTeacher) return true;
+
+            var selectedUser = this.userSvc.UserInCourseList.filter(it => it.UserProfileId == targetUserProfileId);
+            const UserNotFound = 0;
+            const FriendStatus = 2;
+            var canAccess = selectedUser != null
+                && selectedUser.length > UserNotFound
+                && selectedUser[0].Status == FriendStatus;
+            return canAccess;
         }
 
         public targetData(friendId: string) {

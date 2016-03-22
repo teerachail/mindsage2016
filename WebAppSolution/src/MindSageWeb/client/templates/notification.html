@@ -33,10 +33,10 @@ controller: 'app.notification.NotificationController as cx'
     
         <div ng-show="isclose">
             <p>
-                <a ng-show="!cx.userSvc.ClientUserProfile.IsTeacher && item.Tag > 1 && acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) != 2" zf-open="Modal">
+                <a ng-show="!acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
                     {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
                 </a>
-                <a ng-show="cx.userSvc.ClientUserProfile.IsTeacher || item.Tag > 1 && (acx.FriendsStatus( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId ) == 2)" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
+                <a ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
                     {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
                 </a>
                 {{ item.Message }}
