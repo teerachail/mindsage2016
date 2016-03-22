@@ -5,7 +5,7 @@ abstract: true
 controller: 'app.layouts.LessonLayoutController as mcx'
 ---
 <div class="grid-block">
-    <iframe width="560" height="315" class="grid-container" ng-src="{{ mcx.RunningVideoUrl }}" frameborder="0" allowfullscreen></iframe>
+    <iframe width="560" height="315" class="grid-container" ng-src="{{ mcx.clientSvc.PrimaryVideoUrl }}" frameborder="0" allowfullscreen></iframe>
 </div>
 <div class="grid-block">
     <div class="medium-4 align-center grid-block" ng-include="'/templates/sidemenu.html'"></div>

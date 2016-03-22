@@ -21,8 +21,8 @@ module app.lessons {
         private isWaittingForGetLessonContent: boolean;
         private isPrepareLessonContentComplete: boolean;
 
-        static $inject = ['$q', '$scope', '$stateParams', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
-        constructor(private $q, private $scope, private $stateParams, private waitRespondTime, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
+        static $inject = ['$sce', '$q', '$scope', '$stateParams', 'waitRespondTime', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
+        constructor(private $sce, private $q, private $scope, private $stateParams, private waitRespondTime, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
             this.prepareUserprofile();
         }
 
@@ -53,6 +53,7 @@ module app.lessons {
                 ]).then(data => {
                     this.likes = data[0];
                     this.content = data[1];
+                    this.userprofileSvc.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(data[1].PrimaryContentURL);
                     this.comment = data[2];
                     this.userprofileSvc.Advertisments = this.content.Advertisments;
                     this.isWaittingForGetLessonContent = false;

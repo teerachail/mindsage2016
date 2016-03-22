@@ -67,8 +67,6 @@ module app.layouts {
                 return;
             }
 
-            console.log('Preparing owl-carousel, current lesson id: ' + this.clientUserProfileSvc.GetClientUserProfile().CurrentLessonId);
-
             var userprofile = this.clientUserProfileSvc.GetClientUserProfile();
             var lessonId = userprofile.CurrentLessonId;
             var classRoomId = userprofile.CurrentClassRoomId;

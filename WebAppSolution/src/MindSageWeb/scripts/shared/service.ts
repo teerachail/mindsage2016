@@ -20,6 +20,7 @@
         private isWaittingForFriendList: boolean;
         private getStudentListsvc: IStudentListResourceClass<any>;
         private getCourseSvc: IGetCourseInfoResourceClass<any>;
+        public PrimaryVideoUrl: string;
 
         static $inject = ['appConfig', '$resource', '$q'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private $q) {
