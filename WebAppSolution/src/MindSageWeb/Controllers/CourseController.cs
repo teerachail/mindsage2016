@@ -156,6 +156,28 @@ namespace MindSageWeb.Controllers
             return result;
         }
 
+        // GET: api/course/{course-catalog-id}/ads
+        /// <summary>
+        /// Get course ads
+        /// </summary>
+        /// <param name="id">Course catalog id</param>
+        [HttpGet]
+        [Route("{id}/ads")]
+        public object GetAds(string id)
+        {
+            var selectedCourse = _repo.GetCourseCatalogById(id);
+            if (selectedCourse == null) return Enumerable.Empty<string>();
+            var adsUrls = selectedCourse.Advertisements ?? Enumerable.Empty<string>();
+            var result = new
+            {
+                owl = adsUrls.Select(it => new
+                {
+                    item = $"<div class='item'><img src='{ it }' /></div>"
+                })
+            };
+            return result;
+        }
+
         #endregion Methods
 
         //// GET: api/course
