@@ -8,15 +8,17 @@ controller: 'app.teacherlists.teacherlistsController as cx'
         <h1>CLASS LIST</h1>
     </div>
     <div ng-show="cx.list.length == 0"><p> Have no member </p></div>
-    <div class="grid-block v-align" ng-repeat="item in cx.list">
-        <div class="small-6 grid-content noscroll">
-            <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
-                <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-            </a>
-        </div>
-        <div class="small-6 grid-content align-center noscroll">
-            <a class="button noscroll" href="#" zf-popup-toggle="{{ item.Name }}">Open Popup</a>
-            <button class="button noscroll" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
+    <div class="grid-content" ng-repeat="item in cx.list">
+        <div class="grid-block v-align">
+            <div class="small-6 grid-content ">
+                <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
+                    <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
+                </a>
+            </div>
+            <div class="small-6 grid-content align-center ">
+                <a class="button" href="#" zf-popup-toggle="{{ item.Name }}">Open Popup</a>
+                <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
+            </div>
         </div>
         <zf-popup id="{{ item.Name }}" class="padding">
             <span><img src="../assets/img/icon/greenwithpencil.png" width="30"/> {{ item.CommentPercentage }}%</span> 
