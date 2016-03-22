@@ -11,6 +11,7 @@ using MindSageWeb.Models;
 using MindSageWeb.Services;
 using MindSageWeb.ViewModels.Manage;
 using MindSageWeb.Repositories;
+using System.IO;
 
 namespace MindSageWeb.Controllers
 {
@@ -22,19 +23,22 @@ namespace MindSageWeb.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
+        private IUserProfileRepository _userprofileRepo;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
         SignInManager<ApplicationUser> signInManager,
         IEmailSender emailSender,
         ISmsSender smsSender,
-        ILoggerFactory loggerFactory)
+        ILoggerFactory loggerFactory,
+        IUserProfileRepository userprofileRepo)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
+            _userprofileRepo = userprofileRepo;
         }
 
         //
@@ -239,7 +243,6 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public IActionResult ChangeProfileImage(string id)
         {
-
             var model = new ChangeProfileImageViewModel { ClassRoom = id };
             return View(model);
         }
@@ -255,24 +258,29 @@ namespace MindSageWeb.Controllers
                 var user = await GetCurrentUserAsync();
                 if (user != null)
                 {
-                    using (var fileStream = model.ImagePath.OpenReadStream())
+                    var userprofile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
+                    if (userprofile != null)
                     {
-                        var storageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=mindsage;AccountKey=Xhaa5/DoM4usU0teA7pvQr/X7qo6g+6Vx+OGIvvzJb2obg6kpwH4dP5AWX0YKGuXxa+tNAQivwRuKYGphaWcEg==;BlobEndpoint=https://mindsage.blob.core.windows.net/");
-                        var blobClient = storageAccount.CreateCloudBlobClient();
+                        using (var fileStream = new StreamReader(model.ImagePath.OpenReadStream()))
+                        {
+                            var storageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=mindsage;AccountKey=Xhaa5/DoM4usU0teA7pvQr/X7qo6g+6Vx+OGIvvzJb2obg6kpwH4dP5AWX0YKGuXxa+tNAQivwRuKYGphaWcEg==;BlobEndpoint=https://mindsage.blob.core.windows.net/");
+                            var blobClient = storageAccount.CreateCloudBlobClient();
 
-                        const string ContainerName = "userprofileimage";
-                        var container = blobClient.GetContainerReference(ContainerName);
+                            const string ContainerName = "userprofileimage";
+                            var container = blobClient.GetContainerReference(ContainerName);
 
-                        await container.CreateIfNotExistsAsync();
+                            await container.CreateIfNotExistsAsync();
 
-                        var blob = container.GetBlockBlobReference(Guid.NewGuid().ToString());
-                        blob.Properties.ContentType = model.ImagePath.ContentType;
-                        await blob.UploadFromStreamAsync(fileStream);
-                        var fileUrl = blob.Uri.AbsolutePath;
-                        // TODO: Update user profile image
+                            var blob = container.GetBlockBlobReference(Guid.NewGuid().ToString());
+                            blob.Properties.ContentType = model.ImagePath.ContentType;
+                            await blob.UploadFromStreamAsync(fileStream.BaseStream);
+
+                            userprofile.ImageProfileUrl = blob.Uri.AbsoluteUri;
+                            _userprofileRepo.UpsertUserProfile(userprofile);
+                        }
                     }
 
-                    var redirectURL = string.Format("/My#/app/course/{0}/setting", model.ClassRoom);
+                    var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";
                     return Redirect(redirectURL);
                 }
             }
