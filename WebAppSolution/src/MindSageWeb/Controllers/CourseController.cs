@@ -166,7 +166,7 @@ namespace MindSageWeb.Controllers
         public object GetAds(string id)
         {
             var selectedCourse = _repo.GetCourseCatalogById(id);
-            if (selectedCourse == null) return Enumerable.Empty<string>();
+            if (selectedCourse == null) return null;
             var adsUrls = selectedCourse.Advertisements ?? Enumerable.Empty<string>();
             var result = new
             {

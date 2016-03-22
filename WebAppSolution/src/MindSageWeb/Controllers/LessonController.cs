@@ -384,6 +384,44 @@ namespace MindSageWeb.Controllers
             _userActivityRepo.UpsertUserActivity(userActivity);
         }
 
+        // GET: api/lesson{lesson-id}/{class-room-id}/{user-id}/ads
+        /// <summary>
+        /// Get lesson's ads
+        /// </summary>
+        /// <param name="id">Lesson id</param>
+        /// <param name="classRoomId">Class room id</param>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/ads")]
+        public object GetAds(string id, string classRoomId)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id) && !string.IsNullOrEmpty(classRoomId);
+            if (!areArgumentsValid) return null;
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
+            var canAccessClassRoom = selectedClassRoom != null
+                && selectedClassRoom.Lessons != null;
+            if (!canAccessClassRoom) return null;
+
+            var selectedLesson = selectedClassRoom.Lessons.FirstOrDefault(it => it.id == id);
+            if (selectedLesson == null) return null;
+
+            var selectedLessonCatalog = _lessonCatalogRepo.GetLessonCatalogById(selectedLesson.LessonCatalogId);
+            var canAccessLessonCatalog = selectedLessonCatalog != null
+                && selectedLessonCatalog.Advertisments != null
+                && selectedLessonCatalog.Advertisments.Any();
+            if (!canAccessLessonCatalog) return null;
+
+            var adsUrls = selectedLessonCatalog.Advertisments ?? Enumerable.Empty<LessonCatalog.Ads>();
+            var result = new
+            {
+                owl = adsUrls.Select(it => new
+                {
+                    item = $"<div class='item'><img src='{ it.ImageUrl }' /></div>"
+                })
+            };
+            return result;
+        }
+
         #endregion Methods
 
         //// GET: api/Lesson

@@ -49,24 +49,35 @@ module app.layouts {
     }
 
     class LessonLayoutController {
-        public RunningVideoUrl: string;
-
-        static $inject = ['$sce'];
-        constructor(private $sce) {
-        }
-
-        public ChangeVideo(url: string) {
-            this.RunningVideoUrl = this.$sce.trustAsResourceUrl(url);
+        static $inject = ['app.shared.ClientUserProfileService'];
+        constructor(private clientSvc: app.shared.ClientUserProfileService) {
         }
     }
 
     class CourseLayoutController {
 
-        private ads: any;
+        static $inject = ['defaultUrl', 'waitRespondTime', 'app.shared.ClientUserProfileService'];
+        constructor(private defaultUrl, private waitRespondTime, private clientUserProfileSvc: app.shared.ClientUserProfileService) {
+            this.prepareUserprofile();
+        }
 
-        static $inject = ['app.shared.ClientUserProfileService'];
-        constructor(private clientUserProfileSvc: app.shared.ClientUserProfileService) {
-            this.ads = this.clientUserProfileSvc.Advertisments;
+        private prepareUserprofile(): void {
+            if (!this.clientUserProfileSvc.IsPrepareAllUserProfileCompleted()) {
+                setTimeout(it => this.prepareUserprofile(), this.waitRespondTime);
+                return;
+            }
+
+            console.log('Preparing owl-carousel, current lesson id: ' + this.clientUserProfileSvc.GetClientUserProfile().CurrentLessonId);
+
+            var userprofile = this.clientUserProfileSvc.GetClientUserProfile();
+            var lessonId = userprofile.CurrentLessonId;
+            var classRoomId = userprofile.CurrentClassRoomId;
+            (<any>angular.element(".owl-carousel")).owlCarousel({
+                autoPlay: true,
+                slideSpeed: 300,
+                jsonPath: this.defaultUrl + '/api/lesson/' + lessonId + '/' + classRoomId + '/ads',
+                singleItem: true
+            });
         }
     }
 
