@@ -8,36 +8,37 @@ controller: 'app.teacherlists.teacherlistsController as cx'
         <h1>CLASS LIST</h1>
     </div>
     <div ng-show="cx.list.length == 0"><p> Have no member </p></div>
-    <div class="grid-content" ng-repeat="item in cx.list">
-        <div class="grid-block v-align">
-            <div class="small-6 grid-content ">
-                <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
-                    <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                </a>
-            </div>
-            <div class="small-6 grid-content align-center ">
-                <a class="button" href="#" zf-popup-toggle="{{ item.Name }}">Open Popup</a>
-                <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
-            </div>
-        </div>
-        <zf-popup id="{{ item.Name }}" class="padding">
-            <span><img src="../assets/img/icon/greenwithpencil.png" width="30"/> {{ item.CommentPercentage }}%</span> 
-            <span><img src="../assets/img/icon/green.png" width="30"/> {{ item.OnlineExtrasPercentage }}%</span> 
-            <span ng-hide="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation.png" width="30"/> {{ item.SocialParticipationPercentage }}%</span> 
-            <span ng-show="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation_no_score.png" width="30"/></span>
-        </zf-popup>
-    </div>
+    <section class="block-list">
+        <ul>
+            <li ng-repeat="item in cx.list">
+                <span class="v-align">
+                    <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
+                        <img class="small-1" src="{{ item.ImageUrl }}"> {{ item.Name }}
+                    </a>
+                    <div class="float-right align-center">
+                        <a class="button" href="#" zf-popup-toggle="{{ item.Name }}">Score</a>
+                        <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
+                    </div>
+                </span>
+                <zf-popup id="{{ item.Name }}" class="padding">
+                    <span><img src="../assets/img/icon/greenwithpencil.png" width="30" /> {{ item.CommentPercentage }}%</span>
+                    <span><img src="../assets/img/icon/green.png" width="30" /> {{ item.OnlineExtrasPercentage }}%</span>
+                    <span ng-hide="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation.png" width="30" /> {{ item.SocialParticipationPercentage }}%</span>
+                    <span ng-show="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation_no_score.png" width="30" /></span>
+                </zf-popup>
+            </li>
+        </ul>
+    </section>
 </div>
 
 <div zf-modal="" id="ConfirmModel">
     <a zf-close="" class="close-button">x</a>
-    <h4 class="text-center">Confirm</h4>
+    <h4 class="text-center">Confirm to remove student</h4>
     <div>
-        <div class="medium-10 medium-centered large-10 large-centered columns">
+        <div class="medium-10 large-10 text-center grid-container">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
                     <div>
-                        <p>Confirm to remove student</p>
                         <button class="button alert" ng-click="cx.RemoveStd()" zf-close="">Confirm</button>
                         <button class="button" zf-close="">Cancel</button>
                     </div>
