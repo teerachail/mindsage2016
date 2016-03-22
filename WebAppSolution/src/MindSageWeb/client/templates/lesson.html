@@ -54,13 +54,13 @@ controller: 'app.lessons.LessonController as cx'
                         <ul>
                             <li>
                                 <p>Primary</p>
-                                <div><a href="{{ cx.content.PrimaryContentURL }}">{{ cx.content.PrimaryContentURL }}</a></div>
+                                <div><a href="{{ cx.content.PrimaryContentURL }}" target="_blank">{{ cx.content.PrimaryContentURL }}</a></div>
                             </li>
                         </ul>
                         <ul ng-repeat="item in cx.content.ExtraContentUrls">
                             <li class="extra">
                                 <p>Extra {{ $index + 1 }}</p>
-                                <div><a href="{{ item }}">{{ item }}</a></div>
+                                <div><a href="{{ item }}" target="_blank">{{ item }}</a></div>
                             </li>
                         </ul>
                     </zf-accordion-item>
