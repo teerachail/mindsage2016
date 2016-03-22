@@ -26,6 +26,8 @@ module app.journals {
         private prepareUserprofile(): void {
             this.svc.PrepareAllUserProfile().then(() => {
                this.prepareJournalContents();
+            }, error => {
+                this.prepareUserprofile();
             });
         }
 
@@ -39,6 +41,7 @@ module app.journals {
                 this.isPrepareJournalContentComplete = true;
             }, error => {
                 console.log('Load journal content failed');
+                this.prepareJournalContents();
             });
         }
 

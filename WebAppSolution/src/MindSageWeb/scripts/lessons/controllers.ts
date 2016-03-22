@@ -31,6 +31,8 @@ module app.lessons {
             this.userprofileSvc.PrepareAllUserProfile().then(() => {
                 this.userprofileSvc.ClientUserProfile.CurrentDisplayLessonId = this.lessonId;
                 this.prepareLessonContents();
+            }, error => {
+                this.prepareUserprofile();
             });
         }
 

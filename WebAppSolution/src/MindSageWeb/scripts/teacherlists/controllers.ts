@@ -16,6 +16,8 @@
         private prepareUserprofile(): void {
             this.userprofileSvc.PrepareAllUserProfile().then(() => {
                 this.prepareTeacherListContents();
+            }, error => {
+                this.prepareUserprofile();
             });
         }
 
@@ -24,6 +26,7 @@
                 if (respond != null) this.list = respond;
             }, error => {
                 console.log('Load TeacherList content failed');
+                this.prepareTeacherListContents();
             });
         }
 

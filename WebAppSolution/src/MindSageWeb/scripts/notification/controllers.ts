@@ -15,6 +15,8 @@
         private prepareUserprofile(): void {
             this.userSvc.PrepareAllUserProfile().then(() => {
                 this.prepareNotificationContents();
+            }, error => {
+                this.prepareUserprofile();
             });
         }
 
@@ -26,6 +28,7 @@
                 }
             }, error => {
                 console.log('Load notification content failed');
+                this.prepareNotificationContents();
             });
         }
 

@@ -73,6 +73,8 @@ module app.layouts {
                     jsonPath: this.defaultUrl + '/api/lesson/' + lessonId + '/' + classRoomId + '/ads',
                     singleItem: true
                 });
+            }, error => {
+                this.prepareUserprofile();
             });
         }
     }
