@@ -226,7 +226,7 @@ namespace MindSageWeb.Controllers
             var subscriptionQry = selectedUserProfile.Subscriptions.Where(it => !it.DeletedDate.HasValue);
 
             var now = _dateTime.GetCurrentTime();
-            var classCalendars = _classCalendarRepo.GetClassCalendarByClassRoomId(subscriptionQry.Select(it => it.ClassRoomId))
+            var classCalendars = _classCalendarRepo.GetClassCalendarByClassRoomId(subscriptionQry.Select(it => it.ClassRoomId).Distinct())
                 .Where(it => it != null)
                 .Where(it => it.BeginDate.HasValue)
                 .Where(it => it.BeginDate <= now.Date)
