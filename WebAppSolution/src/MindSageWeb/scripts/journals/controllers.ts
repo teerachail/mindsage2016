@@ -46,7 +46,7 @@ module app.journals {
             var usedWeekNo = {};
             var lessonWeeks = [];
 
-            if (this.MyComments.length != 0) {
+            if (this.MyComments.length != 0 && this.targetUserId == this.svc.ClientUserProfile.UserProfileId) {
                 var NewCommentlessonWeekNo = this.svc.ClientUserProfile.CurrentLessonNo;
                 lessonWeeks.push(NewCommentlessonWeekNo);
                 usedWeekNo[NewCommentlessonWeekNo] = 1;
@@ -104,8 +104,10 @@ module app.journals {
                         return message;
                     }
                     else { 
-                        var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.CurrentClassRoomId, userprofile.CurrentLessonId, userprofile.UserProfileId, 0 - this.MyComments.length);
-                        this.MyComments.push(newComment);
+                        if (this.targetUserId == this.svc.ClientUserProfile.UserProfileId) {
+                            var newComment = new app.shared.Comment(it.ActualCommentId, message, 0, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.CurrentClassRoomId, userprofile.CurrentLessonId, userprofile.UserProfileId, 0 - this.MyComments.length);
+                            this.MyComments.push(newComment);
+                        }
                         return "";
                     }
                     
