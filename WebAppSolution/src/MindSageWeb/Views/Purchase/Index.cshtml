@@ -105,7 +105,9 @@
                 </div>
             </div>
             <div class="grid-content">
-                <button ng-disabled="address==null || state==null || city==null || country==null ||
+                <button ng-class="{disabled: (address==null || state==null || city==null || country==null ||
+                            cardtype==null || creditcardNo==null || firstname==null || lastname==null ||
+                            expmonth==null || expyear==null || cvv==null || zipcode==null)}" ng-disabled="address==null || state==null || city==null || country==null ||
                             cardtype==null || creditcardNo==null || firstname==null || lastname==null ||
                             expmonth==null || expyear==null || cvv==null || zipcode==null"
                         zf-open="confirmModal" class="button large">
