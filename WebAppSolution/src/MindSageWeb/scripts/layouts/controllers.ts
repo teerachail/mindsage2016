@@ -15,6 +15,8 @@ module app.layouts {
             if (isHimselfOrTeacher) return true;
 
             var selectedUser = this.userSvc.UserInCourseList.filter(it => it.UserProfileId == targetUserProfileId);
+            if (selectedUser[0].IsTeacher) return true;
+
             const UserNotFound = 0;
             const FriendStatus = 2;
             var canAccess = selectedUser != null

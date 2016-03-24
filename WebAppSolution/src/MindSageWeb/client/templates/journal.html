@@ -75,8 +75,8 @@ controller: 'app.journals.JournalController as cx'
                                                 <div class="grid-block">
                                                     <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ discussion.CreatorImageUrl }}"></div>
                                                     <div class="grid-content large-10">
-                                                        <a href="#" ng-show="!acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
-                                                        <a href="#" ng-show="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                        <a href="#" ng-hide="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
+                                                        <a href="#" ng-show="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
                                                         <p ng-show="!cx.IsEdit(discussion.id)">
                                                             {{ discussion.Description }}
                                                             <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
@@ -141,8 +141,8 @@ controller: 'app.journals.JournalController as cx'
                                                 <div class="grid-block">
                                                     <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ discussion.CreatorImageUrl }}"></div>
                                                     <div class="grid-content large-10">
-                                                        <a href="#" ng-show="!acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
-                                                        <a href="#" ng-show="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4><span class="comment-time"></span></a>
+                                                        <a href="#" ng-hide="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
+                                                        <a href="#" ng-show="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" ui-sref="app.course.journal({ classRoomId: cx.currentUser.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
                                                         <p ng-show="!cx.IsEdit(discussion.id)">
                                                             {{ discussion.Description }}
                                                             <span class="comment-button" ng-show="cx.svc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
