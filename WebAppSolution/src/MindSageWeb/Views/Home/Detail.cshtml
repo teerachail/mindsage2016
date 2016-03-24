@@ -52,9 +52,9 @@
                     <h1 class="lesson-header">@semester.Name</h1>
                     <div class="card">
                         <div class="card-section">
-                            <h1>INTRO</h1>
+                            <h1 class="success label">INTRO</h1>
                             <h2>@semester.Title</h2>
-                            <p>@semester.TotalWeeks Weeks</p>
+                            <p class="text-success">@semester.TotalWeeks Weeks</p>
                             <p>
                                 @semester.Description
                             </p>
@@ -86,13 +86,14 @@
                                 </zf-accordion-item>
                             </zf-accordion>
                         </div>
+                        <div class="success label menu-bar"></div>
                     </div>
 
                     @foreach (var unit in semester.Units)
                     {
                         <div class="card">
                             <div class="card-section">
-                                <h2>UNIT @unit.UnitNo</h2>
+                                <h2 class="success label">UNIT @unit.UnitNo</h2>
                                 <h3>@unit.Title</h3>
                                 <p class="week-info">@unit.TotalWeeks Weeks</p>
                                 <p>
@@ -123,6 +124,7 @@
                                     </zf-accordion-item>
                                 </zf-accordion>
                             </div>
+                            <div class="success label menu-bar"></div>
                         </div>
                     }
                 } 

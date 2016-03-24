@@ -32,7 +32,7 @@ controller: 'app.lessons.LessonController as cx'
 
     <div class="card">
         <div class="card-section">
-            <h2>Week {{ cx.content.Order }}</h2>
+            <h2 class="success label">Week {{ cx.content.Order }}</h2>
 
             <div ng-show="cx.teacherView">
                 <h3>{{ cx.content.Title }}</h3>
@@ -53,13 +53,13 @@ controller: 'app.lessons.LessonController as cx'
                         <h4 class="extra-header">Extra learning</h4>
                         <ul>
                             <li>
-                                <p>Primary</p>
+                                Primary
                                 <div><a href="{{ cx.content.PrimaryContentURL }}" target="_blank">{{ cx.content.PrimaryContentURL }}</a></div>
                             </li>
                         </ul>
                         <ul ng-repeat="item in cx.content.ExtraContentUrls">
                             <li class="extra">
-                                <p>Extra {{ $index + 1 }}</p>
+                                Extra {{ $index + 1 }}
                                 <div><a href="{{ item }}" target="_blank">{{ item }}</a></div>
                             </li>
                         </ul>
@@ -67,11 +67,12 @@ controller: 'app.lessons.LessonController as cx'
                 </zf-accordion>
             </div>
         </div>
+        <div class="success label menu-bar"></div>
     </div>
 
     <div>
         <p>
-            <span class="comment-button" ng-show="!cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.LikeLesson()"></i></a>{{ cx.content.TotalLikes }} people like this</span>
+            <span class="comment-button" ng-show="!cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.LikeLesson()"></i></a> {{ cx.content.TotalLikes }} people like this</span>
             <span class="comment-button like" ng-show="cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.DisLikeLesson()"></i></a>{{ cx.content.TotalLikes }} people like this</span>
         </p>
     </div>
