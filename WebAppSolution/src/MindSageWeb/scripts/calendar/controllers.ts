@@ -8,7 +8,7 @@
         public monthdays = new Array(31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31);
         public monthAllNames = new Array("Jan", "Feb", "Mar", "Apl", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         public today = new Date();
-        public selected = new Array(this.today);
+        public selected = new Array();
         public firstClick = true;
         public fisrtSelected: Date;
         public lastSelected: Date;
@@ -141,18 +141,12 @@
             for (var i = 0; i < this.courseInformation.Lessons.length; i += 2) {
                 if (i == this.courseInformation.Lessons.length - 1) {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
-                        day <= new Date(this.courseInformation.EndDate) &&
-                        !this.OnSelected(day) &&
-                        !this.IsHoliday(day) &&
-                        !this.CheckToday(day)
+                        day <= new Date(this.courseInformation.EndDate)
                     ) return true;
                 }
                 else {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
-                        day < new Date(this.courseInformation.Lessons[i + 1].BeginDate) &&
-                        !this.OnSelected(day) &&
-                        !this.IsHoliday(day) &&
-                        !this.CheckToday(day)
+                        day < new Date(this.courseInformation.Lessons[i + 1].BeginDate) 
                     ) return true;
                 }
             }
@@ -163,18 +157,12 @@
             for (var i = 1; i < this.courseInformation.Lessons.length; i += 2) {
                 if (i == this.courseInformation.Lessons.length - 1) {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
-                        day <= new Date(this.courseInformation.EndDate) &&
-                        !this.OnSelected(day) &&
-                        !this.IsHoliday(day) &&
-                        !this.CheckToday(day)
+                        day <= new Date(this.courseInformation.EndDate) 
                     ) return true;
                 }
                 else {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
-                        day < new Date(this.courseInformation.Lessons[i + 1].BeginDate) &&
-                        !this.OnSelected(day) &&
-                        !this.IsHoliday(day) &&
-                        !this.CheckToday(day)
+                        day < new Date(this.courseInformation.Lessons[i + 1].BeginDate) 
                     ) return true;
                 }
             }
@@ -208,10 +196,18 @@
         }
 
         public OnSelected(day: Date) {
+            if (this.selected == null) return false;
             for (var i = 0; i < this.selected.length; i++) {
                 if (this.selected[i].toDateString() == day.toDateString()) return true;
             }
             return false;
+        }
+
+        public cancelSelected() {
+            this.selected = [];
+            this.fisrtSelected = null;
+            this.lastSelected = null;
+            this.firstClick = true;
         }
 
         public SetStartDate(starDate: Date) {

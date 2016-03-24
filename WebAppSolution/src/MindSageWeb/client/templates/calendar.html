@@ -4,13 +4,13 @@ url: /calendar
 controller: 'app.calendar.CarlendarController as cx'
 ---
 <div class="large-8 push-4 large-offset-1 columns">
-    <div class="large-4">
-        <p>Begin Date <input type="text" id="datepicker" ng-model="cx.BeginDate"></p>
-        <span class="button" ng-click="cx.SetStartDate(cx.BeginDate)">Set begin date</span>
+    <div>
+        <p><input id="datepicker" type="text" ng-model="cx.BeginDate" ng-show="false"> Begin Date : {{cx.BeginDate| date:"MM/dd/yyyy"}}</p>
+        <span class="button" ng-click="cx.SetStartDate(cx.BeginDate)">Set begin date</span><span class="align-left button" ng-click="cx.ApplyToAllCourse()">Apply to all coureses</span>
     </div>
     <div ng-show="cx.isPrepareCourseScheduleContentComplete && (cx.courseInformation.BeginDate != null)">
         <ul class="calendar">
-            <li class="title"><span class="button fi-arrow-left" ng-click="cx.prevMount()"></span>{{ cx.monthNames }} {{ cx.year }} <span class="button fi-arrow-right" ng-click="cx.nextMount()"></span></li>
+            <li class="title"><span class="button " ng-click="cx.prevMount()"><</span>{{ cx.monthNames }} {{ cx.year }} <span class="button" ng-click="cx.nextMount()">></span></li>
             <li class="day-header grid-block small-up-7">
                 <div class="small-1 day">Sun</div>
                 <div class="small-1 day">Mon</div>
@@ -22,11 +22,14 @@ controller: 'app.calendar.CarlendarController as cx'
             </li>
 
             <li class="week grid-block small-up-7" ng-repeat="week in cx.allweeks">
-                <div zf-open="selectDay" class="small-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day), 'holiday': cx.IsHoliday(day), 'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'odd': cx.IsOdd(day), 'even': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} <p>{{ cx.IsStartLesson(day) }}</p></div>
+                <div zf-open="selectDay" class="small-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day),  'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'odd': cx.IsOdd(day), 'even': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} 
+                <p>{{cx.IsStartLesson(day)}}</p>
+                <br ng-if="cx.IsStartLesson(day) == ''">
+                <span class="fi-burst medium" ng-show="cx.IsHoliday(day)" style="font-size: 2em;color:#e43333"></span>
+                </div>
             </li>
             <!-- Repeat for additional weeks -->
         </ul>
-
         <zf-offcanvas id="selectDay" position="right">
             <div class="small-offset-2">
                 <h5>Select by day</h5>
@@ -53,7 +56,7 @@ controller: 'app.calendar.CarlendarController as cx'
                 </div>
                 <div class="align-left grid-block">
                     <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleRange(IsHolidayRange,ShifhtRange)" zf-close="">Submit</div>
-                    <div class="button small-4 grid-block" zf-close="">Cancle</div>
+                    <div class="button small-4 grid-block" zf-close="" ng-click="cx.cancelSelected()">Cancel</div>
                 </div>
             </div>
 
@@ -113,19 +116,24 @@ controller: 'app.calendar.CarlendarController as cx'
                 </div>
                 <div class="align-left grid-block">
                     <div class="button small-4 grid-block" ng-click="cx.SetCourseScheduleWeek(IsHolidayWeek,ShifhtWeek,sun,mon,tue,wed,thu,fri,sat)" zf-close="">Submit</div>
-                    <div class="button small-4 grid-block" zf-close="">Cancle</div>
+                    <div class="button small-4 grid-block" zf-close="" ng-click="cx.cancelSelected()">Cancel</div>
                 </div>
-          </div>
-          <div class="small-offset-2 align-left ">
-              <div class="align-left button" ng-click="cx.ApplyToAllCourse()">
-                  Apply to all coureses
-              </div>
           </div>
         </zf-offcanvas>
     </div>
 </div>
-<script>
+<!--<script>
   $(function() {
     $( "#datepicker" ).datepicker();
   });
+</script>-->
+<script type="text/javascript">
+    $(function () {
+        $("#datepicker").datepicker({
+            showOn: "button",
+            buttonImage: '../assets/img/icon/calendardatepicker.png',
+            buttonImageOnly: true,
+            buttonText: "Select date"
+        });
+    });
 </script>

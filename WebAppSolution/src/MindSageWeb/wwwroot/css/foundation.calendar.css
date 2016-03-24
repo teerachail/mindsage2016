@@ -10,8 +10,11 @@
         line-height: 1;
     }
     .calendar .title { 
-        text-align: center; 
-        font-size: 1.6875rem; 
+        background: #00558b;
+        text-align: center;
+        font-size: 1.6875rem;
+        color: white;
+        /* Edited */
     }
     .calendar .week {
         padding: 0px;
@@ -33,15 +36,17 @@
   float: left;
 }
 .calendar .day-header {
-    background-color: #2ba6cb; 
+    background-color: #FFF; 
 }
 .calendar .day-header .day,
 .calendar .day-header .days { 
-    background-color: #2ba6cb; 
-    color: white;
-    text-align: center;
+    background-color: #FFF; 
+    color: #00558b;
+    text-align: left;
     min-height: 0.5rem;
+    height: 3em;
     display: none;
+    /* Edited */
 }
 
 .day:hover, .days:hover {
@@ -52,43 +57,39 @@
 .days.previous-month,
 .day.next-month,
 .days.next-month {
-    background: #e9e9e9;
-    color: #222222;
+    color: #666;/* Edited */
     display: none;
 }
 
-.day.today, .days.today {
-    background: #76df9d;
-}
-.day.today:hover, .days.today:hover {
-    background: #65ce8c;
-}
+
 /*==================Edit by Gen===============================*/
 .day.odd , .days.odd{
-    background : #fad95b;
+    background : #5ebde8;
 }
-
+.day.odd:hover, .days.odd:hover {
+    background: #6dacd7;
+}
 .day.even, .days.even {
-    background :#cf960e;
+    background :#96d3fd;
+}
+.day.even:hover, .days.even:hover {
+    background: #85c2ec;
 }
 .day.holiday, .days.holiday {
     background :#dd2626;
 }
-
-/*=================================================*/
-.day.odd:hover, .days.odd:hover {
-    background: #e9c84a;
-}
-.day.even:hover, .days.even:hover {
-    background: #be850d;
-}
 .day.holiday:hover, .days.holiday:hover {
     background: #cc1515;
 }
-.day.selected, .days.selected {
-    background :#f78668;
+.day.today, .days.today {
+    border:solid #343434;
 }
-
+.day.selected, .days.selected {
+    background :#e9c84a;
+}
+.day.selected:hover, .days.selected:hover {
+    background :#d8b72F;
+}
 /*============================================================*/
 @media only screen {
     .calendar .small-1 {
