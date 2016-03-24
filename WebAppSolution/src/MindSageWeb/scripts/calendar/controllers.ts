@@ -143,14 +143,16 @@
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
                         day <= new Date(this.courseInformation.EndDate) &&
                         !this.OnSelected(day) &&
-                        !this.IsHoliday(day)
+                        !this.IsHoliday(day) &&
+                        !this.CheckToday(day)
                     ) return true;
                 }
                 else {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
                         day < new Date(this.courseInformation.Lessons[i + 1].BeginDate) &&
                         !this.OnSelected(day) &&
-                        !this.IsHoliday(day)
+                        !this.IsHoliday(day) &&
+                        !this.CheckToday(day)
                     ) return true;
                 }
             }
@@ -163,14 +165,16 @@
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
                         day <= new Date(this.courseInformation.EndDate) &&
                         !this.OnSelected(day) &&
-                        !this.IsHoliday(day)
+                        !this.IsHoliday(day) &&
+                        !this.CheckToday(day)
                     ) return true;
                 }
                 else {
                     if (day >= new Date(this.courseInformation.Lessons[i].BeginDate) &&
                         day < new Date(this.courseInformation.Lessons[i + 1].BeginDate) &&
                         !this.OnSelected(day) &&
-                        !this.IsHoliday(day)
+                        !this.IsHoliday(day) &&
+                        !this.CheckToday(day)
                     ) return true;
                 }
             }
