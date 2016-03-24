@@ -4,24 +4,24 @@
     </h1>
     <a ui-sref-active="primary label" ui-sref="app.course.notification({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-mail size-36"></i><span ng-show="cx.notification > 0" class="badge">{{ cx.notification }}</span></a>
     <a class="float-right" zf-open="classModal" ng-show="cx.userSvc.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
-    <ul>
+    <ul class="vertical menu-bar">
         <li>
-            <a ui-sref-active="primary label" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userSvc.ClientUserProfile.CurrentLessonId })"><i class="fi-home size-36"></i> HOME</a>
-        </li>
-        <li>
-            <a ui-sref-active="primary label" ui-sref="app.course.journal({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><i class="fi-page-multiple size-36"></i> JOURNAL</a>
+            <a ui-sref-active="primary label" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userSvc.ClientUserProfile.CurrentLessonId })"><i class="fi-home grid-content shrink"></i> HOME</a>
         </li>
         <li>
-            <a ui-sref-active="primary label" ui-sref="app.course.coursemap({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-foundation size-36"></i> COURSE MAP</a>
-        </li>
-        <li ui-sref-active="active" ng-show="!cx.userSvc.ClientUserProfile.IsTeacher">
-            <a ui-sref-active="primary label" ui-sref="app.course.studentlist({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
-        </li>
-        <li ui-sref-active="active" ng-show="cx.userSvc.ClientUserProfile.IsTeacher">
-            <a ui-sref-active="primary label" ui-sref="app.course.teacherlist({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-torsos-all size-36"></i> CLASS</a>
+            <a ui-sref-active="primary label" ui-sref="app.course.journal({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><i class="fi-page-multiple grid-content shrink"></i> JOURNAL</a>
         </li>
         <li>
-            <a ui-sref-active="primary label" ui-sref="app.course.config({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-widget size-36"></i> SETTING</a>
+            <a ui-sref-active="primary label" ui-sref="app.course.coursemap({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-foundation grid-content shrink"></i> COURSE MAP</a>
+        </li>
+        <li ng-show="!cx.userSvc.ClientUserProfile.IsTeacher">
+            <a ui-sref-active="primary label" ui-sref="app.course.studentlist({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-torsos-all grid-content shrink"></i> CLASS</a>
+        </li>
+        <li ng-show="cx.userSvc.ClientUserProfile.IsTeacher">
+            <a ui-sref-active="primary label" ui-sref="app.course.teacherlist({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-torsos-all grid-content shrink"></i> CLASS</a>
+        </li>
+        <li>
+            <a ui-sref-active="primary label" ui-sref="app.course.config({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><i class="fi-widget grid-content shrink"></i> SETTING</a>
         </li>
     </ul>
 
