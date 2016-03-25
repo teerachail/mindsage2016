@@ -17,7 +17,8 @@ namespace WebManagementPortal.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Lesson()
         {
-            this.Advertisments = new HashSet<Advertisment>();
+            this.Advertisements = new HashSet<Advertisement>();
+            this.TopicOfTheDays = new HashSet<TopicOfTheDay>();
             this.RecLog = new RecordLog();
         }
     
@@ -35,6 +36,8 @@ namespace WebManagementPortal.EF
     
         public virtual Unit Unit { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Advertisment> Advertisments { get; set; }
+        public virtual ICollection<Advertisement> Advertisements { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<TopicOfTheDay> TopicOfTheDays { get; set; }
     }
 }

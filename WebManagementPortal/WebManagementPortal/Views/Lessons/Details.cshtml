@@ -111,3 +111,43 @@
     @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
     @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.Unit.Semester.CourseCatalogId }, null)
 </p>
+
+<hr />
+
+<h2>Advertisements</h2>
+
+@{ 
+    var adsRunner = 1;
+}
+<p>
+    @Html.ActionLink("Create new advertisement", "Create", "Advertisments", new { @id = Model.Id }, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            No
+        </th>
+        <th>
+            Image
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Advertisements.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        <tr>
+            <td>
+                @adsRunner
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ImageUrl)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Advertisements", new { id = item.Id }) |
+                @Html.ActionLink("Delete", "Delete", "Advertisements", new { id = item.Id })
+            </td>
+        </tr>
+        adsRunner++;
+    }
+
+</table>

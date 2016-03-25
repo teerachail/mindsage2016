@@ -12,10 +12,10 @@ namespace WebManagementPortal.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class Advertisment
+    public partial class Advertisement
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Advertisment()
+        public Advertisement()
         {
             this.RecLog = new RecordLog();
         }

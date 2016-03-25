@@ -215,7 +215,7 @@
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SemestersController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
-    <Compile Include="EF\Advertisment.cs">
+    <Compile Include="EF\Advertisement.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\CourseCatalog.cs">
@@ -243,6 +243,9 @@
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Semester.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TopicOfTheDay.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Unit.cs">

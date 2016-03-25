@@ -10,7 +10,8 @@
     <EntitySet Name="Semesters" EntityType="MindSageDataModels.Store.Semesters" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Units" EntityType="MindSageDataModels.Store.Units" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Lessons" EntityType="MindSageDataModels.Store.Lessons" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="Advertisments" EntityType="MindSageDataModels.Store.Advertisments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Advertisements" EntityType="MindSageDataModels.Store.Advertisements" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TopicOfTheDays" EntityType="MindSageDataModels.Store.TopicOfTheDays" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CourseCatalogSemester" Association="MindSageDataModels.Store.CourseCatalogSemester">
       <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
       <End Role="Semester" EntitySet="Semesters" />
@@ -23,9 +24,13 @@
       <End Role="Unit" EntitySet="Units" />
       <End Role="Lesson" EntitySet="Lessons" />
     </AssociationSet>
-    <AssociationSet Name="LessonAdvertisment" Association="MindSageDataModels.Store.LessonAdvertisment">
+    <AssociationSet Name="LessonAdvertisement" Association="MindSageDataModels.Store.LessonAdvertisement">
       <End Role="Lesson" EntitySet="Lessons" />
-      <End Role="Advertisment" EntitySet="Advertisments" />
+      <End Role="Advertisement" EntitySet="Advertisements" />
+    </AssociationSet>
+    <AssociationSet Name="LessonTopicOfTheDay" Association="MindSageDataModels.Store.LessonTopicOfTheDay">
+      <End Role="Lesson" EntitySet="Lessons" />
+      <End Role="TopicOfTheDay" EntitySet="TopicOfTheDays" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="CourseCatalogs">
@@ -83,13 +88,24 @@
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
     <Property Name="UnitId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="Advertisments">
+  <EntityType Name="Advertisements">
     <Key>
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="ImageUrl" Type="varchar(max)" Nullable="false" />
     <Property Name="LinkUrl" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+    <Property Name="LessonId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TopicOfTheDays">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Message" Type="varchar(max)" Nullable="false" />
+    <Property Name="SendOnDay" Type="int" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
     <Property Name="LessonId" Type="int" Nullable="false" />
@@ -130,14 +146,26 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="LessonAdvertisment">
+  <Association Name="LessonAdvertisement">
     <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="1" />
-    <End Role="Advertisment" Type="MindSageDataModels.Store.Advertisments" Multiplicity="*" />
+    <End Role="Advertisement" Type="MindSageDataModels.Store.Advertisements" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Lesson">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="Advertisment">
+      <Dependent Role="Advertisement">
+        <PropertyRef Name="LessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonTopicOfTheDay">
+    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="1" />
+    <End Role="TopicOfTheDay" Type="MindSageDataModels.Store.TopicOfTheDays" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TopicOfTheDay">
         <PropertyRef Name="LessonId" />
       </Dependent>
     </ReferentialConstraint>
@@ -159,14 +187,19 @@
             <End Role="Unit" EntitySet="Units" />
           </AssociationSet>
           <EntitySet Name="Lessons" EntityType="MindSageDataModels.Lesson" />
-          <EntitySet Name="Advertisments" EntityType="MindSageDataModels.Advertisment" />
+          <EntitySet Name="Advertisements" EntityType="MindSageDataModels.Advertisement" />
           <AssociationSet Name="UnitLesson" Association="MindSageDataModels.UnitLesson">
             <End Role="Unit" EntitySet="Units" />
             <End Role="Lesson" EntitySet="Lessons" />
           </AssociationSet>
-          <AssociationSet Name="LessonAdvertisment" Association="MindSageDataModels.LessonAdvertisment">
+          <AssociationSet Name="LessonAdvertisement" Association="MindSageDataModels.LessonAdvertisement">
             <End Role="Lesson" EntitySet="Lessons" />
-            <End Role="Advertisment" EntitySet="Advertisments" />
+            <End Role="Advertisement" EntitySet="Advertisements" />
+          </AssociationSet>
+          <EntitySet Name="TopicOfTheDays" EntityType="MindSageDataModels.TopicOfTheDay" />
+          <AssociationSet Name="LessonTopicOfTheDay" Association="MindSageDataModels.LessonTopicOfTheDay">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="TopicOfTheDay" EntitySet="TopicOfTheDays" />
           </AssociationSet>
         </EntityContainer>
         <EntityType Name="CourseCatalog">
@@ -253,9 +286,10 @@
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
           <NavigationProperty Name="Unit" Relationship="MindSageDataModels.UnitLesson" FromRole="Lesson" ToRole="Unit" />
           <Property Name="UnitId" Type="Int32" Nullable="false" />
-          <NavigationProperty Name="Advertisments" Relationship="MindSageDataModels.LessonAdvertisment" FromRole="Lesson" ToRole="Advertisment" />
+          <NavigationProperty Name="Advertisements" Relationship="MindSageDataModels.LessonAdvertisement" FromRole="Lesson" ToRole="Advertisement" />
+          <NavigationProperty Name="TopicOfTheDays" Relationship="MindSageDataModels.LessonTopicOfTheDay" FromRole="Lesson" ToRole="TopicOfTheDay" />
         </EntityType>
-        <EntityType Name="Advertisment">
+        <EntityType Name="Advertisement">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
@@ -263,7 +297,7 @@
           <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="LinkUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
-          <NavigationProperty Name="Lesson" Relationship="MindSageDataModels.LessonAdvertisment" FromRole="Advertisment" ToRole="Lesson" />
+          <NavigationProperty Name="Lesson" Relationship="MindSageDataModels.LessonAdvertisement" FromRole="Advertisement" ToRole="Lesson" />
           <Property Name="LessonId" Type="Int32" Nullable="false" />
         </EntityType>
         <Association Name="UnitLesson">
@@ -278,14 +312,37 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="LessonAdvertisment">
+        <Association Name="LessonAdvertisement">
           <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="1" />
-          <End Type="MindSageDataModels.Advertisment" Role="Advertisment" Multiplicity="*" />
+          <End Type="MindSageDataModels.Advertisement" Role="Advertisement" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Lesson">
               <PropertyRef Name="Id" />
             </Principal>
-            <Dependent Role="Advertisment">
+            <Dependent Role="Advertisement">
+              <PropertyRef Name="LessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TopicOfTheDay">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <NavigationProperty Name="Lesson" Relationship="MindSageDataModels.LessonTopicOfTheDay" FromRole="TopicOfTheDay" ToRole="Lesson" />
+          <Property Name="Message" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="SendOnDay" Type="Int32" Nullable="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <Property Name="LessonId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="LessonTopicOfTheDay">
+          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="1" />
+          <End Type="MindSageDataModels.TopicOfTheDay" Role="TopicOfTheDay" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TopicOfTheDay">
               <PropertyRef Name="LessonId" />
             </Dependent>
           </ReferentialConstraint>
@@ -363,12 +420,26 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Advertisments">
-      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Advertisment)">
-        <MappingFragment StoreEntitySet="Advertisments">
+    <EntitySetMapping Name="Advertisements">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Advertisement)">
+        <MappingFragment StoreEntitySet="Advertisements">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
           <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+          <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TopicOfTheDays">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.TopicOfTheDay)">
+        <MappingFragment StoreEntitySet="TopicOfTheDays">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Message" ColumnName="Message" />
+          <ScalarProperty Name="SendOnDay" ColumnName="SendOnDay" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />

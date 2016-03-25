@@ -9,6 +9,9 @@
 <p>
     @Html.ActionLink("Create New", "Create")
 </p>
+
+<a href="#" class="btn btn-default">Update all courses</a>
+
 <table class="table">
     <tr>
         <th>
@@ -18,7 +21,7 @@
             @Html.DisplayNameFor(model => model.Grade)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Advertisements)
+            @Html.DisplayNameFor(model => model.Series)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.SideName)
@@ -27,19 +30,7 @@
             @Html.DisplayNameFor(model => model.PriceUSD)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Series)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Title)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.FullDescription)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.DescriptionImageUrl)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.RecLog)
+            @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
         </th>
         <th></th>
     </tr>
@@ -53,7 +44,7 @@
             @Html.DisplayFor(modelItem => item.Grade)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Advertisements)
+            @Html.DisplayFor(modelItem => item.Series)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.SideName)
@@ -62,19 +53,7 @@
             @Html.DisplayFor(modelItem => item.PriceUSD)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Series)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Title)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.FullDescription)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.DescriptionImageUrl)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.RecLog)
+            @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
         </td>
         <td>
             @Html.ActionLink("View", "Details", new { id=item.Id })

@@ -11,9 +11,11 @@
         <AssociationConnector Association="MindSageDataModels.CourseCatalogSemester" />
         <AssociationConnector Association="MindSageDataModels.SemesterUnit" />
         <EntityTypeShape EntityType="MindSageDataModels.Lesson" Width="2" PointX="6" PointY="3.625" />
-        <EntityTypeShape EntityType="MindSageDataModels.Advertisment" Width="1.5" PointX="9" PointY="4.25" />
+        <EntityTypeShape EntityType="MindSageDataModels.Advertisement" Width="1.5" PointX="9" PointY="3.625" />
         <AssociationConnector Association="MindSageDataModels.UnitLesson" />
-        <AssociationConnector Association="MindSageDataModels.LessonAdvertisment" />
+        <AssociationConnector Association="MindSageDataModels.LessonAdvertisement" />
+        <EntityTypeShape EntityType="MindSageDataModels.TopicOfTheDay" Width="1.5" PointX="9" PointY="6" />
+        <AssociationConnector Association="MindSageDataModels.LessonTopicOfTheDay" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

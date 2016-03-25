@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/25/2016 11:37:18
+-- Date Created: 03/25/2016 18:02:23
 -- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -17,6 +17,18 @@ GO
 -- Dropping existing FOREIGN KEY constraints
 -- --------------------------------------------------
 
+IF OBJECT_ID(N'[dbo].[FK_CourseCatalogSemester]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Semesters] DROP CONSTRAINT [FK_CourseCatalogSemester];
+GO
+IF OBJECT_ID(N'[dbo].[FK_SemesterUnit]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Units] DROP CONSTRAINT [FK_SemesterUnit];
+GO
+IF OBJECT_ID(N'[dbo].[FK_UnitLesson]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Lessons] DROP CONSTRAINT [FK_UnitLesson];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LessonAdvertisment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Advertisments] DROP CONSTRAINT [FK_LessonAdvertisment];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -24,6 +36,18 @@ GO
 
 IF OBJECT_ID(N'[dbo].[CourseCatalogs]', 'U') IS NOT NULL
     DROP TABLE [dbo].[CourseCatalogs];
+GO
+IF OBJECT_ID(N'[dbo].[Semesters]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Semesters];
+GO
+IF OBJECT_ID(N'[dbo].[Units]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Units];
+GO
+IF OBJECT_ID(N'[dbo].[Lessons]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Lessons];
+GO
+IF OBJECT_ID(N'[dbo].[Advertisments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Advertisments];
 GO
 
 -- --------------------------------------------------
@@ -85,11 +109,22 @@ CREATE TABLE [dbo].[Lessons] (
 );
 GO
 
--- Creating table 'Advertisments'
-CREATE TABLE [dbo].[Advertisments] (
+-- Creating table 'Advertisements'
+CREATE TABLE [dbo].[Advertisements] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [ImageUrl] varchar(max)  NOT NULL,
     [LinkUrl] varchar(max)  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL,
+    [LessonId] int  NOT NULL
+);
+GO
+
+-- Creating table 'TopicOfTheDays'
+CREATE TABLE [dbo].[TopicOfTheDays] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Message] varchar(max)  NOT NULL,
+    [SendOnDay] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
     [LessonId] int  NOT NULL
@@ -124,9 +159,15 @@ ADD CONSTRAINT [PK_Lessons]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'Advertisments'
-ALTER TABLE [dbo].[Advertisments]
-ADD CONSTRAINT [PK_Advertisments]
+-- Creating primary key on [Id] in table 'Advertisements'
+ALTER TABLE [dbo].[Advertisements]
+ADD CONSTRAINT [PK_Advertisements]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'TopicOfTheDays'
+ALTER TABLE [dbo].[TopicOfTheDays]
+ADD CONSTRAINT [PK_TopicOfTheDays]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -179,18 +220,33 @@ ON [dbo].[Lessons]
     ([UnitId]);
 GO
 
--- Creating foreign key on [LessonId] in table 'Advertisments'
-ALTER TABLE [dbo].[Advertisments]
-ADD CONSTRAINT [FK_LessonAdvertisment]
+-- Creating foreign key on [LessonId] in table 'Advertisements'
+ALTER TABLE [dbo].[Advertisements]
+ADD CONSTRAINT [FK_LessonAdvertisement]
     FOREIGN KEY ([LessonId])
     REFERENCES [dbo].[Lessons]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_LessonAdvertisment'
-CREATE INDEX [IX_FK_LessonAdvertisment]
-ON [dbo].[Advertisments]
+-- Creating non-clustered index for FOREIGN KEY 'FK_LessonAdvertisement'
+CREATE INDEX [IX_FK_LessonAdvertisement]
+ON [dbo].[Advertisements]
+    ([LessonId]);
+GO
+
+-- Creating foreign key on [LessonId] in table 'TopicOfTheDays'
+ALTER TABLE [dbo].[TopicOfTheDays]
+ADD CONSTRAINT [FK_LessonTopicOfTheDay]
+    FOREIGN KEY ([LessonId])
+    REFERENCES [dbo].[Lessons]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LessonTopicOfTheDay'
+CREATE INDEX [IX_FK_LessonTopicOfTheDay]
+ON [dbo].[TopicOfTheDays]
     ([LessonId]);
 GO
 

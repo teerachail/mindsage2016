@@ -23,6 +23,7 @@ namespace WebManagementPortal.Controllers
                 .Where(it => !it.RecLog.DeletedDate.HasValue)
                 .OrderBy(it => it.GroupName)
                 .ThenBy(it => it.Grade)
+                .ThenBy(it => it.Series)
                 .ToListAsync();
             return View(courseCatalogs);
         }
