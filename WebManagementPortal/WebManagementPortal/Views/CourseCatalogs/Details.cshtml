@@ -83,16 +83,58 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RecLog)
+            @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RecLog)
+            @Html.DisplayFor(model => model.RecLog.CreatedDate)
         </dd>
 
     </dl>
 </div>
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
 </p>
+
+<h2>Semesters</h2>
+
+<p>
+    @Html.ActionLink("Create new semester", "Create", "Semesters", new { @id = Model.Id }, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Name
+        </th>
+        <th>
+            Title
+        </th>
+        <th>
+            Description
+        </th>
+        <th></th>
+    </tr>
+
+    @{ var semesterNameRunner = (byte)65; }
+    @foreach (var item in Model.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue)) 
+    {
+        <tr>
+            <td>
+                @string.Format("{0}", (char)semesterNameRunner++)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "Semesters", new { id = item.Id, courseCatalogId = Model.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Semesters", new { id = item.Id }, null)
+            </td>
+        </tr>
+    }
+
+</table>

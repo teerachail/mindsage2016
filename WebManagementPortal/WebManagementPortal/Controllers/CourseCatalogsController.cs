@@ -18,9 +18,12 @@ namespace WebManagementPortal.Controllers
         // GET: CourseCatalogs
         public async Task<ActionResult> Index()
         {
-            var courseCatalogs = (await db.CourseCatalogs.ToListAsync())
+            var courseCatalogs = await db.CourseCatalogs
+                .Include("Semesters.Units.Lessons")
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
                 .OrderBy(it => it.GroupName)
-                .ThenBy(it => it.Grade);
+                .ThenBy(it => it.Grade)
+                .ToListAsync();
             return View(courseCatalogs);
         }
 
@@ -36,6 +39,10 @@ namespace WebManagementPortal.Controllers
             {
                 return HttpNotFound();
             }
+            var semesters = db.Semesters.Include(s => s.CourseCatalog)
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .OrderBy(it => it.RecLog.CreatedDate);
+            ViewBag.Semesters = await semesters.ToListAsync();
             return View(courseCatalog);
         }
 

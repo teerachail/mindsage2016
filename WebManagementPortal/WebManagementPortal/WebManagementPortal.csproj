@@ -212,6 +212,7 @@
     <Compile Include="Controllers\CourseCatalogsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\SemestersController.cs" />
     <Compile Include="EF\Advertisment.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
@@ -338,6 +339,11 @@
     <Content Include="Views\CourseCatalogs\Details.cshtml" />
     <Content Include="Views\CourseCatalogs\Edit.cshtml" />
     <Content Include="Views\CourseCatalogs\Index.cshtml" />
+    <Content Include="Views\Semesters\Create.cshtml" />
+    <Content Include="Views\Semesters\Delete.cshtml" />
+    <Content Include="Views\Semesters\Details.cshtml" />
+    <Content Include="Views\Semesters\Edit.cshtml" />
+    <Content Include="Views\Semesters\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
