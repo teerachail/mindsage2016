@@ -15,27 +15,27 @@ namespace WebManagementPortal.Controllers
     {
         private MindSageDataModelsContainer db = new MindSageDataModelsContainer();
 
-        // GET: Units
-        public async Task<ActionResult> Index()
-        {
-            var units = db.Units.Include(u => u.Semester);
-            return View(await units.ToListAsync());
-        }
+        //// GET: Units
+        //public async Task<ActionResult> Index()
+        //{
+        //    var units = db.Units.Include(u => u.Semester);
+        //    return View(await units.ToListAsync());
+        //}
 
-        // GET: Units/Details/5
-        public async Task<ActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Unit unit = await db.Units.FindAsync(id);
-            if (unit == null)
-            {
-                return HttpNotFound();
-            }
-            return View(unit);
-        }
+        //// GET: Units/Details/5
+        //public async Task<ActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    Unit unit = await db.Units.FindAsync(id);
+        //    if (unit == null)
+        //    {
+        //        return HttpNotFound();
+        //    }
+        //    return View(unit);
+        //}
 
         // GET: Units/Create
         public async Task<ActionResult> Create(int id)

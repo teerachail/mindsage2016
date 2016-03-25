@@ -15,16 +15,16 @@ namespace WebManagementPortal.Controllers
     {
         private MindSageDataModelsContainer db = new MindSageDataModelsContainer();
 
-        // GET: Semesters
-        public async Task<ActionResult> Index()
-        {
-            var semesters = db.Semesters.Include(s => s.CourseCatalog)
-                .Where(it => !it.RecLog.DeletedDate.HasValue)
-                .OrderBy(it => it.RecLog.CreatedDate);
-            return View(await semesters.ToListAsync());
-        }
+        //// GET: Semesters
+        //public async Task<ActionResult> Index()
+        //{
+        //    var semesters = db.Semesters.Include(s => s.CourseCatalog)
+        //        .Where(it => !it.RecLog.DeletedDate.HasValue)
+        //        .OrderBy(it => it.RecLog.CreatedDate);
+        //    return View(await semesters.ToListAsync());
+        //}
 
-        // GET: Semesters/Details/5
+        //// GET: Semesters/Details/5
         //public async Task<ActionResult> Details(int? id)
         //{
         //    if (id == null)

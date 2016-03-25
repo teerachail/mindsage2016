@@ -1,0 +1,126 @@
+﻿@model WebManagementPortal.EF.Lesson
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Lesson</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            CourseCatalog
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Semester.CourseCatalog.SideName)
+        </dd>
+
+        <dt>
+            Semester
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Semester.Title)
+        </dd>
+
+        <dt>
+            Unit
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Title)
+        </dd>
+
+    </dl>
+
+    <hr />
+
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoreDescription)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoreDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ShortTeacherLessonPlan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ShortTeacherLessonPlan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.MoreTeacherLessonPlan)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.MoreTeacherLessonPlan)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.PrimaryContentURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PrimaryContentURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExtraContentUrls)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExtraContentUrls)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLog)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLog)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Unit.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Unit.Title)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, null)
+        </div>
+    }
+</div>
