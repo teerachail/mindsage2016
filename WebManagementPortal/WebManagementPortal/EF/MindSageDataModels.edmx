@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="MindSageDataModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="MindSageDataModelsStoreContainer">
+    <EntitySet Name="CourseCatalogs" EntityType="MindSageDataModels.Store.CourseCatalogs" store:Type="Tables" Schema="dbo" />
+  </EntityContainer>
+  <EntityType Name="CourseCatalogs">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="GroupName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Grade" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Advertisements" Type="varchar(max)" Nullable="false" />
+    <Property Name="SideName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="PriceUSD" Type="float" Nullable="false" />
+    <Property Name="Series" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="FullDescription" Type="varchar(max)" Nullable="false" />
+    <Property Name="DescriptionImageUrl" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+  </EntityType>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MindSageDataModels" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="MindSageDataModelsContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="CourseCatalogs" EntityType="MindSageDataModels.CourseCatalog" />
+        </EntityContainer>
+        <EntityType Name="CourseCatalog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="GroupName" Type="String" Nullable="false" Unicode="false" FixedLength="false" MaxLength="255" />
+          <Property Name="Grade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Advertisements" Type="String" Nullable="false" Unicode="false" MaxLength="Max" FixedLength="false" />
+          <Property Name="SideName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PriceUSD" Type="Double" Nullable="false" />
+          <Property Name="Series" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="FullDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="DescriptionImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+        </EntityType>
+        <ComplexType Name="RecordLog" >
+          <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
+          <Property Type="DateTime" Name="DeletedDate" Nullable="true" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="MindSageDataModelsStoreContainer" CdmEntityContainer="MindSageDataModelsContainer">
+    <EntitySetMapping Name="CourseCatalogs">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.CourseCatalog)">
+        <MappingFragment StoreEntitySet="CourseCatalogs">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="GroupName" ColumnName="GroupName" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="Advertisements" ColumnName="Advertisements" />
+          <ScalarProperty Name="SideName" ColumnName="SideName" />
+          <ScalarProperty Name="PriceUSD" ColumnName="PriceUSD" />
+          <ScalarProperty Name="Series" ColumnName="Series" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
+          <ScalarProperty Name="DescriptionImageUrl" ColumnName="DescriptionImageUrl" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="True" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
