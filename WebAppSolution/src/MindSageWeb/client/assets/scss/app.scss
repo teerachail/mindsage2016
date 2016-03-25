@@ -409,3 +409,20 @@
     
   }
 }
+
+//// Add Css list ////
+.visible {
+    overflow: visible;
+}
+
+.titlePosition {
+    margin-left: -1.5rem;
+}
+
+.inactive {
+    color: $gray-dark;
+}
+
+.teacherMessage {
+    border: solid 0.3rem $warning-color;
+}
