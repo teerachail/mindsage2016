@@ -50,8 +50,11 @@ namespace WebManagementPortal.Controllers
             var courseCatalog = await db.CourseCatalogs.FirstOrDefaultAsync(it => it.Id == id);
             if (courseCatalog == null || courseCatalog.RecLog.DeletedDate.HasValue) return View("Error");
 
-            ViewBag.CourseCatalog = courseCatalog;
-            return View(new Semester());
+            return View(new Semester
+            {
+                CourseCatalog = courseCatalog,
+                CourseCatalogId = courseCatalog.Id
+            });
         }
 
         // POST: Semesters/Create

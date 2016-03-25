@@ -1,4 +1,4 @@
-﻿@model WebManagementPortal.EF.Semester
+﻿@model WebManagementPortal.EF.Unit
 
 @{
     ViewBag.Title = "Details";
@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Semester</h4>
+    <h4>Unit</h4>
     <hr />
     <dl class="dl-horizontal">
         <dt>
@@ -35,11 +35,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.CourseCatalog.SideName)
+            @Html.DisplayNameFor(model => model.Semester.Title)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CourseCatalog.SideName)
+            @Html.DisplayFor(model => model.Semester.Title)
         </dd>
 
     </dl>

@@ -1,4 +1,4 @@
-﻿@model WebManagementPortal.EF.Semester
+﻿@model WebManagementPortal.EF.Unit
 
 @{
     ViewBag.Title = "Create";
@@ -7,24 +7,22 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm()) 
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
-        <h4>Semester</h4>
+        <h4>Unit</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-
         <div class="form-group">
-            @Html.LabelFor(model => model.CourseCatalogId, "CourseCatalogId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.SemesterId, "SemesterId", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.HiddenFor(it => it.CourseCatalogId)
-                @Html.Label(Model.CourseCatalog.SideName, htmlAttributes: new { @class = "control-label" })
-                @Html.ValidationMessageFor(model => model.CourseCatalogId, "", new { @class = "text-danger" })
+                @Html.HiddenFor(it => it.SemesterId)
+                @Html.Label(Model.Semester.Title, htmlAttributes: new { @class = "control-label" })
+                @Html.ValidationMessageFor(model => model.SemesterId, "", new { @class = "text-danger" })
             </div>
         </div>
-
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -50,7 +48,7 @@
 }
 
 <div>
-    @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.CourseCatalogId }, null)
+    @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.Semester.CourseCatalogId }, null)
 </div>
 
 @section Scripts {

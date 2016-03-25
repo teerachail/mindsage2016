@@ -1,27 +1,34 @@
-﻿@model WebManagementPortal.EF.Semester
+﻿@model WebManagementPortal.EF.Unit
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Edit";
 }
 
-<h2>Create</h2>
+<h2>Edit</h2>
 
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    
     <div class="form-horizontal">
-        <h4>Semester</h4>
+        <h4>Unit</h4>
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
 
         <div class="form-group">
-            @Html.LabelFor(model => model.CourseCatalogId, "CourseCatalogId", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Semester.CourseCatalog.SideName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.HiddenFor(it => it.CourseCatalogId)
-                @Html.Label(Model.CourseCatalog.SideName, htmlAttributes: new { @class = "control-label" })
-                @Html.ValidationMessageFor(model => model.CourseCatalogId, "", new { @class = "text-danger" })
+                @Html.Label(Model.Semester.CourseCatalog.SideName, new { htmlAttributes = new { @class = "control-label" } })
+                @Html.ValidationMessageFor(model => model.Semester.CourseCatalog.SideName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Semester.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.Label(Model.Semester.Title, new { htmlAttributes = new { @class = "control-label" } })
+                @Html.ValidationMessageFor(model => model.Title, "", new { @class = "text-danger" })
             </div>
         </div>
 
@@ -43,14 +50,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-default" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.CourseCatalogId }, null)
+    @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.Semester.CourseCatalogId }, null)
 </div>
 
 @section Scripts {

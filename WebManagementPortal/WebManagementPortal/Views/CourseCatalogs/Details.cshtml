@@ -117,22 +117,68 @@
         <th></th>
     </tr>
 
-    @{ var semesterNameRunner = (byte)65; }
-    @foreach (var item in Model.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue)) 
+    @{ 
+        var semesterNameRunner = (byte)65;
+        var unitRunner = 1;
+    }
+    @foreach (var semester in Model.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue)) 
     {
         <tr>
             <td>
                 @string.Format("{0}", (char)semesterNameRunner++)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Title)
+                @Html.DisplayFor(modelItem => semester.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.DisplayFor(modelItem => semester.Description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "Semesters", new { id = item.Id, courseCatalogId = Model.Id }, null) |
-                @Html.ActionLink("Delete", "Delete", "Semesters", new { id = item.Id }, null)
+                @Html.ActionLink("Edit", "Edit", "Semesters", new { id = semester.Id, courseCatalogId = Model.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Semesters", new { id = semester.Id }, null)
+            </td>
+        </tr>
+        <tr>
+            <td></td>
+            <td colspan="3">
+                <h3>Units</h3>
+
+                <p>
+                    @Html.ActionLink("Create new unit", "Create", "Units", new { @id = semester.Id }, null)
+                </p>
+                <table class="table">
+                    <tr>
+                        <th>Unit No</th>
+                        <th>
+                            Title
+                        </th>
+                        <th>
+                            Description
+                        </th>
+                        <th></th>
+                    </tr>
+
+                    @foreach (var unit in semester.Units.Where(it => !it.RecLog.DeletedDate.HasValue)) 
+                    {
+                        <tr>
+                            <td>
+                                @unitRunner
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => unit.Title)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => unit.Description)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Edit", "Edit", "Units", new { id = unit.Id, semesterId = semester.Id }, null) |
+                                @Html.ActionLink("Delete", "Delete", "Units", new { id = unit.Id, semesterId = semester.Id }, null)
+                            </td>
+                        </tr>
+                        unitRunner++;
+                    }
+
+                </table>
             </td>
         </tr>
     }

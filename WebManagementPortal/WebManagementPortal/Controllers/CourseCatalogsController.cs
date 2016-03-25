@@ -94,9 +94,20 @@ namespace WebManagementPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                db.Entry(courseCatalog).State = EntityState.Modified;
+                var selectedCourseCatalog = await db.CourseCatalogs.FirstOrDefaultAsync(it => it.Id == courseCatalog.Id);
+                if (selectedCourseCatalog == null) return View("Error");
+
+                selectedCourseCatalog.GroupName = courseCatalog.GroupName;
+                selectedCourseCatalog.Grade = courseCatalog.Grade;
+                selectedCourseCatalog.Advertisements = courseCatalog.Advertisements;
+                selectedCourseCatalog.SideName = courseCatalog.SideName;
+                selectedCourseCatalog.PriceUSD = courseCatalog.PriceUSD;
+                selectedCourseCatalog.Series = courseCatalog.Series;
+                selectedCourseCatalog.Title = courseCatalog.Title;
+                selectedCourseCatalog.FullDescription = courseCatalog.FullDescription;
+                selectedCourseCatalog.DescriptionImageUrl = courseCatalog.DescriptionImageUrl;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { @id = selectedCourseCatalog.Id });
             }
             return View(courseCatalog);
         }
