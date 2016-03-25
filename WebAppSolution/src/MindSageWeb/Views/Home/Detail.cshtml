@@ -5,8 +5,8 @@
     </div>
     <br />
     <div class="grid-block">
-        <div class="small-5 grid-block align-center">
-            <div class="small-4 grid-block vertical">
+        <div class="small-4 grid-block align-center">
+            <div class="small-6 grid-block vertical">
                 <div class="card">
                     <div class="card-section">
                         <h2>@Model.Name</h2>
@@ -28,17 +28,19 @@
                         }
                     </div>
                 </div>
-                @foreach (var item in Model.RelatedCourses)
-                {
-                    <div class="card-section">
-                        <h2>@item.Name</h2>
-                        <a asp-action="detail" asp-controller="home" asp-route-id="@item.CourseId" class="button expand">VIEW</a>
-                    </div>
-                }
+                    @foreach (var item in Model.RelatedCourses)
+                    {
+                        <div class="card">
+                            <div class="card-section">
+                                <h2>@item.Name</h2>
+                                <a asp-action="detail" asp-controller="home" asp-route-id="@item.CourseId" class="button expand">VIEW</a>
+                            </div>
+                        </div>
+                    }
             </div>
         </div>
-        <div class="small-6 grid-block vertical">
-            <div class="grid-block vertical">
+        <div class="small-7 grid-block align-center">
+            <div class="small-10 grid-block vertical visible">
                 <p class="detail-info">@Model.Name</p>
                 <hr>
                 <h1 class="detail-header">@Model.Title</h1>
@@ -46,67 +48,76 @@
                     @Model.Description
                 </p>
                 <h2 class="detail-header">@Model.TotalWeeks Week Courses <img class="float-right" src="@Model.DescriptionImageUrl"></h2>
-
                 @foreach (var semester in Model.Semesters)
                 {
                     <h1 class="lesson-header">@semester.Name</h1>
-                    <div class="card">
+                    <div class="card visible">
                         <div class="card-section">
-                            <h1 class="success label">INTRO</h1>
+                            <h1 class="success label titlePosition">INTRO</h1>
                             <h2>@semester.Title</h2>
                             <p class="text-success">@semester.TotalWeeks Weeks</p>
+                            <hr />
                             <p>
                                 @semester.Description
                             </p>
-                            <zf-accordion auto-open="false" collapsible="true" multi-open="true">
-                                <zf-accordion-item title="> More detail">
-                                    @foreach (var unit in semester.Units)
+                            <a ng-click="INTROClose = !INTROClose">
+                                <img ng-hide="INTROClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                                <img ng-show="INTROClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                                More detail
+                            </a>
+                            <div ng-show="INTROClose">
+                                @foreach (var unit in semester.Units)
+                                {
+                                    foreach (var lesson in unit.Lessons)
                                     {
-                                        foreach (var lesson in unit.Lessons)
-                                        {
-                                            <div class="card-section">
-                                                <p>WEEK @lesson.Order</p>
-                                                @foreach (var content in lesson.Contents)
-                                                {
-                                                    <div class="grid-block">
-                                                        <div class="grid-content shrink large-2">
-                                                            <img src="@content.ImageUrl">
-                                                        </div>
-                                                        <div class="grid-content large-10">
-                                                            <p>
-                                                                @content.Description
-                                                            </p>
-                                                        </div>
+                                        <div class="card-section">
+                                            <p>WEEK @lesson.Order</p>
+                                            @foreach (var content in lesson.Contents)
+                                            {
+                                                <div class="grid-block">
+                                                    <div class="grid-content shrink large-2">
+                                                        <img src="@content.ImageUrl">
                                                     </div>
+                                                    <div class="grid-content large-10">
+                                                        <p>
+                                                            @content.Description
+                                                        </p>
+                                                    </div>
+                                                </div>
                                                     <br />
-                                                }
-                                            </div>
-                                        }
+                                            }
+                                        </div>
                                     }
-                                </zf-accordion-item>
-                            </zf-accordion>
+                                }
+                            </div>
+
                         </div>
                         <div class="success label menu-bar"></div>
                     </div>
 
                     @foreach (var unit in semester.Units)
                     {
-                        <div class="card">
+                        <div class="card visible">
                             <div class="card-section">
-                                <h2 class="success label">UNIT @unit.UnitNo</h2>
+                                <h2 class="success label titlePosition">UNIT @unit.UnitNo</h2>
                                 <h3>@unit.Title</h3>
                                 <p class="week-info">@unit.TotalWeeks Weeks</p>
+                                <hr />
                                 <p>
                                     @unit.Description
                                 </p>
-                                <zf-accordion auto-open="false" collapsible="true" multi-open="true">
-                                    <zf-accordion-item title="> More detail">
-                                        @foreach (var lesson in unit.Lessons)
-                                        {
-                                            <div class="card-section">
-                                                <p>WEEK @lesson.Order</p>
-                                                @foreach (var content in lesson.Contents)
-                                                {
+                                <a ng-click="UNITClose = !UNITClose">
+                                    <img ng-hide="UNITClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                                    <img ng-show="UNITClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                                    More detail
+                                </a>
+                                <div ng-show="UNITClose">
+                                    @foreach (var lesson in unit.Lessons)
+                                    {
+                                        <div class="card-section">
+                                            <p>WEEK @lesson.Order</p>
+                                            @foreach (var content in lesson.Contents)
+                                            {
                                                 <div class="grid-block">
                                                     <div class="grid-content shrink large-2">
                                                         <img src="@content.ImageUrl">
@@ -118,11 +129,11 @@
                                                     </div>
                                                 </div>
                                                 <br />
-                                                }
-                                            </div>
-                                        }
-                                    </zf-accordion-item>
-                                </zf-accordion>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+
                             </div>
                             <div class="success label menu-bar"></div>
                         </div>

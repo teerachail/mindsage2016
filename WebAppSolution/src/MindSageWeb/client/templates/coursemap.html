@@ -7,37 +7,37 @@ controller: 'app.coursemaps.CourseMapController as cx'
     <h1>COURSE MAP</h1>
     <div ng-repeat="item in cx.content">
 
-        <div class="card">
+        <div class="card visible">
             <div class="card-section">
                 <div class="clearfix">
                     <div class="title float-left">
-                        <h2>SEMESTER {{ item.SemesterName }}</h2>
+                        <h2 class="success label titlePosition">SEMESTER {{ item.SemesterName }}</h2>
                     </div>
                     <a class="float-right" ng-click="isclose = !isclose">
-                        <i class="fi-plus size-24" ng-if="$first" ng-show="isclose"></i>
-                        <i class="fi-minus size-24" ng-if="$first" ng-show="!isclose"></i>
-                        <i class="fi-plus size-24" ng-if="!$first" ng-show="!isclose"></i>
-                        <i class="fi-minus size-24" ng-if="!$first" ng-show="isclose"></i>
+                        <img ng-if="$first" ng-show="isclose" zf-iconic="" icon="chevron" data-direction="left" size="small" class="iconic-color-dark">
+                        <img ng-if="$first" ng-hide="isclose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-dark">
+                        <img ng-if="!$first" ng-hide="isclose" zf-iconic="" icon="chevron" data-direction="left" size="small" class="iconic-color-dark">
+                        <img ng-if="!$first" ng-show="isclose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-dark">
                     </a>
                 </div>
-                <div ng-if="$first" ng-show="!isclose">
+                <div ng-if="$first" ng-hide="isclose">
                     <div class="grid-block small-up-2 medium-up-5">
                         <div ng-repeat="lesson in item.LessonStatus" class="grid-content">
                             <div ng-show="!cx.userSvc.ClientUserProfile.IsTeacher">
                                 <a href="#" ng-show="!lesson.IsLocked" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
-                                    <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/blue.png">
-                                    <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/bluewithpencil.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/green.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/greenwithpencil.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orange.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orangewithpencil.png">
+                                    <img ng-show="lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/blue.png">
+                                    <img ng-show="lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/bluewithpencil.png">
+                                    <img ng-show="!lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/green.png">
+                                    <img ng-show="!lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/greenwithpencil.png">
+                                    <img ng-show="!lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orange.png">
+                                    <img ng-show="!lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orangewithpencil.png">
                                 </a>
                                 <img ng-show="lesson.IsLocked" src="../assets/img/icon/black.png">
                             </div>
                             <div ng-show="cx.userSvc.ClientUserProfile.IsTeacher">
                                 <a href="#" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
-                                    <img ng-show="lesson.IsCurrent" class="thumbnail" src="../assets/img/icon/blue.png">
-                                    <img ng-show="!lesson.IsCurrent" class="thumbnail" src="../assets/img/icon/green.png">
+                                    <img ng-show="lesson.IsCurrent" src="../assets/img/icon/blue.png">
+                                    <img ng-show="!lesson.IsCurrent" src="../assets/img/icon/green.png">
                                 </a>
                             </div>
                             <p>{{ lesson.LessonWeekName }}</p>
@@ -50,19 +50,19 @@ controller: 'app.coursemaps.CourseMapController as cx'
                         <div ng-repeat="lesson in item.LessonStatus" class="grid-content">
                             <div ng-show="!cx.userSvc.ClientUserProfile.IsTeacher">
                                 <a href="#" ng-show="!lesson.IsLocked" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
-                                    <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/blue.png">
-                                    <img ng-show="!lesson.IsLocked &&  lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/bluewithpencil.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/green.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/greenwithpencil.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orange.png">
-                                    <img ng-show="!lesson.IsLocked && !lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orangewithpencil.png">
+                                    <img ng-show="lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/blue.png">
+                                    <img ng-show="lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/bluewithpencil.png">
+                                    <img ng-show="!lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/green.png">
+                                    <img ng-show="!lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/greenwithpencil.png">
+                                    <img ng-show="!lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orange.png">
+                                    <img ng-show="!lesson.IsCurrent &&  cx.HaveAnyComments(lesson.LessonId) && !cx.HaveReadAllContents(lesson.LessonId)" src="../assets/img/icon/orangewithpencil.png">
                                 </a>
                                 <img ng-show="lesson.IsLocked" src="../assets/img/icon/black.png">
                             </div>
                             <div ng-show="cx.userSvc.ClientUserProfile.IsTeacher">
                                 <a href="#" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
-                                    <img ng-show="lesson.IsCurrent" class="thumbnail" src="../assets/img/icon/blue.png">
-                                    <img ng-show="!lesson.IsCurrent" class="thumbnail" src="../assets/img/icon/green.png">
+                                    <img ng-show="lesson.IsCurrent" src="../assets/img/icon/blue.png">
+                                    <img ng-show="!lesson.IsCurrent" src="../assets/img/icon/green.png">
                                 </a>
                             </div>
                             <p>{{ lesson.LessonWeekName }}</p>
@@ -70,6 +70,7 @@ controller: 'app.coursemaps.CourseMapController as cx'
                     </div>
                 </div>
             </div>
+            <div class="success label menu-bar"></div>
         </div>
     </div>
 </div>

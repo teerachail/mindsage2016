@@ -13,8 +13,8 @@ controller: 'app.settings.SettingController as cx'
             <div class="grid-content shrink">
                 <p>User Info</p>
             </div>
-            <a class="grid-content shrink" ng-show="!explan" ng-click="explan = !explan">Edit</a>
-            <a class="grid-content shrink" ng-show="explan" ng-click="cx.UpdateProfile() ; explan = !explan">Save</a>
+            <a class="grid-content shrink inactive" ng-show="!explan" ng-click="explan = !explan">Edit</a>
+            <a class="grid-content shrink inactive" ng-show="explan" ng-click="cx.UpdateProfile() ; explan = !explan">Save</a>
         </div>
         <div ng-show="explan">
             <div class="grid-block">
@@ -28,7 +28,7 @@ controller: 'app.settings.SettingController as cx'
 
                 <div class="align-center grid-block">
                     <div class="text-center">
-                        <div><img class="thumbnail small-2" src="{{ cx.clientProfileSvc.ClientUserProfile.ImageUrl }}"></div>
+                        <div><img class="small-2" src="{{ cx.clientProfileSvc.ClientUserProfile.ImageUrl }}"></div>
                         <div class="align-center grid-block"><a href="../Manage/ChangeProfileImage/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}">Edit</a></div>
                     </div>
                 </div>
@@ -76,8 +76,8 @@ controller: 'app.settings.SettingController as cx'
             <div class="grid-content shrink">
                 <p>Class Info</p>
             </div>
-            <a class="grid-content shrink" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
-            <a class="grid-content shrink" ng-show="bottomexplan" ng-click="cx.UpdateCoursee() ; bottomexplan = !bottomexplan">Save</a>
+            <a class="grid-content shrink inactive" ng-show="!bottomexplan" ng-click="bottomexplan = !bottomexplan">Edit</a>
+            <a class="grid-content shrink inactive" ng-show="bottomexplan" ng-click="cx.UpdateCoursee() ; bottomexplan = !bottomexplan">Save</a>
             <div class="grid-content shrink">
                 <a class="viewlist" ui-sref="app.course.teacherlist({ classRoomId: cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId })">View Student List</a>
             </div>
