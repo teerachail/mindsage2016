@@ -209,9 +209,16 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CourseCatalogsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="EF\Advertisment.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\CourseCatalog.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Lesson.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\MindSageDataModels.Context.cs">
@@ -230,6 +237,12 @@
       <DependentUpon>MindSageDataModels.edmx</DependentUpon>
     </Compile>
     <Compile Include="EF\RecordLog.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Semester.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Unit.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="Global.asax.cs">
@@ -320,6 +333,11 @@
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Service References\Application Insights\ConnectedService.json" />
+    <Content Include="Views\CourseCatalogs\Create.cshtml" />
+    <Content Include="Views\CourseCatalogs\Delete.cshtml" />
+    <Content Include="Views\CourseCatalogs\Details.cshtml" />
+    <Content Include="Views\CourseCatalogs\Edit.cshtml" />
+    <Content Include="Views\CourseCatalogs\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

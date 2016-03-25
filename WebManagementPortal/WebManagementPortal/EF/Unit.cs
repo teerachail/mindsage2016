@@ -12,29 +12,24 @@ namespace WebManagementPortal.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class CourseCatalog
+    public partial class Unit
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public CourseCatalog()
+        public Unit()
         {
-            this.Semesters = new HashSet<Semester>();
+            this.Lessons = new HashSet<Lesson>();
             this.RecLog = new RecordLog();
         }
     
         public int Id { get; set; }
-        public string GroupName { get; set; }
-        public string Grade { get; set; }
-        public string Advertisements { get; set; }
-        public string SideName { get; set; }
-        public double PriceUSD { get; set; }
-        public string Series { get; set; }
         public string Title { get; set; }
-        public string FullDescription { get; set; }
-        public string DescriptionImageUrl { get; set; }
+        public string Description { get; set; }
+        public int SemesterId { get; set; }
     
         public RecordLog RecLog { get; set; }
     
+        public virtual Semester Semester { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Semester> Semesters { get; set; }
+        public virtual ICollection<Lesson> Lessons { get; set; }
     }
 }

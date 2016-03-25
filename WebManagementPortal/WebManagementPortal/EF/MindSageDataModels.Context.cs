@@ -26,5 +26,9 @@ namespace WebManagementPortal.EF
         }
     
         public virtual DbSet<CourseCatalog> CourseCatalogs { get; set; }
+        public virtual DbSet<Semester> Semesters { get; set; }
+        public virtual DbSet<Unit> Units { get; set; }
+        public virtual DbSet<Lesson> Lessons { get; set; }
+        public virtual DbSet<Advertisment> Advertisments { get; set; }
     }
 }

@@ -7,6 +7,26 @@
     <Schema Namespace="MindSageDataModels.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
   <EntityContainer Name="MindSageDataModelsStoreContainer">
     <EntitySet Name="CourseCatalogs" EntityType="MindSageDataModels.Store.CourseCatalogs" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Semesters" EntityType="MindSageDataModels.Store.Semesters" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Units" EntityType="MindSageDataModels.Store.Units" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Lessons" EntityType="MindSageDataModels.Store.Lessons" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Advertisments" EntityType="MindSageDataModels.Store.Advertisments" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="CourseCatalogSemester" Association="MindSageDataModels.Store.CourseCatalogSemester">
+      <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
+      <End Role="Semester" EntitySet="Semesters" />
+    </AssociationSet>
+    <AssociationSet Name="SemesterUnit" Association="MindSageDataModels.Store.SemesterUnit">
+      <End Role="Semester" EntitySet="Semesters" />
+      <End Role="Unit" EntitySet="Units" />
+    </AssociationSet>
+    <AssociationSet Name="UnitLesson" Association="MindSageDataModels.Store.UnitLesson">
+      <End Role="Unit" EntitySet="Units" />
+      <End Role="Lesson" EntitySet="Lessons" />
+    </AssociationSet>
+    <AssociationSet Name="LessonAdvertisment" Association="MindSageDataModels.Store.LessonAdvertisment">
+      <End Role="Lesson" EntitySet="Lessons" />
+      <End Role="Advertisment" EntitySet="Advertisments" />
+    </AssociationSet>
   </EntityContainer>
   <EntityType Name="CourseCatalogs">
     <Key>
@@ -25,12 +45,129 @@
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
   </EntityType>
+  <EntityType Name="Semesters">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+    <Property Name="CourseCatalogId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Units">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+    <Property Name="SemesterId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Lessons">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="ShortDescription" Type="varchar(max)" Nullable="false" />
+    <Property Name="MoreDescription" Type="varchar(max)" Nullable="false" />
+    <Property Name="ShortTeacherLessonPlan" Type="varchar(max)" Nullable="false" />
+    <Property Name="MoreTeacherLessonPlan" Type="varchar(max)" Nullable="false" />
+    <Property Name="PrimaryContentURL" Type="varchar(max)" Nullable="false" />
+    <Property Name="ExtraContentUrls" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+    <Property Name="UnitId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="Advertisments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="ImageUrl" Type="varchar(max)" Nullable="false" />
+    <Property Name="LinkUrl" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+    <Property Name="LessonId" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="CourseCatalogSemester">
+    <End Role="CourseCatalog" Type="MindSageDataModels.Store.CourseCatalogs" Multiplicity="1" />
+    <End Role="Semester" Type="MindSageDataModels.Store.Semesters" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseCatalog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Semester">
+        <PropertyRef Name="CourseCatalogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SemesterUnit">
+    <End Role="Semester" Type="MindSageDataModels.Store.Semesters" Multiplicity="1" />
+    <End Role="Unit" Type="MindSageDataModels.Store.Units" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Semester">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Unit">
+        <PropertyRef Name="SemesterId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="UnitLesson">
+    <End Role="Unit" Type="MindSageDataModels.Store.Units" Multiplicity="1" />
+    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Unit">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Lesson">
+        <PropertyRef Name="UnitId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonAdvertisment">
+    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="1" />
+    <End Role="Advertisment" Type="MindSageDataModels.Store.Advertisments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Advertisment">
+        <PropertyRef Name="LessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="MindSageDataModels" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
         <EntityContainer Name="MindSageDataModelsContainer" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="CourseCatalogs" EntityType="MindSageDataModels.CourseCatalog" />
+          <EntitySet Name="Semesters" EntityType="MindSageDataModels.Semester" />
+          <EntitySet Name="Units" EntityType="MindSageDataModels.Unit" />
+          <AssociationSet Name="CourseCatalogSemester" Association="MindSageDataModels.CourseCatalogSemester">
+            <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
+            <End Role="Semester" EntitySet="Semesters" />
+          </AssociationSet>
+          <AssociationSet Name="SemesterUnit" Association="MindSageDataModels.SemesterUnit">
+            <End Role="Semester" EntitySet="Semesters" />
+            <End Role="Unit" EntitySet="Units" />
+          </AssociationSet>
+          <EntitySet Name="Lessons" EntityType="MindSageDataModels.Lesson" />
+          <EntitySet Name="Advertisments" EntityType="MindSageDataModels.Advertisment" />
+          <AssociationSet Name="UnitLesson" Association="MindSageDataModels.UnitLesson">
+            <End Role="Unit" EntitySet="Units" />
+            <End Role="Lesson" EntitySet="Lessons" />
+          </AssociationSet>
+          <AssociationSet Name="LessonAdvertisment" Association="MindSageDataModels.LessonAdvertisment">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="Advertisment" EntitySet="Advertisments" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CourseCatalog">
           <Key>
@@ -47,11 +184,112 @@
           <Property Name="FullDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DescriptionImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="Semesters" Relationship="MindSageDataModels.CourseCatalogSemester" FromRole="CourseCatalog" ToRole="Semester" />
         </EntityType>
         <ComplexType Name="RecordLog" >
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
           <Property Type="DateTime" Name="DeletedDate" Nullable="true" />
         </ComplexType>
+        <EntityType Name="Semester">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="CourseCatalog" Relationship="MindSageDataModels.CourseCatalogSemester" FromRole="Semester" ToRole="CourseCatalog" />
+          <Property Name="CourseCatalogId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Units" Relationship="MindSageDataModels.SemesterUnit" FromRole="Semester" ToRole="Unit" />
+        </EntityType>
+        <EntityType Name="Unit">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="Semester" Relationship="MindSageDataModels.SemesterUnit" FromRole="Unit" ToRole="Semester" />
+          <Property Name="SemesterId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Lessons" Relationship="MindSageDataModels.UnitLesson" FromRole="Unit" ToRole="Lesson" />
+        </EntityType>
+        <Association Name="CourseCatalogSemester">
+          <End Type="MindSageDataModels.CourseCatalog" Role="CourseCatalog" Multiplicity="1" />
+          <End Type="MindSageDataModels.Semester" Role="Semester" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseCatalog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Semester">
+              <PropertyRef Name="CourseCatalogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="SemesterUnit">
+          <End Type="MindSageDataModels.Semester" Role="Semester" Multiplicity="1" />
+          <End Type="MindSageDataModels.Unit" Role="Unit" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Semester">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Unit">
+              <PropertyRef Name="SemesterId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Lesson">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MoreDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ShortTeacherLessonPlan" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="MoreTeacherLessonPlan" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="PrimaryContentURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ExtraContentUrls" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="Unit" Relationship="MindSageDataModels.UnitLesson" FromRole="Lesson" ToRole="Unit" />
+          <Property Name="UnitId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Advertisments" Relationship="MindSageDataModels.LessonAdvertisment" FromRole="Lesson" ToRole="Advertisment" />
+        </EntityType>
+        <EntityType Name="Advertisment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="LinkUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="Lesson" Relationship="MindSageDataModels.LessonAdvertisment" FromRole="Advertisment" ToRole="Lesson" />
+          <Property Name="LessonId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="UnitLesson">
+          <End Type="MindSageDataModels.Unit" Role="Unit" Multiplicity="1" />
+          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Unit">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Lesson">
+              <PropertyRef Name="UnitId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LessonAdvertisment">
+          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="1" />
+          <End Type="MindSageDataModels.Advertisment" Role="Advertisment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Advertisment">
+              <PropertyRef Name="LessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -75,6 +313,67 @@
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
           </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Semesters">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Semester)">
+        <MappingFragment StoreEntitySet="Semesters">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+          <ScalarProperty Name="CourseCatalogId" ColumnName="CourseCatalogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Units">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Unit)">
+        <MappingFragment StoreEntitySet="Units">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+          <ScalarProperty Name="SemesterId" ColumnName="SemesterId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Lessons">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Lesson)">
+        <MappingFragment StoreEntitySet="Lessons">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Title" ColumnName="Title" />
+          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
+          <ScalarProperty Name="MoreDescription" ColumnName="MoreDescription" />
+          <ScalarProperty Name="ShortTeacherLessonPlan" ColumnName="ShortTeacherLessonPlan" />
+          <ScalarProperty Name="MoreTeacherLessonPlan" ColumnName="MoreTeacherLessonPlan" />
+          <ScalarProperty Name="PrimaryContentURL" ColumnName="PrimaryContentURL" />
+          <ScalarProperty Name="ExtraContentUrls" ColumnName="ExtraContentUrls" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+          <ScalarProperty Name="UnitId" ColumnName="UnitId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Advertisments">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Advertisment)">
+        <MappingFragment StoreEntitySet="Advertisments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="ImageUrl" ColumnName="ImageUrl" />
+          <ScalarProperty Name="LinkUrl" ColumnName="LinkUrl" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+          <ScalarProperty Name="LessonId" ColumnName="LessonId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

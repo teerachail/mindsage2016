@@ -6,6 +6,14 @@
     <edmx:Diagrams>
       <Diagram DiagramId="e745ca4b62794e52977a3d8698c793f7" Name="Diagram1" >
         <EntityTypeShape EntityType="MindSageDataModels.CourseCatalog" Width="2" PointX="0.5" PointY="0.5" />
+        <EntityTypeShape EntityType="MindSageDataModels.Semester" Width="1.5" PointX="3.625" PointY="0.5" />
+        <EntityTypeShape EntityType="MindSageDataModels.Unit" Width="1.5" PointX="6.25" PointY="0.5" />
+        <AssociationConnector Association="MindSageDataModels.CourseCatalogSemester" />
+        <AssociationConnector Association="MindSageDataModels.SemesterUnit" />
+        <EntityTypeShape EntityType="MindSageDataModels.Lesson" Width="2" PointX="6" PointY="3.625" />
+        <EntityTypeShape EntityType="MindSageDataModels.Advertisment" Width="1.5" PointX="9" PointY="4.25" />
+        <AssociationConnector Association="MindSageDataModels.UnitLesson" />
+        <AssociationConnector Association="MindSageDataModels.LessonAdvertisment" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

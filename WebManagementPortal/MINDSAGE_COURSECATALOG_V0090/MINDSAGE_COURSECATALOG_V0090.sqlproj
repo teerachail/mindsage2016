@@ -63,6 +63,10 @@
   </ItemGroup>
   <ItemGroup>
     <Build Include="dbo\Tables\CourseCatalogs.sql" />
+    <Build Include="dbo\Tables\Semesters.sql" />
+    <Build Include="dbo\Tables\Units.sql" />
+    <Build Include="dbo\Tables\Lessons.sql" />
+    <Build Include="dbo\Tables\Advertisments.sql" />
     <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
   </ItemGroup>
 </Project>
