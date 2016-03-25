@@ -120,7 +120,7 @@
     var adsRunner = 1;
 }
 <p>
-    @Html.ActionLink("Create new advertisement", "Create", "Advertisments", new { @id = Model.Id }, null)
+    @Html.ActionLink("Create new advertisement", "Create", "Advertisements", new { @id = Model.Id }, null)
 </p>
 <table class="table">
     <tr>
@@ -143,8 +143,8 @@
                 @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", "Advertisements", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", "Advertisements", new { id = item.Id })
+                @Html.ActionLink("Edit", "Edit", "Advertisements", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Advertisements", new { id = item.Id }, null)
             </td>
         </tr>
         adsRunner++;

@@ -1,0 +1,50 @@
+﻿@model WebManagementPortal.EF.Advertisement
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Advertisement</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ImageUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ImageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LinkUrl)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LinkUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLog)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLog)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Lesson.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Lesson.Title)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
