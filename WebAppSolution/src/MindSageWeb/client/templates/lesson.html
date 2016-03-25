@@ -7,17 +7,17 @@ controller: 'app.lessons.LessonController as cx'
 <div class="large-8 push-4 large-offset-1 columns" ng-init="mcx.ChangeVideo(cx.content.PrimaryContentURL)">
 
     <div class="grid-block clearfix">
-        <div class="grid-content float-left">
+        <div class="grid-block float-left">
             <h1>SEMESTER {{ cx.content.SemesterName }}</h1>
         </div>
-        <div ng-show="cx.content.IsTeacher" class="grid-content float-right">
-            <a ng-class="{ 'active': cx.teacherView }" ng-click="cx.selectTeacherView()">TEACHER VIEW</a>
+        <div ng-show="cx.content.IsTeacher" class="grid-block float-right align-right">
+            <a ng-class="{ 'inactive': !cx.teacherView }" ng-click="cx.selectTeacherView()">TEACHER VIEW</a>
             <span>|</span>
-            <a ng-class="{ 'active': !cx.teacherView }" ng-click="cx.selectStdView()">STUDENT VIEW</a>
+            <a ng-class="{ 'inactive': cx.teacherView }" ng-click="cx.selectStdView()">STUDENT VIEW</a>
         </div>
     </div>
 
-    <div class="card alert" ng-show="cx.content.CourseMessage != null">
+    <div class="card teacherMessage" ng-show="cx.content.CourseMessage != null">
         <div class="card-section clearfix">
             <a ng-click="cx.ReadNote()" class="float-right">x</a>
             <div class="grid-content float-left">
@@ -30,41 +30,50 @@ controller: 'app.lessons.LessonController as cx'
     </div>
 
 
-    <div class="card">
+    <div class="card visible">
         <div class="card-section">
-            <h2 class="success label">Week {{ cx.content.Order }}</h2>
+            <h2 class="success label titlePosition">Week {{ cx.content.Order }}</h2>
 
             <div ng-show="cx.teacherView">
                 <h3>{{ cx.content.Title }}</h3>
+                <hr />
                 <p>{{ cx.content.ShortTeacherLessonPlan }}</p>
-                <zf-accordion auto-open="false" collapsible="true" multi-open="true">
-                    <zf-accordion-item title="> More detail">
-                        <p>{{ cx.content.FullTeacherLessonPlan }}</p>
-                    </zf-accordion-item>
-                </zf-accordion>
+                <a ng-click="detailTeacherClose = !detailTeacherClose">
+                    <img ng-hide="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                    <img ng-show="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                    More detail
+                </a>
+                <div ng-show="detailTeacherClose">
+                    <p>{{ cx.content.FullTeacherLessonPlan }}</p>
+                </div>
             </div>
 
             <div ng-show="!cx.teacherView">
                 <h3>{{ cx.content.Title }}</h3>
+                <hr />
                 <p>{{ cx.content.ShortDescription }}</p>
-                <zf-accordion auto-open="false" collapsible="true" multi-open="true">
-                    <zf-accordion-item title="> More detail">
-                        <p>{{ cx.content.FullDescription }}</p>
-                        <h4 class="extra-header">Extra learning</h4>
-                        <ul>
-                            <li>
-                                Primary
-                                <div><a href="{{ cx.content.PrimaryContentURL }}" target="_blank">{{ cx.content.PrimaryContentURL }}</a></div>
-                            </li>
-                        </ul>
-                        <ul ng-repeat="item in cx.content.ExtraContentUrls">
-                            <li class="extra">
-                                Extra {{ $index + 1 }}
-                                <div><a href="{{ item }}" target="_blank">{{ item }}</a></div>
-                            </li>
-                        </ul>
-                    </zf-accordion-item>
-                </zf-accordion>
+
+                <a ng-click="detailClose = !detailClose">
+                    <img ng-hide="detailClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                    <img ng-show="detailClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                     More detail
+                </a>
+                <div ng-show="detailClose">
+                    <p>{{ cx.content.FullDescription }}</p>
+                    <h4 class="extra-header">Extra learning</h4>
+                    <ul>
+                        <li>
+                            Primary
+                            <div><a href="{{ cx.content.PrimaryContentURL }}" target="_blank">{{ cx.content.PrimaryContentURL }}</a></div>
+                        </li>
+                    </ul>
+                    <ul ng-repeat="item in cx.content.ExtraContentUrls">
+                        <li class="extra">
+                            Extra {{ $index + 1 }}
+                            <div><a href="{{ item }}" target="_blank">{{ item }}</a></div>
+                        </li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="success label menu-bar"></div>
@@ -72,14 +81,14 @@ controller: 'app.lessons.LessonController as cx'
 
     <div>
         <p>
-            <span class="comment-button" ng-show="!cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.LikeLesson()"></i></a> {{ cx.content.TotalLikes }} people like this</span>
-            <span class="comment-button like" ng-show="cx.likes.IsLikedLesson"><a><i class="fi-heart size-36" ng-click="cx.DisLikeLesson()"></i></a>{{ cx.content.TotalLikes }} people like this</span>
+            <span ng-hide="cx.likes.IsLikedLesson"><a ng-click="cx.LikeLesson()"><img src="../assets/img/icon/like_inactive.png" width="30"/></a> {{ cx.content.TotalLikes }} people like this</span>
+            <span ng-show="cx.likes.IsLikedLesson"><a ng-click="cx.DisLikeLesson()"><img src="../assets/img/icon/like_active.png" width="30"/></a> {{ cx.content.TotalLikes }} people like this</span>
         </p>
     </div>
 
     <div class="clearfix">
         <div class="grid-block">
-            <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.userprofileSvc.ClientUserProfile.ImageUrl }}"></div>
+            <div class="grid-content shrink large-2"><img src="{{ cx.userprofileSvc.ClientUserProfile.ImageUrl }}"></div>
             <div class="grid-content large-10">
                 <h4>{{ cx.userprofileSvc.ClientUserProfile.FullName }}</h4>
                 <textarea ng-model="message" rows="3"></textarea>
@@ -93,16 +102,16 @@ controller: 'app.lessons.LessonController as cx'
     <div class="comment">
         <div ng-repeat="item in cx.comment.Comments | orderBy: 'Order'">
             <div class="grid-block">
-                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ item.CreatorImageUrl }}"></div>
+                <div class="grid-content shrink large-2"><img src="{{ item.CreatorImageUrl }}"></div>
                 <div class="grid-content large-10">
                     <h4><a href="#" ui-sref="app.course.journal({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: item.CreatedByUserProfileId })">{{ item.CreatorDisplayName }}<span class="comment-time"></span></a></h4>
 
                     <p ng-show="!cx.IsEdit(item.id)">
                         {{ item.Description }}
-                        <span class="comment-button" ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId" ng-click="cx.EditOpen(item)"><a> Edit</a></span>
-                        <span class="comment-button" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><i class="fi-heart size-24"></i></a> {{ item.TotalLikes }} people like this</span>
-                        <span class="comment-button like" ng-show="cx.likes.LikeCommentIds.indexOf(item.id) != -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><i class="fi-heart size-24"></i></a> {{ item.TotalLikes }} people like this</span>
-                        <span class="comment-button" zf-open="ConfirmModel" ng-click="cx.deleteComfirm(item)" ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher"><a><i class="fi-trash size-24"></i></a></span>
+                        <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId" ng-click="cx.EditOpen(item)"><a> Edit</a></span>
+                        <span ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><img src="../assets/img/icon/like_inactive.png" width="30"/></a> {{ item.TotalLikes }} people like this</span>
+                        <span ng-hide="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><img src="../assets/img/icon/like_active.png" width="30"/></a> {{ item.TotalLikes }} people like this</span>
+                        <span zf-open="ConfirmModel" ng-click="cx.deleteComfirm(item)" ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher"><a><img src="../assets/img/icon/trash.png" width="30"/></a></span>
                     </p>
                     <div ng-show="cx.IsEdit(item.id)">
                         <textarea ng-model="cx.message"></textarea>
@@ -117,7 +126,7 @@ controller: 'app.lessons.LessonController as cx'
 
                         <div class="clearfix">
                             <div class="grid-block">
-                                <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ cx.userprofileSvc.ClientUserProfile.ImageUrl }}"></div>
+                                <div class="grid-content shrink large-2"><img src="{{ cx.userprofileSvc.ClientUserProfile.ImageUrl }}"></div>
                                 <div class="grid-content large-10">
                                     <h4>{{ cx.userprofileSvc.ClientUserProfile.FullName }}</h4>
                                     <textarea ng-model="discussionMsg" rows="3"></textarea>
@@ -131,18 +140,18 @@ controller: 'app.lessons.LessonController as cx'
                         <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }">
                             <div class="discussion">
                                 <div class="grid-block">
-                                    <div class="grid-content shrink large-2"><img class="thumbnail" src="{{ discussion.CreatorImageUrl }}"></div>
+                                    <div class="grid-content shrink large-2"><img src="{{ discussion.CreatorImageUrl }}"></div>
                                     <div class="grid-content large-10">
                                         <a href="#" ng-hide="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" zf-open="Modal"
                                            ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
                                         <a href="#" ng-show="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" ui-sref="app.course.journal({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
                                         <p ng-show="!cx.IsEdit(discussion.id)">
                                             {{ discussion.Description }}
-                                            <span class="comment-button" ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
-                                            <span class="comment-button" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
-                                            <span class="comment-button like" ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><i class="fi-heart size-24"></i></a> {{ discussion.TotalLikes }} people like this</span>
-                                            <span class="comment-button" ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher"
-                                                  zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><i class="fi-trash size-24"></i></a></span>
+                                            <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
+                                            <span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><img src="../assets/img/icon/like_inactive.png" width="30"/></a> {{ discussion.TotalLikes }} people like this</span>
+                                            <span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><img src="../assets/img/icon/like_active.png" width="30"/></a> {{ discussion.TotalLikes }} people like this</span>
+                                            <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher"
+                                                  zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><img src="../assets/img/icon/trash.png" width="30"/></a></span>
                                         </p>
                                         <div ng-show="cx.IsEdit(discussion.id)">
                                             <textarea ng-model="cx.message"></textarea>

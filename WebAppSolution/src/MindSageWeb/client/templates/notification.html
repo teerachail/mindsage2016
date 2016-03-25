@@ -12,33 +12,48 @@ controller: 'app.notification.NotificationController as cx'
     <div ng-repeat="item in cx.displayNpotifications"  class="callout">
         <a>
             <p ng-show="item.Tag == 0" ng-click="isclose = !isclose">
-                <img class="listIcon" src="../assets/img/icon/friend_request_pending.png" width="30"/><span> Reminder </span>
+                <img class="listIcon" src="../assets/img/icon/reminder_orange.png" width="30"/><span> Reminder </span>
             </p>
             <p ng-show="item.Tag == 1" ng-click="isclose = !isclose">
-                <img class="listIcon" src="../assets/img/icon/notifications_inactive.png" width="30"/><span> TOTD </span>
+                <img class="listIcon" src="../assets/img/icon/totd.png" width="30"/><span> TOTD </span>
             </p>
             <p ng-show="item.Tag == 2" ng-click="isclose = !isclose">
-                <img class="listIcon" src="../assets/img/icon/like_inactive.png" width="30"/><span> Like: </span>
-                <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
+                <img class="listIcon" src="../assets/img/icon/like.png" width="30"/><span> Like: </span>
+                <span>
+                    <a ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
+                        {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
+                    </a>
+                    <a ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
+                        {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
+                    </a>
+                </span>
             </p>
             <p ng-show="item.Tag == 3" ng-click="isclose = !isclose">
-                <img class="listIcon" src="../assets/img/icon/social_participation.png" width="30"/><span> Comment: </span>
-                <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
+                <img class="listIcon" src="../assets/img/icon/social.png" width="30"/><span> Comment: </span>
+                <span>
+                    <a ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
+                        {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
+                    </a>
+                    <a ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
+                        {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
+                    </a>
+                </span>
             </p>
             <p ng-show="item.Tag == 4" ng-click="isclose = !isclose">
-                <img class="listIcon" src="../assets/img/icon/social_participation.png" width="30"/><span> Discussion: </span>
-                <span>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</span>
+                <img class="listIcon" src="../assets/img/icon/social.png" width="30"/><span> Discussion: </span>
+                <span>
+                    <a ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
+                        {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
+                    </a>
+                    <a ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
+                        {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
+                    </a>
+                </span>
             </p>
         </a>
     
         <div ng-show="isclose">
             <p>
-                <a ng-show="!acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
-                    {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
-                </a>
-                <a ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
-                    {{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}
-                </a>
                 {{ item.Message }}
             </p>
         </div>
