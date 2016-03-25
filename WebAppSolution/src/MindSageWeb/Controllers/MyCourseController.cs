@@ -911,7 +911,8 @@ namespace MindSageWeb.Controllers
                     BeginDate = it.BeginDate,
                     Name = string.Format("Lesson {0}", runningLessonId++)
                 }).ToList(),
-                Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>()
+                Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>(),
+                ShiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>(),
             };
             return result;
         }

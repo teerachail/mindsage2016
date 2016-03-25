@@ -29,6 +29,7 @@
     }
 .calendar .day,
 .calendar .days {
+  background:white;
   position: relative;
   padding: 0.3rem 0.39375rem;
   width: 100%;
@@ -89,6 +90,11 @@
 }
 .day.selected:hover, .days.selected:hover {
     background :#d8b72F;
+}
+.title.button {
+        margin:0 !important;
+        color:black;
+        color:red;
 }
 /*============================================================*/
 @media only screen {

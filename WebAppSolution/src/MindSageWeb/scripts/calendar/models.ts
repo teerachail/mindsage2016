@@ -53,7 +53,8 @@
             public BeginDate: Date,
             public EndDate: Date,
             public Lessons: LessonSchedule[],
-            public Holidays = []) {
+            public Holidays = [],
+            public ShiftDays = []){
         }
     }
 

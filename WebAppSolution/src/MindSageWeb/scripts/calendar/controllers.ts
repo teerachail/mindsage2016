@@ -168,6 +168,14 @@
             }
         }
 
+        public IsShift(day: Date) {
+            if (!this.isPrepareCourseScheduleContentComplete) return false;
+            for (var i = 0; i < this.courseInformation.ShiftDays.length; i++) {
+                if (new Date(this.courseInformation.ShiftDays[i]).toDateString() == day.toDateString()) return true;
+            }
+            return false;
+        }
+
         public Selected(day: Date) {
             if (this.firstClick) {
                 this.selected = [];
@@ -215,24 +223,27 @@
             this.courseScheduleService.SetCourseStartDate(starDate)
                 .then(it=> {
                     it.Lessons.BeginDate
-                    this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);
+                    this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays, it.ShiftDays);
                 });
+            this.cancelSelected();
         }
 
         public SetCourseScheduleRange(isHoliday: boolean, isShift: boolean) {
             if (!this.isPrepareCourseScheduleContentComplete) return;
             this.courseInformation = this.courseScheduleService.SetCourseScheduleRange(isHoliday, isShift, this.fisrtSelected, this.lastSelected).then(it=> {
                 it.Lessons.BeginDate
-                this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);
+                this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays, it.ShiftDays);
             });
+            this.cancelSelected();
         }
 
         public SetCourseScheduleWeek(isHoliday: boolean, isShift: boolean, isSunday: boolean, isMonday: boolean, isTuesday: boolean, isWednesday: boolean, isThursday: boolean, isFriday: boolean, isSaturday: boolean) {
             if (!this.isPrepareCourseScheduleContentComplete) return;
             this.courseScheduleService.SetCourseScheduleWeek(isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday).then(it=> {
                 it.Lessons.BeginDate
-                this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays);
+                this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays, it.ShiftDays);
             });
+            this.cancelSelected();
         }
 
         public ApplyToAllCourse() {
