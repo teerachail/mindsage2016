@@ -107,18 +107,17 @@
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
-    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
-    @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.Unit.Semester.CourseCatalogId }, null)
+    @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.Unit.Semester.CourseCatalogId }, new { @class = "btn btn-default" })
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
+    @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
+    <a href="#" class="btn btn-success btn-lg pull-right">Preview</a>
 </p>
 
 <hr />
 
 <h2>Advertisements</h2>
 
-@{ 
-    var adsRunner = 1;
-}
+@{ var adsRunner = 1; }
 <p>
     @Html.ActionLink("Create new advertisement", "Create", "Advertisements", new { @id = Model.Id }, null)
 </p>
@@ -128,7 +127,10 @@
             No
         </th>
         <th>
-            Image
+            Image Url
+        </th>
+        <th>
+            Created date
         </th>
         <th></th>
     </tr>
@@ -143,11 +145,61 @@
                 @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
             <td>
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td>
                 @Html.ActionLink("Edit", "Edit", "Advertisements", new { id = item.Id }, null) |
                 @Html.ActionLink("Delete", "Delete", "Advertisements", new { id = item.Id }, null)
             </td>
         </tr>
         adsRunner++;
+    }
+
+</table>
+
+<h2>Topic of the day</h2>
+@{ var TOTDRunner = 1; }
+<p>
+    @Html.ActionLink("Create new TOTD", "Create", "TopicOfTheDays", new { @id = Model.Id }, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            No
+        </th>
+        <th>
+            Send date
+        </th>
+        <th>
+            Message
+        </th>
+        <th>
+            Created date
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.TopicOfTheDays.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.SendOnDay).ThenBy(it => it.Message)) 
+    {
+        <tr>
+            <td>
+                @TOTDRunner
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SendOnDay)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Message)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "TopicOfTheDays", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "TopicOfTheDays", new { id = item.Id }, null)
+            </td>
+        </tr>
+        TOTDRunner++;
     }
 
 </table>
