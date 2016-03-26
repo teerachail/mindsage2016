@@ -19,6 +19,12 @@
                 </button>
                 @Html.ActionLink("MindSage management portal", "Index", "CourseCatalogs", new { area = "" }, new { @class = "navbar-brand" })
             </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav pull-right">
+                    <li>@Html.ActionLink("Course catalogs", "Index", "CourseCatalogs")</li>
+                    <li>@Html.ActionLink("Manage contracts", "Index", "CourseCatalogs")</li>
+                </ul>
+            </div>
         </div>
     </div>
     <div class="container body-content">
