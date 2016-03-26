@@ -58,10 +58,12 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,Advertisements,SideName,PriceUSD,Series,Title,FullDescription,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog)
+        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
+                var advetisements = Advertisements ?? Enumerable.Empty<string>();
+                courseCatalog.Advertisements = string.Join("#;", advetisements);
                 courseCatalog.RecLog.CreatedDate = DateTime.Now;
                 db.CourseCatalogs.Add(courseCatalog);
                 await db.SaveChangesAsync();
@@ -91,16 +93,17 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,Advertisements,SideName,PriceUSD,Series,Title,FullDescription,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
                 var selectedCourseCatalog = await db.CourseCatalogs.FirstOrDefaultAsync(it => it.Id == courseCatalog.Id);
                 if (selectedCourseCatalog == null) return View("Error");
 
+                var advetisements = Advertisements ?? Enumerable.Empty<string>();
+                selectedCourseCatalog.Advertisements = string.Join("#;", advetisements);
                 selectedCourseCatalog.GroupName = courseCatalog.GroupName;
                 selectedCourseCatalog.Grade = courseCatalog.Grade;
-                selectedCourseCatalog.Advertisements = courseCatalog.Advertisements;
                 selectedCourseCatalog.SideName = courseCatalog.SideName;
                 selectedCourseCatalog.PriceUSD = courseCatalog.PriceUSD;
                 selectedCourseCatalog.Series = courseCatalog.Series;

@@ -31,9 +31,19 @@
             @Html.DisplayNameFor(model => model.Advertisements)
         </dt>
 
-        <dd>
-            @Html.DisplayFor(model => model.Advertisements)
-        </dd>
+        @if (!(bool)Model?.Advertisements.Any())
+        {
+            <dd></dd>
+        }
+        else
+        {
+            foreach (var item in Model.Advertisements?.Split(new[] { "#;" }, StringSplitOptions.RemoveEmptyEntries))
+            {
+                <dd>
+                    @item
+                </dd>
+            }
+        }
 
         <dt>
             @Html.DisplayNameFor(model => model.SideName)
@@ -84,11 +94,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RecLog)
+            @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RecLog)
+            @Html.DisplayFor(model => model.RecLog.CreatedDate)
         </dd>
 
     </dl>

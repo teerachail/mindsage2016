@@ -33,12 +33,23 @@
             </div>
         </div>
 
+        @Html.LabelFor(model => model.Advertisements, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="btn btn-default add-able" att-name="Advertisements" container-name="AdvertisementContainer">Add</div>
         <div class="form-group">
-            @Html.LabelFor(model => model.Advertisements, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Advertisements, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Advertisements, "", new { @class = "text-danger" })
+            <div class="col-md-10 col-md-push-2">
+                @if (!(bool)Model?.Advertisements.Any())
+                {
+                    <input type="text" name="Advertisements" class="form-control" />
+                }
+                else
+                {
+                    foreach (var item in Model.Advertisements?.Split(new[] { "#;" }, StringSplitOptions.RemoveEmptyEntries))
+                    {
+                        <input type="text" name="Advertisements" class="form-control" value="@item" />
+                    }
+                }
             </div>
+            <div id="AdvertisementContainer" class="col-md-10 col-md-push-2"></div>
         </div>
 
         <div class="form-group">
