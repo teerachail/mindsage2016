@@ -260,6 +260,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\OwnCarousel.cs" />
+    <Compile Include="Models\GetCourseDetailRespond.cs" />
     <Compile Include="Models\CourseCatalog.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\LessonCatalog.cs" />

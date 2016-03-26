@@ -5,6 +5,7 @@ using MindSageWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Newtonsoft.Json;
 
 namespace MindSageWeb.Controllers
 {
@@ -55,9 +56,7 @@ namespace MindSageWeb.Controllers
                 {
                     id = it.id,
                     Name = it.GroupName,
-                    Description = it.ShortDescription,
-                    FullImageUrl = it.FullImageUrl,
-                    ThumbnailImageUrl = it.ThumbnailImageUrl,
+                    Description = it.FullDescription,
                 }).ToList();
             return result;
         }
@@ -83,11 +82,9 @@ namespace MindSageWeb.Controllers
                 .Select(it => new CourseCatalogRespond
                 {
                     id = it.id,
-                    Name = it.Name,
+                    Name = it.SideName,
                     GroupName = it.GroupName,
-                    Description = it.ShortDescription,
-                    FullImageUrl = it.FullImageUrl,
-                    ThumbnailImageUrl = it.ThumbnailImageUrl,
+                    Description = it.FullDescription,
                 }).ToList();
             return result;
         }
@@ -108,7 +105,7 @@ namespace MindSageWeb.Controllers
 
             var relatedCourses = GetRelatedCourses(selectedCourse.GroupName)
                 .Where(it => it.id != id)
-                .Select(it=>new GetCourseDetailRespond.RelatedCourse
+                .Select(it => new GetCourseDetailRespond.RelatedCourse
                 {
                     CourseId = it.id,
                     Name = it.Name
@@ -120,11 +117,11 @@ namespace MindSageWeb.Controllers
                 Grade = selectedCourse.Grade,
                 GroupName = selectedCourse.GroupName,
                 CreatedDate = selectedCourse.CreatedDate,
-                Description = selectedCourse.FullDescription,
+                FullDescription = selectedCourse.FullDescription,
                 DescriptionImageUrl = selectedCourse.DescriptionImageUrl,
-                ImageUrl = selectedCourse.FullImageUrl,
-                Name = selectedCourse.Name,
-                Price = selectedCourse.Price,
+                SideName = selectedCourse.SideName,
+                PriceUSD = selectedCourse.PriceUSD,
+                Series = selectedCourse.Series,
                 Title = selectedCourse.Title,
                 TotalWeeks = selectedCourse.Semesters.SelectMany(it => it.Units).SelectMany(it=>it.Lessons).Count(),
                 RelatedCourses = relatedCourses,
@@ -176,6 +173,23 @@ namespace MindSageWeb.Controllers
                 })
             };
             return result;
+        }
+
+        // GET: api/course/{course-catalog-id}/ads
+        /// <summary>
+        /// Get course ads
+        /// </summary>
+        /// <param name="id">Course catalog id</param>
+        [HttpGet]
+        [Route("{id}/previewads")]
+        public async System.Threading.Tasks.Task<OwnCarousel> GetPreviewads(string id)
+        {
+            using (var http = new System.Net.Http.HttpClient())
+            {
+                var result = await http.GetStringAsync($"http://localhost:50726/api/CourseCatalog/{ id }/ads");
+                var courseCatalog = JsonConvert.DeserializeObject<OwnCarousel>(result);
+                return courseCatalog;
+            }
         }
 
         #endregion Methods

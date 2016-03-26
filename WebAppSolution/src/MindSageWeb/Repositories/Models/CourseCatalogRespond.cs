@@ -11,8 +11,6 @@ namespace MindSageWeb.Repositories.Models
 
         public string id { get; set; }
         public string CourseCatalogId { get; set; }
-        public string FullImageUrl { get; set; }
-        public string ThumbnailImageUrl { get; set; }
         public string Name { get; set; }
         public string ClassRoomId { get; set; }
         public string LessonId { get; set; }

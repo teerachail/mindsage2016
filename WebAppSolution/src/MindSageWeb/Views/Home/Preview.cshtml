@@ -1,0 +1,17 @@
+﻿@model MindSageWeb.Repositories.Models.GetCourseDetailRespond
+
+@Html.Partial("Detail")
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $(".owl-carousel").owlCarousel({
+                autoPlay: true,
+                slideSpeed: 300,
+                jsonPath: 'http://localhost:2528/api/course/@Model.id/previewads',
+                singleItem: true
+            });
+        });
+    </script>
+}

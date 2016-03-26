@@ -102,7 +102,7 @@ namespace MindSageWeb.Controllers
             var model = new PurchaseCourseViewModel
             {
                 CourseId = id,
-                TotalChargeAmount = selectedCourse.Price
+                TotalChargeAmount = selectedCourse.PriceUSD
             };
             return View(model);
         }

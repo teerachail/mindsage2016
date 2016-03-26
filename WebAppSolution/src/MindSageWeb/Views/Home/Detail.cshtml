@@ -9,10 +9,10 @@
             <div class="small-6 grid-block vertical">
                 <div class="card">
                     <div class="card-section">
-                        <h2>@Model.Name</h2>
-                        <h4>@Model.Price.ToString("C2")</h4>
+                        <h2>@Model.SideName</h2>
+                        <h4>@Model.PriceUSD.ToString("C2")</h4>
                         @{
-                            var isAlreadyHaveThisCourse = (bool)ViewBag.IsAlreadyHaveThisCourse;
+                            var isAlreadyHaveThisCourse = ViewBag?.IsAlreadyHaveThisCourse ?? false;
                             if (isAlreadyHaveThisCourse)
                             {
                                 <a asp-action="entercourse" asp-controller="my" asp-route-id="@Model.id" class="button expand large">Go to my course</a>
@@ -41,16 +41,16 @@
         </div>
         <div class="small-7 grid-block align-center">
             <div class="small-10 grid-block vertical visible">
-                <p class="detail-info">@Model.Name</p>
+                <p class="detail-info">@Model.Series</p>
                 <hr>
                 <h1 class="detail-header">@Model.Title</h1>
                 <p>
-                    @Model.Description
+                    @Model.FullDescription
                 </p>
                 <h2 class="detail-header">@Model.TotalWeeks Week Courses <img class="float-right" src="@Model.DescriptionImageUrl"></h2>
                 @foreach (var semester in Model.Semesters)
                 {
-                    <h1 class="lesson-header">@semester.Name</h1>
+                    <h1 class="lesson-header">SEMESTER @semester.Name</h1>
                     <div class="card visible">
                         <div class="card-section">
                             <h1 class="success label titlePosition">INTRO</h1>

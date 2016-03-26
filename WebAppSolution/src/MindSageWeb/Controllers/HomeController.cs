@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
+using System.Net.Http;
+using Newtonsoft.Json;
 
 namespace MindSageWeb.Controllers
 {
@@ -54,6 +56,16 @@ namespace MindSageWeb.Controllers
             ViewBag.IsCouponInvalid = isCouponInvalid;
 
             return View(selectedCourse);
+        }
+
+        public async Task<IActionResult> Preview(int id)
+        {
+            using (var http = new HttpClient())
+            {
+                var result = await http.GetStringAsync($"http://localhost:50726/api/CourseCatalog/{ id }/detail");
+                var courseCatalog = JsonConvert.DeserializeObject<Repositories.Models.GetCourseDetailRespond>(result);
+                return View(courseCatalog);
+            }
         }
     }
 }

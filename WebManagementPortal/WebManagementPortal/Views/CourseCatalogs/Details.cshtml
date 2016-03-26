@@ -106,7 +106,7 @@
     @Html.ActionLink("Back", "Index", null, new { @class = "btn btn-default" })
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
     @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
-    <a href="#" class="btn btn-success btn-lg pull-right">Preview</a>
+    <a href="http://localhost:2528/home/preview/@Model.Id" target="_blank" class="btn btn-success btn-lg pull-right">Preview</a>
 </p>
 
 <hr />

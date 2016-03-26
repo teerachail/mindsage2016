@@ -77,5 +77,110 @@ namespace WebManagementPortal.Controllers
             };
             return result;
         }
+
+        // GET: api/CourseCatalog/{course-catalog-id}/detail
+        [Route("{id}/detail")]
+        public async Task<Models.GetCourseDetailRespond> GetDetail(int id)
+        {
+            CourseCatalog courseCatalog;
+            var relatedCourseList = Enumerable.Empty<CourseCatalog>();
+            using (var dctx = new EF.MindSageDataModelsContainer())
+            {
+                courseCatalog = await dctx.CourseCatalogs
+                    .Include("Semesters.Units.Lessons.Advertisements")
+                    .Include("Semesters.Units.Lessons.TopicOfTheDays")
+                    .FirstOrDefaultAsync(it => it.Id == id);
+
+                if (courseCatalog != null)
+                {
+                    relatedCourseList = dctx.CourseCatalogs
+                        .Where(it => it.GroupName == courseCatalog.GroupName)
+                        .Where(it => it.Id != courseCatalog.Id)
+                        .Where(it => !it.RecLog.DeletedDate.HasValue)
+                        .ToList();
+                }
+            }
+            if (courseCatalog == null) return null;
+
+            var semesterQry = courseCatalog.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue);
+            var unitQry = semesterQry.SelectMany(it => it.Units).Where(it => !it.RecLog.DeletedDate.HasValue);
+            var lessonQry = unitQry.SelectMany(it => it.Lessons).Where(it => !it.RecLog.DeletedDate.HasValue);
+
+            var lessonIdRunner = 1;
+            var lessons = lessonQry.Select(it => new Models.GetCourseDetailRespond.Lesson
+            {
+                id = it.Id.ToString(),
+                Order = lessonIdRunner++,
+                Contents = Enumerable.Empty<Models.GetCourseDetailRespond.LessonContent>() // HACK: Create lesson's contents
+            });
+
+            var unitIdRunner = 1;
+            var units = unitQry.Select(it => new Models.GetCourseDetailRespond.Unit
+            {
+                Title = it.Title,
+                Description = it.Description,
+                UnitNo = unitIdRunner++,
+                Lessons = lessons
+                //TotalWeeks
+            });
+
+            var semesterNameRunner = (byte)65;
+            var semesters = semesterQry.Select(it => new Models.GetCourseDetailRespond.Semester
+            {
+                Title = it.Title,
+                Description = it.Description,
+                Units = units,
+                Name = string.Format("{0}", (char)semesterNameRunner++)
+                //TotalWeeks
+            });
+
+            var relatedCourses = (relatedCourseList ?? Enumerable.Empty<CourseCatalog>())
+                .Select(it => new Models.GetCourseDetailRespond.RelatedCourse
+                {
+                    CourseId = it.Id.ToString(),
+                    Name = it.SideName
+                });
+            var result = new Models.GetCourseDetailRespond
+            {
+                id = courseCatalog.Id.ToString(),
+                CreatedDate = courseCatalog.RecLog.CreatedDate,
+                DescriptionImageUrl = courseCatalog.DescriptionImageUrl,
+                FullDescription = courseCatalog.FullDescription,
+                Grade = courseCatalog.Grade,
+                GroupName = courseCatalog.GroupName,
+                PriceUSD = courseCatalog.PriceUSD,
+                Semesters = semesters,
+                Series = courseCatalog.Series,
+                SideName = courseCatalog.SideName,
+                Title = courseCatalog.Title,
+                RelatedCourses = relatedCourses
+                //TotalWeeks
+            };
+            return result;
+        }
+
+        [HttpGet]
+        [Route("{id}/ads")]
+        public async Task<Models.OwnCarousel> GetAds(int id)
+        {
+            CourseCatalog courseCatalog;
+            using (var dctx = new EF.MindSageDataModelsContainer())
+            {
+                courseCatalog = await dctx.CourseCatalogs
+                    .Include("Semesters.Units.Lessons.Advertisements")
+                    .Include("Semesters.Units.Lessons.TopicOfTheDays")
+                    .FirstOrDefaultAsync(it => it.Id == id);
+            }
+            if (courseCatalog == null) return null;
+            var adsUrls = courseCatalog?.Advertisements?.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries) ?? Enumerable.Empty<string>();
+            var result = new Models.OwnCarousel
+            {
+                owl = adsUrls.Select(it => new Models.OwnCarousel.OwnItem
+                {
+                    item = $"<div class='item'><img src='{ it }' /></div>"
+                })
+            };
+            return result;
+        }
     }
 }

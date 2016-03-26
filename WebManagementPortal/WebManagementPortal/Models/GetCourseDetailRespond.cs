@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
-namespace MindSageWeb.Repositories.Models
+namespace WebManagementPortal.Models
 {
-    public class CourseCatalog
+    public class GetCourseDetailRespond
     {
         #region Properties
 
@@ -19,10 +20,10 @@ namespace MindSageWeb.Repositories.Models
         public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
         public DateTime CreatedDate { get; set; }
-        public DateTime? DeletedDate { get; set; }
+        public int TotalWeeks { get; set; }
 
         public IEnumerable<Semester> Semesters { get; set; }
-        public IEnumerable<string> Advertisements { get; set; }
+        public IEnumerable<RelatedCourse> RelatedCourses { get; set; }
 
         #endregion Properties
 
@@ -30,10 +31,10 @@ namespace MindSageWeb.Repositories.Models
         {
             #region Properties
 
-            public string id { get; set; }
             public string Name { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
+            public int TotalWeeks { get; set; }
 
             public IEnumerable<Unit> Units { get; set; }
 
@@ -44,10 +45,10 @@ namespace MindSageWeb.Repositories.Models
         {
             #region Properties
 
-            public string id { get; set; }
-            public int Order { get; set; }
+            public int UnitNo { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
+            public int TotalWeeks { get; set; }
 
             public IEnumerable<Lesson> Lessons { get; set; }
 
@@ -71,6 +72,16 @@ namespace MindSageWeb.Repositories.Models
 
             public string ImageUrl { get; set; }
             public string Description { get; set; }
+
+            #endregion Properties
+        }
+
+        public class RelatedCourse
+        {
+            #region Properties
+
+            public string CourseId { get; set; }
+            public string Name { get; set; }
 
             #endregion Properties
         }
