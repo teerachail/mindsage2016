@@ -36,6 +36,7 @@ module app {
         CourseScheduleRangeUrl: string;
         CourseScheduleWeekUrl: string;
         ApplyToAllCourseUrl: string;
+        LessonPreviewUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -74,6 +75,7 @@ module app {
         public CourseScheduleRangeUrl: string;
         public CourseScheduleWeekUrl: string;
         public ApplyToAllCourseUrl: string;
+        public LessonPreviewUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -113,6 +115,8 @@ module app {
             this.CourseScheduleRangeUrl = apiUrl + '/mycourse/schedulerange';
             this.CourseScheduleWeekUrl = apiUrl + '/mycourse/scheduleweek';
             this.ApplyToAllCourseUrl = apiUrl + '/mycourse/applytoall';
+
+            this.LessonPreviewUrl = apiUrl + '/lesson/:id/lessonpreview';
         }
     }
     

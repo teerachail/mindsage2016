@@ -40,23 +40,21 @@ namespace WebManagementPortal.Controllers
             });
 
             var unitIdRunner = 1;
-            var units = unitQry.Select(it => new Models.CourseCatalog.Unit
-            {
-                id = it.Id.ToString(),
-                Title = it.Title,
-                Description = it.Description,
-                Order = unitIdRunner++,
-                Lessons = lessons
-            });
-
             var semesterNameRunner = (byte)65;
             var semesters = semesterQry.Select(it => new Models.CourseCatalog.Semester
             {
                 id = it.Id.ToString(),
                 Title = it.Title,
                 Description = it.Description,
-                Units = units,
-                Name = string.Format("{0}", (char)semesterNameRunner++)
+                Name = string.Format("{0}", (char)semesterNameRunner++),
+                Units = unitQry.Where(unit => unit.SemesterId == it.Id).Select(unit => new Models.CourseCatalog.Unit
+                {
+                    id = unit.Id.ToString(),
+                    Title = unit.Title,
+                    Description = unit.Description,
+                    Order = unitIdRunner++,
+                    Lessons = lessons
+                }),
             });
 
             var result = new Models.CourseCatalog
@@ -115,23 +113,21 @@ namespace WebManagementPortal.Controllers
             });
 
             var unitIdRunner = 1;
-            var units = unitQry.Select(it => new Models.GetCourseDetailRespond.Unit
-            {
-                Title = it.Title,
-                Description = it.Description,
-                UnitNo = unitIdRunner++,
-                Lessons = lessons,
-                TotalWeeks = it.TotalWeeks
-            });
-
             var semesterNameRunner = (byte)65;
             var semesters = semesterQry.Select(it => new Models.GetCourseDetailRespond.Semester
             {
                 Title = it.Title,
                 Description = it.Description,
-                Units = units,
                 Name = string.Format("{0}", (char)semesterNameRunner++),
-                TotalWeeks = it.TotalWeeks
+                TotalWeeks = it.TotalWeeks,
+                Units = unitQry.Where(unit => unit.SemesterId == it.Id).Select(unit => new Models.GetCourseDetailRespond.Unit
+                {
+                    Title = unit.Title,
+                    Description = unit.Description,
+                    UnitNo = unitIdRunner++,
+                    Lessons = lessons,
+                    TotalWeeks = unit.TotalWeeks
+                }),
             });
 
             var relatedCourses = (relatedCourseList ?? Enumerable.Empty<CourseCatalog>())

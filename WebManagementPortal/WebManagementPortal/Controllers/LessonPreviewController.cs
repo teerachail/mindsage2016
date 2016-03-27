@@ -1,0 +1,66 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using System.Data.Entity;
+using System.Threading.Tasks;
+using WebManagementPortal.EF;
+
+namespace WebManagementPortal.Controllers
+{
+    [RoutePrefix("api/lessonpreview")]
+    public class LessonPreviewController : ApiController
+    {
+        // GET: api/lessonpreview/{lesson-id}
+        [Route("{id}/lesson")]
+        public async Task<Models.LessonContentRespond> GetLesson(int id)
+        {
+            CourseCatalog courseCatalog;
+            Lesson lessonCatalog;
+            using (var dctx = new EF.MindSageDataModelsContainer())
+            {
+                lessonCatalog = await dctx.Lessons
+                    .Include("Unit.Semester")
+                    .FirstOrDefaultAsync(it => it.Id == id);
+                if (lessonCatalog == null) return null;
+
+                courseCatalog = await dctx.CourseCatalogs
+                    .Include("Semesters.Units")
+                    .FirstOrDefaultAsync(it => it.Id == lessonCatalog.Unit.Semester.CourseCatalogId);
+                if (courseCatalog == null) return null;
+            }
+
+            var semesters = courseCatalog.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.RecLog.CreatedDate);
+            var semesterRunner = 65;
+            foreach (var item in semesters)
+            {
+                if (item.Id == lessonCatalog.Unit.SemesterId) break;
+                semesterRunner++;
+            }
+
+            var units = semesters.SelectMany(it=>it.Units).Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.RecLog.CreatedDate);
+            var unitRunner = 1;
+            foreach (var item in units)
+            {
+                if (item.Id == lessonCatalog.UnitId) break;
+                unitRunner++;
+            }
+            var result = new Models.LessonContentRespond
+            {
+                ExtraContentUrls = lessonCatalog?.ExtraContentUrls?.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries) ?? Enumerable.Empty<string>(),
+                CreatedDate = lessonCatalog.RecLog.CreatedDate,
+                PrimaryContentURL = lessonCatalog.PrimaryContentURL,
+                SemesterName = string.Format("{0}",(char)semesterRunner),
+                ShortDescription = lessonCatalog.ShortDescription,
+                ShortTeacherLessonPlan = lessonCatalog.ShortTeacherLessonPlan,
+                FullDescription = lessonCatalog.MoreDescription,
+                FullTeacherLessonPlan = lessonCatalog.MoreTeacherLessonPlan,
+                Title = lessonCatalog.Title,
+                Order = unitRunner
+            };
+            return result;
+        }
+    }
+}

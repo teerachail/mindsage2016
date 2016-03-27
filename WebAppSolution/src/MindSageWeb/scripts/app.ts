@@ -24,7 +24,8 @@
         'app.teacherlists',
         'app.sidemenus',
         'app.settings',
-        'app.calendar'
+        'app.calendar',
+        'app.lessonpreviews'
     ])
         .config(config)
         .run(run)

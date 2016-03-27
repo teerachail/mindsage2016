@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.OptionsModel;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using System;
@@ -15,6 +16,7 @@ namespace MindSageWeb.Controllers
     {
         #region Fields
 
+        private AppConfigOptions _appConfig;
         private NotificationController _notificationCtrl;
         private IClassCalendarRepository _classCalendarRepo;
         private IUserProfileRepository _userprofileRepo;
@@ -42,6 +44,7 @@ namespace MindSageWeb.Controllers
         /// <param name="friendRequestRepo">Friend request repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
         /// <param name="notificationCtrl">Notificaotion API</param>
+        /// <param name="config">App configuration option</param>
         public LessonController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IClassRoomRepository classRoomRepo,
@@ -51,6 +54,7 @@ namespace MindSageWeb.Controllers
             IFriendRequestRepository friendRequestRepo,
             IUserActivityRepository userActivityRepo,
             NotificationController notificationCtrl,
+            IOptions<AppConfigOptions> options,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -61,6 +65,7 @@ namespace MindSageWeb.Controllers
             _commentRepo = commentRepo;
             _friendRequestRepo = friendRequestRepo;
             _userActivityRepo = userActivityRepo;
+            _appConfig = options.Value;
             _dateTime = dateTime;
         }
 
@@ -150,6 +155,18 @@ namespace MindSageWeb.Controllers
                 IsTeacher = isTeacher,
                 TotalLikes = selectedLesson.TotalLikes
             };
+        }
+
+        [HttpGet]
+        [Route("{id}/lessonpreview")]
+        public async System.Threading.Tasks.Task<LessonContentRespond> GetLessonPreview(string id)
+        {
+            using (var http = new System.Net.Http.HttpClient())
+            {
+                var result = await http.GetStringAsync($"{ _appConfig.ManagementPortalUrl }/api/lessonpreview/{ id }/lesson");
+                var lessonCatalog = Newtonsoft.Json.JsonConvert.DeserializeObject<LessonContentRespond>(result);
+                return lessonCatalog;
+            }
         }
 
         // GET: api/lesson/{lesson-id}/{class-room-id}/comments/{user-id}

@@ -110,7 +110,7 @@
     @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.Unit.Semester.CourseCatalogId }, new { @class = "btn btn-default" })
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }, new { @class = "btn btn-warning" })
     @Html.ActionLink("Delete", "Delete", new { id = Model.Id }, new { @class = "btn btn-danger" })
-    <a href="#" class="btn btn-success btn-lg pull-right">Preview</a>
+    <a href="@AppConfigOptions.MindSageWebUrl/my#!/lessonpreview/@Model.Id" target="_blank" class="btn btn-success btn-lg pull-right">Preview</a>
 </p>
 
 <hr />
