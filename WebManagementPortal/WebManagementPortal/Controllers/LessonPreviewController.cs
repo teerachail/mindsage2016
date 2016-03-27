@@ -62,5 +62,30 @@ namespace WebManagementPortal.Controllers
             };
             return result;
         }
+
+        [HttpGet]
+        [Route("{id}/ads")]
+        public async Task<Models.OwnCarousel> GetAds(int id)
+        {
+            Lesson lessonCatalog;
+            using (var dctx = new EF.MindSageDataModelsContainer())
+            {
+                lessonCatalog = await dctx.Lessons
+                    .Include("Advertisements")
+                    .FirstOrDefaultAsync(it => it.Id == id);
+            }
+            if (lessonCatalog == null) return null;
+            var adsUrls = (lessonCatalog.Advertisements ?? Enumerable.Empty<Advertisement>())
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .Select(it => it.ImageUrl);
+            var result = new Models.OwnCarousel
+            {
+                owl = adsUrls.Select(it => new Models.OwnCarousel.OwnItem
+                {
+                    item = $"<div class='item'><img src='{ it }' /></div>"
+                })
+            };
+            return result;
+        }
     }
 }

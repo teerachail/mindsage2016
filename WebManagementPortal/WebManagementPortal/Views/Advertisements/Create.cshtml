@@ -34,9 +34,9 @@
         </div>
 
         <div class="form-group">
-            @Html.LabelFor(model => model.Lesson.Unit.Id, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.Lesson.Unit.Title, "Unit", htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.Label(Model.Lesson.Unit.Title, htmlAttributes: new { @class = "control-label" })
+                <label class="control-label">@Model.Lesson.Unit.Title</label>
                 @Html.ValidationMessageFor(model => model.Lesson.Unit.Title, "", new { @class = "text-danger" })
             </div>
         </div>

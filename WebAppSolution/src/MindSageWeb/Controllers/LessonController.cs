@@ -169,6 +169,18 @@ namespace MindSageWeb.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("{id}/lessonpreviewads")]
+        public async System.Threading.Tasks.Task<OwnCarousel> GetLessonPreviewAds(int id)
+        {
+            using (var http = new System.Net.Http.HttpClient())
+            {
+                var result = await http.GetStringAsync($"{ _appConfig.ManagementPortalUrl }/api/lessonpreview/{ id }/ads");
+                var ads = Newtonsoft.Json.JsonConvert.DeserializeObject<OwnCarousel>(result);
+                return ads;
+            }
+        }
+
         // GET: api/lesson/{lesson-id}/{class-room-id}/comments/{user-id}
         /// <summary>
         /// Get lesson's comments

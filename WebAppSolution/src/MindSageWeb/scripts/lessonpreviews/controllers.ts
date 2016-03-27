@@ -7,19 +7,25 @@ module app.lessonpreviews {
         private content;
         private PrimaryVideoUrl;
 
-        static $inject = ['$sce', '$q', '$stateParams', 'app.lessonpreviews.LessonService'];
-        constructor(private $sce, private $q, private $stateParams, private svc: app.lessonpreviews.LessonService) {
+        static $inject = ['$sce', '$q', '$stateParams', 'defaultUrl', 'app.lessonpreviews.LessonService'];
+        constructor(private $sce, private $q, private $stateParams, private defaultUrl, private svc: app.lessonpreviews.LessonService) {
             this.prepareLessonContents();
         }
 
         private prepareLessonContents(): void {
-            this.svc.GetContent(this.$stateParams.lessonId).then(
+            var lessonId = this.$stateParams.lessonId;
+            this.svc.GetContent(lessonId).then(
                 it => {
                     this.content = it;
-                },
-                error => {
-                    console.log('Error: ' + error);
-                });
+                    this.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(it.PrimaryContentURL);
+                }                    ,
+                error => console.log('Error: ' + error));
+            (<any>angular.element(".owl-carousel")).owlCarousel({
+                autoPlay: true,
+                slideSpeed: 300,
+                jsonPath: this.defaultUrl + '/api/lesson/' + lessonId + '/lessonpreviewads',
+                singleItem: true
+            });
         }
         
         public selectTeacherView(): void {
