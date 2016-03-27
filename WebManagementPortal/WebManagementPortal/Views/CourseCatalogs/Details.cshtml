@@ -85,6 +85,14 @@
         </dd>
 
         <dt>
+            @Html.DisplayNameFor(model => model.TotalWeeks)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TotalWeeks)
+        </dd>
+
+        <dt>
             @Html.DisplayNameFor(model => model.DescriptionImageUrl)
         </dt>
 
@@ -131,6 +139,12 @@
             <th>
                 Description
             </th>
+            <th>
+                Total weeks
+            </th>
+            <th>
+                Created date
+            </th>
             <th></th>
         </tr>
 
@@ -152,13 +166,19 @@
                     @Html.DisplayFor(modelItem => semester.Description)
                 </td>
                 <td>
+                    @Html.DisplayFor(modelItem => semester.TotalWeeks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => semester.RecLog.CreatedDate)
+                </td>
+                <td>
                     @Html.ActionLink("Edit", "Edit", "Semesters", new { id = semester.Id, courseCatalogId = Model.Id }, new { @class = "btn btn-default" })
                     @Html.ActionLink("Delete", "Delete", "Semesters", new { id = semester.Id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td colspan="3">
+                <td colspan="5">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3>Units</h3>
@@ -178,6 +198,12 @@
                                 <th>
                                     Description
                                 </th>
+                                <th>
+                                    Total weeks
+                                </th>
+                                <th>
+                                    Created date
+                                </th>
                                 <th></th>
                             </tr>
 
@@ -194,13 +220,19 @@
                                         @Html.DisplayFor(modelItem => unit.Description)
                                     </td>
                                     <td>
+                                        @Html.DisplayFor(modelItem => unit.TotalWeeks)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => unit.RecLog.CreatedDate)
+                                    </td>
+                                    <td>
                                         @Html.ActionLink("Edit", "Edit", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-default" })
                                         @Html.ActionLink("Delete", "Delete", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-danger" })
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td colspan="3">
+                                    <td colspan="5">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h3>Lesson</h3>

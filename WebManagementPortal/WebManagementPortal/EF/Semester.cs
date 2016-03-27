@@ -24,6 +24,7 @@ namespace WebManagementPortal.EF
         public int Id { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
+        public int TotalWeeks { get; set; }
         public int CourseCatalogId { get; set; }
     
         public RecordLog RecLog { get; set; }

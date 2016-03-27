@@ -55,7 +55,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Description,RecLog,SemesterId")] Unit unit)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,Description,TotalWeeks,RecLog,SemesterId")] Unit unit)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Description,RecLog,SemesterId")] Unit unit)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,Description,TotalWeeks,RecLog,SemesterId")] Unit unit)
         {
             if (ModelState.IsValid)
             {
@@ -102,6 +102,7 @@ namespace WebManagementPortal.Controllers
 
                 selectedUnit.Title = unit.Title;
                 selectedUnit.Description = unit.Description;
+                selectedUnit.TotalWeeks = unit.TotalWeeks;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "CourseCatalogs", new { @id = selectedUnit.Semester.CourseCatalogId });
             }

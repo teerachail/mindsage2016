@@ -31,6 +31,7 @@ namespace WebManagementPortal.EF
         public string Title { get; set; }
         public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
+        public int TotalWeeks { get; set; }
     
         public RecordLog RecLog { get; set; }
     

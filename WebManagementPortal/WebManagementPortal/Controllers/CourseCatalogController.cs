@@ -120,8 +120,8 @@ namespace WebManagementPortal.Controllers
                 Title = it.Title,
                 Description = it.Description,
                 UnitNo = unitIdRunner++,
-                Lessons = lessons
-                //TotalWeeks
+                Lessons = lessons,
+                TotalWeeks = it.TotalWeeks
             });
 
             var semesterNameRunner = (byte)65;
@@ -130,8 +130,8 @@ namespace WebManagementPortal.Controllers
                 Title = it.Title,
                 Description = it.Description,
                 Units = units,
-                Name = string.Format("{0}", (char)semesterNameRunner++)
-                //TotalWeeks
+                Name = string.Format("{0}", (char)semesterNameRunner++),
+                TotalWeeks = it.TotalWeeks
             });
 
             var relatedCourses = (relatedCourseList ?? Enumerable.Empty<CourseCatalog>())
@@ -153,8 +153,8 @@ namespace WebManagementPortal.Controllers
                 Series = courseCatalog.Series,
                 SideName = courseCatalog.SideName,
                 Title = courseCatalog.Title,
-                RelatedCourses = relatedCourses
-                //TotalWeeks
+                RelatedCourses = relatedCourses,
+                TotalWeeks = courseCatalog.TotalWeeks
             };
             return result;
         }

@@ -58,7 +58,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
+        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
@@ -93,7 +93,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
@@ -109,6 +109,7 @@ namespace WebManagementPortal.Controllers
                 selectedCourseCatalog.Series = courseCatalog.Series;
                 selectedCourseCatalog.Title = courseCatalog.Title;
                 selectedCourseCatalog.FullDescription = courseCatalog.FullDescription;
+                selectedCourseCatalog.TotalWeeks = courseCatalog.TotalWeeks;
                 selectedCourseCatalog.DescriptionImageUrl = courseCatalog.DescriptionImageUrl;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", new { @id = selectedCourseCatalog.Id });

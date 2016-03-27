@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/25/2016 18:02:23
+-- Date Created: 03/27/2016 13:51:50
 -- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -31,8 +31,12 @@ IF OBJECT_ID(N'[dbo].[FK_UnitLesson]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lessons] DROP CONSTRAINT [FK_UnitLesson];
 GO
 
-IF OBJECT_ID(N'[dbo].[FK_LessonAdvertisment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Advertisments] DROP CONSTRAINT [FK_LessonAdvertisment];
+IF OBJECT_ID(N'[dbo].[FK_LessonAdvertisement]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Advertisements] DROP CONSTRAINT [FK_LessonAdvertisement];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_LessonTopicOfTheDay]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TopicOfTheDays] DROP CONSTRAINT [FK_LessonTopicOfTheDay];
 GO
 
 -- --------------------------------------------------
@@ -55,8 +59,12 @@ IF OBJECT_ID(N'[dbo].[Lessons]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Lessons];
 GO
 
-IF OBJECT_ID(N'[dbo].[Advertisments]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Advertisments];
+IF OBJECT_ID(N'[dbo].[Advertisements]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Advertisements];
+GO
+
+IF OBJECT_ID(N'[dbo].[TopicOfTheDays]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TopicOfTheDays];
 GO
 
 

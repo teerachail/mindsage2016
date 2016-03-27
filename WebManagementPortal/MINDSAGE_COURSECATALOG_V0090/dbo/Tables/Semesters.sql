@@ -3,6 +3,7 @@ CREATE TABLE [dbo].[Semesters] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Title] varchar(255)  NOT NULL,
     [Description] varchar(max)  NOT NULL,
+    [TotalWeeks] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
     [CourseCatalogId] int  NOT NULL

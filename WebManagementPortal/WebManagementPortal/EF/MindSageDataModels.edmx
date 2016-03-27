@@ -47,6 +47,7 @@
     <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="FullDescription" Type="varchar(max)" Nullable="false" />
     <Property Name="DescriptionImageUrl" Type="varchar(max)" Nullable="false" />
+    <Property Name="TotalWeeks" Type="int" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
   </EntityType>
@@ -57,6 +58,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="TotalWeeks" Type="int" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
     <Property Name="CourseCatalogId" Type="int" Nullable="false" />
@@ -68,6 +70,7 @@
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="TotalWeeks" Type="int" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
     <Property Name="SemesterId" Type="int" Nullable="false" />
@@ -216,6 +219,7 @@
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="FullDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DescriptionImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
           <NavigationProperty Name="Semesters" Relationship="MindSageDataModels.CourseCatalogSemester" FromRole="CourseCatalog" ToRole="Semester" />
         </EntityType>
@@ -230,6 +234,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
           <NavigationProperty Name="CourseCatalog" Relationship="MindSageDataModels.CourseCatalogSemester" FromRole="Semester" ToRole="CourseCatalog" />
           <Property Name="CourseCatalogId" Type="Int32" Nullable="false" />
@@ -242,6 +247,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
           <NavigationProperty Name="Semester" Relationship="MindSageDataModels.SemesterUnit" FromRole="Unit" ToRole="Semester" />
           <Property Name="SemesterId" Type="Int32" Nullable="false" />
@@ -366,6 +372,7 @@
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
           <ScalarProperty Name="DescriptionImageUrl" ColumnName="DescriptionImageUrl" />
+          <ScalarProperty Name="TotalWeeks" ColumnName="TotalWeeks" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
@@ -379,6 +386,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TotalWeeks" ColumnName="TotalWeeks" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
@@ -393,6 +401,7 @@
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
           <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="TotalWeeks" ColumnName="TotalWeeks" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />

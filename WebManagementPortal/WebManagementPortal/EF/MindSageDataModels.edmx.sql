@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/25/2016 18:02:23
+-- Date Created: 03/27/2016 13:51:50
 -- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -26,8 +26,11 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_UnitLesson]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[Lessons] DROP CONSTRAINT [FK_UnitLesson];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LessonAdvertisment]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[Advertisments] DROP CONSTRAINT [FK_LessonAdvertisment];
+IF OBJECT_ID(N'[dbo].[FK_LessonAdvertisement]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Advertisements] DROP CONSTRAINT [FK_LessonAdvertisement];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LessonTopicOfTheDay]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TopicOfTheDays] DROP CONSTRAINT [FK_LessonTopicOfTheDay];
 GO
 
 -- --------------------------------------------------
@@ -46,8 +49,11 @@ GO
 IF OBJECT_ID(N'[dbo].[Lessons]', 'U') IS NOT NULL
     DROP TABLE [dbo].[Lessons];
 GO
-IF OBJECT_ID(N'[dbo].[Advertisments]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[Advertisments];
+IF OBJECT_ID(N'[dbo].[Advertisements]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Advertisements];
+GO
+IF OBJECT_ID(N'[dbo].[TopicOfTheDays]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TopicOfTheDays];
 GO
 
 -- --------------------------------------------------
@@ -66,6 +72,7 @@ CREATE TABLE [dbo].[CourseCatalogs] (
     [Title] varchar(255)  NOT NULL,
     [FullDescription] varchar(max)  NOT NULL,
     [DescriptionImageUrl] varchar(max)  NOT NULL,
+    [TotalWeeks] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL
 );
@@ -76,6 +83,7 @@ CREATE TABLE [dbo].[Semesters] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Title] varchar(255)  NOT NULL,
     [Description] varchar(max)  NOT NULL,
+    [TotalWeeks] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
     [CourseCatalogId] int  NOT NULL
@@ -87,6 +95,7 @@ CREATE TABLE [dbo].[Units] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Title] varchar(255)  NOT NULL,
     [Description] varchar(max)  NOT NULL,
+    [TotalWeeks] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
     [SemesterId] int  NOT NULL
