@@ -137,7 +137,12 @@ namespace WebManagementPortal.Controllers
             var now = DateTime.Now;
             semester.RecLog.DeletedDate = now;
             foreach (var item in semester.Units) item.RecLog.DeletedDate = now;
-            foreach (var item in semester.Units.SelectMany(it => it.Lessons)) item.RecLog.DeletedDate = now;
+            var lessonQry = semester.Units.SelectMany(it => it.Lessons);
+            foreach (var item in lessonQry) item.RecLog.DeletedDate = now;
+            var adsQry = lessonQry.SelectMany(it => it.Advertisements);
+            foreach (var item in adsQry) item.RecLog.DeletedDate = now;
+            var totdQry = lessonQry.SelectMany(it => it.TopicOfTheDays);
+            foreach (var item in totdQry) item.RecLog.DeletedDate = now;
             await db.SaveChangesAsync();
             return RedirectToAction("Details", "CourseCatalogs", new { @id = semester.CourseCatalogId });
         }

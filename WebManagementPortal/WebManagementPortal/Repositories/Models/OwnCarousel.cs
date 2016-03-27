@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebManagementPortal.Models
+namespace WebManagementPortal.Repositories.Models
 {
     public class OwnCarousel
     {

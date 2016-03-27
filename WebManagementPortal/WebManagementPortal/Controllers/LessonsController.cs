@@ -134,7 +134,10 @@ namespace WebManagementPortal.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             Lesson lesson = await db.Lessons.FindAsync(id);
-            lesson.RecLog.DeletedDate = DateTime.Now;
+            var now = DateTime.Now;
+            lesson.RecLog.DeletedDate = now;
+            foreach (var item in lesson.Advertisements) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.TopicOfTheDays) item.RecLog.DeletedDate = now;
             await db.SaveChangesAsync();
             return RedirectToAction("Details", "CourseCatalogs", new { @id = lesson.Unit.Semester.CourseCatalogId });
         }

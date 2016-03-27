@@ -119,40 +119,40 @@ namespace MindSageWeb.Controllers
             var result = new GetCourseDetailRespond
             {
                 id = selectedCourse.id,
-                Grade = selectedCourse.Grade,
                 GroupName = selectedCourse.GroupName,
-                CreatedDate = selectedCourse.CreatedDate,
-                FullDescription = selectedCourse.FullDescription,
-                DescriptionImageUrl = selectedCourse.DescriptionImageUrl,
+                Grade = selectedCourse.Grade,
                 SideName = selectedCourse.SideName,
                 PriceUSD = selectedCourse.PriceUSD,
                 Series = selectedCourse.Series,
                 Title = selectedCourse.Title,
-                TotalWeeks = selectedCourse.Semesters.SelectMany(it => it.Units).SelectMany(it=>it.Lessons).Count(),
+                FullDescription = selectedCourse.FullDescription,
+                DescriptionImageUrl = selectedCourse.DescriptionImageUrl,
+                TotalWeeks = selectedCourse.TotalWeeks,
+                CreatedDate = selectedCourse.CreatedDate,
                 RelatedCourses = relatedCourses,
                 Semesters = selectedCourse.Semesters.Select(semester => new GetCourseDetailRespond.Semester
                 {
-                    Description = semester.Description,
                     Name = semester.Name,
                     Title = semester.Title,
-                    TotalWeeks = semester.Units.SelectMany(unit => unit.Lessons).Count(),
+                    Description = semester.Description,
+                    TotalWeeks = semester.TotalWeeks,
                     Units = semester.Units.Select(unit => new GetCourseDetailRespond.Unit
                     {
-                        Description = unit.Description,
-                        Title = unit.Title,
-                        TotalWeeks = unit.Lessons.Count(),
                         UnitNo = unit.Order,
+                        Title = unit.Title,
+                        Description = unit.Description,
+                        TotalWeeks = unit.TotalWeeks,
                         Lessons = unit.Lessons.Select(lesson => new GetCourseDetailRespond.Lesson
                         {
                             id = lesson.id,
                             Order = lesson.Order,
-                            Contents = lesson.Contents.Select(it=>new GetCourseDetailRespond.LessonContent
+                            Contents = lesson.Contents.Select(it => new GetCourseDetailRespond.LessonContent
                             {
                                 Description = it.Description,
                                 ImageUrl = it.ImageUrl
-                            }).ToList()
-                        }).ToList()
-                    }).ToList()
+                            })
+                        })
+                    })
                 }).ToList()
             };
             return result;

@@ -18,6 +18,7 @@ namespace MindSageWeb.Repositories.Models
         public string Title { get; set; }
         public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
+        public int TotalWeeks { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
@@ -34,6 +35,7 @@ namespace MindSageWeb.Repositories.Models
             public string Name { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
+            public int TotalWeeks { get; set; }
 
             public IEnumerable<Unit> Units { get; set; }
 
@@ -48,6 +50,7 @@ namespace MindSageWeb.Repositories.Models
             public int Order { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
+            public int TotalWeeks { get; set; }
 
             public IEnumerable<Lesson> Lessons { get; set; }
 

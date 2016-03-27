@@ -13,8 +13,37 @@ namespace WebManagementPortal
         {
             get
             {
-                return ConfigurationManager.AppSettings["mindsageWebUrl"] ?? string.Empty; ;
+                var value = ConfigurationManager.AppSettings["mindsageWebUrl"] ?? string.Empty;
+                return value;
             }
         }
+
+        public static string PrimaryDBConnectionString
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["PrimaryDBConnectionString"] ?? string.Empty;
+                return value;
+            }
+        }
+
+        public static string PrimaryDBName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["PrimaryDBName"] ?? string.Empty;
+                return value;
+            }
+        }
+
+        public static string CourseCatalogTableName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["CourseCatalogTableName"] ?? string.Empty;
+                return value;
+            }
+        }
+
     }
 }

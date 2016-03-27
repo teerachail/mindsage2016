@@ -7,6 +7,7 @@ using System.Web.Http;
 using System.Data.Entity;
 using System.Threading.Tasks;
 using WebManagementPortal.EF;
+using WebManagementPortal.Repositories.Models;
 
 namespace WebManagementPortal.Controllers
 {
@@ -15,9 +16,9 @@ namespace WebManagementPortal.Controllers
     {
         // GET: api/lessonpreview/{lesson-id}
         [Route("{id}/lesson")]
-        public async Task<Models.LessonContentRespond> GetLesson(int id)
+        public async Task<LessonContentRespond> GetLesson(int id)
         {
-            CourseCatalog courseCatalog;
+            EF.CourseCatalog courseCatalog;
             Lesson lessonCatalog;
             using (var dctx = new EF.MindSageDataModelsContainer())
             {
@@ -47,7 +48,7 @@ namespace WebManagementPortal.Controllers
                 if (item.Id == lessonCatalog.UnitId) break;
                 unitRunner++;
             }
-            var result = new Models.LessonContentRespond
+            var result = new LessonContentRespond
             {
                 ExtraContentUrls = lessonCatalog?.ExtraContentUrls?.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries) ?? Enumerable.Empty<string>(),
                 CreatedDate = lessonCatalog.RecLog.CreatedDate,
@@ -65,7 +66,7 @@ namespace WebManagementPortal.Controllers
 
         [HttpGet]
         [Route("{id}/ads")]
-        public async Task<Models.OwnCarousel> GetAds(int id)
+        public async Task<OwnCarousel> GetAds(int id)
         {
             Lesson lessonCatalog;
             using (var dctx = new EF.MindSageDataModelsContainer())
@@ -78,9 +79,9 @@ namespace WebManagementPortal.Controllers
             var adsUrls = (lessonCatalog.Advertisements ?? Enumerable.Empty<Advertisement>())
                 .Where(it => !it.RecLog.DeletedDate.HasValue)
                 .Select(it => it.ImageUrl);
-            var result = new Models.OwnCarousel
+            var result = new OwnCarousel
             {
-                owl = adsUrls.Select(it => new Models.OwnCarousel.OwnItem
+                owl = adsUrls.Select(it => new OwnCarousel.OwnItem
                 {
                     item = $"<div class='item'><img src='{ it }' /></div>"
                 })

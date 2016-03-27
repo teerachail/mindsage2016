@@ -18,8 +18,8 @@ namespace MindSageWeb.Repositories.Models
         public string Title { get; set; }
         public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
-        public DateTime CreatedDate { get; set; }
         public int TotalWeeks { get; set; }
+        public DateTime CreatedDate { get; set; }
 
         public IEnumerable<Semester> Semesters { get; set; }
         public IEnumerable<RelatedCourse> RelatedCourses { get; set; }

@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebManagementPortal.Models
+namespace WebManagementPortal.Repositories.Models
 {
-    public class GetCourseDetailRespond
+    public class CourseCatalog
     {
         #region Properties
 
@@ -19,11 +19,12 @@ namespace WebManagementPortal.Models
         public string Title { get; set; }
         public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
-        public DateTime CreatedDate { get; set; }
         public int TotalWeeks { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
 
         public IEnumerable<Semester> Semesters { get; set; }
-        public IEnumerable<RelatedCourse> RelatedCourses { get; set; }
+        public IEnumerable<string> Advertisements { get; set; }
 
         #endregion Properties
 
@@ -31,6 +32,7 @@ namespace WebManagementPortal.Models
         {
             #region Properties
 
+            public string id { get; set; }
             public string Name { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
@@ -45,7 +47,8 @@ namespace WebManagementPortal.Models
         {
             #region Properties
 
-            public int UnitNo { get; set; }
+            public string id { get; set; }
+            public int Order { get; set; }
             public string Title { get; set; }
             public string Description { get; set; }
             public int TotalWeeks { get; set; }
@@ -72,16 +75,6 @@ namespace WebManagementPortal.Models
 
             public string ImageUrl { get; set; }
             public string Description { get; set; }
-
-            #endregion Properties
-        }
-
-        public class RelatedCourse
-        {
-            #region Properties
-
-            public string CourseId { get; set; }
-            public string Name { get; set; }
 
             #endregion Properties
         }

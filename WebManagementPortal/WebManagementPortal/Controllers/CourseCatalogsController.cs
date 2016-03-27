@@ -8,6 +8,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebManagementPortal.EF;
+using repoModel = WebManagementPortal.Repositories.Models;
 
 namespace WebManagementPortal.Controllers
 {
@@ -138,9 +139,105 @@ namespace WebManagementPortal.Controllers
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             CourseCatalog courseCatalog = await db.CourseCatalogs.FindAsync(id);
-            courseCatalog.RecLog.DeletedDate = DateTime.Now;
+            var now = DateTime.Now;
+            courseCatalog.RecLog.DeletedDate = now;
+            var semesterQry = courseCatalog.Semesters;
+            foreach (var item in semesterQry) item.RecLog.DeletedDate = now;
+            var unitQry = semesterQry.SelectMany(it => it.Units);
+            foreach (var item in unitQry) item.RecLog.DeletedDate = now;
+            var lessonQry = unitQry.SelectMany(it => it.Lessons);
+            foreach (var item in lessonQry) item.RecLog.DeletedDate = now;
+            var adsQry = lessonQry.SelectMany(it => it.Advertisements);
+            foreach (var item in adsQry) item.RecLog.DeletedDate = now;
+            var totdQry = lessonQry.SelectMany(it => it.TopicOfTheDays);
+            foreach (var item in totdQry) item.RecLog.DeletedDate = now;
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        // GET: CourseCatalogs/UpdateAllCourses
+        public ActionResult UpdateAllCourses()
+        {
+            return View();
+        }
+
+        // POST: CourseCatalogs/UpdateAllCourses/5
+        [HttpPost, ActionName("UpdateAllCourses")]
+        public async Task<ActionResult> UpdateAllCoursesConfirmed()
+        {
+            IEnumerable<CourseCatalog> allCourseCatalog;
+            using (var dctx = new EF.MindSageDataModelsContainer())
+            {
+                allCourseCatalog = dctx.CourseCatalogs
+                    .Include("Semesters.Units.Lessons.Advertisements")
+                    .Include("Semesters.Units.Lessons.TopicOfTheDays")
+                    .ToList();
+            }
+            var canUpdateCourses = allCourseCatalog != null && allCourseCatalog.Any();
+            if (!canUpdateCourses) return RedirectToAction("Index");
+
+            await updateCourseCatalog(allCourseCatalog);
+
+            return RedirectToAction("Index");
+        }
+
+        private async Task updateCourseCatalog(IEnumerable<CourseCatalog> allCourseCatalog)
+        {
+            var courseCatalogRepo = new WebManagementPortal.Repositories.CourseCatalogRepository();
+            foreach (var courseCatalog in allCourseCatalog)
+            {
+                var semesterQry = courseCatalog.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue);
+                var unitQry = semesterQry.SelectMany(it => it.Units).Where(it => !it.RecLog.DeletedDate.HasValue);
+                var lessonQry = unitQry.SelectMany(it => it.Lessons).Where(it => !it.RecLog.DeletedDate.HasValue);
+
+                var lessonIdRunner = 1;
+                var lessons = lessonQry.Select(it => new repoModel.CourseCatalog.Lesson
+                {
+                    id = it.Id.ToString(),
+                    Order = lessonIdRunner++,
+                    Contents = Enumerable.Empty<repoModel.CourseCatalog.LessonContent>() // HACK: Create lesson's contents
+                });
+
+                var unitIdRunner = 1;
+                var semesterNameRunner = (byte)65;
+                var semesters = semesterQry.Select(it => new repoModel.CourseCatalog.Semester
+                {
+                    id = it.Id.ToString(),
+                    Title = it.Title,
+                    Description = it.Description,
+                    Name = string.Format("{0}", (char)semesterNameRunner++),
+                    TotalWeeks = it.TotalWeeks,
+                    Units = unitQry.Where(unit => unit.SemesterId == it.Id).Select(unit => new repoModel.CourseCatalog.Unit
+                    {
+                        id = unit.Id.ToString(),
+                        Title = unit.Title,
+                        Description = unit.Description,
+                        Order = unitIdRunner++,
+                        TotalWeeks = unit.TotalWeeks,
+                        Lessons = lessons
+                    }),
+                });
+
+                var result = new repoModel.CourseCatalog
+                {
+                    id = courseCatalog.Id.ToString(),
+                    GroupName = courseCatalog.GroupName,
+                    Grade = courseCatalog.Grade,
+                    Advertisements = courseCatalog.Advertisements.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries),
+                    SideName = courseCatalog.SideName,
+                    PriceUSD = courseCatalog.PriceUSD,
+                    Series = courseCatalog.Series,
+                    Title = courseCatalog.Title,
+                    FullDescription = courseCatalog.FullDescription,
+                    DescriptionImageUrl = courseCatalog.DescriptionImageUrl,
+                    CreatedDate = courseCatalog.RecLog.CreatedDate,
+                    DeletedDate = courseCatalog.RecLog.DeletedDate,
+                    Semesters = semesters,
+                    TotalWeeks = courseCatalog.TotalWeeks,
+                };
+
+                await courseCatalogRepo.UpsertCourseCatalog(result);
+            }
         }
 
         protected override void Dispose(bool disposing)

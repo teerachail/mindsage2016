@@ -1,4 +1,5 @@
-﻿using MindSageWeb.Controllers;
+﻿using Microsoft.Extensions.OptionsModel;
+using MindSageWeb.Controllers;
 using MindSageWeb.Repositories;
 using Moq;
 using TechTalk.SpecFlow;
@@ -25,6 +26,7 @@ namespace MindSageWeb.Specs.Steps
             var likeDiscussionRepo = mock.Create<ILikeDiscussionRepository>();
             var studentKeyRepo = mock.Create<IStudentKeyRepository>();
             var notificationRepo = mock.Create<INotificationRepository>();
+            var option = mock.Create<IOptions<AppConfigOptions>>();
             var dateTime = mock.Create<IDateTime>();
 
             ScenarioContext.Current.Set(classRoomRepo);
@@ -39,6 +41,7 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(likeDiscussionRepo);
             ScenarioContext.Current.Set(studentKeyRepo);
             ScenarioContext.Current.Set(notificationRepo);
+            ScenarioContext.Current.Set(option);
             ScenarioContext.Current.Set(dateTime);
 
             var notificationCtrl = new NotificationController(userprofileRepo.Object,
@@ -60,6 +63,7 @@ namespace MindSageWeb.Specs.Steps
                 friendRequestRepo.Object,
                 userActivityRepo.Object,
                 notificationCtrl,
+                option.Object,
                 dateTime.Object);
 
             var commentCtrl = new CommentController(classCalendarRepo.Object,
