@@ -13,6 +13,8 @@ namespace MindSageWeb
         public string PrimaryDBName { get; set; }
         public string GoogleClinetId { get; set; }
         public string GoogleClientSecret { get; set; }
+        public string ManagementPortalUrl { get; set; }
+        public string MindSageUrl { get; set; }
 
         #endregion Properties
     }

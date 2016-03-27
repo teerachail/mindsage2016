@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json;
+using Microsoft.Extensions.OptionsModel;
 
 namespace MindSageWeb.Controllers
 {
@@ -18,6 +19,7 @@ namespace MindSageWeb.Controllers
         #region Fields
 
         private ICourseCatalogRepository _repo;
+        private AppConfigOptions _appConfig;
 
         #endregion Fields
 
@@ -27,9 +29,12 @@ namespace MindSageWeb.Controllers
         /// Initialize course controller
         /// </summary>
         /// <param name="courseCatalogRepo">Course catalog repository</param>
-        public CourseController(ICourseCatalogRepository courseCatalogRepo)
+        /// <param name="config">App configuration option</param>
+        public CourseController(ICourseCatalogRepository courseCatalogRepo,
+            IOptions<AppConfigOptions> options)
         {
             _repo = courseCatalogRepo;
+            _appConfig = options.Value;
         }
 
         #endregion Constructors
@@ -186,7 +191,7 @@ namespace MindSageWeb.Controllers
         {
             using (var http = new System.Net.Http.HttpClient())
             {
-                var result = await http.GetStringAsync($"http://localhost:50726/api/CourseCatalog/{ id }/ads");
+                var result = await http.GetStringAsync($"{ _appConfig.ManagementPortalUrl }/api/CourseCatalog/{ id }/ads");
                 var courseCatalog = JsonConvert.DeserializeObject<OwnCarousel>(result);
                 return courseCatalog;
             }

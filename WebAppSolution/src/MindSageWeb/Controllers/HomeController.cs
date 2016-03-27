@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using System.Net.Http;
 using Newtonsoft.Json;
+using Microsoft.Extensions.OptionsModel;
 
 namespace MindSageWeb.Controllers
 {
@@ -12,11 +13,15 @@ namespace MindSageWeb.Controllers
     {
         private CourseController _courseCtrl;
         private MyCourseController _myCourseCtrl;
+        private AppConfigOptions _appConfig;
 
-        public HomeController(CourseController courseCtrl, MyCourseController myCourseCtrl)
+        public HomeController(CourseController courseCtrl, 
+            MyCourseController myCourseCtrl,
+            IOptions<AppConfigOptions> options)
         {
             _courseCtrl = courseCtrl;
             _myCourseCtrl = myCourseCtrl;
+            _appConfig = options.Value;
         }
 
         public IActionResult Index()
@@ -54,6 +59,7 @@ namespace MindSageWeb.Controllers
 
             ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
             ViewBag.IsCouponInvalid = isCouponInvalid;
+            ViewBag.MindSageUrl = _appConfig.MindSageUrl;
 
             return View(selectedCourse);
         }
@@ -62,7 +68,8 @@ namespace MindSageWeb.Controllers
         {
             using (var http = new HttpClient())
             {
-                var result = await http.GetStringAsync($"http://localhost:50726/api/CourseCatalog/{ id }/detail");
+                ViewBag.MindSageUrl = _appConfig.MindSageUrl;
+                var result = await http.GetStringAsync($"{ _appConfig.ManagementPortalUrl }/api/CourseCatalog/{ id }/detail");
                 var courseCatalog = JsonConvert.DeserializeObject<Repositories.Models.GetCourseDetailRespond>(result);
                 return View(courseCatalog);
             }

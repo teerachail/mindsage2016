@@ -41,6 +41,16 @@ namespace MindSageWeb
         {
             var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
             MongoAccess.MongoUtil.Instance.Initialize(appConfig);
+            services.AddOptions();
+            services.Configure<AppConfigOptions>(option =>
+            {
+                option.GoogleClientSecret = appConfig.GoogleClientSecret;
+                option.GoogleClinetId = appConfig.GoogleClinetId;
+                option.ManagementPortalUrl = appConfig.ManagementPortalUrl;
+                option.MindSageUrl = appConfig.MindSageUrl;
+                option.PrimaryDBConnectionString = appConfig.PrimaryDBConnectionString;
+                option.PrimaryDBName = appConfig.PrimaryDBName;
+            });
 
             // Add framework services.
             services.AddEntityFramework()

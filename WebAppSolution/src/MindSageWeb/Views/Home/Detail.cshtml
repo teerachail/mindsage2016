@@ -164,6 +164,7 @@
     </div>
 </div>
 
+@{ var mindsageUrl = ViewBag?.MindSageUrl ?? string.Empty; }
 @section Scripts
 {
     <script type="text/javascript">
@@ -171,7 +172,7 @@
             $(".owl-carousel").owlCarousel({
                 autoPlay: true,
                 slideSpeed: 300,
-                jsonPath: 'http://localhost:2528/api/course/@Model.id/ads',
+                jsonPath: '@mindsageUrl/api/course/@Model.id/ads',
                 singleItem: true
             });
         });
