@@ -237,10 +237,16 @@
     <Compile Include="EF\Advertisement.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\Contract.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\CourseCatalog.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Lesson.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\License.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\MindSageDataModels.Context.cs">
@@ -262,6 +268,9 @@
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Semester.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\TeacherKey.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\TopicOfTheDay.cs">

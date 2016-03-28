@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/27/2016 13:51:50
+-- Date Created: 03/28/2016 17:13:14
 -- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -140,6 +140,42 @@ CREATE TABLE [dbo].[TopicOfTheDays] (
 );
 GO
 
+-- Creating table 'Contracts'
+CREATE TABLE [dbo].[Contracts] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] varchar(255)  NOT NULL,
+    [StartDate] datetime  NOT NULL,
+    [ExpiredDate] datetime  NOT NULL,
+    [TimeZone] varchar(255)  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
+-- Creating table 'Licenses'
+CREATE TABLE [dbo].[Licenses] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [CourseName] varchar(255)  NOT NULL,
+    [Grade] varchar(50)  NOT NULL,
+    [StudentsCapacity] int  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL,
+    [ContractId] int  NOT NULL,
+    [CourseCatalogId] int  NOT NULL
+);
+GO
+
+-- Creating table 'TeacherKeys'
+CREATE TABLE [dbo].[TeacherKeys] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Grade] varchar(50)  NOT NULL,
+    [Code] varchar(50)  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL,
+    [LicenseId] int  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -177,6 +213,24 @@ GO
 -- Creating primary key on [Id] in table 'TopicOfTheDays'
 ALTER TABLE [dbo].[TopicOfTheDays]
 ADD CONSTRAINT [PK_TopicOfTheDays]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Contracts'
+ALTER TABLE [dbo].[Contracts]
+ADD CONSTRAINT [PK_Contracts]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Licenses'
+ALTER TABLE [dbo].[Licenses]
+ADD CONSTRAINT [PK_Licenses]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'TeacherKeys'
+ALTER TABLE [dbo].[TeacherKeys]
+ADD CONSTRAINT [PK_TeacherKeys]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -257,6 +311,51 @@ GO
 CREATE INDEX [IX_FK_LessonTopicOfTheDay]
 ON [dbo].[TopicOfTheDays]
     ([LessonId]);
+GO
+
+-- Creating foreign key on [ContractId] in table 'Licenses'
+ALTER TABLE [dbo].[Licenses]
+ADD CONSTRAINT [FK_ContractLicense]
+    FOREIGN KEY ([ContractId])
+    REFERENCES [dbo].[Contracts]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_ContractLicense'
+CREATE INDEX [IX_FK_ContractLicense]
+ON [dbo].[Licenses]
+    ([ContractId]);
+GO
+
+-- Creating foreign key on [CourseCatalogId] in table 'Licenses'
+ALTER TABLE [dbo].[Licenses]
+ADD CONSTRAINT [FK_CourseCatalogLicense]
+    FOREIGN KEY ([CourseCatalogId])
+    REFERENCES [dbo].[CourseCatalogs]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_CourseCatalogLicense'
+CREATE INDEX [IX_FK_CourseCatalogLicense]
+ON [dbo].[Licenses]
+    ([CourseCatalogId]);
+GO
+
+-- Creating foreign key on [LicenseId] in table 'TeacherKeys'
+ALTER TABLE [dbo].[TeacherKeys]
+ADD CONSTRAINT [FK_LicenseTeacherKey]
+    FOREIGN KEY ([LicenseId])
+    REFERENCES [dbo].[Licenses]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LicenseTeacherKey'
+CREATE INDEX [IX_FK_LicenseTeacherKey]
+ON [dbo].[TeacherKeys]
+    ([LicenseId]);
 GO
 
 -- --------------------------------------------------

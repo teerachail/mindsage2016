@@ -12,6 +12,9 @@
     <EntitySet Name="Lessons" EntityType="MindSageDataModels.Store.Lessons" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Advertisements" EntityType="MindSageDataModels.Store.Advertisements" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TopicOfTheDays" EntityType="MindSageDataModels.Store.TopicOfTheDays" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Contracts" EntityType="MindSageDataModels.Store.Contracts" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Licenses" EntityType="MindSageDataModels.Store.Licenses" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="TeacherKeys" EntityType="MindSageDataModels.Store.TeacherKeys" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CourseCatalogSemester" Association="MindSageDataModels.Store.CourseCatalogSemester">
       <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
       <End Role="Semester" EntitySet="Semesters" />
@@ -31,6 +34,18 @@
     <AssociationSet Name="LessonTopicOfTheDay" Association="MindSageDataModels.Store.LessonTopicOfTheDay">
       <End Role="Lesson" EntitySet="Lessons" />
       <End Role="TopicOfTheDay" EntitySet="TopicOfTheDays" />
+    </AssociationSet>
+    <AssociationSet Name="ContractLicense" Association="MindSageDataModels.Store.ContractLicense">
+      <End Role="Contract" EntitySet="Contracts" />
+      <End Role="License" EntitySet="Licenses" />
+    </AssociationSet>
+    <AssociationSet Name="CourseCatalogLicense" Association="MindSageDataModels.Store.CourseCatalogLicense">
+      <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
+      <End Role="License" EntitySet="Licenses" />
+    </AssociationSet>
+    <AssociationSet Name="LicenseTeacherKey" Association="MindSageDataModels.Store.LicenseTeacherKey">
+      <End Role="License" EntitySet="Licenses" />
+      <End Role="TeacherKey" EntitySet="TeacherKeys" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="CourseCatalogs">
@@ -113,6 +128,42 @@
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
     <Property Name="LessonId" Type="int" Nullable="false" />
   </EntityType>
+  <EntityType Name="Contracts">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="StartDate" Type="datetime" Nullable="false" />
+    <Property Name="ExpiredDate" Type="datetime" Nullable="false" />
+    <Property Name="TimeZone" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Licenses">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CourseName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Grade" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="StudentsCapacity" Type="int" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+    <Property Name="ContractId" Type="int" Nullable="false" />
+    <Property Name="CourseCatalogId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TeacherKeys">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Grade" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Code" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+    <Property Name="LicenseId" Type="int" Nullable="false" />
+  </EntityType>
   <Association Name="CourseCatalogSemester">
     <End Role="CourseCatalog" Type="MindSageDataModels.Store.CourseCatalogs" Multiplicity="1" />
     <End Role="Semester" Type="MindSageDataModels.Store.Semesters" Multiplicity="*" />
@@ -173,6 +224,42 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
+  <Association Name="ContractLicense">
+    <End Role="Contract" Type="MindSageDataModels.Store.Contracts" Multiplicity="1" />
+    <End Role="License" Type="MindSageDataModels.Store.Licenses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Contract">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="License">
+        <PropertyRef Name="ContractId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CourseCatalogLicense">
+    <End Role="CourseCatalog" Type="MindSageDataModels.Store.CourseCatalogs" Multiplicity="1" />
+    <End Role="License" Type="MindSageDataModels.Store.Licenses" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="CourseCatalog">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="License">
+        <PropertyRef Name="CourseCatalogId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LicenseTeacherKey">
+    <End Role="License" Type="MindSageDataModels.Store.Licenses" Multiplicity="1" />
+    <End Role="TeacherKey" Type="MindSageDataModels.Store.TeacherKeys" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="License">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="TeacherKey">
+        <PropertyRef Name="LicenseId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
 </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
@@ -204,6 +291,21 @@
             <End Role="Lesson" EntitySet="Lessons" />
             <End Role="TopicOfTheDay" EntitySet="TopicOfTheDays" />
           </AssociationSet>
+          <EntitySet Name="Contracts" EntityType="MindSageDataModels.Contract" />
+          <EntitySet Name="Licenses" EntityType="MindSageDataModels.License" />
+          <AssociationSet Name="ContractLicense" Association="MindSageDataModels.ContractLicense">
+            <End Role="Contract" EntitySet="Contracts" />
+            <End Role="License" EntitySet="Licenses" />
+          </AssociationSet>
+          <AssociationSet Name="CourseCatalogLicense" Association="MindSageDataModels.CourseCatalogLicense">
+            <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
+            <End Role="License" EntitySet="Licenses" />
+          </AssociationSet>
+          <EntitySet Name="TeacherKeys" EntityType="MindSageDataModels.TeacherKey" />
+          <AssociationSet Name="LicenseTeacherKey" Association="MindSageDataModels.LicenseTeacherKey">
+            <End Role="License" EntitySet="Licenses" />
+            <End Role="TeacherKey" EntitySet="TeacherKeys" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CourseCatalog">
           <Key>
@@ -222,6 +324,7 @@
           <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
           <NavigationProperty Name="Semesters" Relationship="MindSageDataModels.CourseCatalogSemester" FromRole="CourseCatalog" ToRole="Semester" />
+          <NavigationProperty Name="Licenses" Relationship="MindSageDataModels.CourseCatalogLicense" FromRole="CourseCatalog" ToRole="License" />
         </EntityType>
         <ComplexType Name="RecordLog" >
           <Property Type="DateTime" Name="CreatedDate" Nullable="false" />
@@ -353,6 +456,80 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Contract">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="StartDate" Type="DateTime" Nullable="false" />
+          <Property Name="ExpiredDate" Type="DateTime" Nullable="false" />
+          <Property Name="TimeZone" Type="String" Nullable="false" Unicode="false" FixedLength="false" MaxLength="255" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="Licenses" Relationship="MindSageDataModels.ContractLicense" FromRole="Contract" ToRole="License" />
+        </EntityType>
+        <EntityType Name="License">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CourseName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="StudentsCapacity" Type="Int32" Nullable="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="Contract" Relationship="MindSageDataModels.ContractLicense" FromRole="License" ToRole="Contract" />
+          <Property Name="ContractId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CourseCatalog" Relationship="MindSageDataModels.CourseCatalogLicense" FromRole="License" ToRole="CourseCatalog" />
+          <Property Name="CourseCatalogId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="TeacherKeys" Relationship="MindSageDataModels.LicenseTeacherKey" FromRole="License" ToRole="TeacherKey" />
+        </EntityType>
+        <Association Name="ContractLicense">
+          <End Type="MindSageDataModels.Contract" Role="Contract" Multiplicity="1" />
+          <End Type="MindSageDataModels.License" Role="License" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Contract">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="License">
+              <PropertyRef Name="ContractId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="CourseCatalogLicense">
+          <End Type="MindSageDataModels.CourseCatalog" Role="CourseCatalog" Multiplicity="1" />
+          <End Type="MindSageDataModels.License" Role="License" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CourseCatalog">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="License">
+              <PropertyRef Name="CourseCatalogId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="TeacherKey">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Grade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+          <NavigationProperty Name="License" Relationship="MindSageDataModels.LicenseTeacherKey" FromRole="TeacherKey" ToRole="License" />
+          <Property Name="LicenseId" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="LicenseTeacherKey">
+          <End Type="MindSageDataModels.License" Role="License" Multiplicity="1" />
+          <End Type="MindSageDataModels.TeacherKey" Role="TeacherKey" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="License">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="TeacherKey">
+              <PropertyRef Name="LicenseId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -454,6 +631,51 @@
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
           </ComplexProperty>
           <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Contracts">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Contract)">
+        <MappingFragment StoreEntitySet="Contracts">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="StartDate" ColumnName="StartDate" />
+          <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
+          <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Licenses">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.License)">
+        <MappingFragment StoreEntitySet="Licenses">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="CourseName" ColumnName="CourseName" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="StudentsCapacity" ColumnName="StudentsCapacity" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+          <ScalarProperty Name="ContractId" ColumnName="ContractId" />
+          <ScalarProperty Name="CourseCatalogId" ColumnName="CourseCatalogId" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TeacherKeys">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.TeacherKey)">
+        <MappingFragment StoreEntitySet="TeacherKeys">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Grade" ColumnName="Grade" />
+          <ScalarProperty Name="Code" ColumnName="Code" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+          <ScalarProperty Name="LicenseId" ColumnName="LicenseId" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

@@ -31,5 +31,8 @@ namespace WebManagementPortal.EF
         public virtual DbSet<Lesson> Lessons { get; set; }
         public virtual DbSet<Advertisement> Advertisements { get; set; }
         public virtual DbSet<TopicOfTheDay> TopicOfTheDays { get; set; }
+        public virtual DbSet<Contract> Contracts { get; set; }
+        public virtual DbSet<License> Licenses { get; set; }
+        public virtual DbSet<TeacherKey> TeacherKeys { get; set; }
     }
 }
