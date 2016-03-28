@@ -36,7 +36,7 @@ namespace MindSageWeb.Specs.Steps
             Assert.Equal(expected.id, actual.id);
             Assert.Equal(expected.Title, actual.Title);
             Assert.Equal(expected.ShortTeacherLessonPlan, actual.ShortTeacherLessonPlan);
-            Assert.Equal(expected.FullTeacherLessonPlan, actual.FullTeacherLessonPlan);
+            Assert.Equal(expected.MoreTeacherLessonPlan, actual.MoreTeacherLessonPlan);
             Assert.Equal(expected.CourseMessage, actual.CourseMessage);
             Assert.Equal(expected.TotalLikes, actual.TotalLikes);
             Assert.Equal(expected.IsTeacher, actual.IsTeacher);

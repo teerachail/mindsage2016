@@ -56,8 +56,8 @@ namespace WebManagementPortal.Controllers
                 SemesterName = string.Format("{0}",(char)semesterRunner),
                 ShortDescription = lessonCatalog.ShortDescription,
                 ShortTeacherLessonPlan = lessonCatalog.ShortTeacherLessonPlan,
-                FullDescription = lessonCatalog.MoreDescription,
-                FullTeacherLessonPlan = lessonCatalog.MoreTeacherLessonPlan,
+                MoreDescription = lessonCatalog.MoreDescription,
+                MoreTeacherLessonPlan = lessonCatalog.MoreTeacherLessonPlan,
                 Title = lessonCatalog.Title,
                 Order = unitRunner
             };

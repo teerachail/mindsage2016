@@ -16,9 +16,9 @@ namespace MindSageWeb.Repositories.Models
         public int UnitNo { get; set; }
         public string SemesterName { get; set; }
         public string ShortDescription { get; set; }
-        public string FullDescription { get; set; }
+        public string MoreDescription { get; set; }
         public string ShortTeacherLessonPlan { get; set; }
-        public string FullTeacherLessonPlan { get; set; }
+        public string MoreTeacherLessonPlan { get; set; }
         public string PrimaryContentURL { get; set; }
         public IEnumerable<string> ExtraContentUrls { get; set; }
         public string CourseCatalogId { get; set; }

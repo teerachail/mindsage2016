@@ -274,6 +274,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Repositories\ILessonCatalogRepository.cs" />
+    <Compile Include="Repositories\LessonCatalogRepository.cs" />
     <Compile Include="Repositories\Models\LessonContentRespond.cs" />
     <Compile Include="Repositories\Models\OwnCarousel.cs" />
     <Compile Include="Repositories\Models\GetCourseDetailRespond.cs" />

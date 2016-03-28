@@ -45,5 +45,14 @@ namespace WebManagementPortal
             }
         }
 
+        public static string LessonCatalogTableName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["LessonCatalogTableName"] ?? string.Empty;
+                return value;
+            }
+        }
+
     }
 }
