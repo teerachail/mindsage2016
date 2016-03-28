@@ -1,0 +1,122 @@
+﻿@model WebManagementPortal.EF.License
+
+@{
+    ViewBag.Title = "Edit";
+}
+
+<h2>Edit</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    
+    <div class="form-horizontal">
+        <h4>License</h4>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.ContractId)
+
+        <dl class="dl-horizontal">
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Contract.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.Contract.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseCatalog.SideName)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.CourseCatalog.SideName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseCatalog.GroupName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CourseCatalog.GroupName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.Grade)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.Grade)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseCatalog.Series)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CourseCatalog.Series)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.CourseName)
+            </dt>
+            <dd>
+                @Html.DisplayFor(model => model.CourseName)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(mode => Model.RecLog.CreatedDate)
+            </dt>
+            <dd>
+                @Html.DisplayFor(mode => Model.RecLog.CreatedDate)
+            </dd>
+
+        </dl>
+
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.StudentsCapacity, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.StudentsCapacity, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.StudentsCapacity, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.Label("Teacher code", htmlAttributes: new { @class = "control-label col-md-2" })
+            @{
+                var teacherKey = (Model?.TeacherKeys ?? Enumerable.Empty<WebManagementPortal.EF.TeacherKey>())
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .OrderBy(it => it.RecLog.CreatedDate)
+                .LastOrDefault();
+
+                if (teacherKey != null)
+                {
+                    <div class="col-md-10">
+                        @teacherKey.Code
+                        @Html.ActionLink("Regenerate teacher code", "RegenerateTeacherCode", "Licenses", new { id = Model.Id }, new { @class = "btn btn-default" })
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-10"></div>
+                }
+            }
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Save" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, null)
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

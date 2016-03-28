@@ -1,0 +1,102 @@
+﻿@model WebManagementPortal.EF.License
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Regenerate teacher code</h2>
+
+<h3>Are you sure you want to regenerate this teacher code?</h3>
+<div>
+    <h4>License</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.Name)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.Name)
+        </dd>
+    </dl>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentsCapacity)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentsCapacity)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLog)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLog)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Contract.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseCatalog.GroupName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CourseCatalog.GroupName)
+        </dd>
+
+        <dt>
+            Teacher code
+        </dt>
+        @{
+            var teacherKey = (Model?.TeacherKeys ?? Enumerable.Empty<WebManagementPortal.EF.TeacherKey>())
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .OrderBy(it => it.RecLog.CreatedDate)
+                .LastOrDefault();
+
+            if (teacherKey != null)
+            {
+                <dd>
+                    @teacherKey.Code
+                </dd>
+            }
+            else
+            {
+                <dd></dd>
+            }
+        }
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Confirm" class="btn btn-default" /> |
+            @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, null)
+        </div>
+    }
+</div>

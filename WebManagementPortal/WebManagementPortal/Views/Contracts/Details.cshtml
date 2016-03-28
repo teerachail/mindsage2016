@@ -57,3 +57,79 @@
     @Html.ActionLink("Delete", "Delete", new { id = Model.Id }) |
     @Html.ActionLink("Back", "Index")
 </p>
+
+<hr />
+
+<h2>Licenses</h2>
+
+<p>
+    @Html.ActionLink("Create new license", "Create", "Licenses", new { @id = Model.Id }, null)
+</p>
+<table class="table">
+    <tr>
+        <th>
+            Group name
+        </th>
+        <th>
+            Grade
+        </th>
+        <th>
+            Series
+        </th>
+        <th>
+            SideName
+        </th>
+        <th>
+            Teacher key
+        </th>
+        <th>
+            Students
+        </th>
+        <th>
+            Created date
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model.Licenses.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        var teacherKey = (item?.TeacherKeys ?? Enumerable.Empty<WebManagementPortal.EF.TeacherKey>())
+            .Where(it => !it.RecLog.DeletedDate.HasValue)
+            .OrderBy(it => it.RecLog.CreatedDate)
+            .LastOrDefault();
+
+        if (teacherKey == null)
+        {
+            continue;
+        }
+
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseCatalog.GroupName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Grade)
+            </td>
+            <td>
+                @item.CourseCatalog.Series
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CourseName)
+            </td>
+            <td>
+                @teacherKey.Code
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StudentsCapacity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Manage", "Edit", "Licenses", new { id = item.Id }, null) |
+                @Html.ActionLink("Delete", "Delete", "Licenses", new { id = item.Id }, null)
+            </td>
+        </tr>
+    }
+
+</table>
