@@ -54,5 +54,14 @@ namespace WebManagementPortal
             }
         }
 
+        public static string ClassRoomTableName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["ClassRoomTableName"] ?? string.Empty;
+                return value;
+            }
+        }
+
     }
 }

@@ -177,12 +177,67 @@ namespace WebManagementPortal.Controllers
             if (!canUpdateCourses) return RedirectToAction("Index");
 
             // TODO: Handle update to MongoDB error
-            await updateCourseCatalog(allCourseCatalog);
             await updateLessonCatalog(allCourseCatalog);
-
+            await updateCourseCatalog(allCourseCatalog);
+            await createPublicClassRooms(allCourseCatalog);
             return RedirectToAction("Index");
         }
 
+        private async Task updateLessonCatalog(IEnumerable<CourseCatalog> allCourseCatalog)
+        {
+            var lessonCatalogRepo = new WebManagementPortal.Repositories.LessonCatalogRepository();
+            foreach (var courseCatalog in allCourseCatalog)
+            {
+                var unitOrderRunner = 1;
+                var lessonOrderRunner = 1;
+                var semesterNameRunner = (byte)65;
+                foreach (var semester in courseCatalog.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue))
+                {
+                    foreach (var unit in semester.Units.Where(it => !it.RecLog.DeletedDate.HasValue))
+                    {
+                        foreach (var lesson in unit.Lessons.Where(it => !it.RecLog.DeletedDate.HasValue))
+                        {
+                            var adsQry = lesson.Advertisements.Where(it => !it.RecLog.DeletedDate.HasValue).Select(it => new repoModel.LessonCatalog.Ads
+                            {
+                                id = it.Id.ToString(),
+                                ImageUrl = it.ImageUrl,
+                                LinkUrl = it.LinkUrl,
+                                CreatedDate = it.RecLog.CreatedDate,
+                                DeletedDate = it.RecLog.DeletedDate
+                            });
+                            var totdQry = lesson.TopicOfTheDays.Where(it => !it.RecLog.DeletedDate.HasValue).Select(it => new repoModel.LessonCatalog.TopicOfTheDay
+                            {
+                                id = it.Id.ToString(),
+                                Message = it.Message,
+                                SendOnDay = it.SendOnDay,
+                                CreatedDate = it.RecLog.CreatedDate,
+                                DeletedDate = it.RecLog.DeletedDate
+                            });
+                            var lessonCatalog = new repoModel.LessonCatalog
+                            {
+                                id = lesson.Id.ToString(),
+                                Order = lessonOrderRunner++,
+                                Title = lesson.Title,
+                                UnitNo = unitOrderRunner++,
+                                SemesterName = string.Format("{0}", (char)semesterNameRunner++),
+                                ShortDescription = lesson.ShortDescription,
+                                MoreDescription = lesson.MoreDescription,
+                                ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan,
+                                MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan,
+                                PrimaryContentURL = lesson.PrimaryContentURL,
+                                ExtraContentUrls = lesson.ExtraContentUrls.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries),
+                                CourseCatalogId = courseCatalog.Id.ToString(),
+                                CreatedDate = lesson.RecLog.CreatedDate,
+                                DeletedDate = lesson.RecLog.DeletedDate,
+                                Advertisments = adsQry,
+                                TopicOfTheDays = totdQry
+                            };
+                            await lessonCatalogRepo.UpsertLessonCatalog(lessonCatalog);
+                        }
+                    }
+                }
+            }
+        }
         private async Task updateCourseCatalog(IEnumerable<CourseCatalog> allCourseCatalog)
         {
             var courseCatalogRepo = new WebManagementPortal.Repositories.CourseCatalogRepository();
@@ -241,59 +296,65 @@ namespace WebManagementPortal.Controllers
                 await courseCatalogRepo.UpsertCourseCatalog(result);
             }
         }
-        private async Task updateLessonCatalog(IEnumerable<CourseCatalog> allCourseCatalog)
+        private async Task createPublicClassRooms(IEnumerable<CourseCatalog> allCourseCatalog)
         {
-            var lessonCatalogRepo = new WebManagementPortal.Repositories.LessonCatalogRepository();
-            foreach (var courseCatalog in allCourseCatalog)
+            var courseCatalogIds = allCourseCatalog.Select(it => it.Id.ToString()).Distinct();
+            var classRoomRepo = new WebManagementPortal.Repositories.ClassRoomRepository();
+            var publicClassRooms = (await classRoomRepo.GetPublicClassRoomByCourseCatalogId(courseCatalogIds)).ToList();
+            foreach (var publicClassRoom in publicClassRooms)
             {
-                var unitOrderRunner = 1;
-                var lessonOrderRunner = 1;
-                var semesterNameRunner = (byte)65;
-                foreach (var semester in courseCatalog.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue))
-                {
-                    foreach (var unit in semester.Units.Where(it => !it.RecLog.DeletedDate.HasValue))
+                var coursCatalog = allCourseCatalog.FirstOrDefault(it => it.Id.ToString() == publicClassRoom.id);
+                if (coursCatalog == null) continue;
+
+                publicClassRoom.Name = coursCatalog.SideName;
+                publicClassRoom.DeletedDate = coursCatalog.RecLog.DeletedDate;
+                var lessonQry = coursCatalog.Semesters
+                    .Where(it => !it.RecLog.DeletedDate.HasValue)
+                    .SelectMany(it => it.Units)
+                    .Where(it => !it.RecLog.DeletedDate.HasValue)
+                    .SelectMany(it => it.Lessons)
+                    .Where(it => !it.RecLog.DeletedDate.HasValue)
+                    .Select(it =>
                     {
-                        foreach (var lesson in unit.Lessons.Where(it => !it.RecLog.DeletedDate.HasValue))
+                        var selectedLesson = publicClassRoom.Lessons.FirstOrDefault(l => l.id == it.Id.ToString());
+                        var totalLikes = selectedLesson?.TotalLikes ?? 0;
+
+                        return new repoModel.ClassRoom.Lesson
                         {
-                            var adsQry = lesson.Advertisements.Where(it => !it.RecLog.DeletedDate.HasValue).Select(it => new repoModel.LessonCatalog.Ads
-                            {
-                                id = it.Id.ToString(),
-                                ImageUrl = it.ImageUrl,
-                                LinkUrl = it.LinkUrl,
-                                CreatedDate = it.RecLog.CreatedDate,
-                                DeletedDate = it.RecLog.DeletedDate
-                            });
-                            var totdQry = lesson.TopicOfTheDays.Where(it => !it.RecLog.DeletedDate.HasValue).Select(it => new repoModel.LessonCatalog.TopicOfTheDay
-                            {
-                                id = it.Id.ToString(),
-                                Message = it.Message,
-                                SendOnDay = it.SendOnDay,
-                                CreatedDate = it.RecLog.CreatedDate,
-                                DeletedDate = it.RecLog.DeletedDate
-                            });
-                            var lessonCatalog = new repoModel.LessonCatalog
-                            {
-                                id = lesson.Id.ToString(),
-                                Order = lessonOrderRunner++,
-                                Title = lesson.Title,
-                                UnitNo = unitOrderRunner++,
-                                SemesterName = string.Format("{0}", (char)semesterNameRunner++),
-                                ShortDescription = lesson.ShortDescription,
-                                MoreDescription = lesson.MoreDescription,
-                                ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan,
-                                MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan,
-                                PrimaryContentURL = lesson.PrimaryContentURL,
-                                ExtraContentUrls = lesson.ExtraContentUrls.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries),
-                                CourseCatalogId = courseCatalog.Id.ToString(),
-                                CreatedDate = lesson.RecLog.CreatedDate,
-                                DeletedDate = lesson.RecLog.DeletedDate,
-                                Advertisments = adsQry,
-                                TopicOfTheDays = totdQry
-                            };
-                            await lessonCatalogRepo.UpsertLessonCatalog(lessonCatalog);
-                        }
-                    }
-                }
+                            id = it.Id.ToString(),
+                            LessonCatalogId = it.Id.ToString(),
+                            TotalLikes = totalLikes
+                        };
+                    });
+                publicClassRoom.Lessons = lessonQry.ToList();
+                await classRoomRepo.UpsertClassRoom(publicClassRoom);
+            }
+
+            var needToCreateClassRooms = allCourseCatalog.Where(it => publicClassRooms.All(p => p.id != it.Id.ToString()));
+            foreach (var courseCatalog in needToCreateClassRooms)
+            {
+                var lessonQry = courseCatalog.Semesters
+                    .Where(it => !it.RecLog.DeletedDate.HasValue)
+                    .SelectMany(it => it.Units)
+                    .Where(it => !it.RecLog.DeletedDate.HasValue)
+                    .SelectMany(it => it.Lessons)
+                    .Where(it => !it.RecLog.DeletedDate.HasValue)
+                    .Select(it => new repoModel.ClassRoom.Lesson
+                    {
+                        id = it.Id.ToString(),
+                        LessonCatalogId = it.Id.ToString(),
+                    });
+                var classRoom = new repoModel.ClassRoom
+                {
+                    id = courseCatalog.Id.ToString(),
+                    Name = courseCatalog.SideName,
+                    CourseCatalogId = courseCatalog.Id.ToString(),
+                    CreatedDate = courseCatalog.RecLog.CreatedDate,
+                    DeletedDate = courseCatalog.RecLog.DeletedDate,
+                    IsPublic = true,
+                    Lessons = lessonQry
+                };
+                await classRoomRepo.UpsertClassRoom(classRoom);
             }
         }
 
