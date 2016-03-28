@@ -10,9 +10,10 @@
         line-height: 1;
     }
     .calendar .title { 
-        background: #00558b;
+        background: #5B5B5C;
         text-align: center;
         font-size: 1.6875rem;
+        padding: 0.5em;
         color: white;
         /* Edited */
     }
@@ -29,12 +30,13 @@
     }
 .calendar .day,
 .calendar .days {
-  background:white;
+  background:#E1E1E1;
   position: relative;
   padding: 0.3rem 0.39375rem;
   width: 100%;
   min-height: 6rem;
   float: left;
+  border: solid 1px White;
 }
 .calendar .day-header {
     background-color: #FFF; 
@@ -42,7 +44,7 @@
 .calendar .day-header .day,
 .calendar .day-header .days { 
     background-color: #FFF; 
-    color: #00558b;
+    color: #000;
     text-align: left;
     min-height: 0.5rem;
     height: 3em;
@@ -58,43 +60,67 @@
 .days.previous-month,
 .day.next-month,
 .days.next-month {
-    color: #666;/* Edited */
+    color: #FFF;/* Edited */
     display: none;
 }
 
 
 /*==================Edit by Gen===============================*/
 .day.odd , .days.odd{
-    background : #5ebde8;
+    background : #6F89B1;
 }
 .day.odd:hover, .days.odd:hover {
-    background: #6dacd7;
+    background: #7e78c0;
 }
 .day.even, .days.even {
-    background :#96d3fd;
+    background :#ADBFDC;
 }
 .day.even:hover, .days.even:hover {
-    background: #85c2ec;
-}
-.day.holiday, .days.holiday {
-    background :#dd2626;
-}
-.day.holiday:hover, .days.holiday:hover {
-    background: #cc1515;
+    background: #9caecb;
 }
 .day.today, .days.today {
-    border:solid #343434;
+    border:solid #0F73B3;
 }
 .day.selected, .days.selected {
-    background :#e9c84a;
-}
-.day.selected:hover, .days.selected:hover {
-    background :#d8b72F;
+    box-shadow: inset 0 0 0 3px #1B2F67;
 }
 .title.button {
-        margin:0 !important;
-        color:black;
-        color:red;
+    margin:0 !important;
+    color:black;
+    color:red;
+}
+.holiday {
+    font-size: 0.8em;
+    width: 1.5rem;
+    height: 1.5rem;
+    background: #FFC800;
+    color: #fff;
+    align-items: center;
+    justify-content: center;
+    display: inline-flex;
+    border-radius: 1000px;
+}
+.shift-icon {
+    color:white;
+    margin-left:0.3em;
+}
+.change-month-prev {
+    color:#FFF;
+    float:left;
+}
+.change-month-prev :hover{
+    color:#999;
+}
+.change-month-next {
+    color:#FFF;
+    float:right;
+}
+.change-month-next :hover{
+    color:#999;
+}
+.bottom-border {
+    border-bottom:solid 1px #808080;
+    margin-bottom:0.5em;
 }
 /*============================================================*/
 @media only screen {

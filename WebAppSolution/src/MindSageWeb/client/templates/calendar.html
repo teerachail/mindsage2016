@@ -4,13 +4,16 @@ url: /calendar
 controller: 'app.calendar.CarlendarController as cx'
 ---
 <div class="large-8 push-4 large-offset-1 columns">
-    <div>
-        <p><input id="datepicker" type="text" ng-model="cx.BeginDate" ng-show="false"> Begin Date : {{cx.BeginDate| date:"MM/dd/yyyy"}}</p>
-        <span class="button" ng-click="cx.SetStartDate(cx.BeginDate)">Set begin date</span><span class="align-left button" ng-click="cx.ApplyToAllCourse()">Apply to all coureses</span>
+    <div class="grid-block bottom-border">
+        <p> Begin Date : {{cx.BeginDate| date:"MM/dd/yyyy"}} 
+            <a><input id="datepicker" type="text" ng-model="cx.BeginDate" ng-show="false"></a>
+        </p>
+        <span class="button" ng-click="cx.SetStartDate(cx.BeginDate)" style="margin-left:2em;">Set begin date</span>
     </div>
     <div ng-show="cx.isPrepareCourseScheduleContentComplete && (cx.courseInformation.BeginDate != null)">
+        <span class="align-left button" ng-click="cx.ApplyToAllCourse()">Apply to all coureses</span>
         <ul class="calendar">
-            <li class="title"><span class="button" ng-click="cx.prevMount()"><</span>{{ cx.monthNames }} {{ cx.year }} <span class="button" ng-click="cx.nextMount()">></span></li>
+            <li class="title"><a class="change-month-prev"><span class="fi-arrow-left" ng-click="cx.prevMount()" /></a> {{ cx.monthNames }} {{ cx.year }} <a class="change-month-next"><span class="fi-arrow-right" ng-click="cx.nextMount()" /></a></li>
             <li class="day-header grid-block small-up-7">
                 <div class="small-1 day">Sun</div>
                 <div class="small-1 day">Mon</div>
@@ -22,11 +25,12 @@ controller: 'app.calendar.CarlendarController as cx'
             </li>
 
             <li class="week grid-block small-up-7" ng-repeat="week in cx.allweeks">
-                <div zf-open="selectDay" class="small-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day),  'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'odd': cx.IsOdd(day), 'even': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">{{ day.getDate() }} 
-                <p>{{cx.IsStartLesson(day)}}</p>
-                <br ng-if="cx.IsStartLesson(day) == ''">
-                <span class="fi-burst" ng-show="cx.IsHoliday(day)" style="font-size: 2em;color:#e43333"></span>
-                <span class="fi-fast-forward" ng-show="cx.IsShift(day)" style="font-size: 2em;color:#444"></span>
+                <div zf-open="selectDay" class="small-1 day" ng-repeat="day in week" ng-class="{'today': cx.CheckToday(day),  'previous-month': day.getMonth() < cx.month, 'next-month': day.getMonth() > cx.month , 'odd': cx.IsOdd(day), 'even': cx.IsEven(day), 'selected': cx.OnSelected(day)}" ng-click="cx.Selected(day)">
+                    <div class="grid-block">
+                        <div ng-class="{'holiday': cx.IsHoliday(day)}">{{ day.getDate() }}</div><span class="fi-fast-forward shift-icon" ng-if="cx.IsShift(day)"></span>
+                    </div>
+                    <p>{{cx.IsStartLesson(day)}}</p>
+                    <br ng-if="cx.IsStartLesson(day) == ''">
                 </div>
             </li>
             <!-- Repeat for additional weeks -->
@@ -131,6 +135,7 @@ controller: 'app.calendar.CarlendarController as cx'
 <script type="text/javascript">
     $(function () {
         $("#datepicker").datepicker({
+            constrainInput: true,
             showOn: "button",
             buttonImage: '../assets/img/icon/calendardatepicker.png',
             buttonImageOnly: true,
