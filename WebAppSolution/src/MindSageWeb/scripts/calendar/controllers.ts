@@ -19,6 +19,18 @@
         public monthNames: string;
         private courseInformation: any;
         private isPrepareCourseScheduleContentComplete: boolean;
+        private sun: boolean = false;
+        private mon: boolean = false;
+        private tue: boolean = false;
+        private wed: boolean = false;
+        private thu: boolean = false;
+        private fri: boolean = false;
+        private sat: boolean = false;
+        private IsHolidayRange: boolean = false;
+        private ShifhtRange: boolean = false;
+        private IsHolidayWeek: boolean = false;
+        private ShifhtWeek: boolean = false;
+
 
         static $inject = ['$scope', 'app.calendar.CourseScheduleService', 'app.shared.ClientUserProfileService'];
         constructor(private $scope, private courseScheduleService: app.calendar.CourseScheduleService, private clientProfileSvc: app.shared.ClientUserProfileService) {
@@ -216,6 +228,17 @@
             this.fisrtSelected = null;
             this.lastSelected = null;
             this.firstClick = true;
+            this.sun = false;
+            this.mon = false;
+            this.tue = false;
+            this.wed = false;
+            this.thu = false;
+            this.fri = false;
+            this.sat = false;
+            this.IsHolidayRange = false;
+            this.ShifhtRange = false;
+            this.IsHolidayWeek = false;
+            this.ShifhtWeek = false;
         }
 
         public SetStartDate(starDate: Date) {
@@ -228,18 +251,18 @@
             this.cancelSelected();
         }
 
-        public SetCourseScheduleRange(isHoliday: boolean, isShift: boolean) {
+        public SetCourseScheduleRange() {
             if (!this.isPrepareCourseScheduleContentComplete) return;
-            this.courseInformation = this.courseScheduleService.SetCourseScheduleRange(isHoliday, isShift, this.fisrtSelected, this.lastSelected).then(it=> {
+            this.courseScheduleService.SetCourseScheduleRange(this.IsHolidayRange, this.ShifhtRange, this.fisrtSelected, this.lastSelected).then(it=> {
                 it.Lessons.BeginDate
                 this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays, it.ShiftDays);
             });
             this.cancelSelected();
         }
 
-        public SetCourseScheduleWeek(isHoliday: boolean, isShift: boolean, isSunday: boolean, isMonday: boolean, isTuesday: boolean, isWednesday: boolean, isThursday: boolean, isFriday: boolean, isSaturday: boolean) {
+        public SetCourseScheduleWeek() {
             if (!this.isPrepareCourseScheduleContentComplete) return;
-            this.courseScheduleService.SetCourseScheduleWeek(isHoliday, isShift, isSunday, isMonday, isTuesday, isWednesday, isThursday, isFriday, isSaturday).then(it=> {
+            this.courseScheduleService.SetCourseScheduleWeek(this.IsHolidayWeek, this.ShifhtWeek, this.sun, this.mon, this.tue, this.wed, this.thu, this.fri, this.sat).then(it=> {
                 it.Lessons.BeginDate
                 this.courseInformation = new app.calendar.Calendar(it.IsComplete, it.BeginDate, it.EndDate, it.Lessons, it.Holidays, it.ShiftDays);
             });

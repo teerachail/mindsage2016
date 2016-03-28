@@ -3,11 +3,10 @@
     margin-left: 0;
     margin-bottom: 1.25rem;
     padding-bottom: 1px;
-    border-bottom: 2px solid #2ba6cb;
+    border-bottom: 2px solid #5B5B5C;
 }
     .calendar * {
         list-style: none;
-        line-height: 1;
     }
     .calendar .title { 
         background: #5B5B5C;
@@ -47,7 +46,8 @@
     color: #000;
     text-align: left;
     min-height: 0.5rem;
-    height: 3em;
+    padding-top: 0.5em;
+    padding-bottom: 0.5em;
     display: none;
     /* Edited */
 }
@@ -70,7 +70,7 @@
     background : #6F89B1;
 }
 .day.odd:hover, .days.odd:hover {
-    background: #7e78c0;
+    background: #5E78A0;
 }
 .day.even, .days.even {
     background :#ADBFDC;
@@ -79,10 +79,10 @@
     background: #9caecb;
 }
 .day.today, .days.today {
-    border:solid #0F73B3;
+    border:solid 5px #00558B ;
 }
 .day.selected, .days.selected {
-    box-shadow: inset 0 0 0 3px #1B2F67;
+    box-shadow: inset 0px -19px 0px 0px #00558B;
 }
 .title.button {
     margin:0 !important;
@@ -90,9 +90,9 @@
     color:red;
 }
 .holiday {
-    font-size: 0.8em;
     width: 1.5rem;
     height: 1.5rem;
+    font-size: 0.8em;
     background: #FFC800;
     color: #fff;
     align-items: center;
@@ -100,9 +100,9 @@
     display: inline-flex;
     border-radius: 1000px;
 }
-.shift-icon {
-    color:white;
-    margin-left:0.3em;
+.not-holiday {
+    width: 1.5rem;
+    height: 1.5rem;
 }
 .change-month-prev {
     color:#FFF;
@@ -120,7 +120,21 @@
 }
 .bottom-border {
     border-bottom:solid 1px #808080;
-    margin-bottom:0.5em;
+    margin-bottom:1rem;
+    margin-top:1rem;
+}
+.shift-icon.fi-fast-forward:before {
+    font-size:2em;
+    color:white;
+    margin-left:0.3em;
+}
+
+.extend-right {
+    background: #C3C3C3;
+}
+.show-select-date {
+    background:white;
+    border-radius:3px;
 }
 /*============================================================*/
 @media only screen {
