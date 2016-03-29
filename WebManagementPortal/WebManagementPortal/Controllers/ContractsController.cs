@@ -105,10 +105,10 @@ namespace WebManagementPortal.Controllers
                 var selectedContract = await db.Contracts.FirstOrDefaultAsync(it => it.Id == contract.Id);
                 if (selectedContract == null) return View("Error");
 
-                selectedContract.Name = contract.Name;
-                selectedContract.StartDate = contract.StartDate;
-                selectedContract.ExpiredDate = contract.ExpiredDate;
-                selectedContract.TimeZone = contract.TimeZone;
+                //selectedContract.Name = contract.Name;
+                //selectedContract.StartDate = contract.StartDate;
+                //selectedContract.ExpiredDate = contract.ExpiredDate;
+                //selectedContract.TimeZone = contract.TimeZone;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
@@ -206,12 +206,21 @@ namespace WebManagementPortal.Controllers
                         })
                     });
 
-                mongoDBContract.Name = contract.Name;
+                mongoDBContract.SchoolName = contract.SchoolName;
+                mongoDBContract.City = contract.City;
+                mongoDBContract.State = contract.State;
+                mongoDBContract.ZipCode = contract.ZipCode;
+                mongoDBContract.PrimaryContractName = contract.PrimaryContractName;
+                mongoDBContract.PrimaryPhoneNumber = contract.PrimaryPhoneNumber;
+                mongoDBContract.PrimaryEmail = contract.PrimaryEmail;
+                mongoDBContract.SecondaryContractName = contract.SecondaryContractName;
+                mongoDBContract.SecondaryPhoneNumber = contract.SecondaryPhoneNumber;
+                mongoDBContract.SecondaryEmail = contract.SecondaryEmail;
                 mongoDBContract.StartDate = contract.StartDate;
                 mongoDBContract.ExpiredDate = contract.ExpiredDate;
+                mongoDBContract.TimeZone = contract.TimeZone;
                 mongoDBContract.CreatedDate = contract.RecLog.CreatedDate;
                 mongoDBContract.DeletedDate = contract.RecLog.DeletedDate;
-                mongoDBContract.TimeZone = contract.TimeZone;
                 mongoDBContract.Licenses = licenseQry.ToList();
 
                 await repo.UpsertContract(mongoDBContract);
@@ -245,13 +254,22 @@ namespace WebManagementPortal.Controllers
                 var contract = new repoModel.Contract
                 {
                     id = efContract.Id.ToString(),
+                    SchoolName = efContract.SchoolName,
+                    City = efContract.City,
+                    State = efContract.State,
+                    ZipCode = efContract.ZipCode,
+                    PrimaryContractName = efContract.PrimaryContractName,
+                    PrimaryPhoneNumber = efContract.PrimaryPhoneNumber,
+                    PrimaryEmail = efContract.PrimaryEmail,
+                    SecondaryContractName = efContract.SecondaryContractName,
+                    SecondaryPhoneNumber = efContract.SecondaryPhoneNumber,
+                    SecondaryEmail = efContract.SecondaryEmail,
+                    StartDate = efContract.StartDate,
+                    ExpiredDate = efContract.ExpiredDate,
+                    TimeZone = efContract.TimeZone,
                     CreatedDate = efContract.RecLog.CreatedDate,
                     DeletedDate = efContract.RecLog.DeletedDate,
-                    ExpiredDate = efContract.ExpiredDate,
-                    Name = efContract.Name,
-                    StartDate = efContract.StartDate,
-                    TimeZone = efContract.TimeZone,
-                    Licenses = licenseQry.ToList()
+                    Licenses = licenseQry.ToList(),
                 };
 
                 await repo.UpsertContract(contract);

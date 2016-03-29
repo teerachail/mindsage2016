@@ -133,7 +133,16 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="SchoolName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="City" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="State" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="ZipCode" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="PrimaryContractName" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="PrimaryPhoneNumber" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="PrimaryEmail" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="SecondaryContractName" Type="varchar" Nullable="true" MaxLength="255" />
+    <Property Name="SecondaryPhoneNumber" Type="varchar" Nullable="true" MaxLength="50" />
+    <Property Name="SecondaryEmail" Type="varchar" Nullable="true" MaxLength="50" />
     <Property Name="StartDate" Type="datetime" Nullable="false" />
     <Property Name="ExpiredDate" Type="datetime" Nullable="false" />
     <Property Name="TimeZone" Type="varchar" Nullable="false" MaxLength="255" />
@@ -461,7 +470,16 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="SchoolName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="City" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="State" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="ZipCode" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrimaryContractName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="PrimaryPhoneNumber" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="PrimaryEmail" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="SecondaryContractName" Type="String" MaxLength="255" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="SecondaryPhoneNumber" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="SecondaryEmail" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="true" />
           <Property Name="StartDate" Type="DateTime" Nullable="false" />
           <Property Name="ExpiredDate" Type="DateTime" Nullable="false" />
           <Property Name="TimeZone" Type="String" Nullable="false" Unicode="false" FixedLength="false" MaxLength="255" />
@@ -638,7 +656,16 @@
       <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Contract)">
         <MappingFragment StoreEntitySet="Contracts">
           <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="SchoolName" ColumnName="SchoolName" />
+          <ScalarProperty Name="City" ColumnName="City" />
+          <ScalarProperty Name="State" ColumnName="State" />
+          <ScalarProperty Name="ZipCode" ColumnName="ZipCode" />
+          <ScalarProperty Name="PrimaryContractName" ColumnName="PrimaryContractName" />
+          <ScalarProperty Name="PrimaryPhoneNumber" ColumnName="PrimaryPhoneNumber" />
+          <ScalarProperty Name="PrimaryEmail" ColumnName="PrimaryEmail" />
+          <ScalarProperty Name="SecondaryContractName" ColumnName="SecondaryContractName" />
+          <ScalarProperty Name="SecondaryPhoneNumber" ColumnName="SecondaryPhoneNumber" />
+          <ScalarProperty Name="SecondaryEmail" ColumnName="SecondaryEmail" />
           <ScalarProperty Name="StartDate" ColumnName="StartDate" />
           <ScalarProperty Name="ExpiredDate" ColumnName="ExpiredDate" />
           <ScalarProperty Name="TimeZone" ColumnName="TimeZone" />

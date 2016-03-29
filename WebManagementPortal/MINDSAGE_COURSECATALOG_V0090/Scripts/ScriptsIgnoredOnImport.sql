@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/28/2016 17:13:14
+-- Date Created: 03/29/2016 15:11:12
 -- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -39,6 +39,18 @@ IF OBJECT_ID(N'[dbo].[FK_LessonTopicOfTheDay]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TopicOfTheDays] DROP CONSTRAINT [FK_LessonTopicOfTheDay];
 GO
 
+IF OBJECT_ID(N'[dbo].[FK_ContractLicense]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Licenses] DROP CONSTRAINT [FK_ContractLicense];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_CourseCatalogLicense]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Licenses] DROP CONSTRAINT [FK_CourseCatalogLicense];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_LicenseTeacherKey]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[TeacherKeys] DROP CONSTRAINT [FK_LicenseTeacherKey];
+GO
+
 -- --------------------------------------------------
 -- Dropping existing tables
 -- --------------------------------------------------
@@ -65,6 +77,18 @@ GO
 
 IF OBJECT_ID(N'[dbo].[TopicOfTheDays]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TopicOfTheDays];
+GO
+
+IF OBJECT_ID(N'[dbo].[Contracts]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Contracts];
+GO
+
+IF OBJECT_ID(N'[dbo].[Licenses]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Licenses];
+GO
+
+IF OBJECT_ID(N'[dbo].[TeacherKeys]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[TeacherKeys];
 GO
 
 

@@ -31,7 +31,16 @@ namespace WebManagementPortal.Repositories
         public async Task UpsertContract(Contract data)
         {
             var update = Builders<Contract>.Update
-             .Set(it => it.Name, data.Name)
+             .Set(it => it.SchoolName, data.SchoolName)
+             .Set(it => it.City, data.City)
+             .Set(it => it.State, data.State)
+             .Set(it => it.ZipCode, data.ZipCode)
+             .Set(it => it.PrimaryContractName, data.PrimaryContractName)
+             .Set(it => it.PrimaryPhoneNumber, data.PrimaryPhoneNumber)
+             .Set(it => it.PrimaryEmail, data.PrimaryEmail)
+             .Set(it => it.SecondaryContractName, data.SecondaryContractName)
+             .Set(it => it.SecondaryPhoneNumber, data.SecondaryPhoneNumber)
+             .Set(it => it.SecondaryEmail, data.SecondaryEmail)
              .Set(it => it.StartDate, data.StartDate)
              .Set(it => it.ExpiredDate, data.ExpiredDate)
              .Set(it => it.TimeZone, data.TimeZone)

@@ -22,7 +22,16 @@ namespace WebManagementPortal.EF
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
+        public string SchoolName { get; set; }
+        public string City { get; set; }
+        public string State { get; set; }
+        public string ZipCode { get; set; }
+        public string PrimaryContractName { get; set; }
+        public string PrimaryPhoneNumber { get; set; }
+        public string PrimaryEmail { get; set; }
+        public string SecondaryContractName { get; set; }
+        public string SecondaryPhoneNumber { get; set; }
+        public string SecondaryEmail { get; set; }
         public System.DateTime StartDate { get; set; }
         public System.DateTime ExpiredDate { get; set; }
         public string TimeZone { get; set; }
