@@ -187,18 +187,33 @@ namespace WebManagementPortal.Controllers
 
         private string generateTeacherCode(License license)
         {
-            var courseCatalog = license.CourseCatalog;
-            var contract = license.Contract;
-            var random = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 4);
-            var rgx = new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9]");
-            var safeSchoolName = rgx.Replace(contract.SchoolName, string.Empty);
-            const int MaxSchoolNameLength = 10;
-            var canUseSchoolMaxLength = safeSchoolName.Length >= MaxSchoolNameLength;
-            const int BeginSchoolNameIndex = 0;
-            var schoolName = safeSchoolName.Substring(BeginSchoolNameIndex, canUseSchoolMaxLength ? MaxSchoolNameLength : safeSchoolName.Length);
-            var result = string.Format("{0:00}{1}{2}{3}{4}", courseCatalog.Grade, contract.State, contract.ZipCode, random, schoolName);
-            // HACK: Check can use this teacher code?
-            return result;
+            var teacherKey = string.Empty;
+            while (true)
+            {
+
+                var courseCatalog = license.CourseCatalog;
+                var contract = license.Contract;
+                var random = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 4);
+                var rgx = new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9]");
+                var safeSchoolName = rgx.Replace(contract.SchoolName, string.Empty);
+                const int MaxSchoolNameLength = 10;
+                var canUseSchoolMaxLength = safeSchoolName.Length >= MaxSchoolNameLength;
+                const int BeginSchoolNameIndex = 0;
+                var schoolName = safeSchoolName.Substring(BeginSchoolNameIndex, canUseSchoolMaxLength ? MaxSchoolNameLength : safeSchoolName.Length);
+                teacherKey = string.Format("{0:00}{1}{2}{3}{4}", courseCatalog.Grade, contract.State, contract.ZipCode, random, schoolName);
+
+                var canUseTheNewKey = false;
+                using (var dctx = new EF.MindSageDataModelsContainer())
+                {
+                    canUseTheNewKey = !dctx.TeacherKeys
+                        .Where(it => !it.RecLog.DeletedDate.HasValue && it.Code == teacherKey)
+                        .Any();
+                }
+
+                if (canUseTheNewKey) break;
+            }
+
+            return teacherKey;
         }
 
         protected override void Dispose(bool disposing)
