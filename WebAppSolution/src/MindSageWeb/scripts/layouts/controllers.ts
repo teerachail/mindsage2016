@@ -34,8 +34,11 @@ module app.layouts {
         }
 
         public SendFriendRequest(friendObj: any) {
+            var Index = this.userSvc.UserInCourseList.indexOf(friendObj);
+            if (this.userSvc.ClientUserProfile.IsSelfPurchase && Index == -1) this.userSvc.UserInCourseList.push(friendObj);
             this.userSvc.UserInCourseList.filter(it=> it == friendObj)[0].Status = 0;
             this.listsSvc.SendFriendRequest(friendObj.UserProfileId, null, false);
+            if (this.userSvc.ClientUserProfile.IsSelfPurchase) this.userSvc.PrepareAllUserProfile();
         }
 
         public ConfirmFriendRequest(friendObj: any) {
@@ -46,6 +49,11 @@ module app.layouts {
         public DeleteFriendRequest(friendObj: any) {
             this.userSvc.UserInCourseList.filter(it=> it == friendObj)[0].Status = 3;
             this.listsSvc.SendFriendRequest(friendObj.UserProfileId, friendObj.RequestId, false);
+            if (this.userSvc.ClientUserProfile.IsSelfPurchase) {
+                var removeIndex = this.userSvc.UserInCourseList.indexOf(friendObj);
+                if (removeIndex > -1) this.userSvc.UserInCourseList.splice(removeIndex, 1);
+                this.userSvc.PrepareAllUserProfile();
+            }
         }
     }
 
