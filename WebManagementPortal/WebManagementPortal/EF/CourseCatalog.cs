@@ -24,7 +24,7 @@ namespace WebManagementPortal.EF
     
         public int Id { get; set; }
         public string GroupName { get; set; }
-        public string Grade { get; set; }
+        public int Grade { get; set; }
         public string Advertisements { get; set; }
         public string SideName { get; set; }
         public double PriceUSD { get; set; }

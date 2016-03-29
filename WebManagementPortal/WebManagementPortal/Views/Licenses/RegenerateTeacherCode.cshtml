@@ -11,61 +11,157 @@
     <h4>License</h4>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.Contract.Name)
+            @Html.DisplayNameFor(model => model.Contract.SchoolName)
         </dt>
         <dd>
-            @Html.DisplayFor(model => model.Contract.Name)
+            @Html.DisplayFor(model => model.Contract.SchoolName)
         </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.City)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.City)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.State)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.State)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.ZipCode)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.ZipCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.PrimaryContractName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.PrimaryContractName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.PrimaryPhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.PrimaryPhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.PrimaryEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.PrimaryEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.SecondaryContractName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.SecondaryContractName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.SecondaryPhoneNumber)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.SecondaryPhoneNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.SecondaryEmail)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.SecondaryEmail)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.StartDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.StartDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.ExpiredDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.ExpiredDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.TimeZone)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.TimeZone)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Contract.RecLog.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Contract.RecLog.CreatedDate)
+        </dd>
+
     </dl>
     <hr />
     <dl class="dl-horizontal">
+
         <dt>
-            @Html.DisplayNameFor(model => model.CourseName)
+            @Html.DisplayNameFor(model => model.CourseCatalog.SideName)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.CourseName)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Grade)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Grade)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StudentsCapacity)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StudentsCapacity)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.RecLog)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.RecLog)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Contract.Name)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Contract.Name)
+            @Html.DisplayFor(model => model.CourseCatalog.SideName)
         </dd>
 
         <dt>
             @Html.DisplayNameFor(model => model.CourseCatalog.GroupName)
         </dt>
-
         <dd>
             @Html.DisplayFor(model => model.CourseCatalog.GroupName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Grade)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Grade)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseCatalog.Series)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CourseCatalog.Series)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CourseName)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CourseName)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(mode => Model.RecLog.CreatedDate)
+        </dt>
+        <dd>
+            @Html.DisplayFor(mode => Model.RecLog.CreatedDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(mode => Model.StudentsCapacity)
+        </dt>
+        <dd>
+            @Html.DisplayFor(mode => Model.StudentsCapacity)
         </dd>
 
         <dt>
@@ -73,9 +169,9 @@
         </dt>
         @{
             var teacherKey = (Model?.TeacherKeys ?? Enumerable.Empty<WebManagementPortal.EF.TeacherKey>())
-                .Where(it => !it.RecLog.DeletedDate.HasValue)
-                .OrderBy(it => it.RecLog.CreatedDate)
-                .LastOrDefault();
+            .Where(it => !it.RecLog.DeletedDate.HasValue)
+            .OrderBy(it => it.RecLog.CreatedDate)
+            .LastOrDefault();
 
             if (teacherKey != null)
             {

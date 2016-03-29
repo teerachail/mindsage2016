@@ -279,7 +279,7 @@ namespace WebManagementPortal.Controllers
                 {
                     id = courseCatalog.Id.ToString(),
                     GroupName = courseCatalog.GroupName,
-                    Grade = courseCatalog.Grade,
+                    Grade = courseCatalog.Grade.ToString(),
                     Advertisements = courseCatalog.Advertisements.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries),
                     SideName = courseCatalog.SideName,
                     PriceUSD = courseCatalog.PriceUSD,

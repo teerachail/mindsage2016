@@ -80,7 +80,7 @@ namespace WebManagementPortal.Controllers
                 CreatedDate = courseCatalog.RecLog.CreatedDate,
                 DescriptionImageUrl = courseCatalog.DescriptionImageUrl,
                 FullDescription = courseCatalog.FullDescription,
-                Grade = courseCatalog.Grade,
+                Grade = courseCatalog.Grade.ToString(),
                 GroupName = courseCatalog.GroupName,
                 PriceUSD = courseCatalog.PriceUSD,
                 Semesters = semesters,

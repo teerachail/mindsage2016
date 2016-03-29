@@ -65,12 +65,12 @@ namespace WebManagementPortal.Controllers
 
                 var now = DateTime.Now;
                 license.CourseName = courseCatalog.SideName;
-                license.Grade = courseCatalog.Grade;
+                license.Grade = courseCatalog.Grade.ToString();
                 var newTeacherKey = new TeacherKey
                 {
-                    Grade = courseCatalog.Grade,
+                    Grade = courseCatalog.Grade.ToString(),
                     License = license,
-                    Code = generateTeacherCode(),
+                    Code = generateTeacherCode(license),
                     RecLog = new RecordLog { CreatedDate = now }
                 };
                 license.TeacherKeys.Add(newTeacherKey);
@@ -176,7 +176,7 @@ namespace WebManagementPortal.Controllers
             {
                 Grade = license.Grade,
                 License = license,
-                Code = generateTeacherCode(),
+                Code = generateTeacherCode(license),
                 RecLog = new RecordLog { CreatedDate = now }
             };
             license.TeacherKeys.Add(newTeacherKey);
@@ -185,10 +185,20 @@ namespace WebManagementPortal.Controllers
             return RedirectToAction("Details", "Contracts", new { @id = license.ContractId });
         }
 
-        private string generateTeacherCode()
+        private string generateTeacherCode(License license)
         {
-            // HACK: Generate teacher key
-            return Guid.NewGuid().ToString();
+            var courseCatalog = license.CourseCatalog;
+            var contract = license.Contract;
+            var random = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 4);
+            var rgx = new System.Text.RegularExpressions.Regex("[^a-zA-Z0-9]");
+            var safeSchoolName = rgx.Replace(contract.SchoolName, string.Empty);
+            const int MaxSchoolNameLength = 10;
+            var canUseSchoolMaxLength = safeSchoolName.Length >= MaxSchoolNameLength;
+            const int BeginSchoolNameIndex = 0;
+            var schoolName = safeSchoolName.Substring(BeginSchoolNameIndex, canUseSchoolMaxLength ? MaxSchoolNameLength : safeSchoolName.Length);
+            var result = string.Format("{0:00}{1}{2}{3}{4}", courseCatalog.Grade, contract.State, contract.ZipCode, random, schoolName);
+            // HACK: Check can use this teacher code?
+            return result;
         }
 
         protected override void Dispose(bool disposing)

@@ -54,7 +54,7 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="GroupName" Type="varchar" Nullable="false" MaxLength="255" />
-    <Property Name="Grade" Type="varchar" Nullable="false" MaxLength="50" />
+    <Property Name="Grade" Type="int" Nullable="false" />
     <Property Name="Advertisements" Type="varchar(max)" Nullable="false" />
     <Property Name="SideName" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="PriceUSD" Type="float" Nullable="false" />
@@ -322,7 +322,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="GroupName" Type="String" Nullable="false" Unicode="false" FixedLength="false" MaxLength="255" />
-          <Property Name="Grade" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="Grade" Type="Int32" Nullable="false" />
           <Property Name="Advertisements" Type="String" Nullable="false" Unicode="false" MaxLength="Max" FixedLength="false" />
           <Property Name="SideName" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="PriceUSD" Type="Double" Nullable="false" />

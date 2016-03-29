@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/29/2016 15:11:12
+-- Date Created: 03/29/2016 16:13:53
 -- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -82,7 +82,7 @@ GO
 CREATE TABLE [dbo].[CourseCatalogs] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [GroupName] varchar(255)  NOT NULL,
-    [Grade] varchar(50)  NOT NULL,
+    [Grade] int  NOT NULL,
     [Advertisements] varchar(max)  NOT NULL,
     [SideName] varchar(255)  NOT NULL,
     [PriceUSD] float  NOT NULL,

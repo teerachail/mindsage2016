@@ -6,7 +6,7 @@
 CREATE TABLE [dbo].[CourseCatalogs] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [GroupName] varchar(255)  NOT NULL,
-    [Grade] varchar(50)  NOT NULL,
+    [Grade] int  NOT NULL,
     [Advertisements] varchar(max)  NOT NULL,
     [SideName] varchar(255)  NOT NULL,
     [PriceUSD] float  NOT NULL,
