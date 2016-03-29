@@ -52,13 +52,13 @@ controller: 'app.calendar.CarlendarController as cx'
                     </div>
                     <div class="grid-block">
                         <label>
-                            <input ng-model="cx.IsHolidayRange" type="radio" data-ng-value="false">Not Holiday
+                            <input ng-model="cx.IsHolidayRange" type="radio" data-ng-value="false" ng-click="cx.ShifhtRange=false">Not Holiday
                         </label>
                     </div>
                 </div>
                 <div class="grid-block">
                     <label>
-                        <input ng-model="cx.ShifhtRange" type="checkbox">Shift
+                        <input ng-model="cx.ShifhtRange" type="checkbox" ng-disabled="!cx.IsHolidayRange">Shift
                     </label>
                 </div>
                 <div class="align-center grid-block">
@@ -111,13 +111,13 @@ controller: 'app.calendar.CarlendarController as cx'
                     </div>
                     <div class="grid-block">
                         <label>
-                            <input ng-model="cx.IsHolidayWeek" type="radio" data-ng-value="false">Not Holiday
+                            <input ng-model="cx.IsHolidayWeek" type="radio" data-ng-value="false" ng-click="cx.ShifhtWeek=false">Not Holiday
                         </label>
                     </div>
                 </div>
                 <div class="grid-block">
                     <label>
-                        <input ng-model="cx.ShifhtWeek" type="checkbox">Shift
+                        <input ng-model="cx.ShifhtWeek" type="checkbox" ng-disabled="!cx.IsHolidayWeek">Shift
                     </label>
                 </div>
                 <div class="align-center grid-block">
