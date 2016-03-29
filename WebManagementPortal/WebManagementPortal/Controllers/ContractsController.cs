@@ -54,7 +54,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Name,StartDate,ExpiredDate,TimeZone,RecLog")] Contract contract)
+        public async Task<ActionResult> Create([Bind(Include = "Id,SchoolName,City,State,ZipCode,PrimaryContractName,PrimaryPhoneNumber,PrimaryEmail,SecondaryContractName,SecondaryPhoneNumber,SecondaryEmail,StartDate,ExpiredDate,TimeZone,RecLog")] Contract contract)
         {
             if (ModelState.IsValid)
             {
@@ -98,19 +98,29 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Name,StartDate,ExpiredDate,TimeZone,RecLog")] Contract contract)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,SchoolName,City,State,ZipCode,PrimaryContractName,PrimaryPhoneNumber,PrimaryEmail,SecondaryContractName,SecondaryPhoneNumber,SecondaryEmail,StartDate,ExpiredDate,TimeZone,RecLog")] Contract contract)
         {
             if (ModelState.IsValid)
             {
                 var selectedContract = await db.Contracts.FirstOrDefaultAsync(it => it.Id == contract.Id);
                 if (selectedContract == null) return View("Error");
 
-                //selectedContract.Name = contract.Name;
-                //selectedContract.StartDate = contract.StartDate;
-                //selectedContract.ExpiredDate = contract.ExpiredDate;
-                //selectedContract.TimeZone = contract.TimeZone;
+                selectedContract.SchoolName = contract.SchoolName;
+                selectedContract.City = contract.City;
+                selectedContract.State = contract.State;
+                selectedContract.ZipCode = contract.ZipCode;
+                selectedContract.PrimaryContractName = contract.PrimaryContractName;
+                selectedContract.PrimaryPhoneNumber = contract.PrimaryPhoneNumber;
+                selectedContract.PrimaryEmail = contract.PrimaryEmail;
+                selectedContract.SecondaryContractName = contract.SecondaryContractName;
+                selectedContract.SecondaryPhoneNumber = contract.SecondaryPhoneNumber;
+                selectedContract.SecondaryEmail = contract.SecondaryEmail;
+                selectedContract.StartDate = contract.StartDate;
+                selectedContract.ExpiredDate = contract.ExpiredDate;
+                selectedContract.TimeZone = contract.TimeZone;
+
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                return RedirectToAction("Details", new { @id = contract.Id });
             }
 
             ViewBag.TimeZone = TimeZoneInfo.GetSystemTimeZones().Select(it => new SelectListItem
