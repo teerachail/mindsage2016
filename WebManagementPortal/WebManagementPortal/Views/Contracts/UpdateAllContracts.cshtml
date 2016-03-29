@@ -1,0 +1,25 @@
+﻿@model WebManagementPortal.EF.Contract
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Update all contracts</h2>
+
+<h3>Are you sure you want to update all contracts?</h3>
+<div>
+    <h4>Contracts</h4>
+    <hr />
+
+    * All of changed will be update to all contracts in the MindSage (include deleted contracts and their licences)
+    <hr />
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <button type="submit" class="btn btn-danger">Confirm update</button> |
+            @Html.ActionLink("Back", "Index")
+        </div>
+    }
+</div>

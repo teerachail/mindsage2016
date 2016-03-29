@@ -8,6 +8,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using WebManagementPortal.EF;
+using WebManagementPortal.Repositories;
+using repoModel = WebManagementPortal.Repositories.Models;
 
 namespace WebManagementPortal.Controllers
 {
@@ -143,6 +145,117 @@ namespace WebManagementPortal.Controllers
             contract.RecLog.DeletedDate = DateTime.Now;
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
+        }
+
+        // GET: Contracts/UpdateAllContracts
+        public async Task<ActionResult> UpdateAllContracts()
+        {
+            return View();
+        }
+
+        // POST: Contracts/UpdateAllContracts
+        [HttpPost, ActionName("UpdateAllContracts")]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> UpdateAllContractsConfirmed()
+        {
+            var allContracts = Enumerable.Empty<Contract>();
+            using (var dctx = new MindSageDataModelsContainer())
+            {
+                allContracts = dctx.Contracts
+                    .Include("Licenses.CourseCatalog")
+                    .Include("Licenses.TeacherKeys")
+                    .ToList();
+            }
+            var canUpdateContracts = allContracts != null && allContracts.Any();
+            if (!canUpdateContracts) return RedirectToAction("Index");
+
+            // TODO: Handle update to MongoDB error
+            var contractIds = allContracts.Select(it => it.Id.ToString()).Distinct();
+            var contractRepo = new ContractRepository();
+            var mongoDBcontracts = (await contractRepo.GetContractsById(contractIds)).ToList();
+            await updateContracts(contractRepo, allContracts, mongoDBcontracts);
+            await createNewContracts(contractRepo, allContracts, mongoDBcontracts);
+
+            return RedirectToAction("Index");
+        }
+
+        private async Task updateContracts(IContractRepository repo, IEnumerable<Contract> allContracts, IEnumerable<repoModel.Contract> mongoDBcontracts)
+        {
+            foreach (var mongoDBContract in mongoDBcontracts)
+            {
+                var contract = allContracts.FirstOrDefault(it => it.Id.ToString() == mongoDBContract.id);
+                if (contract == null) continue;
+
+                var licenseQry = contract.Licenses
+                    .Select(it => new repoModel.Contract.License
+                    {
+                        id = it.Id.ToString(),
+                        CourseCatalogId = it.CourseCatalogId.ToString(),
+                        CourseName = it.CourseName,
+                        CreatedDate = it.RecLog.CreatedDate,
+                        DeletedDate = it.RecLog.DeletedDate,
+                        Grade = it.Grade,
+                        StudentsCapacity = it.StudentsCapacity,
+                        TeacherKeys = it.TeacherKeys.Select(tk => new repoModel.Contract.TeacherKey
+                        {
+                            id = tk.Id.ToString(),
+                            Code = tk.Code,
+                            CreatedDate = tk.RecLog.CreatedDate,
+                            DeletedDate = tk.RecLog.DeletedDate,
+                            Grade = tk.Grade
+                        })
+                    });
+
+                mongoDBContract.Name = contract.Name;
+                mongoDBContract.StartDate = contract.StartDate;
+                mongoDBContract.ExpiredDate = contract.ExpiredDate;
+                mongoDBContract.CreatedDate = contract.RecLog.CreatedDate;
+                mongoDBContract.DeletedDate = contract.RecLog.DeletedDate;
+                mongoDBContract.TimeZone = contract.TimeZone;
+                mongoDBContract.Licenses = licenseQry.ToList();
+
+                await repo.UpsertContract(mongoDBContract);
+            }
+        }
+        private async Task createNewContracts(IContractRepository repo, IEnumerable<Contract> allContracts, IEnumerable<repoModel.Contract> mongoDBcontracts)
+        {
+            var needToCreateContracts = allContracts.Where(it => mongoDBcontracts.All(c => c.id != it.Id.ToString()));
+            foreach (var efContract in needToCreateContracts)
+            {
+                var licenseQry = efContract.Licenses
+                    .Select(it => new repoModel.Contract.License
+                    {
+                        id = it.Id.ToString(),
+                        CourseCatalogId = it.CourseCatalogId.ToString(),
+                        CourseName = it.CourseName,
+                        CreatedDate = it.RecLog.CreatedDate,
+                        DeletedDate = it.RecLog.DeletedDate,
+                        Grade = it.Grade,
+                        StudentsCapacity = it.StudentsCapacity,
+                        TeacherKeys = it.TeacherKeys.Select(tk => new repoModel.Contract.TeacherKey
+                        {
+                            id = tk.Id.ToString(),
+                            Code = tk.Code,
+                            CreatedDate = tk.RecLog.CreatedDate,
+                            DeletedDate = tk.RecLog.DeletedDate,
+                            Grade = tk.Grade
+                        })
+                    });
+
+                var contract = new repoModel.Contract
+                {
+                    id = efContract.Id.ToString(),
+                    CreatedDate = efContract.RecLog.CreatedDate,
+                    DeletedDate = efContract.RecLog.DeletedDate,
+                    ExpiredDate = efContract.ExpiredDate,
+                    Name = efContract.Name,
+                    StartDate = efContract.StartDate,
+                    TimeZone = efContract.TimeZone,
+                    Licenses = licenseQry.ToList()
+                };
+
+                await repo.UpsertContract(contract);
+            }
         }
 
         protected override void Dispose(bool disposing)

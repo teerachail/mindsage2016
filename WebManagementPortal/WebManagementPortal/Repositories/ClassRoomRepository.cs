@@ -40,7 +40,7 @@ namespace WebManagementPortal.Repositories
         public async Task<IEnumerable<ClassRoom>> GetPublicClassRoomByCourseCatalogId(IEnumerable<string> courseCatalogIds)
         {
             var qry = (await MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(AppConfigOptions.ClassRoomTableName)
-               .FindAsync(it => !it.DeletedDate.HasValue && it.IsPublic && courseCatalogIds.Contains(it.CourseCatalogId)))
+               .FindAsync(it => it.IsPublic && courseCatalogIds.Contains(it.CourseCatalogId)))
                .ToEnumerable();
             return qry;
         }

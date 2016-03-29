@@ -63,5 +63,14 @@ namespace WebManagementPortal
             }
         }
 
+        public static string ContractTableName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["ContractTableName"] ?? string.Empty;
+                return value;
+            }
+        }
+
     }
 }

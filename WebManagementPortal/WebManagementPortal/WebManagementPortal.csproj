@@ -286,10 +286,13 @@
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Repositories\ClassRoomRepository.cs" />
+    <Compile Include="Repositories\ContractRepository.cs" />
     <Compile Include="Repositories\IClassRoomRepository.cs" />
+    <Compile Include="Repositories\IContractRepository.cs" />
     <Compile Include="Repositories\ILessonCatalogRepository.cs" />
     <Compile Include="Repositories\LessonCatalogRepository.cs" />
     <Compile Include="Repositories\Models\ClassRoom.cs" />
+    <Compile Include="Repositories\Models\Contract.cs" />
     <Compile Include="Repositories\Models\LessonContentRespond.cs" />
     <Compile Include="Repositories\Models\OwnCarousel.cs" />
     <Compile Include="Repositories\Models\GetCourseDetailRespond.cs" />
@@ -432,6 +435,7 @@
     <Content Include="Views\Licenses\Edit.cshtml" />
     <Content Include="Views\Licenses\Index.cshtml" />
     <Content Include="Views\Licenses\RegenerateTeacherCode.cshtml" />
+    <Content Include="Views\Contracts\UpdateAllContracts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
