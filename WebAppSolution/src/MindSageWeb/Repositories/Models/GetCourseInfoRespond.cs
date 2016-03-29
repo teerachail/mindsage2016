@@ -16,6 +16,7 @@ namespace MindSageWeb.Repositories.Models
         public string CurrentStudentCode { get; set; }
         public int NumberOfStudents { get; set; }
         public DateTime? StartDate { get; set; }
+        public bool IsSelfPurchase { get; set; }
 
         #endregion Properties
     }

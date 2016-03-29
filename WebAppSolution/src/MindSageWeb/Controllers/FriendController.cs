@@ -94,6 +94,13 @@ namespace MindSageWeb.Controllers
             return students;
         }
 
+        [HttpGet]
+        [Route("{id}/{classRoomId}/{key}")]
+        public IEnumerable<GetFriendListRespond> GetSearchResult(string id, string classRoomId, string key)
+        {
+            return Enumerable.Empty<GetFriendListRespond>();
+        }
+
         // POST: api/friend
         /// <summary>
         /// Send or respond a friend request

@@ -18,6 +18,7 @@
         public CurrentStudentCode: string;
         public NumberOfStudents: number;
         public StartDate: any;
+        public IsSelfPurchase: boolean;
     }
 
     export class Advertisment {

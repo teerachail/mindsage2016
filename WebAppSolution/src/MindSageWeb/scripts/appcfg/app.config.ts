@@ -7,6 +7,7 @@ module app {
         CourseMapContentUrl: string;
         LessonDiscussionUrl: string;
         StudentListUrl: string;
+        SearchFriendUrl: string;
         SendFriendRequestUrl: string;
         JournalCommentUrl: string;
         TeacherListUrl: string;
@@ -46,6 +47,7 @@ module app {
         public CourseMapContentUrl: string;
         public LessonDiscussionUrl: string;
         public StudentListUrl: string;
+        public SearchFriendUrl: string;
         public SendFriendRequestUrl: string;
         public JournalCommentUrl: string;
         public TeacherListUrl: string;
@@ -86,6 +88,7 @@ module app {
             this.CourseMapContentUrl = apiUrl + '/mycourse/:id/:classRoomId/:action';
             this.LessonDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/discussions/:userId';
             this.StudentListUrl = apiUrl + '/friend/:userId/:classRoomId';
+            this.SearchFriendUrl = this.StudentListUrl + '/:key';
             this.SendFriendRequestUrl = apiUrl + '/friend';
             this.JournalCommentUrl = apiUrl + '/journal/:targetUserId/:requestByUserId/:classRoomId';
             this.TeacherListUrl = apiUrl + '/mycourse/:userId/:classRoomId/students';

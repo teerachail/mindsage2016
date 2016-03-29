@@ -91,6 +91,7 @@
             this.ClientUserProfile.CurrentStudentCode = courseInfo.CurrentStudentCode;
             this.ClientUserProfile.NumberOfStudents = courseInfo.NumberOfStudents;
             this.ClientUserProfile.StartDate = courseInfo.StartDate;
+            this.ClientUserProfile.IsSelfPurchase = courseInfo.IsSelfPurchase;
         }
 
         public ChangeCourse(classRoomId: string): ng.IPromise<any> {

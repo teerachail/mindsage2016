@@ -513,6 +513,7 @@ namespace MindSageWeb.Controllers
                 ClassRoomId = classRoom.id,
                 IsTeacher = lastSubscription.Role == UserProfile.AccountRole.Teacher,
                 ClassName = classRoom.Name,
+                IsSelfPurchase = selectedSubscription.Role == UserProfile.AccountRole.SelfPurchaser,
             };
 
             if (lastSubscription.Role == UserProfile.AccountRole.Teacher)
