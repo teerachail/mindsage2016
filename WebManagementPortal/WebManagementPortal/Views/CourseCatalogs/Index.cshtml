@@ -7,60 +7,57 @@
 <h2>Course catalogs</h2>
 
 <p>
-    @Html.ActionLink("Create new course", "Create")
+    @Html.ActionLink("Create new course", "Create", null, new { @class = "btn btn-primary" })
 </p>
-
-@Html.ActionLink("Update all courses", "UpdateAllCourses", null,new { @class = "btn btn-default"  })
-
+<p>
+    @Html.ActionLink("Update all courses", "UpdateAllCourses", null, new { @class = "btn btn-info" })
+</p>
 <table class="table">
-    <tr>
-        <th>
+    <tr class="row">
+        <th class="col-md-2">
             @Html.DisplayNameFor(model => model.GroupName)
         </th>
-        <th>
+        <th class="col-md-1">
             @Html.DisplayNameFor(model => model.Grade)
         </th>
-        <th>
+        <th class="col-md-1">
             @Html.DisplayNameFor(model => model.Series)
         </th>
-        <th>
+        <th class="col-md-2">
             @Html.DisplayNameFor(model => model.SideName)
         </th>
-        <th>
+        <th class="col-md-2">
             @Html.DisplayNameFor(model => model.PriceUSD)
         </th>
-        <th>
+        <th class="col-md-2">
             @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
         </th>
-        <th></th>
-        <th></th>
+        <th class="col-md-2"></th>
     </tr>
 
 @foreach (var item in Model) {
-    <tr>
-        <td>
+    <tr class="row">
+        <td class="col-md-2">
             @Html.DisplayFor(modelItem => item.GroupName)
         </td>
-        <td>
+        <td class="col-md-1">
             @Html.DisplayFor(modelItem => item.Grade)
         </td>
-        <td>
+        <td class="col-md-1">
             @Html.DisplayFor(modelItem => item.Series)
         </td>
-        <td>
+        <td class="col-md-2">
             @Html.DisplayFor(modelItem => item.SideName)
         </td>
-        <td>
+        <td class="col-md-2">
             @item.PriceUSD.ToString("C2")
         </td>
-        <td>
+        <td class="col-md-2">
             @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
         </td>
-        <td>
-            @Html.ActionLink("Manage", "Details", new { id=item.Id })
-        </td>
-        <td>
-            <a href="@AppConfigOptions.MindSageWebUrl/home/preview/@item.Id" target="_blank">Preview</a>
+        <td class="col-md-2">
+            @Html.ActionLink("Manage", "Details", new { id=item.Id }, new { @class = "btn btn-warning" })
+            <a class="btn btn-success" href="@AppConfigOptions.MindSageWebUrl/home/preview/@item.Id" target="_blank">Preview</a>
         </td>
     </tr>
 }

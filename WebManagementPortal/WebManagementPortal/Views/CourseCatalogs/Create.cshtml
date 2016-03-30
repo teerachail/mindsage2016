@@ -32,10 +32,10 @@
         </div>
 
         @Html.LabelFor(model => model.Advertisements, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="btn btn-default add-able" att-name="Advertisements" container-name="AdvertisementContainer" >Add</div>
+        <p><div class="btn btn-info add-able" att-name="Advertisements" container-name="AdvertisementContainer" >Add</div></p>
         <div class="form-group">
             <div class="col-md-10 col-md-push-2">
-                <input type="text" name="Advertisements" class="form-control" />
+                <input type="text" name="Advertisements" class="form-control"/>
             </div>
             <div id="AdvertisementContainer" class="col-md-10 col-md-push-2"></div>
         </div>
@@ -83,7 +83,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FullDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.FullDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.FullDescription,5,1,new { @class = "form-control"} )
                 @Html.ValidationMessageFor(model => model.FullDescription, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -97,16 +97,13 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+            <div class="col-md-4 text-center">
+                @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+                <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
-
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

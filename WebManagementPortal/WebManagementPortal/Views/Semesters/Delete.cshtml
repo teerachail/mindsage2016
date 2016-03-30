@@ -60,15 +60,18 @@
         <dd>
             @Html.DisplayFor(model => model.RecLog.CreatedDate)
         </dd>
-
+        <dt>
+            <br>
+            @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.CourseCatalogId }, new { @class = "btn btn-default" })
+        </dt>
+        <dd>
+            <br>
+            <input type="submit" value="Delete" class="btn btn-danger" />
+        </dd>
     </dl>
 
     @using (Html.BeginForm()) {
         @Html.AntiForgeryToken()
 
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back", "Details", "CourseCatalogs", new { @id = Model.CourseCatalogId }, null)
-        </div>
-    }
+    }   
 </div>

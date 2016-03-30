@@ -59,7 +59,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.ShortDescription, new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -67,7 +67,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MoreDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MoreDescription, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.MoreDescription,5,1, new {@class = "form-control" })
                 @Html.ValidationMessageFor(model => model.MoreDescription, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -75,7 +75,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ShortTeacherLessonPlan, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ShortTeacherLessonPlan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.ShortTeacherLessonPlan, new { @class = "form-control"})
                 @Html.ValidationMessageFor(model => model.ShortTeacherLessonPlan, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -83,7 +83,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.MoreTeacherLessonPlan, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.MoreTeacherLessonPlan, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.TextAreaFor(model => model.MoreTeacherLessonPlan,5,1, new {@class = "form-control"})
                 @Html.ValidationMessageFor(model => model.MoreTeacherLessonPlan, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -106,14 +106,14 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
 <div>
-    @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, null)
+    @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, new { @class = "btn btn-default" })
 </div>
 
 @section Scripts {

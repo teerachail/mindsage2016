@@ -125,27 +125,27 @@
     </div>
     <div class="panel-body">
         <p>
-            @Html.ActionLink("Create new semester", "Create", "Semesters", new { @id = Model.Id }, null)
+            @Html.ActionLink("Create new semester", "Create", "Semesters", new { @id = Model.Id }, new { @class = "btn btn-primary" })
         </p>
     </div>
     <table class="table">
-        <tr>
-            <th>
+        <tr class="row">
+            <th class="col-md-1">
                 Name
             </th>
-            <th>
+            <th class="col-md-1">
                 Title
             </th>
-            <th>
+            <th  class="col-md-5">
                 Description
             </th>
-            <th>
+            <th class="col-md-1">
                 Total weeks
             </th>
-            <th>
+            <th class="col-md-2">
                 Created date
             </th>
-            <th></th>
+            <th class="col-md-2"></th>
         </tr>
 
         @{
@@ -155,121 +155,121 @@
         }
         @foreach (var semester in Model.Semesters.Where(it => !it.RecLog.DeletedDate.HasValue))
         {
-            <tr>
-                <td>
+            <tr class="row">
+                <td class="col-md-1">
                     @string.Format("{0}", (char)semesterNameRunner++)
                 </td>
-                <td>
+                <td class="col-md-1">
                     @Html.DisplayFor(modelItem => semester.Title)
                 </td>
-                <td>
+                <td class="col-md-5">
                     @Html.DisplayFor(modelItem => semester.Description)
                 </td>
-                <td>
+                <td class="col-md-1">
                     @Html.DisplayFor(modelItem => semester.TotalWeeks)
                 </td>
-                <td>
+                <td class="col-md-2">
                     @Html.DisplayFor(modelItem => semester.RecLog.CreatedDate)
                 </td>
-                <td>
-                    @Html.ActionLink("Edit", "Edit", "Semesters", new { id = semester.Id, courseCatalogId = Model.Id }, new { @class = "btn btn-default" })
+                <td class="col-md-2">
+                    @Html.ActionLink("Edit", "Edit", "Semesters", new { id = semester.Id, courseCatalogId = Model.Id }, new { @class = "btn btn-warning" })
                     @Html.ActionLink("Delete", "Delete", "Semesters", new { id = semester.Id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
             <tr>
                 <td></td>
-                <td colspan="5">
+                <td colspan="7">
                     <div class="panel panel-default">
                         <div class="panel-heading">
                             <h3>Units</h3>
                         </div>
                         <div class="panel-body">
                             <p>
-                                @Html.ActionLink("Create new unit", "Create", "Units", new { @id = semester.Id }, null)
+                                @Html.ActionLink("Create new unit", "Create", "Units", new { @id = semester.Id }, new { @class = "btn btn-primary" })
                             </p>
                         </div>
 
                         <table class="table">
-                            <tr>
-                                <th>Unit No</th>
-                                <th>
+                            <tr class="row">
+                                <th class="col-md-1">Unit No</th>
+                                <th class="col-md-1">
                                     Title
                                 </th>
-                                <th>
+                                <th class="col-md-5">
                                     Description
                                 </th>
-                                <th>
+                                <th class="col-md-1">
                                     Total weeks
                                 </th>
-                                <th>
+                                <th class="col-md-2">
                                     Created date
                                 </th>
-                                <th></th>
+                                <th class="col-md-2"></th>
                             </tr>
 
                             @foreach (var unit in semester.Units.Where(it => !it.RecLog.DeletedDate.HasValue))
                             {
-                                <tr>
-                                    <td>
+                                <tr class="row">
+                                    <td class="col-md-1">
                                         @unitRunner
                                     </td>
-                                    <td>
+                                    <td class="col-md-1">
                                         @Html.DisplayFor(modelItem => unit.Title)
                                     </td>
-                                    <td>
+                                    <td class="col-md-5">
                                         @Html.DisplayFor(modelItem => unit.Description)
                                     </td>
-                                    <td>
+                                    <td class="col-md-1">
                                         @Html.DisplayFor(modelItem => unit.TotalWeeks)
                                     </td>
-                                    <td>
+                                    <td class="col-md-2">
                                         @Html.DisplayFor(modelItem => unit.RecLog.CreatedDate)
                                     </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "Edit", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-default" })
+                                    <td class="col-md-2">
+                                        @Html.ActionLink("Edit", "Edit", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-warning" })
                                         @Html.ActionLink("Delete", "Delete", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-danger" })
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td colspan="5">
+                                    <td colspan="6">
                                         <div class="panel panel-default">
                                             <div class="panel-heading">
                                                 <h3>Lesson</h3>
                                             </div>
                                             <div class="panel-body">
                                                 <p>
-                                                    @Html.ActionLink("Create new lesson", "Create", "Lessons", new { @id = unit.Id }, null)
+                                                    @Html.ActionLink("Create new lesson", "Create", "Lessons", new { @id = unit.Id }, new { @class = "btn btn-primary" })
                                                 </p>
                                             </div>
 
                                             <table class="table">
-                                                <tr>
-                                                    <th>
+                                                <tr class="row">
+                                                    <th class="col-md-1">
                                                         Lesson No
                                                     </th>
-                                                    <th>
+                                                    <th class="col-md-1">
                                                         Title
                                                     </th>
-                                                    <th>
+                                                    <th class="col-md-8">
                                                         Description
                                                     </th>
-                                                    <th></th>
+                                                    <th class="col-md-2"></th>
                                                 </tr>
 
                                                 @foreach (var lesson in unit.Lessons.Where(it => !it.RecLog.DeletedDate.HasValue))
                                                 {
-                                                    <tr>
-                                                        <td>
+                                                    <tr class="row">
+                                                        <td class="col-md-1">
                                                             @lessonRunner
                                                         </td>
-                                                        <td>
+                                                        <td class="col-md-1">
                                                             @Html.DisplayFor(modelItem => lesson.Title)
                                                         </td>
-                                                        <td>
+                                                        <td class="col-md-8">
                                                             @Html.DisplayFor(modelItem => lesson.ShortDescription)
                                                         </td>
-                                                        <td>
+                                                        <td class="col-md-2">
                                                             @Html.ActionLink("View", "Details", "Lessons", new { id = lesson.Id }, new { @class = "btn btn-primary" })
                                                             <a href="@AppConfigOptions.MindSageWebUrl/my#!/lessonpreview/@lesson.Id" target="_blank" class="btn btn-success">Preview</a>
                                                         </td>
