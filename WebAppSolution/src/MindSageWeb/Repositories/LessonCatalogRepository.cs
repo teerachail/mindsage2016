@@ -16,8 +16,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.LessonCatalogs";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public LessonCatalogRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region ILessonCatalogRepository members
 
@@ -27,7 +41,7 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonCatalogId">รหัส Lesson catalog ที่ต้องการ</param>
         public LessonCatalog GetLessonCatalogById(string lessonCatalogId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<LessonCatalog>(TableName)
+            var result = _mongoUtil.GetCollection<LessonCatalog>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.id == lessonCatalogId)
                .ToEnumerable()
                .OrderByDescending(it => it.CreatedDate)
@@ -41,7 +55,7 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonCatalogId">รหัส Lesson catalog ที่ต้องการ</param>
         public IEnumerable<LessonCatalog> GetLessonCatalogById(IEnumerable<string> lessonCatalogIds)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LessonCatalog>(TableName)
+            var qry = _mongoUtil.GetCollection<LessonCatalog>(TableName)
                .Find(it => !it.DeletedDate.HasValue && lessonCatalogIds.Contains(it.id))
                .ToEnumerable();
             return qry;

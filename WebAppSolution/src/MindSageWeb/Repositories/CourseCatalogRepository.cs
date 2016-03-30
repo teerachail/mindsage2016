@@ -15,8 +15,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.CourseCatalogs";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public CourseCatalogRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region ICourseCatalogRepository members
 
@@ -26,7 +40,7 @@ namespace MindSageWeb.Repositories
         /// <param name="courseCatalogId">รหัส course catalog ที่ต้องการข้อมูล</param>
         public IEnumerable<CourseCatalog> GetAvailableCourses()
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<CourseCatalog>(TableName)
+            var qry = _mongoUtil.GetCollection<CourseCatalog>(TableName)
              .Find(it => !it.DeletedDate.HasValue)
              .ToEnumerable();
             return qry;
@@ -37,7 +51,7 @@ namespace MindSageWeb.Repositories
         /// </summary>
         public CourseCatalog GetCourseCatalogById(string courseCatalogId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<CourseCatalog>(TableName)
+            var result = _mongoUtil.GetCollection<CourseCatalog>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.id == courseCatalogId)
                 .ToEnumerable()
                 .FirstOrDefault();
@@ -50,7 +64,7 @@ namespace MindSageWeb.Repositories
         /// <param name="groupName">ชื่อกลุ่มที่ต้องการค้นหา</param>
         public IEnumerable<CourseCatalog> GetRelatedCoursesByGroupName(string groupName)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<CourseCatalog>(TableName)
+            var qry = _mongoUtil.GetCollection<CourseCatalog>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.GroupName == groupName)
                 .ToEnumerable();
             return qry;

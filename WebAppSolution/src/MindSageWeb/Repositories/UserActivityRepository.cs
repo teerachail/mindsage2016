@@ -13,8 +13,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string ClassCalendarsTableName = "test.au.mindsage.UserActivities";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public UserActivityRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region IUserActivityRepository members
 
@@ -25,7 +39,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room</param>
         public UserActivity GetUserActivityByUserProfileIdAndClassRoomId(string userprofile, string classRoomId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<UserActivity>(ClassCalendarsTableName)
+            var result = _mongoUtil.GetCollection<UserActivity>(ClassCalendarsTableName)
                  .Find(it => !it.DeletedDate.HasValue && it.UserProfileId == userprofile && it.ClassRoomId == classRoomId)
                  .ToEnumerable()
                  .FirstOrDefault();
@@ -51,7 +65,7 @@ namespace MindSageWeb.Repositories
               .Set(it => it.LessonActivities, data.LessonActivities);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<UserActivity>(ClassCalendarsTableName)
+            _mongoUtil.GetCollection<UserActivity>(ClassCalendarsTableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

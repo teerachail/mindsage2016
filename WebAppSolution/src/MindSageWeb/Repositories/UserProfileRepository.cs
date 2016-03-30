@@ -13,8 +13,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string UserProfileTableName = "test.au.mindsage.UserProfiles";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public UserProfileRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region IUserProfileRepository members
 
@@ -24,7 +38,7 @@ namespace MindSageWeb.Repositories
         /// <param name="userprofileId">รหัส User profile ที่จะทำการขอข้อมูล</param>
         public UserProfile GetUserProfileById(string userprofileId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+            var result = _mongoUtil.GetCollection<UserProfile>(UserProfileTableName)
                 .Find(it => !it.DeletedDate.HasValue && it.id == userprofileId)
                 .ToEnumerable()
                 .FirstOrDefault();
@@ -37,7 +51,7 @@ namespace MindSageWeb.Repositories
         /// <param name="userprofileId">รหัส User profile ที่จะทำการขอข้อมูล</param>
         public IEnumerable<UserProfile> GetUserProfileById(IEnumerable<string> userprofileIds)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+            var qry = _mongoUtil.GetCollection<UserProfile>(UserProfileTableName)
                 .Find(it => !it.DeletedDate.HasValue && userprofileIds.Contains(it.id))
                 .ToEnumerable();
             return qry;
@@ -49,7 +63,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room ที่จะทำการขอข้อมูล</param>
         public IEnumerable<UserProfile> GetUserProfilesByClassRoomId(string classRoomId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+            var result = _mongoUtil.GetCollection<UserProfile>(UserProfileTableName)
                 .Find(it => !it.DeletedDate.HasValue && it.Subscriptions.Any())
                 .ToEnumerable()
                 .Where(it => it.Subscriptions.Where(subscription => !subscription.DeletedDate.HasValue).Select(s => s.ClassRoomId).Contains(classRoomId));
@@ -62,7 +76,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomIds">รหัส class room ที่จะทำการขอข้อมูล</param>
         public IEnumerable<UserProfile> GetUserProfilesByClassRoomId(IEnumerable<string> classRoomIds)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+            var result = _mongoUtil.GetCollection<UserProfile>(UserProfileTableName)
                .Find(it => !it.DeletedDate.HasValue && it.Subscriptions.Any())
                .ToEnumerable()
                .Where(it =>
@@ -93,7 +107,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.Subscriptions, data.Subscriptions);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<UserProfile>(UserProfileTableName)
+            _mongoUtil.GetCollection<UserProfile>(UserProfileTableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

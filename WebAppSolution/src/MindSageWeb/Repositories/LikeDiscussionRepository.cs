@@ -16,8 +16,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.LikeDiscussions";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public LikeDiscussionRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region ILikeDiscussionRepository members
 
@@ -27,7 +41,7 @@ namespace MindSageWeb.Repositories
         /// <param name="discussionId">รหัส discussion ที่ต้องการขอข้อมูล</param>
         public IEnumerable<LikeDiscussion> GetLikeDiscussionByDiscusionId(string discussionId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
+            var qry = _mongoUtil.GetCollection<LikeDiscussion>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.DiscussionId == discussionId)
                 .ToEnumerable();
             return qry;
@@ -51,7 +65,7 @@ namespace MindSageWeb.Repositories
                 .Set(it => it.DeletedDate, data.DeletedDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
+            _mongoUtil.GetCollection<LikeDiscussion>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
@@ -62,7 +76,7 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonId">รหัส lesson </param>
         public IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndLesson(string userprofileId, string lessonId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
+            var qry = _mongoUtil.GetCollection<LikeDiscussion>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && it.LikedByUserProfileId == userprofileId)
                 .ToEnumerable();
             return qry;
@@ -75,7 +89,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room id</param>
         public IEnumerable<LikeDiscussion> GetLikeDiscussionsByUserProfileIdAndClassRoomId(string userprofileId, string classRoomId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
+            var qry = _mongoUtil.GetCollection<LikeDiscussion>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.LikedByUserProfileId == userprofileId)
                 .ToEnumerable();
             return qry;
@@ -86,7 +100,7 @@ namespace MindSageWeb.Repositories
         /// </summary>
         public IEnumerable<LikeDiscussion> GetRequireNotifyLikeDiscussions()
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeDiscussion>(TableName)
+            var qry = _mongoUtil.GetCollection<LikeDiscussion>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue)
                 .ToEnumerable();
             return qry;

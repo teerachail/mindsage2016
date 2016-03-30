@@ -40,7 +40,6 @@ namespace MindSageWeb
         public void ConfigureServices(IServiceCollection services)
         {
             var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
-            MongoAccess.MongoUtil.Instance.Initialize(appConfig);
             services.AddOptions();
             services.Configure<AppConfigOptions>(option =>
             {
@@ -48,7 +47,6 @@ namespace MindSageWeb
                 option.GoogleClinetId = appConfig.GoogleClinetId;
                 option.ManagementPortalUrl = appConfig.ManagementPortalUrl;
                 option.MindSageUrl = appConfig.MindSageUrl;
-                option.PrimaryDBConnectionString = appConfig.PrimaryDBConnectionString;
                 option.PrimaryDBName = appConfig.PrimaryDBName;
             });
 
@@ -94,6 +92,9 @@ namespace MindSageWeb
             services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();
             services.AddTransient<Controllers.CourseController, Controllers.CourseController>();
             services.AddTransient<Controllers.ProfileController, Controllers.ProfileController>();
+
+            var primaryDBConnectionString = Configuration["Data:DefaultConnection:PrimaryDBConnectionString"];
+            services.AddTransient<MongoAccess.MongoUtil>(pvdr => new MongoAccess.MongoUtil(primaryDBConnectionString, appConfig.PrimaryDBName));
 
             services.AddSwaggerGen();
         }

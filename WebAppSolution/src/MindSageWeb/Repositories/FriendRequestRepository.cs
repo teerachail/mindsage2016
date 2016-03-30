@@ -16,8 +16,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.FriendRequests";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public FriendRequestRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region IFriendRequestRepository members
 
@@ -27,7 +41,7 @@ namespace MindSageWeb.Repositories
         /// <param name="userprofileId">รหัสบัญชีผู้ใช้ที่ต้องการขอข้อมูล</param>
         public IEnumerable<FriendRequest> GetFriendRequestByUserProfileId(string userprofileId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(TableName)
+            var qry = _mongoUtil.GetCollection<FriendRequest>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.FromUserProfileId == userprofileId)
                 .ToEnumerable();
             return qry;
@@ -39,7 +53,7 @@ namespace MindSageWeb.Repositories
         /// <param name="userprofileId">รหัสบัญชีผู้ใช้ที่ต้องการขอข้อมูล</param>
         public IEnumerable<FriendRequest> GetFriendRequestByUserProfileId(IEnumerable<string> userprofileIds)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(TableName)
+            var qry = _mongoUtil.GetCollection<FriendRequest>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && userprofileIds.Contains(it.FromUserProfileId))
                 .ToEnumerable();
             return qry;
@@ -60,7 +74,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.DeletedDate, data.DeletedDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<FriendRequest>(TableName)
+            _mongoUtil.GetCollection<FriendRequest>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

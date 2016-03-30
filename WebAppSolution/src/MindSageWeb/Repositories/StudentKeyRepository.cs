@@ -16,8 +16,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.StudentKeys";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public StudentKeyRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region IStudentKeyRepository members
 
@@ -27,7 +41,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room ที่ต้องการขอข้อมูล</param>
         public StudentKey GetStudentKeyByClassRoomId(string classRoomId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(TableName)
+            var result = _mongoUtil.GetCollection<StudentKey>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId)
                .ToEnumerable()
                .OrderByDescending(it => it.CreatedDate)
@@ -42,7 +56,7 @@ namespace MindSageWeb.Repositories
         /// <param name="grade">เกรดที่ต้องการขอขอ้ฒุล</param>
         public StudentKey GetStudentKeyByCodeAndGrade(string code, string grade)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(TableName)
+            var result = _mongoUtil.GetCollection<StudentKey>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.Code == code && it.Grade == grade)
                 .ToEnumerable()
                 .OrderByDescending(it => it.CreatedDate)
@@ -65,7 +79,7 @@ namespace MindSageWeb.Repositories
                .Set(it => it.DeletedDate, data.DeletedDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<StudentKey>(TableName)
+            _mongoUtil.GetCollection<StudentKey>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

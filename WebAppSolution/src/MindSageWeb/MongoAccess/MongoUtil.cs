@@ -8,49 +8,24 @@ namespace MindSageWeb.MongoAccess
 
         private static IMongoClient _client;
         private static IMongoDatabase _database;
-        private static MongoUtil _instance;
 
         #endregion Fields
 
-        #region Properties
-
-        public static MongoUtil Instance
-        {
-            get
-            {
-                if (_instance == null) _instance = new MongoUtil();
-                return _instance;
-            }
-
-            set
-            {
-                _instance = value;
-            }
-        }
-
-        #endregion Properties
-
         #region Constructors
-
-        private MongoUtil()
-        {
-        }
-
-        #endregion Constructors
-
-        #region Methods
 
         /// <summary>
         /// Initialize database's connection
         /// </summary>
         /// <param name="appConfig">App configuration</param>
-        public void Initialize(AppConfigOptions appConfig)
+        public MongoUtil(string primaryDBConnectionString, string databaseName)
         {
-            var connectionString = appConfig.PrimaryDBConnectionString;
-            var dbName = appConfig.PrimaryDBName;
-            _client = new MongoClient(connectionString);
-            _database = _client.GetDatabase(dbName);
+            _client = new MongoClient(primaryDBConnectionString);
+            _database = _client.GetDatabase(databaseName);
         }
+
+        #endregion Constructors
+
+        #region Methods
 
         /// <summary>
         /// ดึงข้อมูลจากตาราง

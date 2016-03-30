@@ -16,8 +16,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.LikeLessons";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public LikeLessonRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region ILikeLessonRepository members
 
@@ -27,7 +41,7 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonId">รหัส lesson ที่ต้องการขอข้อมูล</param>
         public IEnumerable<LikeLesson> GetLikeLessonsByLessonId(string lessonId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeLesson>(TableName)
+            var qry = _mongoUtil.GetCollection<LikeLesson>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId)
                 .ToEnumerable();
             return qry;
@@ -49,7 +63,7 @@ namespace MindSageWeb.Repositories
                .Set(it => it.DeletedDate, data.DeletedDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<LikeLesson>(TableName)
+            _mongoUtil.GetCollection<LikeLesson>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
@@ -60,7 +74,7 @@ namespace MindSageWeb.Repositories
         /// <param name="lessonId">รหัส lesson </param>
         public IEnumerable<LikeLesson> GetLikeLessonsByUserProfileIdAndLesson(string userprofileId, string lessonId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeLesson>(TableName)
+            var qry = _mongoUtil.GetCollection<LikeLesson>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && it.LikedByUserProfileId == userprofileId)
                 .ToEnumerable();
             return qry;
@@ -71,7 +85,7 @@ namespace MindSageWeb.Repositories
         /// </summary>
         public IEnumerable<LikeLesson> GetRequireNotifyLikeLessons()
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<LikeLesson>(TableName)
+            var qry = _mongoUtil.GetCollection<LikeLesson>(TableName)
                .Find(it => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue)
                .ToEnumerable();
             return qry;

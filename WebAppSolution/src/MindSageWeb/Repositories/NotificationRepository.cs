@@ -16,8 +16,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.Notifications";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public NotificationRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region INotificationRepository members
 
@@ -28,7 +42,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">Class room id</param>
         public IEnumerable<Notification> GetNotificationByUserIdAndClassRoomId(string userprofileId, string classRoomId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Notification>(TableName)
+            var qry = _mongoUtil.GetCollection<Notification>(TableName)
               .Find(it => !it.HideDate.HasValue && it.ClassRoomId == classRoomId && it.ToUserProfileId == userprofileId)
               .ToEnumerable();
             return qry;
@@ -54,7 +68,7 @@ namespace MindSageWeb.Repositories
                .Set(it => it.Tag, data.Tag);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<Notification>(TableName)
+            _mongoUtil.GetCollection<Notification>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
@@ -66,7 +80,7 @@ namespace MindSageWeb.Repositories
         {
             if (!data.Any()) return;
 
-            MongoAccess.MongoUtil.Instance.GetCollection<Notification>(TableName)
+            _mongoUtil.GetCollection<Notification>(TableName)
                 .InsertMany(data);
         }
 

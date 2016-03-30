@@ -16,8 +16,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.Comments";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public CommentRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region ICommentRepository members
 
@@ -28,7 +42,7 @@ namespace MindSageWeb.Repositories
         /// <param name="creatorProfiles">รายชื่อผู้สร้าง comment ที่ต้องการ</param>
         public Comment GetCommentById(string commentId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+            var result = _mongoUtil.GetCollection<Comment>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.id == commentId)
                 .ToEnumerable()
                 .FirstOrDefault();
@@ -41,7 +55,7 @@ namespace MindSageWeb.Repositories
         /// <param name="commentIds">รหัส comment ที่ต้องการขอข้อมูล</param>
         public IEnumerable<Comment> GetCommentById(IEnumerable<string> commentIds)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+            var qry = _mongoUtil.GetCollection<Comment>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && commentIds.Contains(it.id))
                 .ToEnumerable();
             return qry;
@@ -53,7 +67,7 @@ namespace MindSageWeb.Repositories
         /// <param name="commentId">รหัส comment ที่ต้องการขอข้อมูล</param>
         public IEnumerable<Comment> GetCommentsByLessonId(string lessonId, IEnumerable<string> creatorProfiles)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+            var qry = _mongoUtil.GetCollection<Comment>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && creatorProfiles.Contains(it.CreatedByUserProfileId))
                .ToEnumerable();
             return qry;
@@ -80,7 +94,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.Discussions, data.Discussions);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+            _mongoUtil.GetCollection<Comment>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
@@ -91,7 +105,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส Class room ที่ต้องการค้นหา</param>
         public IEnumerable<Comment> GetCommentsByUserProfileId(string userprofileId, string classRoomId)
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+            var qry = _mongoUtil.GetCollection<Comment>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.CreatedByUserProfileId == userprofileId)
                .ToEnumerable();
             return qry;
@@ -102,7 +116,7 @@ namespace MindSageWeb.Repositories
         /// </summary>
         public IEnumerable<Comment> GetRequireNotifyComments()
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+            var qry = _mongoUtil.GetCollection<Comment>(TableName)
                .Find(it => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue)
                .ToEnumerable();
             return qry;
@@ -113,7 +127,7 @@ namespace MindSageWeb.Repositories
         /// </summary>
         public IEnumerable<Comment> GetRequireNotifyDiscussions()
         {
-            var qry = MongoAccess.MongoUtil.Instance.GetCollection<Comment>(TableName)
+            var qry = _mongoUtil.GetCollection<Comment>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.Discussions.Any(d => !it.DeletedDate.HasValue && !it.LastNotifyComplete.HasValue))
                .ToEnumerable();
             return qry;

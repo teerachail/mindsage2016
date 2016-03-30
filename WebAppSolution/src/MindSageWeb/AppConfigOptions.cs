@@ -9,7 +9,6 @@ namespace MindSageWeb
     {
         #region Properties
 
-        public string PrimaryDBConnectionString { get; set; }
         public string PrimaryDBName { get; set; }
         public string GoogleClinetId { get; set; }
         public string GoogleClientSecret { get; set; }

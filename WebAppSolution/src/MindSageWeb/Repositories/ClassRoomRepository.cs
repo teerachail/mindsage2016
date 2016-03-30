@@ -13,8 +13,22 @@ namespace MindSageWeb.Repositories
 
         // HACK: Table name
         private const string TableName = "test.au.mindsage.ClassRooms";
+        private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
+
+        #region Constructors
+
+        /// <summary>
+        /// Initialize repository
+        /// </summary>
+        /// <param name="mongoUtil">Mongo access utility</param>
+        public ClassRoomRepository(MongoAccess.MongoUtil mongoUtil)
+        {
+            _mongoUtil = mongoUtil;
+        }
+
+        #endregion Constructors
 
         #region IClassRoomRepository members
 
@@ -24,7 +38,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส Class room ที่ต้องการขอ</param>
         public ClassRoom GetClassRoomById(string classRoomId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(TableName)
+            var result = _mongoUtil.GetCollection<ClassRoom>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.id == classRoomId)
                 .ToEnumerable()
                 .FirstOrDefault();
@@ -47,7 +61,7 @@ namespace MindSageWeb.Repositories
              .Set(it => it.LastUpdatedMessageDate, data.LastUpdatedMessageDate);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(TableName)
+            _mongoUtil.GetCollection<ClassRoom>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
@@ -57,7 +71,7 @@ namespace MindSageWeb.Repositories
         /// <param name="courseCatalogId">รหัส course catalog ที่ต้องการขอ</param>
         public ClassRoom GetPublicClassRoomByCourseCatalogId(string courseCatalogId)
         {
-            var result = MongoAccess.MongoUtil.Instance.GetCollection<ClassRoom>(TableName)
+            var result = _mongoUtil.GetCollection<ClassRoom>(TableName)
                .Find(it => !it.DeletedDate.HasValue && it.IsPublic && it.CourseCatalogId == courseCatalogId)
                .ToEnumerable()
                .OrderByDescending(it => it.CreatedDate)
