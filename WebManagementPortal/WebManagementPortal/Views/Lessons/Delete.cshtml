@@ -112,17 +112,19 @@
         <dd>
             @Html.DisplayFor(model => model.Unit.Title)
         </dd>
+        @using (Html.BeginForm())
+        {
         <dt>
             <br>
             @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, new { @class = "btn btn-default" })
         </dt>
         <dd>
             <br>
-            <input type="submit" value="Delete" class="btn btn-danger" />
+                @Html.AntiForgeryToken()
+                <input type="submit" value="Delete" class="btn btn-danger" />         
         </dd>
+        }
     </dl>
 
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()    
-    }
+
 </div>
