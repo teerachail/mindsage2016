@@ -34,7 +34,7 @@
         </div>
 
         @Html.LabelFor(model => model.Advertisements, htmlAttributes: new { @class = "control-label col-md-2" })
-        <p><div class="btn btn-info add-able" att-name="Advertisements" container-name="AdvertisementContainer">Add</div></p>
+        <div class="btn btn-info add-able" att-name="Advertisements" container-name="AdvertisementContainer">Add</div>
         <div class="form-group">
             <div class="col-md-10 col-md-push-2">
                 @if (!(bool)Model?.Advertisements.Any())
@@ -45,7 +45,7 @@
                 {
                     foreach (var item in Model.Advertisements?.Split(new[] { "#;" }, StringSplitOptions.RemoveEmptyEntries))
                     {
-                        <input type="text" name="Advertisements" class="form-control" value="@item" />
+                        <input type="text" name="Advertisements" class="form-control" value="@item" style="margin-top:1em;"/>
                     }
                 }
             </div>

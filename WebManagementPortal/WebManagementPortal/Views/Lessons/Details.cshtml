@@ -126,13 +126,13 @@
         <th class="col-md-1">
             No
         </th>
-        <th class="col-md-2">
+        <th class="col-md-7">
             Image Url
         </th>
         <th class="col-md-2">
             Created date
         </th>
-        <th class="col-md-5"></th>
+
         <th class="col-md-2 col-md-offset-5"></th>
     </tr>
 
@@ -142,13 +142,12 @@
             <td class="col-md-1">
                 @adsRunner
             </td>
-            <td class="col-md-2">
+            <td class="col-md-7">
                 @Html.DisplayFor(modelItem => item.ImageUrl)
             </td>
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
             </td>
-            <td class="col-md-5"></td>
             <td class="col-md-2">
                 @Html.ActionLink("Edit", "Edit", "Advertisements", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", "Advertisements", new { id = item.Id }, new { @class = "btn btn-danger" })
@@ -172,13 +171,12 @@
         <th class="col-md-1">
             Send date
         </th>
-        <th class="col-md-2">
+        <th class="col-md-6">
             Message
         </th>
         <th class="col-md-2">
             Created date
         </th>
-        <th class="col-md-4"></th>
         <th class="col-md-2"></th>
     </tr>
 
@@ -191,13 +189,12 @@
             <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.SendOnDay)
             </td>
-            <td class="col-md-2">
+            <td class="col-md-6">
                 @Html.DisplayFor(modelItem => item.Message)
             </td>
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
             </td>
-            <td class="col-md-4"></td>
             <td class="col-md-2">
                 @Html.ActionLink("Edit", "Edit", "TopicOfTheDays", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", "TopicOfTheDays", new { id = item.Id }, new { @class = "btn btn-danger" })

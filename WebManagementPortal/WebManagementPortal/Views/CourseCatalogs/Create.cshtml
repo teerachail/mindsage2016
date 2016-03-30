@@ -32,12 +32,13 @@
         </div>
 
         @Html.LabelFor(model => model.Advertisements, htmlAttributes: new { @class = "control-label col-md-2" })
-        <p><div class="btn btn-info add-able" att-name="Advertisements" container-name="AdvertisementContainer" >Add</div></p>
+        <div class="btn btn-info add-able" att-name="Advertisements" container-name="AdvertisementContainer">Add</div>
         <div class="form-group">
             <div class="col-md-10 col-md-push-2">
-                <input type="text" name="Advertisements" class="form-control"/>
+                <input type="text" name="Advertisements" class="form-control" style="margin-top:1em;"/>
             </div>
-            <div id="AdvertisementContainer" class="col-md-10 col-md-push-2"></div>
+            <div id="AdvertisementContainer" class="col-md-10 col-md-push-2">
+            </div>
         </div>
 
         <div class="form-group">
