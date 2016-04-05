@@ -29,6 +29,8 @@ namespace MindSageWeb.Specs.Steps
             var option = mock.Create<IOptions<AppConfigOptions>>();
             var dateTime = mock.Create<IDateTime>();
 
+            option.Setup(it => it.Value).Returns(new AppConfigOptions());
+
             ScenarioContext.Current.Set(classRoomRepo);
             ScenarioContext.Current.Set(likeLessonRepo);
             ScenarioContext.Current.Set(userprofileRepo);
