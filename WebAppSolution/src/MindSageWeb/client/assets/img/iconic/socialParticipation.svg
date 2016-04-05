@@ -1,11 +1,9 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.1" id="Layer_1" xmlns=" http://www.w3.org/2000/svg" xmlns:xlink=" http://www.w3.org/1999/xlink" x="0px" y="0px"
-  width="128.002" height="128" viewBox="0 0 128.002 128" enable-background="new 0 0 128.002 128" class="iconic iconic-action" xml:space="preserve">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="128.002" height="128" viewBox="0 0 128.002 128" enable-background="new 0 0 128.002 128" class="iconic iconic-action" xml:space="preserve">
 
-  <g class="iconic-ban-lg iconic-container iconic-lg" data-width="128.002" data-height="128" transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+  <g class="iconic-ban-lg iconic-container iconic-lg" data-width="128.002" data-height="128" display="inline">
     <path fill="#507BBE" d="M5.412,128C2.428,128,0,125.564,0,122.57V56.129c0-6.137,4.939-11.131,11.012-11.131h60.98
 		c6.072,0,11.012,4.994,11.012,11.131v41.992c0,6.139-4.939,11.133-11.012,11.133H24.621L9.369,126.25
 		C8.227,127.424,6.863,128,5.412,128z M11.012,52.998C9.352,52.998,8,54.402,8,56.129v59.674l10.924-12.172
@@ -16,8 +14,7 @@ fill="#000000" stroke="none">
 		c6.072,0,11.012,4.994,11.012,11.135v66.441c0,2.215-1.32,4.186-3.363,5.023C123.975,82.871,123.279,83.004,122.592,83.004z"/>
   </g>
   
-  <g class="iconic-ban-md iconic-container iconic-md" data-width="32" data-height="32" transform="translate(0.000000,32.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+  <g class="iconic-ban-md iconic-container iconic-md" data-width="32" data-height="32" display="none" transform="scale(4)">
     <path fill="#507BBE" d="M1.353,32C0.606,32,0,31.391,0,30.643v-16.61c0-1.534,1.234-2.783,2.753-2.783h15.245
 		c1.518,0,2.753,1.249,2.753,2.783V24.53c0,1.535-1.235,2.783-2.753,2.783H6.155l-3.813,4.249C2.057,31.856,1.716,32,1.353,32z
 		 M2.753,13.25C2.338,13.25,2,13.601,2,14.032v14.918l2.73-3.043c0.377-0.389,0.864-0.594,1.363-0.594h11.904
@@ -27,8 +24,7 @@ fill="#000000" stroke="none">
 		v5.718c0,0.552-0.447,1-1,1c-0.552,0-1-0.448-1-1V2.784C11.249,1.249,12.484,0,14.002,0h15.245C30.766,0,32,1.249,32,2.784v16.61
 		c0,0.554-0.33,1.046-0.841,1.256C30.993,20.718,30.819,20.751,30.647,20.751z"/>
   </g>
-  <g class="iconic-ban-sm iconic-container iconic-sm" data-width="16" data-height="16" transform="translate(0.000000,16.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+  <g class="iconic-ban-sm iconic-container iconic-sm" data-width="16" data-height="16" display="none" transform="scale(8)">
     <path fill="#507BBE" d="M0.676,16C0.303,16,0,15.695,0,15.321V7.016c0-0.767,0.617-1.391,1.376-1.391h7.623
 		c0.759,0,1.376,0.624,1.376,1.391v5.249c0,0.767-0.618,1.392-1.376,1.392H3.078l-1.907,2.125C1.028,15.928,0.858,16,0.676,16z
 		 M1.376,6.625C1.169,6.625,1,6.8,1,7.016v7.459l1.365-1.521c0.188-0.194,0.432-0.297,0.682-0.297h5.952

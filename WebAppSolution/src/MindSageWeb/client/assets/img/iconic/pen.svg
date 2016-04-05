@@ -1,11 +1,9 @@
-<?xml version="1.0" standalone="no"?>
-<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 20010904//EN"
- "http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd">
-<svg version="1.1" id="Layer_1" xmlns=" http://www.w3.org/2000/svg" xmlns:xlink=" http://www.w3.org/1999/xlink" x="0px" y="0px"
-  width="128" height="128" viewBox="0 0 128 128" enable-background="new 0 0 128 128" class="iconic iconic-action" xml:space="preserve">
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="109.625" height="128" viewBox="0 0 109.625 128" enable-background="new 0 0 109.625 128" class="iconic iconic-action" xml:space="preserve">
 
-  <g class="iconic-ban-lg iconic-container iconic-lg" data-width="128" data-height="128" transform="translate(0.000000,128.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+  <g class="iconic-ban-lg iconic-container iconic-lg" data-width="128" data-height="128" display="inline">
     <g>
 		<defs>
 			<polygon id="SVGID_10_" points="110.151,22.388 40.106,105.717 13.874,83.666 83.919,0.338 96.053,0 108.397,10.381 			"/>
@@ -52,9 +50,7 @@ fill="#000000" stroke="none">
 			"/>
 	</g>
   </g>
-  
-  <g class="iconic-ban-md iconic-container iconic-md" data-width="32" data-height="32" transform="translate(0.000000,32.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+  <g class="iconic-ban-md iconic-container iconic-md" data-width="32" data-height="32" display="none" transform="scale(4)">
    <g>
 		<defs>
 			<polygon id="SVGID_19_" points="27.538,5.597 10.027,26.429 3.469,20.917 20.98,0.084 24.013,0 27.099,2.595 			"/>
@@ -100,8 +96,7 @@ fill="#000000" stroke="none">
 		<polygon clip-path="url(#SVGID_8_)" fill="url(#SVGID_9_)" points="2.426,34.192 -2.392,29.839 1.98,24.998 6.799,29.352 		"/>
 	</g>
   </g>
-  <g class="iconic-ban-sm iconic-container iconic-sm" data-width="16" data-height="16" transform="translate(0.000000,16.000000) scale(0.100000,-0.100000)"
-fill="#000000" stroke="none">
+  <g class="iconic-ban-sm iconic-container iconic-sm" data-width="16" data-height="16" display="none" transform="scale(8)">
    <g>
 		<defs>
 			<polygon id="SVGID_28_" points="13.77,2.798 5.014,13.215 1.734,10.458 10.49,0.042 12.007,0 13.55,1.298 			"/>
