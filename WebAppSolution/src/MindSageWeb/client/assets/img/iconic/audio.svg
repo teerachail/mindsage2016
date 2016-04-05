@@ -4,7 +4,6 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="74.879" height="128" viewBox="0 0 74.879 128" enable-background="new 0 0 74.879 128" class="iconic iconic-action" xml:space="preserve">
 <g class="iconic-container iconic-lg" data-width="74.879" data-height="128" display="inline">
-	<rect x="1.686" y="1.686" fill="#FFFFFF" width="71.508" height="124.628"/>
 	<path fill="#3399FF" d="M74.879,128H0V0h74.879V128z M3.371,124.628h68.137V3.371H3.371V124.628z"/>
 	<path fill="#3399FF" d="M36.119,48.656c-0.517-0.21-1.118-0.094-1.518,0.307l-8.417,8.465h-6.48c-0.767,0-1.391,0.624-1.391,1.397
 		v10.049c0,0.767,0.624,1.39,1.391,1.39h6.454l8.449,8.467c0.267,0.271,0.622,0.411,0.984,0.411c0.177,0,0.361-0.034,0.533-0.106
@@ -31,7 +30,6 @@
 	</g>
 </g>
 <g class="iconic-container iconic-md" data-width="18.72" data-height="32" display="none" transform="scale(4)">
-	<rect x="0.421" y="0.421" fill="#FFFFFF" width="17.877" height="31.157"/>
 	<path fill="#3399FF" d="M18.72,32H0V0h18.72V32z M0.843,31.157h17.034V0.843H0.843V31.157z"/>
 	<path fill="#3399FF" d="M9.03,12.164c-0.129-0.053-0.279-0.023-0.379,0.077l-2.104,2.116h-1.62c-0.192,0-0.348,0.156-0.348,0.35
 		v2.512c0,0.192,0.156,0.348,0.348,0.348H6.54l2.112,2.117c0.066,0.068,0.155,0.103,0.246,0.103c0.044,0,0.09-0.008,0.133-0.026
@@ -57,8 +55,7 @@
 			c1.745-0.753,2.874-2.466,2.874-4.364C14.152,14.049,13.021,12.332,11.269,11.582"/>
 	</g>
 </g>
-<g class="iconic-container iconic-sm" data-width="8.938" data-height="16" display="none" transform="scale(8)">
-	<rect x="0.21" y="0.21" fill="#FFFFFF" width="8.938" height="15.579"/>
+<g class="iconic-container iconic-sm" data-width="9.359" data-height="16" display="none" transform="scale(8)">
 	<path fill="#3399FF" d="M9.359,16H0V0h9.359V16z M0.421,15.579h8.518V0.421H0.421V15.579z"/>
 	<path fill="#3399FF" d="M4.515,6.082C4.45,6.056,4.375,6.07,4.325,6.121L3.273,7.178h-0.81c-0.096,0-0.174,0.078-0.174,0.175v1.256
 		c0,0.096,0.078,0.174,0.174,0.174H3.27l1.056,1.058c0.033,0.034,0.078,0.052,0.123,0.052c0.022,0,0.045-0.004,0.067-0.014

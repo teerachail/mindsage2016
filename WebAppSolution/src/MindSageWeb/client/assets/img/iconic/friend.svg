@@ -3,7 +3,7 @@
 <!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="127.924" height="128" viewBox="0 0 158.73 128" enable-background="new 0 0 158.73 128" class="iconic iconic-action" xml:space="preserve">
-<g class="iconic-container iconic-lg" data-width="127.924" data-height="128">
+<g class="iconic-container iconic-lg" data-width="127.924" data-height="128" display="inline">
 	<path fill="#FAA526" d="M94.451,74.031c-7.527,9.871-18.424,16.092-30.523,16.092c-12.102,0-22.996-6.221-30.525-16.092
 		C17.096,74.836,4,88.428,4,104.928v5.736C4,118,10.004,124,17.34,124h93.248c7.336,0,13.336-6,13.336-13.336v-5.736
 		C123.924,88.398,110.791,74.799,94.451,74.031"/>
@@ -18,7 +18,7 @@
 		S82.674,83.008,63.928,83.008z M63.928,8c-14.336,0-26,15.029-26,33.504s11.664,33.504,26,33.504
 		c14.334,0,25.996-15.029,25.996-33.504S78.262,8,63.928,8z"/>
 </g>
-<g class="iconic-container iconic-md" data-width="31.981" data-height="32">
+<g class="iconic-container iconic-md" data-width="31.981" data-height="32" display="none" transform="scale(4)">
 	<path fill="#FAA526" d="M23.613,18.508c-1.882,2.468-4.606,4.023-7.631,4.023c-3.025,0-5.749-1.555-7.632-4.023
 		C4.274,18.709,1,22.107,1,26.232v1.434C1,29.5,2.501,31,4.335,31h23.313c1.834,0,3.334-1.5,3.334-3.334v-1.434
 		C30.981,22.1,27.698,18.7,23.613,18.508"/>
@@ -33,7 +33,7 @@
 		S20.669,20.752,15.982,20.752z M15.982,2c-3.584,0-6.5,3.757-6.5,8.376s2.916,8.376,6.5,8.376c3.583,0,6.499-3.757,6.499-8.376
 		S19.565,2,15.982,2z"/>
 </g>
-<g class="iconic-container iconic-sm" data-width="15.991" data-height="16" >
+<g class="iconic-container iconic-sm" data-width="15.991" data-height="16" display="none" transform="scale(8)">
 	<path fill="#FAA526" d="M11.807,9.254c-0.94,1.234-2.303,2.012-3.815,2.012s-2.874-0.778-3.815-2.012
 		C2.138,9.354,0.5,11.054,0.5,13.116v0.717c0,0.917,0.751,1.667,1.668,1.667h11.656c0.917,0,1.667-0.75,1.667-1.667v-0.717
 		C15.491,11.05,13.85,9.35,11.807,9.254"/>

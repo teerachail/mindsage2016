@@ -4,7 +4,6 @@
 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
 	 width="218.806" height="128" viewBox="0 0 218.806 128" enable-background="new 0 0 218.806 128" class="iconic iconic-action" xml:space="preserve">
 <g class="iconic-container iconic-lg" data-width="74.105" data-height="128" display="inline">
-	<rect x="2.881" y="2.881" fill="#FFFFFF" width="213.043" height="122.237"/>
 	<path fill="#3399FF" d="M218.806,128H0V0h218.806V128z M5.763,122.237h207.281V5.763H5.763V122.237z"/>
 	<path fill="#3399FF" d="M104.267,49.652l21.91,12.648c1.306,0.756,1.306,2.64,0,3.392l-21.91,12.652
 		c-1.306,0.754-2.939-0.19-2.939-1.698V51.349C101.328,49.839,102.961,48.897,104.267,49.652"/>
@@ -17,7 +16,6 @@
 		/>
 </g>
 <g class="iconic-container iconic-md" data-width="54.702" data-height="32" display="none" transform="scale(4)">
-	<rect x="0.72" y="0.72" fill="#FFFFFF" width="53.261" height="30.56"/>
 	<path fill="#3399FF" d="M54.702,32H0V0h54.702V32z M1.441,30.559h51.82V1.441H1.441V30.559z"/>
 	<path fill="#3399FF" d="M26.067,12.413l5.478,3.162c0.326,0.189,0.326,0.66,0,0.848l-5.478,3.163
 		c-0.327,0.188-0.735-0.048-0.735-0.425v-6.324C25.332,12.46,25.74,12.224,26.067,12.413"/>
@@ -29,7 +27,6 @@
 		c0,4.176,3.397,7.573,7.573,7.573c4.176,0,7.574-3.397,7.574-7.573C34.924,11.824,31.526,8.426,27.35,8.426z"/>
 </g>
 <g class="iconic-container iconic-sm" data-width="27.351" data-height="16" display="none" transform="scale(8)">
-	<rect x="0.36" y="0.36" fill="#FFFFFF" width="26.63" height="15.279"/>
 	<path fill="#3399FF" d="M27.351,16H0V0h27.351V16z M0.721,15.279h25.91V0.721H0.721V15.279z"/>
 	<path fill="#3399FF" d="M13.034,6.207l2.739,1.581c0.163,0.094,0.163,0.33,0,0.424l-2.739,1.581
 		c-0.164,0.095-0.368-0.023-0.368-0.212V6.419C12.666,6.23,12.87,6.112,13.034,6.207"/>
