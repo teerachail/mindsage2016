@@ -70,12 +70,12 @@ namespace WebManagementPortal.Controllers
                                 });
                         var contents = new List<GetCourseDetailRespond.LessonContent>
                         {
-                        new GetCourseDetailRespond.LessonContent {
-                            ContentUrl = it.PrimaryContentURL,
-                            Description = it.PrimaryContentDescription,
-                            ImageUrl = ExtraContentType.Video.ConvertToIconUrl(),
-                            IsPreviewable = it.IsPreviewable
-                        }
+                            new GetCourseDetailRespond.LessonContent {
+                                ContentUrl = it.PrimaryContentURL,
+                                Description = it.PrimaryContentDescription,
+                                ImageUrl = ExtraContentType.Video.ConvertToIconUrl(),
+                                IsPreviewable = it.IsPreviewable
+                            }
                         };
                         return new GetCourseDetailRespond.Lesson
                         {

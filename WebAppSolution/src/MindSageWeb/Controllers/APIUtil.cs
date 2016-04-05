@@ -140,7 +140,7 @@ namespace MindSageWeb.Controllers
                 {
                     id = Guid.NewGuid().ToString(),
                     BeginDate = selectedLessonCalendar.BeginDate,
-                    TotalContentsAmount = selectedLessonCatalog.ExtraContentUrls.Count() + PrimaryContent,
+                    TotalContentsAmount = selectedLessonCatalog.ExtraContents.Count() + PrimaryContent,
                     LessonId = lesson.id,
                     SawContentIds = Enumerable.Empty<string>()
                 };

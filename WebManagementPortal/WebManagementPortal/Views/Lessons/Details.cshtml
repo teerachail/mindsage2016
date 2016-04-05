@@ -151,22 +151,22 @@
     @foreach (var item in Model.ExtraContents.Where(it => !it.RecLog.DeletedDate.HasValue))
     {
         <tr>
-            <td>
+            <td class="col-md-1">
                 @extraContentRunner
             </td>
-            <td>
+            <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.ContentURL)
             </td>
-            <td>
+            <td class="col-md-5">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
-            <td>
+            <td class="col-md-1">
                 @item.IconURL
             </td>
-            <td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
             </td>
-            <td>
+            <td class="col-md-2">
                 @Html.ActionLink("Edit", "Edit", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>

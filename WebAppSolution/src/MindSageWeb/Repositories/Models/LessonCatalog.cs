@@ -20,7 +20,8 @@ namespace MindSageWeb.Repositories.Models
         public string ShortTeacherLessonPlan { get; set; }
         public string MoreTeacherLessonPlan { get; set; }
         public string PrimaryContentURL { get; set; }
-        public IEnumerable<string> ExtraContentUrls { get; set; }
+        public string PrimaryContentDescription { get; set; }
+        public IEnumerable<ExtraContent> ExtraContents { get; set; }
         public string CourseCatalogId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
@@ -52,6 +53,18 @@ namespace MindSageWeb.Repositories.Models
             public int SendOnDay { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime? DeletedDate { get; set; }
+
+            #endregion Properties
+        }
+
+        public class ExtraContent
+        {
+            #region Properties
+
+            public string id { get; set; }
+            public string ContentURL { get; set; }
+            public string Description { get; set; }
+            public string IconURL { get; set; }
 
             #endregion Properties
         }

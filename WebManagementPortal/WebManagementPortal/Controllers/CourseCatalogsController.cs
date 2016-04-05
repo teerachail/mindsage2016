@@ -171,6 +171,7 @@ namespace WebManagementPortal.Controllers
                 allCourseCatalog = dctx.CourseCatalogs
                     .Include("Semesters.Units.Lessons.Advertisements")
                     .Include("Semesters.Units.Lessons.TopicOfTheDays")
+                    .Include("Semesters.Units.Lessons.ExtraContents")
                     .ToList();
             }
             var canUpdateCourses = allCourseCatalog != null && allCourseCatalog.Any();
@@ -235,7 +236,6 @@ namespace WebManagementPortal.Controllers
                                 MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan,
                                 PrimaryContentURL = lesson.PrimaryContentURL,
                                 PrimaryContentDescription = lesson.PrimaryContentDescription,
-                                IsPreviewable = lesson.IsPreviewable,
                                 ExtraContents = extraContents,
                                 CourseCatalogId = courseCatalog.Id.ToString(),
                                 CreatedDate = lesson.RecLog.CreatedDate,
@@ -259,30 +259,50 @@ namespace WebManagementPortal.Controllers
                 var lessonQry = unitQry.SelectMany(it => it.Lessons).Where(it => !it.RecLog.DeletedDate.HasValue);
 
                 var lessonIdRunner = 1;
-                var lessons = lessonQry.Select(it => new repoModel.CourseCatalog.Lesson
-                {
-                    id = it.Id.ToString(),
-                    Order = lessonIdRunner++,
-                    Contents = Enumerable.Empty<repoModel.CourseCatalog.LessonContent>() // HACK: Create lesson's contents
-                });
-
                 var unitIdRunner = 1;
+                var extraContentRunner = 1;
                 var semesterNameRunner = (byte)65;
-                var semesters = semesterQry.Select(it => new repoModel.CourseCatalog.Semester
+                var semesters = semesterQry.Select(semester => new repoModel.CourseCatalog.Semester
                 {
-                    id = it.Id.ToString(),
-                    Title = it.Title,
-                    Description = it.Description,
+                    id = semester.Id.ToString(),
+                    Title = semester.Title,
+                    Description = semester.Description,
                     Name = string.Format("{0}", (char)semesterNameRunner++),
-                    TotalWeeks = it.TotalWeeks,
-                    Units = unitQry.Where(unit => unit.SemesterId == it.Id).Select(unit => new repoModel.CourseCatalog.Unit
+                    TotalWeeks = semester.TotalWeeks,
+                    Units = unitQry.Where(unit => unit.SemesterId == semester.Id).Select(unit => new repoModel.CourseCatalog.Unit
                     {
                         id = unit.Id.ToString(),
                         Title = unit.Title,
                         Description = unit.Description,
                         Order = unitIdRunner++,
                         TotalWeeks = unit.TotalWeeks,
-                        Lessons = lessons
+                        Lessons = lessonQry.Where(it => it.UnitId == unit.Id).Select(it =>
+                        {
+                            var extraContents = it.ExtraContents
+                                    .Where(eit => !eit.RecLog.DeletedDate.HasValue)
+                                    .Where(eit => eit.LessonId == it.Id)
+                                    .Select(eit => new repoModel.CourseCatalog.LessonContent
+                                    {
+                                        ImageUrl = ControllerHelper.ConvertToIconUrl(eit.IconURL),
+                                        ContentURL = eit.ContentURL,
+                                        Description = eit.Description,
+                                    });
+                            var contents = new List<repoModel.CourseCatalog.LessonContent>
+                            {
+                                new repoModel.CourseCatalog.LessonContent {
+                                    ContentURL = it.PrimaryContentURL,
+                                    Description = it.PrimaryContentDescription,
+                                    ImageUrl = ExtraContentType.Video.ConvertToIconUrl(),
+                                    IsPreviewable = it.IsPreviewable
+                                }
+                            };
+                            return new repoModel.CourseCatalog.Lesson
+                            {
+                                id = it.Id.ToString(),
+                                Order = lessonIdRunner++,
+                                Contents = contents.Union(extraContents)
+                            };
+                        }),
                     }),
                 });
 

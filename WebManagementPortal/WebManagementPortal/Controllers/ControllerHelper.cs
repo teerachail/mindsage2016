@@ -33,13 +33,12 @@ namespace WebManagementPortal.Controllers
             switch (content)
             {
                 case ExtraContentType.Video:
-                    return "";
+                    return string.Format("{0}/assets/img/iconic/media/video.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Audio:
-                    return "";
-                case ExtraContentType.File:
-                    return "";
+                    return string.Format("{0}/assets/img/iconic/media/audio.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Game:
-                    return "";
+                case ExtraContentType.File:
+                    return string.Format("{0}/assets/img/iconic/media/text.png", AppConfigOptions.MindSageWebUrl);
                 default:
                     return "";
             }

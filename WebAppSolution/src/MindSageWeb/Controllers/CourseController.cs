@@ -148,7 +148,7 @@ namespace MindSageWeb.Controllers
                             Order = lesson.Order,
                             Contents = lesson.Contents.Select(it => new GetCourseDetailRespond.LessonContent
                             {
-                                ContentUrl = it.ContentUrl,
+                                ContentUrl = it.ContentURL,
                                 Description = it.Description,
                                 ImageUrl = it.ImageUrl,
                                 IsPreviewable = it.IsPreviewable,

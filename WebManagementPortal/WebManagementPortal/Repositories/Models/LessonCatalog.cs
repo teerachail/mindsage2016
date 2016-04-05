@@ -21,7 +21,6 @@ namespace WebManagementPortal.Repositories.Models
         public string MoreTeacherLessonPlan { get; set; }
         public string PrimaryContentURL { get; set; }
         public string PrimaryContentDescription { get; set; }
-        public bool IsPreviewable { get; set; }
         public IEnumerable<ExtraContent> ExtraContents { get; set; }
         public string CourseCatalogId { get; set; }
         public DateTime CreatedDate { get; set; }

@@ -32,7 +32,6 @@ namespace WebManagementPortal.Repositories
               .Set(it => it.MoreTeacherLessonPlan, data.MoreTeacherLessonPlan)
               .Set(it => it.PrimaryContentURL, data.PrimaryContentURL)
               .Set(it => it.PrimaryContentDescription, data.PrimaryContentDescription)
-              .Set(it => it.IsPreviewable, data.IsPreviewable)
               .Set(it => it.ExtraContents, data.ExtraContents)
               .Set(it => it.CourseCatalogId, data.CourseCatalogId)
               .Set(it => it.CreatedDate, data.CreatedDate)
