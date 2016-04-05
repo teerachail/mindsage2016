@@ -22,6 +22,8 @@
         <AssociationConnector Association="MindSageDataModels.CourseCatalogLicense" />
         <EntityTypeShape EntityType="MindSageDataModels.TeacherKey" Width="1.75" PointX="3.625" PointY="5.125" />
         <AssociationConnector Association="MindSageDataModels.LicenseTeacherKey" />
+        <EntityTypeShape EntityType="MindSageDataModels.ExtraContent" Width="2" PointX="6.5" PointY="8.125" />
+        <AssociationConnector Association="MindSageDataModels.LessonExtraContent" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

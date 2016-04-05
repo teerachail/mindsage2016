@@ -55,7 +55,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,MoreDescription,ShortTeacherLessonPlan,MoreTeacherLessonPlan,PrimaryContentURL,ExtraContentUrls,RecLog,UnitId")] Lesson lesson)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Title,ShortDescription,MoreDescription,ShortTeacherLessonPlan,MoreTeacherLessonPlan,PrimaryContentURL,PrimaryContentDescription,IsPreviewable,RecLog,UnitId")] Lesson lesson)
         {
             if (ModelState.IsValid)
             {
@@ -92,7 +92,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,MoreDescription,ShortTeacherLessonPlan,MoreTeacherLessonPlan,PrimaryContentURL,ExtraContentUrls,RecLog,UnitId")] Lesson lesson)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Title,ShortDescription,MoreDescription,ShortTeacherLessonPlan,MoreTeacherLessonPlan,PrimaryContentURL,PrimaryContentDescription,IsPreviewable,RecLog,UnitId")] Lesson lesson)
         {
             if (ModelState.IsValid)
             {
@@ -105,7 +105,8 @@ namespace WebManagementPortal.Controllers
                 selectedLesson.ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan;
                 selectedLesson.MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan;
                 selectedLesson.PrimaryContentURL = lesson.PrimaryContentURL;
-                selectedLesson.ExtraContentUrls = lesson.ExtraContentUrls;
+                selectedLesson.PrimaryContentDescription = lesson.PrimaryContentDescription;
+                selectedLesson.IsPreviewable = lesson.IsPreviewable;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Lessons", new { @id = lesson.Id });
             }

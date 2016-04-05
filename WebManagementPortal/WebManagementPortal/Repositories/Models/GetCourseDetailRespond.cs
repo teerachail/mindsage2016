@@ -70,8 +70,10 @@ namespace WebManagementPortal.Repositories.Models
         {
             #region Properties
 
-            public string ImageUrl { get; set; }
+            public string ContentUrl { get; set; }
             public string Description { get; set; }
+            public string ImageUrl { get; set; }
+            public bool IsPreviewable { get; set; }
 
             #endregion Properties
         }

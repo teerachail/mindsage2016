@@ -213,6 +213,15 @@ namespace WebManagementPortal.Controllers
                                 CreatedDate = it.RecLog.CreatedDate,
                                 DeletedDate = it.RecLog.DeletedDate
                             });
+                            var extraContents = lesson.ExtraContents
+                                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                                .Select(it => new repoModel.LessonCatalog.ExtraContent
+                                {
+                                    id = it.Id.ToString(),
+                                    ContentURL = it.ContentURL,
+                                    Description = it.Description,
+                                    IconURL = it.IconURL
+                                });
                             var lessonCatalog = new repoModel.LessonCatalog
                             {
                                 id = lesson.Id.ToString(),
@@ -225,7 +234,9 @@ namespace WebManagementPortal.Controllers
                                 ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan,
                                 MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan,
                                 PrimaryContentURL = lesson.PrimaryContentURL,
-                                ExtraContentUrls = lesson.ExtraContentUrls.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries),
+                                PrimaryContentDescription = lesson.PrimaryContentDescription,
+                                IsPreviewable = lesson.IsPreviewable,
+                                ExtraContents = extraContents,
                                 CourseCatalogId = courseCatalog.Id.ToString(),
                                 CreatedDate = lesson.RecLog.CreatedDate,
                                 DeletedDate = lesson.RecLog.DeletedDate,

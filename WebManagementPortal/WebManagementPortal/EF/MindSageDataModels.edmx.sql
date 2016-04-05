@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 03/29/2016 16:13:53
+-- Date Created: 04/05/2016 17:31:57
 -- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -41,6 +41,9 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_LicenseTeacherKey]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TeacherKeys] DROP CONSTRAINT [FK_LicenseTeacherKey];
 GO
+IF OBJECT_ID(N'[dbo].[FK_LessonExtraContent]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[ExtraContents] DROP CONSTRAINT [FK_LessonExtraContent];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -72,6 +75,9 @@ IF OBJECT_ID(N'[dbo].[Licenses]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[TeacherKeys]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TeacherKeys];
+GO
+IF OBJECT_ID(N'[dbo].[ExtraContents]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ExtraContents];
 GO
 
 -- --------------------------------------------------
@@ -129,7 +135,8 @@ CREATE TABLE [dbo].[Lessons] (
     [ShortTeacherLessonPlan] varchar(max)  NOT NULL,
     [MoreTeacherLessonPlan] varchar(max)  NOT NULL,
     [PrimaryContentURL] varchar(max)  NOT NULL,
-    [ExtraContentUrls] varchar(max)  NOT NULL,
+    [PrimaryContentDescription] varchar(max)  NOT NULL,
+    [IsPreviewable] bit  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
     [UnitId] int  NOT NULL
@@ -203,6 +210,18 @@ CREATE TABLE [dbo].[TeacherKeys] (
 );
 GO
 
+-- Creating table 'ExtraContents'
+CREATE TABLE [dbo].[ExtraContents] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [ContentURL] varchar(max)  NOT NULL,
+    [Description] varchar(max)  NOT NULL,
+    [IconURL] varchar(max)  NOT NULL,
+    [LessonId] int  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -258,6 +277,12 @@ GO
 -- Creating primary key on [Id] in table 'TeacherKeys'
 ALTER TABLE [dbo].[TeacherKeys]
 ADD CONSTRAINT [PK_TeacherKeys]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ExtraContents'
+ALTER TABLE [dbo].[ExtraContents]
+ADD CONSTRAINT [PK_ExtraContents]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -383,6 +408,21 @@ GO
 CREATE INDEX [IX_FK_LicenseTeacherKey]
 ON [dbo].[TeacherKeys]
     ([LicenseId]);
+GO
+
+-- Creating foreign key on [LessonId] in table 'ExtraContents'
+ALTER TABLE [dbo].[ExtraContents]
+ADD CONSTRAINT [FK_LessonExtraContent]
+    FOREIGN KEY ([LessonId])
+    REFERENCES [dbo].[Lessons]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LessonExtraContent'
+CREATE INDEX [IX_FK_LessonExtraContent]
+ON [dbo].[ExtraContents]
+    ([LessonId]);
 GO
 
 -- --------------------------------------------------

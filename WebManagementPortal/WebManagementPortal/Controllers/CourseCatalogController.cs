@@ -25,6 +25,7 @@ namespace WebManagementPortal.Controllers
                 courseCatalog = await dctx.CourseCatalogs
                     .Include("Semesters.Units.Lessons.Advertisements")
                     .Include("Semesters.Units.Lessons.TopicOfTheDays")
+                    .Include("Semesters.Units.Lessons.ExtraContents")
                     .FirstOrDefaultAsync(it => it.Id == id);
 
                 if (courseCatalog != null)
@@ -43,27 +44,46 @@ namespace WebManagementPortal.Controllers
             var lessonQry = unitQry.SelectMany(it => it.Lessons).Where(it => !it.RecLog.DeletedDate.HasValue);
 
             var lessonIdRunner = 1;
-            var lessons = lessonQry.Select(it => new GetCourseDetailRespond.Lesson
-            {
-                id = it.Id.ToString(),
-                Order = lessonIdRunner++,
-                Contents = Enumerable.Empty<GetCourseDetailRespond.LessonContent>() // HACK: Create lesson's contents
-            });
-
             var unitIdRunner = 1;
             var semesterNameRunner = (byte)65;
-            var semesters = semesterQry.Select(it => new GetCourseDetailRespond.Semester
+            var semesters = semesterQry.Select(semester => new GetCourseDetailRespond.Semester
             {
-                Title = it.Title,
-                Description = it.Description,
+                Title = semester.Title,
+                Description = semester.Description,
                 Name = string.Format("{0}", (char)semesterNameRunner++),
-                TotalWeeks = it.TotalWeeks,
-                Units = unitQry.Where(unit => unit.SemesterId == it.Id).Select(unit => new GetCourseDetailRespond.Unit
+                TotalWeeks = semester.TotalWeeks,
+                Units = unitQry.Where(unit => unit.SemesterId == semester.Id).Select(unit => new GetCourseDetailRespond.Unit
                 {
                     Title = unit.Title,
                     Description = unit.Description,
                     UnitNo = unitIdRunner++,
-                    Lessons = lessons,
+                    Lessons = lessonQry.Where(it => it.UnitId == unit.Id).Select(it =>
+                    {
+                        var extraContents = it.ExtraContents
+                                .Where(eit => !eit.RecLog.DeletedDate.HasValue)
+                                .Where(eit => eit.LessonId == it.Id)
+                                .Select(eit => new GetCourseDetailRespond.LessonContent
+                                {
+                                    ContentUrl = eit.ContentURL,
+                                    Description = eit.Description,
+                                    ImageUrl = ControllerHelper.ConvertToIconUrl(eit.IconURL),
+                                });
+                        var contents = new List<GetCourseDetailRespond.LessonContent>
+                        {
+                        new GetCourseDetailRespond.LessonContent {
+                            ContentUrl = it.PrimaryContentURL,
+                            Description = it.PrimaryContentDescription,
+                            ImageUrl = ExtraContentType.Video.ConvertToIconUrl(),
+                            IsPreviewable = it.IsPreviewable
+                        }
+                        };
+                        return new GetCourseDetailRespond.Lesson
+                        {
+                            id = it.Id.ToString(),
+                            Order = lessonIdRunner++,
+                            Contents = contents.Union(extraContents)
+                        };
+                    }),
                     TotalWeeks = unit.TotalWeeks
                 }),
             });

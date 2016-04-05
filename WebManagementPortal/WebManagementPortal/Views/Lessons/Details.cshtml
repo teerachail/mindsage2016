@@ -89,11 +89,19 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ExtraContentUrls)
+            @Html.DisplayNameFor(model => model.PrimaryContentDescription)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ExtraContentUrls)
+            @Html.DisplayFor(model => model.PrimaryContentDescription)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPreviewable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPreviewable)
         </dd>
 
         <dt>
@@ -115,8 +123,60 @@
 
 <hr />
 
-<h2>Advertisements</h2>
+<h2>Extra contents</h2>
+@{ var extraContentRunner = 1; }
+<p>
+    @Html.ActionLink("Create new extra content", "Create", "ExtraContents", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr>
+        <th>
+            No
+        </th>
+        <th>
+            URL
+        </th>
+        <th>
+            Description
+        </th>
+        <th>
+            Type
+        </th>
+        <th>
+            Created date
+        </th>
+        <th></th>
+    </tr>
 
+    @foreach (var item in Model.ExtraContents.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        <tr>
+            <td>
+                @extraContentRunner
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ContentURL)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @item.IconURL
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Delete", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        extraContentRunner++;
+    }
+
+</table>
+
+<h2>Advertisements</h2>
 @{ var adsRunner = 1; }
 <p>
     @Html.ActionLink("Create new advertisement", "Create", "Advertisements", new { @id = Model.Id }, new { @class = "btn btn-primary" })
@@ -158,10 +218,10 @@
 
 </table>
 
-<h2>Topic of the day</h2>
+<h2>Topic of the days</h2>
 @{ var TOTDRunner = 1; }
 <p>
-    @Html.ActionLink("Create new TOTD", "Create", "TopicOfTheDays", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create new topic of the day", "Create", "TopicOfTheDays", new { @id = Model.Id }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr class="row">

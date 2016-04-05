@@ -19,6 +19,7 @@ namespace WebManagementPortal.EF
         {
             this.Advertisements = new HashSet<Advertisement>();
             this.TopicOfTheDays = new HashSet<TopicOfTheDay>();
+            this.ExtraContents = new HashSet<ExtraContent>();
             this.RecLog = new RecordLog();
         }
     
@@ -29,7 +30,8 @@ namespace WebManagementPortal.EF
         public string ShortTeacherLessonPlan { get; set; }
         public string MoreTeacherLessonPlan { get; set; }
         public string PrimaryContentURL { get; set; }
-        public string ExtraContentUrls { get; set; }
+        public string PrimaryContentDescription { get; set; }
+        public bool IsPreviewable { get; set; }
         public int UnitId { get; set; }
     
         public RecordLog RecLog { get; set; }
@@ -39,5 +41,7 @@ namespace WebManagementPortal.EF
         public virtual ICollection<Advertisement> Advertisements { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TopicOfTheDay> TopicOfTheDays { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExtraContent> ExtraContents { get; set; }
     }
 }

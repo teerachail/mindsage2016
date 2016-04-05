@@ -7,7 +7,8 @@ CREATE TABLE [dbo].[Lessons] (
     [ShortTeacherLessonPlan] varchar(max)  NOT NULL,
     [MoreTeacherLessonPlan] varchar(max)  NOT NULL,
     [PrimaryContentURL] varchar(max)  NOT NULL,
-    [ExtraContentUrls] varchar(max)  NOT NULL,
+    [PrimaryContentDescription] varchar(max)  NOT NULL,
+    [IsPreviewable] bit  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
     [UnitId] int  NOT NULL

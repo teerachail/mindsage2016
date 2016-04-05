@@ -24,6 +24,7 @@ namespace WebManagementPortal.Controllers
             {
                 lessonCatalog = await dctx.Lessons
                     .Include("Unit.Semester")
+                    .Include("ExtraContents")
                     .FirstOrDefaultAsync(it => it.Id == id);
                 if (lessonCatalog == null) return null;
 
@@ -41,19 +42,30 @@ namespace WebManagementPortal.Controllers
                 semesterRunner++;
             }
 
-            var units = semesters.SelectMany(it=>it.Units).Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.RecLog.CreatedDate);
+            var units = semesters.SelectMany(it => it.Units).Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.RecLog.CreatedDate);
             var unitRunner = 1;
             foreach (var item in units)
             {
                 if (item.Id == lessonCatalog.UnitId) break;
                 unitRunner++;
             }
+            var extraContents = lessonCatalog.ExtraContents
+                                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                                .Select(it => new LessonContentRespond.ExtraContent
+                                {
+                                    id = it.Id.ToString(),
+                                    ContentURL = it.ContentURL,
+                                    Description = it.Description,
+                                    IconURL = it.IconURL
+                                });
             var result = new LessonContentRespond
             {
-                ExtraContentUrls = lessonCatalog?.ExtraContentUrls?.Split(new string[] { "#;" }, StringSplitOptions.RemoveEmptyEntries) ?? Enumerable.Empty<string>(),
+                ExtraContents = extraContents,
                 CreatedDate = lessonCatalog.RecLog.CreatedDate,
                 PrimaryContentURL = lessonCatalog.PrimaryContentURL,
-                SemesterName = string.Format("{0}",(char)semesterRunner),
+                PrimaryContentDescription = lessonCatalog.PrimaryContentDescription,
+                IsPreviewable = lessonCatalog.IsPreviewable,
+                SemesterName = string.Format("{0}", (char)semesterRunner),
                 ShortDescription = lessonCatalog.ShortDescription,
                 ShortTeacherLessonPlan = lessonCatalog.ShortTeacherLessonPlan,
                 MoreDescription = lessonCatalog.MoreDescription,

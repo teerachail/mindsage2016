@@ -226,8 +226,10 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdvertisementsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
+    <Compile Include="Controllers\ControllerHelper.cs" />
     <Compile Include="Controllers\CourseCatalogController.cs" />
     <Compile Include="Controllers\CourseCatalogsController.cs" />
+    <Compile Include="Controllers\ExtraContentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LessonPreviewController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
@@ -243,6 +245,9 @@
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\CourseCatalog.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\ExtraContent.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Lesson.cs">
@@ -433,6 +438,11 @@
     <Content Include="Views\Licenses\Index.cshtml" />
     <Content Include="Views\Licenses\RegenerateTeacherCode.cshtml" />
     <Content Include="Views\Contracts\UpdateAllContracts.cshtml" />
+    <Content Include="Views\ExtraContents\Create.cshtml" />
+    <Content Include="Views\ExtraContents\Delete.cshtml" />
+    <Content Include="Views\ExtraContents\Details.cshtml" />
+    <Content Include="Views\ExtraContents\Edit.cshtml" />
+    <Content Include="Views\ExtraContents\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
