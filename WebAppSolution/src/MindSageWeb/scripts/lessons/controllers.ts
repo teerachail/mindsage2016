@@ -4,7 +4,6 @@ module app.lessons {
     class LessonController {
 
         public teacherView: boolean;
-        //public currentUser: any;
         public message: string;
         public targetComment: any;
         public targetDiscussion: any;
@@ -18,12 +17,14 @@ module app.lessons {
         private comment;
         private lessonId;
         private classRoomId;
+        private primaryContentIconUrl;
 
-        static $inject = ['$sce', '$q', '$scope', '$stateParams', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
-        constructor(private $sce, private $q, private $scope, private $stateParams, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
+        static $inject = ['$sce', '$q', '$scope', '$stateParams', 'defaultUrl', 'app.shared.ClientUserProfileService', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService', 'app.shared.GetProfileService'];
+        constructor(private $sce, private $q, private $scope, private $stateParams, private defaultUrl, private userprofileSvc: app.shared.ClientUserProfileService, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService, private getProfileSvc: app.shared.GetProfileService) {
             this.teacherView = false;
             this.lessonId = this.$stateParams.lessonId;
             this.classRoomId = this.$stateParams.classRoomId;
+            this.primaryContentIconUrl = defaultUrl + "/assets/img/iconic/media/video.png";
             this.prepareUserprofile();
         }
 

@@ -31,6 +31,7 @@ namespace MindSageWeb.Controllers
         }
 
         // GET: /<controller>/
+        [AllowAnonymous]
         public IActionResult Index()
         {
             return View();

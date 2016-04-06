@@ -6,9 +6,11 @@ module app.lessonpreviews {
         public teacherView;
         private content;
         private PrimaryVideoUrl;
+        private primaryContentIconUrl;
 
         static $inject = ['$sce', '$q', '$stateParams', 'defaultUrl', 'app.lessonpreviews.LessonService'];
         constructor(private $sce, private $q, private $stateParams, private defaultUrl, private svc: app.lessonpreviews.LessonService) {
+            this.primaryContentIconUrl = defaultUrl + "/assets/img/iconic/media/video.png";
             this.prepareLessonContents();
         }
 

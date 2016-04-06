@@ -79,19 +79,34 @@ controller: 'app.lessons.LessonController as cx'
                 </a>
                 <div ng-show="detailClose">
                     <p>{{ cx.content.MoreDescription }}</p>
-                    <h4 class="extra-header">Extra learning</h4>
-                    <ul>
-                        <li>
-                            Primary
-                            <div><a href="{{ cx.content.PrimaryContentURL }}" target="_blank">{{ cx.content.PrimaryContentURL }}</a></div>
-                        </li>
-                    </ul>
-                    <ul ng-repeat="item in cx.content.ExtraContentUrls">
-                        <li class="extra">
-                            Extra {{ $index + 1 }}
-                            <div><a href="{{ item }}" target="_blank">{{ item }}</a></div>
-                        </li>
-                    </ul>
+                    <a href="{{ item.PrimaryContentURL }}">
+                        <div class="grid-block">
+                            <div class="grid-content shrink large-2">
+                                <img src="{{ cx.primaryContentIconUrl }}">
+                            </div>
+                            <div class="grid-content large-10">
+                                <p>
+                                    {{ cx.content.PrimaryContentDescription }}
+                                </p>
+                            </div>
+                        </div>
+                    </a>
+                    <br />
+                    <div ng-repeat="item in cx.content.ExtraContents">
+                        <a href="{{ item.ContentURL }}">
+                            <div class="grid-block">
+                                <div class="grid-content shrink large-2">
+                                    <img src="{{ item.IconURL }}">
+                                </div>
+                                <div class="grid-content large-10">
+                                    <p>
+                                        {{ item.Description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                        <br />
+                    </div>
                 </div>
             </div>
         </div>

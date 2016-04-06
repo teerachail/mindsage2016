@@ -221,7 +221,7 @@ namespace WebManagementPortal.Controllers
                                     id = it.Id.ToString(),
                                     ContentURL = it.ContentURL,
                                     Description = it.Description,
-                                    IconURL = it.IconURL
+                                    IconURL = ControllerHelper.ConvertToIconUrl(it.IconURL)
                                 });
                             var lessonCatalog = new repoModel.LessonCatalog
                             {
