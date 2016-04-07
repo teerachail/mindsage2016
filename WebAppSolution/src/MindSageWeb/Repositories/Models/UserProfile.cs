@@ -39,6 +39,7 @@ namespace MindSageWeb.Repositories.Models
             public string CourseCatalogId { get; set; }
             public string ClassRoomId { get; set; }
             public string ClassCalendarId { get; set; }
+            public string LicenseId { get; set; }
             public DateTime? LastActiveDate { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime? DeletedDate { get; set; }

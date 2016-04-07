@@ -27,6 +27,12 @@ namespace MindSageWeb.Repositories
         void UpsertClassRoom(ClassRoom data);
 
         /// <summary>
+        /// สร้าง Class room ใหม่
+        /// </summary>
+        /// <param name="data">ข้อมูล Class room ที่ต้องการสร้าง</param>
+        Task CreateNewClassRoom(ClassRoom data);
+
+        /// <summary>
         /// ขอข้อมูล public class room จากรหัส course catalog
         /// </summary>
         /// <param name="courseCatalogId">รหัส course catalog ที่ต้องการขอ</param>

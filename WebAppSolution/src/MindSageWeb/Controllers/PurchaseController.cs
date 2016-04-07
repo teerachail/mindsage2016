@@ -72,7 +72,7 @@ namespace MindSageWeb.Controllers
         /// <param name="grade">Course's grade name</param>
         /// <param name="courseId">Select course id</param>
         [HttpPost]
-        public IActionResult UserCode(string id, string grade, string courseId)
+        public async Task<IActionResult> UserCode(string id, string grade, string courseId)
         {
             var body = new Repositories.Models.AddCourseRequest
             {
@@ -81,7 +81,7 @@ namespace MindSageWeb.Controllers
                 UserProfileId = User.Identity.Name
             };
 
-            var result = _myCourseCtrl.AddCourse(body);
+            var result = await _myCourseCtrl.AddCourse(body);
             if (result.IsSuccess)
             {
                 return RedirectToAction("Preparing", "My");

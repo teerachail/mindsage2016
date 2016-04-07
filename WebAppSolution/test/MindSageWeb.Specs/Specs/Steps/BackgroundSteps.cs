@@ -27,6 +27,7 @@ namespace MindSageWeb.Specs.Steps
             var studentKeyRepo = mock.Create<IStudentKeyRepository>();
             var notificationRepo = mock.Create<INotificationRepository>();
             var contractRepo = mock.Create<IContractRepository>();
+            var courseCatalogRepo = mock.Create<ICourseCatalogRepository>();
             var option = mock.Create<IOptions<AppConfigOptions>>();
             var dateTime = mock.Create<IDateTime>();
 
@@ -45,6 +46,7 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(studentKeyRepo);
             ScenarioContext.Current.Set(notificationRepo);
             ScenarioContext.Current.Set(contractRepo);
+            ScenarioContext.Current.Set(courseCatalogRepo);
             ScenarioContext.Current.Set(option);
             ScenarioContext.Current.Set(dateTime);
 
@@ -96,6 +98,7 @@ namespace MindSageWeb.Specs.Steps
                 likeCommentRepo.Object,
                 likeDiscussionRepo.Object,
                 contractRepo.Object,
+                courseCatalogRepo.Object,
                 dateTime.Object);
 
             var friendCtrl = new FriendController(classCalendarRepo.Object,

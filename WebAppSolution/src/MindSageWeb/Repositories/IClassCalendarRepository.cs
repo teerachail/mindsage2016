@@ -33,6 +33,12 @@ namespace MindSageWeb.Repositories
         void UpsertClassCalendar(ClassCalendar data);
 
         /// <summary>
+        /// สร้าง Class calendar ใหม่
+        /// </summary>
+        /// <param name="data">ข้อมูล Class calendar ที่ต้องการสร้าง</param>
+        Task CreateNewClassCalendar(ClassCalendar data);
+
+        /// <summary>
         /// ขอรายการ topic of the day ที่ต้องนำไปสร้าง notification
         /// </summary>
         /// <param name="currentTime">Current time</param>

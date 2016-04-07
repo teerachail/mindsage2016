@@ -84,6 +84,15 @@ namespace MindSageWeb.Repositories
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 
+        /// <summary>
+        /// เพิ่มข้อมูล Student key ใหม่
+        /// </summary>
+        /// <param name="data">ข้อมูล Student key ที่ต้องการเพิ่ม</param>
+        public async Task CreateNewStudentKey(StudentKey data)
+        {
+            await _mongoUtil.GetCollection<StudentKey>(TableName).InsertOneAsync(data);
+        }
+
         #endregion IStudentKeyRepository members
     }
 }

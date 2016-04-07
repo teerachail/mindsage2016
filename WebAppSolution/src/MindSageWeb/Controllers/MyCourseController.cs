@@ -4,6 +4,7 @@ using MindSageWeb.Repositories.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace MindSageWeb.Controllers
 {
@@ -26,6 +27,7 @@ namespace MindSageWeb.Controllers
         private ILikeCommentRepository _likeCommentRepo;
         private ILikeDiscussionRepository _likeDiscussionRepo;
         private IContractRepository _contractRepo;
+        private ICourseCatalogRepository _courseCatalogRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -45,6 +47,7 @@ namespace MindSageWeb.Controllers
         /// <param name="likeCommentRepo">Like comment repository</param>
         /// <param name="likeDiscussionRepo">Like discussion repository</param>
         /// <param name="likeLessonRepo">Like lesson repository</param>
+        /// <param name="courseCatalogRepo">Course catalog repository</param>
         public MyCourseController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IUserActivityRepository userActivityRepo,
@@ -55,6 +58,7 @@ namespace MindSageWeb.Controllers
             ILikeCommentRepository likeCommentRepo,
             ILikeDiscussionRepository likeDiscussionRepo,
             IContractRepository contractRepo,
+            ICourseCatalogRepository courseCatalogRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -413,7 +417,7 @@ namespace MindSageWeb.Controllers
         /// <param name="body">Request's information</param>
         [HttpPost]
         [Route("addcourse")]
-        public AddCourseRespond AddCourse(AddCourseRequest body)
+        public async Task<AddCourseRespond> AddCourse(AddCourseRequest body)
         {
             var addCourseFailRespond = new AddCourseRespond
             {
@@ -426,44 +430,142 @@ namespace MindSageWeb.Controllers
                 && !string.IsNullOrEmpty(body.Grade);
             if (!areArgumentsValid) return addCourseFailRespond;
 
-            var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(body.Code, body.Grade);
-            if (selectedStudentKey == null) return addCourseFailRespond;
-
-            var selectedClassRoom = _classRoomRepo.GetClassRoomById(selectedStudentKey.ClassRoomId);
-            if (selectedClassRoom == null) return addCourseFailRespond;
-
-            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(selectedStudentKey.ClassRoomId);
-            if (selectedClassCalendar == null) return addCourseFailRespond;
-
             var selectedUserProfile = _userprofileRepo.GetUserProfileById(body.UserProfileId);
-            var canUseTheCode = selectedUserProfile != null
-                && selectedUserProfile.Subscriptions != null
-                && selectedUserProfile.Subscriptions.All(it => it.ClassRoomId != selectedStudentKey.ClassRoomId);
-            if (!canUseTheCode) return addCourseFailRespond;
+            var isValidUserProfile = selectedUserProfile != null && selectedUserProfile.Subscriptions != null;
+            if (!isValidUserProfile) return addCourseFailRespond;
 
-            var lessonCatalogs = selectedClassRoom.Lessons
-                .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))
-                .ToList();
-            if (lessonCatalogs.Any(it => it == null)) return addCourseFailRespond;
-
+            // Check student key
             var now = _dateTime.GetCurrentTime();
-            var subscriptions = selectedUserProfile.Subscriptions.ToList();
-            subscriptions.Add(new UserProfile.Subscription
+            var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(body.Code, body.Grade);
+            var isStudentKey = selectedStudentKey != null;
+            if (isStudentKey)
             {
-                id = Guid.NewGuid().ToString(),
-                Role = UserProfile.AccountRole.Student,
-                LastActiveDate = now,
-                ClassRoomId = selectedClassRoom.id,
-                ClassCalendarId = selectedClassCalendar.id,
-                CreatedDate = now,
-                ClassRoomName = selectedClassRoom.Name,
-                CourseCatalogId = selectedClassRoom.CourseCatalogId
-            });
-            selectedUserProfile.Subscriptions = subscriptions;
-            _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+                var canUserTheStudentCode = selectedUserProfile.Subscriptions.All(it => it.ClassRoomId != selectedStudentKey.ClassRoomId);
+                if (!canUserTheStudentCode) return addCourseFailRespond;
 
-            var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, selectedClassCalendar, lessonCatalogs, now);
-            _userActivityRepo.UpsertUserActivity(userActivity);
+                var selectedClassRoom = _classRoomRepo.GetClassRoomById(selectedStudentKey.ClassRoomId);
+                if (selectedClassRoom == null) return addCourseFailRespond;
+
+                var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(selectedStudentKey.ClassRoomId);
+                if (selectedClassCalendar == null) return addCourseFailRespond;
+
+                var lessonCatalogs = selectedClassRoom.Lessons
+                    .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))
+                    .ToList();
+                if (lessonCatalogs.Any(it => it == null)) return addCourseFailRespond;
+
+                var teacherSubscription = _userprofileRepo.GetUserProfilesByClassRoomId(selectedClassRoom.id)
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .SelectMany(it => it.Subscriptions)
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .Where(it => it.Role == UserProfile.AccountRole.Teacher)
+                    .Where(it => it.ClassRoomId == selectedClassRoom.id)
+                    .FirstOrDefault();
+                if (teacherSubscription == null) return addCourseFailRespond;
+
+                var subscriptions = createNewSubscription(selectedUserProfile.Subscriptions, UserProfile.AccountRole.Student, selectedClassRoom, selectedClassCalendar.id, teacherSubscription.LicenseId, now);
+                selectedUserProfile.Subscriptions = subscriptions;
+                _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+
+                var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, selectedClassCalendar, lessonCatalogs, now);
+                _userActivityRepo.UpsertUserActivity(userActivity);
+            }
+            else
+            {
+                // Check teacher key
+                var selectedContract = await _contractRepo.GetContractsByTeacherCode(body.Code, body.Grade);
+                var isTeacherKey = selectedContract != null
+                    && !selectedContract.DeletedDate.HasValue
+                    && selectedContract.Licenses.Any();
+                if (isTeacherKey) return addCourseFailRespond;
+
+                var selectedLicense = selectedContract.Licenses
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .FirstOrDefault(it => it.TeacherKeys.Any(t => !t.DeletedDate.HasValue && t.Code == body.Code && t.Grade == body.Grade));
+                if (selectedLicense == null) return addCourseFailRespond;
+
+                var selectedTeacherKey = selectedLicense.TeacherKeys
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .OrderBy(it => it.CreatedDate)
+                    .LastOrDefault();
+                if (selectedTeacherKey == null) return addCourseFailRespond;
+
+                // Create new ClassRoom
+                var selectedCourseCatalog = _courseCatalogRepo.GetCourseCatalogById(selectedLicense.CourseCatalogId);
+                if (selectedCourseCatalog == null) return addCourseFailRespond;
+                var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogByCourseCatalogId(selectedCourseCatalog.id).ToList();
+                if (lessonCatalogs == null || !lessonCatalogs.Any()) return addCourseFailRespond;
+                var lessons = lessonCatalogs
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .Select(it => new ClassRoom.Lesson
+                    {
+                        id = it.id,
+                        LessonCatalogId = it.id
+                    });
+                var newClassRoom = new ClassRoom
+                {
+                    id = Guid.NewGuid().ToString(),
+                    Name = selectedCourseCatalog.SideName,
+                    CourseCatalogId = selectedCourseCatalog.id,
+                    CreatedDate = now,
+                    LastUpdatedMessageDate = now,
+                    Lessons = lessons
+                };
+                await _classRoomRepo.CreateNewClassRoom(newClassRoom);
+
+                // Create new ClassCalendar
+                var lessonCalendars = lessonCatalogs
+                    .Where(it => !it.DeletedDate.HasValue)
+                    .Select(lesson => new ClassCalendar.LessonCalendar
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        Order = lesson.Order,
+                        SemesterGroupName = lesson.SemesterName,
+                        BeginDate = now,
+                        CreatedDate = now,
+                        LessonId = lesson.id,
+                        TopicOfTheDays = lesson.TopicOfTheDays
+                            .Where(it => !it.DeletedDate.HasValue)
+                            .Select(it => new ClassCalendar.TopicOfTheDay
+                            {
+                                id = it.id,
+                                Message = it.Message,
+                                SendOnDay = it.SendOnDay,
+                                CreatedDate = now,
+                            })
+                    });
+                var newClassCalendar = new ClassCalendar
+                {
+                    id = Guid.NewGuid().ToString(),
+                    ClassRoomId = newClassRoom.id,
+                    CreatedDate = now,
+                    Holidays = Enumerable.Empty<DateTime>(),
+                    ShiftDays = Enumerable.Empty<DateTime>(),
+                    LessonCalendars = lessonCalendars
+                };
+                await _classCalendarRepo.CreateNewClassCalendar(newClassCalendar);
+
+                // Create new UserActivity
+                var userActivity = selectedUserProfile.CreateNewUserActivity(newClassRoom, newClassCalendar, lessonCatalogs, now);
+                _userActivityRepo.UpsertUserActivity(userActivity);
+
+                // Create new subscription
+                var subscriptions = createNewSubscription(selectedUserProfile.Subscriptions, UserProfile.AccountRole.Teacher, newClassRoom, newClassCalendar.id, selectedLicense.id, now);
+                selectedUserProfile.Subscriptions = subscriptions;
+                _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+
+                // Create new student key
+                var newStudentKey = new StudentKey
+                {
+                    id = Guid.NewGuid().ToString(),
+                    Grade = body.Grade,
+                    Code = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 7), // HACK: Check student code
+                    CourseCatalogId = selectedCourseCatalog.id,
+                    ClassRoomId = newClassRoom.id,
+                    CreatedDate = now
+                };
+                await _studentKeyRepo.CreateNewStudentKey(newStudentKey);
+            }
 
             return new AddCourseRespond
             {
@@ -471,6 +573,24 @@ namespace MindSageWeb.Controllers
                 Grade = body.Grade,
                 IsSuccess = true
             };
+        }
+
+        private IEnumerable<UserProfile.Subscription> createNewSubscription(IEnumerable<UserProfile.Subscription> subscriptions, UserProfile.AccountRole role, ClassRoom classRoom, string classCalendarId, string licenseId, DateTime currentTime)
+        {
+            var result = subscriptions.ToList();
+            result.Add(new UserProfile.Subscription
+            {
+                id = Guid.NewGuid().ToString(),
+                Role = role,
+                LastActiveDate = currentTime,
+                ClassRoomId = classRoom.id,
+                ClassCalendarId = classCalendarId,
+                CreatedDate = currentTime,
+                LicenseId = licenseId,
+                ClassRoomName = classRoom.Name,
+                CourseCatalogId = classRoom.CourseCatalogId
+            });
+            return result;
         }
 
         // POST: api/mycourse/changecourse

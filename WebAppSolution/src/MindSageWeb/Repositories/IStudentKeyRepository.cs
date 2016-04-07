@@ -32,6 +32,12 @@ namespace MindSageWeb.Repositories
         /// <param name="data">ข้อมูลที่ต้องการดำเนินการ</param>
         void UpsertStudentKey(StudentKey data);
 
+        /// <summary>
+        /// เพิ่มข้อมูล Student key ใหม่
+        /// </summary>
+        /// <param name="data">ข้อมูล Student key ที่ต้องการเพิ่ม</param>
+        Task CreateNewStudentKey(StudentKey data);
+
         #endregion Methods
     }
 }

@@ -62,6 +62,18 @@ namespace MindSageWeb.Repositories
             return qry;
         }
 
+        /// <summary>
+        /// ขอข้อมูล Lesson catalog จากรหัส Course catalog
+        /// </summary>
+        /// <param name="courseCatalogId">รหัส Course catalog ที่ต้องการ</param>
+        public IEnumerable<LessonCatalog> GetLessonCatalogByCourseCatalogId(string courseCatalogId)
+        {
+            var qry = _mongoUtil.GetCollection<LessonCatalog>(TableName)
+               .Find(it => !it.DeletedDate.HasValue && it.CourseCatalogId == courseCatalogId)
+               .ToEnumerable();
+            return qry;
+        }
+
         #endregion ILessonCatalogRepository members
     }
 }

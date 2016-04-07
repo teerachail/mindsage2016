@@ -47,7 +47,7 @@ namespace MindSageWeb.Repositories.Models
             public string id { get; set; }
             public string Message { get; set; }
             public int SendOnDay { get; set; }
-            public DateTime RequiredSendTopicOfTheDayDate { get; set; }
+            public DateTime? RequiredSendTopicOfTheDayDate { get; set; }
             public DateTime? SendTopicOfTheDayDate { get; set; }
             public DateTime CreatedDate { get; set; }
             public DateTime? DeletedDate { get; set; }

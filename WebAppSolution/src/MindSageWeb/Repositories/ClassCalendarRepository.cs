@@ -81,6 +81,15 @@ namespace MindSageWeb.Repositories
         }
 
         /// <summary>
+        /// สร้าง Class calendar ใหม่
+        /// </summary>
+        /// <param name="data">ข้อมูล Class calendar ที่ต้องการสร้าง</param>
+        public async Task CreateNewClassCalendar(ClassCalendar data)
+        {
+            await _mongoUtil.GetCollection<ClassCalendar>(TableName).InsertOneAsync(data);
+        }
+
+        /// <summary>
         /// ขอรายการ topic of the day ที่ต้องนำไปสร้าง notification
         /// </summary>
         /// <param name="currentTime">Current time</param>
@@ -89,7 +98,7 @@ namespace MindSageWeb.Repositories
             var qry = _mongoUtil.GetCollection<ClassCalendar>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && !it.CloseDate.HasValue && it.LessonCalendars.SelectMany(lc => lc.TopicOfTheDays).Any(l => !l.SendTopicOfTheDayDate.HasValue))
                 .ToEnumerable()
-                .Where(c => c.LessonCalendars.SelectMany(lc => lc.TopicOfTheDays).Any(it => !it.SendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.Date >= currentTime.Date));
+                .Where(c => c.LessonCalendars.SelectMany(lc => lc.TopicOfTheDays).Any(it => !it.SendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.Value.Date >= currentTime.Date));
             return qry;
         }
 
