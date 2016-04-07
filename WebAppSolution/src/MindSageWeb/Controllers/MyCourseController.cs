@@ -25,6 +25,7 @@ namespace MindSageWeb.Controllers
         private ILikeLessonRepository _likeLessonRepo;
         private ILikeCommentRepository _likeCommentRepo;
         private ILikeDiscussionRepository _likeDiscussionRepo;
+        private IContractRepository _contractRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -40,6 +41,10 @@ namespace MindSageWeb.Controllers
         /// <param name="classRoomRepo">Class room repository</param>
         /// <param name="studentKeyRepo">Student key repository</param>
         /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
+        /// <param name="contractRepo">Contract repository</param>
+        /// <param name="likeCommentRepo">Like comment repository</param>
+        /// <param name="likeDiscussionRepo">Like discussion repository</param>
+        /// <param name="likeLessonRepo">Like lesson repository</param>
         public MyCourseController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IUserActivityRepository userActivityRepo,
@@ -49,6 +54,7 @@ namespace MindSageWeb.Controllers
             ILikeLessonRepository likeLessonRepo,
             ILikeCommentRepository likeCommentRepo,
             ILikeDiscussionRepository likeDiscussionRepo,
+            IContractRepository contractRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -60,6 +66,7 @@ namespace MindSageWeb.Controllers
             _likeLessonRepo = likeLessonRepo;
             _likeCommentRepo = likeCommentRepo;
             _likeDiscussionRepo = likeDiscussionRepo;
+            _contractRepo = contractRepo;
             _dateTime = dateTime;
         }
 
@@ -194,7 +201,7 @@ namespace MindSageWeb.Controllers
                     {
                         id = it.id,
                         IsPrivateAccount = it.IsPrivateAccount,
-                        Name = it.Name, 
+                        Name = it.Name,
                         ImageUrl = it.ImageProfileUrl,
                         CommentPercentage = isActivityFound ? selectedUserActivity.CommentPercentage : NoneScore,
                         OnlineExtrasPercentage = isActivityFound ? selectedUserActivity.OnlineExtrasPercentage : NoneScore,

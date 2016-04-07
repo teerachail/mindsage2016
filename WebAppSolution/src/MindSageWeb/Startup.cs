@@ -66,6 +66,7 @@ namespace MindSageWeb
                 option.StudentKeys = databaseTable.StudentKeys;
                 option.UserActivities = databaseTable.UserActivities;
                 option.UserProfiles = databaseTable.UserProfiles;
+                option.Contracts = databaseTable.Contracts;
             });
 
             // Add framework services.

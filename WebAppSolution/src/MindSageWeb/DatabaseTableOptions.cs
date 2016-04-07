@@ -23,6 +23,7 @@ namespace MindSageWeb
         public string StudentKeys { get; set; }
         public string UserActivities { get; set; }
         public string UserProfiles { get; set; }
+        public string Contracts { get; set; }
 
         #endregion Properties
     }
