@@ -15,7 +15,7 @@ namespace MindSageWeb.Repositories.Models
         public string Last4Digits { get; set; }
         public string CardType { get; set; }
         public string CardNumber { get; set; }
-        public string TotalChargedAmount { get; set; }
+        public double TotalChargedAmount { get; set; }
         public string BillingAddress { get; set; }
         public string State { get; set; }
         public string City { get; set; }

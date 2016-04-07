@@ -20,6 +20,7 @@ namespace MindSageWeb.Controllers
         private IClassCalendarRepository _classCalendarRepo;
         private IClassRoomRepository _classRoomRepo;
         private IUserProfileRepository _userprofileRepo;
+        private IPaymentRepository _paymentRepo;
         private IDateTime _dateTime;
         private CourseController _courseCtrl;
         private MyCourseController _myCourseCtrl;
@@ -38,6 +39,7 @@ namespace MindSageWeb.Controllers
         /// <param name="classCalendarRepo">Class calendar repository</param>
         /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
+        /// <param name="paymentRepo">Payment repository</param>
         public PurchaseController(CourseController courseCtrl, 
             MyCourseController myCourseCtrl,
             IUserProfileRepository userProfileRepo,
@@ -45,6 +47,7 @@ namespace MindSageWeb.Controllers
             IClassCalendarRepository classCalendarRepo,
             ILessonCatalogRepository lessonCatalogRepo,
             IUserActivityRepository userActivityRepo,
+            IPaymentRepository paymentRepo,
             IDateTime dateTime)
         {
             _courseCtrl = courseCtrl;
@@ -54,6 +57,7 @@ namespace MindSageWeb.Controllers
             _classCalendarRepo = classCalendarRepo;
             _lessonCatalogRepo = lessonCatalogRepo;
             _userActivityRepo = userActivityRepo;
+            _paymentRepo = paymentRepo;
             _dateTime = dateTime;
         }
 
@@ -108,7 +112,7 @@ namespace MindSageWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult Index(PurchaseCourseViewModel model)
+        public async Task<IActionResult> Index(PurchaseCourseViewModel model)
         {
             var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, model.CourseId);
             if (!canAddNewCourse) return RedirectToAction("entercourse", "my", new { @id = model.CourseId });
@@ -143,7 +147,10 @@ namespace MindSageWeb.Controllers
                 _userprofileRepo.UpsertUserProfile(selectedUserProfile);
                 _userActivityRepo.UpsertUserActivity(userActivity);
 
-                return RedirectToAction("Finished", new { @id = newSubscriptionId });
+                var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, true); // HACK: IsPaymentSuccess
+                await _paymentRepo.CreateNewPayment(payment);
+
+                return RedirectToAction("Finished", new { @id = payment.id });
             }
             return View(model);
         }
@@ -166,7 +173,6 @@ namespace MindSageWeb.Controllers
             newSubscriptions.Add(newSubscription);
             return newSubscriptions;
         }
-
         private ClassCalendar createClassCalendar(ClassRoom classRoom, IEnumerable<LessonCatalog> lessonCatalogs, DateTime currentTime)
         {
             var lessonOrderRunner = 1;
@@ -208,22 +214,49 @@ namespace MindSageWeb.Controllers
             };
             return classCalendar;
         }
+        private Payment createNewPayment(string courseCatalogId, string courseName, string newSubscriptionId, PurchaseCourseViewModel model, double totalChargedAmount, DateTime currentTime, bool isPaymentSuccess)
+        {
+            var payment = new Payment
+            {
+                id = Guid.NewGuid().ToString(),
+                FirstName = model.CreditCardInfo.FirstName,
+                LastName = model.CreditCardInfo.LastName,
+                Last4Digits = APIUtil.EncodeCreditCard(model.CreditCardInfo.LastFourDigits),
+                CardType = model.CreditCardInfo.CardType.ToString(),
+                CardNumber = model.CreditCardInfo.CardNumber,
+                TotalChargedAmount = totalChargedAmount,
+                BillingAddress = model.PrimaryAddress.Address,
+                State = model.PrimaryAddress.State,
+                City = model.PrimaryAddress.City,
+                Country = model.PrimaryAddress.Country.ToString(),
+                ZipCode = model.PrimaryAddress.ZipCode,
+                CourseName = courseName,
+                IsCompleted = isPaymentSuccess,
+                CourseCatalogId = courseCatalogId,
+                SubscriptionId = newSubscriptionId,
+                CreatedDate = currentTime,
+            };
+            return payment;
+        }
 
         /// <summary>
         /// Get purchased information
         /// </summary>
         /// <param name="id">Tracking id</param>
         [HttpGet]
-        public IActionResult Finished(string id)
+        public async Task<IActionResult> Finished(string id)
         {
-            // HACK: Show billing address
+            var payment = await _paymentRepo.GetPaymentById(id);
+            if (payment == null) return View("Error");
+
+            var address = APIUtil.CreateAddressSummary(payment.BillingAddress, payment.State, payment.City, payment.Country, payment.ZipCode);
             var model = new CoursePurchasedViewModel
             {
-                AddressSummary = "Pimankhondopark Building 2 room number 989/148 Khonkean Naimung USA 40000",
-                CardType = "VISA",
-                CourseId = "CourseId01",
-                LastFourDigits = "1234",
-                TotalChargeAmount = 53.567
+                AddressSummary = address,
+                CardType = payment.CardType,
+                CourseId = payment.CourseCatalogId,
+                LastFourDigits = payment.Last4Digits,
+                TotalChargeAmount = payment.TotalChargedAmount
             };
             return View();
         }

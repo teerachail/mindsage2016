@@ -27,11 +27,8 @@ namespace MindSageWeb.ViewModels.PurchaseCourse
         {
             get
             {
-                if (string.IsNullOrEmpty(CardNumber)) return string.Empty;
-                const int MinimumDigitRequired = 4;
-                if (CardNumber.Length < MinimumDigitRequired) return string.Empty;
-                var beginIndex = CardNumber.Length - MinimumDigitRequired;
-                return CardNumber.Substring(beginIndex, MinimumDigitRequired);
+                var result = Controllers.APIUtil.GetLast4Characters(CardNumber);
+                return result;
             }
         }
     }
@@ -53,12 +50,9 @@ namespace MindSageWeb.ViewModels.PurchaseCourse
         {
             get
             {
-                var areArgumentValid = !string.IsNullOrEmpty(Address)
-                    && !string.IsNullOrEmpty(State)
-                    && !string.IsNullOrEmpty(City)
-                    && !string.IsNullOrEmpty(ZipCode);
-                if (!areArgumentValid) return string.Empty;
-                return string.Format("{0} {1} {2} {3} {4}", Address, State, City, Country, ZipCode);
+                var result = Controllers.APIUtil
+                    .CreateAddressSummary(Address, State, City, Country.ToString(), ZipCode);
+                return result;
             }
         }
     }

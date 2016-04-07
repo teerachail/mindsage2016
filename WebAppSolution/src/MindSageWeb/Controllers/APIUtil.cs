@@ -160,6 +160,38 @@ namespace MindSageWeb.Controllers
             return userActivity;
         }
 
+        public static string CreateAddressSummary(string address, string state, string city, string country, string zipCode)
+        {
+            var areArgumentValid = !string.IsNullOrEmpty(address)
+                    && !string.IsNullOrEmpty(state)
+                    && !string.IsNullOrEmpty(city)
+                    && !string.IsNullOrEmpty(country)
+                    && !string.IsNullOrEmpty(zipCode);
+            if (!areArgumentValid) return string.Empty;
+            return string.Format($"{address} {state} {city} {country} {zipCode}");
+        }
+
+        public static string GetLast4Characters(string data)
+        {
+            if (string.IsNullOrEmpty(data)) return string.Empty;
+            const int MinimumDigitRequired = 4;
+            if (data.Length < MinimumDigitRequired) return string.Empty;
+            var beginIndex = data.Length - MinimumDigitRequired;
+            return data.Substring(beginIndex, MinimumDigitRequired);
+        }
+
+        public static string EncodeCreditCard(string cardNumber)
+        {
+            if (string.IsNullOrEmpty(cardNumber)) return string.Empty;
+            const int MinimumDigitRequired = 8;
+            if (cardNumber.Length < MinimumDigitRequired) return string.Empty;
+            var beginIndex = cardNumber.Length - MinimumDigitRequired;
+            const string ReplaceNumberKey = "xxxx";
+            var originalNumber = cardNumber.Substring(beginIndex, ReplaceNumberKey.Length);
+            var result = cardNumber.Replace(originalNumber, ReplaceNumberKey);
+            return result;
+        }
+
         #endregion Methods
     }
 }
