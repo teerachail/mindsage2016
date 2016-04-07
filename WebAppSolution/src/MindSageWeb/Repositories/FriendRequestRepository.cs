@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MindSageWeb.Repositories.Models;
 using MongoDB.Driver;
+using Microsoft.Extensions.OptionsModel;
 
 namespace MindSageWeb.Repositories
 {
@@ -14,8 +15,7 @@ namespace MindSageWeb.Repositories
     {
         #region Fields
 
-        // HACK: Table name
-        private const string TableName = "test.au.mindsage.FriendRequests";
+        private readonly string TableName;
         private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
@@ -26,9 +26,10 @@ namespace MindSageWeb.Repositories
         /// Initialize repository
         /// </summary>
         /// <param name="mongoUtil">Mongo access utility</param>
-        public FriendRequestRepository(MongoAccess.MongoUtil mongoUtil)
+        public FriendRequestRepository(MongoAccess.MongoUtil mongoUtil, IOptions<DatabaseTableOptions> option)
         {
             _mongoUtil = mongoUtil;
+            TableName = option.Value.FriendRequests;
         }
 
         #endregion Constructors

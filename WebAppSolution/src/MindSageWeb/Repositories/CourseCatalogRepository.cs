@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using MongoDB.Driver;
 using MindSageWeb.Repositories.Models;
+using Microsoft.Extensions.OptionsModel;
 
 namespace MindSageWeb.Repositories
 {
@@ -13,8 +14,7 @@ namespace MindSageWeb.Repositories
     {
         #region Fields
 
-        // HACK: Table name
-        private const string TableName = "test.au.mindsage.CourseCatalogs";
+        private readonly string TableName;
         private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
@@ -25,9 +25,10 @@ namespace MindSageWeb.Repositories
         /// Initialize repository
         /// </summary>
         /// <param name="mongoUtil">Mongo access utility</param>
-        public CourseCatalogRepository(MongoAccess.MongoUtil mongoUtil)
+        public CourseCatalogRepository(MongoAccess.MongoUtil mongoUtil, IOptions<DatabaseTableOptions> option)
         {
             _mongoUtil = mongoUtil;
+            TableName = option.Value.CourseCatalogs;
         }
 
         #endregion Constructors

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using MindSageWeb.Repositories.Models;
 using MongoDB.Driver;
+using Microsoft.Extensions.OptionsModel;
 
 namespace MindSageWeb.Repositories
 {
@@ -11,8 +12,7 @@ namespace MindSageWeb.Repositories
     {
         #region Fields
 
-        // HACK: Table name
-        private const string ClassCalendarsTableName = "test.au.mindsage.UserActivities";
+        private readonly string TableName;
         private MongoAccess.MongoUtil _mongoUtil;
 
         #endregion Fields
@@ -23,9 +23,10 @@ namespace MindSageWeb.Repositories
         /// Initialize repository
         /// </summary>
         /// <param name="mongoUtil">Mongo access utility</param>
-        public UserActivityRepository(MongoAccess.MongoUtil mongoUtil)
+        public UserActivityRepository(MongoAccess.MongoUtil mongoUtil, IOptions<DatabaseTableOptions> option)
         {
             _mongoUtil = mongoUtil;
+            TableName = option.Value.UserActivities;
         }
 
         #endregion Constructors
@@ -39,7 +40,7 @@ namespace MindSageWeb.Repositories
         /// <param name="classRoomId">รหัส class room</param>
         public UserActivity GetUserActivityByUserProfileIdAndClassRoomId(string userprofile, string classRoomId)
         {
-            var result = _mongoUtil.GetCollection<UserActivity>(ClassCalendarsTableName)
+            var result = _mongoUtil.GetCollection<UserActivity>(TableName)
                  .Find(it => !it.DeletedDate.HasValue && it.UserProfileId == userprofile && it.ClassRoomId == classRoomId)
                  .ToEnumerable()
                  .FirstOrDefault();
@@ -65,7 +66,7 @@ namespace MindSageWeb.Repositories
               .Set(it => it.LessonActivities, data.LessonActivities);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
-            _mongoUtil.GetCollection<UserActivity>(ClassCalendarsTableName)
+            _mongoUtil.GetCollection<UserActivity>(TableName)
                .UpdateOne(it => it.id == data.id, update, updateOption);
         }
 

@@ -72,9 +72,8 @@ namespace MindSageWeb.Controllers
                && !string.IsNullOrEmpty(body.Name);
             if (!areArgumentsValid) return;
 
-            // HACK: Uncomment it when we done the authentication
-            //var currentUserId = User.Identity.Name;
-            //if (currentUserId != id) return;
+            var currentUserId = User.Identity.Name;
+            if (currentUserId != id) return;
 
             var userProfile = _userProfileRepo.GetUserProfileById(id);
             var isUserProfileValid = userProfile != null && !userProfile.DeletedDate.HasValue;

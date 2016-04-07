@@ -40,7 +40,7 @@ namespace MindSageWeb.Controllers
         /// <param name="lessonCatalogRepo">Lesson catalog repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
         /// <param name="paymentRepo">Payment repository</param>
-        public PurchaseController(CourseController courseCtrl, 
+        public PurchaseController(CourseController courseCtrl,
             MyCourseController myCourseCtrl,
             IUserProfileRepository userProfileRepo,
             IClassRoomRepository classRoomRepo,
@@ -139,7 +139,7 @@ namespace MindSageWeb.Controllers
                 var newSubscriptionId = string.Empty;
                 selectedUserProfile.Subscriptions = addNewSelfPurchaseSubscription(
                     selectedUserProfile.Subscriptions, selectedClassRoom,
-                    newClassCalendar.id, model.CourseId, 
+                    newClassCalendar.id, model.CourseId,
                     now, out newSubscriptionId);
 
                 var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, newClassCalendar, lessonCatalogs, now);

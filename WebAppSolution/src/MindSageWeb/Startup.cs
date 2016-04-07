@@ -39,8 +39,8 @@ namespace MindSageWeb
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
             services.AddOptions();
+            var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
             services.Configure<AppConfigOptions>(option =>
             {
                 option.GoogleClientSecret = appConfig.GoogleClientSecret;
@@ -48,6 +48,24 @@ namespace MindSageWeb
                 option.ManagementPortalUrl = appConfig.ManagementPortalUrl;
                 option.MindSageUrl = appConfig.MindSageUrl;
                 option.PrimaryDBName = appConfig.PrimaryDBName;
+            });
+            var databaseTable = Configuration.GetSection("DatabaseTableOptions").Get<DatabaseTableOptions>();
+            services.Configure<DatabaseTableOptions>(option =>
+            {
+                option.ClassCalendars = databaseTable.ClassCalendars;
+                option.ClassRooms = databaseTable.ClassRooms;
+                option.Comments = databaseTable.Comments;
+                option.CourseCatalogs = databaseTable.CourseCatalogs;
+                option.FriendRequests = databaseTable.FriendRequests;
+                option.LessonCatalogs = databaseTable.LessonCatalogs;
+                option.LikeComments = databaseTable.LikeComments;
+                option.LikeDiscussions = databaseTable.LikeDiscussions;
+                option.LikeLessons = databaseTable.LikeLessons;
+                option.Notifications = databaseTable.Notifications;
+                option.Payments = databaseTable.Payments;
+                option.StudentKeys = databaseTable.StudentKeys;
+                option.UserActivities = databaseTable.UserActivities;
+                option.UserProfiles = databaseTable.UserProfiles;
             });
 
             // Add framework services.
