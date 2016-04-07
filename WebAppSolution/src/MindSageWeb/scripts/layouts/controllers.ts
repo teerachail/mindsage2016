@@ -75,7 +75,7 @@ module app.layouts {
         private prepareUserprofile(): void {
             this.clientUserProfileSvc.PrepareAllUserProfile().then(() => {
                 var userprofile = this.clientUserProfileSvc.ClientUserProfile;
-                var lessonId = userprofile.CurrentLessonId;
+                var lessonId = userprofile.CurrentDisplayLessonId;
                 var classRoomId = userprofile.CurrentClassRoomId;
                 (<any>angular.element(".owl-carousel")).owlCarousel({
                     autoPlay: true,
