@@ -9,23 +9,21 @@
         <div class="callout clearfix">
             <div class="columns">
                 <div class="float-left"><img width="100" src="https://www.paypalobjects.com/webstatic/mktg/Logo/pp-logo-200px.png" /></div>
-                <div class="float-right"><h5>$500</h5></div>
+                <div class="float-right"><h5>@Model.TotalChargeAmount.ToString("C2")</h5></div>
             </div>
             <hr />
 
             <div class="columns">
                 <h5>Billing Address</h5>
                 <p>
-                    919/2
-                    Village No.27 Sub-district:Sila
-                    KHON KEAN, KhonKaen 40000 Thailand
+                    @Model.AddressSummary
                 </p>
             </div>
             <hr />
             <div class="columns">
                 <h5>Pay With</h5>
-                <div class="float-left"><h5><i class="fi-credit-card"></i> VISA x-0932</h5></div>
-                <div class="float-right"><h5>$500</h5></div>
+                <div class="float-left"><h5><i class="fi-credit-card"></i> @Model.CardType x-@Model.LastFourDigits</h5></div>
+                <div class="float-right"><h5>@Model.TotalChargeAmount.ToString("C2")</h5></div>
             </div>
         </div>
         <div class="callout clearfix">

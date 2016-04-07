@@ -129,6 +129,7 @@ namespace MindSageWeb.Controllers
                 if (selectedUserProfile == null) return View("Error");
 
                 // TODO: Pay with Paypal
+                var isPaymentSuccessed = true;
 
                 var now = _dateTime.GetCurrentTime();
                 var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogById(selectedClassRoom.Lessons.Select(it => it.LessonCatalogId)).ToList();
@@ -147,7 +148,7 @@ namespace MindSageWeb.Controllers
                 _userprofileRepo.UpsertUserProfile(selectedUserProfile);
                 _userActivityRepo.UpsertUserActivity(userActivity);
 
-                var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, true); // HACK: IsPaymentSuccess
+                var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, isPaymentSuccessed);
                 await _paymentRepo.CreateNewPayment(payment);
 
                 return RedirectToAction("Finished", new { @id = payment.id });
@@ -221,9 +222,9 @@ namespace MindSageWeb.Controllers
                 id = Guid.NewGuid().ToString(),
                 FirstName = model.CreditCardInfo.FirstName,
                 LastName = model.CreditCardInfo.LastName,
-                Last4Digits = APIUtil.EncodeCreditCard(model.CreditCardInfo.LastFourDigits),
+                Last4Digits = model.CreditCardInfo.LastFourDigits,
                 CardType = model.CreditCardInfo.CardType.ToString(),
-                CardNumber = model.CreditCardInfo.CardNumber,
+                CardNumber = APIUtil.EncodeCreditCard(model.CreditCardInfo.CardNumber),
                 TotalChargedAmount = totalChargedAmount,
                 BillingAddress = model.PrimaryAddress.Address,
                 State = model.PrimaryAddress.State,
@@ -258,7 +259,7 @@ namespace MindSageWeb.Controllers
                 LastFourDigits = payment.Last4Digits,
                 TotalChargeAmount = payment.TotalChargedAmount
             };
-            return View();
+            return View(model);
         }
 
         #endregion Methods
