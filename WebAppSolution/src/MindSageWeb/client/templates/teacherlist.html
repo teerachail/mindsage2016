@@ -21,8 +21,8 @@ controller: 'app.teacherlists.teacherlistsController as cx'
                             <div zf-as-content="" position="top">
                                 <span><img zf-iconic="" icon="flag" size="medium"> {{ item.CommentPercentage }}%</span>
                                 <span><img src="../assets/img/icon/green.png" width="30" /> {{ item.OnlineExtrasPercentage }}%</span>
-                                <span ng-hide="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation.png" width="30" /> {{ item.SocialParticipationPercentage }}%</span>
-                                <span ng-show="item.IsPrivateAccount"><img src="../assets/img/icon/social_participation_no_score.png" width="30" /></span>
+                                <span ng-hide="item.IsPrivateAccount"><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-primary"> {{ item.SocialParticipationPercentage }}%</span>
+                                <span ng-show="item.IsPrivateAccount"><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-dark"></span>
                             </div>
                         </div>
                         <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
