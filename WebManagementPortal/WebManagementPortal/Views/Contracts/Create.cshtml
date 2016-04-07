@@ -6,10 +6,10 @@
 
 <h2>Create</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>Contract</h4>
         <hr />
@@ -48,7 +48,7 @@
         </div>
 
         <hr />
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.PrimaryContractName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -92,7 +92,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.SecondaryEmail, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.SecondaryEmail, new { htmlAttributes = new { @class = "form-control"} })
+                @Html.EditorFor(model => model.SecondaryEmail, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.SecondaryEmail, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -102,19 +102,29 @@
         <div class="form-group">
             @Html.LabelFor(model => model.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "form-control"} })
-                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger" })
+                <div class="input-group col-md-4 row">
+                    @Html.EditorFor(model => model.StartDate, new { htmlAttributes = new { @class = "date-picker form-control col-md-4", @id = "date-picker-1" } })
+                    <label for="date-picker-1" class="input-group-addon btn text-left">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </label>
+                </div>
+                @Html.ValidationMessageFor(model => model.StartDate, "", new { @class = "text-danger col-md-10 row" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ExpiredDate, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ExpiredDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ExpiredDate, "", new { @class = "text-danger" })
+                <div class="input-group col-md-4 row">
+                    @Html.EditorFor(model => model.ExpiredDate, new { htmlAttributes = new { @class = "date-picker form-control col-md-4", @id = "date-picker-2" } })
+                    <label for="date-picker-2" class="input-group-addon btn text-left">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </label>
+                </div>
+                @Html.ValidationMessageFor(model => model.ExpiredDate, "", new { @class = "text-danger col-md-10 row" })
             </div>
         </div>
-        
+
         <div class="form-group">
             @Html.LabelFor(model => model.TimeZone, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
@@ -132,18 +142,19 @@
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
-        <div class="form-group">
-            <div class='input-group date' id='datetimepicker1'>
-                <input type='text' class="form-control" />
-                <span class="input-group-addon">
-                    <span class="glyphicon glyphicon-calendar"></span>
-                </span>
-            </div>
-        </div>
+        @*<div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    <input type='text' class="form-control" />
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>*@
     </div>
-}
+                    }
 
 @section Scripts {
+
     @Scripts.Render("~/bundles/jqueryval")
     <script type="text/javascript">
             $(document).ready(function () {
@@ -153,8 +164,13 @@
                     $(containerName).append('<input type="text" name="' + attName + '" class="form-control " />');
                 });
                 //==================================================
-                $('#datetimepicker1').datetimepicker();
+                //$('#datetimepicker1').datetimepicker();
                 //==================================================
+            });
+    </script>
+    <script type="text/javascript">
+            $(function () {
+                $(".date-picker").datepicker();
             });
     </script>
 }
