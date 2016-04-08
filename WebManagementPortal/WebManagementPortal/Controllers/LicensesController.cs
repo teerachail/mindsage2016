@@ -63,6 +63,12 @@ namespace WebManagementPortal.Controllers
                 var courseCatalog = await db.CourseCatalogs.FirstOrDefaultAsync(it => it.Id == license.CourseCatalogId);
                 if (courseCatalog == null || courseCatalog.RecLog.DeletedDate.HasValue) return View("Error");
 
+                var contract = await db.Contracts.FirstOrDefaultAsync(it => it.Id == license.ContractId);
+                if (contract == null) return View("Error");
+
+                license.Contract = contract;
+                license.CourseCatalog = courseCatalog;
+
                 var now = DateTime.Now;
                 license.CourseName = courseCatalog.SideName;
                 license.Grade = courseCatalog.Grade.ToString();
@@ -169,7 +175,10 @@ namespace WebManagementPortal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> RegenerateTeacherCodeConfirmed(int id)
         {
-            License license = await db.Licenses.FindAsync(id);
+            License license = await db.Licenses
+                .Include("Contract")
+                .Include("CourseCatalog")
+                .FirstOrDefaultAsync();
             var now = DateTime.Now;
             foreach (var item in license.TeacherKeys) item.RecLog.DeletedDate = now;
             var newTeacherKey = new TeacherKey
@@ -190,7 +199,6 @@ namespace WebManagementPortal.Controllers
             var teacherKey = string.Empty;
             while (true)
             {
-
                 var courseCatalog = license.CourseCatalog;
                 var contract = license.Contract;
                 var random = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 4);
