@@ -46,7 +46,7 @@
                 <div class="large-4 grid-content">
                     <label>
                         Exp Month
-                        <input asp-for="CreditCardInfo.ExpiredMonth" placeholder="MM" ng-model="expmonth" />
+                        <input asp-for="CreditCardInfo.ExpiredMonth" placeholder="MM" min="1" max="12" ng-model="expmonth" />
                         <span asp-validation-for="CreditCardInfo.ExpiredMonth" class="form-error"></span>
                     </label>
                 </div>
