@@ -62,10 +62,10 @@ controller: 'app.settings.SettingController as cx'
                     </label>
                 </div>
             </div>
-            <div class="grid-block">
+            <div class="grid-content shrink">
                 <a class="button" ng-show="cx.clientProfileSvc.ClientUserProfile.HasPassword" href="../Manage/ChangePassword/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}">Change Password</a>
             </div>
-            <div class="grid-block">
+            <div class="grid-content shrink">
                 <a class="button" ng-hide="cx.clientProfileSvc.ClientUserProfile.HasPassword" href="../Manage/SetPassword/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}">Set Password</a>
             </div>
         </div>
@@ -118,7 +118,7 @@ controller: 'app.settings.SettingController as cx'
             </div>
             <div class="grid-content shrink">
                 <p>
-                    Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId })"><img zf-iconic="" icon="calendar" size="medium" class="iconic-color-dark"></a>
+                    Set Off Days and Vacations <a ui-sref="app.course.calendar({ classRoomId: cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId })"><span><img zf-iconic="" icon="calendar" size="medium" class="iconic-color-dark"></span></a>
                 </p>
             </div>
             <div>
