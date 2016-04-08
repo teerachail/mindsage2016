@@ -53,14 +53,13 @@ controller: 'app.lessons.LessonController as cx'
                 <hr />
                 <p>{{ cx.content.ShortDescription }}</p>
 
-                <p>
-                    <a ng-click="detailClose = !detailClose">
-                        <img ng-hide="detailClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
-                        <img ng-show="detailClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
-                         More detail
-                    </a>
-                </p>
+                <a ng-click="detailClose = !detailClose">
+                    <img ng-hide="detailClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                    <img ng-show="detailClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                     More detail
+                </a>
                 <div ng-show="detailClose">
+                    <br>
                     <p>{{ cx.content.MoreDescription }}</p>
                     <a href="{{ item.PrimaryContentURL }}">
                         <div class="grid-block">
