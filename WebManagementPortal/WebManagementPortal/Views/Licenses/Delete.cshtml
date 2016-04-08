@@ -109,7 +109,6 @@
         <dd>
             @Html.DisplayFor(model => model.Contract.RecLog.CreatedDate)
         </dd>
-
     </dl>
 
     <hr />
@@ -163,7 +162,7 @@
             {
                 <dd></dd>
             }
-        }        
+        }
 
         <dt>
             Students
@@ -179,15 +178,18 @@
         <dd>
             @Html.DisplayFor(model => model.RecLog.CreatedDate)
         </dd>
-
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            
+            <dt>
+                <br>
+                @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, new { @class = "btn btn-default" })
+            </dt>
+            <dd>
+                <br>
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </dd>
+        }
     </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-danger" />
-            @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, new { @class = "btn btn-default" })
-        </div>
-    }
 </div>

@@ -18,8 +18,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <button type="submit" class="btn btn-danger">Confirm update</button> |
-            @Html.ActionLink("Back", "Index")
+            @Html.ActionLink("Back", "Index", null, null, new { @class = "btn btn-default" })
+            <button type="submit" class="btn btn-danger">Confirm update</button>
         </div>
     }
 </div>

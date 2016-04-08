@@ -190,8 +190,11 @@
                 {
                     <div class="col-md-10">
                         @teacherKey.Code
+                    </div>
+                    <div class="col-md-10 col-md-offset-2">
                         @Html.ActionLink("Regenerate teacher code", "RegenerateTeacherCode", "Licenses", new { id = Model.Id }, new { @class = "btn btn-info" })
                     </div>
+                    
                 }
                 else
                 {
@@ -201,16 +204,16 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
+            <div class="col-md-2 text-right">
+                @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-md-10">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, new { @class = "btn btn-default" })
-</div>
 
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")

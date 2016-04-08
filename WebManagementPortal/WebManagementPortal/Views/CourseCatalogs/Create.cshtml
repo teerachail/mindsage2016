@@ -7,10 +7,10 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <h4>CourseCatalog</h4>
         <hr />
@@ -35,7 +35,7 @@
         <div class="btn btn-info add-able" att-name="Advertisements" container-name="AdvertisementContainer">Add</div>
         <div class="form-group">
             <div class="col-md-10 col-md-push-2">
-                <input type="text" name="Advertisements" class="form-control" style="margin-top:1em;"/>
+                <input type="text" name="Advertisements" class="form-control" style="margin-top:1em;" />
             </div>
             <div id="AdvertisementContainer" class="col-md-10 col-md-push-2">
             </div>
@@ -84,7 +84,7 @@
         <div class="form-group">
             @Html.LabelFor(model => model.FullDescription, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextAreaFor(model => model.FullDescription,5,1,new { @class = "form-control"} )
+                @Html.TextAreaFor(model => model.FullDescription, 5, 1, new { @class = "form-control" })
                 @Html.ValidationMessageFor(model => model.FullDescription, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -98,8 +98,10 @@
         </div>
 
         <div class="form-group">
-            <div class="col-md-4 text-center">
+            <div class="col-md-2 text-right">
                 @Html.ActionLink("Back to List", "Index", null, new { @class = "btn btn-default" })
+            </div>
+            <div class="col-md-10">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </div>
