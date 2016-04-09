@@ -13,6 +13,7 @@ using repoModel = WebManagementPortal.Repositories.Models;
 
 namespace WebManagementPortal.Controllers
 {
+    [Authorize(Users = "admin@mindsage.com")]
     public class ContractsController : Controller
     {
         private MindSageDataModelsContainer db = new MindSageDataModelsContainer();
