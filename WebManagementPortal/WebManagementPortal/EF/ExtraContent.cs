@@ -24,6 +24,7 @@ namespace WebManagementPortal.EF
         public string ContentURL { get; set; }
         public string Description { get; set; }
         public string IconURL { get; set; }
+        public bool IsPreviewable { get; set; }
         public int LessonId { get; set; }
     
         public RecordLog RecLog { get; set; }

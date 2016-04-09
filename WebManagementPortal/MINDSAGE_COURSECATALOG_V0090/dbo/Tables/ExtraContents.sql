@@ -4,6 +4,7 @@ CREATE TABLE [dbo].[ExtraContents] (
     [ContentURL] varchar(max)  NOT NULL,
     [Description] varchar(max)  NOT NULL,
     [IconURL] varchar(max)  NOT NULL,
+    [IsPreviewable] bit  NOT NULL,
     [LessonId] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL
