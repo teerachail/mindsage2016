@@ -27,10 +27,11 @@
                 });
         }
 
-        public ChangeCourse(classRoomId: string, lessonId: string) {
+        public ChangeCourse(classRoomId: string, lessonId: string, classCalendarId: string) {
             this.userSvc.ChangeCourse(classRoomId).then(respond => {
                 this.userSvc.UpdateCourseInformation(respond);
                 this.userSvc.ClientUserProfile.CurrentLessonId = lessonId;
+                this.userSvc.ClientUserProfile.CurrentClassCalendarId = classCalendarId;
                 this.$state.go("app.main.lesson", { 'classRoomId': classRoomId, 'lessonId': lessonId }, { inherit: false });
             }, error => {
                 console.log('Change course failed');

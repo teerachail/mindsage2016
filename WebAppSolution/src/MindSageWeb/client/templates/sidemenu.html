@@ -33,7 +33,7 @@
                    ng-repeat="item in cx.userSvc.AllAvailableCourses" 
                    ng-class="{'large expanded button': item.ClassRoomId == cx.userSvc.ClientUserProfile.CurrentClassRoomId,
                    'large hollow expanded button': item.ClassRoomId != cx.userSvc.ClientUserProfile.CurrentClassRoomId}" 
-                   ng-click="cx.ChangeCourse(item.ClassRoomId, item.LessonId)">
+                   ng-click="cx.ChangeCourse(item.ClassRoomId, item.LessonId, item.ClassCalendarId)">
                     {{ item.Name }}
                 </a>
             </div>

@@ -279,7 +279,8 @@ namespace MindSageWeb.Controllers
                         Name = subscription.ClassRoomName,
                         ClassRoomId = subscription.ClassRoomId,
                         LessonId = currentLesson.LessonId,
-                        CourseCatalogId = subscription.CourseCatalogId
+                        CourseCatalogId = subscription.CourseCatalogId,
+                        ClassCalendarId = subscription.ClassCalendarId
                     };
                 }).Where(it => it != null).ToList();
 

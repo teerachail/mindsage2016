@@ -16,6 +16,7 @@ namespace MindSageWeb.Repositories.Models
         public string LessonId { get; set; }
         public string GroupName { get; set; }
         public string Description { get; set; }
+        public string ClassCalendarId { get; set; }
 
         #endregion Properties
     }
