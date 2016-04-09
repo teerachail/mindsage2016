@@ -191,8 +191,8 @@
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Confirm" class="btn btn-default" /> |
-            @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, null)
+            <input type="submit" value="Confirm" class="btn btn-danger" />
+            @Html.ActionLink("Back", "Details", "Contracts", new { @id = Model.ContractId }, new { @class = "btn default" })
         </div>
     }
 </div>
