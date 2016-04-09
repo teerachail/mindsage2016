@@ -228,8 +228,8 @@ namespace WebManagementPortal.Controllers
                                 id = lesson.Id.ToString(),
                                 Order = lessonOrderRunner++,
                                 Title = lesson.Title,
-                                UnitNo = unitOrderRunner++,
-                                SemesterName = string.Format("{0}", (char)semesterNameRunner++),
+                                UnitNo = unitOrderRunner,
+                                SemesterName = string.Format("{0}", (char)semesterNameRunner),
                                 ShortDescription = lesson.ShortDescription,
                                 MoreDescription = lesson.MoreDescription,
                                 ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan,
@@ -245,7 +245,9 @@ namespace WebManagementPortal.Controllers
                             };
                             await lessonCatalogRepo.UpsertLessonCatalog(lessonCatalog);
                         }
+                        unitOrderRunner++;
                     }
+                    semesterNameRunner++;
                 }
             }
         }
@@ -260,7 +262,6 @@ namespace WebManagementPortal.Controllers
 
                 var lessonIdRunner = 1;
                 var unitIdRunner = 1;
-                var extraContentRunner = 1;
                 var semesterNameRunner = (byte)65;
                 var semesters = semesterQry.Select(semester => new repoModel.CourseCatalog.Semester
                 {

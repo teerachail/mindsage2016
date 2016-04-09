@@ -49,10 +49,9 @@
                 </p>
                 <h2 class="detail-header">@Model.TotalWeeks Week Courses <img class="float-right" src="@Model.DescriptionImageUrl"></h2>
                 
+                @{ var slot = 0; }
                 @foreach (var semester in Model.Semesters)
                 {
-                    var units = semester.Units.ToArray();
-                    var currentSemesterIndex = Array.IndexOf(Model.Semesters.ToArray(), semester);
                     <h1 class="lesson-header">SEMESTER @semester.Name</h1>
                     <div class="card visible">
                         <div class="card-section">
@@ -63,12 +62,12 @@
                             <p>
                                 @semester.Description
                             </p>
-                            <a ng-click="INTROClose[@currentSemesterIndex] = !INTROClose[@currentSemesterIndex]">
-                                <img ng-hide="INTROClose[@currentSemesterIndex]" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
-                                <img ng-show="INTROClose[@currentSemesterIndex]" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                            <a ng-click="INTROClose[@slot] = !INTROClose[@slot]">
+                                <img ng-hide="INTROClose[@slot]" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                                <img ng-show="INTROClose[@slot]" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
                                 More detail
                             </a>
-                            <div ng-show="INTROClose[@currentSemesterIndex]">
+                            <div ng-show="INTROClose[@slot]">
                                 @foreach (var unit in semester.Units)
                                 {
                                     foreach (var lesson in unit.Lessons)
@@ -111,13 +110,12 @@
                                     }
                                 }
                             </div>
-
                         </div>
                         <div class="success label menu-bar"></div>
                     </div>
-                    @foreach (var unit in units)
+                    @foreach (var unit in semester.Units)
                     {
-                        var currentUnitIndex = Array.IndexOf(units, unit);
+                        slot++;
                         <div class="card visible">
                             <div class="card-section">
                                 <h2 class="success label titlePosition">UNIT @unit.UnitNo</h2>
@@ -127,12 +125,12 @@
                                 <p>
                                     @unit.Description
                                 </p>
-                                <a ng-click="UNITClose[@currentUnitIndex] = !UNITClose[@currentUnitIndex]">
-                                    <img ng-hide="UNITClose[@currentUnitIndex]" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
-                                    <img ng-show="UNITClose[@currentUnitIndex]" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                                <a ng-click="UNITClose[@slot] = !UNITClose[@slot]">
+                                    <img ng-hide="UNITClose[@slot]" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                                    <img ng-show="UNITClose[@slot]" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
                                     More detail
                                 </a>
-                                <div ng-show="UNITClose[@currentUnitIndex]">
+                                <div ng-show="UNITClose[@slot]">
                                     @foreach (var lesson in unit.Lessons)
                                     {
                                         <div class="card-section">

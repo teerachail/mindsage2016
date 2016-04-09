@@ -51,7 +51,11 @@ namespace MindSageWeb.Controllers
         public IActionResult Detail(string id, bool isCouponInvalid = false)
         {
             var selectedCourse = _courseCtrl?.GetCourseDetail(id);
-            if (selectedCourse == null) return RedirectToAction("Error");
+            if (selectedCourse == null)
+            {
+                ViewBag.ErrorMessage = "The selected course doesn't exist."; // HACK: Error message
+                return View("Error");
+            }
 
             var allUserCourses = Enumerable.Empty<string>();
             var isAlreadyLoggedIn = User?.Identity?.IsAuthenticated ?? false;
