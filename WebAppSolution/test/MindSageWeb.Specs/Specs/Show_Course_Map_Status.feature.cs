@@ -186,7 +186,7 @@ this.FeatureBackground();
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 117
     testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map status of ClassRoom: \'Class" +
-                    "Room01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                    "Room01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "LessonId",

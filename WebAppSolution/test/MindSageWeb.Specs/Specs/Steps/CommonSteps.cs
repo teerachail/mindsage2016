@@ -40,6 +40,8 @@ namespace MindSageWeb.Specs.Steps
             var mockClassCalendarRepo = ScenarioContext.Current.Get<Mock<IClassCalendarRepository>>();
             mockClassCalendarRepo.Setup(it => it.GetClassCalendarByClassRoomId(It.IsAny<string>()))
                 .Returns<string>(classRoomId => classCalendars.Where(it => it.ClassRoomId == classRoomId).FirstOrDefault());
+            mockClassCalendarRepo.Setup(it => it.GetClassCalendarById(It.IsAny<string>()))
+                .Returns<string>(id => Task.FromResult<ClassCalendar>(classCalendars.Where(c => c.id == id).FirstOrDefault()));
         }
 
         [Given(@"Today is '(.*)'")]

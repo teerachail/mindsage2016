@@ -43,13 +43,14 @@ namespace MindSageWeb.Repositories
         /// <param name="grade">Grade</param>
         public async Task<Contract> GetContractsByTeacherCode(string teacherCode, string grade)
         {
-            var result = await _mongoUtil.GetCollection<Contract>(TableName)
-                .Find(it => !it.DeletedDate.HasValue && it.Licenses
-                        .Where(l => !l.DeletedDate.HasValue)
-                        .SelectMany(l => l.TeacherKeys)
-                        .Where(t => !t.DeletedDate.HasValue)
-                        .Any(t => t.Code == teacherCode && t.Grade == grade))
-                .FirstOrDefaultAsync();
+            var result = (await _mongoUtil.GetCollection<Contract>(TableName).FindAsync(it => !it.DeletedDate.HasValue))
+                .ToEnumerable()
+                .Where(contract => contract.Licenses
+                        .Where(it => !it.DeletedDate.HasValue)
+                        .SelectMany(it => it.TeacherKeys)
+                        .Where(it => !it.DeletedDate.HasValue)
+                        .Any(it => it.Code == teacherCode && it.Grade == grade))
+                .FirstOrDefault();
             return result;
         }
 

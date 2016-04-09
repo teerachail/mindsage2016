@@ -131,14 +131,17 @@ namespace MindSageWeb.Controllers
             if (!isClassCalendarValid) return userProfileInfo;
 
             var now = _dateTime.GetCurrentTime();
-            var lessonCalendarQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue);
-
-            var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderByDescending(it => it.BeginDate).FirstOrDefault();
-            if (currentLesson == null) return userProfileInfo;
+            var lessonCalendar = classCalendar.LessonCalendars
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => now.Date >= it.BeginDate)
+                .OrderByDescending(it => it.BeginDate)
+                .FirstOrDefault() ?? classCalendar.LessonCalendars.OrderBy(it => it.BeginDate).LastOrDefault();
+            var currentLessonId = lessonCalendar?.LessonId;
+            if (lessonCalendar == null) return userProfileInfo;
             else
             {
-                userProfileInfo.CurrentLessonId = currentLesson.LessonId;
-                userProfileInfo.CurrentLessonNo = currentLesson.Order;
+                userProfileInfo.CurrentLessonId = lessonCalendar.LessonId;
+                userProfileInfo.CurrentLessonNo = lessonCalendar.Order;
             }
 
             return userProfileInfo;

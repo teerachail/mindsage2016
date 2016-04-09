@@ -16,11 +16,11 @@ namespace MindSageWeb.Specs.Steps
     [Binding]
     public class Show_Course_Map_StatusSteps
     {
-        [When(@"UserProfileId '(.*)' reuqest course map status of ClassRoom: '(.*)'")]
-        public void WhenUserProfileIdReuqestCourseMapStatusOfClassRoom(string userprofileId, string classRoomId)
+        [When(@"UserProfileId '(.*)' reuqest course map status of ClassRoom: '(.*)' and ClassCalendarId: '(.*)'")]
+        public void WhenUserProfileIdReuqestCourseMapStatusOfClassRoomAndClassCalendarId(string userprofileId, string classRoomId, string classCalendarId)
         {
             var mycourseCtrl = ScenarioContext.Current.Get<MyCourseController>();
-            var result = mycourseCtrl.GetStatus(userprofileId, classRoomId);
+            var result = mycourseCtrl.GetStatus(userprofileId, classRoomId, classCalendarId);
             ScenarioContext.Current.Set(result);
         }
 

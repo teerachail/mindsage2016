@@ -112,6 +112,15 @@ namespace WebManagementPortal.Controllers
                 selectedCourseCatalog.FullDescription = courseCatalog.FullDescription;
                 selectedCourseCatalog.TotalWeeks = courseCatalog.TotalWeeks;
                 selectedCourseCatalog.DescriptionImageUrl = courseCatalog.DescriptionImageUrl;
+                foreach (var cc in selectedCourseCatalog.Licenses)
+                {
+                    cc.Grade = courseCatalog.Grade.ToString();
+                    foreach (var item in cc.TeacherKeys)
+                    {
+                        item.Grade = courseCatalog.Grade.ToString();
+                    }
+                }
+                
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", new { @id = selectedCourseCatalog.Id });
             }

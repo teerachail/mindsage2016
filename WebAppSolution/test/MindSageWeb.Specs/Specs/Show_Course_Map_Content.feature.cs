@@ -144,7 +144,7 @@ this.FeatureBackground();
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 74
     testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map content of ClassRoom: \'Clas" +
-                    "sRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+                    "sRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 75
     testRunner.Then("System send course map content collection with JSON format are", @"[

@@ -80,11 +80,15 @@ namespace MindSageWeb.Controllers
             if (!isClassCalendarValid) return View("NoCourseAccess");
 
             var now = _dateTime.GetCurrentTime();
-            var lessonCalendarQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue);
 
-            var currentLesson = lessonCalendarQry.Where(it => now.Date >= it.BeginDate).OrderByDescending(it => it.BeginDate).FirstOrDefault();
-            var currentLessonId = currentLesson?.LessonId;
-            if (currentLessonId == null) return View("NoCourseAccess");
+            var lessonCalendar = classCalendar.LessonCalendars
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => now.Date >= it.BeginDate)
+                .OrderByDescending(it => it.BeginDate)
+                .FirstOrDefault() ?? classCalendar.LessonCalendars.OrderBy(it => it.BeginDate).LastOrDefault();
+
+            var currentLessonId = lessonCalendar?.LessonId;
+            if (string.IsNullOrEmpty(currentLessonId)) return View("NoCourseAccess");
 
             var redirectURL = $"/my#!/app/main/lesson/{ currentLessonId }/{ currentClassRoomId }";
             return Redirect(redirectURL);

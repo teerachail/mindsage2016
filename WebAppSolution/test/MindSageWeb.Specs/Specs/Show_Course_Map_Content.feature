@@ -71,7 +71,7 @@ Background: Initialize mocking data
 @mock  
 Scenario: User request course map's content Then system send the content back  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfileId 'sakul@mindsage.com' reuqest course map content of ClassRoom: 'ClassRoom01'  
+    When UserProfileId 'sakul@mindsage.com' reuqest course map content of ClassRoom: 'ClassRoom01' and ClassCalendarId: 'ClassCalendar01'  
     Then System send course map content collection with JSON format are  
 	"""
 	[

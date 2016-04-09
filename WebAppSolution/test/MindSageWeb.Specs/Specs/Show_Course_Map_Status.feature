@@ -114,7 +114,7 @@ Background: Initialize mocking data
 @mock  
 Scenario: User request course map's status Then system send the status back  
     Given Today is '2/8/2016 00:00 am'  
-    When UserProfileId 'sakul@mindsage.com' reuqest course map status of ClassRoom: 'ClassRoom01'  
+    When UserProfileId 'sakul@mindsage.com' reuqest course map status of ClassRoom: 'ClassRoom01' and ClassCalendarId: 'ClassCalendar01'  
     Then System send course map status back are
 	| LessonId | HaveAnyComments | IsReadedAllContents |
 	| Lesson01 | true            | true                |

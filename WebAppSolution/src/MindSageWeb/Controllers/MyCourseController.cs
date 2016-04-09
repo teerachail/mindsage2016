@@ -71,6 +71,7 @@ namespace MindSageWeb.Controllers
             _likeCommentRepo = likeCommentRepo;
             _likeDiscussionRepo = likeDiscussionRepo;
             _contractRepo = contractRepo;
+            _courseCatalogRepo = courseCatalogRepo;
             _dateTime = dateTime;
         }
 
@@ -96,10 +97,10 @@ namespace MindSageWeb.Controllers
             UserProfile userprofile;
             if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId, out userprofile)) return Enumerable.Empty<CourseMapContentRespond>();
 
-            var isSelfPurchase = userprofile.Subscriptions
+            var isSelfPurchaseOrTeacher = userprofile.Subscriptions
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.ClassRoomId == classRoomId)
-                .Any(it => it.Role == UserProfile.AccountRole.SelfPurchaser);
+                .Any(it => it.Role == UserProfile.AccountRole.SelfPurchaser || it.Role == UserProfile.AccountRole.Teacher);
 
             var now = _dateTime.GetCurrentTime();
             var classCalendar = await _classCalendarRepo.GetClassCalendarById(classCalendarId);
@@ -107,7 +108,7 @@ namespace MindSageWeb.Controllers
                 && classCalendar.LessonCalendars != null
                 && !classCalendar.DeletedDate.HasValue
                 && !classCalendar.CloseDate.HasValue
-                && (classCalendar.ExpiredDate.HasValue && classCalendar.ExpiredDate.Value.Date > now.Date) || isSelfPurchase;
+                && (classCalendar.ExpiredDate.HasValue && classCalendar.ExpiredDate.Value.Date > now.Date) || isSelfPurchaseOrTeacher;
             if (!canAccessToTheClassRoom) return Enumerable.Empty<CourseMapContentRespond>();
 
             var result = classCalendar.LessonCalendars
@@ -482,7 +483,7 @@ namespace MindSageWeb.Controllers
                 var isTeacherKey = selectedContract != null
                     && !selectedContract.DeletedDate.HasValue
                     && selectedContract.Licenses.Any();
-                if (isTeacherKey) return addCourseFailRespond;
+                if (!isTeacherKey) return addCourseFailRespond;
 
                 var selectedLicense = selectedContract.Licenses
                     .Where(it => !it.DeletedDate.HasValue)
