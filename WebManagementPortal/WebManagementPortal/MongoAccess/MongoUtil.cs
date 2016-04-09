@@ -13,7 +13,6 @@ namespace WebManagementPortal.MongoAccess
 
         private static IMongoClient _client;
         private static IMongoDatabase _database;
-        private static MongoUtil _instance;
 
         #endregion Fields
 
@@ -21,16 +20,7 @@ namespace WebManagementPortal.MongoAccess
 
         public static MongoUtil Instance
         {
-            get
-            {
-                if (_instance == null) _instance = new MongoUtil();
-                return _instance;
-            }
-
-            set
-            {
-                _instance = value;
-            }
+            get { return new MongoUtil(); }
         }
 
         #endregion Properties
@@ -48,11 +38,6 @@ namespace WebManagementPortal.MongoAccess
         #endregion Constructors
 
         #region Methods
-
-        internal Task GetCollection<T>(object courseCatalogTableName)
-        {
-            throw new NotImplementedException();
-        }
 
         /// <summary>
         /// ดึงข้อมูลจากตาราง
