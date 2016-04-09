@@ -34,6 +34,18 @@ namespace MindSageWeb.Repositories
         #region IClassCalendarRepository members
 
         /// <summary>
+        /// ขอข้อมูล Class calendar จากรหัส Class calendar
+        /// </summary>
+        /// <param name="classCalendarId">รหัส Class calendar ที่ต้องการขอข้อมูล</param>
+        public async Task<ClassCalendar> GetClassCalendarById(string classCalendarId)
+        {
+            var result = await _mongoUtil.GetCollection<ClassCalendar>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && it.id == classCalendarId)
+                .FirstOrDefaultAsync();
+            return result;
+        }
+
+        /// <summary>
         /// ขอข้อมูล Class calendar จากรหัส Class room
         /// </summary>
         /// <param name="classRoomId">รหัส Class room ที่ต้องการขอข้อมูล</param>
@@ -42,7 +54,8 @@ namespace MindSageWeb.Repositories
             var result = _mongoUtil.GetCollection<ClassCalendar>(TableName)
                 .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId)
                 .ToEnumerable()
-                .FirstOrDefault();
+                .OrderBy(it => it.CreatedDate)
+                .LastOrDefault();
             return result;
         }
 

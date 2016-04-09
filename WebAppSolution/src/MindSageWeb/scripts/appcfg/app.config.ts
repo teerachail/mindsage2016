@@ -85,7 +85,7 @@ module app {
 
             this.LessonUrl = apiUrl + '/lesson/:id/:classRoomId/:userId';
             this.LessonCommentUrl = apiUrl + '/lesson/:id/:classRoomId/comments/:userId';
-            this.CourseMapContentUrl = apiUrl + '/mycourse/:id/:classRoomId/:action';
+            this.CourseMapContentUrl = apiUrl + '/mycourse/:id/:classRoomId/:classCalendarId/:action';
             this.LessonDiscussionUrl = apiUrl + '/lesson/:id/:classRoomId/discussions/:userId';
             this.StudentListUrl = apiUrl + '/friend/:userId/:classRoomId';
             this.SearchFriendUrl = this.StudentListUrl + '/:key';

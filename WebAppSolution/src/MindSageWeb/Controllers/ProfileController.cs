@@ -50,10 +50,10 @@ namespace MindSageWeb.Controllers
 
         // GET: api/profile
         [HttpGet]
-        public GetUserProfileRespond Get()
+        public async Task<GetUserProfileRespond> Get()
         {
             var userProfileName = User?.Identity?.Name;
-            var result = Get(userProfileName);
+            var result = await Get(userProfileName);
             return result;
         }
 
@@ -95,7 +95,7 @@ namespace MindSageWeb.Controllers
         /// <param name="id">User profile id</param>
         [HttpGet]
         [Route("{id}")]
-        public GetUserProfileRespond Get(string id)
+        public async Task<GetUserProfileRespond> Get(string id)
         {
             var isArgumentValid = !string.IsNullOrEmpty(id);
             if (!isArgumentValid) return null;
@@ -124,7 +124,9 @@ namespace MindSageWeb.Controllers
                 .FirstOrDefault();
 
             userProfileInfo.CurrentClassRoomId = lastActiveSubscription.ClassRoomId;
-            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(lastActiveSubscription.ClassRoomId);
+            userProfileInfo.CurrentClassCalendarId = lastActiveSubscription.ClassCalendarId;
+
+            var classCalendar = await _classCalendarRepo.GetClassCalendarById(lastActiveSubscription.ClassCalendarId);
             var isClassCalendarValid = classCalendar != null && classCalendar.LessonCalendars != null && classCalendar.LessonCalendars.Any();
             if (!isClassCalendarValid) return userProfileInfo;
 

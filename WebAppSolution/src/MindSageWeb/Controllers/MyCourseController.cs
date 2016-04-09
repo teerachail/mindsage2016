@@ -78,17 +78,19 @@ namespace MindSageWeb.Controllers
 
         #region Methods
 
-        // GET: api/mycourse/{user-id}/{class-room-id}
+        // GET: api/mycourse/{user-id}/{class-room-id}/{class-calendar-id}/map
         /// <summary>
         /// Get lesson map content
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
-        [HttpGet("{id}/{classRoomId}")]
-        public IEnumerable<CourseMapContentRespond> Get(string id, string classRoomId)
+        /// <param name="classCalendarId">Class calendar id</param>
+        [HttpGet("{id}/{classRoomId}/{classCalendarId}/mapcontent")]
+        public async Task<IEnumerable<CourseMapContentRespond>> Get(string id, string classRoomId, string classCalendarId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
-                && !string.IsNullOrEmpty(classRoomId);
+                && !string.IsNullOrEmpty(classRoomId)
+                && !string.IsNullOrEmpty(classCalendarId);
             if (!areArgumentsValid) return Enumerable.Empty<CourseMapContentRespond>();
 
             UserProfile userprofile;
@@ -100,7 +102,7 @@ namespace MindSageWeb.Controllers
                 .Any(it => it.Role == UserProfile.AccountRole.SelfPurchaser);
 
             var now = _dateTime.GetCurrentTime();
-            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
+            var classCalendar = await _classCalendarRepo.GetClassCalendarById(classCalendarId);
             var canAccessToTheClassRoom = classCalendar != null
                 && classCalendar.LessonCalendars != null
                 && !classCalendar.DeletedDate.HasValue
@@ -128,18 +130,20 @@ namespace MindSageWeb.Controllers
             return result;
         }
 
-        // GET: api/mycourse/{user-id}/{class-room-id}/status
+        // GET: api/mycourse/{user-id}/{class-room-id}/{class-calendar-id}/status
         /// <summary>
         /// Get lesson map status
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
+        /// <param name="classCalendarId">Class calendar id</param>
         [HttpGet]
-        [Route("{id}/{classRoomId}/status")]
-        public IEnumerable<CourseMapStatusRespond> GetStatus(string id, string classRoomId)
+        [Route("{id}/{classRoomId}/{classCalendarId}/mapstatus")]
+        public IEnumerable<CourseMapStatusRespond> GetStatus(string id, string classRoomId, string classCalendarId)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
-                 && !string.IsNullOrEmpty(classRoomId);
+                 && !string.IsNullOrEmpty(classRoomId)
+                 && !string.IsNullOrEmpty(classCalendarId);
             if (!areArgumentsValid) return Enumerable.Empty<CourseMapStatusRespond>();
 
             if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId)) return Enumerable.Empty<CourseMapStatusRespond>();

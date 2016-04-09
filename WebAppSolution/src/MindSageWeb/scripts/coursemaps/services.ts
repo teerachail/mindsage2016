@@ -12,20 +12,23 @@
 
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
-            this.svc = <ICourseMapContentResourceClass<any>>$resource(appConfig.CourseMapContentUrl, { 'id': '@id', 'classRoomId': '@classRoomId' }, {
-                GetContent: { method: 'GET', isArray: true, },
-                GetLessonStatus: { method: 'GET', isArray: true, params: { 'action': 'status' } },
+            this.svc = <ICourseMapContentResourceClass<any>>$resource(appConfig.CourseMapContentUrl, {
+                'id': '@id', 'classRoomId': '@classRoomId', 'classCalendarId': '@classCalendarId' }, {
+                    GetContent: { method: 'GET', isArray: true, params: { 'action': 'mapcontent' }},
+                GetLessonStatus: { method: 'GET', isArray: true, params: { 'action': 'mapstatus' } },
             });
         }
 
         public GetContent(classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
-            return this.svc.GetContent(new GetCourseMapContentRequest(userId, classRoomId)).$promise;
+            var classCalendarId = this.userprofileSvc.ClientUserProfile.CurrentClassCalendarId;
+            return this.svc.GetContent(new GetCourseMapContentRequest(userId, classRoomId, classCalendarId)).$promise;
         }
 
         public GetLessonStatus(classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
-            return this.svc.GetLessonStatus(new GetCourseMapContentRequest(userId, classRoomId)).$promise;
+            var classCalendarId = this.userprofileSvc.ClientUserProfile.CurrentClassCalendarId;
+            return this.svc.GetLessonStatus(new GetCourseMapContentRequest(userId, classRoomId, classCalendarId)).$promise;
         }
 
     }

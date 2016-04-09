@@ -15,6 +15,12 @@ namespace MindSageWeb.Repositories
         #region Methods
 
         /// <summary>
+        /// ขอข้อมูล Class calendar จากรหัส Class calendar
+        /// </summary>
+        /// <param name="classCalendarId">รหัส Class calendar ที่ต้องการขอข้อมูล</param>
+        Task<ClassCalendar> GetClassCalendarById(string classCalendarId);
+
+        /// <summary>
         /// ขอข้อมูล Class calendar จากรหัส Class room
         /// </summary>
         /// <param name="classRoomId">รหัส Class room ที่ต้องการขอข้อมูล</param>
