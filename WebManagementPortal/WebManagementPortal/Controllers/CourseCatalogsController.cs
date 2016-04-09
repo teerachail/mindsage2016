@@ -297,6 +297,7 @@ namespace WebManagementPortal.Controllers
                                         ImageUrl = ControllerHelper.ConvertToIconUrl(eit.IconURL),
                                         ContentURL = eit.ContentURL,
                                         Description = eit.Description,
+                                        IsPreviewable = eit.IsPreviewable
                                     });
                             var contents = new List<repoModel.CourseCatalog.LessonContent>
                             {

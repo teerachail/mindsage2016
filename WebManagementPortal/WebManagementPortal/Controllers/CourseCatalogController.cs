@@ -67,6 +67,7 @@ namespace WebManagementPortal.Controllers
                                     ContentUrl = eit.ContentURL,
                                     Description = eit.Description,
                                     ImageUrl = ControllerHelper.ConvertToIconUrl(eit.IconURL),
+                                    IsPreviewable = eit.IsPreviewable
                                 });
                         var contents = new List<GetCourseDetailRespond.LessonContent>
                         {

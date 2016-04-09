@@ -134,6 +134,9 @@
             No
         </th>
         <th>
+            Previewable
+        </th>
+        <th>
             URL
         </th>
         <th>
@@ -154,7 +157,10 @@
             <td class="col-md-1">
                 @extraContentRunner
             </td>
-            <td class="col-md-2">
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.IsPreviewable)
+            </td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.ContentURL)
             </td>
             <td class="col-md-5">

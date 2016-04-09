@@ -56,7 +56,7 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,ContentURL,Description,IconURL,LessonId,RecLog")] ExtraContent extraContent)
+        public async Task<ActionResult> Create([Bind(Include = "Id,IsPreviewable,ContentURL,Description,IconURL,LessonId,RecLog")] ExtraContent extraContent)
         {
             if (ModelState.IsValid)
             {
@@ -89,13 +89,14 @@ namespace WebManagementPortal.Controllers
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,ContentURL,Description,IconURL,LessonId,RecLog")] ExtraContent extraContent)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,IsPreviewable,ContentURL,Description,IconURL,LessonId,RecLog")] ExtraContent extraContent)
         {
             if (ModelState.IsValid)
             {
                 var selectedExtraContent = await db.ExtraContents.FirstOrDefaultAsync(it => it.Id == extraContent.Id);
                 if (selectedExtraContent == null) return View("Error");
 
+                selectedExtraContent.IsPreviewable = extraContent.IsPreviewable;
                 selectedExtraContent.ContentURL = extraContent.ContentURL;
                 selectedExtraContent.Description = extraContent.Description;
                 selectedExtraContent.IconURL = extraContent.IconURL;
