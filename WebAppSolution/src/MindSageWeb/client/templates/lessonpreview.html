@@ -16,10 +16,10 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
                     <h1 class="lesson-header">
                         Preview
                     </h1>
-                    <a><i class="fi-mail size-36"></i></a>
+                    <a><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"></a>
                     <a class="float-right" zf-open="classModal"><i class="fi-list size-36"></i></a>
-                    <ul class="vertical menu-bar">
-                        <li ui-sref-active="is-active">
+                    <ul class="vertical icon-left menu-bar">
+                        <li ui-sref-active="is-active" class="is-active">
                             <a><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
                         </li>
                         <li ui-sref-active="is-active">
@@ -82,6 +82,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
                                     More detail
                                 </a>
                                 <div ng-show="detailClose">
+                                    <br>
                                     <p>{{ cx.content.MoreDescription }}</p>
                                     <h4 class="extra-header">Extra learning</h4>
                                     <a href="{{ item.PrimaryContentURL }}">
@@ -120,7 +121,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
 
                     <div>
                         <p>
-                            <span><a><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></a> 0 people like this</span>
+                            <a><span><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></span></a> 0 people like this
                         </p>
                     </div>
 
