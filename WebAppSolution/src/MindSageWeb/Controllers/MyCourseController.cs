@@ -565,11 +565,12 @@ namespace MindSageWeb.Controllers
                 {
                     id = Guid.NewGuid().ToString(),
                     Grade = body.Grade,
-                    Code = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 7), // HACK: Check student code
+                    Code = generateStudentCode(body.Grade),
                     CourseCatalogId = selectedCourseCatalog.id,
                     ClassRoomId = newClassRoom.id,
                     CreatedDate = now
                 };
+                
                 await _studentKeyRepo.CreateNewStudentKey(newStudentKey);
             }
 
@@ -579,6 +580,18 @@ namespace MindSageWeb.Controllers
                 Grade = body.Grade,
                 IsSuccess = true
             };
+        }
+
+        private string generateStudentCode(string grade)
+        {
+            var newStudentCode = string.Empty;
+            while (true)
+            {
+                newStudentCode = Guid.NewGuid().ToString().Replace("-", string.Empty).Substring(0, 7);
+                var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(newStudentCode, grade);
+                if (selectedStudentKey == null) break;
+            }
+            return newStudentCode;
         }
 
         private IEnumerable<UserProfile.Subscription> createNewSubscription(IEnumerable<UserProfile.Subscription> subscriptions, UserProfile.AccountRole role, ClassRoom classRoom, string classCalendarId, string licenseId, DateTime currentTime)
