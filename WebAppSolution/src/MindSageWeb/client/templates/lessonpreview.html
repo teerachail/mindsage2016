@@ -1,141 +1,139 @@
 ---
-name: lessonpreview
+name: app.lessonpreview
 url: /lessonpreview/:lessonId
 controller: 'app.lessonpreviews.LessonPreviewController as cx'
 ---
-<div class="main-bg">
-    <div class="clearfix">
-        <div class="grid-block">
-            <iframe height="712" class="large-12" ng-src="{{ cx.PrimaryVideoUrl }}" frameborder="0" allowfullscreen></iframe>
-        </div>
-        <br />
-        <div class="grid-block noscroll">
-            <!-- Side menu -->
-            <div class="medium-4 align-center grid-block">
-                <div class="grid-content medium-6 block-list ng-scope">
-                    <h1 class="lesson-header">
-                        Preview
-                    </h1>
-                    <a><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"></a>
-                    <a class="float-right" zf-open="classModal"><i class="fi-list size-36"></i></a>
-                    <ul class="vertical icon-left menu-bar">
-                        <li ui-sref-active="is-active" class="is-active">
-                            <a><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
-                        </li>
-                        <li ui-sref-active="is-active">
-                            <a><img zf-iconic="" icon="journal" size="medium" class="iconic-color-dark"> JOURNAL</a>
-                        </li>
-                        <li ui-sref-active="is-active">
-                            <a><img zf-iconic="" icon="course_map" size="medium" class="iconic-color-dark"> COURSE MAP</a>
-                        </li>
-                        <li ui-sref-active="is-active">
-                            <a><img zf-iconic="" icon="class" size="medium" class="iconic-color-dark"> CLASS</a>
-                        </li>
-                        <li ui-sref-active="is-active">
-                            <a><img zf-iconic="" icon="setting" size="medium" class="iconic-color-dark"> SETTING</a>
-                        </li>
-                    </ul>
-                </div>
+<div class="clearfix">
+    <div class="grid-block">
+        <iframe height="712" class="large-12" ng-src="{{ cx.PrimaryVideoUrl }}" frameborder="0" allowfullscreen></iframe>
+    </div>
+    <br />
+    <div class="grid-block noscroll">
+        <!-- Side menu -->
+        <div class="medium-4 align-center grid-block">
+            <div class="grid-content medium-6 block-list ng-scope">
+                <h1 class="lesson-header">
+                    Preview
+                </h1>
+                <a><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"></a>
+                <a class="float-right" zf-open="classModal"><i class="fi-list size-36"></i></a>
+                <ul class="vertical icon-left menu-bar">
+                    <li ui-sref-active="is-active" class="is-active">
+                        <a><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
+                    </li>
+                    <li ui-sref-active="is-active">
+                        <a><img zf-iconic="" icon="journal" size="medium" class="iconic-color-dark"> JOURNAL</a>
+                    </li>
+                    <li ui-sref-active="is-active">
+                        <a><img zf-iconic="" icon="course_map" size="medium" class="iconic-color-dark"> COURSE MAP</a>
+                    </li>
+                    <li ui-sref-active="is-active">
+                        <a><img zf-iconic="" icon="class" size="medium" class="iconic-color-dark"> CLASS</a>
+                    </li>
+                    <li ui-sref-active="is-active">
+                        <a><img zf-iconic="" icon="setting" size="medium" class="iconic-color-dark"> SETTING</a>
+                    </li>
+                </ul>
             </div>
+        </div>
 
-            <!-- Lesson contents -->
-            <div class="medium-8 grid-block noscroll clearfix">
-                <div class="large-8 push-4 large-offset-1 columns">
+        <!-- Lesson contents -->
+        <div class="medium-8 grid-block noscroll clearfix">
+            <div class="large-8 push-4 large-offset-1 columns">
 
-                    <div class="grid-block clearfix">
-                        <div class="grid-block float-left">
-                            <h1>SEMESTER {{ cx.content.SemesterName }}</h1>
-                        </div>
-                        <div class="grid-block float-right align-right">
-                            <a ng-class="{ 'inactive': !cx.teacherView }" ng-click="cx.selectTeacherView()">TEACHER VIEW</a>
-                            <span>|</span>
-                            <a ng-class="{ 'inactive': cx.teacherView }" ng-click="cx.selectStdView()">STUDENT VIEW</a>
-                        </div>
+                <div class="grid-block clearfix">
+                    <div class="grid-block float-left">
+                        <h1>SEMESTER {{ cx.content.SemesterName }}</h1>
                     </div>
+                    <div class="grid-block float-right align-right">
+                        <a ng-class="{ 'inactive': !cx.teacherView }" ng-click="cx.selectTeacherView()">TEACHER VIEW</a>
+                        <span>|</span>
+                        <a ng-class="{ 'inactive': cx.teacherView }" ng-click="cx.selectStdView()">STUDENT VIEW</a>
+                    </div>
+                </div>
 
-                    <div class="card visible">
-                        <div class="card-section">
-                            <h2 class="success label titlePosition">Week {{ cx.content.Order }}</h2>
+                <div class="card visible">
+                    <div class="card-section">
+                        <h2 class="success label titlePosition">Week {{ cx.content.Order }}</h2>
 
-                            <div ng-show="cx.teacherView">
-                                <h3>{{ cx.content.Title }}</h3>
-                                <hr />
-                                <p>{{ cx.content.ShortTeacherLessonPlan }}</p>
-                                <a ng-click="detailTeacherClose = !detailTeacherClose">
-                                    <img ng-hide="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
-                                    <img ng-show="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
-                                    More detail
-                                </a>
-                                <div ng-show="detailTeacherClose">
-                                    <p>{{ cx.content.MoreTeacherLessonPlan }}</p>
-                                </div>
+                        <div ng-show="cx.teacherView">
+                            <h3>{{ cx.content.Title }}</h3>
+                            <hr />
+                            <p>{{ cx.content.ShortTeacherLessonPlan }}</p>
+                            <a ng-click="detailTeacherClose = !detailTeacherClose">
+                                <img ng-hide="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                                <img ng-show="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                                More detail
+                            </a>
+                            <div ng-show="detailTeacherClose">
+                                <p>{{ cx.content.MoreTeacherLessonPlan }}</p>
                             </div>
+                        </div>
 
-                            <div ng-show="!cx.teacherView">
-                                <h3>{{ cx.content.Title }}</h3>
-                                <hr />
-                                <p>{{ cx.content.ShortDescription }}</p>
+                        <div ng-show="!cx.teacherView">
+                            <h3>{{ cx.content.Title }}</h3>
+                            <hr />
+                            <p>{{ cx.content.ShortDescription }}</p>
 
-                                <a ng-click="detailClose = !detailClose">
-                                    <img ng-hide="detailClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
-                                    <img ng-show="detailClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
-                                    More detail
+                            <a ng-click="detailClose = !detailClose">
+                                <img ng-hide="detailClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
+                                <img ng-show="detailClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
+                                More detail
+                            </a>
+                            <div ng-show="detailClose">
+                                <br>
+                                <p>{{ cx.content.MoreDescription }}</p>
+                                <h4 class="extra-header">Extra learning</h4>
+                                <a href="{{ item.PrimaryContentURL }}">
+                                    <div class="grid-block">
+                                        <div class="grid-content text-center shrink large-2">
+                                            <img src="{{ cx.primaryContentIconUrl }}">
+                                        </div>
+                                        <div class="grid-content large-10">
+                                            <p>
+                                                {{ cx.content.PrimaryContentDescription }}
+                                            </p>
+                                        </div>
+                                    </div>
                                 </a>
-                                <div ng-show="detailClose">
-                                    <br>
-                                    <p>{{ cx.content.MoreDescription }}</p>
-                                    <h4 class="extra-header">Extra learning</h4>
-                                    <a href="{{ item.PrimaryContentURL }}">
+                                <br />
+                                <div ng-repeat="item in cx.content.ExtraContents">
+                                    <a href="{{ item.ContentURL }}">
                                         <div class="grid-block">
-                                                <div class="grid-content text-center shrink large-2">
-                                                    <img src="{{ cx.primaryContentIconUrl }}">
-                                                </div>
-                                                <div class="grid-content large-10">
-                                                    <p>
-                                                        {{ cx.content.PrimaryContentDescription }}
-                                                    </p>
-                                                </div>
+                                            <div class="grid-content shrink large-2">
+                                                <img src="{{ item.IconURL }}">
+                                            </div>
+                                            <div class="grid-content large-10">
+                                                <p>
+                                                    {{ item.Description }}
+                                                </p>
+                                            </div>
                                         </div>
                                     </a>
                                     <br />
-                                    <div ng-repeat="item in cx.content.ExtraContents">
-                                        <a href="{{ item.ContentURL }}">
-                                            <div class="grid-block">
-                                                <div class="grid-content shrink large-2">
-                                                    <img src="{{ item.IconURL }}">
-                                                </div>
-                                                <div class="grid-content large-10">
-                                                    <p>
-                                                        {{ item.Description }}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </a>
-                                        <br />
-                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="success label menu-bar"></div>
                     </div>
+                    <div class="success label menu-bar"></div>
+                </div>
 
-                    <div>
-                        <p>
-                            <a><span><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></span></a> 0 people like this
-                        </p>
+                <div>
+                    <p>
+                        <a><span><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></span></a> 0 people like this
+                    </p>
+                </div>
+
+                <div class="clearfix">
+                    <div class="grid-block">
+                        <div class="grid-content shrink large-2"><img src="http://placehold.it/100x100"></div>
+                        <div class="grid-content large-10">
+                            <h4>Preview</h4>
+                            <textarea ng-model="message" rows="3"></textarea>
+                        </div>
                     </div>
-
-                    <div class="clearfix">
-                        <div class="grid-block">
-                            <div class="grid-content shrink large-2"><img src="http://placehold.it/100x100"></div>
-                            <div class="grid-content large-10">
-                                <h4>Preview</h4>
-                                <textarea ng-model="message" rows="3"></textarea>
-                            </div>
-                        </div>
-                        <div class="float-right">
-                            <button class="button">Post</button>
-                        </div>
+                    <div class="float-right">
+                        <button class="button">Post</button>
                     </div>
                 </div>
             </div>
