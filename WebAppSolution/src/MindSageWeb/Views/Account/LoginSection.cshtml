@@ -1,0 +1,66 @@
+﻿@using System.Security.Claims
+@{
+    Layout = null;
+}
+
+<style>
+    .button.hollow.secondary {
+        border: 1px solid #777;
+        background: transparent;
+        color: #777;
+    }
+    .float-right {
+        float: right;
+    }
+    .button {
+        font-size: 0.9rem;
+        display: inline-block;
+        width: auto;
+        margin: 0 1rem 1rem 0;
+    }
+    .button, .button-group > li > a, .button-group > li > label, .button-group > li > button {
+        text-align: center;
+        line-height: 1;
+        cursor: pointer;
+        -webkit-appearance: none;
+        -webkit-font-smoothing: antialiased;
+        transition: background 0.25s ease-out;
+        vertical-align: middle;
+        padding: 0.85em 1em;
+        border-radius: 0;
+    }
+    a {
+        text-decoration: none;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+    bar .center, .title-bar .right {
+        white-space: nowrap;
+    }
+    .title-bar .title {
+        font-weight: bold;
+    }
+    body {
+            font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+    *, *:before, *:after {
+        box-sizing: inherit;
+    }
+</style>
+
+@if (User.IsSignedIn())
+{
+    <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
+        <button type="submit" class="float-right secondary hollow button">LOG OUT</button>
+        <a href="/my/preparing" class="float-right secondary hollow button">My Course</a>
+    </form>
+}
+else
+{
+    <a asp-controller="Account" asp-action="Register" class="float-right info hollow button">SIGNUP</a>
+    <a asp-controller="Account" asp-action="Login" class="float-right secondary hollow button">LOGIN</a>
+}

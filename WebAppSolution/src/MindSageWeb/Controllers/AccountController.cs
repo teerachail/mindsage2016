@@ -45,6 +45,13 @@ namespace MindSageWeb.Controllers
             _dateTime = dateTime;
         }
 
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult LoginSection()
+        {
+            return View();
+        }
+
         //
         // GET: /Account/Login
         [HttpGet]
