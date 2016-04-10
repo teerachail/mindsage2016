@@ -26,7 +26,7 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            return Redirect("/public/home.html");
         }
 
         public IActionResult About()
