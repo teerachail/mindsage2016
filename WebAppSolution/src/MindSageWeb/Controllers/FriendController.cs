@@ -69,6 +69,7 @@ namespace MindSageWeb.Controllers
             var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
             if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetFriendListRespond>();
 
+            // TODO: Filter self out
             var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id).ToList();
             var students = allStudentsInTheClassRoom
                 .Where(it => it.id != id)
@@ -98,7 +99,36 @@ namespace MindSageWeb.Controllers
         [Route("{id}/{classRoomId}/{key}")]
         public IEnumerable<GetFriendListRespond> GetSearchResult(string id, string classRoomId, string key)
         {
-            return Enumerable.Empty<GetFriendListRespond>();
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId)
+                && !string.IsNullOrEmpty(key);
+            if (!areArgumentsValid) return Enumerable.Empty<GetFriendListRespond>();
+
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId);
+            if (!canAccessToTheClassRoom) return Enumerable.Empty<GetFriendListRespond>();
+
+            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
+            if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetFriendListRespond>();
+
+            // TODO: Filter self out
+            var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id).ToList();
+            var containKeyUserProfiles = allStudentsInTheClassRoom
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Name.Contains(key) || (it.SchoolName != null && it.SchoolName.Contains(key)))
+                .Select(it =>
+                {
+                    var selectedRequest = friendRequests.FirstOrDefault(req => req.ToUserProfileId.Equals(it.id));
+                    var status = selectedRequest == null ? FriendRequest.RelationStatus.Unfriend : selectedRequest.Status;
+                    return new GetFriendListRespond
+                    {
+                        UserProfileId = it.id,
+                        Name = it.Name,
+                        ImageUrl = it.ImageProfileUrl,
+                        Status = status,
+                        RequestId = selectedRequest?.id
+                    };
+                }).ToList();
+            return containKeyUserProfiles;
         }
 
         // POST: api/friend
