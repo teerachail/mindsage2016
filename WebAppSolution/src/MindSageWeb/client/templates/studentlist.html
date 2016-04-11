@@ -16,7 +16,7 @@ controller: 'app.studentlists.studentlistsController as cx'
     </div>
 
     <div ng-hide="cx.searching">
-        <div ng-show="cx.userSvc.UserInCourseList.length == 0"><p> Have no member </p></div>
+        <div ng-show="cx.userSvc.UserInCourseList.length == 0"><p> No Students  </p></div>
         <section class="block-list">
             <ul>
                 <li ng-repeat="item in cx.userSvc.UserInCourseList | orderBy: 'Status' | orderBy: 'Name'" ng-show="!item.IsTeacher && (item.Status == 2 || item.Status == 1)">

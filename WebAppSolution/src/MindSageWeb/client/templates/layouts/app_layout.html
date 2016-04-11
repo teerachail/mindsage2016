@@ -23,22 +23,22 @@ controller: 'app.layouts.AppLayoutController as acx'
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 1">
-                        Need to be Friend with {{ acx.targetUser.Name }}.
-                        You have Request form another side.
+                        {{ acx.targetUser.Name }}
+                        has requested to be your friend.
                         <button class="button" ng-click="acx.ConfirmFriendRequest(acx.targetUser)">Confirm</button>
                         <button class="button secondary" zf-open="DeleteFriendModel">Delete Request</button>
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 2">
-                        Click your friend's name for go to journal page
+                        Click on your friend's name to go to their journal.
                         <a ui-sref="app.course.journal({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: acx.targetUser.UserProfileId })">
                             {{ item.Name }}
                         </a>
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 3">
-                       <p>Need to be Friend with {{ acx.targetUser.Name }}.</p>
-                       <p>Send Friend Request, please.</p>
+                       <p>You aren't currently friends with {{ acx.targetUser.Name }}.</p>
+                       <p>Would you like to send a Friend Request?.</p>
                        <button class="button secondary" ng-click="acx.SendFriendRequest(acx.targetUser)">Friend Request</button>
                     </div>
                 </div>

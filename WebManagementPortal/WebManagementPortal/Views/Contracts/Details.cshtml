@@ -126,28 +126,28 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        <th class="col-md-1">
             Group name
         </th>
-        <th>
+        <th class="col-md-1">
             Grade
         </th>
-        <th>
+        <th class="col-md-3">
             Series
         </th>
-        <th>
+        <th class="col-md-1">
             SideName
         </th>
-        <th>
+        <th class="col-md-2">
             Teacher key
         </th>
-        <th>
+        <th class="col-md-1">
             Students
         </th>
-        <th>
+        <th class="col-md-1">
             Created date
         </th>
-        <th></th>
+        <th class="col-md-2"></th>
     </tr>
 
     @foreach (var item in Model.Licenses.Where(it => !it.RecLog.DeletedDate.HasValue))
@@ -163,28 +163,28 @@
         }
 
         <tr>
-            <td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.CourseCatalog.GroupName)
             </td>
-            <td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.Grade)
             </td>
-            <td>
+            <td class="col-md-3">
                 @item.CourseCatalog.Series
             </td>
-            <td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.CourseName)
             </td>
-            <td>
+            <td class="col-md-2">
                 @teacherKey.Code
             </td>
-            <td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.StudentsCapacity)
             </td>
-            <td>
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
             </td>
-            <td>
+            <td class="col-md-2">
                 @Html.ActionLink("Manage", "Edit", "Licenses", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", "Licenses", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>

@@ -30,9 +30,9 @@ controller: 'app.journals.JournalController as cx'
                 <label> Accout is Private</label>
             </div>
             <zf-accordion ng-show="!cx.content.IsPrivateAccount || cx.content.IsDiscussionAvailable">
-                <div ng-show="cx.GetWeeks().length == 0">Have no comment</div>
+                <div ng-show="cx.GetWeeks().length == 0">No Comments</div>
                 <zf-accordion-item ng-repeat="item in cx.GetWeeks() | orderBy: '-'" title="Week {{ item }}" on-finish-render>
-                    <label ng-show="(cx.GetComments(item) | filter:search).length == 0 && cx.MyComments.length == 0">no comment</label>
+                    <label ng-show="(cx.GetComments(item) | filter:search).length == 0 && cx.MyComments.length == 0">No Comments</label>
                     <div class="comment">
                         <div ng-repeat="comment in cx.MyComments | orderBy: 'Order'" ng-show="item == cx.svc.ClientUserProfile.CurrentLessonNo && cx.targetUserId == cx.svc.ClientUserProfile.UserProfileId">
                             <div class="grid-block">
@@ -173,7 +173,7 @@ controller: 'app.journals.JournalController as cx'
 
 <div zf-modal="" id="ConfirmModel" class="tiny dialog">
     <a zf-close="" class="close-button">x</a>
-    <h4 class="text-center">Confirm to delete</h4>
+    <h4 class="text-center">Are you sure you want to delete this comment?</h4>
         <div class="medium-10 large-10 text-center grid-container">
             <form asp-controller="Purchase" asp-action="UserCode" method="post">
                 <div class="text-center">

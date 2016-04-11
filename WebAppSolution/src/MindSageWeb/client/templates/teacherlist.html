@@ -7,7 +7,7 @@ controller: 'app.teacherlists.teacherlistsController as cx'
     <div class="row">
         <h1>CLASS LIST</h1>
     </div>
-    <div ng-show="cx.list.length == 0"><p> Have no member </p></div>
+    <div ng-show="cx.list.length == 0"><p> No Students </p></div>
     <section class="block-list">
         <ul>
             <li ng-repeat="item in cx.list">
@@ -36,7 +36,7 @@ controller: 'app.teacherlists.teacherlistsController as cx'
 
 <div zf-modal="" id="ConfirmModel" class="tiny dialog">
     <a zf-close="" class="close-button">x</a>
-    <h4 class="text-center">Confirm to remove student</h4>
+    <h4 class="text-center">Are you sure you want to remove this student?</h4>
     <div>
         <div class="medium-10 large-10 text-center grid-container">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
