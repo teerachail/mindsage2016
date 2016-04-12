@@ -133,7 +133,7 @@ namespace MindSageWeb.Controllers
                 var isPaymentSuccessed = false;
                 model.TotalChargeAmount = selectedCourse.PriceUSD;
                 var paymentResult = payWithPaypal(model);
-                if (paymentResult == "approve") isPaymentSuccessed = true;
+                if (paymentResult == "approved") isPaymentSuccessed = true;
                 else
                 {
                     ViewBag.ErrorMessage = "The Credit Card Verification System used by PayPal is currently unavailable. Please try to add your credit card at a later time. We apologize for this inconvenience";
