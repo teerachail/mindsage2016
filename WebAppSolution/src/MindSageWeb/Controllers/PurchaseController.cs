@@ -129,8 +129,16 @@ namespace MindSageWeb.Controllers
                 var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
                 if (selectedUserProfile == null) return View("Error");
 
-                // TODO: Pay with Paypal
-                var isPaymentSuccessed = true;
+                // Pay with Paypal
+                var isPaymentSuccessed = false;
+                model.TotalChargeAmount = selectedCourse.PriceUSD;
+                var paymentResult = payWithPaypal(model);
+                if (paymentResult == "approve") isPaymentSuccessed = true;
+                else
+                {
+                    ViewBag.ErrorMessage = "The Credit Card Verification System used by PayPal is currently unavailable. Please try to add your credit card at a later time. We apologize for this inconvenience";
+                    return View("Error");
+                }
 
                 var now = _dateTime.GetCurrentTime();
                 var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogById(selectedClassRoom.Lessons.Select(it => it.LessonCatalogId)).ToList();
@@ -149,15 +157,9 @@ namespace MindSageWeb.Controllers
                 _userprofileRepo.UpsertUserProfile(selectedUserProfile);
                 _userActivityRepo.UpsertUserActivity(userActivity);
 
-                model.TotalChargeAmount = 99;
-                var paymentResult = ChargeCreditCard(model);
-                if (paymentResult == "approve")
-                {
-                    var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, isPaymentSuccessed);
-                    await _paymentRepo.CreateNewPayment(payment);
-                    return RedirectToAction("Finished", new { @id = payment.id });
-                }
-                return RedirectToAction("Finished", new { @id = "xxx" });
+                var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, isPaymentSuccessed);
+                await _paymentRepo.CreateNewPayment(payment);
+                return RedirectToAction("Finished", new { @id = payment.id });
             }
             return View(model);
         }
@@ -167,13 +169,13 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="model">PurchaseCourse details</param>
         /// <returns></returns>
-        private string ChargeCreditCard(PurchaseCourseViewModel model)
+        private string payWithPaypal(PurchaseCourseViewModel model)
         {
             var clientKey = "AciMCMM9IZHz0akSQdpyuOjQ9HaZI0nEjpS_Ik28qb681ZTXJFHuo03BF1LC7Cb_jgn6K0FQJ7LF_Cbd";
             var clientSecret = "EJe__bJ7Sz0CwQiJvz59ZpFMDn-7L8Ix3OdlaJHFWR8O2LouaYOY-AYJwE9YSvY6pl6pei9fcE_IC1f9";
-            OAuthTokenCredential tokenCredential = new OAuthTokenCredential(clientKey, clientSecret, new Dictionary<string, string>());
+            var tokenCredential = new OAuthTokenCredential(clientKey, clientSecret, new Dictionary<string, string>());
 
-            string accessToken = tokenCredential.GetAccessToken();
+            var accessToken = tokenCredential.GetAccessToken();
             var config = new Dictionary<string, string>();
             config.Add("mode", "sandbox"); //Set mode to 'live' or 'sandbox'
             var apiContext = new APIContext
@@ -183,6 +185,7 @@ namespace MindSageWeb.Controllers
             };
 
             // A transaction defines the contract of a payment - what is the payment for and who is fulfilling it. 
+            var description = $"User {User.Identity.Name} pay {model.TotalChargeAmount} for course {model.CourseId}";
             var transaction = new Transaction()
             {
                 amount = new Amount()
@@ -196,7 +199,7 @@ namespace MindSageWeb.Controllers
                         tax = "0"
                     }
                 },
-                description = "This is the payment transaction description.",
+                description = description,
             };
 
             // A resource representing a Payer that funds a payment.
@@ -229,7 +232,7 @@ namespace MindSageWeb.Controllers
                 },
                 payer_info = new PayerInfo
                 {
-                    email = "test@email.com"
+                    email = User.Identity.Name,
                 }
             };
 
