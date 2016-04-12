@@ -7,6 +7,7 @@ using Microsoft.AspNet.Authorization;
 using MindSageWeb.ViewModels.PurchaseCourse;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
+using PayPal.Api;
 
 namespace MindSageWeb.Controllers
 {
@@ -148,12 +149,101 @@ namespace MindSageWeb.Controllers
                 _userprofileRepo.UpsertUserProfile(selectedUserProfile);
                 _userActivityRepo.UpsertUserActivity(userActivity);
 
-                var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, isPaymentSuccessed);
-                await _paymentRepo.CreateNewPayment(payment);
-
-                return RedirectToAction("Finished", new { @id = payment.id });
+                model.TotalChargeAmount = 99;
+                var paymentResult = ChargeCreditCard(model);
+                if (paymentResult == "approve")
+                {
+                    var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, isPaymentSuccessed);
+                    await _paymentRepo.CreateNewPayment(payment);
+                    return RedirectToAction("Finished", new { @id = payment.id });
+                }
+                return RedirectToAction("Finished", new { @id = "xxx" });
             }
             return View(model);
+        }
+
+        /// <summary>
+        /// Charging CreditCard
+        /// </summary>
+        /// <param name="model">PurchaseCourse details</param>
+        /// <returns></returns>
+        private string ChargeCreditCard(PurchaseCourseViewModel model)
+        {
+            var clientKey = "AciMCMM9IZHz0akSQdpyuOjQ9HaZI0nEjpS_Ik28qb681ZTXJFHuo03BF1LC7Cb_jgn6K0FQJ7LF_Cbd";
+            var clientSecret = "EJe__bJ7Sz0CwQiJvz59ZpFMDn-7L8Ix3OdlaJHFWR8O2LouaYOY-AYJwE9YSvY6pl6pei9fcE_IC1f9";
+            OAuthTokenCredential tokenCredential = new OAuthTokenCredential(clientKey, clientSecret, new Dictionary<string, string>());
+
+            string accessToken = tokenCredential.GetAccessToken();
+            var config = new Dictionary<string, string>();
+            config.Add("mode", "sandbox");
+            var apiContext = new APIContext
+            {
+                Config = config,
+                AccessToken = accessToken
+            };
+
+            // A transaction defines the contract of a payment - what is the payment for and who is fulfilling it. 
+            var transaction = new Transaction()
+            {
+                amount = new Amount()
+                {
+                    currency = "USD",
+                    total = model.TotalChargeAmount.ToString(),
+                    details = new Details()
+                    {
+                        shipping = "0",
+                        subtotal = model.TotalChargeAmount.ToString(),
+                        tax = "0"
+                    }
+                },
+                description = "This is the payment transaction description.",
+            };
+
+            // A resource representing a Payer that funds a payment.
+            var payer = new Payer()
+            {
+                payment_method = "credit_card",
+                funding_instruments = new List<FundingInstrument>()
+                {
+                    new FundingInstrument()
+                    {
+                        credit_card = new PayPal.Api.CreditCard()
+                        {
+                            billing_address = new Address()
+                            {
+                                city = model.PrimaryAddress.City,
+                                country_code = model.PrimaryAddress.Country.ToString(),
+                                line1 = model.PrimaryAddress.Address,
+                                postal_code = model.PrimaryAddress.ZipCode,
+                                state = model.PrimaryAddress.State
+                            },
+                            cvv2 = model.CreditCardInfo.CVV.ToString(),
+                            expire_month = model.CreditCardInfo.ExpiredMonth,
+                            expire_year = model.CreditCardInfo.ExpiredYear,
+                            first_name = model.CreditCardInfo.FirstName,
+                            last_name = model.CreditCardInfo.LastName,
+                            number = model.CreditCardInfo.CardNumber,
+                            type = model.CreditCardInfo.CardType.ToString().ToLower()
+                        }
+                     }
+                },
+                payer_info = new PayerInfo
+                {
+                    email = "test@email.com"
+                }
+            };
+
+            // A Payment resource; create one using the above types and intent as `sale` or `authorize`
+            var payment = new PayPal.Api.Payment()
+            {
+                intent = "sale",
+                payer = payer,
+                transactions = new List<Transaction>() { transaction }
+            };
+
+            // Create a payment using a valid APIContext
+            var createdPayment = payment.Create(apiContext);
+            return createdPayment.state;
         }
 
         private IEnumerable<UserProfile.Subscription> addNewSelfPurchaseSubscription(IEnumerable<UserProfile.Subscription> subscriptions, ClassRoom selectedClassRoom, string classCalendarId, string courseCatalogId, DateTime currentTime, out string newSubscriptionId)
@@ -215,9 +305,9 @@ namespace MindSageWeb.Controllers
             };
             return classCalendar;
         }
-        private Payment createNewPayment(string courseCatalogId, string courseName, string newSubscriptionId, PurchaseCourseViewModel model, double totalChargedAmount, DateTime currentTime, bool isPaymentSuccess)
+        private Repositories.Models.Payment createNewPayment(string courseCatalogId, string courseName, string newSubscriptionId, PurchaseCourseViewModel model, double totalChargedAmount, DateTime currentTime, bool isPaymentSuccess)
         {
-            var payment = new Payment
+            var payment = new Repositories.Models.Payment
             {
                 id = Guid.NewGuid().ToString(),
                 FirstName = model.CreditCardInfo.FirstName,

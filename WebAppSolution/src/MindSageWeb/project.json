@@ -28,7 +28,8 @@
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
     "Swashbuckle.SwaggerGen": "6.0.0-rc1-final",
     "Swashbuckle.SwaggerUi": "6.0.0-rc1-final",
-    "WindowsAzure.Storage": "6.2.2-preview"
+    "WindowsAzure.Storage": "6.2.2-preview",
+    "PayPal": "1.7.3"
   },
 
   "commands": {

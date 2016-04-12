@@ -67,6 +67,6 @@ namespace MindSageWeb.ViewModels.PurchaseCourse
 
     public enum Country
     {
-        USA
+        US
     }
 }
