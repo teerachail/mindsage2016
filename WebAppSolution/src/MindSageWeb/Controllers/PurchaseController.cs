@@ -175,7 +175,7 @@ namespace MindSageWeb.Controllers
 
             string accessToken = tokenCredential.GetAccessToken();
             var config = new Dictionary<string, string>();
-            config.Add("mode", "sandbox");
+            config.Add("mode", "sandbox"); //Set mode to 'live' or 'sandbox'
             var apiContext = new APIContext
             {
                 Config = config,
