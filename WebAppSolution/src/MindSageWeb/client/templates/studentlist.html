@@ -20,44 +20,56 @@ controller: 'app.studentlists.studentlistsController as cx'
         <section class="block-list">
             <ul>
                 <li ng-repeat="item in cx.userSvc.UserInCourseList | orderBy: 'Status' | orderBy: 'Name'" ng-show="!item.IsTeacher && (item.Status == 2 || item.Status == 1)">
-                    <span class="v-align">
-                        <a ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <a ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <div class="float-right align-center">
-                            <div class="grid-content" ng-show="item.Status == 1" data-equalizer-watch>
+                    <div class="v-align title-bar">
+                        <img ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <img ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <div class="float-right align-center small-6">
+                            <div ng-show="item.Status == 1" data-equalizer-watch>
                                 <button class="button" ng-click="acx.ConfirmFriendRequest(item)">Confirm</button>
                                 <button class="button secondary" ng-click="acx.targetData(item.UserProfileId)" zf-open="DeleteFriendModel">Delete Request</button>
                             </div>
 
-                            <div class="grid-content" ng-show="item.Status == 2" data-equalizer-watch>
+                            <div ng-show="item.Status == 2" data-equalizer-watch>
                                 <img zf-iconic="" icon="friend" size="medium" class="iconic-color-warning">
                             </div>
                         </div>
-                    </span>
+                    </div>
                 </li>
 
                 <li ng-repeat="item in cx.userSvc.UserInCourseList | orderBy: 'Status' | orderBy: 'Name'" ng-show="!item.IsTeacher && !(item.Status == 2 || item.Status == 1)">
-                    <span class="v-align">
-                        <a ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <a ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <div class="float-right align-center">
-                            <div class="grid-content middleblock" ng-show="item.Status == 0" data-equalizer-watch>
+                    <div class="v-align title-bar">
+                        <img ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <img  ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher"class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <div class="float-right align-center small-6">
+                            <div middleblock" ng-show="item.Status == 0" data-equalizer-watch>
                                 <button class="button disabled secondary">Friend Request Sent</button>
                             </div>
 
-                            <div class="grid-content" ng-show="item.Status == 3" data-equalizer-watch>
+                            <div ng-show="item.Status == 3" data-equalizer-watch>
                                 <button class="button secondary" ng-click="acx.SendFriendRequest(item)">Friend Request</button>
                             </div>
                         </div>
-                    </span>
+                    </div>
                 </li>
             </ul>
         </section>
@@ -68,44 +80,55 @@ controller: 'app.studentlists.studentlistsController as cx'
         <section class="block-list">
             <ul>
                 <li ng-repeat="item in cx.searchList | orderBy: 'Status' | orderBy: 'Name'" ng-show="!item.IsTeacher && (item.Status == 2 || item.Status == 1)">
-                    <span class="v-align">
-                        <a ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <a ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <div class="float-right align-center">
-                            <div class="grid-content" ng-show="item.Status == 1" data-equalizer-watch>
+                    <div class="v-align title-bar">
+                        <img ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <img ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <div class="float-right align-center small-6">
+                            <div ng-show="item.Status == 1" data-equalizer-watch>
                                 <button class="button" ng-click="acx.ConfirmFriendRequest(item); cx.cancelSearch()">Confirm</button>
                                 <button class="button secondary" ng-click="acx.targetData(item.UserProfileId); cx.cancelSearch()" zf-open="DeleteFriendModel">Delete Request</button>
                             </div>
 
-                            <div class="grid-content" ng-show="item.Status == 2" data-equalizer-watch>
+                            <div ng-show="item.Status == 2" data-equalizer-watch>
                                 <img style="width: 50px; height: 50px;" src="../assets/img/icon/friend.png" />
                             </div>
                         </div>
-                    </span>
+                    </div>
                 </li>
 
                 <li ng-repeat="item in cx.searchList | orderBy: 'Status' | orderBy: 'Name'" ng-show="!item.IsTeacher && !(item.Status == 2 || item.Status == 1)">
-                    <span class="v-align">
-                        <a ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <a ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
-                            <img class="small-2" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                        </a>
-                        <div class="float-right align-center">
-                            <div class="grid-content middleblock" ng-show="item.Status == 0" data-equalizer-watch>
+                    <div class="v-align title-bar">
+                        <img ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <im ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher"g class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <div ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
+                            <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
+                                {{ item.Name }}
+                            </a>
+                        </div>
+                        <div class="float-right align-center small-6">
+                            <div middleblock" ng-show="item.Status == 0" data-equalizer-watch>
                                 <button class="button disabled secondary">Friend Request Sent</button>
                             </div>
-
-                            <div class="grid-content" ng-show="item.Status == 3" data-equalizer-watch>
+                            <div ng-show="item.Status == 3" data-equalizer-watch>
                                 <button class="button secondary" ng-click="acx.SendFriendRequest(item); cx.cancelSearch()">Friend Request</button>
                             </div>
                         </div>
-                    </span>
+                    </div>
                 </li>
             </ul>
         </section>

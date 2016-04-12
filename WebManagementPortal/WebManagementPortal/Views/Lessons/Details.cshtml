@@ -130,25 +130,25 @@
 </p>
 <table class="table">
     <tr>
-        <th>
+        <th class="col-md-1">
             No
         </th>
-        <th>
+        <th class="col-md-1">
             Previewable
         </th>
-        <th>
+        <th class="col-md-3">
             URL
         </th>
-        <th>
+        <th class="col-md-3">
             Description
         </th>
-        <th>
+        <th class="col-md-1">
             Type
         </th>
-        <th>
+        <th class="col-md-1">
             Created date
         </th>
-        <th></th>
+        <th class="col-md-2"></th>
     </tr>
 
     @foreach (var item in Model.ExtraContents.Where(it => !it.RecLog.DeletedDate.HasValue))
@@ -160,10 +160,10 @@
             <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.IsPreviewable)
             </td>
-            <td class="col-md-1">
+            <td class="col-md-3">
                 @Html.DisplayFor(modelItem => item.ContentURL)
             </td>
-            <td class="col-md-5">
+            <td class="col-md-3">
                 @Html.DisplayFor(modelItem => item.Description)
             </td>
             <td class="col-md-1">
@@ -199,7 +199,7 @@
             Created date
         </th>
 
-        <th class="col-md-2 col-md-offset-5"></th>
+        <th class="col-md-2"></th>
     </tr>
 
     @foreach (var item in Model.Advertisements.Where(it => !it.RecLog.DeletedDate.HasValue))

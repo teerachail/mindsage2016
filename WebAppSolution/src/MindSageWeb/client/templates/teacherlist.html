@@ -11,24 +11,27 @@ controller: 'app.teacherlists.teacherlistsController as cx'
     <section class="block-list">
         <ul>
             <li ng-repeat="item in cx.list">
-                <span class="v-align">
-                    <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
-                        <img class="small-1" src="{{ item.ImageUrl }}"> {{ item.Name }}
-                    </a>
-                    <div class="float-right align-center">
-                        <div zf-action-sheet="" id="{{ item.Name }}">
-                            <div zf-as-button="" title="Score"></div>
-                            <div zf-as-content="" position="top">
+                <div class="v-align title-bar">
+                    <img class="small-1" src="{{ item.ImageUrl }}">
+                    <div class="grid-block small-5">
+                        <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.id })">
+                            {{ item.Name }}
+                        </a>
+                    </div>
+                    <div class="float-right align-center small-5 v-align">
+                        <zf-action-sheet  id="{{ item.Name }}">
+                            <zf-as-button  title="Score"></zf-as-button>
+                            <zf-as-content position="top">
                                 <span><img zf-iconic="" icon="flag" size="medium"> {{ item.CommentPercentage }}%</span>
                                 <span><img src="../assets/img/icon/green.png" width="30" /> {{ item.OnlineExtrasPercentage }}%</span>
                                 <span ng-hide="item.IsPrivateAccount"><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-primary"> {{ item.SocialParticipationPercentage }}%</span>
                                 <span ng-show="item.IsPrivateAccount"><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-dark"></span>
-                            </div>
-                        </div>
+                            </zf-as-content>
+                        </zf-action-sheet>
                         <button class="button" ng-click="cx.targetStd(item)" zf-open="ConfirmModel">Remove student</button>
                     </div>
-                </span>
-                
+                </div>
+
             </li>
         </ul>
     </section>
