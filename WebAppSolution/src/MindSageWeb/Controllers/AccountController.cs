@@ -243,21 +243,28 @@ namespace MindSageWeb.Controllers
 
         private void createNewUserProfile(string email)
         {
-            var isUserExisting = _userProfileRepo.GetUserProfileById(email) != null;
-            if (isUserExisting) return;
-
-            const string DefaultProfileImageUrl = "http://placehold.it/100x100";
-            var newUserProfile = new Repositories.Models.UserProfile
+            try
             {
-                id = email,
-                CourseReminder = Repositories.Models.UserProfile.ReminderFrequency.Once,
-                CreatedDate = _dateTime.GetCurrentTime(),
-                ImageProfileUrl = DefaultProfileImageUrl,
-                IsEnableNotification = true,
-                Name = email,
-                Subscriptions = Enumerable.Empty<Repositories.Models.UserProfile.Subscription>()
-            };
-            _userProfileRepo.UpsertUserProfile(newUserProfile);
+                var isUserExisting = _userProfileRepo.GetUserProfileById(email) != null;
+                if (isUserExisting) return;
+
+                const string DefaultProfileImageUrl = "http://placehold.it/100x100"; // HACK: Default user profile image
+                var newUserProfile = new Repositories.Models.UserProfile
+                {
+                    id = email,
+                    CourseReminder = Repositories.Models.UserProfile.ReminderFrequency.Once,
+                    CreatedDate = _dateTime.GetCurrentTime(),
+                    ImageProfileUrl = DefaultProfileImageUrl,
+                    IsEnableNotification = true,
+                    Name = email,
+                    Subscriptions = Enumerable.Empty<Repositories.Models.UserProfile.Subscription>()
+                };
+                _userProfileRepo.UpsertUserProfile(newUserProfile);
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical($"Can't create new userprofile { email }, error info: {e.ToString()}");
+            }
         }
 
         // GET: /Account/ConfirmEmail
