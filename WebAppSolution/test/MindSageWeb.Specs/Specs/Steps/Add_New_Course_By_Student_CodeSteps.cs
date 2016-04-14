@@ -39,7 +39,7 @@ namespace MindSageWeb.Specs.Steps
         public void ThenSystemUpsertUserIdUserProfileSSubscriptionsCollectionWithJSONFormatAre(string userprofileId, string multilineText)
         {
             var expected = JsonConvert.DeserializeObject<IEnumerable<UserProfile.Subscription>>(multilineText).ToList();
-            Func<List<UserProfile.Subscription> ,bool> validateUpsertFunc = subscriptions =>
+            Func<List<UserProfile.Subscription>, bool> validateUpsertFunc = subscriptions =>
             {
                 var collectionAreEqual = subscriptions.Count == expected.Count;
                 if (!collectionAreEqual) return false;
@@ -100,6 +100,20 @@ namespace MindSageWeb.Specs.Steps
                 && useractivity.UserProfileId == userprofileId
                 && validateUpsertFunc(useractivity.LessonActivities.ToList())
             )));
+        }
+
+        [Then(@"System doesn't add new subscription")]
+        public void ThenSystemDoesnTAddNewSubscription()
+        {
+            var mockUserProfileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
+            mockUserProfileRepo.Verify(it => it.UpsertUserProfile(It.IsAny<UserProfile>()), Times.Never);
+        }
+
+        [Then(@"System doesn't add UserActivity")]
+        public void ThenSystemDoesnTAddUserActivity()
+        {
+            var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
+            mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.IsAny<UserActivity>()), Times.Never);
         }
     }
 }

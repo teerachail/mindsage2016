@@ -225,6 +225,224 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
+        [Xunit.TraitAttribute("Description", "User add new course by using the incorrect code Then system don\'t add new course " +
+            "to the user\'s subscription")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void UserAddNewCourseByUsingTheIncorrectCodeThenSystemDonTAddNewCourseToTheUserSSubscription()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using the incorrect code Then system don\'t add new course " +
+                    "to the user\'s subscription", new string[] {
+                        "mock"});
+#line 158
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 159
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 160
+    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'IncorrectCode\' and" +
+                    " grade \'Grade01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 161
+    testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 162
+ testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
+        [Xunit.TraitAttribute("Description", "User add new course by using the right code but incorrect grade Then system don\'t" +
+            " add new course to the user\'s subscription")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void UserAddNewCourseByUsingTheRightCodeButIncorrectGradeThenSystemDonTAddNewCourseToTheUserSSubscription()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using the right code but incorrect grade Then system don\'t" +
+                    " add new course to the user\'s subscription", new string[] {
+                        "mock"});
+#line 165
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 166
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 167
+    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'StudentCode01\' and" +
+                    " grade \'IncorrectGrade\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 168
+    testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 169
+ testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
+        [Xunit.TraitAttribute("Description", "User add new course by using code and grade are incorrect Then system don\'t add n" +
+            "ew course to the user\'s subscription")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void UserAddNewCourseByUsingCodeAndGradeAreIncorrectThenSystemDonTAddNewCourseToTheUserSSubscription()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using code and grade are incorrect Then system don\'t add n" +
+                    "ew course to the user\'s subscription", new string[] {
+                        "mock"});
+#line 172
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 173
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 174
+    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'IncorrectCode\' and" +
+                    " grade \'IncorrectGrade\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 175
+    testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 176
+ testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
+        [Xunit.TraitAttribute("Description", "User add new course by using the right code but the class doesn\'t have a teacher " +
+            "account Then system doesn\'t add new course to the user\'s subscription")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void UserAddNewCourseByUsingTheRightCodeButTheClassDoesnTHaveATeacherAccountThenSystemDoesnTAddNewCourseToTheUserSSubscription()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using the right code but the class doesn\'t have a teacher " +
+                    "account Then system doesn\'t add new course to the user\'s subscription", new string[] {
+                        "mock"});
+#line 179
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 180
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 181
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul\",\r\n\"ImageProfileUrl\": \"sakul.jp" +
+                    "g\",\r\n\"Subscriptions\": []\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 192
+    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'StudentCode01\' and" +
+                    " grade \'Grade01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 193
+ testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 194
+ testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
+        [Xunit.TraitAttribute("Description", "User add new course by using the right code but the ClassRoom doesn\'t existing Th" +
+            "en system doesn\'t add new course to the user\'s subscription")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void UserAddNewCourseByUsingTheRightCodeButTheClassRoomDoesnTExistingThenSystemDoesnTAddNewCourseToTheUserSSubscription()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using the right code but the ClassRoom doesn\'t existing Th" +
+                    "en system doesn\'t add new course to the user\'s subscription", new string[] {
+                        "mock"});
+#line 197
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 198
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 199
+ testRunner.And("System have ClassRoom collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 203
+    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'StudentCode01\' and" +
+                    " grade \'Grade01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 204
+ testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 205
+ testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
+        [Xunit.TraitAttribute("Description", "User add new course by using the right code but the ClassCalendar doesn\'t existin" +
+            "g Then system doesn\'t add new course to the user\'s subscription")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void UserAddNewCourseByUsingTheRightCodeButTheClassCalendarDoesnTExistingThenSystemDoesnTAddNewCourseToTheUserSSubscription()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using the right code but the ClassCalendar doesn\'t existin" +
+                    "g Then system doesn\'t add new course to the user\'s subscription", new string[] {
+                        "mock"});
+#line 208
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 209
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 210
+ testRunner.And("System have ClassCalendar collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 214
+    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'StudentCode01\' and" +
+                    " grade \'Grade01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 215
+ testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 216
+ testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
+        [Xunit.TraitAttribute("Description", "Incorrect user add new course by using the right informations Then system doesn\'t" +
+            " add new course to the user")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserAddNewCourseByUsingTheRightInformationsThenSystemDoesnTAddNewCourseToTheUser()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user add new course by using the right informations Then system doesn\'t" +
+                    " add new course to the user", new string[] {
+                        "mock"});
+#line 219
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 220
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 221
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""Teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"": [
+{
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""CreatedDate"": ""1/1/2016 00:00 am"",
+	""ClassRoomName"": ""Emotional literacy"",
+	""LicenseId"": ""License01""
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 241
+    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'StudentCode01\' and" +
+                    " grade \'Grade01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 242
+ testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 243
+ testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

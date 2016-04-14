@@ -153,3 +153,91 @@ Scenario: User add new course by using the right code Then system add new course
 		}
 	]
     """  
+
+@mock  
+Scenario: User add new course by using the incorrect code Then system don't add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'IncorrectCode' and grade 'Grade01'
+    Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+
+@mock  
+Scenario: User add new course by using the right code but incorrect grade Then system don't add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'IncorrectGrade'
+    Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+
+@mock  
+Scenario: User add new course by using code and grade are incorrect Then system don't add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'IncorrectCode' and grade 'IncorrectGrade'
+    Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+
+@mock  
+Scenario: User add new course by using the right code but the class doesn't have a teacher account Then system doesn't add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have UserProfile collection with JSON format are  
+    """
+    [
+		{
+			"id": "sakul@mindsage.com",
+			"Name": "Sakul",
+			"ImageProfileUrl": "sakul.jpg",
+			"Subscriptions": []
+		},
+    ]
+    """  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+
+@mock  
+Scenario: User add new course by using the right code but the ClassRoom doesn't existing Then system doesn't add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have ClassRoom collection with JSON format are  
+    """
+    []
+    """  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+
+@mock  
+Scenario: User add new course by using the right code but the ClassCalendar doesn't existing Then system doesn't add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have ClassCalendar collection with JSON format are
+    """
+    []
+    """  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+
+@mock  
+Scenario: Incorrect user add new course by using the right informations Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have UserProfile collection with JSON format are  
+    """
+    [
+		{
+			"id": "teacher@mindsage.com",
+			"Name": "Teacher",
+			"ImageProfileUrl": "teacher.jpg",
+			"Subscriptions": [
+				{
+					"Role": "Teacher",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+					"CreatedDate": "1/1/2016 00:00 am",
+					"ClassRoomName": "Emotional literacy",
+					"LicenseId": "License01"
+				}
+			]
+		}
+    ]
+    """  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
