@@ -12,6 +12,7 @@ using Microsoft.Extensions.Logging;
 using MindSageWeb.Models;
 using MindSageWeb.Services;
 using MindSageWeb.Repositories;
+using MindSageWeb.Engines;
 
 namespace MindSageWeb
 {
@@ -119,6 +120,7 @@ namespace MindSageWeb
             services.AddTransient<INotificationRepository, NotificationRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IContractRepository, ContractRepository>();
+            services.AddTransient<IPayment, PaypalPayment>();
 
             services.AddTransient<Controllers.NotificationController, Controllers.NotificationController>();
             services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();
