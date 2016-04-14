@@ -6,6 +6,7 @@ using Microsoft.AspNet.Mvc;
 using System.Net.Http;
 using Newtonsoft.Json;
 using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.Logging;
 
 namespace MindSageWeb.Controllers
 {
@@ -14,14 +15,20 @@ namespace MindSageWeb.Controllers
         private CourseController _courseCtrl;
         private MyCourseController _myCourseCtrl;
         private AppConfigOptions _appConfig;
+        private ErrorMessageOptions _errorMsgs;
+        private ILogger _logger;
 
         public HomeController(CourseController courseCtrl, 
             MyCourseController myCourseCtrl,
-            IOptions<AppConfigOptions> options)
+            IOptions<AppConfigOptions> options,
+            IOptions<ErrorMessageOptions> errorMgs,
+            ILoggerFactory loggerFactory)
         {
             _courseCtrl = courseCtrl;
             _myCourseCtrl = myCourseCtrl;
             _appConfig = options.Value;
+            _errorMsgs = errorMgs.Value;
+            _logger = loggerFactory.CreateLogger<CourseController>();
         }
 
         public IActionResult Index()
@@ -50,22 +57,31 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Detail(string id, bool isCouponInvalid = false)
         {
-            var selectedCourse = _courseCtrl?.GetCourseDetail(id);
-            if (selectedCourse == null)
+            try
             {
-                ViewBag.ErrorMessage = "The selected course doesn't exist."; // HACK: Error message
+                var selectedCourse = _courseCtrl?.GetCourseDetail(id);
+                if (selectedCourse == null)
+                {
+                    ViewBag.ErrorMessage = "The selected course doesn't exist."; // HACK: Error message
+                    return View("Error");
+                }
+
+                var allUserCourses = Enumerable.Empty<string>();
+                var isAlreadyLoggedIn = User?.Identity?.IsAuthenticated ?? false;
+                var isAlreadyHaveSelectedCourse = isAlreadyLoggedIn ? !_myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses) : false;
+
+                ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
+                ViewBag.IsCouponInvalid = isCouponInvalid;
+                ViewBag.MindSageUrl = _appConfig.MindSageUrl;
+
+                return View(selectedCourse);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"MongoDB: { e.ToString() }");
+                ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
                 return View("Error");
             }
-
-            var allUserCourses = Enumerable.Empty<string>();
-            var isAlreadyLoggedIn = User?.Identity?.IsAuthenticated ?? false;
-            var isAlreadyHaveSelectedCourse = isAlreadyLoggedIn ? !_myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, selectedCourse.id, out allUserCourses) : false;
-
-            ViewBag.IsAlreadyHaveThisCourse = isAlreadyHaveSelectedCourse;
-            ViewBag.IsCouponInvalid = isCouponInvalid;
-            ViewBag.MindSageUrl = _appConfig.MindSageUrl;
-
-            return View(selectedCourse);
         }
 
         public async Task<IActionResult> Preview(int id)

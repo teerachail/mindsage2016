@@ -68,6 +68,11 @@ namespace MindSageWeb
                 option.UserProfiles = databaseTable.UserProfiles;
                 option.Contracts = databaseTable.Contracts;
             });
+            var errorMessages = Configuration.GetSection("ErrorMessageOptions").Get<ErrorMessageOptions>();
+            services.Configure<ErrorMessageOptions>(option =>
+            {
+                option.CanNotConnectToTheDatabase = errorMessages.CanNotConnectToTheDatabase;
+            });
 
             // Add framework services.
             services.AddEntityFramework()
