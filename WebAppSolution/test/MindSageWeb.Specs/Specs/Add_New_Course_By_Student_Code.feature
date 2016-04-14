@@ -1,4 +1,4 @@
-﻿Feature: Add_New_Course
+﻿Feature: Add_New_Course_By_Student_Code
 	In order to avoid silly mistakes
 	As a math idiot
 	I want to be told the sum of two numbers
@@ -8,6 +8,21 @@ Background: Initialize mocking data
 	And System have UserProfile collection with JSON format are  
     """
     [
+		{
+			"id": "teacher@mindsage.com",
+			"Name": "Teacher",
+			"ImageProfileUrl": "teacher.jpg",
+			"Subscriptions": [
+				{
+					"Role": "Teacher",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+					"CreatedDate": "1/1/2016 00:00 am",
+					"ClassRoomName": "Emotional literacy",
+					"LicenseId": "License01"
+				}
+			]
+		},
 		{
 			"id": "sakul@mindsage.com",
 			"Name": "Sakul",
@@ -45,7 +60,26 @@ Background: Initialize mocking data
             "ShortTeacherLessonPlan": "short teacher lesson plan01",
             "FullTeacherLessonPlan": "full teacher lesson plan01",
 			"PrimaryContentUrl": "PrimaryContent01",
-			"ExtraContentUrls": [ "Extra01", "Extra02", "Extra03" ]
+			"ExtraContents": [ 
+				{
+					"id": "Extra01",
+					"ContentURL": "www.extracontent01.com",
+					"Description": "description01",
+					"IconURL": "extra01.jpg"
+				},
+				{
+					"id": "Extra02",
+					"ContentURL": "www.extracontent02.com",
+					"Description": "description03",
+					"IconURL": "extra02.jpg"
+				},
+				{
+					"id": "Extra03",
+					"ContentURL": "www.extracontent03.com",
+					"Description": "description03",
+					"IconURL": "extra03.jpg"
+				}
+			]
         },
     ]
     """  
@@ -99,7 +133,10 @@ Scenario: User add new course by using the right code Then system add new course
 			"ClassRoomId": "ClassRoom01",
 			"ClassCalendarId": "ClassCalendar01",
 			"CreatedDate": "2/8/2016 00:00 am",
-			"ClassRoomName": "Emotional literacy"
+			"ClassRoomName": "Emotional literacy",
+			"LicenseId": "License01",
+			"CourseCatalogId": "CourseCatalog01",
+			"LastActiveDate": "2/8/2016 00:00 am",
 		}
 	]
     """  

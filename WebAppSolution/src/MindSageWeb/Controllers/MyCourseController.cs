@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.Logging;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using System;
@@ -28,6 +29,7 @@ namespace MindSageWeb.Controllers
         private ILikeDiscussionRepository _likeDiscussionRepo;
         private IContractRepository _contractRepo;
         private ICourseCatalogRepository _courseCatalogRepo;
+        private ILogger _logger;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -59,6 +61,7 @@ namespace MindSageWeb.Controllers
             ILikeDiscussionRepository likeDiscussionRepo,
             IContractRepository contractRepo,
             ICourseCatalogRepository courseCatalogRepo,
+            ILoggerFactory loggerFactory,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -72,6 +75,7 @@ namespace MindSageWeb.Controllers
             _likeDiscussionRepo = likeDiscussionRepo;
             _contractRepo = contractRepo;
             _courseCatalogRepo = courseCatalogRepo;
+            _logger = loggerFactory.CreateLogger<MyCourseController>();
             _dateTime = dateTime;
         }
 
@@ -446,35 +450,13 @@ namespace MindSageWeb.Controllers
             var isStudentKey = selectedStudentKey != null;
             if (isStudentKey)
             {
-                var canUserTheStudentCode = selectedUserProfile.Subscriptions.All(it => it.ClassRoomId != selectedStudentKey.ClassRoomId);
-                if (!canUserTheStudentCode) return addCourseFailRespond;
-
-                var selectedClassRoom = _classRoomRepo.GetClassRoomById(selectedStudentKey.ClassRoomId);
-                if (selectedClassRoom == null) return addCourseFailRespond;
-
-                var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(selectedStudentKey.ClassRoomId);
-                if (selectedClassCalendar == null) return addCourseFailRespond;
-
-                var lessonCatalogs = selectedClassRoom.Lessons
-                    .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))
-                    .ToList();
-                if (lessonCatalogs.Any(it => it == null)) return addCourseFailRespond;
-
-                var teacherSubscription = _userprofileRepo.GetUserProfilesByClassRoomId(selectedClassRoom.id)
-                    .Where(it => !it.DeletedDate.HasValue)
-                    .SelectMany(it => it.Subscriptions)
-                    .Where(it => !it.DeletedDate.HasValue)
-                    .Where(it => it.Role == UserProfile.AccountRole.Teacher)
-                    .Where(it => it.ClassRoomId == selectedClassRoom.id)
-                    .FirstOrDefault();
-                if (teacherSubscription == null) return addCourseFailRespond;
-
-                var subscriptions = createNewSubscription(selectedUserProfile.Subscriptions, UserProfile.AccountRole.Student, selectedClassRoom, selectedClassCalendar.id, teacherSubscription.LicenseId, now);
-                selectedUserProfile.Subscriptions = subscriptions;
-                _userprofileRepo.UpsertUserProfile(selectedUserProfile);
-
-                var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, selectedClassCalendar, lessonCatalogs, now);
-                _userActivityRepo.UpsertUserActivity(userActivity);
+                var isSuccessed = addNewCourseByStudentCode(selectedUserProfile, selectedStudentKey, now);
+                return new AddCourseRespond
+                {
+                    Code = body.Code,
+                    Grade = body.Grade,
+                    IsSuccess = isSuccessed
+                };
             }
             else
             {
@@ -572,14 +554,58 @@ namespace MindSageWeb.Controllers
                 };
                 
                 await _studentKeyRepo.CreateNewStudentKey(newStudentKey);
+                return new AddCourseRespond
+                {
+                    Code = body.Code,
+                    Grade = body.Grade,
+                    IsSuccess = true
+                };
+            }
+        }
+
+        private bool addNewCourseByStudentCode(UserProfile selectedUserProfile, StudentKey selectedStudentKey, DateTime currentTime)
+        {
+            var canUserprofileAccessToTheClassRoom = selectedUserProfile.Subscriptions
+                .Where(it => !it.DeletedDate.HasValue)
+                .Any(it => it.ClassRoomId == selectedStudentKey.ClassRoomId);
+            if (canUserprofileAccessToTheClassRoom) return false;
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(selectedStudentKey.ClassRoomId);
+            if (selectedClassRoom == null) return false;
+
+            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(selectedStudentKey.ClassRoomId);
+            if (selectedClassCalendar == null) return false;
+
+            var lessonCatalogs = selectedClassRoom.Lessons
+                .Select(it => _lessonCatalogRepo.GetLessonCatalogById(it.LessonCatalogId))
+                .ToList();
+            if (lessonCatalogs.Any(it => it == null)) return false;
+
+            var teacherSubscription = _userprofileRepo.GetUserProfilesByClassRoomId(selectedClassRoom.id)
+                .Where(it => !it.DeletedDate.HasValue)
+                .SelectMany(it => it.Subscriptions)
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Role == UserProfile.AccountRole.Teacher)
+                .Where(it => it.ClassRoomId == selectedClassRoom.id)
+                .FirstOrDefault();
+            if (teacherSubscription == null)
+            {
+                _logger.LogWarning($"Teacher account in the private ClassRoomId: { selectedStudentKey.ClassRoomId } not found.");
+                return false;
             }
 
-            return new AddCourseRespond
-            {
-                Code = body.Code,
-                Grade = body.Grade,
-                IsSuccess = true
-            };
+            selectedUserProfile.Subscriptions = createNewSubscription(selectedUserProfile.Subscriptions, 
+                UserProfile.AccountRole.Student, 
+                selectedClassRoom, 
+                selectedClassCalendar.id, 
+                teacherSubscription.LicenseId, 
+                currentTime);
+            _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+
+            var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, selectedClassCalendar, lessonCatalogs, currentTime);
+            _userActivityRepo.UpsertUserActivity(userActivity);
+
+            return true;
         }
 
         private string generateStudentCode(string grade)

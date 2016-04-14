@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.OptionsModel;
+﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.OptionsModel;
 using MindSageWeb.Controllers;
 using MindSageWeb.Repositories;
 using Moq;
@@ -28,6 +29,8 @@ namespace MindSageWeb.Specs.Steps
             var notificationRepo = mock.Create<INotificationRepository>();
             var contractRepo = mock.Create<IContractRepository>();
             var courseCatalogRepo = mock.Create<ICourseCatalogRepository>();
+            var logger = mock.Create<ILogger>();
+            var loggerFactory = mock.Create<ILoggerFactory>();
             var option = mock.Create<IOptions<AppConfigOptions>>();
             var dateTime = mock.Create<IDateTime>();
 
@@ -47,8 +50,13 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(notificationRepo);
             ScenarioContext.Current.Set(contractRepo);
             ScenarioContext.Current.Set(courseCatalogRepo);
+            ScenarioContext.Current.Set(logger);
+            ScenarioContext.Current.Set(loggerFactory);
             ScenarioContext.Current.Set(option);
             ScenarioContext.Current.Set(dateTime);
+
+            loggerFactory.Setup(it => it.CreateLogger(It.IsAny<string>()))
+                .Returns(() => logger.Object);
 
             var notificationCtrl = new NotificationController(userprofileRepo.Object,
                 notificationRepo.Object,
@@ -99,6 +107,7 @@ namespace MindSageWeb.Specs.Steps
                 likeDiscussionRepo.Object,
                 contractRepo.Object,
                 courseCatalogRepo.Object,
+                loggerFactory.Object,
                 dateTime.Object);
 
             var friendCtrl = new FriendController(classCalendarRepo.Object,

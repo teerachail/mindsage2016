@@ -73,7 +73,7 @@ namespace MindSageWeb.Controllers
             _dateTime = dateTime;
             _appConfig = appConfig.Value;
             _errorMsgs = errorMsgs.Value;
-            _logger = loggerFactory.CreateLogger<PurchaseController>();
+            _logger = loggerFactory.CreateLogger("PurchaseController");
             _payment = payment;
         }
 
@@ -90,20 +90,23 @@ namespace MindSageWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> UserCode(string id, string grade, string courseId)
         {
-            var body = new Repositories.Models.AddCourseRequest
+            try
             {
-                Code = id,
-                Grade = grade,
-                UserProfileId = User.Identity.Name
-            };
-
-            var result = await _myCourseCtrl.AddCourse(body);
-            if (result.IsSuccess)
-            {
-                return RedirectToAction("Preparing", "My");
+                var body = new AddCourseRequest
+                {
+                    Code = id,
+                    Grade = grade,
+                    UserProfileId = User.Identity.Name
+                };
+                var result = await _myCourseCtrl.AddCourse(body);
+                if (result.IsSuccess) return RedirectToAction("Preparing", "My");
+                else return RedirectToAction("Detail", "Home", new { @id = courseId, isCouponInvalid = true });
             }
-
-            return RedirectToAction("Detail", "Home", new { @id = courseId, isCouponInvalid = true });
+            catch (Exception)
+            {
+                ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
+                return View("Error");
+            }
         }
 
         /// <summary>

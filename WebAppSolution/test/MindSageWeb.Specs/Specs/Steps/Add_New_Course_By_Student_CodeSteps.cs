@@ -1,4 +1,5 @@
-﻿using MindSageWeb.Controllers;
+﻿using Microsoft.Extensions.Logging;
+using MindSageWeb.Controllers;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using Moq;
@@ -6,16 +7,17 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using TechTalk.SpecFlow;
 
 
 namespace MindSageWeb.Specs.Steps
 {
     [Binding]
-    public class Add_New_CourseSteps
+    public class Add_New_Course_By_Student_CodeSteps
     {
         [When(@"UserProfile '(.*)' Add new course by using code '(.*)' and grade '(.*)'")]
-        public void WhenUserProfileAddNewCourseByUsingCodeAndGrade(string userprofileId, string code, string grade)
+        public async Task WhenUserProfileAddNewCourseByUsingCodeAndGrade(string userprofileId, string code, string grade)
         {
             var mockUserProfileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
             mockUserProfileRepo.Setup(it => it.UpsertUserProfile(It.IsAny<UserProfile>()));
@@ -30,7 +32,7 @@ namespace MindSageWeb.Specs.Steps
                 Code = code,
                 Grade = grade
             };
-            mycourseCtrl.AddCourse(body);
+            await mycourseCtrl.AddCourse(body);
         }
 
         [Then(@"System upsert user id '(.*)' UserProfile's subscriptions collection with JSON format are")]
@@ -50,7 +52,10 @@ namespace MindSageWeb.Specs.Steps
                         && expected[elementIndex].CreatedDate == subscriptions[elementIndex].CreatedDate
                         && expected[elementIndex].ClassRoomName == subscriptions[elementIndex].ClassRoomName
                         && expected[elementIndex].ClassRoomId == subscriptions[elementIndex].ClassRoomId
-                        && expected[elementIndex].ClassCalendarId == subscriptions[elementIndex].ClassCalendarId;
+                        && expected[elementIndex].ClassCalendarId == subscriptions[elementIndex].ClassCalendarId
+                        && expected[elementIndex].CourseCatalogId == subscriptions[elementIndex].CourseCatalogId
+                        && expected[elementIndex].LastActiveDate == subscriptions[elementIndex].LastActiveDate
+                        && expected[elementIndex].LicenseId == subscriptions[elementIndex].LicenseId;
                     if (!areAllEqual) return false;
                 }
 

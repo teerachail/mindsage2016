@@ -17,15 +17,15 @@ namespace SpecFlow.GeneratedTests.Specs
     
     [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
     [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public partial class Add_New_CourseFeature : Xunit.IClassFixture<Add_New_CourseFeature.FixtureData>, System.IDisposable
+    public partial class Add_New_Course_By_Student_CodeFeature : Xunit.IClassFixture<Add_New_Course_By_Student_CodeFeature.FixtureData>, System.IDisposable
     {
         
         private static TechTalk.SpecFlow.ITestRunner testRunner;
         
-#line 1 "Add_New_Course.feature"
+#line 1 "Add_New_Course_By_Student_Code.feature"
 #line hidden
         
-        public Add_New_CourseFeature()
+        public Add_New_Course_By_Student_CodeFeature()
         {
             this.TestInitialize();
         }
@@ -33,7 +33,7 @@ namespace SpecFlow.GeneratedTests.Specs
         public static void FeatureSetup()
         {
             testRunner = TechTalk.SpecFlow.TestRunnerManager.GetTestRunner();
-            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Add_New_Course", "\tIn order to avoid silly mistakes\r\n\tAs a math idiot\r\n\tI want to be told the sum o" +
+            TechTalk.SpecFlow.FeatureInfo featureInfo = new TechTalk.SpecFlow.FeatureInfo(new System.Globalization.CultureInfo("en-US"), "Add_New_Course_By_Student_Code", "\tIn order to avoid silly mistakes\r\n\tAs a math idiot\r\n\tI want to be told the sum o" +
                     "f two numbers", ProgrammingLanguage.CSharp, ((string[])(null)));
             testRunner.OnFeatureStart(featureInfo);
         }
@@ -70,10 +70,31 @@ namespace SpecFlow.GeneratedTests.Specs
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
- testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul\",\r\n\"ImageProfileUrl\": \"sakul.jp" +
-                    "g\",\r\n\"Subscriptions\": []\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""Teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"": [
+{
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""CreatedDate"": ""1/1/2016 00:00 am"",
+	""ClassRoomName"": ""Emotional literacy"",
+	""LicenseId"": ""License01""
+}
+]
+},
+{
+""id"": ""sakul@mindsage.com"",
+""Name"": ""Sakul"",
+""ImageProfileUrl"": ""sakul.jpg"",
+""Subscriptions"": []
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 19
+#line 34
  testRunner.And("System have ClassRoom collection with JSON format are", @"[
     {
         ""id"": ""ClassRoom01"",
@@ -92,7 +113,7 @@ namespace SpecFlow.GeneratedTests.Specs
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 39
+#line 54
  testRunner.And("System have LessonCatalog collection with JSON format are", @"[
     {
         ""id"": ""LessonCatalog01"",
@@ -100,11 +121,30 @@ namespace SpecFlow.GeneratedTests.Specs
         ""ShortTeacherLessonPlan"": ""short teacher lesson plan01"",
         ""FullTeacherLessonPlan"": ""full teacher lesson plan01"",
 ""PrimaryContentUrl"": ""PrimaryContent01"",
-""ExtraContentUrls"": [ ""Extra01"", ""Extra02"", ""Extra03"" ]
+""ExtraContents"": [ 
+{
+	""id"": ""Extra01"",
+	""ContentURL"": ""www.extracontent01.com"",
+	""Description"": ""description01"",
+	""IconURL"": ""extra01.jpg""
+},
+{
+	""id"": ""Extra02"",
+	""ContentURL"": ""www.extracontent02.com"",
+	""Description"": ""description03"",
+	""IconURL"": ""extra02.jpg""
+},
+{
+	""id"": ""Extra03"",
+	""ContentURL"": ""www.extracontent03.com"",
+	""Description"": ""description03"",
+	""IconURL"": ""extra03.jpg""
+}
+]
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 52
+#line 86
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -122,17 +162,17 @@ namespace SpecFlow.GeneratedTests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 71
+#line 105
  testRunner.And("System have UserActivity collection with JSON format are", "[\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 76
+#line 110
  testRunner.And("System have StudentKey collection with JSON format are", "[\r\n\t{\r\n\t\t\"id\": \"StudentKey01\",\r\n\t\t\"Code\": \"StudentCode01\",\r\n\t\t\"Grade\": \"Grade01\"," +
                     "\r\n\t\t\"CourseCatalogId\": \"CourseCatalog01\",\r\n\t\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\t\"C" +
                     "reatedDate\": \"2/1/2016\",\r\n\t}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
-        public virtual void SetFixture(Add_New_CourseFeature.FixtureData fixtureData)
+        public virtual void SetFixture(Add_New_Course_By_Student_CodeFeature.FixtureData fixtureData)
         {
         }
         
@@ -142,7 +182,7 @@ namespace SpecFlow.GeneratedTests.Specs
         }
         
         [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course")]
+        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
         [Xunit.TraitAttribute("Description", "User add new course by using the right code Then system add new course to the use" +
             "r\'s subscription")]
         [Xunit.TraitAttribute("Category", "mock")]
@@ -151,23 +191,32 @@ namespace SpecFlow.GeneratedTests.Specs
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using the right code Then system add new course to the use" +
                     "r\'s subscription", new string[] {
                         "mock"});
-#line 91
+#line 125
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 92
+#line 126
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 93
+#line 127
     testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'StudentCode01\' and" +
                     " grade \'Grade01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 94
+#line 128
     testRunner.Then("System upsert user id \'sakul@mindsage.com\' UserProfile\'s subscriptions collection" +
-                    " with JSON format are", "[\r\n{\r\n\"Role\": \"Student\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"ClassCalendarId\": \"Clas" +
-                    "sCalendar01\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\",\r\n\"ClassRoomName\": \"Emotional " +
-                    "literacy\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                    " with JSON format are", @"[
+{
+""Role"": ""Student"",
+""ClassRoomId"": ""ClassRoom01"",
+""ClassCalendarId"": ""ClassCalendar01"",
+""CreatedDate"": ""2/8/2016 00:00 am"",
+""ClassRoomName"": ""Emotional literacy"",
+""LicenseId"": ""License01"",
+""CourseCatalogId"": ""CourseCatalog01"",
+""LastActiveDate"": ""2/8/2016 00:00 am"",
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 106
+#line 143
  testRunner.And("System upsert user id \'sakul@mindsage.com\' UserActivity\'s LessonActivities collec" +
                     "tion with JSON format are", "[\r\n{\r\n\"LessonId\": \"Lesson01\",\r\n\"TotalContentsAmount\": 4,\r\n\"SawContentIds\": [],\r\n\"" +
                     "CreatedCommentAmount\": 0,\r\n\"ParticipationAmount\": 0,\r\n\"BeginDate\": \"2/1/2016\",\r\n" +
@@ -183,12 +232,12 @@ this.FeatureBackground();
             
             public FixtureData()
             {
-                Add_New_CourseFeature.FeatureSetup();
+                Add_New_Course_By_Student_CodeFeature.FeatureSetup();
             }
             
             void System.IDisposable.Dispose()
             {
-                Add_New_CourseFeature.FeatureTearDown();
+                Add_New_Course_By_Student_CodeFeature.FeatureTearDown();
             }
         }
     }
