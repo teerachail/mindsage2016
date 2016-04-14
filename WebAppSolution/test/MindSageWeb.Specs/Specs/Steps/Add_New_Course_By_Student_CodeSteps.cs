@@ -9,7 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TechTalk.SpecFlow;
-
+using Xunit;
 
 namespace MindSageWeb.Specs.Steps
 {
@@ -47,7 +47,7 @@ namespace MindSageWeb.Specs.Steps
                 for (int elementIndex = 0; elementIndex < expected.Count; elementIndex++)
                 {
                     var areAllEqual = !string.IsNullOrEmpty(subscriptions[elementIndex].id)
-                        && expected[elementIndex].Role == subscriptions[elementIndex].Role
+                        && expected[elementIndex].Role == UserProfile.AccountRole.Student
                         && expected[elementIndex].DeletedDate == subscriptions[elementIndex].DeletedDate
                         && expected[elementIndex].CreatedDate == subscriptions[elementIndex].CreatedDate
                         && expected[elementIndex].ClassRoomName == subscriptions[elementIndex].ClassRoomName
@@ -99,6 +99,37 @@ namespace MindSageWeb.Specs.Steps
                 !string.IsNullOrEmpty(useractivity.id)
                 && useractivity.UserProfileId == userprofileId
                 && validateUpsertFunc(useractivity.LessonActivities.ToList())
+            )));
+        }
+
+        [Then(@"System create new ClassRoom with JSON format is")]
+        public void ThenSystemCreateNewClassRoomWithJSONFormatIs(string multilineText)
+        {
+            var expectedClassRoom = JsonConvert.DeserializeObject<ClassRoom>(multilineText);
+
+            Func<List<ClassRoom.Lesson>, bool> validateLessonFunc = lessons =>
+            {
+                var expectedLessons = expectedClassRoom.Lessons.ToList();
+                for (int index = 0; index < expectedLessons.Count; index++)
+                {
+                    Assert.Equal(expectedLessons[index].id, lessons[index].id);
+                    Assert.Equal(expectedLessons[index].LessonCatalogId, lessons[index].LessonCatalogId);
+                    Assert.Equal(expectedLessons[index].TotalLikes, lessons[index].TotalLikes);
+                }
+
+                return true;
+            };
+
+            var mockClassRoomRepo = ScenarioContext.Current.Get<Mock<IClassRoomRepository>>();
+            mockClassRoomRepo.Verify(it => it.CreateNewClassRoom(It.Is<ClassRoom>(actual =>
+                !string.IsNullOrEmpty(actual.id)
+                && actual.Name == expectedClassRoom.Name
+                && actual.CourseCatalogId == expectedClassRoom.CourseCatalogId
+                && actual.CreatedDate == expectedClassRoom.CreatedDate
+                && actual.LastUpdatedMessageDate == expectedClassRoom.LastUpdatedMessageDate
+                && !actual.DeletedDate.HasValue
+                && actual.Lessons.Count() == expectedClassRoom.Lessons.Count()
+                && validateLessonFunc(actual.Lessons.ToList())
             )));
         }
 

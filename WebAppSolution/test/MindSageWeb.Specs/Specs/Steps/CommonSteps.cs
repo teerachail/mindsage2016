@@ -76,6 +76,8 @@ namespace MindSageWeb.Specs.Steps
             var mockLessonCatalogRepo = ScenarioContext.Current.Get<Moq.Mock<ILessonCatalogRepository>>();
             mockLessonCatalogRepo.Setup(it => it.GetLessonCatalogById(It.IsAny<string>()))
                 .Returns<string>(id => lessonCatalogs.Where(it => it.id == id).FirstOrDefault());
+            mockLessonCatalogRepo.Setup(it => it.GetLessonCatalogByCourseCatalogId(It.IsAny<string>()))
+                .Returns<string>(courseCatalogId => lessonCatalogs.Where(it => it.CourseCatalogId == courseCatalogId));
         }
 
         [Given(@"System have FriendRequest collection with JSON format are")]
@@ -134,6 +136,28 @@ namespace MindSageWeb.Specs.Steps
                 .Returns<string>(classRoomId => studentKeys.FirstOrDefault(it => it.ClassRoomId == classRoomId));
             mockStudentKeyRepo.Setup(it => it.GetStudentKeyByCodeAndGrade(It.IsAny<string>(), It.IsAny<string>()))
                 .Returns<string,string>((code,grade) => studentKeys.FirstOrDefault(it => it.Code == code && it.Grade == grade));
+        }
+
+        [Given(@"System have Contract collection with JSON format are")]
+        public void GivenSystemHaveContractCollectionWithJSONFormatAre(string multilineText)
+        {
+            var collection = JsonConvert.DeserializeObject<IEnumerable<Contract>>(multilineText);
+            var mockContractRepo = ScenarioContext.Current.Get<Mock<IContractRepository>>();
+            mockContractRepo.Setup(it => it.GetContractsByTeacherCode(It.IsAny<string>(), It.IsAny<string>()))
+                .Returns<string, string>((tCode, grade) =>
+                 {
+                     var result = collection.Where(c => c.Licenses.Any(l => l.TeacherKeys.Any(t => t.Code == tCode && t.Grade == grade))).FirstOrDefault();
+                     return Task.FromResult(result);
+                 });
+        }
+
+        [Given(@"System have CourseCatalog collection with JSON format are")]
+        public void GivenSystemHaveCourseCatalogCollectionWithJSONFormatAre(string multilineText)
+        {
+            var collection = JsonConvert.DeserializeObject<IEnumerable<CourseCatalog>>(multilineText);
+            var mockCourseCatalogRepo = ScenarioContext.Current.Get<Mock<ICourseCatalogRepository>>();
+            mockCourseCatalogRepo.Setup(it => it.GetCourseCatalogById(It.IsAny<string>()))
+                .Returns<string>(id => collection.FirstOrDefault(it => it.id == id));
         }
     }
 }
