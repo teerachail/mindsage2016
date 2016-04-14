@@ -8,5 +8,9 @@ namespace MindSageWeb
     public class ErrorMessageOptions
     {
         public string CanNotConnectToTheDatabase { get; set; }
+        public string CanNotChargeACreditCard { get; set; }
+        public string CourseNotFound { get; set; }
+        public string UserProfileNotFound { get; set; }
+        public string CourseInformationIncorrect { get; set; }
     }
 }

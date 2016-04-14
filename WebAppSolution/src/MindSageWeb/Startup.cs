@@ -48,6 +48,8 @@ namespace MindSageWeb
                 option.ManagementPortalUrl = appConfig.ManagementPortalUrl;
                 option.MindSageUrl = appConfig.MindSageUrl;
                 option.PrimaryDBName = appConfig.PrimaryDBName;
+                option.PaypalClientId = appConfig.PaypalClientId;
+                option.PaypalClientSecret = appConfig.PaypalClientSecret;
             });
             var databaseTable = Configuration.GetSection("DatabaseTableOptions").Get<DatabaseTableOptions>();
             services.Configure<DatabaseTableOptions>(option =>
@@ -72,6 +74,10 @@ namespace MindSageWeb
             services.Configure<ErrorMessageOptions>(option =>
             {
                 option.CanNotConnectToTheDatabase = errorMessages.CanNotConnectToTheDatabase;
+                option.CanNotChargeACreditCard = errorMessages.CanNotChargeACreditCard;
+                option.CourseNotFound = errorMessages.CourseNotFound;
+                option.UserProfileNotFound = errorMessages.UserProfileNotFound;
+                option.CourseInformationIncorrect = errorMessages.CourseInformationIncorrect;
             });
 
             // Add framework services.

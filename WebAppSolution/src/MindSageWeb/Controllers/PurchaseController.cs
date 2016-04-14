@@ -8,6 +8,8 @@ using MindSageWeb.ViewModels.PurchaseCourse;
 using MindSageWeb.Repositories;
 using MindSageWeb.Repositories.Models;
 using PayPal.Api;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.OptionsModel;
 
 namespace MindSageWeb.Controllers
 {
@@ -25,6 +27,9 @@ namespace MindSageWeb.Controllers
         private IDateTime _dateTime;
         private CourseController _courseCtrl;
         private MyCourseController _myCourseCtrl;
+        private ErrorMessageOptions _errorMsgs;
+        private AppConfigOptions _appConfig;
+        private ILogger _logger;
 
         #endregion Fields
 
@@ -49,6 +54,9 @@ namespace MindSageWeb.Controllers
             ILessonCatalogRepository lessonCatalogRepo,
             IUserActivityRepository userActivityRepo,
             IPaymentRepository paymentRepo,
+            IOptions<AppConfigOptions> appConfig,
+            IOptions<ErrorMessageOptions> errorMsgs,
+            ILoggerFactory loggerFactory,
             IDateTime dateTime)
         {
             _courseCtrl = courseCtrl;
@@ -60,6 +68,9 @@ namespace MindSageWeb.Controllers
             _userActivityRepo = userActivityRepo;
             _paymentRepo = paymentRepo;
             _dateTime = dateTime;
+            _appConfig = appConfig.Value;
+            _errorMsgs = errorMsgs.Value;
+            _logger = loggerFactory.CreateLogger<PurchaseController>();
         }
 
         #endregion Constructors
@@ -98,58 +109,103 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public IActionResult Index(string id)
         {
-            var selectedCourse = _courseCtrl.GetCourseDetail(id);
-            if (selectedCourse == null) return View("Error");
-
-            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, id);
-            if (!canAddNewCourse) return RedirectToAction("entercourse", "my", new { @id = id });
-
-            var model = new PurchaseCourseViewModel
+            try
             {
-                CourseId = id,
-                TotalChargeAmount = selectedCourse.PriceUSD
-            };
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Index(PurchaseCourseViewModel model)
-        {
-            var canAddNewCourse = _myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, model.CourseId);
-            if (!canAddNewCourse) return RedirectToAction("entercourse", "my", new { @id = model.CourseId });
-
-            if (ModelState.IsValid)
-            {
-                var selectedCourse = _courseCtrl.GetCourseDetail(model.CourseId);
-                if (selectedCourse == null) return View("Error");
-
-                var selectedClassRoom = _classRoomRepo.GetPublicClassRoomByCourseCatalogId(model.CourseId);
-                if (selectedClassRoom == null) return View("Error");
-
-                var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
-                if (selectedUserProfile == null) return View("Error");
-
-                // Pay with Paypal
-                var isPaymentSuccessed = false;
-                model.TotalChargeAmount = selectedCourse.PriceUSD;
-                var paymentResult = payWithPaypal(model);
-                if (paymentResult == "approved") isPaymentSuccessed = true;
-                else
+                var selectedCourse = _courseCtrl.GetCourseDetail(id);
+                if (selectedCourse == null)
                 {
-                    ViewBag.ErrorMessage = "The Credit Card Verification System used by PayPal is currently unavailable. Please try to add your credit card at a later time. We apologize for this inconvenience";
+                    ViewBag.ErrorMessage = _errorMsgs.CourseNotFound;
                     return View("Error");
                 }
 
+                var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
+                if (selectedUserProfile == null)
+                {
+                    _logger.LogCritical($"User profile { User.Identity.Name } not found.");
+                    ViewBag.ErrorMessage = _errorMsgs.UserProfileNotFound;
+                    return View("Error");
+                }
+
+                var selectedClassRoom = _classRoomRepo.GetPublicClassRoomByCourseCatalogId(id);
+                if (selectedClassRoom == null)
+                {
+                    _logger.LogCritical($"ClassRoom of CourseId: { id } not found.");
+                    ViewBag.ErrorMessage = _errorMsgs.CourseInformationIncorrect;
+                    return View("Error");
+                }
+
+                var isAlreadyHaveTheSelectedCourse = !_myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, id);
+                if (isAlreadyHaveTheSelectedCourse) return RedirectToAction("entercourse", "my", new { @id = id });
+
+                var model = new PurchaseCourseViewModel
+                {
+                    CourseId = id,
+                    TotalChargeAmount = selectedCourse.PriceUSD
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"MongoDB: { e.ToString() }");
+                ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
+                return View("Error");
+            }
+        }
+
+        [HttpPost, ActionName("Index")]
+        public async Task<IActionResult> ChargeACreditCard(PurchaseCourseViewModel model)
+        {
+            var selectedCourse = _courseCtrl.GetCourseDetail(model.CourseId);
+            if (selectedCourse == null)
+            {
+                ViewBag.ErrorMessage = _errorMsgs.CourseNotFound;
+                return View("Error");
+            }
+
+            var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
+            if (selectedUserProfile == null)
+            {
+                _logger.LogCritical($"User profile { User.Identity.Name } not found.");
+                ViewBag.ErrorMessage = _errorMsgs.UserProfileNotFound;
+                return View("Error");
+            }
+
+            var selectedClassRoom = _classRoomRepo.GetPublicClassRoomByCourseCatalogId(model.CourseId);
+            if (selectedClassRoom == null)
+            {
+                _logger.LogCritical($"ClassRoom of CourseId: { model.CourseId } not found.");
+                ViewBag.ErrorMessage = _errorMsgs.CourseInformationIncorrect;
+                return View("Error");
+            }
+
+            var isAlreadyHaveTheSelectedCourse = !_myCourseCtrl.CanAddNewCourseCatalog(User.Identity.Name, model.CourseId);
+            if (isAlreadyHaveTheSelectedCourse) return RedirectToAction("entercourse", "my", new { @id = model.CourseId });
+
+            if (ModelState.IsValid)
+            {
+                // Pay with Paypal (paypal error, mongoDB error)
+                model.TotalChargeAmount = selectedCourse.PriceUSD;
+                var paymentResult = payWithPaypal(model);
+                const string PaymentApproved = "approved";
+                var isPaymentSuccessed = paymentResult == PaymentApproved;
                 var now = _dateTime.GetCurrentTime();
+                var newSubscriptionId = isPaymentSuccessed ? Guid.NewGuid().ToString() : "None";
+                var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, isPaymentSuccessed);
+                await _paymentRepo.CreateNewPayment(payment);
+                if (!isPaymentSuccessed)
+                {
+                    ViewBag.ErrorMessage = _errorMsgs.CanNotChargeACreditCard;
+                    return View("Error");
+                }
+
                 var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogById(selectedClassRoom.Lessons.Select(it => it.LessonCatalogId)).ToList();
                 var newClassCalendar = createClassCalendar(selectedClassRoom, lessonCatalogs, now);
                 newClassCalendar.CalculateCourseSchedule();
 
-                var newSubscriptionId = string.Empty;
                 selectedUserProfile.Subscriptions = addNewSelfPurchaseSubscription(
                     selectedUserProfile.Subscriptions, selectedClassRoom,
                     newClassCalendar.id, model.CourseId,
-                    now, out newSubscriptionId);
+                    now, newSubscriptionId);
 
                 var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, newClassCalendar, lessonCatalogs, now);
 
@@ -157,27 +213,16 @@ namespace MindSageWeb.Controllers
                 _userprofileRepo.UpsertUserProfile(selectedUserProfile);
                 _userActivityRepo.UpsertUserActivity(userActivity);
 
-                var payment = createNewPayment(selectedCourse.id, selectedCourse.SideName, newSubscriptionId, model, selectedCourse.PriceUSD, now, isPaymentSuccessed);
-                await _paymentRepo.CreateNewPayment(payment);
                 return RedirectToAction("Finished", new { @id = payment.id });
             }
             return View(model);
         }
-
-        /// <summary>
-        /// Charging CreditCard
-        /// </summary>
-        /// <param name="model">PurchaseCourse details</param>
-        /// <returns></returns>
         private string payWithPaypal(PurchaseCourseViewModel model)
         {
-            var clientKey = "AciMCMM9IZHz0akSQdpyuOjQ9HaZI0nEjpS_Ik28qb681ZTXJFHuo03BF1LC7Cb_jgn6K0FQJ7LF_Cbd";
-            var clientSecret = "EJe__bJ7Sz0CwQiJvz59ZpFMDn-7L8Ix3OdlaJHFWR8O2LouaYOY-AYJwE9YSvY6pl6pei9fcE_IC1f9";
-            var tokenCredential = new OAuthTokenCredential(clientKey, clientSecret, new Dictionary<string, string>());
-
+            var tokenCredential = new OAuthTokenCredential(_appConfig.PaypalClientId, _appConfig.PaypalClientSecret, new Dictionary<string, string>());
             var accessToken = tokenCredential.GetAccessToken();
             var config = new Dictionary<string, string>();
-            config.Add("mode", "sandbox"); //Set mode to 'live' or 'sandbox'
+            config.Add("mode", "sandbox"); // HACK: Paypal mode ('live' or 'sandbox')
             var apiContext = new APIContext
             {
                 Config = config,
@@ -248,10 +293,8 @@ namespace MindSageWeb.Controllers
             var createdPayment = payment.Create(apiContext);
             return createdPayment.state;
         }
-
-        private IEnumerable<UserProfile.Subscription> addNewSelfPurchaseSubscription(IEnumerable<UserProfile.Subscription> subscriptions, ClassRoom selectedClassRoom, string classCalendarId, string courseCatalogId, DateTime currentTime, out string newSubscriptionId)
+        private IEnumerable<UserProfile.Subscription> addNewSelfPurchaseSubscription(IEnumerable<UserProfile.Subscription> subscriptions, ClassRoom selectedClassRoom, string classCalendarId, string courseCatalogId, DateTime currentTime, string newSubscriptionId)
         {
-            newSubscriptionId = Guid.NewGuid().ToString();
             var newSubscriptions = subscriptions.ToList();
             var newSubscription = new UserProfile.Subscription
             {
@@ -340,19 +383,28 @@ namespace MindSageWeb.Controllers
         [HttpGet]
         public async Task<IActionResult> Finished(string id)
         {
-            var payment = await _paymentRepo.GetPaymentById(id);
-            if (payment == null) return View("Error");
-
-            var address = APIUtil.CreateAddressSummary(payment.BillingAddress, payment.State, payment.City, payment.Country, payment.ZipCode);
-            var model = new CoursePurchasedViewModel
+            try
             {
-                AddressSummary = address,
-                CardType = payment.CardType,
-                CourseId = payment.CourseCatalogId,
-                LastFourDigits = payment.Last4Digits,
-                TotalChargeAmount = payment.TotalChargedAmount
-            };
-            return View(model);
+                var payment = await _paymentRepo.GetPaymentById(id);
+                if (payment == null) return View("Error");
+
+                var address = APIUtil.CreateAddressSummary(payment.BillingAddress, payment.State, payment.City, payment.Country, payment.ZipCode);
+                var model = new CoursePurchasedViewModel
+                {
+                    AddressSummary = address,
+                    CardType = payment.CardType,
+                    CourseId = payment.CourseCatalogId,
+                    LastFourDigits = payment.Last4Digits,
+                    TotalChargeAmount = payment.TotalChargedAmount
+                };
+                return View(model);
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"MongoDB: { e.ToString() }");
+                ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
+                return View("Error");
+            }
         }
 
         #endregion Methods

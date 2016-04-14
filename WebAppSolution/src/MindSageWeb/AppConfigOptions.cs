@@ -14,6 +14,8 @@ namespace MindSageWeb
         public string GoogleClientSecret { get; set; }
         public string ManagementPortalUrl { get; set; }
         public string MindSageUrl { get; set; }
+        public string PaypalClientId { get; set; }
+        public string PaypalClientSecret { get; set; }
 
         #endregion Properties
     }

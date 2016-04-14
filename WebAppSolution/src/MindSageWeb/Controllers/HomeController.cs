@@ -62,7 +62,7 @@ namespace MindSageWeb.Controllers
                 var selectedCourse = _courseCtrl?.GetCourseDetail(id);
                 if (selectedCourse == null)
                 {
-                    ViewBag.ErrorMessage = "The selected course doesn't exist."; // HACK: Error message
+                    ViewBag.ErrorMessage = _errorMsgs.CourseNotFound;
                     return View("Error");
                 }
 
