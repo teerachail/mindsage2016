@@ -444,125 +444,20 @@ namespace MindSageWeb.Controllers
             var isValidUserProfile = selectedUserProfile != null && selectedUserProfile.Subscriptions != null;
             if (!isValidUserProfile) return addCourseFailRespond;
 
-            // Check student key
-            var now = _dateTime.GetCurrentTime();
             var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(body.Code, body.Grade);
             var isStudentKey = selectedStudentKey != null;
-            if (isStudentKey)
+
+            var now = _dateTime.GetCurrentTime();
+            var isSuccessed = isStudentKey ?
+                addNewCourseByStudentCode(selectedUserProfile, selectedStudentKey, now) :
+                await addNewCourseByTeacherCode(body.Code, body.Grade, selectedUserProfile, now);
+            return new AddCourseRespond
             {
-                var isSuccessed = addNewCourseByStudentCode(selectedUserProfile, selectedStudentKey, now);
-                return new AddCourseRespond
-                {
-                    Code = body.Code,
-                    Grade = body.Grade,
-                    IsSuccess = isSuccessed
-                };
-            }
-            else
-            {
-                // Check teacher key
-                var selectedContract = await _contractRepo.GetContractsByTeacherCode(body.Code, body.Grade);
-                var isTeacherKey = selectedContract != null
-                    && !selectedContract.DeletedDate.HasValue
-                    && selectedContract.Licenses.Any();
-                if (!isTeacherKey) return addCourseFailRespond;
-
-                var selectedLicense = selectedContract.Licenses
-                    .Where(it => !it.DeletedDate.HasValue)
-                    .FirstOrDefault(it => it.TeacherKeys.Any(t => !t.DeletedDate.HasValue && t.Code == body.Code && t.Grade == body.Grade));
-                if (selectedLicense == null) return addCourseFailRespond;
-
-                var selectedTeacherKey = selectedLicense.TeacherKeys
-                    .Where(it => !it.DeletedDate.HasValue)
-                    .OrderBy(it => it.CreatedDate)
-                    .LastOrDefault();
-                if (selectedTeacherKey == null) return addCourseFailRespond;
-
-                // Create new ClassRoom
-                var selectedCourseCatalog = _courseCatalogRepo.GetCourseCatalogById(selectedLicense.CourseCatalogId);
-                if (selectedCourseCatalog == null) return addCourseFailRespond;
-                var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogByCourseCatalogId(selectedCourseCatalog.id).ToList();
-                if (lessonCatalogs == null || !lessonCatalogs.Any()) return addCourseFailRespond;
-                var lessons = lessonCatalogs
-                    .Where(it => !it.DeletedDate.HasValue)
-                    .Select(it => new ClassRoom.Lesson
-                    {
-                        id = it.id,
-                        LessonCatalogId = it.id
-                    });
-                var newClassRoom = new ClassRoom
-                {
-                    id = Guid.NewGuid().ToString(),
-                    Name = selectedCourseCatalog.SideName,
-                    CourseCatalogId = selectedCourseCatalog.id,
-                    CreatedDate = now,
-                    LastUpdatedMessageDate = now,
-                    Lessons = lessons
-                };
-                await _classRoomRepo.CreateNewClassRoom(newClassRoom);
-
-                // Create new ClassCalendar
-                var lessonCalendars = lessonCatalogs
-                    .Where(it => !it.DeletedDate.HasValue)
-                    .Select(lesson => new ClassCalendar.LessonCalendar
-                    {
-                        id = Guid.NewGuid().ToString(),
-                        Order = lesson.Order,
-                        SemesterGroupName = lesson.SemesterName,
-                        BeginDate = now,
-                        CreatedDate = now,
-                        LessonId = lesson.id,
-                        TopicOfTheDays = lesson.TopicOfTheDays
-                            .Where(it => !it.DeletedDate.HasValue)
-                            .Select(it => new ClassCalendar.TopicOfTheDay
-                            {
-                                id = it.id,
-                                Message = it.Message,
-                                SendOnDay = it.SendOnDay,
-                                CreatedDate = now,
-                            })
-                    });
-                var newClassCalendar = new ClassCalendar
-                {
-                    id = Guid.NewGuid().ToString(),
-                    ClassRoomId = newClassRoom.id,
-                    CreatedDate = now,
-                    Holidays = Enumerable.Empty<DateTime>(),
-                    ShiftDays = Enumerable.Empty<DateTime>(),
-                    LessonCalendars = lessonCalendars
-                };
-                await _classCalendarRepo.CreateNewClassCalendar(newClassCalendar);
-
-                // Create new UserActivity
-                var userActivity = selectedUserProfile.CreateNewUserActivity(newClassRoom, newClassCalendar, lessonCatalogs, now);
-                _userActivityRepo.UpsertUserActivity(userActivity);
-
-                // Create new subscription
-                var subscriptions = createNewSubscription(selectedUserProfile.Subscriptions, UserProfile.AccountRole.Teacher, newClassRoom, newClassCalendar.id, selectedLicense.id, now);
-                selectedUserProfile.Subscriptions = subscriptions;
-                _userprofileRepo.UpsertUserProfile(selectedUserProfile);
-
-                // Create new student key
-                var newStudentKey = new StudentKey
-                {
-                    id = Guid.NewGuid().ToString(),
-                    Grade = body.Grade,
-                    Code = generateStudentCode(body.Grade),
-                    CourseCatalogId = selectedCourseCatalog.id,
-                    ClassRoomId = newClassRoom.id,
-                    CreatedDate = now
-                };
-                
-                await _studentKeyRepo.CreateNewStudentKey(newStudentKey);
-                return new AddCourseRespond
-                {
-                    Code = body.Code,
-                    Grade = body.Grade,
-                    IsSuccess = true
-                };
-            }
+                Code = body.Code,
+                Grade = body.Grade,
+                IsSuccess = isSuccessed
+            };
         }
-
         private bool addNewCourseByStudentCode(UserProfile selectedUserProfile, StudentKey selectedStudentKey, DateTime currentTime)
         {
             var canUserprofileAccessToTheClassRoom = selectedUserProfile.Subscriptions
@@ -594,11 +489,11 @@ namespace MindSageWeb.Controllers
                 return false;
             }
 
-            selectedUserProfile.Subscriptions = createNewSubscription(selectedUserProfile.Subscriptions, 
-                UserProfile.AccountRole.Student, 
-                selectedClassRoom, 
-                selectedClassCalendar.id, 
-                teacherSubscription.LicenseId, 
+            selectedUserProfile.Subscriptions = createNewSubscription(selectedUserProfile.Subscriptions,
+                UserProfile.AccountRole.Student,
+                selectedClassRoom,
+                selectedClassCalendar.id,
+                teacherSubscription.LicenseId,
                 currentTime);
             _userprofileRepo.UpsertUserProfile(selectedUserProfile);
 
@@ -607,7 +502,103 @@ namespace MindSageWeb.Controllers
 
             return true;
         }
+        private async Task<bool> addNewCourseByTeacherCode(string code, string grade, UserProfile selectedUserProfile, DateTime currentTime)
+        {
+            var selectedContract = await _contractRepo.GetContractsByTeacherCode(code, grade);
+            var isTeacherKey = selectedContract != null
+                && !selectedContract.DeletedDate.HasValue
+                && selectedContract.Licenses.Any();
+            if (!isTeacherKey) return false;
 
+            var selectedLicense = selectedContract.Licenses
+                .Where(it => !it.DeletedDate.HasValue)
+                .FirstOrDefault(it => it.TeacherKeys.Any(t => !t.DeletedDate.HasValue && t.Code == code && t.Grade == grade));
+            if (selectedLicense == null) return false;
+
+            var selectedTeacherKey = selectedLicense.TeacherKeys
+                .Where(it => !it.DeletedDate.HasValue)
+                .OrderBy(it => it.CreatedDate)
+                .LastOrDefault();
+            if (selectedTeacherKey == null) return false;
+
+            // Create new ClassRoom
+            var selectedCourseCatalog = _courseCatalogRepo.GetCourseCatalogById(selectedLicense.CourseCatalogId);
+            if (selectedCourseCatalog == null) return false;
+            var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogByCourseCatalogId(selectedCourseCatalog.id).ToList();
+            if (lessonCatalogs == null || !lessonCatalogs.Any()) return false;
+            var lessons = lessonCatalogs
+                .Where(it => !it.DeletedDate.HasValue)
+                .Select(it => new ClassRoom.Lesson
+                {
+                    id = it.id,
+                    LessonCatalogId = it.id
+                });
+            var newClassRoom = new ClassRoom
+            {
+                id = Guid.NewGuid().ToString(),
+                Name = selectedCourseCatalog.SideName,
+                CourseCatalogId = selectedCourseCatalog.id,
+                CreatedDate = currentTime,
+                LastUpdatedMessageDate = currentTime,
+                Lessons = lessons
+            };
+            await _classRoomRepo.CreateNewClassRoom(newClassRoom);
+
+            // Create new ClassCalendar
+            var lessonCalendars = lessonCatalogs
+                .Where(it => !it.DeletedDate.HasValue)
+                .Select(lesson => new ClassCalendar.LessonCalendar
+                {
+                    id = Guid.NewGuid().ToString(),
+                    Order = lesson.Order,
+                    SemesterGroupName = lesson.SemesterName,
+                    BeginDate = currentTime,
+                    CreatedDate = currentTime,
+                    LessonId = lesson.id,
+                    TopicOfTheDays = lesson.TopicOfTheDays
+                        .Where(it => !it.DeletedDate.HasValue)
+                        .Select(it => new ClassCalendar.TopicOfTheDay
+                        {
+                            id = it.id,
+                            Message = it.Message,
+                            SendOnDay = it.SendOnDay,
+                            CreatedDate = currentTime,
+                        })
+                });
+            var newClassCalendar = new ClassCalendar
+            {
+                id = Guid.NewGuid().ToString(),
+                ClassRoomId = newClassRoom.id,
+                CreatedDate = currentTime,
+                Holidays = Enumerable.Empty<DateTime>(),
+                ShiftDays = Enumerable.Empty<DateTime>(),
+                LessonCalendars = lessonCalendars
+            };
+            await _classCalendarRepo.CreateNewClassCalendar(newClassCalendar);
+
+            // Create new UserActivity
+            var userActivity = selectedUserProfile.CreateNewUserActivity(newClassRoom, newClassCalendar, lessonCatalogs, currentTime);
+            _userActivityRepo.UpsertUserActivity(userActivity);
+
+            // Create new subscription
+            var subscriptions = createNewSubscription(selectedUserProfile.Subscriptions, UserProfile.AccountRole.Teacher, newClassRoom, newClassCalendar.id, selectedLicense.id, currentTime);
+            selectedUserProfile.Subscriptions = subscriptions;
+            _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+
+            // Create new student key
+            var newStudentKey = new StudentKey
+            {
+                id = Guid.NewGuid().ToString(),
+                Grade = grade,
+                Code = generateStudentCode(grade),
+                CourseCatalogId = selectedCourseCatalog.id,
+                ClassRoomId = newClassRoom.id,
+                CreatedDate = currentTime
+            };
+
+            await _studentKeyRepo.CreateNewStudentKey(newStudentKey);
+            return true;
+        }
         private string generateStudentCode(string grade)
         {
             var newStudentCode = string.Empty;
@@ -619,7 +610,6 @@ namespace MindSageWeb.Controllers
             }
             return newStudentCode;
         }
-
         private IEnumerable<UserProfile.Subscription> createNewSubscription(IEnumerable<UserProfile.Subscription> subscriptions, UserProfile.AccountRole role, ClassRoom classRoom, string classCalendarId, string licenseId, DateTime currentTime)
         {
             var result = subscriptions.ToList();
