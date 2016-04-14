@@ -260,6 +260,7 @@ namespace MindSageWeb.Controllers
                     Subscriptions = Enumerable.Empty<Repositories.Models.UserProfile.Subscription>()
                 };
                 _userProfileRepo.UpsertUserProfile(newUserProfile);
+                _logger.LogInformation($"Create new user profile { email } complete");
             }
             catch (Exception e)
             {
