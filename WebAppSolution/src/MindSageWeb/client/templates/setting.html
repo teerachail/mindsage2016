@@ -112,7 +112,7 @@ controller: 'app.settings.SettingController as cx'
                 </div>
                 <div class="grid-content shrink">
                     <p>
-                        {{ cx.clientProfileSvc.ClientUserProfile.StartDate }}
+                        {{ cx.clientProfileSvc.ClientUserProfile.StartDate | date:'MM/dd/yyyy'}}
                     </p>
                 </div>
             </div>
