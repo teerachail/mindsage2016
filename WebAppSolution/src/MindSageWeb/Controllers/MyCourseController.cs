@@ -447,7 +447,7 @@ namespace MindSageWeb.Controllers
 
             var now = _dateTime.GetCurrentTime();
             var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(body.Code, body.Grade);
-            var isStudentKey = selectedStudentKey != null;
+            var isStudentKey = selectedStudentKey != null && !selectedStudentKey.DeletedDate.HasValue;
             var isSuccessed = isStudentKey ?
                 addNewCourseByStudentCode(selectedUserProfile, selectedStudentKey, now) :
                 await addNewCourseByTeacherCode(body.Code, body.Grade, selectedUserProfile, now);

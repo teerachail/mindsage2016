@@ -241,3 +241,67 @@ Scenario: Incorrect user add new course by using the right informations Then sys
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
 	Then System doesn't add new subscription  
 	And System doesn't add UserActivity  
+
+@mock  
+Scenario: User who already have course want to add the same course Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have UserProfile collection with JSON format are  
+    """
+    [
+		{
+			"id": "teacher@mindsage.com",
+			"Name": "Teacher",
+			"ImageProfileUrl": "teacher.jpg",
+			"Subscriptions": [
+				{
+					"Role": "Teacher",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+					"CreatedDate": "1/1/2016 00:00 am",
+					"ClassRoomName": "Emotional literacy",
+					"LicenseId": "License01"
+				}
+			]
+		},
+		{
+			"id": "sakul@mindsage.com",
+			"Name": "Sakul",
+			"ImageProfileUrl": "sakul.jpg",
+			"Subscriptions": [
+				{
+					"Role": "Student",
+					"ClassRoomId": "ClassRoom01",
+					"ClassCalendarId": "ClassCalendar01",
+					"CreatedDate": "1/1/2016 00:00 am",
+					"ClassRoomName": "Emotional literacy",
+					"LicenseId": "License01"
+				}
+			]
+		},
+    ]
+    """  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+
+
+@mock  
+Scenario: User add new course by using deleted student code Then system doesn't add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have StudentKey collection with JSON format are  
+	"""
+	[
+		{
+			"id": "StudentKey01",
+			"Code": "StudentCode01",
+			"Grade": "Grade01",
+			"CourseCatalogId": "CourseCatalog01",
+			"ClassRoomId": "ClassRoom01",
+			"CreatedDate": "2/1/2016",
+			"DeletedDate": "2/1/2016",
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
