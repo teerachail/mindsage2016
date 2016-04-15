@@ -24,7 +24,7 @@ namespace MindSageWeb.Repositories.Models
         #region Properties
 
         public string Name { get; set; }
-        public DateTime? BeginDate { get; set; }
+        public DateTime BeginDate { get; set; }
 
         #endregion Properties
     }

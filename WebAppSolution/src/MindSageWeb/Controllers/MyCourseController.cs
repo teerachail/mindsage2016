@@ -869,7 +869,10 @@ namespace MindSageWeb.Controllers
             if (!canAccessToCourse) return null;
 
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
-            if (classCalendar == null) return null;
+            var canAccessClassCalendar = classCalendar != null
+                && !classCalendar.DeletedDate.HasValue
+                && !classCalendar.CloseDate.HasValue;
+            if (!canAccessClassCalendar) return null;
 
             var result = getCourseSchedule(classCalendar, true);
             return result;
@@ -1068,11 +1071,11 @@ namespace MindSageWeb.Controllers
             {
                 IsComplete = isComplete,
                 BeginDate = classCalendar.BeginDate,
-                EndDate = classCalendar.LessonCalendars.OrderBy(it => it.Order).LastOrDefault()?.BeginDate.AddDays(LessonDuration), // HACK: คำนวณวันจบ course
+                EndDate = classCalendar.ExpiredDate?.Date,
                 Lessons = classCalendar.LessonCalendars?.Select(it => new LessonSchedule
                 {
                     BeginDate = it.BeginDate,
-                    Name = string.Format("Lesson {0}", runningLessonId++)
+                    Name = $"Lesson {runningLessonId++}"
                 }).ToList(),
                 Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>(),
                 ShiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>(),

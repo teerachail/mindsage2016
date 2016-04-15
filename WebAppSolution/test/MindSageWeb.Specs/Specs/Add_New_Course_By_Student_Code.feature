@@ -89,6 +89,7 @@ Background: Initialize mocking data
         {
             "id": "ClassCalendar01",
             "BeginDate": "2/1/2016",
+			"ExpiredDate": "1/1/2017",
             "ClassRoomId": "ClassRoom01",
             "LessonCalendars":
             [
