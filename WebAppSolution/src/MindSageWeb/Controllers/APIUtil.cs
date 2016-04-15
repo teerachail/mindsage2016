@@ -81,39 +81,30 @@ namespace MindSageWeb.Controllers
                 && classCalendar.LessonCalendars.Any();
             if (!areArgumentsValid) return;
 
+            classCalendar.Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
+            classCalendar.ShiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
+
             const int ShiftOneDay = 1;
             const int LessonDuration = 5;
             var currentBeginDate = classCalendar.BeginDate.Value;
-
-            // HACK: ต้องยกเลิกการคลี่ lessonRange มาใช้ช่วงเวลาแทน
-            var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>())
-                .Select(it => new DateTime(it.Year, it.Month, it.Day).ToUniversalTime());
-            
+            var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>()).Select(it => it.ToUniversalTime());
             var lessonQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue).OrderBy(it => it.Order);
             foreach (var lesson in lessonQry)
             {
-                // Set lesson's begin date
+                // Set begin date for each lesson
+                var list = new List<DateTime>();
+                var offerDay = 0;
                 while (true)
                 {
-                    var beginDate = currentBeginDate;
-                    var endDate = currentBeginDate.AddDays(LessonDuration);
-                    var lessonRange = Enumerable.Range(0, LessonDuration).Select(it => beginDate.AddDays(it).ToUniversalTime()); // HACK: ต้องยกเลิกการคลี่ lessonRange มาใช้ช่วงเวลาแทน
-                    var availableRange = lessonRange.Except(shiftDays);
-                    if (availableRange.Any())
+                    var date = currentBeginDate.AddDays(offerDay++);
+                    if (!shiftDays.Any(it => it == date))
                     {
-                        lesson.BeginDate = availableRange.First();
-                        var totalShiftDayInLessonRange = lessonRange.Intersect(shiftDays).Count();
-                        var nextBeginDate = endDate.AddDays(totalShiftDayInLessonRange);
-                        currentBeginDate = nextBeginDate;
-                        break;
-                    }
-                    else
-                    {
-                        const int ShiftOneDayForNextLesson = 1;
-                        var nextBeginDate = endDate.AddDays(ShiftOneDayForNextLesson);
-                        currentBeginDate = nextBeginDate;
+                        list.Add(date);
+                        if (list.Count == LessonDuration) break;
                     }
                 }
+                lesson.BeginDate = list.First();
+                currentBeginDate = list.Last().AddDays(ShiftOneDay);
 
                 // Set topic of the day date
                 foreach (var totd in lesson.TopicOfTheDays)
@@ -122,6 +113,7 @@ namespace MindSageWeb.Controllers
                     totd.RequiredSendTopicOfTheDayDate = lesson.BeginDate.AddDays(sendDay);
                 }
             }
+            classCalendar.ExpiredDate = currentBeginDate;
         }
 
         public static UserActivity CreateNewUserActivity(this UserProfile selectedUserProfile, ClassRoom selectedClassRoom, ClassCalendar selectedClassCalendar, List<LessonCatalog> lessonCatalogs, DateTime now)

@@ -31,7 +31,21 @@ namespace MindSageWeb.Specs.Steps
             var expected = JsonConvert.DeserializeObject<GetCourseScheduleRespond>(multilineText);
             var actual = ScenarioContext.Current.Get<GetCourseScheduleRespond>();
 
-            Assert.Equal(JsonConvert.SerializeObject(expected), JsonConvert.SerializeObject(actual));
+            Assert.Equal(expected.BeginDate?.ToUniversalTime(), actual.BeginDate?.ToUniversalTime());
+            Assert.Equal(expected.EndDate?.ToUniversalTime(), actual.EndDate?.ToUniversalTime());
+            Assert.Equal(expected.IsComplete, actual.IsComplete);
+
+            var expectedHoliday = JsonConvert.SerializeObject(expected.Holidays.Select(it => it.ToUniversalTime()));
+            var actualHoliday = JsonConvert.SerializeObject(actual.Holidays.Select(it => it.ToUniversalTime()));
+            Assert.Equal(expectedHoliday, actualHoliday);
+
+            var expectedShiftDays = JsonConvert.SerializeObject(expected.ShiftDays.Select(it => it.ToUniversalTime()));
+            var actualShiftDays = JsonConvert.SerializeObject(actual.ShiftDays.Select(it => it.ToUniversalTime()));
+            Assert.Equal(expectedShiftDays,actualShiftDays);
+
+            var expectedLessons = JsonConvert.SerializeObject(expected.Lessons.Select(it => new LessonSchedule{ BeginDate = it.BeginDate.ToUniversalTime(), Name = it.Name }));
+            var actualLessons = JsonConvert.SerializeObject(actual.Lessons.Select(it => new LessonSchedule { BeginDate = it.BeginDate.ToUniversalTime(), Name = it.Name }));
+            Assert.Equal(expectedLessons, actualLessons);
         }
 
         [Then(@"System send null back")]

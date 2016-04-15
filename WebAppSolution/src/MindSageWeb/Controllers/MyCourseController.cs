@@ -898,11 +898,15 @@ namespace MindSageWeb.Controllers
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             if (classCalendar == null) return null;
 
-            classCalendar.BeginDate = body.BeginDate;
-            classCalendar.CalculateCourseSchedule();
-            _classCalendarRepo.UpsertClassCalendar(classCalendar);
+            var canSetStartDate = !classCalendar.BeginDate.HasValue
+                || _dateTime.GetCurrentTime().ToUniversalTime().Date <= body.BeginDate.ToUniversalTime().Date;
+            if (canSetStartDate)
+            {
+                classCalendar.BeginDate = body.BeginDate.Date.ToUniversalTime();
+                classCalendar.CalculateCourseSchedule();
+                _classCalendarRepo.UpsertClassCalendar(classCalendar);
+            }
 
-            classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             var result = getCourseSchedule(classCalendar, true);
             return result;
         }
@@ -1070,11 +1074,11 @@ namespace MindSageWeb.Controllers
             var result = new GetCourseScheduleRespond
             {
                 IsComplete = isComplete,
-                BeginDate = classCalendar.BeginDate,
-                EndDate = classCalendar.ExpiredDate?.Date,
+                BeginDate = classCalendar.BeginDate?.ToUniversalTime(),
+                EndDate = classCalendar.ExpiredDate?.ToUniversalTime(),
                 Lessons = classCalendar.LessonCalendars?.Select(it => new LessonSchedule
                 {
-                    BeginDate = it.BeginDate,
+                    BeginDate = it.BeginDate.ToUniversalTime(),
                     Name = $"Lesson {runningLessonId++}"
                 }).ToList(),
                 Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>(),
