@@ -434,6 +434,7 @@ namespace MindSageWeb.Controllers
                 Code = body.Code,
                 Grade = body.Grade,
             };
+            
             var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.UserProfileId)
                 && !string.IsNullOrEmpty(body.Code)
@@ -444,10 +445,9 @@ namespace MindSageWeb.Controllers
             var isValidUserProfile = selectedUserProfile != null && selectedUserProfile.Subscriptions != null;
             if (!isValidUserProfile) return addCourseFailRespond;
 
+            var now = _dateTime.GetCurrentTime();
             var selectedStudentKey = _studentKeyRepo.GetStudentKeyByCodeAndGrade(body.Code, body.Grade);
             var isStudentKey = selectedStudentKey != null;
-
-            var now = _dateTime.GetCurrentTime();
             var isSuccessed = isStudentKey ?
                 addNewCourseByStudentCode(selectedUserProfile, selectedStudentKey, now) :
                 await addNewCourseByTeacherCode(body.Code, body.Grade, selectedUserProfile, now);

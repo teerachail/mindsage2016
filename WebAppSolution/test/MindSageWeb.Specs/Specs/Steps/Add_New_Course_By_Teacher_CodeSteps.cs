@@ -18,6 +18,10 @@ namespace MindSageWeb.Specs.Steps
         [When(@"UserProfile '(.*)' Add new course by using teteacher code '(.*)' and grade '(.*)'")]
         public async Task WhenUserProfileAddNewCourseByUsingTeteacherCodeAndGrade(string userprofileId, string code, string grade)
         {
+            userprofileId = userprofileId.GetMockStrinValue();
+            code = code.GetMockStrinValue();
+            grade = grade.GetMockStrinValue();
+
             var mockUserProfileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
             mockUserProfileRepo.Setup(it => it.UpsertUserProfile(It.IsAny<UserProfile>()));
 
@@ -45,6 +49,37 @@ namespace MindSageWeb.Specs.Steps
                 Grade = grade
             };
             await mycourseCtrl.AddCourse(body);
+        }
+
+        [Then(@"System create new ClassRoom with JSON format is")]
+        public void ThenSystemCreateNewClassRoomWithJSONFormatIs(string multilineText)
+        {
+            var expectedClassRoom = JsonConvert.DeserializeObject<ClassRoom>(multilineText);
+
+            Func<List<ClassRoom.Lesson>, bool> validateLessonFunc = lessons =>
+            {
+                var expectedLessons = expectedClassRoom.Lessons.ToList();
+                for (int index = 0; index < expectedLessons.Count; index++)
+                {
+                    Assert.Equal(expectedLessons[index].id, lessons[index].id);
+                    Assert.Equal(expectedLessons[index].LessonCatalogId, lessons[index].LessonCatalogId);
+                    Assert.Equal(expectedLessons[index].TotalLikes, lessons[index].TotalLikes);
+                }
+
+                return true;
+            };
+
+            var mockClassRoomRepo = ScenarioContext.Current.Get<Mock<IClassRoomRepository>>();
+            mockClassRoomRepo.Verify(it => it.CreateNewClassRoom(It.Is<ClassRoom>(actual =>
+                !string.IsNullOrEmpty(actual.id)
+                && actual.Name == expectedClassRoom.Name
+                && actual.CourseCatalogId == expectedClassRoom.CourseCatalogId
+                && actual.CreatedDate == expectedClassRoom.CreatedDate
+                && actual.LastUpdatedMessageDate == expectedClassRoom.LastUpdatedMessageDate
+                && !actual.DeletedDate.HasValue
+                && actual.Lessons.Count() == expectedClassRoom.Lessons.Count()
+                && validateLessonFunc(actual.Lessons.ToList())
+            )));
         }
 
         [Then(@"System add new teacher subscription for user id '(.*)' collection with JSON format are")]
@@ -129,6 +164,27 @@ namespace MindSageWeb.Specs.Steps
                 && actual.CreatedDate == expected.CreatedDate
                 && !actual.DeletedDate.HasValue
             )));
+        }
+
+        [Then(@"System doesn't create new ClassRoom")]
+        public void ThenSystemDoesnTCreateNewClassRoom()
+        {
+            var mockClassRoomRepo = ScenarioContext.Current.Get<Mock<IClassRoomRepository>>();
+            mockClassRoomRepo.Verify(it => it.CreateNewClassRoom(It.IsAny<ClassRoom>()), Times.Never);
+        }
+
+        [Then(@"System doesn't create new ClassCalendar")]
+        public void ThenSystemDoesnTCreateNewClassCalendar()
+        {
+            var mockClassCalendarRepo = ScenarioContext.Current.Get<Mock<IClassCalendarRepository>>();
+            mockClassCalendarRepo.Verify(it => it.CreateNewClassCalendar(It.IsAny<ClassCalendar>()), Times.Never);
+        }
+
+        [Then(@"System doesn't create new StudentKey")]
+        public void ThenSystemDoesnTCreateNewStudentKey()
+        {
+            var mockStudentKeyRepo = ScenarioContext.Current.Get<Mock<IStudentKeyRepository>>();
+            mockStudentKeyRepo.Verify(it => it.CreateNewStudentKey(It.IsAny<StudentKey>()), Times.Never);
         }
     }
 }

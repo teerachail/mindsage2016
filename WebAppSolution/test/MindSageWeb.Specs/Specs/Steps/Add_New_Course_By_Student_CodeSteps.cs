@@ -102,37 +102,6 @@ namespace MindSageWeb.Specs.Steps
             )));
         }
 
-        [Then(@"System create new ClassRoom with JSON format is")]
-        public void ThenSystemCreateNewClassRoomWithJSONFormatIs(string multilineText)
-        {
-            var expectedClassRoom = JsonConvert.DeserializeObject<ClassRoom>(multilineText);
-
-            Func<List<ClassRoom.Lesson>, bool> validateLessonFunc = lessons =>
-            {
-                var expectedLessons = expectedClassRoom.Lessons.ToList();
-                for (int index = 0; index < expectedLessons.Count; index++)
-                {
-                    Assert.Equal(expectedLessons[index].id, lessons[index].id);
-                    Assert.Equal(expectedLessons[index].LessonCatalogId, lessons[index].LessonCatalogId);
-                    Assert.Equal(expectedLessons[index].TotalLikes, lessons[index].TotalLikes);
-                }
-
-                return true;
-            };
-
-            var mockClassRoomRepo = ScenarioContext.Current.Get<Mock<IClassRoomRepository>>();
-            mockClassRoomRepo.Verify(it => it.CreateNewClassRoom(It.Is<ClassRoom>(actual =>
-                !string.IsNullOrEmpty(actual.id)
-                && actual.Name == expectedClassRoom.Name
-                && actual.CourseCatalogId == expectedClassRoom.CourseCatalogId
-                && actual.CreatedDate == expectedClassRoom.CreatedDate
-                && actual.LastUpdatedMessageDate == expectedClassRoom.LastUpdatedMessageDate
-                && !actual.DeletedDate.HasValue
-                && actual.Lessons.Count() == expectedClassRoom.Lessons.Count()
-                && validateLessonFunc(actual.Lessons.ToList())
-            )));
-        }
-
         [Then(@"System doesn't add new subscription")]
         public void ThenSystemDoesnTAddNewSubscription()
         {

@@ -173,3 +173,520 @@ Scenario: User add new course by using the right teacher code Then system add ne
 		"CreatedDate": "2/8/2016 00:00 am",
 	}
 	"""  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher code Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code 'IncorrectCode' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher grade Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade 'IncorrectGrade'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher code and grade Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code 'IncorrectCode' and grade 'IncorrectGrade'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: Incorrect user add new course by using a correct teacher code Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'unknow@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher code (empty) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher grade (empty) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade ''
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher code and grade (empty) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '' and grade ''
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: Incorrect user add new course by using a correct teacher code (empty) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile '' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher code (null) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code 'NULL' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher grade (null) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade 'NULL'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course by using a incorrect teacher code and grade (null) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code 'NULL' and grade 'NULL'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: Incorrect user add new course by using a correct teacher code (null) Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+    When UserProfile 'NULL' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course but contracts in system doens't existing Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+
+@mock  
+Scenario: User add new course but licenses in system doens't existing Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[
+		{
+			"id": "Contract01",
+			"SchoolName": "SchoolName01",
+			"State": "CA",
+			"ZipCode": "95123",
+			"CreatedDate": "1/1/2016",
+			"Licenses": []
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course but TeacherKeys in system doens't existing Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[
+		{
+			"id": "Contract01",
+			"SchoolName": "SchoolName01",
+			"State": "CA",
+			"ZipCode": "95123",
+			"CreatedDate": "1/1/2016",
+			"Licenses": [
+				{
+					"id": "License01",
+					"CourseCatalogId": "CourseCatalog01",
+					"Grade": 7,
+					"TeacherKeys": []
+				}
+			]
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course but the contract was deleted Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[
+		{
+			"id": "Contract01",
+			"SchoolName": "SchoolName01",
+			"State": "CA",
+			"ZipCode": "95123",
+			"CreatedDate": "1/1/2016",
+			"DeletedDate": "1/1/2016",
+			"Licenses": [
+				{
+					"id": "License01",
+					"CourseCatalogId": "CourseCatalog01",
+					"Grade": 7,
+					"TeacherKeys": [
+						{
+							"id": "TeacherKey01",
+							"Grade": 7,
+							"Code": "07CA95123U48PSchoolName",
+							"CreatedDate": "1/1/2016"
+						}
+					]
+				}
+			]
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course but the license was deleted Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[
+		{
+			"id": "Contract01",
+			"SchoolName": "SchoolName01",
+			"State": "CA",
+			"ZipCode": "95123",
+			"CreatedDate": "1/1/2016",
+			"Licenses": [
+				{
+					"id": "License01",
+					"CourseCatalogId": "CourseCatalog01",
+					"Grade": 7,
+					"DeletedDate": "1/1/2016",
+					"TeacherKeys": [
+						{
+							"id": "TeacherKey01",
+							"Grade": 7,
+							"Code": "07CA95123U48PSchoolName",
+							"CreatedDate": "1/1/2016"
+						}
+					]
+				}
+			]
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course but the TeacherKey was deleted Then system doesn't add new course to the user  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[
+		{
+			"id": "Contract01",
+			"SchoolName": "SchoolName01",
+			"State": "CA",
+			"ZipCode": "95123",
+			"CreatedDate": "1/1/2016",
+			"Licenses": [
+				{
+					"id": "License01",
+					"CourseCatalogId": "CourseCatalog01",
+					"Grade": 7,
+					"TeacherKeys": [
+						{
+							"id": "TeacherKey01",
+							"Grade": 7,
+							"Code": "07CA95123U48PSchoolName",
+							"CreatedDate": "1/1/2016",
+							"DeletedDate": "1/1/2016",
+						}
+					]
+				}
+			]
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System doesn't create new ClassRoom  
+	And System doesn't create new ClassCalendar  
+	Then System doesn't add new subscription  
+	And System doesn't add UserActivity  
+	And System doesn't create new StudentKey  
+
+@mock  
+Scenario: User add new course all data correct (some licenses was deleted) Then system add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[
+		{
+			"id": "Contract01",
+			"SchoolName": "SchoolName01",
+			"State": "CA",
+			"ZipCode": "95123",
+			"CreatedDate": "1/1/2016",
+			"Licenses": [
+				{
+					"id": "License01",
+					"CourseCatalogId": "CourseCatalog01",
+					"Grade": 7,
+					"DeletedDate": "1/1/2016",
+					"TeacherKeys": [
+						{
+							"id": "TeacherKey01",
+							"Grade": 7,
+							"Code": "07CA95123U48PSchoolName",
+							"CreatedDate": "1/1/2016"
+						}
+					]
+				},
+				{
+					"id": "License02",
+					"CourseCatalogId": "CourseCatalog01",
+					"Grade": 7,
+					"TeacherKeys": [
+						{
+							"id": "TeacherKey01",
+							"Grade": 7,
+							"Code": "07CA95123U48PSchoolName",
+							"CreatedDate": "1/1/2016"
+						}
+					]
+				}
+			]
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System create new ClassRoom with JSON format is  
+	"""  
+	{
+		"Name": "COMPLETE 7th GRADE COURSE",
+		"CourseCatalogId": "CourseCatalog01",
+		"CreatedDate": "2/8/2016 00:00 am",
+		"LastUpdatedMessageDate": "2/8/2016 00:00 am",
+		"Lessons": [
+			{
+				"id": "LessonCatalog01",
+				"LessonCatalogId": "LessonCatalog01",
+			}
+		]
+	}
+	"""  
+	And System create new ClassCalendar with JSON format is  
+	"""  
+	{
+		"CreatedDate": "2/8/2016 00:00 am",
+		"LessonCalendars": [
+			{
+				"Order": 1,
+				"SemesterGroupName": "A",
+				"BeginDate": "2/8/2016 00:00 am",
+				"CreatedDate": "2/8/2016 00:00 am",
+				"LessonId": "LessonCatalog01",
+				"TopicOfTheDays": []
+			}
+		]
+	}
+	"""  
+	And System upsert user id 'sakul@mindsage.com' UserActivity's LessonActivities collection with JSON format are
+    """
+	[
+		{
+			"LessonId": "LessonCatalog01",
+			"TotalContentsAmount": 4,
+			"SawContentIds": [],
+			"CreatedCommentAmount": 0,
+			"ParticipationAmount": 0,
+			"BeginDate": "2/8/2016 00:00 am",
+		}
+	]
+    """  
+	And System add new teacher subscription for user id 'sakul@mindsage.com' collection with JSON format are  
+    """
+	[
+		{
+			"Role": "Teacher",
+			"ClassRoomName": "COMPLETE 7th GRADE COURSE",
+			"LicenseId": "License02",
+			"CourseCatalogId": "CourseCatalog01",
+			"CreatedDate": "2/8/2016 00:00 am",
+			"LastActiveDate": "2/8/2016 00:00 am",
+		}
+	]
+    """  
+	And System create new StudentKey with JSON format is  
+	"""  
+	{
+		"Grade": 7,
+		"CourseCatalogId": "CourseCatalog01",
+		"CreatedDate": "2/8/2016 00:00 am",
+	}
+	"""  
+
+@mock  
+Scenario: User add new course all data correct (some teacheTeacherKey was deleted) Then system add new course to the user's subscription  
+    Given Today is '2/8/2016 00:00 am'  
+	And System have Contract collection with JSON format are  
+	"""  
+	[
+		{
+			"id": "Contract01",
+			"SchoolName": "SchoolName01",
+			"State": "CA",
+			"ZipCode": "95123",
+			"CreatedDate": "1/1/2016",
+			"Licenses": [
+				{
+					"id": "License01",
+					"CourseCatalogId": "CourseCatalog01",
+					"Grade": 7,
+					"TeacherKeys": [
+						{
+							"id": "TeacherKey01",
+							"Grade": 7,
+							"Code": "07CA95123U48PSchoolName",
+							"CreatedDate": "1/1/2016",
+							"DeletedDate": "1/1/2016"
+						},
+						{
+							"id": "TeacherKey02",
+							"Grade": 7,
+							"Code": "07CA95123U48PSchoolName",
+							"CreatedDate": "1/1/2016"
+						}
+					]
+				}
+			]
+		}
+	]
+	"""  
+    When UserProfile 'sakul@mindsage.com' Add new course by using teteacher code '07CA95123U48PSchoolName' and grade '7'
+    Then System create new ClassRoom with JSON format is  
+	"""  
+	{
+		"Name": "COMPLETE 7th GRADE COURSE",
+		"CourseCatalogId": "CourseCatalog01",
+		"CreatedDate": "2/8/2016 00:00 am",
+		"LastUpdatedMessageDate": "2/8/2016 00:00 am",
+		"Lessons": [
+			{
+				"id": "LessonCatalog01",
+				"LessonCatalogId": "LessonCatalog01",
+			}
+		]
+	}
+	"""  
+	And System create new ClassCalendar with JSON format is  
+	"""  
+	{
+		"CreatedDate": "2/8/2016 00:00 am",
+		"LessonCalendars": [
+			{
+				"Order": 1,
+				"SemesterGroupName": "A",
+				"BeginDate": "2/8/2016 00:00 am",
+				"CreatedDate": "2/8/2016 00:00 am",
+				"LessonId": "LessonCatalog01",
+				"TopicOfTheDays": []
+			}
+		]
+	}
+	"""  
+	And System upsert user id 'sakul@mindsage.com' UserActivity's LessonActivities collection with JSON format are
+    """
+	[
+		{
+			"LessonId": "LessonCatalog01",
+			"TotalContentsAmount": 4,
+			"SawContentIds": [],
+			"CreatedCommentAmount": 0,
+			"ParticipationAmount": 0,
+			"BeginDate": "2/8/2016 00:00 am",
+		}
+	]
+    """  
+	And System add new teacher subscription for user id 'sakul@mindsage.com' collection with JSON format are  
+    """
+	[
+		{
+			"Role": "Teacher",
+			"ClassRoomName": "COMPLETE 7th GRADE COURSE",
+			"LicenseId": "License01",
+			"CourseCatalogId": "CourseCatalog01",
+			"CreatedDate": "2/8/2016 00:00 am",
+			"LastActiveDate": "2/8/2016 00:00 am",
+		}
+	]
+    """  
+	And System create new StudentKey with JSON format is  
+	"""  
+	{
+		"Grade": 7,
+		"CourseCatalogId": "CourseCatalog01",
+		"CreatedDate": "2/8/2016 00:00 am",
+	}
+	"""  
