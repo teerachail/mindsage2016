@@ -536,54 +536,6 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Add_New_Course_By_Student_Code")]
-        [Xunit.TraitAttribute("Description", "User add new course by using deleted student code but have another can active The" +
-            "n system add new course to the user\'s subscription")]
-        [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void UserAddNewCourseByUsingDeletedStudentCodeButHaveAnotherCanActiveThenSystemAddNewCourseToTheUserSSubscription()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User add new course by using deleted student code but have another can active The" +
-                    "n system add new course to the user\'s subscription", new string[] {
-                        "mock"});
-#line 310
-this.ScenarioSetup(scenarioInfo);
-#line 6
-this.FeatureBackground();
-#line 311
-    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
-#line 312
- testRunner.And("System have StudentKey collection with JSON format are", @"[
-	{
-		""id"": ""StudentKey01"",
-		""Code"": ""StudentCode01"",
-		""Grade"": ""Grade01"",
-		""CourseCatalogId"": ""CourseCatalog01"",
-		""ClassRoomId"": ""ClassRoom01"",
-		""CreatedDate"": ""2/1/2016"",
-		""DeletedDate"": ""2/1/2016"",
-	},
-	{
-		""id"": ""StudentKey02"",
-		""Code"": ""StudentCode01"",
-		""Grade"": ""Grade01"",
-		""CourseCatalogId"": ""CourseCatalog01"",
-		""ClassRoomId"": ""ClassRoom01"",
-		""CreatedDate"": ""2/1/2016"",
-	}
-]", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 334
-    testRunner.When("UserProfile \'sakul@mindsage.com\' Add new course by using code \'StudentCode01\' and" +
-                    " grade \'Grade01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 335
- testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 336
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-            this.ScenarioCleanup();
-        }
-        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

@@ -132,6 +132,10 @@ namespace MindSageWeb.Specs.Steps
                     Assert.Equal(expectedLessonCalendars[index].CreatedDate, lessonCalendars[index].CreatedDate);
                     Assert.Equal(expectedLessonCalendars[index].LessonId, lessonCalendars[index].LessonId);
                     Assert.Equal(expectedLessonCalendars[index].TopicOfTheDays.Count(), lessonCalendars[index].TopicOfTheDays.Count());
+
+                    var expectedTOTDString = JsonConvert.SerializeObject(expectedLessonCalendars[index].TopicOfTheDays);
+                    var actualTOTDString = JsonConvert.SerializeObject(lessonCalendars[index].TopicOfTheDays);
+                    Assert.Equal(expectedTOTDString, actualTOTDString);
                 }
                 return true;
             };
