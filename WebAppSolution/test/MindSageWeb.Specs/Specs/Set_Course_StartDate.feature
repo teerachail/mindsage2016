@@ -93,7 +93,7 @@ Scenario: Teacher set course start date Then system set ClassCalendar and send t
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "2/8/2016",
-		"ExpiredDate": "2/18/2016",
+		"ExpiredDate": "2/17/2016",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -124,7 +124,7 @@ Scenario: Teacher set course start date Then system set ClassCalendar and send t
 	{
 		"IsComplete": true,
 		"BeginDate": "2/8/2016",
-		"EndDate": "2/18/2016",
+		"EndDate": "2/17/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -149,7 +149,7 @@ Scenario: Teacher set course start date to the past date Then system set ClassCa
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "1/1/2000",
-		"ExpiredDate": "1/11/2000",
+		"ExpiredDate": "1/10/2000",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -180,7 +180,7 @@ Scenario: Teacher set course start date to the past date Then system set ClassCa
 	{
 		"IsComplete": true,
 		"BeginDate": "1/1/2000",
-		"EndDate": "1/11/2000",
+		"EndDate": "1/10/2000",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -205,7 +205,7 @@ Scenario: Teacher set course start date to the past date but the start date was 
         {
             "id": "ClassCalendar01",
 			"BeginDate": "1/1/2016",
-			"ExpiredDate": "1/11/2016",
+			"ExpiredDate": "1/10/2016",
             "ClassRoomId": "ClassRoom01",
 			"CreatedDate": "1/1/2016",
             "LessonCalendars":
@@ -239,7 +239,7 @@ Scenario: Teacher set course start date to the past date but the start date was 
 	{
 		"IsComplete": true,
 		"BeginDate": "1/1/2016",
-		"EndDate": "1/11/2016",
+		"EndDate": "1/10/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -295,7 +295,7 @@ Scenario: Teacher set course start date when schedule have shift days Then syste
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "1/1/2016",
-		"ExpiredDate": "1/13/2016",
+		"ExpiredDate": "1/12/2016",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -326,7 +326,7 @@ Scenario: Teacher set course start date when schedule have shift days Then syste
 	{
 		"IsComplete": true,
 		"BeginDate": "1/1/2016",
-		"EndDate": "1/13/2016",
+		"EndDate": "1/12/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -382,7 +382,7 @@ Scenario: Teacher set course start date when schedule have holidays Then system 
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "1/1/2016",
-		"ExpiredDate": "1/11/2016",
+		"ExpiredDate": "1/10/2016",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -413,7 +413,7 @@ Scenario: Teacher set course start date when schedule have holidays Then system 
 	{
 		"IsComplete": true,
 		"BeginDate": "1/1/2016",
-		"EndDate": "1/11/2016",
+		"EndDate": "1/10/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -469,7 +469,7 @@ Scenario: Teacher set course start date when schedule have shift days and holida
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "1/1/2016",
-		"ExpiredDate": "1/14/2016",
+		"ExpiredDate": "1/13/2016",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -500,7 +500,7 @@ Scenario: Teacher set course start date when schedule have shift days and holida
 	{
 		"IsComplete": true,
 		"BeginDate": "1/1/2016",
-		"EndDate": "1/14/2016",
+		"EndDate": "1/13/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -622,7 +622,7 @@ Scenario: Teacher set course start date but the ClassCalendar's holidays is null
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "2/8/2016",
-		"ExpiredDate": "2/18/2016",
+		"ExpiredDate": "2/17/2016",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -653,7 +653,7 @@ Scenario: Teacher set course start date but the ClassCalendar's holidays is null
 	{
 		"IsComplete": true,
 		"BeginDate": "2/8/2016",
-		"EndDate": "2/18/2016",
+		"EndDate": "2/17/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -708,7 +708,7 @@ Scenario: Teacher set course start date but the ClassCalendar's shiftdays is nul
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "2/8/2016",
-		"ExpiredDate": "2/18/2016",
+		"ExpiredDate": "2/17/2016",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -739,7 +739,7 @@ Scenario: Teacher set course start date but the ClassCalendar's shiftdays is nul
 	{
 		"IsComplete": true,
 		"BeginDate": "2/8/2016",
-		"EndDate": "2/18/2016",
+		"EndDate": "2/17/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
@@ -793,7 +793,7 @@ Scenario: Teacher set course start date but the ClassCalendar's shiftdays and ho
 	{
         "id": "ClassCalendar01",
 		"BeginDate": "2/8/2016",
-		"ExpiredDate": "2/18/2016",
+		"ExpiredDate": "2/17/2016",
         "ClassRoomId": "ClassRoom01",
 		"CreatedDate": "1/1/2016",
         "LessonCalendars":
@@ -824,7 +824,7 @@ Scenario: Teacher set course start date but the ClassCalendar's shiftdays and ho
 	{
 		"IsComplete": true,
 		"BeginDate": "2/8/2016",
-		"EndDate": "2/18/2016",
+		"EndDate": "2/17/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",

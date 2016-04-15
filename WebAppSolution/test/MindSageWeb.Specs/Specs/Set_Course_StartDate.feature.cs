@@ -180,7 +180,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""2/8/2016"",
-	""ExpiredDate"": ""2/18/2016"",
+	""ExpiredDate"": ""2/17/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -210,7 +210,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""2/8/2016"",
-	""EndDate"": ""2/18/2016"",
+	""EndDate"": ""2/17/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -252,7 +252,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2000"",
-	""ExpiredDate"": ""1/11/2000"",
+	""ExpiredDate"": ""1/10/2000"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -282,7 +282,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2000"",
-	""EndDate"": ""1/11/2000"",
+	""EndDate"": ""1/10/2000"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -322,7 +322,7 @@ this.FeatureBackground();
     {
         ""id"": ""ClassCalendar01"",
 ""BeginDate"": ""1/1/2016"",
-""ExpiredDate"": ""1/11/2016"",
+""ExpiredDate"": ""1/10/2016"",
         ""ClassRoomId"": ""ClassRoom01"",
 ""CreatedDate"": ""1/1/2016"",
         ""LessonCalendars"":
@@ -358,7 +358,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
-	""EndDate"": ""1/11/2016"",
+	""EndDate"": ""1/10/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -430,7 +430,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2016"",
-	""ExpiredDate"": ""1/13/2016"",
+	""ExpiredDate"": ""1/12/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -460,7 +460,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
-	""EndDate"": ""1/13/2016"",
+	""EndDate"": ""1/12/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -532,7 +532,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2016"",
-	""ExpiredDate"": ""1/11/2016"",
+	""ExpiredDate"": ""1/10/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -562,7 +562,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
-	""EndDate"": ""1/11/2016"",
+	""EndDate"": ""1/10/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -634,7 +634,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2016"",
-	""ExpiredDate"": ""1/14/2016"",
+	""ExpiredDate"": ""1/13/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -664,7 +664,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
-	""EndDate"": ""1/14/2016"",
+	""EndDate"": ""1/13/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -972,7 +972,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""2/8/2016"",
-	""ExpiredDate"": ""2/18/2016"",
+	""ExpiredDate"": ""2/17/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -1002,7 +1002,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""2/8/2016"",
-	""EndDate"": ""2/18/2016"",
+	""EndDate"": ""2/17/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -1073,7 +1073,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""2/8/2016"",
-	""ExpiredDate"": ""2/18/2016"",
+	""ExpiredDate"": ""2/17/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -1103,7 +1103,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""2/8/2016"",
-	""EndDate"": ""2/18/2016"",
+	""EndDate"": ""2/17/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
@@ -1173,7 +1173,7 @@ this.FeatureBackground();
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""2/8/2016"",
-	""ExpiredDate"": ""2/18/2016"",
+	""ExpiredDate"": ""2/17/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
        ""LessonCalendars"":
@@ -1203,7 +1203,7 @@ this.FeatureBackground();
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""2/8/2016"",
-	""EndDate"": ""2/18/2016"",
+	""EndDate"": ""2/17/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",

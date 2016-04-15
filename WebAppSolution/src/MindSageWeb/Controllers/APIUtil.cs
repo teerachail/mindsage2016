@@ -113,7 +113,7 @@ namespace MindSageWeb.Controllers
                     totd.RequiredSendTopicOfTheDayDate = lesson.BeginDate.AddDays(sendDay);
                 }
             }
-            classCalendar.ExpiredDate = currentBeginDate;
+            classCalendar.ExpiredDate = currentBeginDate.AddDays(-1);
         }
 
         public static UserActivity CreateNewUserActivity(this UserProfile selectedUserProfile, ClassRoom selectedClassRoom, ClassCalendar selectedClassCalendar, List<LessonCatalog> lessonCatalogs, DateTime now)
