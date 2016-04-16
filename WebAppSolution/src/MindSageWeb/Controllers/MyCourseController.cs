@@ -983,44 +983,40 @@ namespace MindSageWeb.Controllers
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             if (classCalendar == null) return null;
 
-            if (!classCalendar.BeginDate.HasValue) return null;
-            var beginDate = classCalendar.BeginDate.Value.ToUniversalTime();
-            if (beginDate == null) return null;
-            var endedDate = classCalendar.LessonCalendars
-                .Where(it => !it.DeletedDate.HasValue)
-                .OrderBy(it => it.Order)
-                .LastOrDefault()?.BeginDate.AddDays(LessonDuration).ToUniversalTime();
-            if (endedDate == null) return null;
+            var isRequestValid = classCalendar.BeginDate.HasValue && classCalendar.ExpiredDate.HasValue;
+            if (isRequestValid)
+            {
+                var beginDate = classCalendar.BeginDate.Value.ToUniversalTime();
+                var endedDate = classCalendar.ExpiredDate.Value.ToUniversalTime();
 
-            const int ShiftOneDay = 1;
-            var diffDays = (int)(Math.Abs((beginDate - endedDate.Value).TotalDays + ShiftOneDay));
-            var dateRange = Enumerable.Range(0, diffDays).Select(it => beginDate.AddDays(it));
+                const int ShiftTwoDays = 2;
+                var diffDays = (int)(Math.Abs((beginDate - endedDate).TotalDays) + ShiftTwoDays);
+                var dateRange = Enumerable.Range(0, diffDays).Select(it => beginDate.AddDays(it));
 
-            classCalendar.Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
-            classCalendar.ShiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
+                classCalendar.Holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
+                classCalendar.ShiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
 
-            if (body.IsSunday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Sunday, dateRange);
-            if (body.IsMonday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Monday, dateRange);
-            if (body.IsTuesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Tuesday, dateRange);
-            if (body.IsWednesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Wednesday, dateRange);
-            if (body.IsThursday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Thursday, dateRange);
-            if (body.IsFriday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Friday, dateRange);
-            if (body.IsSaturday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Saturday, dateRange);
+                if (body.IsSunday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Sunday, dateRange);
+                if (body.IsMonday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Monday, dateRange);
+                if (body.IsTuesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Tuesday, dateRange);
+                if (body.IsWednesday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Wednesday, dateRange);
+                if (body.IsThursday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Thursday, dateRange);
+                if (body.IsFriday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Friday, dateRange);
+                if (body.IsSaturday) setHolidayAndShiftDate(classCalendar, body, DayOfWeek.Saturday, dateRange);
 
-            classCalendar.Holidays = classCalendar.Holidays.Distinct();
-            classCalendar.ShiftDays = classCalendar.ShiftDays.Distinct();
+                classCalendar.Holidays = classCalendar.Holidays.Distinct();
+                classCalendar.ShiftDays = classCalendar.ShiftDays.Distinct();
 
-            classCalendar.CalculateCourseSchedule();
-            _classCalendarRepo.UpsertClassCalendar(classCalendar);
+                classCalendar.CalculateCourseSchedule();
+                _classCalendarRepo.UpsertClassCalendar(classCalendar);
+            }
 
-            classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
-            var result = getCourseSchedule(classCalendar, true);
+            var result = getCourseSchedule(classCalendar, isRequestValid);
             return result;
         }
-
         private void setHolidayAndShiftDate(ClassCalendar classCalendar, SetScheduleWithWeekRequest body, DayOfWeek day, IEnumerable<DateTime> dateRange)
         {
-            var qry = dateRange.Where(it => it.DayOfWeek == day).Select(it => it.ToUniversalTime());
+            var qry = dateRange.Where(it => it.DayOfWeek == day);
             classCalendar.Holidays = body.IsHoliday ? classCalendar.Holidays.Union(qry) : classCalendar.Holidays.Except(qry);
             classCalendar.ShiftDays = body.IsShift ? classCalendar.ShiftDays.Union(qry) : classCalendar.ShiftDays.Except(qry);
         }
