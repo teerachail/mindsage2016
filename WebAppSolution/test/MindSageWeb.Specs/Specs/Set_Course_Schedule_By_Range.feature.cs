@@ -824,6 +824,140 @@ this.FeatureBackground();
             this.ScenarioCleanup();
         }
         
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Set_Course_Schedule_By_Range")]
+        [Xunit.TraitAttribute("Description", "Teacher set course schedule holiday only (Single day with TOTD) Then system set c" +
+            "ourse Calendar and send new schedule back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherSetCourseScheduleHolidayOnlySingleDayWithTOTDThenSystemSetCourseCalendarAndSendNewScheduleBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule holiday only (Single day with TOTD) Then system set c" +
+                    "ourse Calendar and send new schedule back", new string[] {
+                        "mock"});
+#line 459
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 460
+ testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 461
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""ClassRoomId"": ""ClassRoom01"",
+""CreatedDate"": ""1/1/2016"",
+""BeginDate"": ""1/1/2016"",
+""ExpiredDate"": ""1/10/2016"",
+        ""LessonCalendars"":
+        [
+{
+	""Id"": ""LessonCalendar01"",
+	""Order"": 1,
+	""SemesterGroupName"": ""A"",
+	""BeginDate"": ""1/1/2016"",
+	""TopicOfTheDays"": [
+		{
+			""id"": ""TOTD01"",
+			""Message"": ""Msg01"",
+			""SendOnDay"": 1,
+			""CreatedDate"": ""1/1/2016""
+		}
+	],
+	""LessonId"": ""Lesson01"",
+},
+{
+	""Id"": ""LessonCalendar02"",
+	""Order"": 2,
+	""SemesterGroupName"": ""A"",
+	""BeginDate"": ""1/6/2016"",
+	""TopicOfTheDays"": [
+		{
+			""id"": ""TOTD02"",
+			""Message"": ""Msg02"",
+			""SendOnDay"": 2,
+			""CreatedDate"": ""1/1/2016"",
+			""DeletedDate"": ""1/1/2016""
+		},
+		{
+			""id"": ""TOTD03"",
+			""Message"": ""Msg03"",
+			""SendOnDay"": 2,
+			""CreatedDate"": ""1/1/2016"",
+			""DeletedDate"": ""1/1/2016""
+		},
+		{
+			""id"": ""TOTD04"",
+			""Message"": ""Msg04"",
+			""SendOnDay"": 7,
+			""CreatedDate"": ""1/1/2016""
+		},
+		{
+			""id"": ""TOTD05"",
+			""Message"": ""Msg05"",
+			""SendOnDay"": 8,
+			""RequiredSendTopicOfTheDayDate"": ""1/13/2016"",
+			""SendTopicOfTheDayDate"": ""1/1/2016"",
+			""CreatedDate"": ""1/1/2016""
+		}
+	],
+	""LessonId"": ""Lesson01"",
+}
+],
+""Holidays"": [],
+""ShiftDays"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 530
+ testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
+                    "/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 531
+ testRunner.Then("System set course ClassCalendar collection with JSON format is", "{\r\n       \"id\": \"ClassCalendar01\",\r\n\t\"BeginDate\": \"1/1/2016\",\r\n\t\"ExpiredDate\": \"1" +
+                    "/10/2016\",\r\n       \"ClassRoomId\": \"ClassRoom01\",\r\n\t\"CreatedDate\": \"1/1/2016\",\r\n " +
+                    "      \"LessonCalendars\":\r\n       [\r\n           {\r\n               \"Id\": \"LessonCa" +
+                    "lendar01\",\r\n               \"Order\": 1,\r\n               \"SemesterGroupName\": \"A\"," +
+                    "\r\n               \"BeginDate\": \"1/1/2016\",\r\n\t\t\t\"TopicOfTheDays\": [\r\n\t\t\t\t{\r\n\t\t\t\t\t\"" +
+                    "id\": \"TOTD01\",\r\n\t\t\t\t\t\"Message\": \"Msg01\",\r\n\t\t\t\t\t\"SendOnDay\": 1,\r\n\t\t\t\t\t\"RequiredSe" +
+                    "ndTopicOfTheDayDate\": \"1/1/2016\",\r\n\t\t\t\t\t\"CreatedDate\": \"1/1/2016\"\r\n\t\t\t\t}\r\n\t\t\t],\r" +
+                    "\n               \"LessonId\": \"Lesson01\",\r\n           },\r\n\t\t{\r\n               \"Id\"" +
+                    ": \"LessonCalendar02\",\r\n               \"Order\": 2,\r\n               \"SemesterGroup" +
+                    "Name\": \"A\",\r\n               \"BeginDate\": \"1/6/2016\",\r\n\t\t\t\"TopicOfTheDays\": [\r\n\t\t" +
+                    "\t\t{\r\n\t\t\t\t\t\"id\": \"TOTD02\",\r\n\t\t\t\t\t\"Message\": \"Msg02\",\r\n\t\t\t\t\t\"SendOnDay\": 2,\r\n\t\t\t\t\t" +
+                    "\"RequiredSendTopicOfTheDayDate\": \"1/7/2016\",\r\n\t\t\t\t\t\"CreatedDate\": \"1/1/2016\",\r\n\t" +
+                    "\t\t\t\t\"DeletedDate\": \"1/1/2016\"\r\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"id\": \"TOTD03\",\r\n\t\t\t\t\t\"Messag" +
+                    "e\": \"Msg03\",\r\n\t\t\t\t\t\"SendOnDay\": 2,\r\n\t\t\t\t\t\"RequiredSendTopicOfTheDayDate\": \"1/7/2" +
+                    "016\",\r\n\t\t\t\t\t\"CreatedDate\": \"1/1/2016\",\r\n\t\t\t\t\t\"DeletedDate\": \"1/1/2016\"\r\n\t\t\t\t},\r\n" +
+                    "\t\t\t\t{\r\n\t\t\t\t\t\"id\": \"TOTD04\",\r\n\t\t\t\t\t\"Message\": \"Msg04\",\r\n\t\t\t\t\t\"SendOnDay\": 7,\r\n\t\t\t" +
+                    "\t\t\"RequiredSendTopicOfTheDayDate\": \"1/12/2016\",\r\n\t\t\t\t\t\"CreatedDate\": \"1/1/2016\"\r" +
+                    "\n\t\t\t\t},\r\n\t\t\t\t{\r\n\t\t\t\t\t\"id\": \"TOTD05\",\r\n\t\t\t\t\t\"Message\": \"Msg05\",\r\n\t\t\t\t\t\"SendOnDay\"" +
+                    ": 8,\r\n\t\t\t\t\t\"RequiredSendTopicOfTheDayDate\": \"1/13/2016\",\r\n\t\t\t\t\t\"SendTopicOfTheDa" +
+                    "yDate\": \"1/1/2016\",\r\n\t\t\t\t\t\"CreatedDate\": \"1/1/2016\"\r\n\t\t\t\t}\r\n\t\t\t],\r\n             " +
+                    "  \"LessonId\": \"Lesson01\",\r\n           }\r\n       ],\r\n\t\"Holidays\": [ \"1/1/2016\" ]," +
+                    "\r\n\t\"ShiftDays\": []\r\n   }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 602
+ testRunner.And("System send course schedule with JSON format is", @"{
+	""IsComplete"": true,
+	""BeginDate"": ""1/1/2016"",
+	""EndDate"": ""1/10/2016"",
+	""Lessons"": [
+		{
+			""Name"": ""Lesson 1"",
+			""BeginDate"": ""1/1/2016""
+		},
+		{
+			""Name"": ""Lesson 2"",
+			""BeginDate"": ""1/6/2016""
+		}
+	],
+	""Holidays"": [ ""1/1/2016"" ],
+	""ShiftDays"": []
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
         [System.CodeDom.Compiler.GeneratedCodeAttribute("TechTalk.SpecFlow", "2.0.0.0")]
         [System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
         public class FixtureData : System.IDisposable

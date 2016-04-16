@@ -56,6 +56,36 @@ namespace MindSageWeb.Specs.Steps
                 Assert.Equal(expectedShiftDays, actualShiftDays);
 
                 Assert.Equal(expected.id, actual.id);
+
+                var expectedLessonCalendars = expected.LessonCalendars.ToList();
+                var actualLessonCalendars = actual.LessonCalendars.ToList();
+                for (int index = 0; index < expected.LessonCalendars.Count(); index++)
+                {
+                    var expectedTOTD = expectedLessonCalendars[index].TopicOfTheDays.Select(it => new ClassCalendar.TopicOfTheDay
+                    {
+                        id = it.id,
+                        CreatedDate = it.CreatedDate,
+                        DeletedDate = it.DeletedDate,
+                        Message = it.Message,
+                        RequiredSendTopicOfTheDayDate = it.RequiredSendTopicOfTheDayDate?.ToUniversalTime(),
+                        SendOnDay = it.SendOnDay,
+                        SendTopicOfTheDayDate = it.SendTopicOfTheDayDate?.ToUniversalTime()
+                    });
+                    var expectedTOTDString = JsonConvert.SerializeObject(expectedTOTD);
+                    var actualTOTD = actualLessonCalendars[index].TopicOfTheDays.Select(it => new ClassCalendar.TopicOfTheDay
+                    {
+                        id = it.id,
+                        CreatedDate = it.CreatedDate,
+                        DeletedDate = it.DeletedDate,
+                        Message = it.Message,
+                        RequiredSendTopicOfTheDayDate = it.RequiredSendTopicOfTheDayDate?.ToUniversalTime(),
+                        SendOnDay = it.SendOnDay,
+                        SendTopicOfTheDayDate = it.SendTopicOfTheDayDate?.ToUniversalTime()
+                    });
+                    var actualTOTDString = JsonConvert.SerializeObject(actualTOTD);
+                    Assert.Equal(expectedTOTDString, actualTOTDString);
+                }
+
                 return true;
             };
 

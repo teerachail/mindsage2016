@@ -454,3 +454,168 @@ Scenario: Teacher set course schedule but the ClassCalendar doesn't existing  Th
 	When User 'sakul@mindsage.com' set schedule of ClassRoomId 'ClassRoom01' FromDate '1/1/2016' ToDate '' IsHoliday 'true' IsShift 'false'  
 	Then System doesn't set course ClassCalendar  
 	And System send null back  
+
+@mock  
+Scenario: Teacher set course schedule holiday only (Single day with TOTD) Then system set course Calendar and send new schedule back  
+	Given Today is '1/1/2016 00:00 am'  
+	And System have ClassCalendar collection with JSON format are
+    """
+    [
+        {
+            "id": "ClassCalendar01",
+            "ClassRoomId": "ClassRoom01",
+			"CreatedDate": "1/1/2016",
+			"BeginDate": "1/1/2016",
+			"ExpiredDate": "1/10/2016",
+            "LessonCalendars":
+            [
+				{
+					"Id": "LessonCalendar01",
+					"Order": 1,
+					"SemesterGroupName": "A",
+					"BeginDate": "1/1/2016",
+					"TopicOfTheDays": [
+						{
+							"id": "TOTD01",
+							"Message": "Msg01",
+							"SendOnDay": 1,
+							"CreatedDate": "1/1/2016"
+						}
+					],
+					"LessonId": "Lesson01",
+				},
+				{
+					"Id": "LessonCalendar02",
+					"Order": 2,
+					"SemesterGroupName": "A",
+					"BeginDate": "1/6/2016",
+					"TopicOfTheDays": [
+						{
+							"id": "TOTD02",
+							"Message": "Msg02",
+							"SendOnDay": 2,
+							"CreatedDate": "1/1/2016",
+							"DeletedDate": "1/1/2016"
+						},
+						{
+							"id": "TOTD03",
+							"Message": "Msg03",
+							"SendOnDay": 2,
+							"CreatedDate": "1/1/2016",
+							"DeletedDate": "1/1/2016"
+						},
+						{
+							"id": "TOTD04",
+							"Message": "Msg04",
+							"SendOnDay": 7,
+							"CreatedDate": "1/1/2016"
+						},
+						{
+							"id": "TOTD05",
+							"Message": "Msg05",
+							"SendOnDay": 8,
+							"RequiredSendTopicOfTheDayDate": "1/13/2016",
+							"SendTopicOfTheDayDate": "1/1/2016",
+							"CreatedDate": "1/1/2016"
+						}
+					],
+					"LessonId": "Lesson01",
+				}
+			],
+			"Holidays": [],
+			"ShiftDays": []
+        }
+    ]
+    """  
+	When User 'sakul@mindsage.com' set schedule of ClassRoomId 'ClassRoom01' FromDate '1/1/2016' ToDate '' IsHoliday 'true' IsShift 'false'  
+	Then System set course ClassCalendar collection with JSON format is  
+	"""  
+	{
+        "id": "ClassCalendar01",
+		"BeginDate": "1/1/2016",
+		"ExpiredDate": "1/10/2016",
+        "ClassRoomId": "ClassRoom01",
+		"CreatedDate": "1/1/2016",
+        "LessonCalendars":
+        [
+            {
+                "Id": "LessonCalendar01",
+                "Order": 1,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/1/2016",
+				"TopicOfTheDays": [
+					{
+						"id": "TOTD01",
+						"Message": "Msg01",
+						"SendOnDay": 1,
+						"RequiredSendTopicOfTheDayDate": "1/1/2016",
+						"CreatedDate": "1/1/2016"
+					}
+				],
+                "LessonId": "Lesson01",
+            },
+			{
+                "Id": "LessonCalendar02",
+                "Order": 2,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/6/2016",
+				"TopicOfTheDays": [
+					{
+						"id": "TOTD02",
+						"Message": "Msg02",
+						"SendOnDay": 2,
+						"RequiredSendTopicOfTheDayDate": "1/7/2016",
+						"CreatedDate": "1/1/2016",
+						"DeletedDate": "1/1/2016"
+					},
+					{
+						"id": "TOTD03",
+						"Message": "Msg03",
+						"SendOnDay": 2,
+						"RequiredSendTopicOfTheDayDate": "1/7/2016",
+						"CreatedDate": "1/1/2016",
+						"DeletedDate": "1/1/2016"
+					},
+					{
+						"id": "TOTD04",
+						"Message": "Msg04",
+						"SendOnDay": 7,
+						"RequiredSendTopicOfTheDayDate": "1/12/2016",
+						"CreatedDate": "1/1/2016"
+					},
+					{
+						"id": "TOTD05",
+						"Message": "Msg05",
+						"SendOnDay": 8,
+						"RequiredSendTopicOfTheDayDate": "1/13/2016",
+						"SendTopicOfTheDayDate": "1/1/2016",
+						"CreatedDate": "1/1/2016"
+					}
+				],
+                "LessonId": "Lesson01",
+            }
+        ],
+		"Holidays": [ "1/1/2016" ],
+		"ShiftDays": []
+    }
+	"""  
+	And System send course schedule with JSON format is  
+	"""  
+	{
+		"IsComplete": true,
+		"BeginDate": "1/1/2016",
+		"EndDate": "1/10/2016",
+		"Lessons": [
+			{
+				"Name": "Lesson 1",
+				"BeginDate": "1/1/2016"
+			},
+			{
+				"Name": "Lesson 2",
+				"BeginDate": "1/6/2016"
+			}
+		],
+		"Holidays": [ "1/1/2016" ],
+		"ShiftDays": []
+	}
+	"""  

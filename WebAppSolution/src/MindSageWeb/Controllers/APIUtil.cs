@@ -93,15 +93,11 @@ namespace MindSageWeb.Controllers
             {
                 // Set begin date for each lesson
                 var list = new List<DateTime>();
-                var offerDay = 0;
-                while (true)
+                var beginDateOfferDay = 0;
+                while (list.Count < LessonDuration)
                 {
-                    var date = currentBeginDate.AddDays(offerDay++);
-                    if (!shiftDays.Any(it => it == date))
-                    {
-                        list.Add(date);
-                        if (list.Count == LessonDuration) break;
-                    }
+                    var date = currentBeginDate.AddDays(beginDateOfferDay++);
+                    if (!shiftDays.Any(it => it == date)) list.Add(date);
                 }
                 lesson.BeginDate = list.First();
                 currentBeginDate = list.Last().AddDays(ShiftOneDay);
