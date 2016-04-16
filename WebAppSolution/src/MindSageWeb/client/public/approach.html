@@ -12,6 +12,11 @@
 
 
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+
+
+
+
     <title>Our approach &#8211; mindsage</title>
     <link rel="alternate" type="application/rss+xml" title="mindsage &raquo; Feed" href="http://mindkey.org/wordpress/index.php/feed/"
     />
@@ -24,7 +29,7 @@
     <meta property="og:site_name" content="mindsage" />
     <meta property="og:description" content="MicroLearning + Metacognition = MindSage   
 We’ve designed MindSage to be a highly effective learning tool that easily fits into your class schedule.    
-Using a micro learning approach, our lessons stimulate self analysis and awareness." />
+Using a microlearning approach, our lessons stimulate self analysis and awareness." />
 
     <meta property="og:image" content="http://mindkey.org/wordpress/wp-content/uploads/2016/04/logo_small.png" />
     <script type="text/javascript">
@@ -45,6 +50,8 @@ Using a micro learning approach, our lessons stimulate self analysis and awarene
             padding: 0 !important;
         }
     </style>
+    <link rel='stylesheet' id='hover_effects_pack-css' href='http://mindkey.org/wordpress/wp-content/plugins/hover_effects_pack/css/hover_pack.css?ver=4.4.1'
+    type='text/css' media='all' />
     <link rel='stylesheet' id='layerslider-css' href='http://mindkey.org/wordpress/wp-content/plugins/LayerSlider/static/css/layerslider.css?ver=5.6.2'
     type='text/css' media='all' />
     <link rel='stylesheet' id='ls-google-fonts-css' href='http://fonts.googleapis.com/css?family=Lato:100,300,regular,700,900%7COpen+Sans:300%7CIndie+Flower:regular%7COswald:300,regular,700&#038;subset=latin%2Clatin-ext'
@@ -54,7 +61,7 @@ Using a micro learning approach, our lessons stimulate self analysis and awarene
     <style id='rs-plugin-settings-inline-css' type='text/css'>
         #rs-demo-id {}
     </style>
-    <link rel='stylesheet' id='avada-google-fonts-css' href='http://fonts.googleapis.com/css?family=PT+Sans%3A400%2C400italic%2C700%2C700italic&#038;subset=latin&#038;ver=4.4.1'
+    <link rel='stylesheet' id='avada-google-fonts-css' href='http://fonts.googleapis.com/css?family=PT+Sans%3A400%2C400italic%2C700%2C700italic%7CPT+Sans+Narrow%3A400%2C400italic%2C700%2C700italic&#038;subset=latin&#038;ver=4.4.1'
     type='text/css' media='all' />
     <link rel='stylesheet' id='avada-stylesheet-css' href='http://mindkey.org/wordpress/wp-content/themes/Avada/style.css?ver=3.9.3'
     type='text/css' media='all' />
@@ -76,9 +83,10 @@ Using a micro learning approach, our lessons stimulate self analysis and awarene
     type='text/css' media='all' />
     <link rel='stylesheet' id='avada-animations-css' href='http://mindkey.org/wordpress/wp-content/themes/Avada/animations.css?ver=3.9.3'
     type='text/css' media='all' />
-    <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js'></script><script type='text/javascript' src='http://mindkey.org/wordpress/wp-content/plugins/LayerSlider/static/js/greensock.js?ver=1.11.8'></script>
     <script type='text/javascript' src='http://mindkey.org/wordpress/wp-includes/js/jquery/jquery.js?ver=1.11.3'></script>
     <script type='text/javascript' src='http://mindkey.org/wordpress/wp-includes/js/jquery/jquery-migrate.min.js?ver=1.2.1'></script>
+    <script type='text/javascript' src='http://mindkey.org/wordpress/wp-content/plugins/hover_effects_pack/js/hover_pack.js?ver=4.4.1'></script>
+    <script src='http://ajax.googleapis.com/ajax/libs/angularjs/1.3.14/angular.min.js'></script><script type='text/javascript' src='http://mindkey.org/wordpress/wp-content/plugins/LayerSlider/static/js/greensock.js?ver=1.11.8'></script>
     <script type='text/javascript' src='http://mindkey.org/wordpress/wp-content/plugins/LayerSlider/static/js/layerslider.kreaturamedia.jquery.js?ver=5.6.2'></script>
     <script type='text/javascript' src='http://mindkey.org/wordpress/wp-content/plugins/LayerSlider/static/js/layerslider.transitions.js?ver=5.6.2'></script>
     <script type='text/javascript' src='http://mindkey.org/wordpress/wp-content/plugins/revslider/public/assets/js/jquery.themepunch.tools.min.js?ver=5.1.6'></script>
@@ -590,11 +598,11 @@ Using a micro learning approach, our lessons stimulate self analysis and awarene
         .project-content h3,
         .share-box h4,
         table th {
-            font-family: 'PT Sans', Arial, Helvetica, sans-serif;
+            font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
         }
         
         .project-content .project-info h4 {
-            font-family: 'PT Sans', Arial, Helvetica, sans-serif;
+            font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
         }
         
         #main .post h2,
@@ -2103,7 +2111,7 @@ Using a micro learning approach, our lessons stimulate self analysis and awarene
         }
         
         .fusion-megamenu-title {
-            font-family: 'PT Sans', Arial, Helvetica, sans-serif;
+            font-family: 'PT Sans Narrow', Arial, Helvetica, sans-serif;
             font-weight: 400;
             font-size: 18px;
             color: #333333;
@@ -4599,6 +4607,57 @@ Using a micro learning approach, our lessons stimulate self analysis and awarene
         .fusion-column-wrapper {
             border-radius: 5px;
         }
+        
+        .image-flip-sprite {
+            margin: 5px auto;
+            display: block;
+            width: 330px;
+            height: 445px;
+            background: url(http://mindkey.org/wordpress/wp-content/uploads/2016/04/Empowered_Sprite.jpg) no-repeat 0 0;
+            overflow: hidden;
+            text-indent: -1500px;
+            font-size: 0px;
+            line-height: 0px;
+            cursor: ponter !important;
+        }
+        
+        .image-flip-sprite:hover {
+            background-position: 0 -445px;
+        }
+        
+        .image-flip-spritelong {
+            margin: 5px auto;
+            display: block;
+            width: 315px;
+            height: 205px;
+            background: url(http://mindkey.org/wordpress/wp-content/uploads/2016/03/4th-9thGrades-Sprite.jpg) no-repeat 0 0;
+            overflow: hidden;
+            text-indent: -1500px;
+            font-size: 0px;
+            line-height: 0px;
+            cursor: ponter !important;
+        }
+        
+        .image-flip-spritelong:hover {
+            background-position: 0 -205px;
+        }
+        
+        .image-flip-spritelong2 {
+            margin: 5px auto;
+            display: block;
+            width: 315px;
+            height: 205px;
+            background: url(http://mindkey.org/wordpress/wp-content/uploads/2016/03/CorporateTraining-Sprite.jpg) no-repeat 0 0;
+            overflow: hidden;
+            text-indent: -1500px;
+            font-size: 0px;
+            line-height: 0px;
+            cursor: ponter !important;
+        }
+        
+        .image-flip-spritelong2:hover {
+            background-position: 0 -205px;
+        }
     </style>
 
     <!--[if lte IE 8]>
@@ -4724,6 +4783,7 @@ else {
 lsjQuery("#layerslider_1").layerSlider({globalBGColor: 0, skinsPath: 'http://mindkey.org/wordpress/wp-content/plugins/LayerSlider/static/skins/'})
 }
 });
+
                     </script>
                     <div id="layerslider_1" class="ls-wp-container" style="width:2048px;height:768px;margin:0 auto;margin-bottom: 0px;">
                         <div class="ls-slide" data-ls="slidedelay:8000; transition2d: all;"><img class="ls-l" style="top:0px;left:0px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
@@ -4731,21 +4791,23 @@ lsjQuery("#layerslider_1").layerSlider({globalBGColor: 0, skinsPath: 'http://min
                             alt=""><img class="ls-l" style="top:123px;left:1089px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
                             data-ls="offsetxin:0;delayin:500;offsetxout:0;" src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/text_slide_1.png"
                             alt="">
-                            <a href="necessity.html" target="_self" class="ls-link"></a>
+                            <a href="necessity.html#anchor" target="_self"
+                            class="ls-link"></a>
                         </div>
                         <div class="ls-slide" data-ls="slidedelay:8000; transition2d: all;"><img class="ls-l" style="top:0px;left:0px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
                             data-ls="offsetxin:0;offsetxout:0;" src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/background_top_slider_2.jpg"
                             alt=""><img class="ls-l" style="top:104px;left:37px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
                             data-ls="offsetxin:0;delayin:500;offsetxout:0;" src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/text_top_slide_2.png"
                             alt="">
-                            <a href=" seminars.html" target="_self" class="ls-link"></a>
+                            <a href=" seminars.html#anchor" target="_self" class="ls-link"></a>
                         </div>
                         <div class="ls-slide" data-ls="slidedelay:8000; transition2d: all;"><img class="ls-l" style="top:0px;left:0px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
                             src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/background_top_slider_3.jpg" alt="">
-                            <img class="ls-l" style="top:490px;left:510px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
+                            <img
+                            class="ls-l" style="top:490px;left:510px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
                             data-ls="offsetxin:0;delayin:500;offsetxout:0;" src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/text_top_slider_3.png"
                             alt="">
-                            <a href="whatmindsage.html " target="_self" class="ls-link"></a>
+                                <a href="whatmindsage.html#anchor" target="_self" class="ls-link"></a>
                         </div>
                         <div class="ls-slide" data-ls="slidedelay:8000; transition2d: all;"><img class="ls-l" style="top:0px;left:0px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
                             data-ls="offsetxin:0;offsetxout:0;" src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/background_top_slider_4.jpg"
@@ -4754,7 +4816,8 @@ lsjQuery("#layerslider_1").layerSlider({globalBGColor: 0, skinsPath: 'http://min
                             alt=""><img class="ls-l" style="top:489px;left:1303px;width:;height:;padding-top:;padding-right:;padding-bottom:;padding-left:;border-top:;border-right:;border-bottom:;border-left:;font-family:;font-size:;line-height:;color:;background:;border-radius:;white-space: nowrap;"
                             data-ls="offsetxin:0;delayin:1000;offsetxout:0;" src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/text_2_top_slider_4.png"
                             alt="">
-                            <a href="whystart.html" target="_self" class="ls-link"></a>
+                            <a href="whystart.html#anchor" target="_self"
+                            class="ls-link"></a>
                         </div>
                     </div>
                 </div>
@@ -4769,288 +4832,401 @@ lsjQuery("#layerslider_1").layerSlider({globalBGColor: 0, skinsPath: 'http://min
                 <div id="content" class="full-width">
                     <div id="post-259" class="post-259 page type-page status-publish hentry">
                         <span class="entry-title" style="display: none;">Our approach</span><span class="vcard" style="display: none;"><span class="fn"><a href="http://mindkey.org/wordpress/index.php/author/admin/" title="Posts by admin" rel="author">admin</a></span></span>
-                        <span class="updated" style="display:none;">2016-04-06T05:09:19+00:00</span>
-                        <div class="post-content">
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-1  fusion-parallax-none nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:40px;padding-left:100px;padding-right:100px;padding-left:100px !important;padding-right:100px !important;background-color:#a9d34e;">
-                                <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-1 {
-                                        padding-left: 100px !important;
-                                        padding-right: 100px !important;
-                                    }
-                                </style>
-                                <div class="fusion-row">
-                                    <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper">
-                                            <h1 style="text-align: center;"><span style="color: #ffffff;"><strong>MicroLearning + Metacognition = MindSage</strong></span></h1>
-                                            <div class="imageframe-align-center"><span class="fusion-imageframe imageframe-none imageframe-1 hover-type-none"> <img src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/our_approach_graphic_1_2000px.png" alt="" class="img-responsive"/></span></div>
-                                            <h4 style="text-align: center;"><span style="color: #ffffff;">We’ve designed MindSage to be a highly effective learning tool </span>
+                        <span
+                        class="updated" style="display:none;">2016-04-14T01:13:14+00:00</span>
+                            <div class="post-content">
+                                <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-1  fusion-parallax-none nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:40px;padding-left:150px;padding-right:150px;padding-left:150px !important;padding-right:150px !important;background-color:#a9d34e;">
+                                    <style type="text/css" scoped="scoped">
+                                        .fusion-fullwidth-1 {
+                                            padding-left: 150px !important;
+                                            padding-right: 150px !important;
+                                        }
+                                    </style>
+                                    <div class="fusion-row">
+                                        <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes"
+                                        style="margin-top:0px;margin-bottom:0px;">
+                                            <div class="fusion-column-wrapper">
+                                                <h1 style="text-align: center;"><span style="color: #ffffff;"><strong>MicroLearning + Metacognition = MindSage</strong></span></h1>
+                                                <div class="imageframe-align-center"><span class="fusion-imageframe imageframe-none imageframe-1 hover-type-none"> <img src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/our_approach_graphic_1_2000px.png" alt="" class="img-responsive"/></span></div>
+                                                <h4
+                                                style="text-align: center;"><span style="color: #ffffff;">We’ve designed MindSage to be a highly effective learning tool </span>
                                                     <span
                                                     style="color: #ffffff;">that easily fits into your class schedule.</span>
                                                         </h4>
-                                            <div class="fusion-clearfix"></div>
+                                                        <div class="fusion-clearfix"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="fusion-clearfix"></div>
-                                    <div class="fusion-section-separator section-separator" style="border-bottom:10px solid #a9d34e;">
-                                        <div class="divider-candy-arrow bottom" style="top:10px;border-top-color: #a9d34e;"></div>
-                                        <div class="divider-candy bottom" style="bottom:-30px;border-bottom:1px solid #a9d34e;border-left:1px solid #a9d34e;"></div>
+                                        <div class="fusion-clearfix"></div>
+                                        <div class="fusion-section-separator section-separator" style="border-bottom:10px solid #a9d34e;">
+                                            <div class="divider-candy-arrow bottom" style="top:10px;border-top-color: #a9d34e;"></div>
+                                            <div class="divider-candy bottom" style="bottom:-30px;border-bottom:1px solid #a9d34e;border-left:1px solid #a9d34e;"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="fusion-bg-parallax" data-bg-align="center center" data-direction="up" data-mute="yes" data-opacity="100" data-velocity="-0.9"
-                            data-mobile-enabled="true" data-break-parents="0" data-bg-image="http://mindkey.org/wordpress/wp-content/uploads/2016/03/OurApproach_image_1_2000px.jpg"
-                            data-bg-repeat="false"></div>
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-2  fusion-parallax-up nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:400px;padding-top:50px;padding-left:150px;padding-right:100px;padding-left:150px !important;padding-right:100px !important;">
-                                <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-2 {
-                                        padding-left: 150px !important;
-                                        padding-right: 100px !important;
-                                    }
-                                </style>
-                                <div class="fusion-row">
-                                    <div class="fusion-one-half fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper" style="padding:1px;">
-                                            <h4><span style="color: #667cbd;">Using a micro learning approach, our lessons stimulate self analysis and awareness.</span></h4>
-                                            <div class="fusion-clearfix"></div>
+                                <div class="fusion-bg-parallax" data-bg-align="center top" data-direction="up" data-mute="yes"
+                                data-opacity="100" data-velocity="-0.2" data-mobile-enabled="true" data-break-parents="0"
+                                data-bg-image="http://mindkey.org/wordpress/wp-content/uploads/2016/03/OurApproach_image_1_2000px.jpg"
+                                data-bg-repeat="false"></div>
+                                <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-2  fusion-parallax-up nonhundred-percent-fullwidth"
+                                style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:400px;padding-top:10px;padding-left:80px;padding-right:0px;padding-left:80px !important;">
+                                    <style type="text/css" scoped="scoped">
+                                        .fusion-fullwidth-2 {
+                                            padding-left: 80px !important;
+                                            padding-right: 0px !important;
+                                        }
+                                    </style>
+                                    <div class="fusion-row">
+                                        <div class="fusion-one-half fusion-layout-column fusion-column-last fusion-spacing-yes"
+                                        style="margin-top:0px;margin-bottom:0px;">
+                                            <div class="fusion-column-wrapper" style="padding:1px;">
+                                                <h4><span style="color: #446a96;">Using a microlearning approach, our lessons stimulate self analysis and awareness.</span></h4>
+                                                <div class="fusion-clearfix"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="fusion-clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-3  fusion-parallax-none nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:60px;padding-left:100px;padding-right:100px;padding-left:100px !important;padding-right:100px !important;">
-                                <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-3 {
-                                        padding-left: 100px !important;
-                                        padding-right: 100px !important;
-                                    }
-                                </style>
-                                <div class="fusion-row">
-                                    <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper">
-                                            <h2><span style="color: #667cbd;">MicroLearning</span></h2>
-                                            <div class="fusion-clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fusion-clearfix"></div>
-                                    <div class="fusion-one-half fusion-layout-column fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper" style="padding:0px;">
-                                            <h5>Students are bombarded with massive amounts of information every day.  To ensure that students pay attention and remember each lesson, we’ve found<em><span style="color: #000000;"> less is more</span>.</em></h5>
-                                            <div class="fusion-clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fusion-one-half fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper" style="padding:0px;">
-                                            <h3><span style="color: #667cbd;">“In the digital age, it seems the ability to stay focused is now a superpower.”</span></h3>
-                                            <h5><span style="color: #667cbd;">-www.medicaldaily.com</span></h5>
-                                            <div class="fusion-clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fusion-clearfix"></div>
-                                    <div class="fusion-section-separator section-separator" style="border-bottom:10px solid #ffffff;">
-                                        <div class="divider-candy-arrow bottom" style="top:10px;border-top-color: #ffffff;"></div>
-                                        <div class="divider-candy bottom" style="bottom:-30px;border-bottom:1px solid #ffffff;border-left:1px solid #ffffff;"></div>
+                                        <div class="fusion-clearfix"></div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-4  fusion-parallax-none nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:60px;padding-left:100px;padding-right:100px;padding-left:100px !important;padding-right:100px !important;background-color:#658fbc;">
-                                <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-4 {
-                                        padding-left: 100px !important;
-                                        padding-right: 100px !important;
-                                    }
-                                </style>
-                                <div class="fusion-row">
-                                    <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:30px;">
-                                        <div class="fusion-column-wrapper">
-                                            <h4><span style="color: #ffffff;">MindSage uses the four principles of Microlearning to present information in short 2-4 minutes soft skills lesson videos.</span></h4>
-                                            <h4>
-                                                <span style="color: #ffffff;">A brief 5-10 minute discussion at the beginning and end of the week, round out the program.<br /></span>
-                                            </h4>
-                                            <h5 style="text-align: center;"><span style="color: #000000;">
-                                                <span style="color: #ffffff;">Find out more: MindSage MicroLearning Whitepaper</span><br /></span>
-                                            </h5>
-                                            <div class="imageframe-align-center"><span class="fusion-imageframe imageframe-none imageframe-2 hover-type-none"><a class="fusion-no-lightbox" href="http://www.etamedia.com/MindSage/ASSETS/Grade_7_BETA_TESTING/Whitepapers/MicrolearningWhitepaperFINAL.docx" target="_blank"> <img src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/Document_icon.png" alt="MindSage Microlearning WhitePaper" class="img-responsive"/></a></span></div>
-                                            <div class="fusion-clearfix"></div>
+                                <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-3  fusion-parallax-none nonhundred-percent-fullwidth"
+                                style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:60px;padding-left:150px;padding-right:150px;padding-left:150px !important;padding-right:150px !important;">
+                                    <style type="text/css" scoped="scoped">
+                                        .fusion-fullwidth-3 {
+                                            padding-left: 150px !important;
+                                            padding-right: 150px !important;
+                                        }
+                                    </style>
+                                    <div class="fusion-row">
+                                        <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes"
+                                        style="margin-top:0px;margin-bottom:0px;">
+                                            <div class="fusion-column-wrapper">
+                                                <h2><span style="color: #446a96;">MICROLEARNING</span></h2>
+                                                <div class="fusion-clearfix"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="fusion-clearfix"></div>
-                                    <div class="fusion-section-separator section-separator" style="border-bottom:10px solid #658fbc;">
-                                        <div class="divider-candy-arrow bottom" style="top:10px;border-top-color: #658fbc;"></div>
-                                        <div class="divider-candy bottom" style="bottom:-30px;border-bottom:1px solid #658fbc;border-left:1px solid #658fbc;"></div>
+                                        <div class="fusion-clearfix"></div>
+                                        <div class="fusion-one-half fusion-layout-column fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
+                                            <div class="fusion-column-wrapper" style="padding:0px;">
+                                                <h5><span style="color: #6c7175;">Students are bombarded with massive amounts of information every day.  To ensure that students pay attention and remember each lesson, we’ve found<em> less is more.</em></span></h5>
+                                                <div class="fusion-clearfix"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fusion-one-half fusion-layout-column fusion-column-last fusion-spacing-yes"
+                                        style="margin-top:0px;margin-bottom:0px;">
+                                            <div class="fusion-column-wrapper" style="padding:0px;">
+                                                <h3><span style="color: #667cbd;">“In the digital age, it seems the ability to stay focused is now a superpower.”</span></h3>
+                                                <h6><span style="color: #667cbd;">-www.medicaldaily.com</span></h6>
+                                                <div class="fusion-clearfix"></div>
+                                            </div>
+                                        </div>
+                                        <div class="fusion-clearfix"></div>
+                                        <div class="fusion-section-separator section-separator" style="border-bottom:10px solid #ffffff;">
+                                            <div class="divider-candy-arrow bottom" style="top:10px;border-top-color: #ffffff;"></div>
+                                            <div class="divider-candy bottom" style="bottom:-30px;border-bottom:1px solid #ffffff;border-left:1px solid #ffffff;"></div>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-5  fusion-parallax-none nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:60px;padding-left:100px;padding-right:100px;padding-left:100px !important;padding-right:100px !important;">
-                                <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-5 {
-                                        padding-left: 100px !important;
-                                        padding-right: 100px !important;
-                                    }
-                                </style>
-                                <div class="fusion-row">
-                                    <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper">
-                                            <h2><span style="color: #667cbd;">Metacognition</span></h2>
-                                            <h3><span style="color: #999999;">Above and beyond retention, we want our students to achieve <em>application</em> and <em>adoption</em>.</span></h3>
-                                            <div class="fusion-clearfix"></div>
+                                <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-4  fusion-parallax-none nonhundred-percent-fullwidth"
+                                style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:60px;padding-left:150px;padding-right:150px;padding-left:150px !important;padding-right:150px !important;background-color:#f9f9f4;">
+                                    <style type="text/css" scoped="scoped">
+                                        .fusion-fullwidth-4 {
+                                            padding-left: 150px !important;
+                                            padding-right: 150px !important;
+                                        }
+                                    </style>
+                                    <div class="fusion-row">
+                                        <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes"
+                                        style="margin-top:0px;margin-bottom:30px;">
+                                            <div class="fusion-column-wrapper">
+                                                <h4><span style="color: #6c7175;">MindSage uses the four principles of Microlearning to present information in short 2-4 minutes soft skills lesson videos.</span></h4>
+                                                <h4><span style="color: #6c7175;">A brief 5-10 minute discussion at the beginning and end of the week, round out the program.<br />
+</span></h4>
+                                                <h5 style="text-align: center;"><span style="color: #000000;"><span style="color: #6c7175;">Find out more: MindSage MicroLearning Whitepaper</span><br />
+</span></h5>
+                                                <div class="fusion-clearfix"></div>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="fusion-clearfix"></div>
-                                    <div class="fusion-one-half fusion-layout-column fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper">
-                                            <h5><span style="color: #667cbd;">MindSage combines microlearning with a metacognitive approach to help students make deep and lasting changes over time.</span></h5>
-                                            <h6 style="text-align: center;"><span style="color: #667cbd;">Find out more in our Metacognative Approach Whitepaper.</span></h6>
-                                            <div class="imageframe-align-center"><span class="fusion-imageframe imageframe-none imageframe-3 hover-type-none"><a class="fusion-no-lightbox" href="http://www.etamedia.com/MindSage/ASSETS/Grade_7_BETA_TESTING/Whitepapers/MetacognitiveLearningWhitepaperFINAL.docx" target="_blank"> <img src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/Document_icon_blue.png" alt="" class="img-responsive"/></a></span></div>
-                                            <div class="fusion-clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fusion-one-half fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper" style="padding:0px;">
-                                            <h5><span style="color: #667cbd;">Our metacognative component allows for transformative learning. We want to help student’s trigger ‘ah-ha’ moments, as they examine basic personal meaning perspectives.</span></h5>
-                                            <h5><span style="color: #667cbd;">Using weekly assignements students are asked to observe, notice, analyze and assess themselves in light of the weekly soft skill lesson. Students are then asked to record their findings in their MindSage journal.</span></h5>
-                                            <div class="fusion-clearfix"></div>
-                                        </div>
+                                        <div class="fusion-clearfix"></div>
+                                        <div class="imageframe-align-center"><span class="fusion-imageframe imageframe-none imageframe-2 hover-type-none"><a class="fusion-no-lightbox" href="http://www.etamedia.com/MindSage/ASSETS/Grade_7_BETA_TESTING/Whitepapers/MetacognitiveLearningWhitepaperFINAL.docx" target="_blank"> <img src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/Document_icon_blue.png" alt="" class="img-responsive"/></a></span></div>
+                                        <div
+                                        class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes"
+                                        style="margin-top:0px;margin-bottom:0px;">
+                                            <div class="fusion-column-wrapper">
+                                                <h2></h2>
+                                                <p><span style="color: #ffffff;">MINDSAGE SOFT SKILLS</span></p>
+                                                <div class="fusion-clearfix"></div>
+                                            </div>
                                     </div>
                                     <div class="fusion-clearfix"></div>
                                     <div class="fusion-sep-clear"></div>
                                     <div class="fusion-separator fusion-full-width-sep sep-shadow" style="background:radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);background:-webkit-radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);background:-moz-radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);background:-o-radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);margin-left: auto;margin-right: auto;margin-top:;"></div>
                                 </div>
                             </div>
-                            <div class="fusion-bg-parallax" data-bg-align="left center" data-direction="up" data-mute="yes" data-opacity="100" data-velocity="-0.9"
-                            data-mobile-enabled="true" data-break-parents="0" data-bg-image="http://mindkey.org/wordpress/wp-content/uploads/2016/03/OurApproach_image_2_2000px.jpg"
-                            data-bg-repeat="false"></div>
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-6  fusion-parallax-up nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:100px;padding-top:400px;padding-left:100px;padding-right:100px;padding-left:100px !important;padding-right:100px !important;">
+                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-5  fusion-parallax-none nonhundred-percent-fullwidth"
+                            style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:60px;padding-left:150px;padding-right:150px;padding-left:150px !important;padding-right:150px !important;">
                                 <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-6 {
-                                        padding-left: 100px !important;
-                                        padding-right: 100px !important;
-                                    }
-                                </style>
-                                <div class="fusion-row">
-                                    <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:300x;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper" style="padding:50px;">
-                                            <h2><span style="color: #000000;">The greatest and most profound changes a student can make, are those they choose to make on their own.</span></h2>
-                                            <div class="fusion-clearfix"></div>
-                                        </div>
-                                    </div>
-                                    <div class="fusion-clearfix"></div>
-                                </div>
-                            </div>
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-7  fusion-parallax-none nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:0px;padding-left:100px;padding-right:100px;padding-left:100px !important;padding-right:100px !important;background-color:#ffbd72;">
-                                <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-7 {
-                                        padding-left: 100px !important;
-                                        padding-right: 100px !important;
+                                    .fusion-fullwidth-5 {
+                                        padding-left: 150px !important;
+                                        padding-right: 150px !important;
                                     }
                                 </style>
                                 <div class="fusion-row">
                                     <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper" style="padding:50px;">
-                                            <h3><span style="color: #667cbd;">MindSage initiate self examination, bringing students face-to-face with an assessment of their current thinking, actions and achievements.</span></h3>
+                                        <div class="fusion-column-wrapper">
+                                            <h2><span style="color: #446a96;">METAGOGNITION</span></h2>
+                                            <h3><span style="color: #6c7175;">Above and beyond retention, we want our students to achieve <em>application</em> and <em>adoption</em>.</span></h3>
                                             <div class="fusion-clearfix"></div>
                                         </div>
                                     </div>
                                     <div class="fusion-clearfix"></div>
-                                    <div class="fusion-section-separator section-separator" style="border-bottom:10px solid #ffbd72;">
-                                        <div class="divider-candy-arrow bottom" style="top:10px;border-top-color: #ffbd72;"></div>
-                                        <div class="divider-candy bottom" style="bottom:-30px;border-bottom:1px solid #ffbd72;border-left:1px solid #ffbd72;"></div>
+                                    <div class="fusion-one-half fusion-layout-column fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
+                                        <div class="fusion-column-wrapper">
+                                            <h5><span style="color: #6c7175;">MindSage combines microlearning with a metacognitive approach to help students make deep and lasting changes over time.</span></h5>
+                                            <h6 style="text-align: left;"><span style="color: #667cbd;">Find out more in our Metacognative Approach Whitepaper.</span></h6>
+                                            <div class="imageframe-align-center"><span class="fusion-imageframe imageframe-none imageframe-3 hover-type-none"><a class="fusion-no-lightbox" href="http://www.etamedia.com/MindSage/ASSETS/Grade_7_BETA_TESTING/Whitepapers/MetacognitiveLearningWhitepaperFINAL.docx" target="_blank"> <img src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/Document_icon_blue.png" alt="" class="img-responsive"/></a></span></div>
+                                            <div
+                                            class="fusion-clearfix"></div>
                                     </div>
+                                </div>
+                                <div class="fusion-one-half fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
+                                    <div class="fusion-column-wrapper" style="padding:0px;">
+                                        <h5><span style="color: #6c7175;">Our metacognative component allows for transformative learning. We want to help student’s trigger ‘ah-ha’ moments, as they examine basic personal meaning perspectives.</span></h5>
+                                        <h5><span style="color: #6c7175;">Using weekly assignements students are asked to observe, notice, analyze and assess themselves in light of the weekly soft skill lesson. Students are then asked to record their findings in their MindSage journal.</span></h5>
+                                        <div class="fusion-clearfix"></div>
+                                    </div>
+                                </div>
+                                <div class="fusion-clearfix"></div>
+                                <div class="fusion-sep-clear"></div>
+                                <div class="fusion-separator fusion-full-width-sep sep-shadow" style="background:radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);background:-webkit-radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);background:-moz-radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);background:-o-radial-gradient(ellipse at 50% -50% , #e0dede 0px, rgba(255, 255, 255, 0) 80%) repeat scroll 0 0 rgba(0, 0, 0, 0);margin-left: auto;margin-right: auto;margin-top:;"></div>
+                            </div>
+                    </div>
+                    <div class="fusion-bg-parallax" data-bg-align="center top" data-direction="up" data-mute="yes" data-opacity="100"
+                    data-velocity="-0.2" data-mobile-enabled="true" data-break-parents="0" data-bg-image="http://mindkey.org/wordpress/wp-content/uploads/2016/03/OurApproach_image_2_2000px.jpg"
+                    data-bg-repeat="false"></div>
+                    <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-6  fusion-parallax-up nonhundred-percent-fullwidth"
+                    style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:200px;padding-top:100px;padding-left:0px;padding-right:0px;">
+                        <style type="text/css" scoped="scoped">
+                            .fusion-fullwidth-6 {
+                                padding-left: 0px !important;
+                                padding-right: 0px !important;
+                            }
+                        </style>
+                        <div class="fusion-row">
+                            <div class="fusion-three-fifth fusion-layout-column fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
+                                <div class="fusion-column-wrapper">
+                                    <p><span style="color: #ffcc99;">&#8230;.</span></p>
+                                    <div class="fusion-clearfix"></div>
                                 </div>
                             </div>
-                            <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-8  fusion-parallax-none nonhundred-percent-fullwidth" style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:0px;padding-left:100px;padding-right:100px;padding-left:100px !important;padding-right:100px !important;">
-                                <style type="text/css" scoped="scoped">
-                                    .fusion-fullwidth-8 {
-                                        padding-left: 100px !important;
-                                        padding-right: 100px !important;
-                                    }
-                                </style>
-                                <div class="fusion-row">
-                                    <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
-                                        <div class="fusion-column-wrapper" style="padding:50px;">
-                                            <h4><span style="color: #667cbd;">“Micro-learning (ML) combines micro-content delivery with a sequence of micro interactions which enable users to learn <em>without information overload</em>. This has the potential to enable better learning results in terms of retention of propositional content.”</span></h4>
-                                            <h5><span style="color: #667cbd;">-Association for Information Systems</span></h5>
-                                            <div class="fusion-clearfix"></div>
-                                        </div>
-                                    </div>
+                            <div class="fusion-two-fifth fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
+                                <div class="fusion-column-wrapper">
+                                    <h2><span style="color: #000000;">The greatest and most profound changes a student can make, are those they choose to make on their own.</span></h2>
                                     <div class="fusion-clearfix"></div>
                                 </div>
+                            </div>
+                            <div class="fusion-clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-7  fusion-parallax-none nonhundred-percent-fullwidth"
+                    style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:0px;padding-left:150px;padding-right:150px;padding-left:150px !important;padding-right:150px !important;background-color:#f9f9f4;">
+                        <style type="text/css" scoped="scoped">
+                            .fusion-fullwidth-7 {
+                                padding-left: 150px !important;
+                                padding-right: 150px !important;
+                            }
+                        </style>
+                        <div class="fusion-row">
+                            <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
+                                <div class="fusion-column-wrapper" style="padding:50px;">
+                                    <h3><span style="color: #6c7175;">MindSage initiates self examination, bringing students face-to-face with an assessment of their current thinking, actions and achievements.</span></h3>
+                                    <div class="fusion-clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="fusion-clearfix"></div>
+                            <div class="fusion-section-separator section-separator" style="border-bottom:10px solid #f9f9f4;">
+                                <div class="divider-candy-arrow bottom" style="top:10px;border-top-color: #f9f9f4;"></div>
+                                <div class="divider-candy bottom" style="bottom:-30px;border-bottom:1px solid #f9f9f4;border-left:1px solid #f9f9f4;"></div>
                             </div>
                         </div>
                     </div>
+                    <div class="fusion-fullwidth fullwidth-box fusion-fullwidth-8  fusion-parallax-none nonhundred-percent-fullwidth"
+                    style="border-color:#eae9e9;border-bottom-width: 0px;border-top-width: 0px;border-bottom-style: solid;border-top-style: solid;padding-bottom:0px;padding-top:0px;padding-left:150px;padding-right:150px;padding-left:150px !important;padding-right:150px !important;">
+                        <style type="text/css" scoped="scoped">
+                            .fusion-fullwidth-8 {
+                                padding-left: 150px !important;
+                                padding-right: 150px !important;
+                            }
+                        </style>
+                        <div class="fusion-row">
+                            <div class="fusion-one-full fusion-layout-column fusion-column-last fusion-spacing-yes" style="margin-top:0px;margin-bottom:0px;">
+                                <div class="fusion-column-wrapper" style="padding:50px;">
+                                    <h4><span style="color: #667cbd;">“Micro-learning (ML) combines micro-content delivery with a sequence of micro interactions which enable users to learn <em>without information overload</em>.  This has the potential to enable better learning results in terms of retention of propositional content.”</span></h4>
+                                    <h6><span style="color: #667cbd;">-Association for Information Systems</span></h6>
+                                    <div class="fusion-clearfix"></div>
+                                </div>
+                            </div>
+                            <div class="fusion-clearfix"></div>
+                        </div>
+                    </div>
                 </div>
+            </div>
+        </div>
 
+    </div>
+    <!-- fusion-row -->
+    </div>
+    <!-- #main -->
+    <div class="fusion-footer">
+        <footer class="fusion-footer-widget-area fusion-widget-area">
+            <div class="fusion-row">
+                <div class="fusion-columns fusion-columns-3 fusion-widget-area">
+
+                    <div class="fusion-column col-lg-4 col-md-4 col-sm-4">
+                        <div id="text-2" class="fusion-footer-widget-column widget widget_text">
+                            <div class="textwidget">
+                                <p><img class="logo" src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/logo_small.png"
+                                    alt="logo" width="246" height="79" /> </p>
+                                <p><span style="color: #DDDDDD;">Mindsage is a teacher-friendly soft skills training program that spans 4th-12th grades.</span></p>
+                                <p><span style="color: #DDDDDD;">Our course adapts cutting edge corporate level training concepts to grade appropriate lessons.</span></p>
+                                <p><span style="color: #DDDDDD;">Mindsage uses a microlearning and metacognative approach for a maximum transformative learning.</span></p>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                        <div id="social_links-widget-2" class="fusion-footer-widget-column widget social_links">
+                            <div class="fusion-social-networks">
+                                <div class="fusion-social-networks-wrapper">
+
+
+
+
+
+
+
+
+                                    <a class="fusion-social-network-icon fusion-tooltip fusion-facebook fusion-icon-facebook" href="https://www.facebook.com/seniorsasa"
+                                    data-placement="top" data-title="Facebook" data-toggle="tooltip" data-original-title=""
+                                    title="Facebook" target="_self" style="font-size:16px;color:#bebdbd;"></a>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                    <div class="fusion-column col-lg-4 col-md-4 col-sm-4">
+                        <div id="nav_menu-2" class="fusion-footer-widget-column widget widget_nav_menu">
+                            <div class="menu-footer_menu-container">
+                                <ul id="menu-footer_menu" class="menu">
+                                    <li id="menu-item-579" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-579"><a href="http://mindkey.org/wordpress/">home</a></li>
+                                    <li id="menu-item-584" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-584"><a href="whatmindsage.html">What is Mindsage?</a></li>
+                                    <li id="menu-item-582" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-259 current_page_item menu-item-582"><a href="approach.html">Our approach</a></li>
+                                    <li id="menu-item-583" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-583"><a href="organisation.html">Our organisation</a></li>
+                                    <li id="menu-item-585" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-585"><a href="necessity.html">Are softskills necessary?</a></li>
+                                    <li id="menu-item-581" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-581"><a href="whystart.html">Why start now?</a></li>
+                                    <li id="menu-item-1744" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-1744"><a href="21century.html">21st Century Skills Community Centers</a></li>
+                                    <li id="menu-item-580" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-580"><a href="seminars.html">Mindsage seminars</a></li>
+                                </ul>
+                            </div>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                    <div class="fusion-column fusion-column-last col-lg-4 col-md-4 col-sm-4">
+                        <div id="captainformwidget-2" class="fusion-footer-widget-column widget widget_captainformwidget">
+                            <h4 class="widget-title"></h4>
+                            <script type="text/javascript">
+                                if(document.getElementById('captainform_js_global_vars') == null)
+	{
+		document.write(unescape('%3Cscript id="captainform_js_global_vars"%3E  var frmRef=""; try { frmRef=window.top.location.href; } catch(err) {}; var captainform_servicedomain="app.captainform.com";var cfJsHost = (("https:" == document.location.protocol) ? "https://" : "http://");%3C/script%3E'));
+	}
+
+                            </script>
+                            <script type="text/javascript">
+                                var customVarsMF = '%%CUSTOMVARS%%';
+	var captainform_theme_style = '';
+	if(document.getElementById('captainform_easyxdmjs') == null)
+	{
+		document.write(unescape("%3Cscript id='captainform_easyxdmjs' src='" + cfJsHost + captainform_servicedomain + "/includes/easyXDM.min.js' type='text/javascript'%3E%3C/script%3E")); 
+	}
+	if(document.getElementById('iframeresizer_embedding_system') == null)
+	{
+		document.write(unescape("%3Cscript id='iframeresizer_embedding_system' src='" + cfJsHost + captainform_servicedomain + "/modules/captainform/js/iframe_resizer/3.5/iframeResizer.min.js' type='text/javascript'%3E%3C/script%3E")); 
+	}
+	document.write(unescape("%3Cscript src='" + cfJsHost + captainform_servicedomain + "/jsform-735062.js?" + customVarsMF + captainform_theme_style + "' type='text/javascript'%3E%3C/script%3E"));
+
+                            </script>
+                            <div style="clear:both;"></div>
+                        </div>
+                    </div>
+                    <div class="fusion-clearfix"></div>
+                </div>
+                <!-- fusion-columns -->
             </div>
             <!-- fusion-row -->
-        </div>
-        <!-- #main -->
-        <div class="fusion-footer">
-            <footer class="fusion-footer-widget-area fusion-widget-area">
-                <div class="fusion-row">
-                    <div class="fusion-columns fusion-columns-3 fusion-widget-area">
+        </footer>
+        <!-- fusion-footer-widget-area -->
+        <footer id="footer" class="fusion-footer-copyright-area">
+            <div class="fusion-row">
+                <div class="fusion-copyright-content">
 
-                        <div class="fusion-column col-lg-4 col-md-4 col-sm-4">
-                            <div id="text-2" class="fusion-footer-widget-column widget widget_text">
-                                <div class="textwidget">
-                                    <p><img class="logo" src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/logo_small.png"
-                                        alt="logo" width="246" height="79" /> </p>
-                                    <p><span style="color: #DDDDDD;">Mindsage is a teacher-friendly soft skills ntraining program that spans 4th-12th grades.</span></p>
-                                    <p><span style="color: #DDDDDD;">Our course adapts cutting edge corporate level training concepts to grade apropriate lessons.</span></p>
-                                    <p><span style="color: #DDDDDD;">Mindsage uses a microlearning and metacognative approach for a maximum transformative learning.</span></p>
-                                </div>
-                                <div style="clear:both;"></div>
-                            </div>
-                            <div id="social_links-widget-2" class="fusion-footer-widget-column widget social_links">
-                                <div class="fusion-social-networks">
-                                    <div class="fusion-social-networks-wrapper">
-                                        <a class="fusion-social-network-icon fusion-tooltip fusion-facebook fusion-icon-facebook" href="https://www.facebook.com/seniorsasa"
-                                        data-placement="top" data-title="Facebook" data-toggle="tooltip" data-original-title=""
-                                        title="Facebook" target="_self" style="font-size:16px;color:#bebdbd;"></a>
-                                    </div>
-                                </div>
-
-                                <div style="clear:both;"></div>
-                            </div>
-                        </div>
-                        <div class="fusion-column col-lg-4 col-md-4 col-sm-4">
-                            <div id="nav_menu-2" class="fusion-footer-widget-column widget widget_nav_menu">
-                                <div class="menu-footer_menu-container">
-                                    <ul id="menu-footer_menu" class="menu">
-                                        <li id="menu-item-579" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-579"><a href="http://mindkey.org/wordpress/">home</a></li>
-                                        <li id="menu-item-582" class="menu-item menu-item-type-post_type menu-item-object-page current-menu-item page_item page-item-259 current_page_item menu-item-582"><a href="approach.html">Our approach</a></li>
-                                        <li id="menu-item-583" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-583"><a href="organisation.html">Our organisation</a></li>
-                                        <li id="menu-item-584" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-584"><a href="whatmindsage.html">What is Mindsage?</a></li>
-                                        <li id="menu-item-585" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-585"><a href="necessity.html">Are softskills necessary?</a></li>
-                                        <li id="menu-item-581" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-581"><a href="whystart.html">Why start now?</a></li>
-                                        <li id="menu-item-580" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-580"><a href="seminars.html">Mindsage seminars</a></li>
-                                    </ul>
-                                </div>
-                                <div style="clear:both;"></div>
-                            </div>
-                        </div>
-                        <div class="fusion-column fusion-column-last col-lg-4 col-md-4 col-sm-4"></div>
-                        <div class="fusion-clearfix"></div>
+                    <div class="fusion-copyright-notice">
+                        <div>Copyright 2012</div>
                     </div>
-                    <!-- fusion-columns -->
-                </div>
-                <!-- fusion-row -->
-            </footer>
-            <!-- fusion-footer-widget-area -->
-            <footer id="footer" class="fusion-footer-copyright-area">
-                <div class="fusion-row">
-                    <div class="fusion-copyright-content">
 
-                        <div class="fusion-copyright-notice">
-                            <div>Copyright 2012</div>
-                        </div>
-
-                    </div>
-                    <!-- fusion-fusion-copyright-content -->
                 </div>
-                <!-- fusion-row -->
-            </footer>
-            <!-- #footer -->
-        </div>
-        <!-- fusion-footer -->
+                <!-- fusion-fusion-copyright-content -->
+            </div>
+            <!-- fusion-row -->
+        </footer>
+        <!-- #footer -->
+    </div>
+    <!-- fusion-footer -->
     </div>
     <!-- wrapper -->
 
@@ -5062,8 +5238,9 @@ lsjQuery("#layerslider_1").layerSlider({globalBGColor: 0, skinsPath: 'http://min
     <script type='text/javascript' src='http://mindkey.org/wordpress/wp-includes/js/comment-reply.min.js?ver=4.4.1'></script>
     <script type='text/javascript'>
         /* <![CDATA[ */
-var js_local_vars = {"admin_ajax":"http:\/\/mindkey.org\/wordpress\/wp-admin\/admin-ajax.php","admin_ajax_nonce":"bf84770abf","protocol":"","theme_url":"http:\/\/mindkey.org\/wordpress\/wp-content\/themes\/Avada","dropdown_goto":"Go to...","mobile_nav_cart":"Shopping Cart","page_smoothHeight":"false","flex_smoothHeight":"false","language_flag":"","infinite_blog_finished_msg":"<em>All posts displayed.<\/em>","infinite_finished_msg":"<em>All items displayed.<\/em>","infinite_blog_text":"<em>Loading the next set of posts...<\/em>","portfolio_loading_text":"<em>Loading Portfolio Items...<\/em>","faqs_loading_text":"<em>Loading FAQ Items...<\/em>","order_actions":"Details","avada_rev_styles":"1","avada_styles_dropdowns":"0","blog_grid_column_spacing":"40","blog_pagination_type":"Pagination","body_font_size":"18","carousel_speed":"2500","content_break_point":"800","custom_icon_image_retina":"","disable_mobile_animate_css":"1","disable_mobile_image_hovers":"0","portfolio_pagination_type":"Pagination","form_bg_color":"#ffffff","header_transparency":"0","header_padding_bottom":"0px","header_padding_top":"0px","header_position":"Top","header_sticky":"1","header_sticky_tablet":"0","header_sticky_mobile":"0","header_sticky_type2_layout":"menu_only","sticky_header_shrinkage":"1","is_responsive":"1","is_ssl":"false","isotope_type":"masonry","layout_mode":"wide","lightbox_animation_speed":"Normal","lightbox_arrows":"1","lightbox_autoplay":"0","lightbox_behavior":"all","lightbox_desc":"1","lightbox_deeplinking":"1","lightbox_gallery":"1","lightbox_opacity":"0.9","lightbox_path":"vertical","lightbox_post_images":"1","lightbox_skin":"metro-white","lightbox_slideshow_speed":"5000","lightbox_social":"1","lightbox_title":"1","lightbox_video_height":"720","lightbox_video_width":"1280","logo_alignment":"Left","logo_margin_bottom":"0px","logo_margin_top":"0px","megamenu_max_width":"1100px","mobile_menu_design":"modern","nav_height":"40","nav_highlight_border":"3","page_title_fading":"0","pagination_video_slide":"0","related_posts_speed":"2500","retina_icon_height":"","retina_icon_width":"","submenu_slideout":"1","side_header_break_point":"800","sidenav_behavior":"Hover","site_width":"1100px","slider_position":"below","slideshow_autoplay":"1","slideshow_speed":"7000","smooth_scrolling":"1","status_lightbox":"0","status_totop_mobile":"0","status_vimeo":"0","status_yt":"0","testimonials_speed":"4000","tfes_animation":"sides","tfes_autoplay":"1","tfes_interval":"3000","tfes_speed":"800","tfes_width":"150","title_style_type":"double","typography_responsive":"0","typography_sensitivity":"0.6","typography_factor":"1.5","woocommerce_shop_page_columns":"4","side_header_width":"0"};
+var js_local_vars = {"admin_ajax":"http:\/\/mindkey.org\/wordpress\/wp-admin\/admin-ajax.php","admin_ajax_nonce":"786a708fbc","protocol":"","theme_url":"http:\/\/mindkey.org\/wordpress\/wp-content\/themes\/Avada","dropdown_goto":"Go to...","mobile_nav_cart":"Shopping Cart","page_smoothHeight":"false","flex_smoothHeight":"false","language_flag":"","infinite_blog_finished_msg":"<em>All posts displayed.<\/em>","infinite_finished_msg":"<em>All items displayed.<\/em>","infinite_blog_text":"<em>Loading the next set of posts...<\/em>","portfolio_loading_text":"<em>Loading Portfolio Items...<\/em>","faqs_loading_text":"<em>Loading FAQ Items...<\/em>","order_actions":"Details","avada_rev_styles":"1","avada_styles_dropdowns":"0","blog_grid_column_spacing":"40","blog_pagination_type":"Pagination","body_font_size":"18","carousel_speed":"2500","content_break_point":"800","custom_icon_image_retina":"","disable_mobile_animate_css":"1","disable_mobile_image_hovers":"0","portfolio_pagination_type":"Pagination","form_bg_color":"#ffffff","header_transparency":"0","header_padding_bottom":"0px","header_padding_top":"0px","header_position":"Top","header_sticky":"1","header_sticky_tablet":"0","header_sticky_mobile":"0","header_sticky_type2_layout":"menu_only","sticky_header_shrinkage":"1","is_responsive":"1","is_ssl":"false","isotope_type":"masonry","layout_mode":"wide","lightbox_animation_speed":"Normal","lightbox_arrows":"1","lightbox_autoplay":"0","lightbox_behavior":"all","lightbox_desc":"1","lightbox_deeplinking":"1","lightbox_gallery":"1","lightbox_opacity":"0.9","lightbox_path":"vertical","lightbox_post_images":"1","lightbox_skin":"metro-white","lightbox_slideshow_speed":"5000","lightbox_social":"1","lightbox_title":"1","lightbox_video_height":"720","lightbox_video_width":"1280","logo_alignment":"Left","logo_margin_bottom":"0px","logo_margin_top":"0px","megamenu_max_width":"1100px","mobile_menu_design":"modern","nav_height":"40","nav_highlight_border":"3","page_title_fading":"0","pagination_video_slide":"0","related_posts_speed":"2500","retina_icon_height":"","retina_icon_width":"","submenu_slideout":"1","side_header_break_point":"800","sidenav_behavior":"Hover","site_width":"1100px","slider_position":"below","slideshow_autoplay":"1","slideshow_speed":"7000","smooth_scrolling":"1","status_lightbox":"0","status_totop_mobile":"0","status_vimeo":"0","status_yt":"0","testimonials_speed":"4000","tfes_animation":"sides","tfes_autoplay":"1","tfes_interval":"3000","tfes_speed":"800","tfes_width":"150","title_style_type":"double","typography_responsive":"0","typography_sensitivity":"0.6","typography_factor":"1.5","woocommerce_shop_page_columns":"4","side_header_width":"0"};
 /* ]]> */
+
     </script>
     <script type='text/javascript' src='http://mindkey.org/wordpress/wp-content/themes/Avada/assets/js/main.min.js?ver=3.9.3'
     async></script>
