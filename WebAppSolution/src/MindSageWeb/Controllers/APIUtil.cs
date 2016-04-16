@@ -86,7 +86,7 @@ namespace MindSageWeb.Controllers
 
             const int ShiftOneDay = 1;
             const int LessonDuration = 5;
-            var currentBeginDate = classCalendar.BeginDate.Value;
+            var currentBeginDate = classCalendar.BeginDate.Value.ToUniversalTime();
             var shiftDays = (classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>()).Select(it => it.ToUniversalTime());
             var lessonQry = classCalendar.LessonCalendars.Where(it => !it.DeletedDate.HasValue).OrderBy(it => it.Order);
             foreach (var lesson in lessonQry)

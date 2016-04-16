@@ -931,32 +931,35 @@ namespace MindSageWeb.Controllers
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             if (classCalendar == null) return null;
 
-            var dateRange = Enumerable.Empty<DateTime>();
-            var isMoreThanOneDay = body.ToDate.HasValue;
-            if (isMoreThanOneDay)
+            var requestValid = body.IsHoliday;
+            if (requestValid)
             {
-                var isTodayIsCorrect = body.ToDate.Value > body.FromDate;
-                var fromDate = isTodayIsCorrect ? body.FromDate : body.ToDate.Value;
-                var toDate = isTodayIsCorrect ? body.ToDate.Value : body.FromDate;
-                const int ShiftOneDay = 1;
-                var diffDays = (toDate - fromDate).Days + ShiftOneDay;
-                dateRange = Enumerable.Range(0, diffDays).Select(it => new DateTime(fromDate.Year, fromDate.Month, fromDate.Day + it).ToUniversalTime());
+                var dateRange = Enumerable.Empty<DateTime>();
+                var isMoreThanOneDay = body.ToDate.HasValue;
+                if (isMoreThanOneDay)
+                {
+                    var isTodayIsCorrect = body.ToDate.Value > body.FromDate;
+                    var fromDate = (isTodayIsCorrect ? body.FromDate : body.ToDate.Value).Date;
+                    var toDate = (isTodayIsCorrect ? body.ToDate.Value : body.FromDate).Date;
+                    const int ShiftOneDay = 1;
+                    var diffDays = (toDate - fromDate).Days + ShiftOneDay;
+                    dateRange = Enumerable.Range(0, diffDays).Select(it => fromDate.AddDays(it).ToUniversalTime());
+                }
+                else dateRange = new List<DateTime> { body.FromDate.Date.ToUniversalTime() };
+
+                var holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
+                holidays = body.IsHoliday ? holidays.Union(dateRange) : holidays.Except(dateRange);
+                classCalendar.Holidays = holidays.Distinct();
+
+                var shiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
+                shiftDays = body.IsShift ? shiftDays.Union(dateRange) : shiftDays.Except(dateRange);
+                classCalendar.ShiftDays = shiftDays.Distinct();
+
+                classCalendar.CalculateCourseSchedule();
+                _classCalendarRepo.UpsertClassCalendar(classCalendar);
             }
-            else dateRange = new List<DateTime> { body.FromDate.ToUniversalTime() };
 
-            var holidays = classCalendar.Holidays ?? Enumerable.Empty<DateTime>();
-            holidays = body.IsHoliday ? holidays.Union(dateRange) : holidays.Except(dateRange);
-            classCalendar.Holidays = holidays.Distinct();
-
-            var shiftDays = classCalendar.ShiftDays ?? Enumerable.Empty<DateTime>();
-            shiftDays = body.IsShift ? shiftDays.Union(dateRange) : shiftDays.Except(dateRange);
-            classCalendar.ShiftDays = shiftDays.Distinct();
-
-            classCalendar.CalculateCourseSchedule();
-            _classCalendarRepo.UpsertClassCalendar(classCalendar);
-
-            classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
-            var result = getCourseSchedule(classCalendar, true);
+            var result = getCourseSchedule(classCalendar, requestValid);
             return result;
         }
 
