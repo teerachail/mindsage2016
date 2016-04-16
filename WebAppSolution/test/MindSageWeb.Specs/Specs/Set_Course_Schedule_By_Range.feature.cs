@@ -304,13 +304,13 @@ this.FeatureBackground();
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Set_Course_Schedule_By_Range")]
-        [Xunit.TraitAttribute("Description", "Teacher set course schedule shift date only (Single day) Then system doesn\'t set " +
-            "course Calendar and send new schedule back")]
+        [Xunit.TraitAttribute("Description", "Teacher set course schedule shift date only (Single day) Then system set course C" +
+            "alendar and send new schedule back")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void TeacherSetCourseScheduleShiftDateOnlySingleDayThenSystemDoesnTSetCourseCalendarAndSendNewScheduleBack()
+        public virtual void TeacherSetCourseScheduleShiftDateOnlySingleDayThenSystemSetCourseCalendarAndSendNewScheduleBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule shift date only (Single day) Then system doesn\'t set " +
-                    "course Calendar and send new schedule back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule shift date only (Single day) Then system set course C" +
+                    "alendar and send new schedule back", new string[] {
                         "mock"});
 #line 202
 this.ScenarioSetup(scenarioInfo);
@@ -321,26 +321,54 @@ this.FeatureBackground();
 #line 204
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
                     "/2016\' ToDate \'\' IsHoliday \'false\' IsShift \'true\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 205
- testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 206
- testRunner.And("System send course schedule with JSON format is", @"{
-	""IsComplete"": false,
+#line 205
+ testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
+       ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2016"",
-	""EndDate"": ""1/10/2016"",
+	""ExpiredDate"": ""1/11/2016"",
+       ""ClassRoomId"": ""ClassRoom01"",
+	""CreatedDate"": ""1/1/2016"",
+       ""LessonCalendars"":
+       [
+           {
+               ""Id"": ""LessonCalendar01"",
+               ""Order"": 1,
+               ""SemesterGroupName"": ""A"",
+               ""BeginDate"": ""1/2/2016"",
+			""TopicOfTheDays"": [],
+               ""LessonId"": ""Lesson01"",
+           },
+		{
+               ""Id"": ""LessonCalendar02"",
+               ""Order"": 2,
+               ""SemesterGroupName"": ""A"",
+               ""BeginDate"": ""1/7/2016"",
+			""TopicOfTheDays"": [],
+               ""LessonId"": ""Lesson01"",
+           }
+       ],
+	""Holidays"": [],
+	""ShiftDays"": [ ""1/1/2016"" ]
+   }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 236
+ testRunner.And("System send course schedule with JSON format is", @"{
+	""IsComplete"": true,
+	""BeginDate"": ""1/1/2016"",
+	""EndDate"": ""1/11/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
-			""BeginDate"": ""1/1/2016""
+			""BeginDate"": ""1/2/2016""
 		},
 		{
 			""Name"": ""Lesson 2"",
-			""BeginDate"": ""1/6/2016""
+			""BeginDate"": ""1/7/2016""
 		}
 	],
 	""Holidays"": [],
-	""ShiftDays"": []
+	""ShiftDays"": [ ""1/1/2016"" ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -348,43 +376,71 @@ this.FeatureBackground();
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Set_Course_Schedule_By_Range")]
-        [Xunit.TraitAttribute("Description", "Teacher set course schedule shift date only (Multiple days) Then system doesn\'t s" +
-            "et course Calendar and send new schedule back")]
+        [Xunit.TraitAttribute("Description", "Teacher set course schedule shift date only (Multiple days) Then system set cours" +
+            "e Calendar and send new schedule back")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void TeacherSetCourseScheduleShiftDateOnlyMultipleDaysThenSystemDoesnTSetCourseCalendarAndSendNewScheduleBack()
+        public virtual void TeacherSetCourseScheduleShiftDateOnlyMultipleDaysThenSystemSetCourseCalendarAndSendNewScheduleBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule shift date only (Multiple days) Then system doesn\'t s" +
-                    "et course Calendar and send new schedule back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule shift date only (Multiple days) Then system set cours" +
+                    "e Calendar and send new schedule back", new string[] {
                         "mock"});
-#line 228
+#line 258
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 229
+#line 259
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 230
+#line 260
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
                     "/2016\' ToDate \'1/5/2016\' IsHoliday \'false\' IsShift \'true\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 231
- testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 232
- testRunner.And("System send course schedule with JSON format is", @"{
-	""IsComplete"": false,
+#line 261
+ testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
+       ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2016"",
-	""EndDate"": ""1/10/2016"",
+	""ExpiredDate"": ""1/15/2016"",
+       ""ClassRoomId"": ""ClassRoom01"",
+	""CreatedDate"": ""1/1/2016"",
+       ""LessonCalendars"":
+       [
+           {
+               ""Id"": ""LessonCalendar01"",
+               ""Order"": 1,
+               ""SemesterGroupName"": ""A"",
+               ""BeginDate"": ""1/6/2016"",
+			""TopicOfTheDays"": [],
+               ""LessonId"": ""Lesson01"",
+           },
+		{
+               ""Id"": ""LessonCalendar02"",
+               ""Order"": 2,
+               ""SemesterGroupName"": ""A"",
+               ""BeginDate"": ""1/11/2016"",
+			""TopicOfTheDays"": [],
+               ""LessonId"": ""Lesson01"",
+           }
+       ],
+	""Holidays"": [],
+	""ShiftDays"": [ ""1/1/2016"", ""1/2/2016"", ""1/3/2016"", ""1/4/2016"", ""1/5/2016"" ]
+   }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 292
+ testRunner.And("System send course schedule with JSON format is", @"{
+	""IsComplete"": true,
+	""BeginDate"": ""1/1/2016"",
+	""EndDate"": ""1/15/2016"",
 	""Lessons"": [
 		{
 			""Name"": ""Lesson 1"",
-			""BeginDate"": ""1/1/2016""
+			""BeginDate"": ""1/6/2016""
 		},
 		{
 			""Name"": ""Lesson 2"",
-			""BeginDate"": ""1/6/2016""
+			""BeginDate"": ""1/11/2016""
 		}
 	],
 	""Holidays"": [],
-	""ShiftDays"": []
+	""ShiftDays"": [ ""1/1/2016"", ""1/2/2016"", ""1/3/2016"", ""1/4/2016"", ""1/5/2016"" ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -400,17 +456,17 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule holiday and shiftday (Single day) Then system set cou" +
                     "rse Calendar and send new schedule back", new string[] {
                         "mock"});
-#line 254
+#line 314
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 255
+#line 315
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 256
+#line 316
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
                     "/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'true\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 257
+#line 317
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2016"",
@@ -440,7 +496,7 @@ this.FeatureBackground();
 	""ShiftDays"": [ ""1/1/2016"" ]
    }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 288
+#line 348
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
@@ -472,17 +528,17 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule holiday and shiftday (Multiple days) Then system set " +
                     "course Calendar and send new schedule back", new string[] {
                         "mock"});
-#line 310
+#line 370
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 311
+#line 371
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 312
+#line 372
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/2" +
                     "/2016\' ToDate \'1/5/2016\' IsHoliday \'true\' IsShift \'true\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 313
+#line 373
  testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
        ""id"": ""ClassCalendar01"",
 	""BeginDate"": ""1/1/2016"",
@@ -512,7 +568,7 @@ this.FeatureBackground();
 	""ShiftDays"": [ ""1/2/2016"", ""1/3/2016"", ""1/4/2016"", ""1/5/2016"" ]
    }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 344
+#line 404
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
@@ -536,29 +592,57 @@ this.FeatureBackground();
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Set_Course_Schedule_By_Range")]
-        [Xunit.TraitAttribute("Description", "Teacher set course without any thing changed Then system doesn\'t set course Calen" +
-            "dar and send new schedule back")]
+        [Xunit.TraitAttribute("Description", "Teacher set course without any thing changed Then system set course Calendar and " +
+            "send new schedule back")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void TeacherSetCourseWithoutAnyThingChangedThenSystemDoesnTSetCourseCalendarAndSendNewScheduleBack()
+        public virtual void TeacherSetCourseWithoutAnyThingChangedThenSystemSetCourseCalendarAndSendNewScheduleBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course without any thing changed Then system doesn\'t set course Calen" +
-                    "dar and send new schedule back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course without any thing changed Then system set course Calendar and " +
+                    "send new schedule back", new string[] {
                         "mock"});
-#line 366
+#line 426
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 367
+#line 427
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 368
+#line 428
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
                     "/2016\' ToDate \'\' IsHoliday \'false\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 369
- testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 370
+#line 429
+ testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
+       ""id"": ""ClassCalendar01"",
+	""BeginDate"": ""1/1/2016"",
+	""ExpiredDate"": ""1/10/2016"",
+       ""ClassRoomId"": ""ClassRoom01"",
+	""CreatedDate"": ""1/1/2016"",
+       ""LessonCalendars"":
+       [
+           {
+               ""Id"": ""LessonCalendar01"",
+               ""Order"": 1,
+               ""SemesterGroupName"": ""A"",
+               ""BeginDate"": ""1/1/2016"",
+			""TopicOfTheDays"": [],
+               ""LessonId"": ""Lesson01"",
+           },
+		{
+               ""Id"": ""LessonCalendar02"",
+               ""Order"": 2,
+               ""SemesterGroupName"": ""A"",
+               ""BeginDate"": ""1/6/2016"",
+			""TopicOfTheDays"": [],
+               ""LessonId"": ""Lesson01"",
+           }
+       ],
+	""Holidays"": [],
+	""ShiftDays"": []
+   }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 460
  testRunner.And("System send course schedule with JSON format is", @"{
-	""IsComplete"": false,
+	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
 	""EndDate"": ""1/10/2016"",
 	""Lessons"": [
@@ -588,18 +672,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule but using incorrect ClassRoom Then system doesn\'t set" +
                     " course Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 392
+#line 482
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 393
+#line 483
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 394
+#line 484
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'IncorrectClassRoom\' FromDa" +
                     "te \'1/1/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 395
+#line 485
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 396
+#line 486
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -615,18 +699,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule but using incorrect (empty) ClassRoom Then system doe" +
                     "sn\'t set course Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 399
+#line 489
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 400
+#line 490
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 401
+#line 491
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'\' FromDate \'1/1/2016\' ToDa" +
                     "te \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 402
+#line 492
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 403
+#line 493
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -642,18 +726,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule but using incorrect (null) ClassRoom Then system does" +
                     "n\'t set course Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 406
+#line 496
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 407
+#line 497
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 408
+#line 498
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'NULL\' FromDate \'1/1/2016\' " +
                     "ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 409
+#line 499
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 410
+#line 500
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -669,18 +753,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (unknow) try to set course schedule Then system doesn\'t set course" +
                     " Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 413
+#line 503
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 414
+#line 504
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 415
+#line 505
  testRunner.When("User \'unknow@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/" +
                     "1/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 416
+#line 506
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 417
+#line 507
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -696,18 +780,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (empty) try to set course schedule Then system doesn\'t set course " +
                     "Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 420
+#line 510
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 421
+#line 511
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 422
+#line 512
  testRunner.When("User \'\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1/2016\' ToDate \'\' I" +
                     "sHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 423
+#line 513
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 424
+#line 514
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -723,18 +807,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (null) try to set course schedule Then system doesn\'t set course C" +
                     "alendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 427
+#line 517
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 428
+#line 518
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 429
+#line 519
  testRunner.When("User \'NULL\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1/2016\' ToDate " +
                     "\'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 430
+#line 520
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 431
+#line 521
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -750,18 +834,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (role = student) try to set course schedule Then system doesn\'t se" +
                     "t course Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 434
+#line 524
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 435
+#line 525
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 436
+#line 526
  testRunner.When("User \'student@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1" +
                     "/1/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 437
+#line 527
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 438
+#line 528
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -777,18 +861,18 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (role = selfpurchase) try to set course schedule Then system doesn" +
                     "\'t set course Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 441
+#line 531
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 442
+#line 532
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 443
+#line 533
  testRunner.When("User \'selfpurchase@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDa" +
                     "te \'1/1/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 444
+#line 534
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 445
+#line 535
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -804,21 +888,21 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule but the ClassCalendar doesn\'t existing  Then system d" +
                     "oesn\'t set course Calendar and doesn\'t send schedule back", new string[] {
                         "mock"});
-#line 448
+#line 538
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 449
+#line 539
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 450
+#line 540
  testRunner.And("System have ClassCalendar collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 454
+#line 544
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
                     "/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 455
+#line 545
  testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 456
+#line 546
  testRunner.And("System send null back", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -834,14 +918,14 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule holiday only (Single day with TOTD) Then system set c" +
                     "ourse Calendar and send new schedule back", new string[] {
                         "mock"});
-#line 459
+#line 549
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 460
+#line 550
  testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 461
+#line 551
  testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -908,11 +992,11 @@ this.FeatureBackground();
 ""ShiftDays"": []
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 530
+#line 620
  testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
                     "/2016\' ToDate \'\' IsHoliday \'true\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 531
+#line 621
  testRunner.Then("System set course ClassCalendar collection with JSON format is", "{\r\n       \"id\": \"ClassCalendar01\",\r\n\t\"BeginDate\": \"1/1/2016\",\r\n\t\"ExpiredDate\": \"1" +
                     "/10/2016\",\r\n       \"ClassRoomId\": \"ClassRoom01\",\r\n\t\"CreatedDate\": \"1/1/2016\",\r\n " +
                     "      \"LessonCalendars\":\r\n       [\r\n           {\r\n               \"Id\": \"LessonCa" +
@@ -936,7 +1020,7 @@ this.FeatureBackground();
                     "  \"LessonId\": \"Lesson01\",\r\n           }\r\n       ],\r\n\t\"Holidays\": [ \"1/1/2016\" ]," +
                     "\r\n\t\"ShiftDays\": []\r\n   }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 602
+#line 692
  testRunner.And("System send course schedule with JSON format is", @"{
 	""IsComplete"": true,
 	""BeginDate"": ""1/1/2016"",
@@ -954,6 +1038,66 @@ this.FeatureBackground();
 	""Holidays"": [ ""1/1/2016"" ],
 	""ShiftDays"": []
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Set_Course_Schedule_By_Range")]
+        [Xunit.TraitAttribute("Description", "Teacher set course schedule but the course doesn\'t set started date Then system d" +
+            "oesn\'t set course Calendar and send the schedule back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherSetCourseScheduleButTheCourseDoesnTSetStartedDateThenSystemDoesnTSetCourseCalendarAndSendTheScheduleBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher set course schedule but the course doesn\'t set started date Then system d" +
+                    "oesn\'t set course Calendar and send the schedule back", new string[] {
+                        "mock"});
+#line 714
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 715
+ testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 716
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""ClassRoomId"": ""ClassRoom01"",
+""CreatedDate"": ""1/1/2016"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""1/1/2016"",
+	""TopicOfTheDays"": [],
+                ""LessonId"": ""Lesson01"",
+            },
+{
+                ""Id"": ""LessonCalendar02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""1/6/2016"",
+	""TopicOfTheDays"": [],
+                ""LessonId"": ""Lesson01"",
+            }
+        ],
+""Holidays"": [],
+""ShiftDays"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 747
+ testRunner.When("User \'sakul@mindsage.com\' set schedule of ClassRoomId \'ClassRoom01\' FromDate \'1/1" +
+                    "/2016\' ToDate \'\' IsHoliday \'false\' IsShift \'false\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 748
+ testRunner.Then("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 749
+ testRunner.And("System send course schedule with JSON format is", "{\r\n\t\"IsComplete\": false,\r\n\t\"Lessons\": [\r\n\t\t{\r\n\t\t\t\"Name\": \"Lesson 1\",\r\n\t\t\t\"BeginDa" +
+                    "te\": \"1/1/2016\"\r\n\t\t},\r\n\t\t{\r\n\t\t\t\"Name\": \"Lesson 2\",\r\n\t\t\t\"BeginDate\": \"1/6/2016\"\r\n" +
+                    "\t\t}\r\n\t],\r\n\t\"Holidays\": [],\r\n\t\"ShiftDays\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

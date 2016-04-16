@@ -199,54 +199,114 @@ Scenario: Teacher set course schedule holiday only (Multiple days) Then system s
 	"""  
 
 @mock  
-Scenario: Teacher set course schedule shift date only (Single day) Then system doesn't set course Calendar and send new schedule back  
+Scenario: Teacher set course schedule shift date only (Single day) Then system set course Calendar and send new schedule back  
 	Given Today is '1/1/2016 00:00 am'  
 	When User 'sakul@mindsage.com' set schedule of ClassRoomId 'ClassRoom01' FromDate '1/1/2016' ToDate '' IsHoliday 'false' IsShift 'true'  
-	Then System doesn't set course ClassCalendar  
+	Then System set course ClassCalendar collection with JSON format is  
+	"""  
+	{
+        "id": "ClassCalendar01",
+		"BeginDate": "1/1/2016",
+		"ExpiredDate": "1/11/2016",
+        "ClassRoomId": "ClassRoom01",
+		"CreatedDate": "1/1/2016",
+        "LessonCalendars":
+        [
+            {
+                "Id": "LessonCalendar01",
+                "Order": 1,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/2/2016",
+				"TopicOfTheDays": [],
+                "LessonId": "Lesson01",
+            },
+			{
+                "Id": "LessonCalendar02",
+                "Order": 2,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/7/2016",
+				"TopicOfTheDays": [],
+                "LessonId": "Lesson01",
+            }
+        ],
+		"Holidays": [],
+		"ShiftDays": [ "1/1/2016" ]
+    }
+	"""  
 	And System send course schedule with JSON format is  
 	"""  
 	{
-		"IsComplete": false,
+		"IsComplete": true,
 		"BeginDate": "1/1/2016",
-		"EndDate": "1/10/2016",
+		"EndDate": "1/11/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
-				"BeginDate": "1/1/2016"
+				"BeginDate": "1/2/2016"
 			},
 			{
 				"Name": "Lesson 2",
-				"BeginDate": "1/6/2016"
+				"BeginDate": "1/7/2016"
 			}
 		],
 		"Holidays": [],
-		"ShiftDays": []
+		"ShiftDays": [ "1/1/2016" ]
 	}
 	"""  
 
 @mock  
-Scenario: Teacher set course schedule shift date only (Multiple days) Then system doesn't set course Calendar and send new schedule back  
+Scenario: Teacher set course schedule shift date only (Multiple days) Then system set course Calendar and send new schedule back  
 	Given Today is '1/1/2016 00:00 am'  
 	When User 'sakul@mindsage.com' set schedule of ClassRoomId 'ClassRoom01' FromDate '1/1/2016' ToDate '1/5/2016' IsHoliday 'false' IsShift 'true'  
-	Then System doesn't set course ClassCalendar  
+	Then System set course ClassCalendar collection with JSON format is  
+	"""  
+	{
+        "id": "ClassCalendar01",
+		"BeginDate": "1/1/2016",
+		"ExpiredDate": "1/15/2016",
+        "ClassRoomId": "ClassRoom01",
+		"CreatedDate": "1/1/2016",
+        "LessonCalendars":
+        [
+            {
+                "Id": "LessonCalendar01",
+                "Order": 1,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/6/2016",
+				"TopicOfTheDays": [],
+                "LessonId": "Lesson01",
+            },
+			{
+                "Id": "LessonCalendar02",
+                "Order": 2,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/11/2016",
+				"TopicOfTheDays": [],
+                "LessonId": "Lesson01",
+            }
+        ],
+		"Holidays": [],
+		"ShiftDays": [ "1/1/2016", "1/2/2016", "1/3/2016", "1/4/2016", "1/5/2016" ]
+    }
+	"""  
 	And System send course schedule with JSON format is  
 	"""  
 	{
-		"IsComplete": false,
+		"IsComplete": true,
 		"BeginDate": "1/1/2016",
-		"EndDate": "1/10/2016",
+		"EndDate": "1/15/2016",
 		"Lessons": [
 			{
 				"Name": "Lesson 1",
-				"BeginDate": "1/1/2016"
+				"BeginDate": "1/6/2016"
 			},
 			{
 				"Name": "Lesson 2",
-				"BeginDate": "1/6/2016"
+				"BeginDate": "1/11/2016"
 			}
 		],
 		"Holidays": [],
-		"ShiftDays": []
+		"ShiftDays": [ "1/1/2016", "1/2/2016", "1/3/2016", "1/4/2016", "1/5/2016" ]
 	}
 	"""  
 
@@ -363,14 +423,44 @@ Scenario: Teacher set course schedule holiday and shiftday (Multiple days) Then 
 	"""  
 
 @mock  
-Scenario: Teacher set course without any thing changed Then system doesn't set course Calendar and send new schedule back  
+Scenario: Teacher set course without any thing changed Then system set course Calendar and send new schedule back  
 	Given Today is '1/1/2016 00:00 am'  
 	When User 'sakul@mindsage.com' set schedule of ClassRoomId 'ClassRoom01' FromDate '1/1/2016' ToDate '' IsHoliday 'false' IsShift 'false'  
-	Then System doesn't set course ClassCalendar  
+	Then System set course ClassCalendar collection with JSON format is  
+	"""  
+	{
+        "id": "ClassCalendar01",
+		"BeginDate": "1/1/2016",
+		"ExpiredDate": "1/10/2016",
+        "ClassRoomId": "ClassRoom01",
+		"CreatedDate": "1/1/2016",
+        "LessonCalendars":
+        [
+            {
+                "Id": "LessonCalendar01",
+                "Order": 1,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/1/2016",
+				"TopicOfTheDays": [],
+                "LessonId": "Lesson01",
+            },
+			{
+                "Id": "LessonCalendar02",
+                "Order": 2,
+                "SemesterGroupName": "A",
+                "BeginDate": "1/6/2016",
+				"TopicOfTheDays": [],
+                "LessonId": "Lesson01",
+            }
+        ],
+		"Holidays": [],
+		"ShiftDays": []
+    }
+	"""  
 	And System send course schedule with JSON format is  
 	"""  
 	{
-		"IsComplete": false,
+		"IsComplete": true,
 		"BeginDate": "1/1/2016",
 		"EndDate": "1/10/2016",
 		"Lessons": [
@@ -616,6 +706,61 @@ Scenario: Teacher set course schedule holiday only (Single day with TOTD) Then s
 			}
 		],
 		"Holidays": [ "1/1/2016" ],
+		"ShiftDays": []
+	}
+	"""  
+
+@mock  
+Scenario: Teacher set course schedule but the course doesn't set started date Then system doesn't set course Calendar and send the schedule back  
+	Given Today is '1/1/2016 00:00 am'  
+	And System have ClassCalendar collection with JSON format are
+    """
+    [
+        {
+            "id": "ClassCalendar01",
+            "ClassRoomId": "ClassRoom01",
+			"CreatedDate": "1/1/2016",
+            "LessonCalendars":
+            [
+                {
+                    "Id": "LessonCalendar01",
+                    "Order": 1,
+                    "SemesterGroupName": "A",
+                    "BeginDate": "1/1/2016",
+					"TopicOfTheDays": [],
+                    "LessonId": "Lesson01",
+                },
+				{
+                    "Id": "LessonCalendar02",
+                    "Order": 2,
+                    "SemesterGroupName": "A",
+                    "BeginDate": "1/6/2016",
+					"TopicOfTheDays": [],
+                    "LessonId": "Lesson01",
+                }
+            ],
+			"Holidays": [],
+			"ShiftDays": []
+        }
+    ]
+    """  
+	When User 'sakul@mindsage.com' set schedule of ClassRoomId 'ClassRoom01' FromDate '1/1/2016' ToDate '' IsHoliday 'false' IsShift 'false'  
+	Then System doesn't set course ClassCalendar  
+	And System send course schedule with JSON format is  
+	"""  
+	{
+		"IsComplete": false,
+		"Lessons": [
+			{
+				"Name": "Lesson 1",
+				"BeginDate": "1/1/2016"
+			},
+			{
+				"Name": "Lesson 2",
+				"BeginDate": "1/6/2016"
+			}
+		],
+		"Holidays": [],
 		"ShiftDays": []
 	}
 	"""  

@@ -931,7 +931,7 @@ namespace MindSageWeb.Controllers
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
             if (classCalendar == null) return null;
 
-            var requestValid = body.IsHoliday;
+            var requestValid = classCalendar.BeginDate.HasValue;
             if (requestValid)
             {
                 var dateRange = Enumerable.Empty<DateTime>();
