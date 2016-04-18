@@ -174,15 +174,15 @@ controller: 'app.journals.JournalController as cx'
 <div zf-modal="" id="ConfirmModel">
     <a zf-close="" class="close-button">x</a>
     <h4 class="text-center">Are you sure you want to delete this comment?</h4>
+    <div>
         <div class="medium-10 large-10 text-center grid-container">
-            <form asp-controller="Purchase" asp-action="UserCode" method="post">
-                <div class="text-center">
-                    <div data-equalizer-watch>
-                        <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()"  zf-close="" >Confirm</button>
-                        <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()"  zf-close="">Confirm</button>
-                        <button class="button"  zf-close="">Cancel</button>
-                    </div>
+            <div class="text-center">
+                <div data-equalizer-watch>
+                    <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()" zf-close="">Confirm</button>
+                    <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()" zf-close="">Confirm</button>
+                    <button class="button" zf-close="">Cancel</button>
                 </div>
-            </form>
+            </div>
         </div>
+    </div>
 </div>

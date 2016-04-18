@@ -13,32 +13,36 @@ controller: 'app.layouts.AppLayoutController as acx'
     <a zf-close="" class="close-button">x</a>
     <h4 class="text-center">Warning</h4>
     <div>
-        <div class="medium-10 medium-centered large-10 large-centered columns">
+        <div class="medium-10 large-10 text-center grid-container">
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 0">
-                        Need to be Friend with {{ acx.targetUser.Name }}.
-                        Alrealy send Friend Request.
+                        <h6>Need to be Friend with {{ acx.targetUser.Name }}.</h6>
+                        <h6>Alrealy send Friend Request.</h6>
                         <button class="button disabled secondary">Friend Request Sent</button>
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 1">
-                        {{ acx.targetUser.Name }}
-                        has requested to be your friend.
+                        <h6>
+                            {{ acx.targetUser.Name }}
+                            has requested to be your friend.
+                        </h6>
                         <button class="button" ng-click="acx.ConfirmFriendRequest(acx.targetUser)">Confirm</button>
                         <button class="button secondary" zf-open="DeleteFriendModel">Delete Request</button>
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 2">
-                        Click on your friend's name to go to their journal.
+                        <h6>
+                            Click on your friend's name to go to their journal.
+                        </h6>
                         <a ui-sref="app.course.journal({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: acx.targetUser.UserProfileId })">
                             {{ item.Name }}
                         </a>
                     </div>
 
                     <div data-equalizer-watch ng-show="acx.targetUser.Status == 3">
-                       <p>You aren't currently friends with {{ acx.targetUser.Name }}.</p>
-                       <p>Would you like to send a Friend Request?.</p>
+                       <h6>You aren't currently friends with {{ acx.targetUser.Name }}.</h6>
+                       <h6>Would you like to send a Friend Request?.</h6>
                        <button class="button secondary" ng-click="acx.SendFriendRequest(acx.targetUser)">Friend Request</button>
                     </div>
                 </div>
@@ -55,7 +59,7 @@ controller: 'app.layouts.AppLayoutController as acx'
             <form asp-controller="Purchase" asp-action="UserCode" method="post" class="navbar-right">
                 <div class="text-center">
                     <div data-equalizer-watch>
-                        <p>Confirm to delete</p>
+                        <h6>Confirm to delete</h6>
                         <button class="button alert" ng-click="acx.DeleteFriendRequest(acx.targetUser)" zf-close="">Confirm</button>
                         <button class="button" zf-close="">Cancel</button>
                     </div>

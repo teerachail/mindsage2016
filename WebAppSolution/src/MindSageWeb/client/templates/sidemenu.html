@@ -28,14 +28,16 @@
     <div zf-modal="" id="classModal">
         <a zf-close="" class="close-button">x</a>
         <h4 class="text-center">CLASS LIST</h4>
+        <div>
             <div class="medium-10 large-10 text-center grid-container">
                 <a href="#" zf-close=""
-                   ng-repeat="item in cx.userSvc.AllAvailableCourses" 
+                   ng-repeat="item in cx.userSvc.AllAvailableCourses"
                    ng-class="{'large expanded button': item.ClassRoomId == cx.userSvc.ClientUserProfile.CurrentClassRoomId,
-                   'large hollow expanded button': item.ClassRoomId != cx.userSvc.ClientUserProfile.CurrentClassRoomId}" 
+                   'large hollow expanded button': item.ClassRoomId != cx.userSvc.ClientUserProfile.CurrentClassRoomId}"
                    ng-click="cx.ChangeCourse(item.ClassRoomId, item.LessonId, item.ClassCalendarId)">
                     {{ item.Name }}
                 </a>
             </div>
+        </div>
     </div>
 </div>
