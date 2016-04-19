@@ -72,22 +72,16 @@ namespace MindSageWeb.Repositories
         }
 
         /// <summary>
-        /// ขอข้อมูล User profile จากรหัส class room
+        /// ขอข้อมูล User profile จากรหัส class room ที่ใช้งานล่าสุด
         /// </summary>
-        /// <param name="classRoomIds">รหัส class room ที่จะทำการขอข้อมูล</param>
-        public IEnumerable<UserProfile> GetUserProfilesByClassRoomId(IEnumerable<string> classRoomIds)
+        /// <param name="classRoomId">รหัส class room ที่จะทำการขอข้อมูล</param>
+        public IEnumerable<UserProfile> GetUserProfilesByLastActivateOnClassRoomId(IEnumerable<string> classRoomIds)
         {
-            var result = _mongoUtil.GetCollection<UserProfile>(TableName)
-               .Find(it => !it.DeletedDate.HasValue && it.Subscriptions.Any())
-               .ToEnumerable()
-               .Where(it =>
-               {
-                   var subscriptionIds = it.Subscriptions
-                    .Where(subscription => !subscription.DeletedDate.HasValue)
-                    .Select(subscription => subscription.ClassRoomId);
-                   return classRoomIds.Any(cid => subscriptionIds.Contains(cid));
-               });
-            return result;
+            var qry = _mongoUtil.GetCollection<UserProfile>(TableName)
+                .Find(it => !it.DeletedDate.HasValue && it.Subscriptions.Any(s => classRoomIds.Contains(s.ClassRoomId)))
+                .ToEnumerable()
+                .Where(it => classRoomIds.Contains(it.Subscriptions.Where(s => !s.DeletedDate.HasValue && s.LastActiveDate.HasValue).OrderBy(s => s.LastActiveDate).LastOrDefault().ClassRoomId));
+            return qry;
         }
 
         /// <summary>

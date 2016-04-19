@@ -33,10 +33,10 @@ namespace MindSageWeb.Repositories
         IEnumerable<UserProfile> GetUserProfilesByClassRoomId(string classRoomId);
 
         /// <summary>
-        /// ขอข้อมูล User profile จากรหัส class room
+        /// ขอข้อมูล User profile จากรหัส class room ที่ใช้งานล่าสุด
         /// </summary>
         /// <param name="classRoomId">รหัส class room ที่จะทำการขอข้อมูล</param>
-        IEnumerable<UserProfile> GetUserProfilesByClassRoomId(IEnumerable<string> classRoomId);
+        IEnumerable<UserProfile> GetUserProfilesByLastActivateOnClassRoomId(IEnumerable<string> classRoomId);
 
         /// <summary>
         /// อัพเดทหรือเพิ่มข้อมูลผู้ใช้

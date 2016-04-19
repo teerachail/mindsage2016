@@ -176,7 +176,6 @@ namespace MindSageWeb.Controllers
             sendNotifyNewComments(now);
             sendNotifyNewDiscussions(now);
             sendNotifyTopicOfTheDay(now);
-            sendNotifyReminder(now);
         }
 
         private void sendNotifyLikeLessons(DateTime now)
@@ -377,50 +376,55 @@ namespace MindSageWeb.Controllers
         }
         private void sendNotifyTopicOfTheDay(DateTime now)
         {
-            // TODO: Send topic of the day
-            //var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay(now).ToList();
-            //if (!requiredNotifyTOTD.Any()) return;
+            var requiredNotifyTOTD = _classCalendarRepo.GetRequireNotifyTopicOfTheDay(now).ToList();
+            if (!requiredNotifyTOTD.Any()) return;
 
-            //var classIds = requiredNotifyTOTD.Select(it => it.ClassRoomId).Distinct();
-            //var students = _userProfileRepo.GetUserProfilesByClassRoomId(classIds).ToList();
+            var classIds = requiredNotifyTOTD.Select(it => it.ClassRoomId).Distinct();
+            var students = _userProfileRepo.GetUserProfilesByLastActivateOnClassRoomId(classIds).ToList();
 
-            //var qry = from classCalendar in requiredNotifyTOTD
-            //          where !classCalendar.CloseDate.HasValue
-            //          from lessonCalendar in classCalendar.LessonCalendars
-            //          where !lessonCalendar.DeletedDate.HasValue
-            //          where !lessonCalendar.SendTopicOfTheDayDate.HasValue
-            //          where lessonCalendar.RequiredSendTopicOfTheDayDate.Date <= now.Date
-            //          from student in students
-            //          where !student.DeletedDate.HasValue
-            //          from subscription in student.Subscriptions
-            //          where !subscription.DeletedDate.HasValue
-            //          where subscription.ClassRoomId == classCalendar.ClassRoomId
-            //          where subscription.Role != UserProfile.AccountRole.Teacher
-            //          select new Notification
-            //          {
-            //              id = Guid.NewGuid().ToString(),
-            //              ByUserProfileId = Enumerable.Empty<string>(),
-            //              ClassRoomId = classCalendar.ClassRoomId,
-            //              CreatedDate = now,
-            //              LastUpdateDate = now,
-            //              LessonId = lessonCalendar.LessonId,
-            //              Message = lessonCalendar.TopicOfTheDayMessage,
-            //              Tag = Notification.NotificationTag.TopicOfTheDay,
-            //              ToUserProfileId = student.id
-            //          };
-            //_notificationRepo.Insert(qry);
-
-            //var reqUpdateLessons = from classCalendar in requiredNotifyTOTD
-            //                       where !classCalendar.CloseDate.HasValue
-            //                       from lessonCalendar in classCalendar.LessonCalendars
-            //                       where !lessonCalendar.DeletedDate.HasValue
-            //                       select lessonCalendar;
-            //foreach (var item in reqUpdateLessons) item.SendTopicOfTheDayDate = now;
-            //requiredNotifyTOTD.ForEach(it => _classCalendarRepo.UpsertClassCalendar(it));
-        }
-        private void sendNotifyReminder(DateTime now)
-        {
-            // TODO: Not implemented Reminder
+            var qry = from classCalendar in requiredNotifyTOTD
+                      where !classCalendar.CloseDate.HasValue
+                      from lessonCalendar in classCalendar.LessonCalendars
+                      where !lessonCalendar.DeletedDate.HasValue
+                      from totd in lessonCalendar.TopicOfTheDays
+                      where !totd.DeletedDate.HasValue
+                      where !totd.SendTopicOfTheDayDate.HasValue
+                      where totd.RequiredSendTopicOfTheDayDate.HasValue
+                      where totd.RequiredSendTopicOfTheDayDate <= now
+                      from student in students
+                      where !student.DeletedDate.HasValue
+                      from subscription in student.Subscriptions
+                      where !subscription.DeletedDate.HasValue
+                      where subscription.ClassRoomId == classCalendar.ClassRoomId
+                      select new
+                      {
+                          TOTD = totd,
+                          NotificationInfo = new Notification
+                          {
+                              id = Guid.NewGuid().ToString(),
+                              ByUserProfileId = Enumerable.Empty<string>(),
+                              ClassRoomId = classCalendar.ClassRoomId,
+                              CreatedDate = now,
+                              LastUpdateDate = now,
+                              LessonId = lessonCalendar.LessonId,
+                              Message = totd.Message,
+                              Tag = Notification.NotificationTag.TopicOfTheDay,
+                              ToUserProfileId = student.id
+                          }
+                      };
+            _notificationRepo.Insert(qry.Select(it => it.NotificationInfo));
+            var totdQry = from classCalendar in requiredNotifyTOTD
+                          where !classCalendar.CloseDate.HasValue
+                          from lessonCalendar in classCalendar.LessonCalendars
+                          where !lessonCalendar.DeletedDate.HasValue
+                          from totd in lessonCalendar.TopicOfTheDays
+                          where !totd.DeletedDate.HasValue
+                          where !totd.SendTopicOfTheDayDate.HasValue
+                          where totd.RequiredSendTopicOfTheDayDate.HasValue
+                          where totd.RequiredSendTopicOfTheDayDate <= now
+                          select totd;
+            foreach (var item in totdQry) item.SendTopicOfTheDayDate = now;
+            requiredNotifyTOTD.ForEach(it => _classCalendarRepo.UpsertClassCalendar(it));
         }
 
         #endregion Methods

@@ -109,9 +109,9 @@ namespace MindSageWeb.Repositories
         public IEnumerable<ClassCalendar> GetRequireNotifyTopicOfTheDay(DateTime currentTime)
         {
             var qry = _mongoUtil.GetCollection<ClassCalendar>(TableName)
-                .Find(it => !it.DeletedDate.HasValue && !it.CloseDate.HasValue && it.LessonCalendars.SelectMany(lc => lc.TopicOfTheDays).Any(l => !l.SendTopicOfTheDayDate.HasValue))
+                .Find(it => !it.DeletedDate.HasValue && !it.CloseDate.HasValue)
                 .ToEnumerable()
-                .Where(c => c.LessonCalendars.SelectMany(lc => lc.TopicOfTheDays).Any(it => !it.SendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.Value.Date >= currentTime.Date));
+                .Where(c => c.LessonCalendars.SelectMany(lc => lc.TopicOfTheDays).Any(it => !it.SendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.HasValue && it.RequiredSendTopicOfTheDayDate.Value.Date.ToUniversalTime() >= currentTime.Date));
             return qry;
         }
 
