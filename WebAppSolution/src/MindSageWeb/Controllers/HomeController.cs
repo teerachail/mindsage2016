@@ -86,12 +86,21 @@ namespace MindSageWeb.Controllers
 
         public async Task<IActionResult> Preview(int id)
         {
-            using (var http = new HttpClient())
+            try
             {
-                ViewBag.MindSageUrl = _appConfig.MindSageUrl;
-                var result = await http.GetStringAsync($"{ _appConfig.ManagementPortalUrl }/api/CourseCatalog/{ id }/detail");
-                var courseCatalog = JsonConvert.DeserializeObject<Repositories.Models.GetCourseDetailRespond>(result);
-                return View(courseCatalog);
+                using (var http = new HttpClient())
+                {
+                    ViewBag.MindSageUrl = _appConfig.MindSageUrl;
+                    var result = await http.GetStringAsync($"{ _appConfig.ManagementPortalUrl }/api/CourseCatalog/{ id }/detail");
+                    var courseCatalog = JsonConvert.DeserializeObject<Repositories.Models.GetCourseDetailRespond>(result);
+                    return View(courseCatalog);
+                }
+            }
+            catch (Exception e)
+            {
+                _logger.LogError($"ManagementPortal: { e.ToString() }");
+                ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
+                return View("Error");
             }
         }
     }
