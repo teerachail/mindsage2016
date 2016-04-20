@@ -76,10 +76,11 @@ namespace MindSageWeb.Controllers
                 && !selectedClassRoom.IsPublic;
             if (!isClassRoomValid) return Enumerable.Empty<GetFriendListRespond>();
 
-            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
+            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId)
+                .Where(it => it.Subscriptions.Any(s => !s.DeletedDate.HasValue && s.ClassRoomId == classRoomId))
+                .ToList();
             if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetFriendListRespond>();
 
-            // TODO: Filter self out
             var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id).ToList();
             var students = allStudentsInTheClassRoom
                 .Where(it => it.id != id)
@@ -101,6 +102,7 @@ namespace MindSageWeb.Controllers
                     };
                     return result;
                 })
+                .OrderBy(it => it.Name)
                 .ToList();
             return students;
         }
@@ -150,7 +152,7 @@ namespace MindSageWeb.Controllers
                     };
                     return result;
                 }).Where(it => it != null)
-                .OrderBy(it => it.RequestId)
+                .OrderBy(it => it.Name)
                 .ToList();
             return students;
         }
