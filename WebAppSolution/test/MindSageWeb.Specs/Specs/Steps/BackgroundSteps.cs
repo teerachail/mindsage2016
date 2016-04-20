@@ -114,6 +114,7 @@ namespace MindSageWeb.Specs.Steps
                 userprofileRepo.Object,
                 friendRequestRepo.Object,
                 userActivityRepo.Object,
+                classRoomRepo.Object,
                 dateTime.Object);
 
             ScenarioContext.Current.Set(notificationCtrl);

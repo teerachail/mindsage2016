@@ -129,7 +129,6 @@ namespace MindSageWeb.Controllers
             if (!isClassRoomValid) return Enumerable.Empty<GetFriendListRespond>();
 
             var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id)
-                .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.Status != FriendRequest.RelationStatus.Unfriend)
                 .ToList();
             var relatedUserProfiles = _userprofileRepo.GetUserProfileById(friendRequests.Select(it => it.ToUserProfileId).Distinct());
@@ -150,7 +149,9 @@ namespace MindSageWeb.Controllers
                         RequestId = selectedRequest.id,
                     };
                     return result;
-                }).Where(it => it != null).ToList();
+                }).Where(it => it != null)
+                .OrderBy(it => it.RequestId)
+                .ToList();
             return students;
         }
 
