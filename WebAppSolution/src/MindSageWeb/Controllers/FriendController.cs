@@ -19,6 +19,7 @@ namespace MindSageWeb.Controllers
         private IUserProfileRepository _userprofileRepo;
         private IFriendRequestRepository _friendRequestRepo;
         private IUserActivityRepository _userActivityRepo;
+        private IClassRoomRepository _classRoomRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -32,16 +33,19 @@ namespace MindSageWeb.Controllers
         /// <param name="userprofileRepo">UserProfile repository</param>
         /// <param name="friendRequestRepo">Friend request repository</param>
         /// <param name="userActivityRepo">User activity repository</param>
+        /// <param name="classRoomRepo">Class room repository</param>
         public FriendController(IClassCalendarRepository classCalendarRepo,
             IUserProfileRepository userprofileRepo,
             IFriendRequestRepository friendRequestRepo,
             IUserActivityRepository userActivityRepo,
+            IClassRoomRepository classRoomRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
             _userprofileRepo = userprofileRepo;
             _friendRequestRepo = friendRequestRepo;
             _userActivityRepo = userActivityRepo;
+            _classRoomRepo = classRoomRepo;
             _dateTime = dateTime;
         }
 
@@ -51,7 +55,7 @@ namespace MindSageWeb.Controllers
 
         // GET: api/friend/{user-id}/{class-room-id}
         /// <summary>
-        /// Get friends from class room id
+        /// Get friends from class room id (Student)
         /// </summary>
         /// <param name="id">User profile id</param>
         /// <param name="classRoomId">Class room id</param>
@@ -65,6 +69,12 @@ namespace MindSageWeb.Controllers
 
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId);
             if (!canAccessToTheClassRoom) return Enumerable.Empty<GetFriendListRespond>();
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
+            var isClassRoomValid = selectedClassRoom != null
+                && !selectedClassRoom.DeletedDate.HasValue
+                && !selectedClassRoom.IsPublic;
+            if (!isClassRoomValid) return Enumerable.Empty<GetFriendListRespond>();
 
             var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
             if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetFriendListRespond>();
@@ -92,6 +102,55 @@ namespace MindSageWeb.Controllers
                     return result;
                 })
                 .ToList();
+            return students;
+        }
+
+        // GET: api/friend/{user-id}/{class-room-id}/selfpurchase
+        /// <summary>
+        /// Get friends from class room id (Self purchase)
+        /// </summary>
+        /// <param name="id">User profile id</param>
+        /// <param name="classRoomId">Class room id</param>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/selfpurchase")]
+        public IEnumerable<GetFriendListRespond> GetFriendForSelfPurchase(string id, string classRoomId)
+        {
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId);
+            if (!areArgumentsValid) return Enumerable.Empty<GetFriendListRespond>();
+
+            var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId);
+            if (!canAccessToTheClassRoom) return Enumerable.Empty<GetFriendListRespond>();
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
+            var isClassRoomValid = selectedClassRoom != null
+                && !selectedClassRoom.DeletedDate.HasValue
+                && selectedClassRoom.IsPublic;
+            if (!isClassRoomValid) return Enumerable.Empty<GetFriendListRespond>();
+
+            var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id)
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Status != FriendRequest.RelationStatus.Unfriend)
+                .ToList();
+            var relatedUserProfiles = _userprofileRepo.GetUserProfileById(friendRequests.Select(it => it.ToUserProfileId).Distinct());
+
+            var students = relatedUserProfiles
+                .Where(it => it.id != id)
+                .OrderBy(it => it.id)
+                .Select(it =>
+                {
+                    var selectedRequest = friendRequests.FirstOrDefault(req => req.ToUserProfileId.Equals(it.id));
+                    if (selectedRequest == null) return null;
+                    var result = new GetFriendListRespond
+                    {
+                        UserProfileId = it.id,
+                        Name = it.Name,
+                        ImageUrl = it.ImageProfileUrl,
+                        Status = selectedRequest.Status,
+                        RequestId = selectedRequest.id,
+                    };
+                    return result;
+                }).Where(it => it != null).ToList();
             return students;
         }
 
