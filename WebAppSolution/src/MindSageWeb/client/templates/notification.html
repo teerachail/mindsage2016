@@ -9,52 +9,53 @@ controller: 'app.notification.NotificationController as cx'
         <h1>Notification</h1>
     </div>
     <div ng-show="cx.notification.length == 0"><p> Have no notification </p></div>
-    <div ng-repeat="item in cx.displayNpotifications" class="callout card">
-        <div class="card-section">
-            <a ng-click="isclose = !isclose">
-                <h6 ng-show="item.Tag == 0">
-                    <span><img zf-iconic="" icon="reminder" size="medium" class="iconic-color-warning"> Reminder </span>
-                </h6>
-                <h6 ng-show="item.Tag == 1">
-                    <span><img zf-iconic="" icon="totd" size="medium" class="iconic-color-warning"> TOTD </span>
+    <section ng-hide="cx.notification.length == 0" class="block-list card">
+        <ul>
+            <li ng-repeat="item in cx.displayNpotifications">
+                <a ng-click="isclose = !isclose">
+                    <h6 ng-show="item.Tag == 0">
+                        <span><img zf-iconic="" icon="reminder" size="medium" class="iconic-color-warning"> Reminder </span>
+                    </h6>
+                    <h6 ng-show="item.Tag == 1">
+                        <span><img zf-iconic="" icon="totd" size="medium" class="iconic-color-warning"> TOTD </span>
 
-                </h6>
-                <h6 ng-show="item.Tag == 2">
-                    <span><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-warning"> Like: </span>
-                    <span>
+                    </h6>
+                    <h6 ng-show="item.Tag == 2">
+                        <span><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-warning"> Like: </span>
+                        <span>
+                            <span ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
+                                <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
+                            </span>
+                            <span ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
+                                <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
+                            </span>
+                        </span>
+                    </h6>
+                    <h6 ng-show="item.Tag == 3">
+                        <span><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-warning"> Comment: </span>
                         <span ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
                             <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
                         </span>
                         <span ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
                             <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
                         </span>
-                    </span>
-                </h6>
-                <h6 ng-show="item.Tag == 3">
-                    <span><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-warning"> Comment: </span>
-                    <span ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
-                        <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
-                    </span>
-                    <span ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
-                        <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
-                    </span>
-                </h6>
-                <h6 ng-show="item.Tag == 4">
-                    <span><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-warning"> Discussion: </span>
-                    <span ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
-                        <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
-                    </span>
-                    <span ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
-                        <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
-                    </span>
-                </h6>
-            </a>
-            <div ng-show="isclose">
-                <p>
-                    {{ item.Message }}
-                </p>
-            </div>
-        </div>
-    </div>
-
+                    </h6>
+                    <h6 ng-show="item.Tag == 4">
+                        <span><img zf-iconic="" icon="socialParticipation" size="medium" class="iconic-color-warning"> Discussion: </span>
+                        <span ng-hide="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" zf-open="Modal">
+                            <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
+                        </span>
+                        <span ng-show="acx.CanAccessToUserJournal( cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId )" ng-click="cx.OpenJournalPage('Journal', cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileId)">
+                            <b>{{ cx.GetFirstLiker(item.FromUserProfiles).FromUserProfileName }}</b>
+                        </span>
+                    </h6>
+                </a>
+                <div ng-show="isclose">
+                    <p class="card-section">
+                        {{ item.Message }}
+                    </p>
+                </div>
+            </li>
+        </ul>
+    </section>
 </div>
