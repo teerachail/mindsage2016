@@ -712,8 +712,12 @@ namespace MindSageWeb.Controllers
             var isUserprofileValid = userprofile.Subscriptions != null && userprofile.Subscriptions.Any();
             if (!isUserprofileValid) return;
 
-            var isCanUpdateCourse = userprofile.Subscriptions.Any(it => it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
+            var isCanUpdateCourse = userprofile.Subscriptions.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
             if (!isCanUpdateCourse) return;
+
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
+            var canAccessCalssRoom = selectedClassRoom != null && !selectedClassRoom.DeletedDate.HasValue;
+            if (!canAccessCalssRoom) return;
 
             var now = _dateTime.GetCurrentTime();
             var isRequestUpdateStudentCode = !string.IsNullOrEmpty(body.ChangedStudentCode);
@@ -722,7 +726,6 @@ namespace MindSageWeb.Controllers
                 var selectedStudentKeyObj = _studentKeyRepo.GetStudentKeyByClassRoomId(body.ClassRoomId);
                 if (selectedStudentKeyObj != null)
                 {
-
                     if (!selectedStudentKeyObj.DeletedDate.HasValue)
                     {
                         selectedStudentKeyObj.DeletedDate = now;
@@ -738,30 +741,26 @@ namespace MindSageWeb.Controllers
                         ClassRoomId = selectedStudentKeyObj.ClassRoomId,
                         CreatedDate = now
                     };
-                    _studentKeyRepo.UpsertStudentKey(newStudentKey);
+                    _studentKeyRepo.CreateNewStudentKey(newStudentKey);
                 }
             }
 
             var isRequestUpdateClassName = !string.IsNullOrEmpty(body.ClassName);
             if (isRequestUpdateClassName)
             {
-                var classRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
-                if (classRoom != null)
-                {
-                    classRoom.Name = body.ClassName;
-                    _classRoomRepo.UpsertClassRoom(classRoom);
-                }
+                selectedClassRoom.Name = body.ClassName;
+                _classRoomRepo.UpsertClassRoom(selectedClassRoom);
             }
 
-            if (body.BeginDate.HasValue)
-            {
-                var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
-                var canUpdateClassCalendar = classCalendar != null;
-                if (!canUpdateClassCalendar) return;
+            //if (body.BeginDate.HasValue)
+            //{
+            //    var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+            //    var canUpdateClassCalendar = classCalendar != null;
+            //    if (!canUpdateClassCalendar) return;
 
-                classCalendar.BeginDate = body.BeginDate.Value;
-                _classCalendarRepo.UpsertClassCalendar(classCalendar);
-            }
+            //    classCalendar.BeginDate = body.BeginDate.Value;
+            //    _classCalendarRepo.UpsertClassCalendar(classCalendar);
+            //}
         }
 
         // GET: api/mycourse/{user-id}/{class-room-id}/{lesson-id}
