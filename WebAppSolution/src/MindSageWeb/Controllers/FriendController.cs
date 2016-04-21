@@ -169,14 +169,23 @@ namespace MindSageWeb.Controllers
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId);
             if (!canAccessToTheClassRoom) return Enumerable.Empty<GetFriendListRespond>();
 
-            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
+            var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
+            var isClassRoomValid = selectedClassRoom != null
+                && !selectedClassRoom.DeletedDate.HasValue
+                && selectedClassRoom.IsPublic;
+            if (!isClassRoomValid) return Enumerable.Empty<GetFriendListRespond>();
+
+            key = key.ToLower();
+            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId)
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.Subscriptions.Any(s => !s.DeletedDate.HasValue && s.ClassRoomId == classRoomId))
+                .Where(it => it.id != id)
+                .Where(it => it.id.ToLower().Contains(key) || it.Name.ToLower().Contains(key) || (it.SchoolName?.Contains(key) ?? false))
+                .ToList();
             if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetFriendListRespond>();
 
-            // TODO: Filter self out
             var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(id).ToList();
             var containKeyUserProfiles = allStudentsInTheClassRoom
-                .Where(it => !it.DeletedDate.HasValue)
-                .Where(it => it.Name.Contains(key) || (it.SchoolName != null && it.SchoolName.Contains(key)))
                 .Select(it =>
                 {
                     var selectedRequest = friendRequests.FirstOrDefault(req => req.ToUserProfileId.Equals(it.id));

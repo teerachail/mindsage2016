@@ -27,7 +27,7 @@ namespace MindSageWeb.Controllers
 
             var canAccessToTheClass = selectedUserProfile
                 .Subscriptions
-                .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
+                .Where(it => !it.DeletedDate.HasValue && it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
                 .Any();
 
             return canAccessToTheClass;
