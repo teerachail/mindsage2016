@@ -381,7 +381,8 @@ namespace MindSageWeb.Controllers
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
-            var isTeacherAccount = userprofile.Subscriptions.First(it => it.ClassRoomId == body.ClassRoomId).Role == UserProfile.AccountRole.Teacher;
+            var isTeacherAccount = userprofile.Subscriptions
+                .Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
             if (!isTeacherAccount) return;
 
             var selectedClassRoom = _classRoomRepo.GetClassRoomById(body.ClassRoomId);
@@ -394,11 +395,17 @@ namespace MindSageWeb.Controllers
             if (selectedClassCalendar == null) return;
 
             var now = _dateTime.GetCurrentTime();
-            selectedClassRoom.DeletedDate = now;
-            _classRoomRepo.UpsertClassRoom(selectedClassRoom);
+            if (!selectedClassRoom.DeletedDate.HasValue)
+            {
+                selectedClassRoom.DeletedDate = now;
+                _classRoomRepo.UpsertClassRoom(selectedClassRoom);
+            }
 
-            selectedClassCalendar.DeletedDate = now;
-            _classCalendarRepo.UpsertClassCalendar(selectedClassCalendar);
+            if (!selectedClassCalendar.DeletedDate.HasValue)
+            {
+                selectedClassCalendar.DeletedDate = now;
+                _classCalendarRepo.UpsertClassCalendar(selectedClassCalendar);
+            }
 
             var subscriptions = students.SelectMany(it => it.Subscriptions)
                 .Where(it => it.ClassRoomId.Equals(body.ClassRoomId))
@@ -422,8 +429,11 @@ namespace MindSageWeb.Controllers
             var selectedStudentKey = _studentKeyRepo.GetStudentKeyByClassRoomId(body.ClassRoomId);
             if (selectedStudentKey == null) return;
 
-            selectedStudentKey.DeletedDate = now;
-            _studentKeyRepo.UpsertStudentKey(selectedStudentKey);
+            if (!selectedStudentKey.DeletedDate.HasValue)
+            {
+                selectedStudentKey.DeletedDate = now;
+                _studentKeyRepo.UpsertStudentKey(selectedStudentKey);
+            }
         }
 
         // POST: api/mycourse/addcourse
