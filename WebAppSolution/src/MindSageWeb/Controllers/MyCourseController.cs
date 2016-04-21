@@ -341,20 +341,26 @@ namespace MindSageWeb.Controllers
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return;
 
-            var isTeacherAccount = userprofile.Subscriptions.First(it => it.ClassRoomId == body.ClassRoomId).Role == UserProfile.AccountRole.Teacher;
+            var isTeacherAccount = userprofile.Subscriptions
+                .Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
             if (!isTeacherAccount) return;
 
             var selectedUserProfile = _userprofileRepo.GetUserProfileById(body.RemoveUserProfileId);
             if (selectedUserProfile == null) return;
 
-            var selectedSubscription = selectedUserProfile.Subscriptions
+            var selectedSubscriptions = selectedUserProfile.Subscriptions
                 .Where(it => it.ClassRoomId.Equals(body.ClassRoomId))
                 .Where(it => !it.DeletedDate.HasValue)
-                .FirstOrDefault();
-            if (selectedSubscription == null) return;
+                .Where(it => it.Role == UserProfile.AccountRole.Student);
+            if (!selectedSubscriptions.Any()) return;
 
-            selectedSubscription.DeletedDate = _dateTime.GetCurrentTime();
+            foreach (var item in selectedSubscriptions) item.DeletedDate = _dateTime.GetCurrentTime();
             _userprofileRepo.UpsertUserProfile(selectedUserProfile);
+
+            var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.RemoveUserProfileId, body.ClassRoomId);
+            if (selectedUserActivity == null) return;
+            selectedUserActivity.DeletedDate = _dateTime.GetCurrentTime();
+            _userActivityRepo.UpsertUserActivity(selectedUserActivity);
         }
 
         // POST: api/mycourse/leave
