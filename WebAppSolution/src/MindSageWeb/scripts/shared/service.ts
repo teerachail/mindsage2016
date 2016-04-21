@@ -7,6 +7,9 @@
     interface IStudentListResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetStudentList(data: T): T;
     }
+    interface ISelfpurchaseListResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetSelfpurchaseList(data: T): T;
+    }
     export class ClientUserProfileService {
 
         public UserInCourseList: any[];
@@ -23,6 +26,7 @@
         private getCourseSvc: IGetCourseInfoResourceClass<any>;
         private getAllCourseSvc: IGetAllCourseResourceClass<any>;
         private getStudentListsvc: IStudentListResourceClass<any>;
+        private getSelfpurchaseListsvc: ISelfpurchaseListResourceClass<any>;
         private getUserProfileSvc: IGetUserProfileResourceClass<any>;
 
         static $inject = ['appConfig', '$resource', '$q'];
@@ -30,9 +34,36 @@
             this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, {});
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
             this.getStudentListsvc = <IStudentListResourceClass<any>>$resource(appConfig.StudentListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
+            this.getSelfpurchaseListsvc = <ISelfpurchaseListResourceClass<any>>$resource(appConfig.SelfpurchaseListUrl, { 'userId': '@userId', 'classRoomId': '@classRoomId' });
             this.getCourseSvc = <IGetCourseInfoResourceClass<any>>$resource(appConfig.ChangeCourseUrl, { 'UserProfileId': '@UserProfileId', 'ClassRoomId': '@ClassRoomId' });
         }
 
+        private getCourseInformation(): ng.IPromise<any> {
+            var prom = this.$q.defer();
+            this.getCourseInfo(this.ClientUserProfile.CurrentClassRoomId).then(courseInfoRespond => {
+                this.UpdateCourseInformation(courseInfoRespond);
+                console.log('2.Get course information, done');
+                this.$q.all([
+                    this.getAllCourses(),
+                    this.getUsersLists(),
+                ]).then(data => {
+                    console.log('3.Get user information and friend list, done');
+                    this.AllAvailableCourses = <CourseCatalog[]>data[0];
+                    this.UserInCourseList = <any[]>data[1];
+                    this.isWaittingForPrepareUserProfile = false;
+                    this.isPrepareUserProfileComplete = true;
+                    prom.resolve(null);
+                }, error => {
+                    console.log('3.Error');
+                    this.isWaittingForPrepareUserProfile = false;
+                    prom.reject(null);
+                });
+            }, error => {
+                console.log('2.Error');
+                prom.reject(null);
+            });
+            return prom.promise;
+        }
         public PrepareAllUserProfile(): ng.IPromise<any> {
             var prom = this.$q.defer();
             var shouldPrepareUserProfile = !this.isPrepareUserProfileComplete && !this.isWaittingForPrepareUserProfile;
@@ -41,23 +72,26 @@
                 this.getUserProfileSvc.get().$promise.then(it => {
                     console.log('1.Get user profile, done');
                     this.ClientUserProfile = it;
-                    this.$q.all([
-                        this.getAllCourses(),
-                        this.getFriendLists(),
-                        this.getCourseInfo(this.ClientUserProfile.CurrentClassRoomId)
-                    ]).then(data => {
-                        console.log('2.Get all user contents, done');
-                        this.AllAvailableCourses = <CourseCatalog[]>data[0];
-                        this.UserInCourseList = <any[]>data[1];
-                        this.UpdateCourseInformation(data[2]);
-                        this.isWaittingForPrepareUserProfile = false;
-                        this.isPrepareUserProfileComplete = true;
-                        prom.resolve(null);
-                    }, error => {
-                        console.log('2.Error');
-                        this.isWaittingForPrepareUserProfile = false;
-                        prom.reject(null);
-                    });
+                    this.getCourseInformation().then(
+                        respond => { prom.resolve(null) },
+                        error => { prom.resolve(null) });
+                    //this.$q.all([
+                    //    this.getAllCourses(),
+                    //    this.getFriendLists(),
+                    //    this.getCourseInfo(this.ClientUserProfile.CurrentClassRoomId)
+                    //]).then(data => {
+                    //    console.log('2.Get all user contents, done');
+                    //    this.AllAvailableCourses = <CourseCatalog[]>data[0];
+                    //    this.UserInCourseList = <any[]>data[1];
+                    //    this.UpdateCourseInformation(data[2]);
+                    //    this.isWaittingForPrepareUserProfile = false;
+                    //    this.isPrepareUserProfileComplete = true;
+                    //    prom.resolve(null);
+                    //}, error => {
+                    //    console.log('2.Error');
+                    //    this.isWaittingForPrepareUserProfile = false;
+                    //    prom.reject(null);
+                    //});
                 }, error => {
                     console.log('1.Error');
                     this.isWaittingForPrepareUserProfile = false;
@@ -74,11 +108,25 @@
             var userId = this.ClientUserProfile.UserProfileId;
             return this.getAllCourseSvc.query(new GetAllCourseRequest(userId)).$promise;
         }
+
+        private getUsersLists(): ng.IPromise<any> {
+            if (this.ClientUserProfile.IsSelfPurchase)
+                return this.getSelfpurchaseLists();
+            else
+                return this.getFriendLists();
+        }
+
         private getFriendLists(): ng.IPromise<any> {
             var userId = this.ClientUserProfile.UserProfileId;
             var classRoomId = this.ClientUserProfile.CurrentClassRoomId;
             return this.getStudentListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise;
         }
+        private getSelfpurchaseLists(): ng.IPromise<any> {
+            var userId = this.ClientUserProfile.UserProfileId;
+            var classRoomId = this.ClientUserProfile.CurrentClassRoomId;
+            return this.getSelfpurchaseListsvc.query(new GetFriendListRequest(userId, classRoomId)).$promise;
+        }
+
         private getCourseInfo(classRoomId: string): ng.IPromise<any> {
             var userId = this.ClientUserProfile.UserProfileId;
             return this.getCourseSvc.save(new ChangeCourseRequest(userId, classRoomId)).$promise;
