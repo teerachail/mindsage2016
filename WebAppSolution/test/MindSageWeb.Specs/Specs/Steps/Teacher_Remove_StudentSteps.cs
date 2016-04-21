@@ -62,5 +62,16 @@ namespace MindSageWeb.Specs.Steps
             var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
             mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.IsAny<UserActivity>()), Times.Never);
         }
+
+        [Then(@"System upsert UserProfile with JSON format is")]
+        public void ThenSystemUpsertUserProfileWithJSONFormatIs(string multilineText)
+        {
+            var expected = JsonConvert.DeserializeObject<UserProfile>(multilineText);
+
+            var mockUserProfileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
+            mockUserProfileRepo.Verify(it => it.UpsertUserProfile(It.Is<UserProfile>(up =>
+                  JsonConvert.SerializeObject(up) == JsonConvert.SerializeObject(expected)
+            )));
+        }
     }
 }
