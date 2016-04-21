@@ -104,18 +104,18 @@
     width: 1.5rem;
     height: 1.5rem;
 }
-.change-month-prev {
+a.change-month-prev {
     color:#FFF;
     float:left;
 }
-.change-month-prev :hover{
+a.change-month-prev :hover{
     color:#999;
 }
-.change-month-next {
+a.change-month-next {
     color:#FFF;
     float:right;
 }
-.change-month-next :hover{
+a.change-month-next :hover{
     color:#999;
 }
 .bottom-border {
