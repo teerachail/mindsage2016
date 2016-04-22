@@ -61,7 +61,7 @@ controller: 'app.studentlists.studentlistsController as cx'
                             </a>
                         </div>
                         <div class="float-right align-center small-6">
-                            <div middleblock" ng-show="item.Status == 0" data-equalizer-watch>
+                            <div ng-show="item.Status == 0" data-equalizer-watch>
                                 <button class="button disabled secondary">Friend Request Sent</button>
                             </div>
 
@@ -106,7 +106,7 @@ controller: 'app.studentlists.studentlistsController as cx'
                     </div>
                 </li>
 
-                <li ng-repeat="item in cx.searchList | orderBy: 'Status' | orderBy: 'Name'" ng-show="!item.IsTeacher && !(item.Status == 2 || item.Status == 1)">
+                <li ng-repeat="item in cx.searchList | orderBy: 'Status' | orderBy: 'Name'" ng-show="!item.IsTeacher && (item.Status == 3 || item.Status == 0)">
                     <div class="v-align title-bar">
                         <img ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
                         <div ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
@@ -114,18 +114,19 @@ controller: 'app.studentlists.studentlistsController as cx'
                                 {{ item.Name }}
                             </a>
                         </div>
-                        <im ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher"g class="small-1 grid-block" src="{{ item.ImageUrl }}">
+                        <img ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
                         <div ng-show="item.Status == 2 || cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
                             <a ui-sref="app.course.journal({ classRoomId: cx.classRoomId, targetUserId: item.UserProfileId })">
                                 {{ item.Name }}
                             </a>
                         </div>
                         <div class="float-right align-center small-6">
-                            <div middleblock" ng-show="item.Status == 0" data-equalizer-watch>
+                            <div ng-show="item.Status == 0" data-equalizer-watch>
                                 <button class="button disabled secondary">Friend Request Sent</button>
                             </div>
+
                             <div ng-show="item.Status == 3" data-equalizer-watch>
-                                <button class="button secondary" ng-click="acx.SendFriendRequest(item); cx.cancelSearch()">Friend Request</button>
+                                <button class="button secondary" ng-click="acx.SendFriendRequest(item)">Friend Request</button>
                             </div>
                         </div>
                     </div>
