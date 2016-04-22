@@ -18,7 +18,7 @@ controller: 'app.settings.SettingController as cx'
         </div>
         <div ng-show="explan">
             <div class="grid-block">
-                <div class="grid-content">
+                <div class="grid-content large-9">
                     <label>
                         Name
                         <input ng-model="cx.clientProfileSvc.ClientUserProfile.FullName" type="text">
@@ -26,14 +26,14 @@ controller: 'app.settings.SettingController as cx'
                     <p>Email : {{ cx.clientProfileSvc.ClientUserProfile.UserProfileId }}</p>
                 </div>
 
-                <div class="align-center grid-block">
+                <div class="align-center grid-block large-3">
                     <div class="text-center">
-                        <div><img class="small-2" src="{{ cx.clientProfileSvc.ClientUserProfile.ImageUrl }}"></div>
-                        <div class="align-center grid-block"><a href="../Manage/ChangeProfileImage/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}">Edit</a></div>
+                        <div><img class="small-8" src="{{ cx.clientProfileSvc.ClientUserProfile.ImageUrl }}"></div>
+                        <div class="align-center grid-block"><a href="../Manage/ChangeProfileImage/{{ cx.clientProfileSvc.ClientUserProfile.CurrentClassRoomId }}"><br>Edit</a></div>
                     </div>
                 </div>
             </div>
-            <div class="grid-content">
+            <div class="grid-content large-9">
                 <label>
                     School
                     <input ng-model="cx.clientProfileSvc.ClientUserProfile.SchoolName" type="text">
