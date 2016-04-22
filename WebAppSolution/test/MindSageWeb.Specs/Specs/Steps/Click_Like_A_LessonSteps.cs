@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using TechTalk.SpecFlow;
+using Xunit;
 
 namespace MindSageWeb.Specs.Steps
 {
@@ -62,9 +63,43 @@ namespace MindSageWeb.Specs.Steps
         public void ThenSystemUpdateUserActivityCollectionWithJSONFormatIs(string multilineText)
         {
             var expected = JsonConvert.DeserializeObject<UserActivity>(multilineText);
+            Func<List<UserActivity.LessonActivity>, bool> validateLessonActivityFunc = actualLessonActivities =>
+            {
+                var expectedLessonActivities = expected.LessonActivities.ToList();
+                for (int index = 0; index < expectedLessonActivities.Count; index++)
+                {
+                    Assert.Equal(expectedLessonActivities[index].id, actualLessonActivities[index].id);
+                    Assert.Equal(expectedLessonActivities[index].BeginDate, actualLessonActivities[index].BeginDate);
+                    Assert.Equal(expectedLessonActivities[index].TotalContentsAmount, actualLessonActivities[index].TotalContentsAmount);
+                    Assert.Equal(expectedLessonActivities[index].SawContentIds, actualLessonActivities[index].SawContentIds);
+                    Assert.Equal(expectedLessonActivities[index].CreatedCommentAmount, actualLessonActivities[index].CreatedCommentAmount);
+                    Assert.Equal(expectedLessonActivities[index].ParticipationAmount, actualLessonActivities[index].ParticipationAmount);
+                    Assert.Equal(expectedLessonActivities[index].LessonId, actualLessonActivities[index].LessonId);
+                }
+                return true;
+            };
+            Func<UserActivity, bool> validateUpsertUserActivityFunc = actual =>
+            {
+                Assert.NotNull(actual.id);
+                Assert.Equal(expected.IsTeacher, actual.IsTeacher);
+                Assert.Equal(expected.IsPrivateAccount, actual.IsPrivateAccount);
+                Assert.Equal(expected.UserProfileName, actual.UserProfileName);
+                Assert.Equal(expected.UserProfileImageUrl, actual.UserProfileImageUrl);
+                Assert.Equal(expected.HideClassRoomMessageDate, actual.HideClassRoomMessageDate);
+                Assert.Equal(expected.UserProfileId, actual.UserProfileId);
+                Assert.Equal(expected.ClassRoomId, actual.ClassRoomId);
+                Assert.Equal(expected.CreatedDate, actual.CreatedDate);
+                Assert.Equal(expected.DeletedDate, actual.DeletedDate);
+                Assert.Equal(expected.LessonActivities.Count(), actual.LessonActivities.Count());
+                Assert.Equal(expected.CommentPercentage, actual.CommentPercentage);
+                Assert.Equal(expected.OnlineExtrasPercentage, actual.OnlineExtrasPercentage);
+                Assert.Equal(expected.SocialParticipationPercentage, actual.SocialParticipationPercentage);
+                Assert.True(validateLessonActivityFunc(actual.LessonActivities.ToList()));
+                return true;
+            };
             var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
             mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.Is<UserActivity>(activity =>
-                JsonConvert.SerializeObject(activity) == JsonConvert.SerializeObject(expected)
+                validateUpsertUserActivityFunc(activity)
             )));
         }
     }

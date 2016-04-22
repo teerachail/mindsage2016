@@ -24,10 +24,10 @@ namespace MindSageWeb.Specs.Steps
 
             var body = new PostNewCommentRequest
             {
-                ClassRoomId = classRoomId,
-                Description = message,
-                LessonId = lessonId,
-                UserProfileId = userprofile
+                ClassRoomId = classRoomId.GetMockStrinValue(),
+                Description = message.GetMockStrinValue(),
+                LessonId = lessonId.GetMockStrinValue(),
+                UserProfileId = userprofile.GetMockStrinValue()
             };
 
             var commentCtrl = ScenarioContext.Current.Get<CommentController>();
@@ -51,6 +51,20 @@ namespace MindSageWeb.Specs.Steps
                 && comment.CreatorImageUrl == expected.CreatorImageUrl
                 && comment.CreatedDate == expected.CreatedDate
             )));
+        }
+
+        [Then(@"System doesn't add new Comment")]
+        public void ThenSystemDoesnTAddNewComment()
+        {
+            var mockCommentRepo = ScenarioContext.Current.Get<Mock<ICommentRepository>>();
+            mockCommentRepo.Verify(it => it.UpsertComment(It.IsAny<Comment>()), Times.Never);
+        }
+
+        [Then(@"System doesn't update UserActivity")]
+        public void ThenSystemDoesnTUpdateUserActivity()
+        {
+            var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
+            mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.IsAny<UserActivity>()), Times.Never);
         }
     }
 }

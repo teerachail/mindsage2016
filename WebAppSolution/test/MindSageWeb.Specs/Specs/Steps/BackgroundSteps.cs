@@ -2,7 +2,10 @@
 using Microsoft.Extensions.OptionsModel;
 using MindSageWeb.Controllers;
 using MindSageWeb.Repositories;
+using MindSageWeb.Repositories.Models;
 using Moq;
+using System;
+using System.Linq;
 using TechTalk.SpecFlow;
 
 namespace MindSageWeb.Specs.Steps
@@ -123,6 +126,29 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(discussionCtrl);
             ScenarioContext.Current.Set(mycourseCtrl);
             ScenarioContext.Current.Set(friendCtrl);
+        }
+
+        [Given(@"Initialize mocking notifications' repositories")]
+        public void GivenInitializeMockingNotificationsRepositories()
+        {
+            var mockLikeLessonRepo = ScenarioContext.Current.Get<Mock<ILikeLessonRepository>>();
+            mockLikeLessonRepo.Setup(it => it.GetRequireNotifyLikeLessons()).Returns(() => Enumerable.Empty<LikeLesson>());
+
+            var mockCommentRepo = ScenarioContext.Current.Get<Mock<ICommentRepository>>();
+            mockCommentRepo.Setup(it => it.GetRequireNotifyComments()).Returns(() => Enumerable.Empty<Comment>());
+            mockCommentRepo.Setup(it => it.GetRequireNotifyDiscussions()).Returns(() => Enumerable.Empty<Comment>());
+
+            var mockLikeCommentRepo = ScenarioContext.Current.Get<Mock<ILikeCommentRepository>>();
+            mockLikeCommentRepo.Setup(it => it.GetRequireNotifyLikeComments()).Returns(() => Enumerable.Empty<LikeComment>());
+
+            var mockLikeDiscussionRepo = ScenarioContext.Current.Get<Mock<ILikeDiscussionRepository>>();
+            mockLikeDiscussionRepo.Setup(it => it.GetRequireNotifyLikeDiscussions()).Returns(() => Enumerable.Empty<LikeDiscussion>());
+
+            var mockClassCalendarRepo = ScenarioContext.Current.Get<Mock<IClassCalendarRepository>>();
+            mockClassCalendarRepo.Setup(it => it.GetRequireNotifyTopicOfTheDay(It.IsAny<DateTime>())).Returns<DateTime>(it => Enumerable.Empty<ClassCalendar>());
+
+            var mockNotificationRepo = ScenarioContext.Current.Get<Mock<INotificationRepository>>();
+            var mockFriendRequestRepo = ScenarioContext.Current.Get<Mock<IFriendRequestRepository>>();
         }
     }
 }

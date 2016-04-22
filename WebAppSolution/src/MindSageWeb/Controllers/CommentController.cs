@@ -75,8 +75,10 @@ namespace MindSageWeb.Controllers
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return null;
 
+            var isTeacher = userprofile.Subscriptions.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
+
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now) || isTeacher;
             if (!canAccessToTheClassLesson) return null;
 
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
