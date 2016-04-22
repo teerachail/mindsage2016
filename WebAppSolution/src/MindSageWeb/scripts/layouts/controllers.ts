@@ -33,6 +33,10 @@ module app.layouts {
                 this.targetUser = targetObj;
         }
 
+        public targetNewData(friendObj: any) {
+                this.targetUser = friendObj;
+        }
+
         public SendFriendRequest(friendObj: any) {
             var Index = this.userSvc.UserInCourseList.indexOf(friendObj);
             if (this.userSvc.ClientUserProfile.IsSelfPurchase && Index == -1) this.userSvc.UserInCourseList.push(friendObj);

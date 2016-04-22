@@ -100,7 +100,7 @@ controller: 'app.studentlists.studentlistsController as cx'
                             </div>
 
                             <div ng-show="item.Status == 2" data-equalizer-watch>
-                                <img style="width: 50px; height: 50px;" src="../assets/img/icon/friend.png" />
+                                <img zf-iconic="" icon="friend" size="medium" class="iconic-color-warning">
                             </div>
                         </div>
                     </div>
@@ -110,7 +110,7 @@ controller: 'app.studentlists.studentlistsController as cx'
                     <div class="v-align title-bar">
                         <img ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="small-1 grid-block" src="{{ item.ImageUrl }}">
                         <div ng-show="item.Status != 2 && !cx.userSvc.ClientUserProfile.IsTeacher" class="grid-block small-4">
-                            <a zf-open="Modal" ng-click="acx.targetData(item.UserProfileId)">
+                            <a zf-open="Modal" ng-click="acx.targetNewData(item)">
                                 {{ item.Name }}
                             </a>
                         </div>
