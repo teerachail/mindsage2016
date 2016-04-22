@@ -364,7 +364,7 @@ namespace WebManagementPortal.Controllers
 
                         return new repoModel.ClassRoom.Lesson
                         {
-                            id = it.Id.ToString(),
+                            id = selectedLesson.id,
                             LessonCatalogId = it.Id.ToString(),
                             TotalLikes = totalLikes
                         };
@@ -384,7 +384,7 @@ namespace WebManagementPortal.Controllers
                     .Where(it => !it.RecLog.DeletedDate.HasValue)
                     .Select(it => new repoModel.ClassRoom.Lesson
                     {
-                        id = it.Id.ToString(),
+                        id = Guid.NewGuid().ToString(),
                         LessonCatalogId = it.Id.ToString(),
                     });
                 var classRoom = new repoModel.ClassRoom

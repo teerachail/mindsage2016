@@ -546,9 +546,9 @@ namespace MindSageWeb.Controllers
                 .Where(it => !it.DeletedDate.HasValue)
                 .Select(it => new ClassRoom.Lesson
                 {
-                    id = it.id,
+                    id = Guid.NewGuid().ToString(),
                     LessonCatalogId = it.id
-                });
+                }).ToList();
             var newClassRoom = new ClassRoom
             {
                 id = Guid.NewGuid().ToString(),
@@ -563,24 +563,28 @@ namespace MindSageWeb.Controllers
             // Create new ClassCalendar
             var lessonCalendars = lessonCatalogs
                 .Where(it => !it.DeletedDate.HasValue)
-                .Select(lesson => new ClassCalendar.LessonCalendar
+                .Select(lesson =>
                 {
-                    id = Guid.NewGuid().ToString(),
-                    Order = lesson.Order,
-                    SemesterGroupName = lesson.SemesterName,
-                    BeginDate = currentTime,
-                    CreatedDate = currentTime,
-                    LessonId = lesson.id,
-                    TopicOfTheDays = lesson.TopicOfTheDays
-                        .Where(it => !it.DeletedDate.HasValue)
-                        .Select(it => new ClassCalendar.TopicOfTheDay
-                        {
-                            id = it.id,
-                            Message = it.Message,
-                            SendOnDay = it.SendOnDay,
-                            CreatedDate = currentTime,
-                        })
-                });
+                    var selectedLesson = lessons.FirstOrDefault(it => it.LessonCatalogId == lesson.id);
+                    return new ClassCalendar.LessonCalendar
+                    {
+                        id = Guid.NewGuid().ToString(),
+                        Order = lesson.Order,
+                        SemesterGroupName = lesson.SemesterName,
+                        BeginDate = currentTime,
+                        CreatedDate = currentTime,
+                        LessonId = selectedLesson.id,
+                        TopicOfTheDays = lesson.TopicOfTheDays
+                            .Where(it => !it.DeletedDate.HasValue)
+                            .Select(it => new ClassCalendar.TopicOfTheDay
+                            {
+                                id = it.id,
+                                Message = it.Message,
+                                SendOnDay = it.SendOnDay,
+                                CreatedDate = currentTime,
+                            })
+                    };
+                }).ToList();
             var newClassCalendar = new ClassCalendar
             {
                 id = Guid.NewGuid().ToString(),
