@@ -81,7 +81,7 @@ namespace MindSageWeb.Specs.Steps
                 for (int elementIndex = 0; elementIndex < expected.Count; elementIndex++)
                 {
                     var areAllEqual = !string.IsNullOrEmpty(subscriptions[elementIndex].id)
-                        && expected[elementIndex].LessonId == subscriptions[elementIndex].LessonId
+                        && !string.IsNullOrEmpty(subscriptions[elementIndex].LessonId)
                         && expected[elementIndex].SawContentIds.Count() == subscriptions[elementIndex].SawContentIds.Count()
                         && expected[elementIndex].SawContentIds.All(it => subscriptions[elementIndex].SawContentIds.Contains(it))
                         && expected[elementIndex].ParticipationAmount == subscriptions[elementIndex].ParticipationAmount

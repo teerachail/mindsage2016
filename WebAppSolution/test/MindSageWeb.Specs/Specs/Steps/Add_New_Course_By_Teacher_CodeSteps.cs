@@ -61,7 +61,7 @@ namespace MindSageWeb.Specs.Steps
                 var expectedLessons = expectedClassRoom.Lessons.ToList();
                 for (int index = 0; index < expectedLessons.Count; index++)
                 {
-                    Assert.Equal(expectedLessons[index].id, lessons[index].id);
+                    Assert.NotNull(lessons[index].id);
                     Assert.Equal(expectedLessons[index].LessonCatalogId, lessons[index].LessonCatalogId);
                     Assert.Equal(expectedLessons[index].TotalLikes, lessons[index].TotalLikes);
                 }
@@ -130,7 +130,7 @@ namespace MindSageWeb.Specs.Steps
 
                     Assert.Equal(expectedLessonCalendars[index].BeginDate, lessonCalendars[index].BeginDate);
                     Assert.Equal(expectedLessonCalendars[index].CreatedDate, lessonCalendars[index].CreatedDate);
-                    Assert.Equal(expectedLessonCalendars[index].LessonId, lessonCalendars[index].LessonId);
+                    Assert.NotNull(lessonCalendars[index].LessonId);
                     Assert.Equal(expectedLessonCalendars[index].TopicOfTheDays.Count(), lessonCalendars[index].TopicOfTheDays.Count());
 
                     var expectedTOTDString = JsonConvert.SerializeObject(expectedLessonCalendars[index].TopicOfTheDays);
