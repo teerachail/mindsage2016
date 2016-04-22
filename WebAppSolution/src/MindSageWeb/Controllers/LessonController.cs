@@ -236,7 +236,7 @@ namespace MindSageWeb.Controllers
                 filterByCreatorNames = friendIds.Union(new string[] { userId }).Union(teacherIds).Distinct();
             }
             var order = 1;
-            var comments = _commentRepo.GetCommentsByLessonId(id, filterByCreatorNames)
+            var comments = _commentRepo.GetCommentsByClassRoomAndLessonId(classRoomId, id, filterByCreatorNames)
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)
                 .Select(it => new CommentInformation

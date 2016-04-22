@@ -94,8 +94,8 @@ namespace MindSageWeb.Specs.Steps
         {
             var comments = JsonConvert.DeserializeObject<IEnumerable<Comment>>(multilineText);
             var mockCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ICommentRepository>>();
-            mockCommentRepo.Setup(it => it.GetCommentsByLessonId(It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
-                .Returns<string, IEnumerable<string>>((id, creators) => comments.Where(it => it.LessonId == id && creators.Contains(it.CreatedByUserProfileId)));
+            mockCommentRepo.Setup(it => it.GetCommentsByClassRoomAndLessonId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
+                .Returns<string, string, IEnumerable<string>>((classRoomId, lessonId, creators) => comments.Where(it => it.ClassRoomId == classRoomId && it.LessonId == lessonId && creators.Contains(it.CreatedByUserProfileId)));
             mockCommentRepo.Setup(it => it.GetCommentById(It.IsAny<string>()))
                 .Returns<string>(id => comments.FirstOrDefault(it => it.id == id));
         }
@@ -135,7 +135,7 @@ namespace MindSageWeb.Specs.Steps
             mockStudentKeyRepo.Setup(it => it.GetStudentKeyByClassRoomId(It.IsAny<string>()))
                 .Returns<string>(classRoomId => studentKeys.FirstOrDefault(it => it.ClassRoomId == classRoomId));
             mockStudentKeyRepo.Setup(it => it.GetStudentKeyByCodeAndGrade(It.IsAny<string>(), It.IsAny<string>()))
-                .Returns<string,string>((code,grade) => studentKeys.FirstOrDefault(it => it.Code == code && it.Grade == grade));
+                .Returns<string, string>((code, grade) => studentKeys.FirstOrDefault(it => it.Code == code && it.Grade == grade));
         }
 
         [Given(@"System have Contract collection with JSON format are")]

@@ -63,13 +63,15 @@ namespace MindSageWeb.Repositories
         }
 
         /// <summary>
-        /// ขอข้อมูล comment จากรหัส comment
+        /// ขอข้อมูล comment จากรหัส lesson และผู้สร้าง comment
         /// </summary>
-        /// <param name="commentId">รหัส comment ที่ต้องการขอข้อมูล</param>
-        public IEnumerable<Comment> GetCommentsByLessonId(string lessonId, IEnumerable<string> creatorProfiles)
+        /// <param name="classRoomId">รหัส class room ที่ต้องการขอข้อมูล</param>
+        /// <param name="lessonId">รหัส lesson ที่ต้องการขอข้อมูล</param>
+        /// <param name="creatorProfiles">รายชื่อผู้สร้าง comment ที่ต้องการ</param>
+        public IEnumerable<Comment> GetCommentsByClassRoomAndLessonId(string classRoomId, string lessonId, IEnumerable<string> creatorProfiles)
         {
             var qry = _mongoUtil.GetCollection<Comment>(TableName)
-               .Find(it => !it.DeletedDate.HasValue && it.LessonId == lessonId && creatorProfiles.Contains(it.CreatedByUserProfileId))
+               .Find(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId && it.LessonId == lessonId && creatorProfiles.Contains(it.CreatedByUserProfileId))
                .ToEnumerable();
             return qry;
         }

@@ -17,9 +17,10 @@ namespace MindSageWeb.Repositories
         /// <summary>
         /// ขอข้อมูล comment จากรหัส lesson และผู้สร้าง comment
         /// </summary>
+        /// <param name="classRoomId">รหัส class room ที่ต้องการขอข้อมูล</param>
         /// <param name="lessonId">รหัส lesson ที่ต้องการขอข้อมูล</param>
         /// <param name="creatorProfiles">รายชื่อผู้สร้าง comment ที่ต้องการ</param>
-        IEnumerable<Comment> GetCommentsByLessonId(string lessonId, IEnumerable<string> creatorProfiles);
+        IEnumerable<Comment> GetCommentsByClassRoomAndLessonId(string classRoomId, string lessonId, IEnumerable<string> creatorProfiles);
 
         /// <summary>
         /// เพิ่มหรืออัพเดทข้อมูล comment
