@@ -68,14 +68,16 @@ namespace SpecFlow.GeneratedTests.Specs
 #line 6
 #line 7
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 8
+ testRunner.And("Initialize mocking notifications\' repositories", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 9
     testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul jaruthanaset\",\r\n\"ImageProfileUr" +
                     "l\": \"ImgURL01\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Tea" +
                     "cher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
                     "},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 27
+#line 28
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -95,7 +97,7 @@ namespace SpecFlow.GeneratedTests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 48
+#line 49
     testRunner.And("System have Comment collection with JSON format are", @"[
     {
         ""Id"": ""Comment01"",
@@ -108,7 +110,7 @@ namespace SpecFlow.GeneratedTests.Specs
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 62
+#line 63
     testRunner.And("System have UserActivity collection with JSON format are", @"[
 {
 ""id"": ""UserActivity01"",
@@ -151,24 +153,24 @@ namespace SpecFlow.GeneratedTests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create a new discussion Then system create a new discussion", new string[] {
                         "mock"});
-#line 89
+#line 90
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 90
-    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 91
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 92
     testRunner.When("UserProfileId \'sakul@mindsage.com\' create a new discussion with a message is \'Thi" +
                     "s is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom" +
                     ": \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 92
+#line 93
     testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment01\' a" +
                     "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
                     ": \"ImgURL01\",\r\n\"CreatorDisplayName\": \"Sakul jaruthanaset\",\r\n\"CreatedByUserProfil" +
                     "eId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 105
+#line 106
     testRunner.And("System update UserActivity collection with JSON format is", @"{
 ""id"": ""UserActivity01"",
 ""UserProfileId"": ""sakul@mindsage.com"",

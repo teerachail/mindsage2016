@@ -5,6 +5,7 @@
 
 Background: Initialize mocking data  
 	Given Initialize mocking data  
+	And Initialize mocking notifications' repositories  
     And System have UserProfile collection with JSON format are  
     """
     [

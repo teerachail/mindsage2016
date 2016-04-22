@@ -68,13 +68,15 @@ namespace SpecFlow.GeneratedTests.Specs
 #line 6
 #line 7
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line hidden
 #line 8
+ testRunner.And("Initialize mocking notifications\' repositories", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 9
     testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01" +
                     "\",\r\n\t\"Role\": \"Teacher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Cl" +
                     "assCalendar01\",\r\n},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 25
+#line 26
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -94,7 +96,7 @@ namespace SpecFlow.GeneratedTests.Specs
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 46
+#line 47
     testRunner.And("System have Comment collection with JSON format are", @"[
     {
         ""Id"": ""Comment01"",
@@ -107,12 +109,12 @@ namespace SpecFlow.GeneratedTests.Specs
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 60
+#line 61
  testRunner.And("System have LikeComment collection with JSON format are", "[\r\n{\r\n\"id\": \"LikeComment01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CommentId\": \"Comment01\",\r" +
                     "\n\"LikedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 a" +
                     "m\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 72
+#line 73
     testRunner.And("System have UserActivity collection with JSON format are", @"[
 {
 ""id"": ""UserActivity01"",
@@ -155,24 +157,24 @@ namespace SpecFlow.GeneratedTests.Specs
         {
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User click unlike a comment Then system update comment\'s total like", new string[] {
                         "mock"});
-#line 99
+#line 100
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 100
-    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line 101
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 102
     testRunner.When("UserProfileId \'sakul@mindsage.com\' click the unlike button for comment \'Comment01" +
                     "\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 102
+#line 103
     testRunner.Then("System update total likes for comment \'Comment01\' in the lesson \'Lesson01\' of Cla" +
                     "ssRoom \'ClassRoom01\' to \'0\' likes", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 103
+#line 104
     testRunner.And("System add new LikeComment by JSON format is", "{\r\n    \"LessonId\": \"Lesson01\",\r\n\"CommentId\": \"Comment01\",\r\n    \"LikedByUserProfil" +
                     "eId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\",\r\n\"DeletedDate\":" +
                     " \"2/8/2016 00:00 am\"\r\n}", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 113
+#line 114
  testRunner.And("System doesn\'t update UserActivity collection with JSON format is", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

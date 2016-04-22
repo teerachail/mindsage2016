@@ -65,6 +65,7 @@ namespace MindSageWeb.Controllers
             _commentRepo = commentRepo;
             _friendRequestRepo = friendRequestRepo;
             _userActivityRepo = userActivityRepo;
+            _notificationCtrl = notificationCtrl;
             _appConfig = options.Value;
             _dateTime = dateTime;
         }
