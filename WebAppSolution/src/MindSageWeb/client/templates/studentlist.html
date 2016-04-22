@@ -8,12 +8,12 @@ controller: 'app.studentlists.studentlistsController as cx'
         <h1>CLASS LIST</h1>
     </div>
 
-    <div class="inline-label" ng-show="cx.userSvc.ClientUserProfile.IsSelfPurchase">
+    <form class="inline-label" ng-show="cx.userSvc.ClientUserProfile.IsSelfPurchase" ng-submit="cx.searchNewFriend()">
         <span class="form-label"><img zf-iconic="" icon="Magnifying-glass" size="medium" class="iconic-color-dark"></span>
         <input type="text" placeholder="search" ng-model="cx.keyword">
-        <a ng-click="cx.searchNewFriend()" class="button">Search</a>
+        <input class="button" type="submit" value="Search" />
         <a ng-click="cx.cancelSearch()" ng-show="cx.searching" class="button secondary">Cancel</a>
-    </div>
+    </form>
 
     <div ng-hide="cx.searching">
         <div ng-show="cx.userSvc.UserInCourseList.length == 0"><p> No Students  </p></div>
