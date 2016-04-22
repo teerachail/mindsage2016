@@ -77,6 +77,7 @@ namespace SpecFlow.GeneratedTests.Specs
         ""ClassRoomId"": ""ClassRoom01"",
         ""LessonCalendars"":
         [
+
             {
                 ""Id"": ""ClassCalendar01"",
                 ""LessonId"": ""Lesson01"",
@@ -88,80 +89,21 @@ namespace SpecFlow.GeneratedTests.Specs
                 ""LessonId"": ""Lesson02"",
                 ""BeginDate"": ""2/8/2016"",
                 ""LessonCatalogId"": ""LessonCatalog02""
-            },
-            {
-                ""Id"": ""LC03"",
-                ""LessonId"": ""Lesson03"",
-                ""BeginDate"": ""2/15/2016"",
-                ""LessonCatalogId"": ""LessonCatalog03""
-            },
+            }
         ]
-    },
+    }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 39
- testRunner.And("System have UserProfile collection with JSON format are", @"[
-{
-""id"": ""sakul@mindsage.com"",
-""Subscriptions"":
-[
-{
-	""id"": ""Subscription01"",
-	""Role"": ""Teacher"",
-	""ClassRoomId"": ""ClassRoom01"",
-	""ClassCalendarId"": ""ClassCalendar01"",
-},
-]
-},
-{
-""id"": ""earn@mindsage.com"",
-""Subscriptions"":
-[
-{
-	""id"": ""Subscription02"",
-	""Role"": ""Student"",
-	""ClassRoomId"": ""ClassRoom01"",
-	""ClassCalendarId"": ""ClassCalendar01"",
-},
-]
-},
-]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 34
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"sakul\",\r\n\"ImageProfileUrl\": \"sakul.jp" +
+                    "g\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Student\",\r\n\t\"Cl" +
+                    "assRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 68
-    testRunner.And("System have FriendRequest collection with JSON format are", "[\r\n    {\r\n        \"id\": \"FriendRequest01\",\r\n\"FromUserProfileId\": \"sakul@mindsage." +
-                    "com\",\r\n\"ToUserProfileId\": \"earn@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDa" +
-                    "te\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 53
+    testRunner.And("System have FriendRequest collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 81
-    testRunner.And("System have Comment collection with JSON format are", "[\r\n    {\r\n        \"id\": \"Comment01\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n    " +
-                    "    \"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n        \"Description\": \"Msg" +
-                    "01\",\r\n        \"TotalLikes\": 0,\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": " +
-                    "\"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n        \"id\": \"Comment02" +
-                    "\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"sa" +
-                    "kul@mindsage.com\",\r\n        \"Description\": \"Msg02\",\r\n        \"TotalLikes\": 5,\r\n " +
-                    "       \"LessonId\": \"Lesson02\",\r\n\"CreatedDate\": \"2/1/2016 02:00 am\",\r\n        \"Di" +
-                    "scussions\":\r\n        [\r\n            {\r\n                \"Id\": \"DiscussionId01\",\r\n" +
-                    "                \"Description\": \"Discussion01\",\r\n                \"TotalLikes\": 10" +
-                    "0,\r\n                \"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\t\"CreatedDa" +
-                    "te\": \"2/1/2016 02:01 am\",\r\n            }\r\n        ]\r\n    },\r\n    {\r\n        \"id\"" +
-                    ": \"Comment03\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserPro" +
-                    "fileId\": \"earn@mindsage.com\",\r\n        \"Description\": \"Msg03\",\r\n        \"TotalLi" +
-                    "kes\": 10,\r\n        \"LessonId\": \"Lesson02\",\r\n\"CreatedDate\": \"2/1/2016 03:00 am\",\r" +
-                    "\n        \"Discussions\":\r\n        [\r\n            {\r\n                \"Id\": \"Discus" +
-                    "sionId02\",\r\n                \"Description\": \"Discussion02\",\r\n                \"Tot" +
-                    "alLikes\": 200,\r\n                \"CreatedByUserProfileId\": \"someone@mindsage.com\"" +
-                    ",\r\n\t\"CreatedDate\": \"2/1/2016 03:01 am\",\r\n            },\r\n            {\r\n        " +
-                    "        \"Id\": \"DiscussionId03\",\r\n                \"Description\": \"Discussion03\",\r" +
-                    "\n                \"TotalLikes\": 300,\r\n                \"CreatedByUserProfileId\": \"" +
-                    "sakul@mindsage.com\",\r\n\t\"CreatedDate\": \"2/1/2016 03:02 am\",\r\n            }\r\n     " +
-                    "   ]\r\n    },\r\n    {\r\n        \"id\": \"Comment04\",\r\n        \"ClassRoomId\": \"ClassRo" +
-                    "om01\",\r\n        \"CreatedByUserProfileId\": \"someone@mindsage.com\",\r\n        \"Desc" +
-                    "ription\": \"Msg04\",\r\n        \"TotalLikes\": 15,\r\n        \"LessonId\": \"Lesson02\",\r\n" +
-                    "\"CreatedDate\": \"2/1/2016 04:00 am\",\r\n        \"Discussions\":\r\n        [\r\n        " +
-                    "    {\r\n                \"Id\": \"DiscussionId04\",\r\n                \"Description\": \"" +
-                    "Discussion04\",\r\n                \"TotalLikes\": 400,\r\n\t\"CreatedByUserProfileId\": \"" +
-                    "someone@mindsage.com\",\r\n\t\"CreatedDate\": \"2/1/2016 04:01 am\",\r\n            }\r\n   " +
-                    "     ]\r\n    },\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 57
+    testRunner.And("System have Comment collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
         
@@ -176,52 +118,2426 @@ namespace SpecFlow.GeneratedTests.Specs
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
-        [Xunit.TraitAttribute("Description", "User request lesson\'s comments Then system send the lesson\'s comments back")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but no comment in the lesson Then system send e" +
+            "mpty list back")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void UserRequestLessonSCommentsThenSystemSendTheLessonSCommentsBack()
+        public virtual void StudentRequestLessonSCommentsButNoCommentInTheLessonThenSystemSendEmptyListBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request lesson\'s comments Then system send the lesson\'s comments back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but no comment in the lesson Then system send e" +
+                    "mpty list back", new string[] {
                         "mock"});
-#line 162
+#line 63
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 163
+#line 64
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 164
-    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson02\' of Cl" +
+#line 65
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
                     "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 165
+#line 66
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have itself comments in the lesson Then sys" +
+            "tem send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveItselfCommentsInTheLessonThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have itself comments in the lesson Then sys" +
+                    "tem send comments back", new string[] {
+                        "mock"});
+#line 76
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 77
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 78
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment01"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
+        ""Description"": ""Msg01"",
+        ""TotalLikes"": 5,
+""CreatorImageUrl"": ""sakul.jpg"",
+""CreatorDisplayName"": ""sakul"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 95
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 96
     testRunner.Then("System send lesson\'s comment with JSON format is", @"{
 ""IsPrivateAccount"": false,
 ""IsDiscussionAvailable"": true,
 ""Comments"":
 [
 {
-""id"": ""Comment03"",
+""id"": ""Comment01"",
 ""Order"": 1,
+""Description"": ""Msg01"",
+""TotalLikes"": 5,
+""CreatorImageUrl"": ""sakul.jpg"",
+""CreatorDisplayName"": ""sakul"",
 ""ClassRoomId"": ""ClassRoom01"",
-""CreatedByUserProfileId"": ""earn@mindsage.com"",
-""Description"": ""Msg03"",
-""TotalLikes"": 10,
-""LessonId"": ""Lesson02"",
-""CreatedDate"": ""2/1/2016 03:00 am"",
-""TotalDiscussions"": 2
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""sakul@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have itself comments in the difference less" +
+            "on in the lesson Then system send empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveItselfCommentsInTheDifferenceLessonInTheLessonThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have itself comments in the difference less" +
+                    "on in the lesson Then system send empty list back", new string[] {
+                        "mock"});
+#line 120
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 121
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 122
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment01"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
+        ""Description"": ""Msg01"",
+        ""TotalLikes"": 5,
+""CreatorImageUrl"": ""sakul.jpg"",
+""CreatorDisplayName"": ""sakul"",
+        ""LessonId"": ""Lesson02"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    },
+    
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 140
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 141
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have only teacher\'s comments in the lesson " +
+            "Then system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveOnlyTeacherSCommentsInTheLessonThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have only teacher\'s comments in the lesson " +
+                    "Then system send comments back", new string[] {
+                        "mock"});
+#line 151
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 152
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 153
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription00"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""sakul@mindsage.com"",
+""Name"": ""sakul"",
+""ImageProfileUrl"": ""sakul.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 186
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 203
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 204
+    testRunner.Then("System send lesson\'s comment with JSON format is", @"{
+""IsPrivateAccount"": false,
+""IsDiscussionAvailable"": true,
+""Comments"":
+[
+{
+""id"": ""Comment00"",
+""Order"": 1,
+""Description"": ""Teacher Msg01"",
+""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have only friends\' comments in the lesson T" +
+            "hen system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveOnlyFriendsCommentsInTheLessonThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have only friends\' comments in the lesson T" +
+                    "hen system send comments back", new string[] {
+                        "mock"});
+#line 228
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 229
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 230
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""sakul@mindsage.com"",
+""Name"": ""sakul"",
+""ImageProfileUrl"": ""sakul.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""friend01@mindsage.com"",
+""Name"": ""friend01"",
+""ImageProfileUrl"": ""friend01.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""friend02@mindsage.com"",
+""Name"": ""friend02"",
+""ImageProfileUrl"": ""friend02.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription03"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 277
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+    {
+        ""id"": ""FriendRequest01-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend01@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest01-B"",
+""FromUserProfileId"": ""friend01@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend02@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-B"",
+""FromUserProfileId"": ""friend02@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 314
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment02"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+        ""Description"": ""friend01 msg"",
+        ""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    },
+{
+        ""id"": ""Comment03"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+        ""Description"": ""friend02 msg"",
+        ""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 343
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 344
+    testRunner.Then("System send lesson\'s comment with JSON format is", @"{
+""IsPrivateAccount"": false,
+""IsDiscussionAvailable"": true,
+""Comments"":
+[
+{
+""id"": ""Comment02"",
+""Order"": 1,
+""Description"": ""friend01 msg"",
+""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+},
+{
+""id"": ""Comment03"",
+""Order"": 2,
+""Description"": ""friend02 msg"",
+""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have only not friends\' comments in the less" +
+            "on Then system send empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveOnlyNotFriendsCommentsInTheLessonThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have only not friends\' comments in the less" +
+                    "on Then system send empty list back", new string[] {
+                        "mock"});
+#line 380
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 381
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 382
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""sakul@mindsage.com"",
+""Name"": ""sakul"",
+""ImageProfileUrl"": ""sakul.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""waitingForRespond@mindsage.com"",
+""Name"": ""waitingForRespond"",
+""ImageProfileUrl"": ""waitingForRespond.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription04"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""requestedToBeYourFriend@mindsage.com"",
+""Name"": ""requestedToBeYourFriend"",
+""ImageProfileUrl"": ""requestedToBeYourFriend.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription05"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""sender@mindsage.com"",
+""Name"": ""sender"",
+""ImageProfileUrl"": ""sender.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription06"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 443
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+{
+        ""id"": ""FriendRequest03-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""waitingForRespond@mindsage.com"",
+""Status"": ""SendRequest"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest03-B"",
+""FromUserProfileId"": ""waitingForRespond@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""ReceiveRequest"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest04-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""requestedToBeYourFriend@mindsage.com"",
+""Status"": ""ReceiveRequest"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest04-B"",
+""FromUserProfileId"": ""requestedToBeYourFriend@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""SendRequest"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest05-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""unfriend@mindsage.com"",
+""Status"": ""Unfriend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016"",
+""DeletedDate"": ""2/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 485
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment04"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""waitingForRespond@mindsage.com"",
+        ""Description"": ""waitingForRespond msg"",
+        ""TotalLikes"": 4,
+""CreatorImageUrl"": ""waitingForRespond.jpg"",
+""CreatorDisplayName"": ""waitingForRespond"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    },
+{
+        ""id"": ""Comment05"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""requestedToBeYourFriend@mindsage.com"",
+        ""Description"": ""requestedToBeYourFriend msg"",
+        ""TotalLikes"": 5,
+""CreatorImageUrl"": ""requestedToBeYourFriend.jpg"",
+""CreatorDisplayName"": ""requestedToBeYourFriend"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    },
+{
+        ""id"": ""Comment06"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""unfriend@mindsage.com"",
+        ""Description"": ""unfriend msg"",
+        ""TotalLikes"": 6,
+""CreatorImageUrl"": ""unfriend.jpg"",
+""CreatorDisplayName"": ""unfriend"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 526
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 527
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have only unfriends\' comments in the lesson" +
+            " Then system send empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveOnlyUnfriendsCommentsInTheLessonThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have only unfriends\' comments in the lesson" +
+                    " Then system send empty list back", new string[] {
+                        "mock"});
+#line 537
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 538
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 539
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""sakul@mindsage.com"",
+""Name"": ""sakul"",
+""ImageProfileUrl"": ""sakul.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""unfriend@mindsage.com"",
+""Name"": ""unfriend"",
+""ImageProfileUrl"": ""unfriend.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription07"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 572
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+{
+        ""id"": ""FriendRequest05-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""unfriend@mindsage.com"",
+""Status"": ""Unfriend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016"",
+""DeletedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest05-B"",
+""FromUserProfileId"": ""unfriend@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Unfriend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016"",
+""DeletedDate"": ""2/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 595
+ testRunner.And("System have Comment collection with JSON format are", @"[
+{
+        ""id"": ""Comment07"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""unfriend@mindsage.com"",
+        ""Description"": ""unfriend msg"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""unfriend.jpg"",
+""CreatorDisplayName"": ""unfriend"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 612
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 613
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments when the lesson have a lot of multi comments\' s" +
+            "tatus Then system send only comments created by itself, teachers and friends bac" +
+            "k")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsWhenTheLessonHaveALotOfMultiCommentsStatusThenSystemSendOnlyCommentsCreatedByItselfTeachersAndFriendsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments when the lesson have a lot of multi comments\' s" +
+                    "tatus Then system send only comments created by itself, teachers and friends bac" +
+                    "k", new string[] {
+                        "mock"});
+#line 623
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 624
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 625
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "},\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"sakul\",\r\n\"ImageProfileUrl\": \"sakul." +
+                    "jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Student\",\r\n\t\"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n},\r\n" +
+                    "{\r\n\"id\": \"friend01@mindsage.com\",\r\n\"Name\": \"friend01\",\r\n\"ImageProfileUrl\": \"frie" +
+                    "nd01.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription02\",\r\n\t\"Role\": \"Student\"" +
+                    ",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r" +
+                    "\n},\r\n{\r\n\"id\": \"friend02@mindsage.com\",\r\n\"Name\": \"friend02\",\r\n\"ImageProfileUrl\": " +
+                    "\"friend02.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription03\",\r\n\t\"Role\": \"Stu" +
+                    "dent\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
+                    "}\r\n]\r\n},\r\n{\r\n\"id\": \"waitingForRespond@mindsage.com\",\r\n\"Name\": \"waitingForRespond" +
+                    "\",\r\n\"ImageProfileUrl\": \"waitingForRespond.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": " +
+                    "\"Subscription04\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassC" +
+                    "alendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"requestedToBeYourFriend@mind" +
+                    "sage.com\",\r\n\"Name\": \"requestedToBeYourFriend\",\r\n\"ImageProfileUrl\": \"requestedToB" +
+                    "eYourFriend.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription05\",\r\n\t\"Role\": \"S" +
+                    "tudent\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\"," +
+                    "\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"sender@mindsage.com\",\r\n\"Name\": \"sender\",\r\n\"ImageProfileUrl" +
+                    "\": \"sender.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription06\",\r\n\t\"Role\": \"St" +
+                    "udent\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r" +
+                    "\n}\r\n]\r\n},\r\n{\r\n\"id\": \"unfriend@mindsage.com\",\r\n\"Name\": \"unfriend\",\r\n\"ImageProfile" +
+                    "Url\": \"unfriend.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription07\",\r\n\t\"Role\"" +
+                    ": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar" +
+                    "01\",\r\n}\r\n]\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 742
+ testRunner.And("System have FriendRequest collection with JSON format are", "[\r\n    {\r\n        \"id\": \"FriendRequest01-A\",\r\n\"FromUserProfileId\": \"sakul@mindsag" +
+                    "e.com\",\r\n\"ToUserProfileId\": \"friend01@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Acce" +
+                    "ptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Fri" +
+                    "endRequest01-B\",\r\n\"FromUserProfileId\": \"friend01@mindsage.com\",\r\n\"ToUserProfileI" +
+                    "d\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"Cr" +
+                    "eatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest02-A\",\r\n\"FromUser" +
+                    "ProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"friend02@mindsage.com\",\r\n" +
+                    "\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n   " +
+                    " },\r\n{\r\n        \"id\": \"FriendRequest02-B\",\r\n\"FromUserProfileId\": \"friend02@minds" +
+                    "age.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Accep" +
+                    "tedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frie" +
+                    "ndRequest03-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": " +
+                    "\"waitingForRespond@mindsage.com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1" +
+                    "/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest03-B\",\r\n\"FromUserProfileId\": \"wai" +
+                    "tingForRespond@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status" +
+                    "\": \"ReceiveRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frien" +
+                    "dRequest04-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"" +
+                    "requestedToBeYourFriend@mindsage.com\",\r\n\"Status\": \"ReceiveRequest\",\r\n\"CreatedDat" +
+                    "e\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest04-B\",\r\n\"FromUserProfileI" +
+                    "d\": \"requestedToBeYourFriend@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage." +
+                    "com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"" +
+                    "id\": \"FriendRequest05-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserPr" +
+                    "ofileId\": \"unfriend@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2/1/" +
+                    "2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n      " +
+                    "  \"id\": \"FriendRequest05-B\",\r\n\"FromUserProfileId\": \"unfriend@mindsage.com\",\r\n\"To" +
+                    "UserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2" +
+                    "/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 825
+ testRunner.And("System have Comment collection with JSON format are", "[\r\n{\r\n        \"id\": \"Comment00\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        " +
+                    "\"CreatedByUserProfileId\": \"teacher@mindsage.com\",\r\n        \"Description\": \"Teach" +
+                    "er Msg01\",\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"Creato" +
+                    "rDisplayName\": \"teacher\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/" +
+                    "2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment01\",\r\n     " +
+                    "   \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"sakul@minds" +
+                    "age.com\",\r\n        \"Description\": \"Msg01\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n " +
+                    "       \"id\": \"Comment02\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Creat" +
+                    "edByUserProfileId\": \"friend01@mindsage.com\",\r\n        \"Description\": \"friend01 m" +
+                    "sg\",\r\n        \"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"CreatorDisp" +
+                    "layName\": \"friend01\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016" +
+                    " 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment03\",\r\n        \"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"friend02@mindsa" +
+                    "ge.com\",\r\n        \"Description\": \"friend02 msg\",\r\n        \"TotalLikes\": 3,\r\n\"Cre" +
+                    "atorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\": \"friend02\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment04\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n        \"Descript" +
+                    "ion\": \"waitingForRespond msg\",\r\n        \"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"wa" +
+                    "itingForRespond.jpg\",\r\n\"CreatorDisplayName\": \"waitingForRespond\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment05\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"requestedToBeYourFriend@mindsage.com\",\r\n        \"De" +
+                    "scription\": \"requestedToBeYourFriend msg\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"requestedToBeYourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYou" +
+                    "rFriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r" +
+                    "\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment06\",\r\n        \"ClassRoomId\"" +
+                    ": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"unfriend@mindsage.com\",\r\n  " +
+                    "      \"Description\": \"unfriend msg\",\r\n        \"TotalLikes\": 6,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n     " +
+                    "   \"id\": \"Comment07\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedBy" +
+                    "UserProfileId\": \"unfriend@mindsage.com\",\r\n        \"Description\": \"unfriend msg\"," +
+                    "\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"unfriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:" +
+                    "00 am\",\r\n\"Discussions\": []\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 926
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 927
+    testRunner.Then("System send lesson\'s comment with JSON format is", @"{
+""IsPrivateAccount"": false,
+""IsDiscussionAvailable"": true,
+""Comments"":
+[
+{
+""id"": ""Comment00"",
+""Order"": 1,
+""Description"": ""Teacher Msg01"",
+""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+},
+{
+""id"": ""Comment01"",
+""Order"": 2,
+""Description"": ""Msg01"",
+""TotalLikes"": 5,
+""CreatorImageUrl"": ""sakul.jpg"",
+""CreatorDisplayName"": ""sakul"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""sakul@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
 },
 {
 ""id"": ""Comment02"",
-""Order"": 2,
+""Order"": 3,
+""Description"": ""friend01 msg"",
+""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
 ""ClassRoomId"": ""ClassRoom01"",
-""CreatedByUserProfileId"": ""sakul@mindsage.com"",
-""Description"": ""Msg02"",
-""TotalLikes"": 5,
-""LessonId"": ""Lesson02"",
-""CreatedDate"": ""2/1/2016 02:00 am"",
-""TotalDiscussions"": 1
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
 },
+{
+""id"": ""Comment03"",
+""Order"": 4,
+""Description"": ""friend02 msg"",
+""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have only friends\' comments in the lesson a" +
+            "nd thier subscriptions was deleted Then system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveOnlyFriendsCommentsInTheLessonAndThierSubscriptionsWasDeletedThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have only friends\' comments in the lesson a" +
+                    "nd thier subscriptions was deleted Then system send comments back", new string[] {
+                        "mock"});
+#line 987
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 988
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 989
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""sakul@mindsage.com"",
+""Name"": ""sakul"",
+""ImageProfileUrl"": ""sakul.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""friend01@mindsage.com"",
+""Name"": ""friend01"",
+""ImageProfileUrl"": ""friend01.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016""
+}
+]
+},
+{
+""id"": ""friend02@mindsage.com"",
+""Name"": ""friend02"",
+""ImageProfileUrl"": ""friend02.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription03"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016""
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1038
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+    {
+        ""id"": ""FriendRequest01-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend01@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest01-B"",
+""FromUserProfileId"": ""friend01@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend02@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-B"",
+""FromUserProfileId"": ""friend02@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1075
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment02"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+        ""Description"": ""friend01 msg"",
+        ""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    },
+{
+        ""id"": ""Comment03"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+        ""Description"": ""friend02 msg"",
+        ""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1104
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 1105
+    testRunner.Then("System send lesson\'s comment with JSON format is", @"{
+""IsPrivateAccount"": false,
+""IsDiscussionAvailable"": true,
+""Comments"":
+[
+{
+""id"": ""Comment02"",
+""Order"": 1,
+""Description"": ""friend01 msg"",
+""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+},
+{
+""id"": ""Comment03"",
+""Order"": 2,
+""Description"": ""friend02 msg"",
+""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have only friends\' comments in the lesson a" +
+            "nd users was deleted Then system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveOnlyFriendsCommentsInTheLessonAndUsersWasDeletedThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have only friends\' comments in the lesson a" +
+                    "nd users was deleted Then system send comments back", new string[] {
+                        "mock"});
+#line 1141
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1142
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1143
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""sakul@mindsage.com"",
+""Name"": ""sakul"",
+""ImageProfileUrl"": ""sakul.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""friend01@mindsage.com"",
+""Name"": ""friend01"",
+""ImageProfileUrl"": ""friend01.jpg"",
+""DeletedDate"": ""1/1/2016"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""friend02@mindsage.com"",
+""Name"": ""friend02"",
+""ImageProfileUrl"": ""friend02.jpg"",
+""DeletedDate"": ""1/1/2016"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription03"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1192
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+    {
+        ""id"": ""FriendRequest01-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend01@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest01-B"",
+""FromUserProfileId"": ""friend01@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend02@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-B"",
+""FromUserProfileId"": ""friend02@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1229
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment02"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+        ""Description"": ""friend01 msg"",
+        ""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    },
+{
+        ""id"": ""Comment03"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+        ""Description"": ""friend02 msg"",
+        ""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1258
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 1259
+    testRunner.Then("System send lesson\'s comment with JSON format is", @"{
+""IsPrivateAccount"": false,
+""IsDiscussionAvailable"": true,
+""Comments"":
+[
+{
+""id"": ""Comment02"",
+""Order"": 1,
+""Description"": ""friend01 msg"",
+""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+},
+{
+""id"": ""Comment03"",
+""Order"": 2,
+""Description"": ""friend02 msg"",
+""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Student request lesson\'s comments but have only friends\' comments in the lesson a" +
+            "nd users don\'t existing Then system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void StudentRequestLessonSCommentsButHaveOnlyFriendsCommentsInTheLessonAndUsersDonTExistingThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Student request lesson\'s comments but have only friends\' comments in the lesson a" +
+                    "nd users don\'t existing Then system send comments back", new string[] {
+                        "mock"});
+#line 1295
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1296
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1297
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"sakul\",\r\n\"ImageProfileUrl\": \"sakul.jp" +
+                    "g\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Student\",\r\n\t\"Cl" +
+                    "assRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1316
+ testRunner.And("System have FriendRequest collection with JSON format are", @"[
+    {
+        ""id"": ""FriendRequest01-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend01@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest01-B"",
+""FromUserProfileId"": ""friend01@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-A"",
+""FromUserProfileId"": ""sakul@mindsage.com"",
+""ToUserProfileId"": ""friend02@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    },
+{
+        ""id"": ""FriendRequest02-B"",
+""FromUserProfileId"": ""friend02@mindsage.com"",
+""ToUserProfileId"": ""sakul@mindsage.com"",
+""Status"": ""Friend"",
+""AcceptedDate"": ""2/1/2016"",
+""CreatedDate"": ""2/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1353
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment02"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+        ""Description"": ""friend01 msg"",
+        ""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    },
+{
+        ""id"": ""Comment03"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+        ""Description"": ""friend02 msg"",
+        ""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1382
+    testRunner.When("UserProfile \'sakul@mindsage.com\' request comment from the lesson \'Lesson01\' of Cl" +
+                    "assRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 1383
+    testRunner.Then("System send lesson\'s comment with JSON format is", @"{
+""IsPrivateAccount"": false,
+""IsDiscussionAvailable"": true,
+""Comments"":
+[
+{
+""id"": ""Comment02"",
+""Order"": 1,
+""Description"": ""friend01 msg"",
+""TotalLikes"": 2,
+""CreatorImageUrl"": ""friend01.jpg"",
+""CreatorDisplayName"": ""friend01"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend01@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+},
+{
+""id"": ""Comment03"",
+""Order"": 2,
+""Description"": ""friend02 msg"",
+""TotalLikes"": 3,
+""CreatorImageUrl"": ""friend02.jpg"",
+""CreatorDisplayName"": ""friend02"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""friend02@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but no comment in the lesson Then system send e" +
+            "mpty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButNoCommentInTheLessonThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but no comment in the lesson Then system send e" +
+                    "mpty list back", new string[] {
+                        "mock"});
+#line 1419
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1420
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1421
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1440
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 1441
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but have only itself comments in the lesson The" +
+            "n system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButHaveOnlyItselfCommentsInTheLessonThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but have only itself comments in the lesson The" +
+                    "n system send comments back", new string[] {
+                        "mock"});
+#line 1451
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1452
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1453
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1472
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1489
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 1490
+    testRunner.Then("System send lesson\'s comment with JSON format is", @"{
+""IsPrivateAccount"": false,
+""IsDiscussionAvailable"": true,
+""Comments"":
+[
+{
+""id"": ""Comment00"",
+""Order"": 1,
+""Description"": ""Teacher Msg01"",
+""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonId"": ""Lesson01"",
+""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments when the lesson have a lot of multi comments\' s" +
+            "tatus Then system send all comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsWhenTheLessonHaveALotOfMultiCommentsStatusThenSystemSendAllCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments when the lesson have a lot of multi comments\' s" +
+                    "tatus Then system send all comments back", new string[] {
+                        "mock"});
+#line 1514
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1515
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1516
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "},\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"sakul\",\r\n\"ImageProfileUrl\": \"sakul." +
+                    "jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Student\",\r\n\t\"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n},\r\n" +
+                    "{\r\n\"id\": \"friend01@mindsage.com\",\r\n\"Name\": \"friend01\",\r\n\"ImageProfileUrl\": \"frie" +
+                    "nd01.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription02\",\r\n\t\"Role\": \"Student\"" +
+                    ",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r" +
+                    "\n},\r\n{\r\n\"id\": \"friend02@mindsage.com\",\r\n\"Name\": \"friend02\",\r\n\"ImageProfileUrl\": " +
+                    "\"friend02.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription03\",\r\n\t\"Role\": \"Stu" +
+                    "dent\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
+                    "}\r\n]\r\n},\r\n{\r\n\"id\": \"waitingForRespond@mindsage.com\",\r\n\"Name\": \"waitingForRespond" +
+                    "\",\r\n\"ImageProfileUrl\": \"waitingForRespond.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": " +
+                    "\"Subscription04\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassC" +
+                    "alendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"requestedToBeYourFriend@mind" +
+                    "sage.com\",\r\n\"Name\": \"requestedToBeYourFriend\",\r\n\"ImageProfileUrl\": \"requestedToB" +
+                    "eYourFriend.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription05\",\r\n\t\"Role\": \"S" +
+                    "tudent\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\"," +
+                    "\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"sender@mindsage.com\",\r\n\"Name\": \"sender\",\r\n\"ImageProfileUrl" +
+                    "\": \"sender.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription06\",\r\n\t\"Role\": \"St" +
+                    "udent\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r" +
+                    "\n}\r\n]\r\n},\r\n{\r\n\"id\": \"unfriend@mindsage.com\",\r\n\"Name\": \"unfriend\",\r\n\"ImageProfile" +
+                    "Url\": \"unfriend.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription07\",\r\n\t\"Role\"" +
+                    ": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar" +
+                    "01\",\r\n}\r\n]\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1633
+ testRunner.And("System have FriendRequest collection with JSON format are", "[\r\n    {\r\n        \"id\": \"FriendRequest01-A\",\r\n\"FromUserProfileId\": \"sakul@mindsag" +
+                    "e.com\",\r\n\"ToUserProfileId\": \"friend01@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Acce" +
+                    "ptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Fri" +
+                    "endRequest01-B\",\r\n\"FromUserProfileId\": \"friend01@mindsage.com\",\r\n\"ToUserProfileI" +
+                    "d\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"Cr" +
+                    "eatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest02-A\",\r\n\"FromUser" +
+                    "ProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"friend02@mindsage.com\",\r\n" +
+                    "\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n   " +
+                    " },\r\n{\r\n        \"id\": \"FriendRequest02-B\",\r\n\"FromUserProfileId\": \"friend02@minds" +
+                    "age.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Accep" +
+                    "tedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frie" +
+                    "ndRequest03-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": " +
+                    "\"waitingForRespond@mindsage.com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1" +
+                    "/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest03-B\",\r\n\"FromUserProfileId\": \"wai" +
+                    "tingForRespond@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status" +
+                    "\": \"ReceiveRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frien" +
+                    "dRequest04-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"" +
+                    "requestedToBeYourFriend@mindsage.com\",\r\n\"Status\": \"ReceiveRequest\",\r\n\"CreatedDat" +
+                    "e\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest04-B\",\r\n\"FromUserProfileI" +
+                    "d\": \"requestedToBeYourFriend@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage." +
+                    "com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"" +
+                    "id\": \"FriendRequest05-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserPr" +
+                    "ofileId\": \"unfriend@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2/1/" +
+                    "2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n      " +
+                    "  \"id\": \"FriendRequest05-B\",\r\n\"FromUserProfileId\": \"unfriend@mindsage.com\",\r\n\"To" +
+                    "UserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2" +
+                    "/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 1716
+ testRunner.And("System have Comment collection with JSON format are", "[\r\n{\r\n        \"id\": \"Comment00\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        " +
+                    "\"CreatedByUserProfileId\": \"teacher@mindsage.com\",\r\n        \"Description\": \"Teach" +
+                    "er Msg01\",\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"Creato" +
+                    "rDisplayName\": \"teacher\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/" +
+                    "2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment01\",\r\n     " +
+                    "   \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"sakul@minds" +
+                    "age.com\",\r\n        \"Description\": \"Msg01\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n " +
+                    "       \"id\": \"Comment02\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Creat" +
+                    "edByUserProfileId\": \"friend01@mindsage.com\",\r\n        \"Description\": \"friend01 m" +
+                    "sg\",\r\n        \"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"CreatorDisp" +
+                    "layName\": \"friend01\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016" +
+                    " 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment03\",\r\n        \"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"friend02@mindsa" +
+                    "ge.com\",\r\n        \"Description\": \"friend02 msg\",\r\n        \"TotalLikes\": 3,\r\n\"Cre" +
+                    "atorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\": \"friend02\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment04\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n        \"Descript" +
+                    "ion\": \"waitingForRespond msg\",\r\n        \"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"wa" +
+                    "itingForRespond.jpg\",\r\n\"CreatorDisplayName\": \"waitingForRespond\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment05\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"requestedToBeYourFriend@mindsage.com\",\r\n        \"De" +
+                    "scription\": \"requestedToBeYourFriend msg\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"requestedToBeYourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYou" +
+                    "rFriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r" +
+                    "\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment06\",\r\n        \"ClassRoomId\"" +
+                    ": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"unfriend@mindsage.com\",\r\n  " +
+                    "      \"Description\": \"unfriend msg\",\r\n        \"TotalLikes\": 6,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n     " +
+                    "   \"id\": \"Comment07\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedBy" +
+                    "UserProfileId\": \"unfriend@mindsage.com\",\r\n        \"Description\": \"unfriend msg\"," +
+                    "\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"unfriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:" +
+                    "00 am\",\r\n\"Discussions\": []\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1817
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 1818
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\":\r\n[\r\n{\r" +
+                    "\n\"id\": \"Comment00\",\r\n\"Order\": 1,\r\n\"Description\": \"Teacher Msg01\",\r\n\"TotalLikes\":" +
+                    " 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"Class" +
+                    "RoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"tea" +
+                    "cher@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment0" +
+                    "1\",\r\n\"Order\": 2,\r\n\"Description\": \"Msg01\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": " +
+                    "\"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"Le" +
+                    "ssonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"CreatedD" +
+                    "ate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment02\",\r\n\"Order\": 3,\r\n\"Description" +
+                    "\": \"friend01 msg\",\r\n\"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"Creat" +
+                    "orDisplayName\": \"friend01\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson0" +
+                    "1\",\r\n\"CreatedByUserProfileId\": \"friend01@mindsage.com\",\r\n\"CreatedDate\": \"2/1/201" +
+                    "6 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment03\",\r\n\"Order\": 4,\r\n\"Description\": \"friend02 m" +
+                    "sg\",\r\n\"TotalLikes\": 3,\r\n\"CreatorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\"" +
+                    ": \"friend02\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedB" +
+                    "yUserProfileId\": \"friend02@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n" +
+                    "},\r\n{\r\n\"id\": \"Comment04\",\r\n\"Order\": 5,\r\n\"Description\": \"waitingForRespond msg\",\r" +
+                    "\n\"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"waitingForRespond.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"waitingForRespond\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01" +
+                    "\",\r\n\"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n\"CreatedDate\": " +
+                    "\"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment05\",\r\n\"Order\": 6,\r\n\"Description\": \"re" +
+                    "questedToBeYourFriend msg\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": \"requestedToBe" +
+                    "YourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYourFriend\",\r\n\"ClassRoomId" +
+                    "\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"requested" +
+                    "ToBeYourFriend@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\":" +
+                    " \"Comment06\",\r\n\"Order\": 7,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 6,\r\n\"C" +
+                    "reatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomI" +
+                    "d\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend" +
+                    "@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment07\",\r" +
+                    "\n\"Order\": 8,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 7,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomId\": \"ClassRoom" +
+                    "01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend@mindsage.com\"" +
+                    ",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n}\r\n]\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments when the lesson have a lot of multi comments\' a" +
+            "nd their users\' subscriptions was deleted status Then system send all comments b" +
+            "ack")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsWhenTheLessonHaveALotOfMultiCommentsAndTheirUsersSubscriptionsWasDeletedStatusThenSystemSendAllCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments when the lesson have a lot of multi comments\' a" +
+                    "nd their users\' subscriptions was deleted status Then system send all comments b" +
+                    "ack", new string[] {
+                        "mock"});
+#line 1926
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1927
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1928
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "},\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"sakul\",\r\n\"ImageProfileUrl\": \"sakul." +
+                    "jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Student\",\r\n\t\"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n\t\"DeletedD" +
+                    "ate\": \"1/1/2016\"\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"friend01@mindsage.com\",\r\n\"Name\": \"friend01" +
+                    "\",\r\n\"ImageProfileUrl\": \"friend01.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscrip" +
+                    "tion02\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId" +
+                    "\": \"ClassCalendar01\",\r\n\t\"DeletedDate\": \"1/1/2016\"\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"friend02@" +
+                    "mindsage.com\",\r\n\"Name\": \"friend02\",\r\n\"ImageProfileUrl\": \"friend02.jpg\",\r\n\"Subscr" +
+                    "iptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription03\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": " +
+                    "\"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n\t\"DeletedDate\": \"1/1/201" +
+                    "6\"\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"waitingForRespond@mindsage.com\",\r\n\"Name\": \"waitingForRes" +
+                    "pond\",\r\n\"ImageProfileUrl\": \"waitingForRespond.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"i" +
+                    "d\": \"Subscription04\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"Cl" +
+                    "assCalendarId\": \"ClassCalendar01\",\r\n\t\"DeletedDate\": \"1/1/2016\"\r\n}\r\n]\r\n},\r\n{\r\n\"id" +
+                    "\": \"requestedToBeYourFriend@mindsage.com\",\r\n\"Name\": \"requestedToBeYourFriend\",\r\n" +
+                    "\"ImageProfileUrl\": \"requestedToBeYourFriend.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\"" +
+                    ": \"Subscription05\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"Clas" +
+                    "sCalendarId\": \"ClassCalendar01\",\r\n\t\"DeletedDate\": \"1/1/2016\"\r\n}\r\n]\r\n},\r\n{\r\n\"id\":" +
+                    " \"sender@mindsage.com\",\r\n\"Name\": \"sender\",\r\n\"ImageProfileUrl\": \"sender.jpg\",\r\n\"S" +
+                    "ubscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription06\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoom" +
+                    "Id\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n\t\"DeletedDate\": \"1/" +
+                    "1/2016\"\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"unfriend@mindsage.com\",\r\n\"Name\": \"unfriend\",\r\n\"Imag" +
+                    "eProfileUrl\": \"unfriend.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription07\",\r" +
+                    "\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"Class" +
+                    "Calendar01\",\r\n\t\"DeletedDate\": \"1/1/2016\"\r\n}\r\n]\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 2052
+ testRunner.And("System have FriendRequest collection with JSON format are", "[\r\n    {\r\n        \"id\": \"FriendRequest01-A\",\r\n\"FromUserProfileId\": \"sakul@mindsag" +
+                    "e.com\",\r\n\"ToUserProfileId\": \"friend01@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Acce" +
+                    "ptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Fri" +
+                    "endRequest01-B\",\r\n\"FromUserProfileId\": \"friend01@mindsage.com\",\r\n\"ToUserProfileI" +
+                    "d\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"Cr" +
+                    "eatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest02-A\",\r\n\"FromUser" +
+                    "ProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"friend02@mindsage.com\",\r\n" +
+                    "\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n   " +
+                    " },\r\n{\r\n        \"id\": \"FriendRequest02-B\",\r\n\"FromUserProfileId\": \"friend02@minds" +
+                    "age.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Accep" +
+                    "tedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frie" +
+                    "ndRequest03-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": " +
+                    "\"waitingForRespond@mindsage.com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1" +
+                    "/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest03-B\",\r\n\"FromUserProfileId\": \"wai" +
+                    "tingForRespond@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status" +
+                    "\": \"ReceiveRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frien" +
+                    "dRequest04-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"" +
+                    "requestedToBeYourFriend@mindsage.com\",\r\n\"Status\": \"ReceiveRequest\",\r\n\"CreatedDat" +
+                    "e\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest04-B\",\r\n\"FromUserProfileI" +
+                    "d\": \"requestedToBeYourFriend@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage." +
+                    "com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"" +
+                    "id\": \"FriendRequest05-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserPr" +
+                    "ofileId\": \"unfriend@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2/1/" +
+                    "2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n      " +
+                    "  \"id\": \"FriendRequest05-B\",\r\n\"FromUserProfileId\": \"unfriend@mindsage.com\",\r\n\"To" +
+                    "UserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2" +
+                    "/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 2135
+ testRunner.And("System have Comment collection with JSON format are", "[\r\n{\r\n        \"id\": \"Comment00\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        " +
+                    "\"CreatedByUserProfileId\": \"teacher@mindsage.com\",\r\n        \"Description\": \"Teach" +
+                    "er Msg01\",\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"Creato" +
+                    "rDisplayName\": \"teacher\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/" +
+                    "2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment01\",\r\n     " +
+                    "   \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"sakul@minds" +
+                    "age.com\",\r\n        \"Description\": \"Msg01\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n " +
+                    "       \"id\": \"Comment02\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Creat" +
+                    "edByUserProfileId\": \"friend01@mindsage.com\",\r\n        \"Description\": \"friend01 m" +
+                    "sg\",\r\n        \"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"CreatorDisp" +
+                    "layName\": \"friend01\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016" +
+                    " 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment03\",\r\n        \"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"friend02@mindsa" +
+                    "ge.com\",\r\n        \"Description\": \"friend02 msg\",\r\n        \"TotalLikes\": 3,\r\n\"Cre" +
+                    "atorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\": \"friend02\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment04\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n        \"Descript" +
+                    "ion\": \"waitingForRespond msg\",\r\n        \"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"wa" +
+                    "itingForRespond.jpg\",\r\n\"CreatorDisplayName\": \"waitingForRespond\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment05\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"requestedToBeYourFriend@mindsage.com\",\r\n        \"De" +
+                    "scription\": \"requestedToBeYourFriend msg\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"requestedToBeYourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYou" +
+                    "rFriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r" +
+                    "\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment06\",\r\n        \"ClassRoomId\"" +
+                    ": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"unfriend@mindsage.com\",\r\n  " +
+                    "      \"Description\": \"unfriend msg\",\r\n        \"TotalLikes\": 6,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n     " +
+                    "   \"id\": \"Comment07\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedBy" +
+                    "UserProfileId\": \"unfriend@mindsage.com\",\r\n        \"Description\": \"unfriend msg\"," +
+                    "\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"unfriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:" +
+                    "00 am\",\r\n\"Discussions\": []\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 2236
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 2237
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\":\r\n[\r\n{\r" +
+                    "\n\"id\": \"Comment00\",\r\n\"Order\": 1,\r\n\"Description\": \"Teacher Msg01\",\r\n\"TotalLikes\":" +
+                    " 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"Class" +
+                    "RoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"tea" +
+                    "cher@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment0" +
+                    "1\",\r\n\"Order\": 2,\r\n\"Description\": \"Msg01\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": " +
+                    "\"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"Le" +
+                    "ssonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"CreatedD" +
+                    "ate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment02\",\r\n\"Order\": 3,\r\n\"Description" +
+                    "\": \"friend01 msg\",\r\n\"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"Creat" +
+                    "orDisplayName\": \"friend01\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson0" +
+                    "1\",\r\n\"CreatedByUserProfileId\": \"friend01@mindsage.com\",\r\n\"CreatedDate\": \"2/1/201" +
+                    "6 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment03\",\r\n\"Order\": 4,\r\n\"Description\": \"friend02 m" +
+                    "sg\",\r\n\"TotalLikes\": 3,\r\n\"CreatorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\"" +
+                    ": \"friend02\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedB" +
+                    "yUserProfileId\": \"friend02@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n" +
+                    "},\r\n{\r\n\"id\": \"Comment04\",\r\n\"Order\": 5,\r\n\"Description\": \"waitingForRespond msg\",\r" +
+                    "\n\"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"waitingForRespond.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"waitingForRespond\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01" +
+                    "\",\r\n\"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n\"CreatedDate\": " +
+                    "\"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment05\",\r\n\"Order\": 6,\r\n\"Description\": \"re" +
+                    "questedToBeYourFriend msg\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": \"requestedToBe" +
+                    "YourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYourFriend\",\r\n\"ClassRoomId" +
+                    "\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"requested" +
+                    "ToBeYourFriend@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\":" +
+                    " \"Comment06\",\r\n\"Order\": 7,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 6,\r\n\"C" +
+                    "reatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomI" +
+                    "d\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend" +
+                    "@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment07\",\r" +
+                    "\n\"Order\": 8,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 7,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomId\": \"ClassRoom" +
+                    "01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend@mindsage.com\"" +
+                    ",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n}\r\n]\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments when the lesson have a lot of multi comments\' a" +
+            "nd users was deleted status Then system send all comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsWhenTheLessonHaveALotOfMultiCommentsAndUsersWasDeletedStatusThenSystemSendAllCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments when the lesson have a lot of multi comments\' a" +
+                    "nd users was deleted status Then system send all comments back", new string[] {
+                        "mock"});
+#line 2345
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 2346
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 2347
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "},\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"sakul\",\r\n\"ImageProfileUrl\": \"sakul." +
+                    "jpg\",\r\n\"DeletedDate\": \"1/1/2016\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription0" +
+                    "1\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"C" +
+                    "lassCalendar01\",\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"friend01@mindsage.com\",\r\n\"Name\": \"friend01" +
+                    "\",\r\n\"ImageProfileUrl\": \"friend01.jpg\",\r\n\"DeletedDate\": \"1/1/2016\",\r\n\"Subscriptio" +
+                    "ns\":\r\n[\r\n{\r\n\t\"id\": \"Subscription02\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"Clas" +
+                    "sRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"friend02@" +
+                    "mindsage.com\",\r\n\"Name\": \"friend02\",\r\n\"ImageProfileUrl\": \"friend02.jpg\",\r\n\"Delete" +
+                    "dDate\": \"1/1/2016\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription03\",\r\n\t\"Role\": " +
+                    "\"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01" +
+                    "\",\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"waitingForRespond@mindsage.com\",\r\n\"Name\": \"waitingForRes" +
+                    "pond\",\r\n\"ImageProfileUrl\": \"waitingForRespond.jpg\",\r\n\"DeletedDate\": \"1/1/2016\",\r" +
+                    "\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription04\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassR" +
+                    "oomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n},\r\n{\r\n\"id" +
+                    "\": \"requestedToBeYourFriend@mindsage.com\",\r\n\"Name\": \"requestedToBeYourFriend\",\r\n" +
+                    "\"ImageProfileUrl\": \"requestedToBeYourFriend.jpg\",\r\n\"DeletedDate\": \"1/1/2016\",\r\n\"" +
+                    "Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription05\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoo" +
+                    "mId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n},\r\n{\r\n\"id\":" +
+                    " \"sender@mindsage.com\",\r\n\"Name\": \"sender\",\r\n\"ImageProfileUrl\": \"sender.jpg\",\r\n\"D" +
+                    "eletedDate\": \"1/1/2016\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription06\",\r\n\t\"Ro" +
+                    "le\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalen" +
+                    "dar01\",\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"unfriend@mindsage.com\",\r\n\"Name\": \"unfriend\",\r\n\"Imag" +
+                    "eProfileUrl\": \"unfriend.jpg\",\r\n\"DeletedDate\": \"1/1/2016\",\r\n\"Subscriptions\":\r\n[\r\n" +
+                    "{\r\n\t\"id\": \"Subscription07\",\r\n\t\"Role\": \"Student\",\r\n\t\"ClassRoomId\": \"ClassRoom01\"," +
+                    "\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 2471
+ testRunner.And("System have FriendRequest collection with JSON format are", "[\r\n    {\r\n        \"id\": \"FriendRequest01-A\",\r\n\"FromUserProfileId\": \"sakul@mindsag" +
+                    "e.com\",\r\n\"ToUserProfileId\": \"friend01@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Acce" +
+                    "ptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Fri" +
+                    "endRequest01-B\",\r\n\"FromUserProfileId\": \"friend01@mindsage.com\",\r\n\"ToUserProfileI" +
+                    "d\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"Cr" +
+                    "eatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest02-A\",\r\n\"FromUser" +
+                    "ProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"friend02@mindsage.com\",\r\n" +
+                    "\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n   " +
+                    " },\r\n{\r\n        \"id\": \"FriendRequest02-B\",\r\n\"FromUserProfileId\": \"friend02@minds" +
+                    "age.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Accep" +
+                    "tedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frie" +
+                    "ndRequest03-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": " +
+                    "\"waitingForRespond@mindsage.com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1" +
+                    "/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest03-B\",\r\n\"FromUserProfileId\": \"wai" +
+                    "tingForRespond@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status" +
+                    "\": \"ReceiveRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frien" +
+                    "dRequest04-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"" +
+                    "requestedToBeYourFriend@mindsage.com\",\r\n\"Status\": \"ReceiveRequest\",\r\n\"CreatedDat" +
+                    "e\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest04-B\",\r\n\"FromUserProfileI" +
+                    "d\": \"requestedToBeYourFriend@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage." +
+                    "com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"" +
+                    "id\": \"FriendRequest05-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserPr" +
+                    "ofileId\": \"unfriend@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2/1/" +
+                    "2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n      " +
+                    "  \"id\": \"FriendRequest05-B\",\r\n\"FromUserProfileId\": \"unfriend@mindsage.com\",\r\n\"To" +
+                    "UserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2" +
+                    "/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 2554
+ testRunner.And("System have Comment collection with JSON format are", "[\r\n{\r\n        \"id\": \"Comment00\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        " +
+                    "\"CreatedByUserProfileId\": \"teacher@mindsage.com\",\r\n        \"Description\": \"Teach" +
+                    "er Msg01\",\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"Creato" +
+                    "rDisplayName\": \"teacher\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/" +
+                    "2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment01\",\r\n     " +
+                    "   \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"sakul@minds" +
+                    "age.com\",\r\n        \"Description\": \"Msg01\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n " +
+                    "       \"id\": \"Comment02\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Creat" +
+                    "edByUserProfileId\": \"friend01@mindsage.com\",\r\n        \"Description\": \"friend01 m" +
+                    "sg\",\r\n        \"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"CreatorDisp" +
+                    "layName\": \"friend01\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016" +
+                    " 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment03\",\r\n        \"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"friend02@mindsa" +
+                    "ge.com\",\r\n        \"Description\": \"friend02 msg\",\r\n        \"TotalLikes\": 3,\r\n\"Cre" +
+                    "atorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\": \"friend02\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment04\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n        \"Descript" +
+                    "ion\": \"waitingForRespond msg\",\r\n        \"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"wa" +
+                    "itingForRespond.jpg\",\r\n\"CreatorDisplayName\": \"waitingForRespond\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment05\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"requestedToBeYourFriend@mindsage.com\",\r\n        \"De" +
+                    "scription\": \"requestedToBeYourFriend msg\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"requestedToBeYourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYou" +
+                    "rFriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r" +
+                    "\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment06\",\r\n        \"ClassRoomId\"" +
+                    ": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"unfriend@mindsage.com\",\r\n  " +
+                    "      \"Description\": \"unfriend msg\",\r\n        \"TotalLikes\": 6,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n     " +
+                    "   \"id\": \"Comment07\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedBy" +
+                    "UserProfileId\": \"unfriend@mindsage.com\",\r\n        \"Description\": \"unfriend msg\"," +
+                    "\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"unfriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:" +
+                    "00 am\",\r\n\"Discussions\": []\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 2655
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 2656
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\":\r\n[\r\n{\r" +
+                    "\n\"id\": \"Comment00\",\r\n\"Order\": 1,\r\n\"Description\": \"Teacher Msg01\",\r\n\"TotalLikes\":" +
+                    " 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"Class" +
+                    "RoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"tea" +
+                    "cher@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment0" +
+                    "1\",\r\n\"Order\": 2,\r\n\"Description\": \"Msg01\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": " +
+                    "\"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"Le" +
+                    "ssonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"CreatedD" +
+                    "ate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment02\",\r\n\"Order\": 3,\r\n\"Description" +
+                    "\": \"friend01 msg\",\r\n\"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"Creat" +
+                    "orDisplayName\": \"friend01\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson0" +
+                    "1\",\r\n\"CreatedByUserProfileId\": \"friend01@mindsage.com\",\r\n\"CreatedDate\": \"2/1/201" +
+                    "6 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment03\",\r\n\"Order\": 4,\r\n\"Description\": \"friend02 m" +
+                    "sg\",\r\n\"TotalLikes\": 3,\r\n\"CreatorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\"" +
+                    ": \"friend02\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedB" +
+                    "yUserProfileId\": \"friend02@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n" +
+                    "},\r\n{\r\n\"id\": \"Comment04\",\r\n\"Order\": 5,\r\n\"Description\": \"waitingForRespond msg\",\r" +
+                    "\n\"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"waitingForRespond.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"waitingForRespond\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01" +
+                    "\",\r\n\"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n\"CreatedDate\": " +
+                    "\"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment05\",\r\n\"Order\": 6,\r\n\"Description\": \"re" +
+                    "questedToBeYourFriend msg\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": \"requestedToBe" +
+                    "YourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYourFriend\",\r\n\"ClassRoomId" +
+                    "\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"requested" +
+                    "ToBeYourFriend@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\":" +
+                    " \"Comment06\",\r\n\"Order\": 7,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 6,\r\n\"C" +
+                    "reatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomI" +
+                    "d\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend" +
+                    "@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment07\",\r" +
+                    "\n\"Order\": 8,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 7,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomId\": \"ClassRoom" +
+                    "01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend@mindsage.com\"" +
+                    ",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n}\r\n]\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments when the lesson have a lot of multi comments\' a" +
+            "nd their users was deleted status Then system all comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsWhenTheLessonHaveALotOfMultiCommentsAndTheirUsersWasDeletedStatusThenSystemAllCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments when the lesson have a lot of multi comments\' a" +
+                    "nd their users was deleted status Then system all comments back", new string[] {
+                        "mock"});
+#line 2764
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 2765
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 2766
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 2785
+ testRunner.And("System have FriendRequest collection with JSON format are", "[\r\n    {\r\n        \"id\": \"FriendRequest01-A\",\r\n\"FromUserProfileId\": \"sakul@mindsag" +
+                    "e.com\",\r\n\"ToUserProfileId\": \"friend01@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Acce" +
+                    "ptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Fri" +
+                    "endRequest01-B\",\r\n\"FromUserProfileId\": \"friend01@mindsage.com\",\r\n\"ToUserProfileI" +
+                    "d\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"Cr" +
+                    "eatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest02-A\",\r\n\"FromUser" +
+                    "ProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"friend02@mindsage.com\",\r\n" +
+                    "\"Status\": \"Friend\",\r\n\"AcceptedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n   " +
+                    " },\r\n{\r\n        \"id\": \"FriendRequest02-B\",\r\n\"FromUserProfileId\": \"friend02@minds" +
+                    "age.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Friend\",\r\n\"Accep" +
+                    "tedDate\": \"2/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frie" +
+                    "ndRequest03-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": " +
+                    "\"waitingForRespond@mindsage.com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1" +
+                    "/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest03-B\",\r\n\"FromUserProfileId\": \"wai" +
+                    "tingForRespond@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage.com\",\r\n\"Status" +
+                    "\": \"ReceiveRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"Frien" +
+                    "dRequest04-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserProfileId\": \"" +
+                    "requestedToBeYourFriend@mindsage.com\",\r\n\"Status\": \"ReceiveRequest\",\r\n\"CreatedDat" +
+                    "e\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"id\": \"FriendRequest04-B\",\r\n\"FromUserProfileI" +
+                    "d\": \"requestedToBeYourFriend@mindsage.com\",\r\n\"ToUserProfileId\": \"sakul@mindsage." +
+                    "com\",\r\n\"Status\": \"SendRequest\",\r\n\"CreatedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n        \"" +
+                    "id\": \"FriendRequest05-A\",\r\n\"FromUserProfileId\": \"sakul@mindsage.com\",\r\n\"ToUserPr" +
+                    "ofileId\": \"unfriend@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2/1/" +
+                    "2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    },\r\n{\r\n      " +
+                    "  \"id\": \"FriendRequest05-B\",\r\n\"FromUserProfileId\": \"unfriend@mindsage.com\",\r\n\"To" +
+                    "UserProfileId\": \"sakul@mindsage.com\",\r\n\"Status\": \"Unfriend\",\r\n\"AcceptedDate\": \"2" +
+                    "/1/2016\",\r\n\"CreatedDate\": \"2/1/2016\",\r\n\"DeletedDate\": \"2/1/2016\"\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 2868
+ testRunner.And("System have Comment collection with JSON format are", "[\r\n{\r\n        \"id\": \"Comment00\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        " +
+                    "\"CreatedByUserProfileId\": \"teacher@mindsage.com\",\r\n        \"Description\": \"Teach" +
+                    "er Msg01\",\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"Creato" +
+                    "rDisplayName\": \"teacher\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/" +
+                    "2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment01\",\r\n     " +
+                    "   \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"sakul@minds" +
+                    "age.com\",\r\n        \"Description\": \"Msg01\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n    {\r\n " +
+                    "       \"id\": \"Comment02\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"Creat" +
+                    "edByUserProfileId\": \"friend01@mindsage.com\",\r\n        \"Description\": \"friend01 m" +
+                    "sg\",\r\n        \"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"CreatorDisp" +
+                    "layName\": \"friend01\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016" +
+                    " 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment03\",\r\n        \"" +
+                    "ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"friend02@mindsa" +
+                    "ge.com\",\r\n        \"Description\": \"friend02 msg\",\r\n        \"TotalLikes\": 3,\r\n\"Cre" +
+                    "atorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\": \"friend02\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment04\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n        \"Descript" +
+                    "ion\": \"waitingForRespond msg\",\r\n        \"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"wa" +
+                    "itingForRespond.jpg\",\r\n\"CreatorDisplayName\": \"waitingForRespond\",\r\n        \"Less" +
+                    "onId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    " +
+                    "},\r\n{\r\n        \"id\": \"Comment05\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n      " +
+                    "  \"CreatedByUserProfileId\": \"requestedToBeYourFriend@mindsage.com\",\r\n        \"De" +
+                    "scription\": \"requestedToBeYourFriend msg\",\r\n        \"TotalLikes\": 5,\r\n\"CreatorIm" +
+                    "ageUrl\": \"requestedToBeYourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYou" +
+                    "rFriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r" +
+                    "\n\"Discussions\": []\r\n    },\r\n{\r\n        \"id\": \"Comment06\",\r\n        \"ClassRoomId\"" +
+                    ": \"ClassRoom01\",\r\n        \"CreatedByUserProfileId\": \"unfriend@mindsage.com\",\r\n  " +
+                    "      \"Description\": \"unfriend msg\",\r\n        \"TotalLikes\": 6,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n        \"LessonId\": \"Less" +
+                    "on01\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n\"Discussions\": []\r\n    },\r\n{\r\n     " +
+                    "   \"id\": \"Comment07\",\r\n        \"ClassRoomId\": \"ClassRoom01\",\r\n        \"CreatedBy" +
+                    "UserProfileId\": \"unfriend@mindsage.com\",\r\n        \"Description\": \"unfriend msg\"," +
+                    "\r\n        \"TotalLikes\": 7,\r\n\"CreatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"unfriend\",\r\n        \"LessonId\": \"Lesson01\",\r\n\"CreatedDate\": \"2/1/2016 01:" +
+                    "00 am\",\r\n\"Discussions\": []\r\n    }\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 2969
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 2970
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\":\r\n[\r\n{\r" +
+                    "\n\"id\": \"Comment00\",\r\n\"Order\": 1,\r\n\"Description\": \"Teacher Msg01\",\r\n\"TotalLikes\":" +
+                    " 7,\r\n\"CreatorImageUrl\": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"Class" +
+                    "RoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"tea" +
+                    "cher@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment0" +
+                    "1\",\r\n\"Order\": 2,\r\n\"Description\": \"Msg01\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": " +
+                    "\"sakul.jpg\",\r\n\"CreatorDisplayName\": \"sakul\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"Le" +
+                    "ssonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"CreatedD" +
+                    "ate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment02\",\r\n\"Order\": 3,\r\n\"Description" +
+                    "\": \"friend01 msg\",\r\n\"TotalLikes\": 2,\r\n\"CreatorImageUrl\": \"friend01.jpg\",\r\n\"Creat" +
+                    "orDisplayName\": \"friend01\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson0" +
+                    "1\",\r\n\"CreatedByUserProfileId\": \"friend01@mindsage.com\",\r\n\"CreatedDate\": \"2/1/201" +
+                    "6 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment03\",\r\n\"Order\": 4,\r\n\"Description\": \"friend02 m" +
+                    "sg\",\r\n\"TotalLikes\": 3,\r\n\"CreatorImageUrl\": \"friend02.jpg\",\r\n\"CreatorDisplayName\"" +
+                    ": \"friend02\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedB" +
+                    "yUserProfileId\": \"friend02@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n" +
+                    "},\r\n{\r\n\"id\": \"Comment04\",\r\n\"Order\": 5,\r\n\"Description\": \"waitingForRespond msg\",\r" +
+                    "\n\"TotalLikes\": 4,\r\n\"CreatorImageUrl\": \"waitingForRespond.jpg\",\r\n\"CreatorDisplayN" +
+                    "ame\": \"waitingForRespond\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01" +
+                    "\",\r\n\"CreatedByUserProfileId\": \"waitingForRespond@mindsage.com\",\r\n\"CreatedDate\": " +
+                    "\"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment05\",\r\n\"Order\": 6,\r\n\"Description\": \"re" +
+                    "questedToBeYourFriend msg\",\r\n\"TotalLikes\": 5,\r\n\"CreatorImageUrl\": \"requestedToBe" +
+                    "YourFriend.jpg\",\r\n\"CreatorDisplayName\": \"requestedToBeYourFriend\",\r\n\"ClassRoomId" +
+                    "\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"requested" +
+                    "ToBeYourFriend@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\":" +
+                    " \"Comment06\",\r\n\"Order\": 7,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 6,\r\n\"C" +
+                    "reatorImageUrl\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomI" +
+                    "d\": \"ClassRoom01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend" +
+                    "@mindsage.com\",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n},\r\n{\r\n\"id\": \"Comment07\",\r" +
+                    "\n\"Order\": 8,\r\n\"Description\": \"unfriend msg\",\r\n\"TotalLikes\": 7,\r\n\"CreatorImageUrl" +
+                    "\": \"unfriend.jpg\",\r\n\"CreatorDisplayName\": \"unfriend\",\r\n\"ClassRoomId\": \"ClassRoom" +
+                    "01\",\r\n\"LessonId\": \"Lesson01\",\r\n\"CreatedByUserProfileId\": \"unfriend@mindsage.com\"" +
+                    ",\r\n\"CreatedDate\": \"2/1/2016 01:00 am\",\r\n}\r\n]\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but used incorrect ClassRoom (unknow) Then syst" +
+            "em send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButUsedIncorrectClassRoomUnknowThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but used incorrect ClassRoom (unknow) Then syst" +
+                    "em send comments back", new string[] {
+                        "mock"});
+#line 3078
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3079
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3080
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3099
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3116
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'UnknowClassRoom\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3117
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but used incorrect ClassRoom (empty) Then syste" +
+            "m send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButUsedIncorrectClassRoomEmptyThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but used incorrect ClassRoom (empty) Then syste" +
+                    "m send comments back", new string[] {
+                        "mock"});
+#line 3127
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3128
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3129
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3148
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3165
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3166
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but used incorrect ClassRoom (null) Then system" +
+            " send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButUsedIncorrectClassRoomNullThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but used incorrect ClassRoom (null) Then system" +
+                    " send comments back", new string[] {
+                        "mock"});
+#line 3176
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3177
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3178
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3197
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3214
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'Lesson01\' of " +
+                    "ClassRoom: \'NULL\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3215
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but used incorrect LessonId (unknow) Then syste" +
+            "m send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButUsedIncorrectLessonIdUnknowThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but used incorrect LessonId (unknow) Then syste" +
+                    "m send comments back", new string[] {
+                        "mock"});
+#line 3225
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3226
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3227
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3246
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3263
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'UnknowLesson\'" +
+                    " of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3264
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": true,\r\n\"Comments\": []\r\n}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but used incorrect LessonId (empty) Then system" +
+            " send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButUsedIncorrectLessonIdEmptyThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but used incorrect LessonId (empty) Then system" +
+                    " send comments back", new string[] {
+                        "mock"});
+#line 3274
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3275
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3276
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3295
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3312
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'\' of ClassRoo" +
+                    "m: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3313
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Teacher request lesson\'s comments but used incorrect LessonId (null) Then system " +
+            "send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void TeacherRequestLessonSCommentsButUsedIncorrectLessonIdNullThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request lesson\'s comments but used incorrect LessonId (null) Then system " +
+                    "send comments back", new string[] {
+                        "mock"});
+#line 3323
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3324
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3325
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3344
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3361
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request comment from the lesson \'NULL\' of Clas" +
+                    "sRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3362
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (unknow) request lesson\'s comments Then system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserUnknowRequestLessonSCommentsThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (unknow) request lesson\'s comments Then system send comments back", new string[] {
+                        "mock"});
+#line 3372
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3373
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3374
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3393
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3410
+    testRunner.When("UserProfile \'unknow@mindsage.com\' request comment from the lesson \'Lesson01\' of C" +
+                    "lassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3411
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (empty) request lesson\'s comments Then system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserEmptyRequestLessonSCommentsThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (empty) request lesson\'s comments Then system send comments back", new string[] {
+                        "mock"});
+#line 3421
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3422
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3423
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3442
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3459
+    testRunner.When("UserProfile \'\' request comment from the lesson \'Lesson01\' of ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3460
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Lesson_Comments")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (null) request lesson\'s comments Then system send comments back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserNullRequestLessonSCommentsThenSystemSendCommentsBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (null) request lesson\'s comments Then system send comments back", new string[] {
+                        "mock"});
+#line 3470
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 3471
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 3472
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription00\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n}\r\n]\r\n" +
+                    "}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 3491
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""id"": ""Comment00"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher Msg01"",
+        ""TotalLikes"": 7,
+""CreatorImageUrl"": ""teacher.jpg"",
+""CreatorDisplayName"": ""teacher"",
+        ""LessonId"": ""Lesson01"",
+""CreatedDate"": ""2/1/2016 01:00 am"",
+""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 3508
+    testRunner.When("UserProfile \'NULL\' request comment from the lesson \'Lesson01\' of ClassRoom: \'Clas" +
+                    "sRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 3509
+    testRunner.Then("System send lesson\'s comment with JSON format is", "{\r\n\"IsPrivateAccount\": false,\r\n\"IsDiscussionAvailable\": false,\r\n\"Comments\": []\r\n}" +
+                    "", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

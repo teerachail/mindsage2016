@@ -17,6 +17,10 @@ namespace MindSageWeb.Specs.Steps
         [When(@"UserProfile '(.*)' request comment from the lesson '(.*)' of ClassRoom: '(.*)'")]
         public void WhenUserProfileRequestCommentFromTheLessonOfClassRoom(string userprofile, string lessonId, string classRoomId)
         {
+            userprofile = userprofile.GetMockStrinValue();
+            lessonId = lessonId.GetMockStrinValue();
+            classRoomId = classRoomId.GetMockStrinValue();
+
             var lessonCtrl = ScenarioContext.Current.Get<LessonController>();
             var result = lessonCtrl.Comments(lessonId, classRoomId, userprofile);
             ScenarioContext.Current.Set(result);

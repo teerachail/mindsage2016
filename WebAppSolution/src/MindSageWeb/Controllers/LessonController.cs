@@ -193,38 +193,33 @@ namespace MindSageWeb.Controllers
         [Route("{id}/{classRoomId}/comments/{userId}")]
         public GetCommentRespond Comments(string id, string classRoomId, string userId)
         {
+            var invalidRequestRespond = new GetCommentRespond { Comments = Enumerable.Empty<CommentInformation>() };
             var areArgumentsValid = !string.IsNullOrEmpty(id)
                 && !string.IsNullOrEmpty(classRoomId)
                 && !string.IsNullOrEmpty(userId);
-            if (!areArgumentsValid) return null;
+            if (!areArgumentsValid) return invalidRequestRespond;
 
             UserProfile userprofile;
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId, out userprofile);
-            if (!canAccessToTheClassRoom) return null;
+            if (!canAccessToTheClassRoom) return invalidRequestRespond;
 
             var userSubscription = userprofile.Subscriptions
-                .Where(it=>!it.DeletedDate.HasValue)
+                .Where(it => !it.DeletedDate.HasValue)
                 .FirstOrDefault(it => it.ClassRoomId == classRoomId);
-            if (userSubscription == null) return null;
+            if (userSubscription == null) return invalidRequestRespond;
             var isTeacher = userSubscription.Role == UserProfile.AccountRole.Teacher;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson =  isTeacher || _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
-            if (!canAccessToTheClassLesson) return null;
+            var canAccessToTheClassLesson = isTeacher || _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            if (!canAccessToTheClassLesson) return invalidRequestRespond;
 
-            var allUsersInCourse = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId)
-                .Where(it => !it.DeletedDate.HasValue)
-                .ToList();
-
+            var allUsersInCourse = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
             var filterByCreatorNames = Enumerable.Empty<string>();
-            if (isTeacher)
-            {
-                filterByCreatorNames = allUsersInCourse.Select(it => it.id).ToList();
-            }
+            if (isTeacher) filterByCreatorNames = allUsersInCourse.Select(it => it.id).ToList();
             else
             {
                 var friendRequests = _friendRequestRepo.GetFriendRequestByUserProfileId(userId);
-                if (friendRequests == null) return null;
+                if (friendRequests == null) return invalidRequestRespond;
 
                 var teacherIds = allUsersInCourse
                     .Where(it => it.Subscriptions.Any(s => s.ClassRoomId == classRoomId && s.Role == UserProfile.AccountRole.Teacher))
@@ -235,14 +230,15 @@ namespace MindSageWeb.Controllers
                     .Select(it => it.ToUserProfileId);
                 filterByCreatorNames = friendIds.Union(new string[] { userId }).Union(teacherIds).Distinct();
             }
-            var order = 1;
-            var comments = _commentRepo.GetCommentsByClassRoomAndLessonId(classRoomId, id, filterByCreatorNames)
+
+            var runningCommentOrder = 1;
+            var comments = _commentRepo.GetCommentsByClassRoomAndLessonId(classRoomId, id, filterByCreatorNames, isTeacher)
                 .Where(it => !it.DeletedDate.HasValue)
                 .OrderByDescending(it => it.CreatedDate)
                 .Select(it => new CommentInformation
                 {
                     id = it.id,
-                    Order = order++,
+                    Order = runningCommentOrder++,
                     Description = it.Description,
                     TotalLikes = it.TotalLikes,
                     CreatorImageUrl = it.CreatorImageUrl,

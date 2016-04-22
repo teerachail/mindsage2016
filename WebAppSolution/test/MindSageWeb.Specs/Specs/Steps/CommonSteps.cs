@@ -94,8 +94,8 @@ namespace MindSageWeb.Specs.Steps
         {
             var comments = JsonConvert.DeserializeObject<IEnumerable<Comment>>(multilineText);
             var mockCommentRepo = ScenarioContext.Current.Get<Moq.Mock<ICommentRepository>>();
-            mockCommentRepo.Setup(it => it.GetCommentsByClassRoomAndLessonId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IEnumerable<string>>()))
-                .Returns<string, string, IEnumerable<string>>((classRoomId, lessonId, creators) => comments.Where(it => it.ClassRoomId == classRoomId && it.LessonId == lessonId && creators.Contains(it.CreatedByUserProfileId)));
+            mockCommentRepo.Setup(it => it.GetCommentsByClassRoomAndLessonId(It.IsAny<string>(), It.IsAny<string>(), It.IsAny<IEnumerable<string>>(), It.IsAny<bool>()))
+                .Returns<string, string, IEnumerable<string>, bool>((classRoomId, lessonId, creators, getAllComments) => comments.Where(it => it.ClassRoomId == classRoomId && it.LessonId == lessonId && (getAllComments || creators.Contains(it.CreatedByUserProfileId))));
             mockCommentRepo.Setup(it => it.GetCommentById(It.IsAny<string>()))
                 .Returns<string>(id => comments.FirstOrDefault(it => it.id == id));
         }
