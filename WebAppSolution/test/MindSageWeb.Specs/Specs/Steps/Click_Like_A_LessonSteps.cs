@@ -91,9 +91,6 @@ namespace MindSageWeb.Specs.Steps
                 Assert.Equal(expected.CreatedDate, actual.CreatedDate);
                 Assert.Equal(expected.DeletedDate, actual.DeletedDate);
                 Assert.Equal(expected.LessonActivities.Count(), actual.LessonActivities.Count());
-                Assert.Equal(expected.CommentPercentage, actual.CommentPercentage);
-                Assert.Equal(expected.OnlineExtrasPercentage, actual.OnlineExtrasPercentage);
-                Assert.Equal(expected.SocialParticipationPercentage, actual.SocialParticipationPercentage);
                 Assert.True(validateLessonActivityFunc(actual.LessonActivities.ToList()));
                 return true;
             };

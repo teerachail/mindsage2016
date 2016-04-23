@@ -74,27 +74,35 @@ namespace SpecFlow.GeneratedTests.Specs
     {
         ""id"": ""ClassCalendar01"",
         ""BeginDate"": ""2/1/2016"",
-""ExpiredDate"": ""2/1/2017"",
         ""ClassRoomId"": ""ClassRoom01"",
         ""LessonCalendars"":
         [
             {
                 ""Id"": ""LessonCalendar01"",
                 ""LessonId"": ""Lesson01"",
+                ""LessonCatalogId"": ""LessonCatalog01"",
                 ""Order"": 1,
                 ""SemesterGroupName"": ""A"",
                 ""BeginDate"": ""2/1/2016"",
             },
+{
+                ""Id"": ""LessonCalendar02"",
+                ""LessonId"": ""Lesson02"",
+                ""LessonCatalogId"": ""LessonCatalog02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/16/2016"",
+            }
         ]
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 29
+#line 37
  testRunner.And("System have UserProfile collection with JSON format are", @"[
 {
-""id"": ""sakul@mindsage.com"",
-""Name"": ""Sakul"",
-""ImageProfileUrl"": ""sakul.jpg"",
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
 ""Subscriptions"":
 [
 {
@@ -106,9 +114,9 @@ namespace SpecFlow.GeneratedTests.Specs
 ]
 },
 {
-""id"": ""earn@mindsage.com"",
-""Name"": ""Earn"",
-""ImageProfileUrl"": ""earn.jpg"",
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
 ""Subscriptions"":
 [
 {
@@ -118,122 +126,59 @@ namespace SpecFlow.GeneratedTests.Specs
 	""ClassCalendarId"": ""ClassCalendar01"",
 },
 ]
-},
-{
-""id"": ""joker@mindsage.com"",
-""Name"": ""Joker"",
-""ImageProfileUrl"": ""joker.jpg"",
-""Subscriptions"":
-[
-{
-	""id"": ""Subscription03"",
-	""Role"": ""Student"",
-	""ClassRoomId"": ""ClassRoom01"",
-	""ClassCalendarId"": ""ClassCalendar01"",
-},
-]
-},
-{
-""id"": ""perawatt@mindsage.com"",
-""Name"": ""Perawatt"",
-""ImageProfileUrl"": ""perawatt.jpg"",
-""Subscriptions"":
-[
-{
-	""id"": ""Subscription04"",
-	""Role"": ""Student"",
-	""ClassRoomId"": ""ClassRoom01"",
-	""ClassCalendarId"": ""ClassCalendar01"",
-},
-]
-},
-{
-""id"": ""bank@mindsage.com"",
-""Name"": ""Bank"",
-""ImageProfileUrl"": ""bank.jpg"",
-""Subscriptions"":
-[
-{
-	""id"": ""Subscription05"",
-	""Role"": ""Student"",
-	""ClassRoomId"": ""ClassRoom01"",
-	""ClassCalendarId"": ""ClassCalendar01"",
-},
-]
-},
+}
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 104
+#line 70
  testRunner.And("System have UserActivity collection with JSON format are", @"[
 {
 ""id"": ""UserActivity01"",
-""UserProfileId"": ""joker@mindsage.com"",
+""UserProfileId"": ""teacher@mindsage.com"",
 ""ClassRoomId"": ""ClassRoom01"",
 ""LessonActivities"":
 [
 {
 	""id"": ""LessonActivity01"",
 	""LessonId"": ""Lesson01"",
-
+	""SawContentIds"": [],
 	""TotalContentsAmount"": 1,
-	""SawContentIds"": 
-	[
-		""Content01""
-	],
-	""CreatedCommentAmount"": 1,
-	""ParticipationAmount"": 1
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 0,
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 1,
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 0,
 }
 ]
 },
 {
 ""id"": ""UserActivity02"",
-""UserProfileId"": ""bank@mindsage.com"",
+""UserProfileId"": ""student@mindsage.com"",
 ""ClassRoomId"": ""ClassRoom01"",
 ""LessonActivities"":
 [
-{
-	""id"": ""LessonActivity02"",
-	""LessonId"": ""Lesson01"",
-
-	""TotalContentsAmount"": 1,
-	""SawContentIds"": 
-	[
-		""Content01""
-	],
-	""CreatedCommentAmount"": 1,
-	""ParticipationAmount"": 1
-},
 {
 	""id"": ""LessonActivity03"",
 	""LessonId"": ""Lesson01"",
-
-	""TotalContentsAmount"": 1,
 	""SawContentIds"": [],
+	""TotalContentsAmount"": 1,
+	""ParticipationAmount"": 1,
 	""CreatedCommentAmount"": 0,
-	""ParticipationAmount"": 0
 },
-]
-},
-{
-""id"": ""UserActivity03"",
-""UserProfileId"": ""perawatt@mindsage.com"",
-""ClassRoomId"": ""ClassRoom01"",
-""LessonActivities"":
-[
 {
 	""id"": ""LessonActivity04"",
-	""LessonId"": ""Lesson01"",
-
+	""LessonId"": ""Lesson02"",
+	""SawContentIds"": [ ""Content02"" ],
 	""TotalContentsAmount"": 1,
-	""SawContentIds"": 
-	[
-		""Content01""
-	],
-	""CreatedCommentAmount"": 0,
-	""ParticipationAmount"": 0
+	""ParticipationAmount"": 1,
+	""CreatedCommentAmount"": 1,
 }
 ]
-},
+}
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -249,21 +194,29 @@ namespace SpecFlow.GeneratedTests.Specs
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
-        [Xunit.TraitAttribute("Description", "Teacher request student list Then system send student list back")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list when it\'s the only one in the class room Then syst" +
+            "em send empty list back")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void TeacherRequestStudentListThenSystemSendStudentListBack()
+        public virtual void ATeacherRequestStudentListWhenItSTheOnlyOneInTheClassRoomThenSystemSendEmptyListBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Teacher request student list Then system send student list back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list when it\'s the only one in the class room Then syst" +
+                    "em send empty list back", new string[] {
                         "mock"});
-#line 180
+#line 125
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 181
+#line 126
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 182
-    testRunner.When("UserProfile \'sakul@mindsage.com\' request student list from ClassRoom: \'ClassRoom0" +
-                    "1\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 127
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Teacher\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n},\r\n]\r" +
+                    "\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 146
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
@@ -272,36 +225,708 @@ this.FeatureBackground();
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table2.AddRow(new string[] {
-                        "bank@mindsage.com",
-                        "Bank",
-                        "bank.jpg",
-                        "50",
-                        "50",
-                        "50"});
-            table2.AddRow(new string[] {
-                        "earn@mindsage.com",
-                        "Earn",
-                        "earn.jpg",
-                        "0",
-                        "0",
-                        "0"});
-            table2.AddRow(new string[] {
-                        "joker@mindsage.com",
-                        "Joker",
-                        "joker.jpg",
-                        "100",
-                        "100",
-                        "100"});
-            table2.AddRow(new string[] {
-                        "perawatt@mindsage.com",
-                        "Perawatt",
-                        "perawatt.jpg",
-                        "0",
-                        "100",
-                        "0"});
-#line 183
+#line 147
     testRunner.Then("System send student list are", ((string)(null)), table2, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list when have only one lesson available Then system se" +
+            "nd student list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListWhenHaveOnlyOneLessonAvailableThenSystemSendStudentListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list when have only one lesson available Then system se" +
+                    "nd student list back", new string[] {
+                        "mock"});
+#line 151
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 152
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 153
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+            table3.AddRow(new string[] {
+                        "student@mindsage.com",
+                        "student",
+                        "student.jpg",
+                        "0",
+                        "0",
+                        "100"});
+#line 154
+    testRunner.Then("System send student list are", ((string)(null)), table3, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list when have more than one lesson available Then syst" +
+            "em send student list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListWhenHaveMoreThanOneLessonAvailableThenSystemSendStudentListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list when have more than one lesson available Then syst" +
+                    "em send student list back", new string[] {
+                        "mock"});
+#line 159
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 160
+    testRunner.Given("Today is \'2/1/2017 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 161
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+            table4.AddRow(new string[] {
+                        "student@mindsage.com",
+                        "student",
+                        "student.jpg",
+                        "50",
+                        "50",
+                        "100"});
+#line 162
+    testRunner.Then("System send student list are", ((string)(null)), table4, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "#A teacher request student list when some sudent\'s subscription was deleted Then " +
+            "system send student list with valid subscription only back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListWhenSomeSudentSSubscriptionWasDeletedThenSystemSendStudentListWithValidSubscriptionOnlyBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("#A teacher request student list when some sudent\'s subscription was deleted Then " +
+                    "system send student list with valid subscription only back", new string[] {
+                        "mock"});
+#line 167
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 168
+    testRunner.Given("Today is \'2/1/2017 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 169
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""student-subscription-was-deleted@mindsage.com"",
+""Name"": ""student-subscription-was-deleted"",
+""ImageProfileUrl"": ""student-subscription-was-deleted.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription03"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016""
+},
+]
+},
+{
+""id"": ""student-subscription-does-not-existing@mindsage.com"",
+""Name"": ""student-subscription-does-not-existing"",
+""ImageProfileUrl"": ""student-subscription-does-not-existing.jpg"",
+""Subscriptions"": []
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 223
+ testRunner.And("System have UserActivity collection with JSON format are", "[\r\n{\r\n\"id\": \"UserActivity01\",\r\n\"UserProfileId\": \"teacher@mindsage.com\",\r\n\"ClassRo" +
+                    "omId\": \"ClassRoom01\",\r\n\"LessonActivities\":\r\n[\r\n{\r\n\t\"id\": \"LessonActivity01\",\r\n\t\"" +
+                    "LessonId\": \"Lesson01\",\r\n\t\"SawContentIds\": [],\r\n\t\"TotalContentsAmount\": 1,\r\n\t\"Par" +
+                    "ticipationAmount\": 0,\r\n\t\"CreatedCommentAmount\": 0,\r\n},\r\n{\r\n\t\"id\": \"LessonActivit" +
+                    "y02\",\r\n\t\"LessonId\": \"Lesson02\",\r\n\t\"SawContentIds\": [],\r\n\t\"TotalContentsAmount\": " +
+                    "1,\r\n\t\"ParticipationAmount\": 0,\r\n\t\"CreatedCommentAmount\": 0,\r\n}\r\n]\r\n},\r\n{\r\n\"id\": " +
+                    "\"UserActivity02\",\r\n\"UserProfileId\": \"student@mindsage.com\",\r\n\"ClassRoomId\": \"Cla" +
+                    "ssRoom01\",\r\n\"LessonActivities\":\r\n[\r\n{\r\n\t\"id\": \"LessonActivity03\",\r\n\t\"LessonId\": " +
+                    "\"Lesson01\",\r\n\t\"SawContentIds\": [ \"Content01\" ],\r\n\t\"TotalContentsAmount\": 1,\r\n\t\"P" +
+                    "articipationAmount\": 0,\r\n\t\"CreatedCommentAmount\": 1,\r\n},\r\n{\r\n\t\"id\": \"LessonActiv" +
+                    "ity04\",\r\n\t\"LessonId\": \"Lesson02\",\r\n\t\"SawContentIds\": [ \"Content02\" ],\r\n\t\"TotalCo" +
+                    "ntentsAmount\": 1,\r\n\t\"ParticipationAmount\": 0,\r\n\t\"CreatedCommentAmount\": 1,\r\n}\r\n]" +
+                    "\r\n},\r\n{\r\n\"id\": \"UserActivity03\",\r\n\"UserProfileId\": \"student-subscription-was-del" +
+                    "eted@mindsage.com\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"LessonActivities\":\r\n[\r\n{\r\n\t" +
+                    "\"id\": \"LessonActivity05\",\r\n\t\"LessonId\": \"Lesson01\",\r\n\t\"SawContentIds\": [],\r\n\t\"To" +
+                    "talContentsAmount\": 1,\r\n\t\"ParticipationAmount\": 1,\r\n\t\"CreatedCommentAmount\": 0,\r" +
+                    "\n},\r\n{\r\n\t\"id\": \"LessonActivity06\",\r\n\t\"LessonId\": \"Lesson02\",\r\n\t\"SawContentIds\": " +
+                    "[ \"Content01\" ],\r\n\t\"TotalContentsAmount\": 1,\r\n\t\"ParticipationAmount\": 1,\r\n\t\"Crea" +
+                    "tedCommentAmount\": 1,\r\n}\r\n]\r\n},\r\n{\r\n\"id\": \"UserActivity04\",\r\n\"UserProfileId\": \"s" +
+                    "tudent-subscription-does-not-existing@mindsage.com\",\r\n\"ClassRoomId\": \"ClassRoom0" +
+                    "1\",\r\n\"LessonActivities\":\r\n[\r\n{\r\n\t\"id\": \"LessonActivity07\",\r\n\t\"LessonId\": \"Lesson" +
+                    "01\",\r\n\t\"SawContentIds\": [],\r\n\t\"TotalContentsAmount\": 1,\r\n\t\"ParticipationAmount\":" +
+                    " 1,\r\n\t\"CreatedCommentAmount\": 0,\r\n},\r\n{\r\n\t\"id\": \"LessonActivity08\",\r\n\t\"LessonId\"" +
+                    ": \"Lesson02\",\r\n\t\"SawContentIds\": [ \"Content01\" ],\r\n\t\"TotalContentsAmount\": 1,\r\n\t" +
+                    "\"ParticipationAmount\": 1,\r\n\t\"CreatedCommentAmount\": 1,\r\n}\r\n]\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 324
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+            table5.AddRow(new string[] {
+                        "student@mindsage.com",
+                        "student",
+                        "student.jpg",
+                        "100",
+                        "100",
+                        "0"});
+#line 325
+    testRunner.Then("System send student list are", ((string)(null)), table5, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list but student\'s UserActivity was deleted Then system" +
+            " send student list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListButStudentSUserActivityWasDeletedThenSystemSendStudentListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list but student\'s UserActivity was deleted Then system" +
+                    " send student list back", new string[] {
+                        "mock"});
+#line 330
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 331
+    testRunner.Given("Today is \'2/1/2017 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 332
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""DeletedDate"": ""1/1/2016"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson01"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 1,
+	""ParticipationAmount"": 1,
+	""CreatedCommentAmount"": 0,
+},
+{
+	""id"": ""LessonActivity04"",
+	""LessonId"": ""Lesson02"",
+	""SawContentIds"": [ ""Content02"" ],
+	""TotalContentsAmount"": 1,
+	""ParticipationAmount"": 1,
+	""CreatedCommentAmount"": 1,
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 362
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+            table6.AddRow(new string[] {
+                        "student@mindsage.com",
+                        "student",
+                        "student.jpg",
+                        "50",
+                        "50",
+                        "100"});
+#line 363
+    testRunner.Then("System send student list are", ((string)(null)), table6, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list but student\'s LessonActivities don\'t existing Then" +
+            " system send student list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListButStudentSLessonActivitiesDonTExistingThenSystemSendStudentListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list but student\'s LessonActivities don\'t existing Then" +
+                    " system send student list back", new string[] {
+                        "mock"});
+#line 368
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 369
+    testRunner.Given("Today is \'2/1/2017 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 370
+ testRunner.And("System have UserActivity collection with JSON format are", "[\r\n{\r\n\"id\": \"UserActivity02\",\r\n\"UserProfileId\": \"student@mindsage.com\",\r\n\"ClassRo" +
+                    "omId\": \"ClassRoom01\",\r\n\"LessonActivities\": []\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 381
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+            table7.AddRow(new string[] {
+                        "student@mindsage.com",
+                        "student",
+                        "student.jpg",
+                        "0",
+                        "0",
+                        "0"});
+#line 382
+    testRunner.Then("System send student list are", ((string)(null)), table7, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list but student\'s UserActivity don\'t existing Then sys" +
+            "tem send student list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListButStudentSUserActivityDonTExistingThenSystemSendStudentListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list but student\'s UserActivity don\'t existing Then sys" +
+                    "tem send student list back", new string[] {
+                        "mock"});
+#line 387
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 388
+    testRunner.Given("Today is \'2/1/2017 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 389
+ testRunner.And("System have UserActivity collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 393
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+            table8.AddRow(new string[] {
+                        "student@mindsage.com",
+                        "student",
+                        "student.jpg",
+                        "0",
+                        "0",
+                        "0"});
+#line 394
+    testRunner.Then("System send student list are", ((string)(null)), table8, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "Invalid user (subscription was deleted) request student list Then system send emp" +
+            "ty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserSubscriptionWasDeletedRequestStudentListThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (subscription was deleted) request student list Then system send emp" +
+                    "ty list back", new string[] {
+                        "mock"});
+#line 399
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 400
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 401
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016""
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 435
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 436
+    testRunner.Then("System send student list are", ((string)(null)), table9, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "Invalid user (subscription doesn\'t existing) request student list Then system sen" +
+            "d empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserSubscriptionDoesnTExistingRequestStudentListThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (subscription doesn\'t existing) request student list Then system sen" +
+                    "d empty list back", new string[] {
+                        "mock"});
+#line 440
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 441
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 442
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"": []
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 467
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 468
+    testRunner.Then("System send student list are", ((string)(null)), table10, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "Invalid user (Role = student) request student list Then system send empty list ba" +
+            "ck")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserRoleStudentRequestStudentListThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (Role = student) request student list Then system send empty list ba" +
+                    "ck", new string[] {
+                        "mock"});
+#line 472
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 473
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 474
+    testRunner.When("UserProfile \'student@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
+                    "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 475
+    testRunner.Then("System send student list are", ((string)(null)), table11, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "Invalid user (unknow) request student list Then system send empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserUnknowRequestStudentListThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (unknow) request student list Then system send empty list back", new string[] {
+                        "mock"});
+#line 479
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 480
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 481
+    testRunner.When("UserProfile \'unknow@mindsage.com\' request student list from ClassRoom: \'ClassRoom" +
+                    "01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 482
+    testRunner.Then("System send student list are", ((string)(null)), table12, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "Invalid user (empty) request student list Then system send empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserEmptyRequestStudentListThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (empty) request student list Then system send empty list back", new string[] {
+                        "mock"});
+#line 486
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 487
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 488
+    testRunner.When("UserProfile \'\' request student list from ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 489
+    testRunner.Then("System send student list are", ((string)(null)), table13, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "Invalid user (null) request student list Then system send empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserNullRequestStudentListThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (null) request student list Then system send empty list back", new string[] {
+                        "mock"});
+#line 493
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 494
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 495
+    testRunner.When("UserProfile \'NULL\' request student list from ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 496
+    testRunner.Then("System send student list are", ((string)(null)), table14, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list but used ClassRoom invalid (unknow) Then system se" +
+            "nd empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListButUsedClassRoomInvalidUnknowThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list but used ClassRoom invalid (unknow) Then system se" +
+                    "nd empty list back", new string[] {
+                        "mock"});
+#line 500
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 501
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 502
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'UnknowCl" +
+                    "assRoom\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 503
+    testRunner.Then("System send student list are", ((string)(null)), table15, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list but used ClassRoom invalid (empty) Then system sen" +
+            "d empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListButUsedClassRoomInvalidEmptyThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list but used ClassRoom invalid (empty) Then system sen" +
+                    "d empty list back", new string[] {
+                        "mock"});
+#line 507
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 508
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 509
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 510
+    testRunner.Then("System send student list are", ((string)(null)), table16, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Student_List")]
+        [Xunit.TraitAttribute("Description", "A teacher request student list but used ClassRoom invalid (null) Then system send" +
+            " empty list back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestStudentListButUsedClassRoomInvalidNullThenSystemSendEmptyListBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request student list but used ClassRoom invalid (null) Then system send" +
+                    " empty list back", new string[] {
+                        "mock"});
+#line 514
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 515
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 516
+    testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'NULL\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                        "id",
+                        "Name",
+                        "ImageUrl",
+                        "CommentPercentage",
+                        "OnlineExtrasPercentage",
+                        "SocialParticipationPercentage"});
+#line 517
+    testRunner.Then("System send student list are", ((string)(null)), table17, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

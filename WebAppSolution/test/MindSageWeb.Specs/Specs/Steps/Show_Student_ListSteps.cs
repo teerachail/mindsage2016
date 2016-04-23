@@ -18,6 +18,9 @@ namespace MindSageWeb.Specs.Steps
         [When(@"UserProfile '(.*)' request student list from ClassRoom: '(.*)'")]
         public void WhenUserProfileRequestStudentListFromClassRoom(string userprofileId, string classRoomId)
         {
+            userprofileId = userprofileId.GetMockStrinValue();
+            classRoomId = classRoomId.GetMockStrinValue();
+
             var myCourseCtrl = ScenarioContext.Current.Get<MyCourseController>();
             var result = myCourseCtrl.Students(userprofileId, classRoomId);
             ScenarioContext.Current.Set(result);

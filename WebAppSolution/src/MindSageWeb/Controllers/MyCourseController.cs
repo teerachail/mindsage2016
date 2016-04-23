@@ -193,7 +193,13 @@ namespace MindSageWeb.Controllers
             var isTeacherAccount = userprofile.Subscriptions.First(it => it.ClassRoomId == classRoomId).Role == UserProfile.AccountRole.Teacher;
             if (!isTeacherAccount) return Enumerable.Empty<GetStudentListRespond>();
 
-            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId).ToList();
+            var selectedClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
+            var isClassCalendarValid = selectedClassCalendar != null && !selectedClassCalendar.DeletedDate.HasValue && selectedClassCalendar.LessonCalendars.Any();
+            if (!isClassCalendarValid) return Enumerable.Empty<GetStudentListRespond>();
+
+            var allStudentsInTheClassRoom = _userprofileRepo.GetUserProfilesByClassRoomId(classRoomId)
+                .Where(it => it.Subscriptions.Any(s => !s.DeletedDate.HasValue && s.ClassRoomId == classRoomId))
+                .ToList();
             if (!allStudentsInTheClassRoom.Any()) return Enumerable.Empty<GetStudentListRespond>();
 
             var userActivities = allStudentsInTheClassRoom
@@ -201,27 +207,41 @@ namespace MindSageWeb.Controllers
                 .Where(it => it != null)
                 .ToList();
 
-            const int NoneScore = 0;
+            var availableLessonIds = selectedClassCalendar.LessonCalendars
+                .Where(it => !it.DeletedDate.HasValue)
+                .Where(it => it.BeginDate <= _dateTime.GetCurrentTime())
+                .Select(it => it.LessonId);
+
             var result = allStudentsInTheClassRoom
                 .Where(it => it.id != id)
                 .OrderBy(it => it.id)
-                .Select(it =>
+                .Select(currentUserProfile =>
                 {
-                    var selectedUserActivity = userActivities.FirstOrDefault(ua => ua.UserProfileId == it.id);
-                    var isActivityFound = selectedUserActivity != null;
-
-                    return new GetStudentListRespond
+                    var selectedUserActivity = userActivities.FirstOrDefault(it => it.UserProfileId == currentUserProfile.id);
+                    var lessonActivities = selectedUserActivity != null ? selectedUserActivity.LessonActivities : Enumerable.Empty<UserActivity.LessonActivity>();
+                    var availableLessonActivities = lessonActivities.Where(it => availableLessonIds.Contains(it.LessonId));
+                    var totalActivatedLesson = availableLessonActivities.Count();
+                    var respond = new GetStudentListRespond
                     {
-                        id = it.id,
-                        IsPrivateAccount = it.IsPrivateAccount,
-                        Name = it.Name,
-                        ImageUrl = it.ImageProfileUrl,
-                        CommentPercentage = isActivityFound ? selectedUserActivity.CommentPercentage : NoneScore,
-                        OnlineExtrasPercentage = isActivityFound ? selectedUserActivity.OnlineExtrasPercentage : NoneScore,
-                        SocialParticipationPercentage = isActivityFound ? selectedUserActivity.SocialParticipationPercentage : NoneScore,
+                        id = currentUserProfile.id,
+                        IsPrivateAccount = currentUserProfile.IsPrivateAccount,
+                        Name = currentUserProfile.Name,
+                        ImageUrl = currentUserProfile.ImageProfileUrl,
+                        CommentPercentage = calculateRation(totalActivatedLesson, availableLessonActivities.Where(it => it.IsAlreadyCreatedAComment).Count()),
+                        OnlineExtrasPercentage = calculateRation(totalActivatedLesson, availableLessonActivities.Where(it => it.IsAlreadySawOnlineExtraContent).Count()),
+                        SocialParticipationPercentage = calculateRation(totalActivatedLesson, availableLessonActivities.Where(it => it.IsAlreadyParticipation).Count()),
                     };
-                })
-                .ToList();
+                    return respond;
+                }).Where(it => it != null).ToList();
+            return result;
+        }
+        private int calculateRation(double totalContents, double doneContents)
+        {
+            const int MinimumContent = 1;
+            totalContents = totalContents < MinimumContent ? MinimumContent : totalContents;
+            var ratio = doneContents / totalContents;
+            const int ConvertToPercent = 100;
+            var result = (int)(ratio * ConvertToPercent);
             return result;
         }
 
