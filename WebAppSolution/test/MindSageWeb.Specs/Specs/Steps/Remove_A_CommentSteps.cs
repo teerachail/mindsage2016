@@ -47,12 +47,5 @@ namespace MindSageWeb.Specs.Steps
                 && comment.CreatorImageUrl == expected.CreatorImageUrl
             )));
         }
-
-        [Then(@"System doesn't update UserActivity collection with JSON format is")]
-        public void ThenSystemDoesnTUpdateUserActivityCollectionWithJSONFormatIs()
-        {
-            var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
-            mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.IsAny<UserActivity>()), Times.Never);
-        }
     }
 }

@@ -390,7 +390,7 @@ Scenario: User add new course by using a incorrect teacher code Then system does
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -400,7 +400,7 @@ Scenario: User add new course by using a incorrect teacher grade Then system doe
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -410,7 +410,7 @@ Scenario: User add new course by using a incorrect teacher code and grade Then s
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -420,7 +420,7 @@ Scenario: Incorrect user add new course by using a correct teacher code Then sys
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -430,7 +430,7 @@ Scenario: User add new course by using a incorrect teacher code (empty) Then sys
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -440,7 +440,7 @@ Scenario: User add new course by using a incorrect teacher grade (empty) Then sy
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -450,7 +450,7 @@ Scenario: User add new course by using a incorrect teacher code and grade (empty
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -460,7 +460,7 @@ Scenario: Incorrect user add new course by using a correct teacher code (empty) 
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -470,7 +470,7 @@ Scenario: User add new course by using a incorrect teacher code (null) Then syst
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -480,7 +480,7 @@ Scenario: User add new course by using a incorrect teacher grade (null) Then sys
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -490,7 +490,7 @@ Scenario: User add new course by using a incorrect teacher code and grade (null)
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -500,7 +500,7 @@ Scenario: Incorrect user add new course by using a correct teacher code (null) T
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -514,7 +514,7 @@ Scenario: User add new course but contracts in system doens't existing Then syst
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 
@@ -538,7 +538,7 @@ Scenario: User add new course but licenses in system doens't existing Then syste
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -568,7 +568,7 @@ Scenario: User add new course but TeacherKeys in system doens't existing Then sy
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -606,7 +606,7 @@ Scenario: User add new course but the contract was deleted Then system doesn't a
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -644,7 +644,7 @@ Scenario: User add new course but the license was deleted Then system doesn't ad
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  
@@ -682,7 +682,7 @@ Scenario: User add new course but the TeacherKey was deleted Then system doesn't
     Then System doesn't create new ClassRoom  
 	And System doesn't create new ClassCalendar  
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 	And System doesn't create new StudentKey  
 
 @mock  

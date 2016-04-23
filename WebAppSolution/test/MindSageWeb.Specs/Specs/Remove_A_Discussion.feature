@@ -111,4 +111,4 @@ Scenario: User remove his comment Then system remove his comment
 		}
 	]
     """  
-    And System doesn't update UserActivity collection with JSON format is  
+    And System doesn't update UserActivity  

@@ -108,12 +108,5 @@ namespace MindSageWeb.Specs.Steps
             var mockUserProfileRepo = ScenarioContext.Current.Get<Mock<IUserProfileRepository>>();
             mockUserProfileRepo.Verify(it => it.UpsertUserProfile(It.IsAny<UserProfile>()), Times.Never);
         }
-
-        [Then(@"System doesn't add UserActivity")]
-        public void ThenSystemDoesnTAddUserActivity()
-        {
-            var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
-            mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.IsAny<UserActivity>()), Times.Never);
-        }
     }
 }

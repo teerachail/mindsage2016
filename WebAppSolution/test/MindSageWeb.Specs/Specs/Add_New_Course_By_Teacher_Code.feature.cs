@@ -396,7 +396,7 @@ this.FeatureBackground();
 #line 392
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 393
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 394
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -429,7 +429,7 @@ this.FeatureBackground();
 #line 402
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 403
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 404
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -462,7 +462,7 @@ this.FeatureBackground();
 #line 412
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 413
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 414
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -495,7 +495,7 @@ this.FeatureBackground();
 #line 422
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 423
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 424
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -528,7 +528,7 @@ this.FeatureBackground();
 #line 432
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 433
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 434
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -561,7 +561,7 @@ this.FeatureBackground();
 #line 442
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 443
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 444
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -594,7 +594,7 @@ this.FeatureBackground();
 #line 452
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 453
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 454
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -627,7 +627,7 @@ this.FeatureBackground();
 #line 462
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 463
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 464
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -660,7 +660,7 @@ this.FeatureBackground();
 #line 472
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 473
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 474
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -693,7 +693,7 @@ this.FeatureBackground();
 #line 482
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 483
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 484
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -726,7 +726,7 @@ this.FeatureBackground();
 #line 492
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 493
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 494
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -759,7 +759,7 @@ this.FeatureBackground();
 #line 502
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 503
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 504
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -795,7 +795,7 @@ this.FeatureBackground();
 #line 516
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 517
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 518
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -832,7 +832,7 @@ this.FeatureBackground();
 #line 540
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 541
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 542
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -884,7 +884,7 @@ this.FeatureBackground();
 #line 570
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 571
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 572
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -944,7 +944,7 @@ this.FeatureBackground();
 #line 608
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 609
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 610
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -1004,7 +1004,7 @@ this.FeatureBackground();
 #line 646
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 647
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 648
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
@@ -1064,7 +1064,7 @@ this.FeatureBackground();
 #line 684
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 685
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line 686
  testRunner.And("System doesn\'t create new StudentKey", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden

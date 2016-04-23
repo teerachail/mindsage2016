@@ -111,4 +111,4 @@ Scenario: User click unlike a comment Then system update comment's total like
 		"DeletedDate": "2/8/2016 00:00 am"
     }
     """  
-	And System doesn't update UserActivity collection with JSON format is  
+	And System doesn't update UserActivity  

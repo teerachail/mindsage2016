@@ -177,7 +177,7 @@ this.FeatureBackground();
                     ",\r\n\"CreatedByUserProfileId\": \"sakul@mindsage.com\",\r\n\"DeletedDate\": \"2/8/2016 00:" +
                     "00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 114
-    testRunner.And("System doesn\'t update UserActivity collection with JSON format is", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

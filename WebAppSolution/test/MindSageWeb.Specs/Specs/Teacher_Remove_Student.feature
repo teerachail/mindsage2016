@@ -195,84 +195,84 @@ Scenario: Teacher remove a student but the student doesn't existing (unknow) The
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'unknow@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher remove a student but the student doesn't existing (empty) Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' remove StudentId '' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher remove a student but the student doesn't existing (null) Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'NULL' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher remove a student but the ClassRoom doesn't existing (unknow) Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'student@mindsage.com' from ClassRoom 'UnknowClassRoom' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher remove a student but the ClassRoom doesn't existing (empty) Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'student@mindsage.com' from ClassRoom '' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher remove a student but the ClassRoom doesn't existing (null) Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'student@mindsage.com' from ClassRoom 'NULL' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Incorrect user (unknow) remove a student Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'unknow@mindsage.com' remove StudentId 'student@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Incorrect user (empty) remove a student Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile '' remove StudentId 'student@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Incorrect user (null) remove a student Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'NULL' remove StudentId 'student@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Incorrect user (Role = student) remove a student Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'student@mindsage.com' remove StudentId 'student@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Incorrect user (Subscription was deleted) remove a student Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacherWithDeletedSubscription@mindsage.com' remove StudentId 'student@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher try to remove himself from the class room Then system doesn't remove the student from the course  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'teacher@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher remove a student but the student's subscription was deleted Then system doesn't remove the student from the course  
@@ -313,7 +313,7 @@ Scenario: Teacher remove a student but the student's subscription was deleted Th
     """  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'teacher@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Teacher remove a student but the student doesn't existing Then system doesn't remove the student from the course  
@@ -339,4 +339,4 @@ Scenario: Teacher remove a student but the student doesn't existing Then system 
     """  
     When UserProfile 'teacher@mindsage.com' remove StudentId 'teacher@mindsage.com' from ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  

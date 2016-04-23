@@ -308,7 +308,7 @@ Scenario: Teacher delete course but used ClassRoom incorrect (unknow) Then syste
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' delete ClassRoom 'UnknowClassRoom' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -318,7 +318,7 @@ Scenario: Teacher delete course but used ClassRoom incorrect (empty) Then system
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' delete ClassRoom '' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -328,7 +328,7 @@ Scenario: Teacher delete course but used ClassRoom incorrect (null) Then system 
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacher@mindsage.com' delete ClassRoom 'NULL' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -338,7 +338,7 @@ Scenario: Incorrect user (unknow) delete course Then system doesn't delete the s
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'unknow@mindsage.com' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -348,7 +348,7 @@ Scenario: Incorrect user (empty) delete course Then system doesn't delete the se
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile '' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -358,7 +358,7 @@ Scenario: Incorrect user (null) delete course Then system doesn't delete the sel
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'NULL' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -368,7 +368,7 @@ Scenario: Incorrect user (Role = Student) delete course Then system doesn't dele
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'student@mindsage.com' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -378,7 +378,7 @@ Scenario: Teacher delete course but its subscription was deleted Then system doe
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'teacherWithDeletedSubscription@mindsage.com' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -399,7 +399,7 @@ Scenario: Teacher delete course but its subscription doesn't existing Then syste
     """  
     When UserProfile 'student@mindsage.com' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -553,7 +553,7 @@ Scenario: Teacher delete course but the class calendar doesn't existing Then sys
     """  
     When UserProfile 'teacher@mindsage.com' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -707,7 +707,7 @@ Scenario: Teacher delete course but the class room doesn't existing Then system 
     """  
     When UserProfile 'teacher@mindsage.com' delete ClassRoom 'ClassRoom01' 
     Then System doesn't upsert UserProfile  
-	And System doesn't upsert UserActivity  
+	And System doesn't update UserActivity  
 	And System don't upsert ClassRoom  
 	And System doesn't set course ClassCalendar  
 	And System don't upsert StudentKey  
@@ -1081,7 +1081,7 @@ Scenario: Teacher delete course but user activities was deleted Then system dele
 		]
 	}
     """  
-	And System doesn't upsert UserActivity
+	And System doesn't update UserActivity  
 	And System upsert ClassRoom with JSON format is  
     """
     {
@@ -1180,7 +1180,7 @@ Scenario: Teacher delete course but user activities don't existing Then system d
 		]
 	}
     """  
-	And System doesn't upsert UserActivity
+	And System doesn't update UserActivity  
 	And System upsert ClassRoom with JSON format is  
     """
     {

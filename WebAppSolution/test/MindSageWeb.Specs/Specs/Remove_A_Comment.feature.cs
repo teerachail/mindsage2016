@@ -172,7 +172,7 @@ this.FeatureBackground();
     ""DeletedDate"": ""2/8/2016 00:00 am""
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 103
-    testRunner.And("System doesn\'t update UserActivity collection with JSON format is", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

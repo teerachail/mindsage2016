@@ -142,4 +142,4 @@ Scenario: User click unlike a lesson Then system update lesson's total like
             "DeletedDate": "2/8/2016 00:00 am"
     }
     """  
-	And System doesn't update UserActivity collection with JSON format is  
+	And System doesn't update UserActivity  

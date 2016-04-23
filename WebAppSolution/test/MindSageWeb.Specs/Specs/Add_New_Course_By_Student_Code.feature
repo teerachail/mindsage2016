@@ -160,21 +160,21 @@ Scenario: User add new course by using the incorrect code Then system don't add 
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'IncorrectCode' and grade 'Grade01'
     Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: User add new course by using the right code but incorrect grade Then system don't add new course to the user's subscription  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'IncorrectGrade'
     Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: User add new course by using code and grade are incorrect Then system don't add new course to the user's subscription  
     Given Today is '2/8/2016 00:00 am'  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'IncorrectCode' and grade 'IncorrectGrade'
     Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: User add new course by using the right code but the class doesn't have a teacher account Then system doesn't add new course to the user's subscription  
@@ -192,7 +192,7 @@ Scenario: User add new course by using the right code but the class doesn't have
     """  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: User add new course by using the right code but the ClassRoom doesn't existing Then system doesn't add new course to the user's subscription  
@@ -203,7 +203,7 @@ Scenario: User add new course by using the right code but the ClassRoom doesn't 
     """  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: User add new course by using the right code but the ClassCalendar doesn't existing Then system doesn't add new course to the user's subscription  
@@ -214,7 +214,7 @@ Scenario: User add new course by using the right code but the ClassCalendar does
     """  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: Incorrect user add new course by using the right informations Then system doesn't add new course to the user  
@@ -241,7 +241,7 @@ Scenario: Incorrect user add new course by using the right informations Then sys
     """  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 @mock  
 Scenario: User who already have course want to add the same course Then system doesn't add new course to the user  
@@ -283,7 +283,7 @@ Scenario: User who already have course want to add the same course Then system d
     """  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  
 
 
 @mock  
@@ -305,4 +305,4 @@ Scenario: User add new course by using deleted student code Then system doesn't 
 	"""  
     When UserProfile 'sakul@mindsage.com' Add new course by using code 'StudentCode01' and grade 'Grade01'
 	Then System doesn't add new subscription  
-	And System doesn't add UserActivity  
+	And System doesn't update UserActivity  

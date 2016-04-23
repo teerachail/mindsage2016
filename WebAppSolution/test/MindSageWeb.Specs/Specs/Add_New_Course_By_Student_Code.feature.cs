@@ -248,7 +248,7 @@ this.FeatureBackground();
 #line 162
     testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 163
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -275,7 +275,7 @@ this.FeatureBackground();
 #line 169
     testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 170
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -302,7 +302,7 @@ this.FeatureBackground();
 #line 176
     testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 177
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -333,7 +333,7 @@ this.FeatureBackground();
 #line 194
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 195
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -363,7 +363,7 @@ this.FeatureBackground();
 #line 205
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 206
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -393,7 +393,7 @@ this.FeatureBackground();
 #line 216
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 217
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -439,7 +439,7 @@ this.FeatureBackground();
 #line 243
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 244
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -500,7 +500,7 @@ this.FeatureBackground();
 #line 285
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 286
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -532,7 +532,7 @@ this.FeatureBackground();
 #line 307
  testRunner.Then("System doesn\'t add new subscription", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line 308
- testRunner.And("System doesn\'t add UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

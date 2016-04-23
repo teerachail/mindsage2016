@@ -56,13 +56,6 @@ namespace MindSageWeb.Specs.Steps
             mockUserprofileRepo.Verify(it => it.UpsertUserProfile(It.IsAny<UserProfile>()), Times.Never);
         }
 
-        [Then(@"System doesn't upsert UserActivity")]
-        public void ThenSystemDoesnTUpsertUserActivity()
-        {
-            var mockUserActivityRepo = ScenarioContext.Current.Get<Mock<IUserActivityRepository>>();
-            mockUserActivityRepo.Verify(it => it.UpsertUserActivity(It.IsAny<UserActivity>()), Times.Never);
-        }
-
         [Then(@"System upsert UserProfile with JSON format is")]
         public void ThenSystemUpsertUserProfileWithJSONFormatIs(string multilineText)
         {
