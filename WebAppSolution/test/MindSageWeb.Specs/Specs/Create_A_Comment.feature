@@ -520,7 +520,7 @@ Scenario: Incorrect user (subscription doesn't existing) create new comment Then
     And System doesn't update UserActivity  
 
 @mock  
-Scenario: User create new comment but the ClassCalendar was deleted Then system create new comment and update user activity  
+Scenario: User create new comment but the ClassCalendar was deleted Then system do nothing  
     Given Today is '2/8/2016 00:00 am'  
 	And System have ClassCalendar collection with JSON format are
     """
@@ -558,58 +558,8 @@ Scenario: User create new comment but the ClassCalendar was deleted Then system 
     ]
     """  
     When UserProfileId 'student@mindsage.com' create a new comment with a message is 'Hello lesson 1' in the lesson 'Lesson01' of ClassRoom: 'ClassRoom01'  
-    Then System add new Comment by JSON format is  
-    """
-    {
-        "ClassRoomId": "ClassRoom01",
-        "CreatedByUserProfileId": "student@mindsage.com",
-		"CreatorDisplayName": "student",
-		"CreatorImageUrl": "student.jpg",
-        "Description": "Hello lesson 1",
-        "TotalLikes": 0,
-        "LessonId": "Lesson01",
-        "Discussions": [],
-		"CreatedDate": "2/8/2016 00:00 am"
-    }
-    """
-    And System update UserActivity collection with JSON format is
-    """
-    {
-		"id": "UserActivity02",
-		"UserProfileId": "student@mindsage.com",
-		"ClassRoomId": "ClassRoom01",
-		"CreatedDate": "1/1/2016",
-		"UserProfileName": "student",
-		"UserProfileImageUrl": "student.jpg",
-		"LessonActivities":
-		[
-			{
-				"id": "LessonActivity04",
-				"LessonId": "Lesson01",
-				"SawContentIds": [],
-				"TotalContentsAmount": 1,
-				"ParticipationAmount": 1,
-				"CreatedCommentAmount": 1,
-			},
-			{
-				"id": "LessonActivity05",
-				"LessonId": "Lesson02",
-				"SawContentIds": [],
-				"TotalContentsAmount": 1,
-				"ParticipationAmount": 1,
-				"CreatedCommentAmount": 0,
-			},
-			{
-				"id": "LessonActivity06",
-				"LessonId": "Lesson03",
-				"SawContentIds": [],
-				"TotalContentsAmount": 1,
-				"ParticipationAmount": 1,
-				"CreatedCommentAmount": 0,
-			}
-		]
-	}
-    """  
+    Then System doesn't add new Comment  
+    And System doesn't update UserActivity  
 
 @mock  
 Scenario: User create new comment but the ClassCalendar doesn't existing Then the system do nothing

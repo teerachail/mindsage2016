@@ -1000,13 +1000,11 @@ this.FeatureBackground();
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Create_A_Comment")]
-        [Xunit.TraitAttribute("Description", "User create new comment but the ClassCalendar was deleted Then system create new " +
-            "comment and update user activity")]
+        [Xunit.TraitAttribute("Description", "User create new comment but the ClassCalendar was deleted Then system do nothing")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void UserCreateNewCommentButTheClassCalendarWasDeletedThenSystemCreateNewCommentAndUpdateUserActivity()
+        public virtual void UserCreateNewCommentButTheClassCalendarWasDeletedThenSystemDoNothing()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create new comment but the ClassCalendar was deleted Then system create new " +
-                    "comment and update user activity", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create new comment but the ClassCalendar was deleted Then system do nothing", new string[] {
                         "mock"});
 #line 523
 this.ScenarioSetup(scenarioInfo);
@@ -1051,56 +1049,10 @@ this.FeatureBackground();
 #line 560
     testRunner.When("UserProfileId \'student@mindsage.com\' create a new comment with a message is \'Hell" +
                     "o lesson 1\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
 #line 561
-    testRunner.Then("System add new Comment by JSON format is", @"{
-    ""ClassRoomId"": ""ClassRoom01"",
-    ""CreatedByUserProfileId"": ""student@mindsage.com"",
-""CreatorDisplayName"": ""student"",
-""CreatorImageUrl"": ""student.jpg"",
-    ""Description"": ""Hello lesson 1"",
-    ""TotalLikes"": 0,
-    ""LessonId"": ""Lesson01"",
-    ""Discussions"": [],
-""CreatedDate"": ""2/8/2016 00:00 am""
-}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line hidden
-#line 575
-    testRunner.And("System update UserActivity collection with JSON format is", @"{
-""id"": ""UserActivity02"",
-""UserProfileId"": ""student@mindsage.com"",
-""ClassRoomId"": ""ClassRoom01"",
-""CreatedDate"": ""1/1/2016"",
-""UserProfileName"": ""student"",
-""UserProfileImageUrl"": ""student.jpg"",
-""LessonActivities"":
-[
-{
-""id"": ""LessonActivity04"",
-""LessonId"": ""Lesson01"",
-""SawContentIds"": [],
-""TotalContentsAmount"": 1,
-""ParticipationAmount"": 1,
-""CreatedCommentAmount"": 1,
-},
-{
-""id"": ""LessonActivity05"",
-""LessonId"": ""Lesson02"",
-""SawContentIds"": [],
-""TotalContentsAmount"": 1,
-""ParticipationAmount"": 1,
-""CreatedCommentAmount"": 0,
-},
-{
-""id"": ""LessonActivity06"",
-""LessonId"": ""Lesson03"",
-""SawContentIds"": [],
-""TotalContentsAmount"": 1,
-""ParticipationAmount"": 1,
-""CreatedCommentAmount"": 0,
-}
-]
-}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.Then("System doesn\'t add new Comment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 562
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -1115,21 +1067,21 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create new comment but the ClassCalendar doesn\'t existing Then the system do" +
                     " nothing", new string[] {
                         "mock"});
-#line 615
+#line 565
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 616
+#line 566
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 617
+#line 567
  testRunner.And("System have ClassCalendar collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 621
+#line 571
     testRunner.When("UserProfileId \'student@mindsage.com\' create a new comment with a message is \'Hell" +
                     "o lesson 1\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 622
+#line 572
     testRunner.Then("System doesn\'t add new Comment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 623
+#line 573
     testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
@@ -1145,14 +1097,14 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create new comment but the UserActivity was deleted Then system create new c" +
                     "omment and update user activity", new string[] {
                         "mock"});
-#line 626
+#line 576
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 627
+#line 577
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 628
+#line 578
  testRunner.And("System have UserActivity collection with JSON format are", @"   [
 	{
 		""id"": ""UserActivity02"",
@@ -1191,11 +1143,11 @@ this.FeatureBackground();
 		]
 	}
    ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 669
+#line 619
     testRunner.When("UserProfileId \'student@mindsage.com\' create a new comment with a message is \'Hell" +
                     "o lesson 1\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 670
+#line 620
     testRunner.Then("System add new Comment by JSON format is", @"{
     ""ClassRoomId"": ""ClassRoom01"",
     ""CreatedByUserProfileId"": ""student@mindsage.com"",
@@ -1208,7 +1160,7 @@ this.FeatureBackground();
 ""CreatedDate"": ""2/8/2016 00:00 am""
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 684
+#line 634
     testRunner.And("System update UserActivity collection with JSON format is", @"{
 ""id"": ""UserActivity02"",
 ""UserProfileId"": ""student@mindsage.com"",
@@ -1259,21 +1211,21 @@ this.FeatureBackground();
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create new comment but the UserActivity doesn\'t existing Then system do noth" +
                     "ing", new string[] {
                         "mock"});
-#line 725
+#line 675
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 726
+#line 676
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
-#line 727
+#line 677
  testRunner.And("System have UserActivity collection with JSON format are", "   []", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line 731
+#line 681
     testRunner.When("UserProfileId \'student@mindsage.com\' create a new comment with a message is \'Hell" +
                     "o lesson 1\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line 732
+#line 682
     testRunner.Then("System doesn\'t add new Comment", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
-#line 733
+#line 683
     testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();

@@ -72,12 +72,67 @@ namespace SpecFlow.GeneratedTests.Specs
  testRunner.And("Initialize mocking notifications\' repositories", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
 #line 9
-    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul jaruthanaset\",\r\n\"ImageProfileUr" +
-                    "l\": \"ImgURL01\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Tea" +
-                    "cher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
-                    "},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""publicStudent@mindsage.com"",
+""Name"": ""publicStudent"",
+""ImageProfileUrl"": ""publicStudent.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription03"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""privateStudent@mindsage.com"",
+""Name"": ""privateStudent"",
+""ImageProfileUrl"": ""privateStudent.jpg"",
+""IsPrivateAccount"": true,
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription04"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 28
+#line 71
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
@@ -92,46 +147,125 @@ namespace SpecFlow.GeneratedTests.Specs
                 ""Order"": 1,
                 ""SemesterGroupName"": ""A"",
                 ""BeginDate"": ""2/1/2016"",
+            },
+{
+                ""Id"": ""LessonCalendar02"",
+                ""LessonId"": ""Lesson02"",
+                ""LessonCatalogId"": ""LessonCatalog02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/16/2016"",
             }
         ]
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 49
+#line 100
     testRunner.And("System have Comment collection with JSON format are", @"[
     {
         ""Id"": ""Comment01"",
         ""ClassRoomId"": ""ClassRoom01"",
-        ""CreatedByUserProfileId"": ""sakul@mindsage.com"",
-        ""Description"": ""Hello lesson 1"",
+        ""CreatedByUserProfileId"": ""student@mindsage.com"",
+        ""Description"": ""Student comment"",
         ""TotalLikes"": 0,
+        ""LessonId"": ""Lesson01"",
+        ""Discussions"": []
+    },
+{
+        ""Id"": ""Comment02"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""publicStudent@mindsage.com"",
+        ""Description"": ""Private student comment"",
+        ""TotalLikes"": 10,
+        ""LessonId"": ""Lesson01"",
+        ""Discussions"": []
+    },
+{
+        ""Id"": ""Comment03"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Teacher comment"",
+        ""TotalLikes"": 100,
+        ""LessonId"": ""Lesson01"",
+        ""Discussions"": []
+    },
+{
+        ""Id"": ""Comment04"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""privateStudent@mindsage.com"",
+        ""Description"": ""Private student comment"",
+        ""TotalLikes"": 1000,
         ""LessonId"": ""Lesson01"",
         ""Discussions"": []
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 63
+#line 141
     testRunner.And("System have UserActivity collection with JSON format are", @"[
 {
 ""id"": ""UserActivity01"",
-""UserProfileId"": ""sakul@mindsage.com"",
+""UserProfileId"": ""teacher@mindsage.com"",
 ""ClassRoomId"": ""ClassRoom01"",
 ""LessonActivities"":
 [
 {
 	""id"": ""LessonActivity01"",
 	""LessonId"": ""Lesson01"",
-
+	""SawContentIds"": [],
 	""TotalContentsAmount"": 1,
-	""SawContentIds"": 
-	[
-		""Content01""
-	],
-	""CreatedCommentAmount"": 1,
-	""ParticipationAmount"": 0
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 0,
 }
 ]
+},
+{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson01"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 1,
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 1,
 }
+]
+},
+{
+""id"": ""UserActivity03"",
+""UserProfileId"": ""publicStudent@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson01"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 0,
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 0,
+}
+]
+},
+{
+""id"": ""UserActivity04"",
+""UserProfileId"": ""privateStudent@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity04"",
+	""LessonId"": ""Lesson01"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 0,
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 0,
+}
+]
+},
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -147,50 +281,1411 @@ namespace SpecFlow.GeneratedTests.Specs
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
-        [Xunit.TraitAttribute("Description", "User create a new discussion Then system create a new discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment Then system create new discu" +
+            "ssion and update user activity")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void UserCreateANewDiscussionThenSystemCreateANewDiscussion()
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentThenSystemCreateNewDiscussionAndUpdateUserActivity()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User create a new discussion Then system create a new discussion", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment Then system create new discu" +
+                    "ssion and update user activity", new string[] {
                         "mock"});
-#line 90
+#line 212
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 91
+#line 213
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 92
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' create a new discussion with a message is \'Thi" +
-                    "s is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom" +
-                    ": \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 214
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 93
+#line 215
     testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment01\' a" +
                     "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
-                    ": \"ImgURL01\",\r\n\"CreatorDisplayName\": \"Sakul jaruthanaset\",\r\n\"CreatedByUserProfil" +
-                    "eId\": \"sakul@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+                    ": \"student.jpg\",\r\n\"CreatorDisplayName\": \"student\",\r\n\"CreatedByUserProfileId\": \"s" +
+                    "tudent@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 106
+#line 228
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"":  [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 1,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on public-account\'s comment Then system create ne" +
+            "w discussion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnPublic_AccountSCommentThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on public-account\'s comment Then system create ne" +
+                    "w discussion and update user activity", new string[] {
+                        "mock"});
+#line 249
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 250
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 251
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment02\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 252
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment02\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"student.jpg\",\r\n\"CreatorDisplayName\": \"student\",\r\n\"CreatedByUserProfileId\": \"s" +
+                    "tudent@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 265
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"":  [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 1,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on teacher\'s comment Then system create new discu" +
+            "ssion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnTeacherSCommentThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on teacher\'s comment Then system create new discu" +
+                    "ssion and update user activity", new string[] {
+                        "mock"});
+#line 286
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 287
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 288
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment03\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 289
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment03\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"student.jpg\",\r\n\"CreatorDisplayName\": \"student\",\r\n\"CreatedByUserProfileId\": \"s" +
+                    "tudent@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 302
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"":  [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 1,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on private-account\'s comment Then system do nothi" +
+            "ng")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnPrivate_AccountSCommentThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on private-account\'s comment Then system do nothi" +
+                    "ng", new string[] {
+                        "mock"});
+#line 323
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 324
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 325
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment04\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 326
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 327
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on future teacher\'s comment Then system do nothin" +
+            "g")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnFutureTeacherSCommentThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on future teacher\'s comment Then system do nothin" +
+                    "g", new string[] {
+                        "mock"});
+#line 330
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 331
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 332
+ testRunner.And("System have Comment collection with JSON format are", @"[
+{
+        ""Id"": ""FutureTeacherComment"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Feture teacher comment"",
+        ""TotalLikes"": 10000,
+        ""LessonId"": ""Lesson02"",
+        ""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 346
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'FutureTeacherComment\' in the lesson \'Lesson02\'" +
+                    " of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 347
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 348
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A teacher create new discussion on its owned comment Then system create new discu" +
+            "ssion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherCreateNewDiscussionOnItsOwnedCommentThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher create new discussion on its owned comment Then system create new discu" +
+                    "ssion and update user activity", new string[] {
+                        "mock"});
+#line 351
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 352
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 353
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment03\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 354
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment03\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"CreatedByUserProfileId\": \"t" +
+                    "eacher@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 367
     testRunner.And("System update UserActivity collection with JSON format is", @"{
 ""id"": ""UserActivity01"",
-""UserProfileId"": ""sakul@mindsage.com"",
+""UserProfileId"": ""teacher@mindsage.com"",
 ""ClassRoomId"": ""ClassRoom01"",
 ""LessonActivities"":
 [
 {
 ""id"": ""LessonActivity01"",
 ""LessonId"": ""Lesson01"",
-
+""SawContentIds"":  [],
 ""TotalContentsAmount"": 1,
-""SawContentIds"": 
-[
-	""Content01""
-],
-""CreatedCommentAmount"": 1,
-""ParticipationAmount"": 1
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 0,
 }
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A teacher create new discussion on future its owned comment Then system create ne" +
+            "w discussion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherCreateNewDiscussionOnFutureItsOwnedCommentThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher create new discussion on future its owned comment Then system create ne" +
+                    "w discussion and update user activity", new string[] {
+                        "mock"});
+#line 388
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 389
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 390
+ testRunner.And("System have Comment collection with JSON format are", @"[
+{
+        ""Id"": ""FutureTeacherComment"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""teacher@mindsage.com"",
+        ""Description"": ""Feture teacher comment"",
+        ""TotalLikes"": 10000,
+        ""LessonId"": ""Lesson02"",
+        ""Discussions"": []
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 404
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 1,
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 0,
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 0,
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 0,
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 433
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'FutureTeacherComment\' in the lesson \'Lesson02\'" +
+                    " of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 434
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'FutureTeache" +
+                    "rComment\' are", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"CreatedByUserProfileId\": \"t" +
+                    "eacher@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 447
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity01"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"": [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 0,
+""CreatedCommentAmount"": 0,
+},
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson02"",
+""SawContentIds"": [],
+""TotalContentsAmount"": 0,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 0,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A teacher create new discussion on student\'s comment (public account) Then system" +
+            " create new discussion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherCreateNewDiscussionOnStudentSCommentPublicAccountThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher create new discussion on student\'s comment (public account) Then system" +
+                    " create new discussion and update user activity", new string[] {
+                        "mock"});
+#line 476
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 477
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 478
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment02\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 479
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment02\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"CreatedByUserProfileId\": \"t" +
+                    "eacher@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 492
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity01"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"": [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 0,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A teacher create new discussion on student\'s comment (private account) Then syste" +
+            "m create new discussion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherCreateNewDiscussionOnStudentSCommentPrivateAccountThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher create new discussion on student\'s comment (private account) Then syste" +
+                    "m create new discussion and update user activity", new string[] {
+                        "mock"});
+#line 513
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 514
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 515
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment04\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 516
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment02\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"teacher.jpg\",\r\n\"CreatorDisplayName\": \"teacher\",\r\n\"CreatedByUserProfileId\": \"t" +
+                    "eacher@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 529
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity01"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"": [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 0,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (unknow) create new discussion Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserUnknowCreateNewDiscussionThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (unknow) create new discussion Then system do nothing", new string[] {
+                        "mock"});
+#line 550
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 551
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 552
+    testRunner.When("UserProfileId \'unknow@mindsage.com\' create a new discussion with a message is \'Th" +
+                    "is is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoo" +
+                    "m: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 553
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 554
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (empty) create new discussion Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserEmptyCreateNewDiscussionThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (empty) create new discussion Then system do nothing", new string[] {
+                        "mock"});
+#line 557
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 558
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 559
+    testRunner.When("UserProfileId \'\' create a new discussion with a message is \'This is a discussion\'" +
+                    " for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 560
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 561
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (null) create new discussion Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserNullCreateNewDiscussionThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (null) create new discussion Then system do nothing", new string[] {
+                        "mock"});
+#line 564
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 565
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 566
+    testRunner.When("UserProfileId \'NULL\' create a new discussion with a message is \'This is a discuss" +
+                    "ion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01" +
+                    "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 567
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 568
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used ClassRoom incorrect (unknow) Then system" +
+            " do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedClassRoomIncorrectUnknowThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used ClassRoom incorrect (unknow) Then system" +
+                    " do nothing", new string[] {
+                        "mock"});
+#line 571
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 572
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 573
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'UnknowClassRoom\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 574
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 575
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used ClassRoom incorrect (empty) Then system " +
+            "do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedClassRoomIncorrectEmptyThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used ClassRoom incorrect (empty) Then system " +
+                    "do nothing", new string[] {
+                        "mock"});
+#line 578
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 579
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 580
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 581
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 582
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used ClassRoom incorrect (NULL) Then system d" +
+            "o nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedClassRoomIncorrectNULLThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used ClassRoom incorrect (NULL) Then system d" +
+                    "o nothing", new string[] {
+                        "mock"});
+#line 585
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 586
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 587
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'NULL\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 588
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 589
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used LessonId incorrect (unknow) Then system " +
+            "do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedLessonIdIncorrectUnknowThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used LessonId incorrect (unknow) Then system " +
+                    "do nothing", new string[] {
+                        "mock"});
+#line 592
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 593
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 594
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'UnknowLesson\' of Cla" +
+                    "ssRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 595
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 596
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used LessonId incorrect (empty) Then system d" +
+            "o nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedLessonIdIncorrectEmptyThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used LessonId incorrect (empty) Then system d" +
+                    "o nothing", new string[] {
+                        "mock"});
+#line 599
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 600
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 601
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'\' of ClassRoom: \'Cla" +
+                    "ssRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 602
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 603
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used LessonId incorrect (null) Then system do" +
+            " nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedLessonIdIncorrectNullThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used LessonId incorrect (null) Then system do" +
+                    " nothing", new string[] {
+                        "mock"});
+#line 606
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 607
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 608
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'NULL\' of ClassRoom: " +
+                    "\'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 609
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 610
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used comment\'s message incorrect (empty) Then" +
+            " system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedCommentSMessageIncorrectEmptyThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used comment\'s message incorrect (empty) Then" +
+                    " system do nothing", new string[] {
+                        "mock"});
+#line 613
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 614
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 615
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'\'" +
+                    " for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 616
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 617
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion but used comment\'s message incorrect (null) Then " +
+            "system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionButUsedCommentSMessageIncorrectNullThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion but used comment\'s message incorrect (null) Then " +
+                    "system do nothing", new string[] {
+                        "mock"});
+#line 620
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 621
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 622
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'N" +
+                    "ULL\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRoom: \'ClassRoom01" +
+                    "\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 623
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 624
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but its subscription was del" +
+            "eted Then system create new discussion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButItsSubscriptionWasDeletedThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but its subscription was del" +
+                    "eted Then system create new discussion and update user activity", new string[] {
+                        "mock"});
+#line 627
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 628
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 629
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016""
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 649
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 650
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 651
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but its subscription doesn\'t" +
+            " existing Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButItsSubscriptionDoesnTExistingThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but its subscription doesn\'t" +
+                    " existing Then system do nothing", new string[] {
+                        "mock"});
+#line 654
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 655
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 656
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"student@mindsage.com\",\r\n\"Name\": \"student\",\r\n\"ImageProfileUrl\": \"stud" +
+                    "ent.jpg\",\r\n\"Subscriptions\": []\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 667
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 668
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 669
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on public-account\'s comment but that accout\'s sub" +
+            "scription was deleted Then system create new discussion and update user activity" +
+            "")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnPublic_AccountSCommentButThatAccoutSSubscriptionWasDeletedThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on public-account\'s comment but that accout\'s sub" +
+                    "scription was deleted Then system create new discussion and update user activity" +
+                    "", new string[] {
+                        "mock"});
+#line 672
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 673
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 674
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""publicStudent@mindsage.com"",
+""Name"": ""publicStudent"",
+""ImageProfileUrl"": ""publicStudent.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription03"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016""
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 708
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment02\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 709
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment02\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"student.jpg\",\r\n\"CreatorDisplayName\": \"student\",\r\n\"CreatedByUserProfileId\": \"s" +
+                    "tudent@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 722
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"":  [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 1,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on public-account\'s comment but that accout\'s sub" +
+            "scription doesn\'t existing Then system create new discussion and update user act" +
+            "ivity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnPublic_AccountSCommentButThatAccoutSSubscriptionDoesnTExistingThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on public-account\'s comment but that accout\'s sub" +
+                    "scription doesn\'t existing Then system create new discussion and update user act" +
+                    "ivity", new string[] {
+                        "mock"});
+#line 743
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 744
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 745
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""publicStudent@mindsage.com"",
+""Name"": ""publicStudent"",
+""ImageProfileUrl"": ""publicStudent.jpg"",
+""Subscriptions"": []
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 770
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment02\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 771
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment02\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"student.jpg\",\r\n\"CreatorDisplayName\": \"student\",\r\n\"CreatedByUserProfileId\": \"s" +
+                    "tudent@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 784
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"":  [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 1,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on public-account\'s comment but that accout was d" +
+            "eleted Then system create new discussion and update user activity")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnPublic_AccountSCommentButThatAccoutWasDeletedThenSystemCreateNewDiscussionAndUpdateUserActivity()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on public-account\'s comment but that accout was d" +
+                    "eleted Then system create new discussion and update user activity", new string[] {
+                        "mock"});
+#line 805
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 806
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 807
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""publicStudent@mindsage.com"",
+""Name"": ""publicStudent"",
+""ImageProfileUrl"": ""publicStudent.jpg"",
+""DeletedDate"": ""1/1/2016"",
+""Subscriptions"": []
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 833
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment02\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 834
+    testRunner.Then("System update Discussion collection with JSON format in the Comment \'Comment02\' a" +
+                    "re", "[\r\n{\r\n\"Description\": \"This is a discussion\",\r\n\"TotalLikes\": 0,\r\n\"CreatorImageUrl\"" +
+                    ": \"student.jpg\",\r\n\"CreatorDisplayName\": \"student\",\r\n\"CreatedByUserProfileId\": \"s" +
+                    "tudent@mindsage.com\",\r\n\"CreatedDate\": \"2/8/2016 00:00 am\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 847
+    testRunner.And("System update UserActivity collection with JSON format is", @"{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+""id"": ""LessonActivity02"",
+""LessonId"": ""Lesson01"",
+""SawContentIds"":  [],
+""TotalContentsAmount"": 1,
+""ParticipationAmount"": 1,
+""CreatedCommentAmount"": 1,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on public-account\'s comment but that accout doesn" +
+            "\'t existing Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnPublic_AccountSCommentButThatAccoutDoesnTExistingThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on public-account\'s comment but that accout doesn" +
+                    "\'t existing Then system do nothing", new string[] {
+                        "mock"});
+#line 868
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 869
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 870
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"student@mindsage.com\",\r\n\"Name\": \"student\",\r\n\"ImageProfileUrl\": \"stud" +
+                    "ent.jpg\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription02\",\r\n\t\"Role\": \"Student\"," +
+                    "\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n},\r\n]\r" +
+                    "\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 889
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment02\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 890
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 891
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but the LessonCalendar was d" +
+            "eleted Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButTheLessonCalendarWasDeletedThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but the LessonCalendar was d" +
+                    "eleted Then system do nothing", new string[] {
+                        "mock"});
+#line 894
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 895
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 896
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""LessonCatalogId"": ""LessonCatalog01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+	""DeletedDate"": ""1/1/2016""
+            }
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 918
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 919
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 920
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but the LessonCalendar doesn" +
+            "\'t existing Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButTheLessonCalendarDoesnTExistingThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but the LessonCalendar doesn" +
+                    "\'t existing Then system do nothing", new string[] {
+                        "mock"});
+#line 923
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 924
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 925
+ testRunner.And("System have ClassCalendar collection with JSON format are", "[\r\n    {\r\n        \"id\": \"ClassCalendar01\",\r\n        \"BeginDate\": \"2/1/2016\",\r\n   " +
+                    "     \"ClassRoomId\": \"ClassRoom01\",\r\n        \"LessonCalendars\": []\r\n    },\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 936
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 937
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 938
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but the ClassCalendar was de" +
+            "leted Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButTheClassCalendarWasDeletedThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but the ClassCalendar was de" +
+                    "leted Then system do nothing", new string[] {
+                        "mock"});
+#line 941
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 942
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 943
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+        ""ClassRoomId"": ""ClassRoom01"",
+""DeletedDate"": ""1/1/2016"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""LessonCatalogId"": ""LessonCatalog01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            }
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 965
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 966
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 967
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but the ClassCalendar doesn\'" +
+            "t existing Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButTheClassCalendarDoesnTExistingThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but the ClassCalendar doesn\'" +
+                    "t existing Then system do nothing", new string[] {
+                        "mock"});
+#line 970
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 971
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 972
+ testRunner.And("System have ClassCalendar collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 976
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 977
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 978
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but the comment was deleted " +
+            "Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButTheCommentWasDeletedThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but the comment was deleted " +
+                    "Then system do nothing", new string[] {
+                        "mock"});
+#line 981
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 982
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 983
+ testRunner.And("System have Comment collection with JSON format are", @"[
+    {
+        ""Id"": ""Comment01"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""CreatedByUserProfileId"": ""student@mindsage.com"",
+        ""Description"": ""Student comment"",
+        ""TotalLikes"": 0,
+        ""LessonId"": ""Lesson01"",
+        ""Discussions"": [],
+""DeletedDate"": ""1/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 998
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 999
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 1000
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but the comment doesn\'t exis" +
+            "ting Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButTheCommentDoesnTExistingThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but the comment doesn\'t exis" +
+                    "ting Then system do nothing", new string[] {
+                        "mock"});
+#line 1003
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1004
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1005
+ testRunner.And("System have Comment collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1009
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 1010
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 1011
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but its UserActivity was del" +
+            "eted Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButItsUserActivityWasDeletedThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but its UserActivity was del" +
+                    "eted Then system do nothing", new string[] {
+                        "mock"});
+#line 1014
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1015
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1016
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity02"",
+""UserProfileId"": ""student@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""DeletedDate"": ""1/1/2016"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson01"",
+	""SawContentIds"": [],
+	""TotalContentsAmount"": 1,
+	""ParticipationAmount"": 0,
+	""CreatedCommentAmount"": 1,
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1038
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 1039
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 1040
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Create_A_Discussion")]
+        [Xunit.TraitAttribute("Description", "A student create new discussion on its owned comment but its UserActivity doesn\'t" +
+            " existing Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentCreateNewDiscussionOnItsOwnedCommentButItsUserActivityDoesnTExistingThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student create new discussion on its owned comment but its UserActivity doesn\'t" +
+                    " existing Then system do nothing", new string[] {
+                        "mock"});
+#line 1043
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 1044
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 1045
+ testRunner.And("System have UserActivity collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 1049
+    testRunner.When("UserProfileId \'student@mindsage.com\' create a new discussion with a message is \'T" +
+                    "his is a discussion\' for comment \'Comment01\' in the lesson \'Lesson01\' of ClassRo" +
+                    "om: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 1050
+    testRunner.Then("System doesn\'t create new discussion", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 1051
+    testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

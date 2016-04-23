@@ -25,11 +25,11 @@ namespace MindSageWeb.Specs.Steps
             var discussionCtrl = ScenarioContext.Current.Get<DiscussionController>();
             var body = new PostNewDiscussionRequest
             {
-                ClassRoomId = classRoomId,
-                CommentId = commentId,
-                Description = message,
-                LessonId = lessonId,
-                UserProfileId = userprofileId
+                ClassRoomId = classRoomId.GetMockStrinValue(),
+                CommentId = commentId.GetMockStrinValue(),
+                Description = message.GetMockStrinValue(),
+                LessonId = lessonId.GetMockStrinValue(),
+                UserProfileId = userprofileId.GetMockStrinValue(),
             };
             discussionCtrl.Post(body);
         }
@@ -63,6 +63,13 @@ namespace MindSageWeb.Specs.Steps
 
             var mockCommentRepo = ScenarioContext.Current.Get<Mock<ICommentRepository>>();
             mockCommentRepo.Verify(it => it.UpsertComment(It.Is<Comment>(comment => validateCommentFunc(comment))));
+        }
+
+        [Then(@"System doesn't create new discussion")]
+        public void ThenSystemDoesnTCreateNewDiscussion()
+        {
+            var mockCommentRepo = ScenarioContext.Current.Get<Mock<ICommentRepository>>();
+            mockCommentRepo.Verify(it => it.UpsertComment(It.IsAny<Comment>()), Times.Never);
         }
     }
 }

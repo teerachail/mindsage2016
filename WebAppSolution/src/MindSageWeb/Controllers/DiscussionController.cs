@@ -77,23 +77,32 @@ namespace MindSageWeb.Controllers
             if (!canAccessToTheClassRoom) return null;
 
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now);
+            var isTeacher = userprofile.Subscriptions.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == body.ClassRoomId && it.Role == UserProfile.AccountRole.Teacher);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(body.ClassRoomId, body.LessonId, now, isTeacher);
             if (!canAccessToTheClassLesson) return null;
 
             var selectedComment = _commentRepo.GetCommentById(body.CommentId);
-            if (selectedComment == null) return null;
+            var isCommentValid = selectedComment != null
+                && selectedComment.LessonId.Equals(body.LessonId, StringComparison.CurrentCultureIgnoreCase)
+                && selectedComment.id.Equals(body.CommentId, StringComparison.CurrentCultureIgnoreCase)
+                && !selectedComment.DeletedDate.HasValue;
+            if (!isCommentValid) return null;
 
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(body.UserProfileId, body.ClassRoomId);
-            if (selectedUserActivity == null) return null;
+            var isUserActivityValid = selectedUserActivity != null && !selectedUserActivity.DeletedDate.HasValue;
+            if (!isUserActivityValid) return null;
 
             var selectedLesson = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId == body.LessonId);
             if (selectedLesson == null) return null;
 
-            var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
-            if (!isCommentOwner)
+            if (!isTeacher)
             {
-                var canPostNewDiscussion = _userprofileRepo.CheckAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
-                if (!canPostNewDiscussion) return null;
+                var isCommentOwner = selectedComment.CreatedByUserProfileId.Equals(body.UserProfileId, StringComparison.CurrentCultureIgnoreCase);
+                if (!isCommentOwner)
+                {
+                    var canPostNewDiscussion = _userprofileRepo.CheckAccessPermissionToUserProfile(selectedComment.CreatedByUserProfileId);
+                    if (!canPostNewDiscussion) return null;
+                }
             }
 
             var id = Guid.NewGuid().ToString();

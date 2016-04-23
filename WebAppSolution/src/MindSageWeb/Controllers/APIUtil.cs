@@ -32,18 +32,19 @@ namespace MindSageWeb.Controllers
 
             return canAccessToTheClass;
         }
-        public static bool CheckAccessPermissionToSelectedClassLesson(this IClassCalendarRepository classCalendarRepo, string classRoomId, string lessonId, DateTime currentTime)
+        public static bool CheckAccessPermissionToSelectedClassLesson(this IClassCalendarRepository classCalendarRepo, string classRoomId, string lessonId, DateTime currentTime, bool isTeacher = false)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(classRoomId) && !string.IsNullOrEmpty(lessonId);
             if (!areArgumentsValid) return false;
 
             var selectedClassCalendar = classCalendarRepo.GetClassCalendarByClassRoomId(classRoomId);
-            if (selectedClassCalendar == null) return false;
+            var isClassCalendarValid = selectedClassCalendar != null && !selectedClassCalendar.DeletedDate.HasValue;
+            if (!isClassCalendarValid) return false;
 
             var canAccessToTheLesson = selectedClassCalendar.LessonCalendars
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.LessonId.Equals(lessonId, StringComparison.CurrentCultureIgnoreCase))
-                .Where(it => it.BeginDate <= currentTime)
+                .Where(it => isTeacher || it.BeginDate <= currentTime)
                 .Any();
             return canAccessToTheLesson;
         }
