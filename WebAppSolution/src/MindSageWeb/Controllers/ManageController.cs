@@ -26,6 +26,7 @@ namespace MindSageWeb.Controllers
         private readonly ILogger _logger;
         private IUserProfileRepository _userprofileRepo;
         private ErrorMessageOptions _errorMsgs;
+        private Engines.IImageUploader _imageUploader;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
@@ -34,6 +35,7 @@ namespace MindSageWeb.Controllers
         ISmsSender smsSender,
         ILoggerFactory loggerFactory,
         IUserProfileRepository userprofileRepo,
+        Engines.IImageUploader imageUploader,
         IOptions<ErrorMessageOptions> errorMsgs)
         {
             _userManager = userManager;
@@ -42,6 +44,7 @@ namespace MindSageWeb.Controllers
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
             _userprofileRepo = userprofileRepo;
+            _imageUploader = imageUploader;
             _errorMsgs = errorMsgs.Value;
         }
 
@@ -267,21 +270,9 @@ namespace MindSageWeb.Controllers
                         var userprofile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
                         if (userprofile != null)
                         {
-                            var storageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=mindsage;AccountKey=Xhaa5/DoM4usU0teA7pvQr/X7qo6g+6Vx+OGIvvzJb2obg6kpwH4dP5AWX0YKGuXxa+tNAQivwRuKYGphaWcEg==;BlobEndpoint=https://mindsage.blob.core.windows.net/");
-                            var blobClient = storageAccount.CreateCloudBlobClient();
-
-                            const string ContainerName = "userprofileimage";
-                            var container = blobClient.GetContainerReference(ContainerName);
-                            await container.CreateIfNotExistsAsync();
-
-                            var blob = container.GetBlockBlobReference(User.Identity.Name);
-                            blob.Properties.ContentType = model.ImagePath.ContentType;
-                            var fileStream = model.ImagePath.OpenReadStream();
-                            await blob.UploadFromStreamAsync(fileStream);
-
-                            userprofile.ImageProfileUrl = blob.Uri.AbsoluteUri;
+                            var uploadedURL = await _imageUploader.UploadUserProfile(User.Identity.Name, model.ImagePath.OpenReadStream(), model.ImagePath.ContentType);
+                            userprofile.ImageProfileUrl = uploadedURL;
                             _userprofileRepo.UpsertUserProfile(userprofile);
-                            fileStream.Close();
                         }
 
                         var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";

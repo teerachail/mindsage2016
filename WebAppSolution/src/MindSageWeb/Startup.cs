@@ -133,6 +133,9 @@ namespace MindSageWeb
             var primaryDBConnectionString = Configuration["Data:DefaultConnection:PrimaryDBConnectionString"];
             services.AddTransient<MongoAccess.MongoUtil>(pvdr => new MongoAccess.MongoUtil(primaryDBConnectionString, appConfig.PrimaryDBName));
 
+            var azureStorageConnectionString = Configuration["Data:DefaultConnection:AzureStorageConnectionString"];
+            services.AddTransient<Engines.IImageUploader>(pvdr => new Engines.AzureBlobStorageImageUploader(azureStorageConnectionString));
+
             services.AddSwaggerGen();
         }
 
