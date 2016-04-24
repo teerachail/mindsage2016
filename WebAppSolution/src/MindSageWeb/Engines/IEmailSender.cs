@@ -16,7 +16,8 @@ namespace MindSageWeb.Engines
         /// ส่งอีเมล์ในการขอตั้งรหัสผ่านใหม่
         /// </summary>
         /// <param name="receiverEmail">อีเมล์ผู้รับ</param>
-        Task SendResetPasswordEmail(string receiverEmail);
+        /// <param name="callbackURL">ลิงค์เมื่อกลับมายังหน้าตั้งรหัสผ่านใหม่</param>
+        Task SendResetPasswordEmail(string receiverEmail, string callbackURL);
 
         /// <summary>
         /// ส่งอีเมล์

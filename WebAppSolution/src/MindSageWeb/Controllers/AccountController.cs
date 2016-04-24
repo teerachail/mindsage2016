@@ -26,6 +26,7 @@ namespace MindSageWeb.Controllers
         private readonly ILogger _logger;
         private readonly IUserProfileRepository _userProfileRepo;
         private readonly IDateTime _dateTime;
+        private readonly Engines.IEmailSender _mindsageEmailSender;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -34,6 +35,7 @@ namespace MindSageWeb.Controllers
             ISmsSender smsSender,
             ILoggerFactory loggerFactory,
             IUserProfileRepository userprofileRepo,
+            Engines.IEmailSender mindsageEmailSender,
             IDateTime dateTime)
         {
             _userManager = userManager;
@@ -42,6 +44,7 @@ namespace MindSageWeb.Controllers
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<AccountController>();
             _userProfileRepo = userprofileRepo;
+            _mindsageEmailSender = mindsageEmailSender;
             _dateTime = dateTime;
         }
 
@@ -313,10 +316,13 @@ namespace MindSageWeb.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713
                 // Send an email with this link
-                //var code = await _userManager.GeneratePasswordResetTokenAsync(user);
-                //var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
+                var code = await _userManager.GeneratePasswordResetTokenAsync(user);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: HttpContext.Request.Scheme);
                 //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
                 //   "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
+                await _mindsageEmailSender.SendResetPasswordEmail(model.Email, callbackUrl);
+                ViewBag.ErrorMessage = callbackUrl;
+                return View("Error");
                 //return View("ForgotPasswordConfirmation");
             }
 
