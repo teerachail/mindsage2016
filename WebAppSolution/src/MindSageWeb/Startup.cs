@@ -12,7 +12,6 @@ using Microsoft.Extensions.Logging;
 using MindSageWeb.Models;
 using MindSageWeb.Services;
 using MindSageWeb.Repositories;
-using MindSageWeb.Engines;
 
 namespace MindSageWeb
 {
@@ -101,7 +100,7 @@ namespace MindSageWeb
             services.AddMvc();
 
             // Add application services.
-            services.AddTransient<Services.IEmailSender, AuthMessageSender>();
+            services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.AddTransient<IClassCalendarRepository, ClassCalendarRepository>();
@@ -120,8 +119,8 @@ namespace MindSageWeb
             services.AddTransient<INotificationRepository, NotificationRepository>();
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IContractRepository, ContractRepository>();
-            services.AddTransient<IPayment, PaypalPayment>();
-            services.AddTransient<Engines.IEmailSender, SendGridEmailSender>();
+            services.AddTransient<Engines.IPayment, Engines.PaypalPayment>();
+            services.AddTransient<Engines.IEmailSender, Engines.SendGridEmailSender>();
 
             services.AddTransient<Controllers.NotificationController, Controllers.NotificationController>();
             services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();
