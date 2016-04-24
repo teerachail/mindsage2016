@@ -308,7 +308,8 @@ namespace MindSageWeb.Controllers
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByNameAsync(model.Email);
-                if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                //if (user == null || !(await _userManager.IsEmailConfirmedAsync(user)))
+                if (user == null)
                 {
                     // Don't reveal that the user does not exist or is not confirmed
                     return View("ForgotPasswordConfirmation");
@@ -321,9 +322,7 @@ namespace MindSageWeb.Controllers
                 //await _emailSender.SendEmailAsync(model.Email, "Reset Password",
                 //   "Please reset your password by clicking here: <a href=\"" + callbackUrl + "\">link</a>");
                 await _mindsageEmailSender.SendResetPasswordEmail(model.Email, callbackUrl);
-                ViewBag.ErrorMessage = callbackUrl;
-                return View("Error");
-                //return View("ForgotPasswordConfirmation");
+                return View("ForgotPasswordConfirmation");
             }
 
             // If we got this far, something failed, redisplay form
