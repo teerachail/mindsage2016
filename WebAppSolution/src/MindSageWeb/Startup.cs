@@ -50,6 +50,9 @@ namespace MindSageWeb
                 option.PrimaryDBName = appConfig.PrimaryDBName;
                 option.PaypalClientId = appConfig.PaypalClientId;
                 option.PaypalClientSecret = appConfig.PaypalClientSecret;
+                option.EmailSenderName = appConfig.EmailSenderName;
+                option.SendGridUserName = appConfig.SendGridUserName;
+                option.SendGridPassword = appConfig.SendGridPassword;
             });
             var databaseTable = Configuration.GetSection("DatabaseTableOptions").Get<DatabaseTableOptions>();
             services.Configure<DatabaseTableOptions>(option =>

@@ -16,8 +16,9 @@ namespace MindSageWeb
         public string MindSageUrl { get; set; }
         public string PaypalClientId { get; set; }
         public string PaypalClientSecret { get; set; }
-        public string SendGridSenderEmail { get; set; }
-        public string SendGridAPIKey { get; set; }
+        public string EmailSenderName { get; set; }
+        public string SendGridUserName { get; set; }
+        public string SendGridPassword { get; set; }
 
         #endregion Properties
     }
