@@ -12,6 +12,7 @@ using MindSageWeb.Services;
 using MindSageWeb.ViewModels.Manage;
 using MindSageWeb.Repositories;
 using System.IO;
+using Microsoft.Extensions.OptionsModel;
 
 namespace MindSageWeb.Controllers
 {
@@ -24,6 +25,7 @@ namespace MindSageWeb.Controllers
         private readonly ISmsSender _smsSender;
         private readonly ILogger _logger;
         private IUserProfileRepository _userprofileRepo;
+        private ErrorMessageOptions _errorMsgs;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
@@ -31,7 +33,8 @@ namespace MindSageWeb.Controllers
         IEmailSender emailSender,
         ISmsSender smsSender,
         ILoggerFactory loggerFactory,
-        IUserProfileRepository userprofileRepo)
+        IUserProfileRepository userprofileRepo,
+        IOptions<ErrorMessageOptions> errorMsgs)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -39,6 +42,7 @@ namespace MindSageWeb.Controllers
             _smsSender = smsSender;
             _logger = loggerFactory.CreateLogger<ManageController>();
             _userprofileRepo = userprofileRepo;
+            _errorMsgs = errorMsgs.Value;
         }
 
         //
@@ -258,30 +262,36 @@ namespace MindSageWeb.Controllers
                 var user = await GetCurrentUserAsync();
                 if (user != null)
                 {
-                    var userprofile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
-                    if (userprofile != null)
+                    try
                     {
-                        using (var fileStream = new StreamReader(model.ImagePath.OpenReadStream()))
+                        var userprofile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
+                        if (userprofile != null)
                         {
                             var storageAccount = Microsoft.WindowsAzure.Storage.CloudStorageAccount.Parse("DefaultEndpointsProtocol=https;AccountName=mindsage;AccountKey=Xhaa5/DoM4usU0teA7pvQr/X7qo6g+6Vx+OGIvvzJb2obg6kpwH4dP5AWX0YKGuXxa+tNAQivwRuKYGphaWcEg==;BlobEndpoint=https://mindsage.blob.core.windows.net/");
                             var blobClient = storageAccount.CreateCloudBlobClient();
 
                             const string ContainerName = "userprofileimage";
                             var container = blobClient.GetContainerReference(ContainerName);
-
                             await container.CreateIfNotExistsAsync();
 
-                            var blob = container.GetBlockBlobReference(Guid.NewGuid().ToString());
+                            var blob = container.GetBlockBlobReference(User.Identity.Name);
                             blob.Properties.ContentType = model.ImagePath.ContentType;
-                            await blob.UploadFromStreamAsync(fileStream.BaseStream);
+                            var fileStream = model.ImagePath.OpenReadStream();
+                            await blob.UploadFromStreamAsync(fileStream);
 
                             userprofile.ImageProfileUrl = blob.Uri.AbsoluteUri;
                             _userprofileRepo.UpsertUserProfile(userprofile);
+                            fileStream.Close();
                         }
-                    }
 
-                    var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";
-                    return Redirect(redirectURL);
+                        var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";
+                        return Redirect(redirectURL);
+                    }
+                    catch (Exception)
+                    {
+                        ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
+                        return View("Error");
+                    }
                 }
             }
 
