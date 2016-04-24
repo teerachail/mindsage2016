@@ -101,7 +101,7 @@ namespace MindSageWeb
             services.AddMvc();
 
             // Add application services.
-            services.AddTransient<IEmailSender, AuthMessageSender>();
+            services.AddTransient<Services.IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
 
             services.AddTransient<IClassCalendarRepository, ClassCalendarRepository>();
@@ -121,6 +121,7 @@ namespace MindSageWeb
             services.AddTransient<IPaymentRepository, PaymentRepository>();
             services.AddTransient<IContractRepository, ContractRepository>();
             services.AddTransient<IPayment, PaypalPayment>();
+            services.AddTransient<Engines.IEmailSender, SendGridEmailSender>();
 
             services.AddTransient<Controllers.NotificationController, Controllers.NotificationController>();
             services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();
