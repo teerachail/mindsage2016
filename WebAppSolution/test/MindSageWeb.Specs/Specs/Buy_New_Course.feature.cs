@@ -98,7 +98,7 @@ namespace SpecFlow.GeneratedTests.Specs
 		""id"": ""CourseCatalog01"",
 		""Grade"": 7,
 		""SideName"": ""COMPLETE 7th GRADE COURSE"",
-		""PriceUSD"": 80.00,
+		""PriceUSD"": 80.01,
 		""Series"": ""Mind Sage Middle School Program: 6th,7th & 8th Grades"",
 		""Title"": ""GUIDING THE NATURAL DESIRE TO BECOME INDEPENDENT THINKERS"",
 		""FullDescription"": ""Middle school is a transitional period for students. They are no longer children, but entering phase were they in lift affords quite adults either. This wonderful period in life affords teachers the opportunity to build on the awareness of the Elementary MindSage course, developing and guiding the students as they natural begin to push for indepedents and control of their lives."",
@@ -190,11 +190,13 @@ namespace SpecFlow.GeneratedTests.Specs
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
-        [Xunit.TraitAttribute("Description", "New account buy new course success Then system add new course to the user")]
+        [Xunit.TraitAttribute("Description", "New account buy new course success Then system record the payment and add new cou" +
+            "rse to the user")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void NewAccountBuyNewCourseSuccessThenSystemAddNewCourseToTheUser()
+        public virtual void NewAccountBuyNewCourseSuccessThenSystemRecordThePaymentAndAddNewCourseToTheUser()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New account buy new course success Then system add new course to the user", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New account buy new course success Then system record the payment and add new cou" +
+                    "rse to the user", new string[] {
                         "mock"});
 #line 122
 this.ScenarioSetup(scenarioInfo);
@@ -230,7 +232,26 @@ this.FeatureBackground();
 }", ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
 #line 149
- testRunner.Then("System set course ClassCalendar collection with JSON format is", @"{
+ testRunner.Then("System record the payment information with JSON format is", @"{
+	""FirstName"": ""fresh"",
+	""LastName"": ""lastname"",
+	""Last4Digits"": ""7862"",
+	""CardType"": ""Visa"",
+	""CardNumber"": ""48772749xxxx7862"",
+	""TotalChargedAmount"": 80.01,
+	""BillingAddress"": ""799 E DRAGRAM SUITE 5A"",
+	""State"": ""CA"",
+	""City"": ""SEATTLE"",
+	""Country"": ""US"",
+	""ZipCode"": ""85705"",
+	""CourseName"": ""COMPLETE 7th GRADE COURSE"",
+	""IsCompleted"": true,
+	""CourseCatalogId"": ""CourseCatalog01"",
+	""CreatedDate"": ""1/1/2016""
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 169
+ testRunner.And("System set course ClassCalendar collection with JSON format is", @"{
 	""BeginDate"": ""1/1/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
 	""CreatedDate"": ""1/1/2016"",
@@ -264,15 +285,15 @@ this.FeatureBackground();
        ],
 	""Holidays"": [],
 	""ShiftDays"": []
-   }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+   }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 187
+#line 207
  testRunner.And("System upsert UserProfileId \'fresh@mindsage.com\' for update new subscription with" +
                     " JSON format are", "[\r\n{\r\n\"Role\": \"SelfPurchaser\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"ClassRoomName\": \"" +
                     "Emotional literacy\",\r\n\"CourseCatalogId\": \"CourseCatalog01\",\r\n\"LastActiveDate\": \"" +
                     "1/1/2016\",\r\n\"CreatedDate\": \"1/1/2016\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 200
+#line 220
  testRunner.And("System create new UserActivity with JSON format is", @"{
 ""UserProfileId"": ""fresh@mindsage.com"",
 ""ClassRoomId"": ""ClassRoom01"",

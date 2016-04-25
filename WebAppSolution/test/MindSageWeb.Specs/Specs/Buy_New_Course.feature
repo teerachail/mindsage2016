@@ -36,7 +36,7 @@ Background: Initialize mocking data
 			"id": "CourseCatalog01",
 			"Grade": 7,
 			"SideName": "COMPLETE 7th GRADE COURSE",
-			"PriceUSD": 80.00,
+			"PriceUSD": 80.01,
 			"Series": "Mind Sage Middle School Program: 6th,7th & 8th Grades",
 			"Title": "GUIDING THE NATURAL DESIRE TO BECOME INDEPENDENT THINKERS",
 			"FullDescription": "Middle school is a transitional period for students. They are no longer children, but entering phase were they in lift affords quite adults either. This wonderful period in life affords teachers the opportunity to build on the awareness of the Elementary MindSage course, developing and guiding the students as they natural begin to push for indepedents and control of their lives.",
@@ -119,7 +119,7 @@ Background: Initialize mocking data
     """  
     
 @mock  
-Scenario: New account buy new course success Then system add new course to the user  
+Scenario: New account buy new course success Then system record the payment and add new course to the user  
     Given Today is '1/1/2016 00:00 am'  
 	And Payment system will return result 'approved'
     When UserProfileId 'fresh@mindsage.com' buy new course by using information in JSON format is  
@@ -146,7 +146,27 @@ Scenario: New account buy new course success Then system add new course to the u
 		}
 	}
 	"""  
-	Then System set course ClassCalendar collection with JSON format is  
+	Then System record the payment information with JSON format is  
+	"""  
+	{
+		"FirstName": "fresh",
+		"LastName": "lastname",
+		"Last4Digits": "7862",
+		"CardType": "Visa",
+		"CardNumber": "48772749xxxx7862",
+		"TotalChargedAmount": 80.01,
+		"BillingAddress": "799 E DRAGRAM SUITE 5A",
+		"State": "CA",
+		"City": "SEATTLE",
+		"Country": "US",
+		"ZipCode": "85705",
+		"CourseName": "COMPLETE 7th GRADE COURSE",
+		"IsCompleted": true,
+		"CourseCatalogId": "CourseCatalog01",
+		"CreatedDate": "1/1/2016"
+	}
+	"""  
+	And System set course ClassCalendar collection with JSON format is  
 	"""  
 	{
 		"BeginDate": "1/1/2016",
@@ -218,3 +238,5 @@ Scenario: New account buy new course success Then system add new course to the u
 		]
 	}
     """  
+
+#New account buy new course failed Then system record the failed payment but doesn't add new course to the user  

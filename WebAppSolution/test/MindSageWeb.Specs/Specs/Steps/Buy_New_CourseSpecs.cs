@@ -54,6 +54,39 @@ namespace MindSageWeb.Specs.Steps
             var result = purchaseCtrl.ChargeACreditCard(body).Result;
         }
 
+        [Then(@"System record the payment information with JSON format is")]
+        public void WhenSystemRecordThePaymentInformationWithJSONFormatIs(string multilineText)
+        {
+            var expected = JsonConvert.DeserializeObject<Payment>(multilineText);
+            Func<Payment, bool> validateCreatePaymentFunc = actual =>
+            {
+                Assert.True(!string.IsNullOrEmpty(actual.id));
+                Assert.Equal(expected.FirstName, actual.FirstName);
+                Assert.Equal(expected.LastName, actual.LastName);
+                Assert.Equal(expected.Last4Digits, actual.Last4Digits);
+                Assert.Equal(expected.CardType, actual.CardType);
+                Assert.Equal(expected.CardNumber, actual.CardNumber);
+                Assert.Equal(expected.TotalChargedAmount, actual.TotalChargedAmount);
+                Assert.Equal(expected.BillingAddress, actual.BillingAddress);
+                Assert.Equal(expected.State, actual.State);
+                Assert.Equal(expected.City, actual.City);
+                Assert.Equal(expected.Country, actual.Country);
+                Assert.Equal(expected.ZipCode, actual.ZipCode);
+                Assert.Equal(expected.CourseName, actual.CourseName);
+                Assert.Equal(expected.IsCompleted, actual.IsCompleted);
+                Assert.True(!string.IsNullOrEmpty(actual.SubscriptionId));
+                Assert.Equal(expected.CourseCatalogId, actual.CourseCatalogId);
+                Assert.Equal(expected.CreatedDate, actual.CreatedDate);
+                Assert.Equal(expected.DeletedDate, actual.DeletedDate);
+                return true;
+            };
+
+            var mockPaymentRepo = ScenarioContext.Current.Get<Mock<IPaymentRepository>>();
+            mockPaymentRepo.Verify(it => it.CreateNewPayment(It.Is<Payment>(payment =>
+                validateCreatePaymentFunc(payment)
+            )));
+        }
+
         [Then(@"System upsert UserProfileId '(.*)' for update new subscription with JSON format are")]
         public void ThenSystemUpsertUserProfileIdForUpdateNewSubscriptionWithJSONFormatAre(string userprofileId, string multilineText)
         {
