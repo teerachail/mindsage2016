@@ -21,7 +21,7 @@ namespace MindSageWeb.Specs
         {
             if (ScenarioContext.Current.CurrentScenarioBlock == ScenarioBlock.Given)
             {
-                var mocks = new Moq.MockRepository(Moq.MockBehavior.Strict);
+                var mocks = new Moq.MockRepository(Moq.MockBehavior.Loose);
                 ScenarioContext.Current.Set(mocks);
             }
         }

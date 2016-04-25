@@ -38,6 +38,21 @@ namespace MindSageWeb.Specs.Steps
         {
             var expected = JsonConvert.DeserializeObject<ClassCalendar>(multilineText);
 
+            Func<List<ClassCalendar.TopicOfTheDay>, List<ClassCalendar.TopicOfTheDay>, bool> validateTopicOfTheDayFunc = (expecteds, actuals) =>
+            {
+                for (int index = 0; index < expecteds.Count; index++)
+                {
+                    Assert.True(!string.IsNullOrEmpty(actuals[index].id));
+                    Assert.Equal(expecteds[index].Message, actuals[index].Message);
+                    Assert.Equal(expecteds[index].SendOnDay, actuals[index].SendOnDay);
+                    Assert.Equal(expecteds[index].RequiredSendTopicOfTheDayDate?.ToUniversalTime(), actuals[index].RequiredSendTopicOfTheDayDate?.ToUniversalTime());
+                    Assert.Equal(expecteds[index].SendTopicOfTheDayDate?.ToUniversalTime(), actuals[index].SendTopicOfTheDayDate?.ToUniversalTime());
+                    Assert.Equal(expecteds[index].CreatedDate, actuals[index].CreatedDate);
+                    Assert.Equal(expecteds[index].DeletedDate, actuals[index].DeletedDate);
+                }
+                return true;
+            };
+
             Func<ClassCalendar, bool> validateClassCalendarFunc = actual =>
             {
                 Assert.Equal(expected.BeginDate?.ToUniversalTime(), actual.BeginDate?.ToUniversalTime());
@@ -55,35 +70,16 @@ namespace MindSageWeb.Specs.Steps
                 var actualShiftDays = JsonConvert.SerializeObject(actual.ShiftDays.Select(it => it.ToUniversalTime()));
                 Assert.Equal(expectedShiftDays, actualShiftDays);
 
-                Assert.Equal(expected.id, actual.id);
+                Assert.True(!string.IsNullOrEmpty(actual.id));
 
                 var expectedLessonCalendars = expected.LessonCalendars.ToList();
                 var actualLessonCalendars = actual.LessonCalendars.ToList();
                 for (int index = 0; index < expected.LessonCalendars.Count(); index++)
                 {
-                    var expectedTOTD = expectedLessonCalendars[index].TopicOfTheDays.Select(it => new ClassCalendar.TopicOfTheDay
-                    {
-                        id = it.id,
-                        CreatedDate = it.CreatedDate,
-                        DeletedDate = it.DeletedDate,
-                        Message = it.Message,
-                        RequiredSendTopicOfTheDayDate = it.RequiredSendTopicOfTheDayDate?.ToUniversalTime(),
-                        SendOnDay = it.SendOnDay,
-                        SendTopicOfTheDayDate = it.SendTopicOfTheDayDate?.ToUniversalTime()
-                    });
-                    var expectedTOTDString = JsonConvert.SerializeObject(expectedTOTD);
-                    var actualTOTD = actualLessonCalendars[index].TopicOfTheDays.Select(it => new ClassCalendar.TopicOfTheDay
-                    {
-                        id = it.id,
-                        CreatedDate = it.CreatedDate,
-                        DeletedDate = it.DeletedDate,
-                        Message = it.Message,
-                        RequiredSendTopicOfTheDayDate = it.RequiredSendTopicOfTheDayDate?.ToUniversalTime(),
-                        SendOnDay = it.SendOnDay,
-                        SendTopicOfTheDayDate = it.SendTopicOfTheDayDate?.ToUniversalTime()
-                    });
-                    var actualTOTDString = JsonConvert.SerializeObject(actualTOTD);
-                    Assert.Equal(expectedTOTDString, actualTOTDString);
+                    var expecteds = expectedLessonCalendars[index].TopicOfTheDays.ToList();
+                    var actuals = actualLessonCalendars[index].TopicOfTheDays.ToList();
+                    var result = validateTopicOfTheDayFunc(expecteds, actuals);
+                    Assert.True(result);
                 }
 
                 return true;

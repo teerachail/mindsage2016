@@ -243,9 +243,11 @@ namespace MindSageWeb.Controllers
 
                     try
                     {
-                        var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogById(selectedClassRoom.Lessons.Select(it => it.LessonCatalogId)).ToList();
+                        var requestLessonCatalogIds = selectedClassRoom.Lessons.Select(it => it.LessonCatalogId);
+                        var lessonCatalogs = _lessonCatalogRepo.GetLessonCatalogById(requestLessonCatalogIds).ToList();
                         var newClassCalendar = createClassCalendar(selectedClassRoom, lessonCatalogs, now);
                         newClassCalendar.CalculateCourseSchedule();
+                        newClassCalendar.ExpiredDate = null;
                         selectedUserProfile.Subscriptions = addNewSelfPurchaseSubscription(selectedUserProfile.Subscriptions, selectedClassRoom, newClassCalendar.id, model.CourseId, now, newSubscriptionId);
                         var userActivity = selectedUserProfile.CreateNewUserActivity(selectedClassRoom, newClassCalendar, lessonCatalogs, now);
 

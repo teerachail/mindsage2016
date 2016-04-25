@@ -58,6 +58,8 @@ namespace MindSageWeb.Specs.Steps
             var mockClassRoomRepo = ScenarioContext.Current.Get<Moq.Mock<IClassRoomRepository>>();
             mockClassRoomRepo.Setup(it => it.GetClassRoomById(It.IsAny<string>()))
                 .Returns<string>(id => classRooms.FirstOrDefault(it => it.id == id));
+            mockClassRoomRepo.Setup(it => it.GetPublicClassRoomByCourseCatalogId(It.IsAny<string>()))
+                .Returns<string>(id => classRooms.FirstOrDefault(it => it.CourseCatalogId == id && it.IsPublic));
         }
 
         [Given(@"System have LikeLesson collection with JSON format are")]
@@ -76,6 +78,8 @@ namespace MindSageWeb.Specs.Steps
             var mockLessonCatalogRepo = ScenarioContext.Current.Get<Moq.Mock<ILessonCatalogRepository>>();
             mockLessonCatalogRepo.Setup(it => it.GetLessonCatalogById(It.IsAny<string>()))
                 .Returns<string>(id => lessonCatalogs.Where(it => it.id == id).FirstOrDefault());
+            mockLessonCatalogRepo.Setup(it => it.GetLessonCatalogById(It.IsAny<IEnumerable<string>>()))
+                .Returns<IEnumerable<string>>(ids => lessonCatalogs.Where(it => ids.Contains(it.id)));
             mockLessonCatalogRepo.Setup(it => it.GetLessonCatalogByCourseCatalogId(It.IsAny<string>()))
                 .Returns<string>(courseCatalogId => lessonCatalogs.Where(it => it.CourseCatalogId == courseCatalogId));
         }

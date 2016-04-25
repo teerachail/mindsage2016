@@ -32,12 +32,17 @@ namespace MindSageWeb.Specs.Steps
             var notificationRepo = mock.Create<INotificationRepository>();
             var contractRepo = mock.Create<IContractRepository>();
             var courseCatalogRepo = mock.Create<ICourseCatalogRepository>();
+            var paymentRepo = mock.Create<IPaymentRepository>();
+            var payment = mock.Create<Engines.IPayment>();
             var logger = mock.Create<ILogger>();
             var loggerFactory = mock.Create<ILoggerFactory>();
-            var option = mock.Create<IOptions<AppConfigOptions>>();
+            var appConfigOption = mock.Create<IOptions<AppConfigOptions>>();
+            var errorOption = mock.Create<IOptions<ErrorMessageOptions>>();
+            var httpContext = mock.Create<Microsoft.AspNet.Http.HttpContext>();
             var dateTime = mock.Create<IDateTime>();
 
-            option.Setup(it => it.Value).Returns(new AppConfigOptions());
+            appConfigOption.Setup(it => it.Value).Returns(new AppConfigOptions());
+            errorOption.Setup(it => it.Value).Returns(new ErrorMessageOptions());
 
             ScenarioContext.Current.Set(classRoomRepo);
             ScenarioContext.Current.Set(likeLessonRepo);
@@ -53,9 +58,13 @@ namespace MindSageWeb.Specs.Steps
             ScenarioContext.Current.Set(notificationRepo);
             ScenarioContext.Current.Set(contractRepo);
             ScenarioContext.Current.Set(courseCatalogRepo);
+            ScenarioContext.Current.Set(paymentRepo);
+            ScenarioContext.Current.Set(payment);
             ScenarioContext.Current.Set(logger);
             ScenarioContext.Current.Set(loggerFactory);
-            ScenarioContext.Current.Set(option);
+            ScenarioContext.Current.Set(appConfigOption);
+            ScenarioContext.Current.Set(errorOption);
+            ScenarioContext.Current.Set(httpContext);
             ScenarioContext.Current.Set(dateTime);
 
             loggerFactory.Setup(it => it.CreateLogger(It.IsAny<string>()))
@@ -71,7 +80,7 @@ namespace MindSageWeb.Specs.Steps
                 friendRequestRepo.Object,
                 dateTime.Object);
 
-            var myCourseCtrl = new LessonController(classCalendarRepo.Object,
+            var lessonCtrl = new LessonController(classCalendarRepo.Object,
                 userprofileRepo.Object,
                 classRoomRepo.Object,
                 likeLessonRepo.Object,
@@ -80,7 +89,7 @@ namespace MindSageWeb.Specs.Steps
                 friendRequestRepo.Object,
                 userActivityRepo.Object,
                 notificationCtrl,
-                option.Object,
+                appConfigOption.Object,
                 dateTime.Object);
 
             var commentCtrl = new CommentController(classCalendarRepo.Object,
@@ -99,7 +108,7 @@ namespace MindSageWeb.Specs.Steps
                 notificationCtrl,
                 dateTime.Object);
 
-            var mycourseCtrl = new MyCourseController(classCalendarRepo.Object,
+            var myCourseCtrl = new MyCourseController(classCalendarRepo.Object,
                 userprofileRepo.Object,
                 userActivityRepo.Object,
                 classRoomRepo.Object,
@@ -120,12 +129,28 @@ namespace MindSageWeb.Specs.Steps
                 classRoomRepo.Object,
                 dateTime.Object);
 
+            var courseCtrl = new CourseController(courseCatalogRepo.Object, appConfigOption.Object);
+            var purchaseCtrl = new PurchaseController(courseCtrl,
+                myCourseCtrl,
+                userprofileRepo.Object,
+                classRoomRepo.Object,
+                classCalendarRepo.Object,
+                lessonCatalogRepo.Object,
+                userActivityRepo.Object,
+                paymentRepo.Object,
+                appConfigOption.Object,
+                errorOption.Object,
+                loggerFactory.Object,
+                payment.Object,
+                dateTime.Object);
+
             ScenarioContext.Current.Set(notificationCtrl);
-            ScenarioContext.Current.Set(myCourseCtrl);
+            ScenarioContext.Current.Set(lessonCtrl);
             ScenarioContext.Current.Set(commentCtrl);
             ScenarioContext.Current.Set(discussionCtrl);
-            ScenarioContext.Current.Set(mycourseCtrl);
+            ScenarioContext.Current.Set(myCourseCtrl);
             ScenarioContext.Current.Set(friendCtrl);
+            ScenarioContext.Current.Set(purchaseCtrl);
         }
 
         [Given(@"Initialize mocking notifications' repositories")]
