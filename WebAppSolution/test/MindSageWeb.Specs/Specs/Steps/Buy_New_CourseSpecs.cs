@@ -32,6 +32,8 @@ namespace MindSageWeb.Specs.Steps
         [When(@"UserProfileId '(.*)' buy new course by using information in JSON format is")]
         public void WhenUserProfileIdBuyNewCourseByUsingInformationInJSONFormatIs(string userprofileId, string multilineText)
         {
+            userprofileId = userprofileId.GetMockStrinValue();
+
             var mockPaymentRepo = ScenarioContext.Current.Get<Mock<IPaymentRepository>>();
             mockPaymentRepo.Setup(it => it.CreateNewPayment(It.IsAny<Payment>()))
                 .Returns<Payment>(it => Task.Delay(0));
@@ -51,6 +53,7 @@ namespace MindSageWeb.Specs.Steps
             purchaseCtrl.ActionContext.HttpContext = mockHttpContext.Object;
 
             var body = JsonConvert.DeserializeObject<PurchaseCourseViewModel>(multilineText);
+            body.CourseId = body.CourseId.GetMockStrinValue();
             var result = purchaseCtrl.ChargeACreditCard(body).Result;
         }
 
@@ -85,6 +88,13 @@ namespace MindSageWeb.Specs.Steps
             mockPaymentRepo.Verify(it => it.CreateNewPayment(It.Is<Payment>(payment =>
                 validateCreatePaymentFunc(payment)
             )));
+        }
+
+        [Then(@"System doesn't record the payment information")]
+        public void ThenSystemDoesnTRecordThePaymentInformation()
+        {
+            var mockPaymentRepo = ScenarioContext.Current.Get<Mock<IPaymentRepository>>();
+            mockPaymentRepo.Verify(it => it.CreateNewPayment(It.IsAny<Payment>()), Times.Never);
         }
 
         [Then(@"System upsert UserProfileId '(.*)' for update new subscription with JSON format are")]

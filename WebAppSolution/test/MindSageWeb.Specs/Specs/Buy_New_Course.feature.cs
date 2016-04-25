@@ -81,6 +81,7 @@ namespace SpecFlow.GeneratedTests.Specs
 	""Role"": ""SelfPurchaser"",
 	""ClassRoomId"": ""ClassRoom01"",
 	""ClassCalendarId"": ""ClassCalendar01"",
+	""CourseCatalogId"": ""CourseCatalog01""
 }
 ]
 },
@@ -92,7 +93,7 @@ namespace SpecFlow.GeneratedTests.Specs
 }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 32
+#line 33
     testRunner.And("System have CourseCatalog collection with JSON format are", @"[
 	{
 		""id"": ""CourseCatalog01"",
@@ -110,7 +111,7 @@ namespace SpecFlow.GeneratedTests.Specs
 	}
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 51
+#line 52
  testRunner.And("System have LessonCatalog collection with JSON format are", @"[
     {
         ""id"": ""LessonCatalog01"",
@@ -158,7 +159,7 @@ namespace SpecFlow.GeneratedTests.Specs
     }
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 100
+#line 101
  testRunner.And("System have ClassRoom collection with JSON format are", @"[
     {
         ""id"": ""ClassRoom01"",
@@ -175,6 +176,25 @@ namespace SpecFlow.GeneratedTests.Specs
             },
         ]
     }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 121
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""1/1/2016"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""1/1/2016"",
+            }
+        ]
+    },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
         }
@@ -198,16 +218,16 @@ namespace SpecFlow.GeneratedTests.Specs
             TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New account buy new course success Then system record the payment and add new cou" +
                     "rse to the user", new string[] {
                         "mock"});
-#line 122
+#line 143
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 123
+#line 144
     testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 124
+#line 145
  testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 125
+#line 146
     testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
                     "rmat is", @"{
 	""CourseId"": ""CourseCatalog01"",
@@ -231,7 +251,7 @@ this.FeatureBackground();
 	}
 }", ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-#line 149
+#line 170
  testRunner.Then("System record the payment information with JSON format is", @"{
 	""FirstName"": ""fresh"",
 	""LastName"": ""lastname"",
@@ -250,7 +270,7 @@ this.FeatureBackground();
 	""CreatedDate"": ""1/1/2016""
 }", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
-#line 169
+#line 190
  testRunner.And("System set course ClassCalendar collection with JSON format is", @"{
 	""BeginDate"": ""1/1/2016"",
        ""ClassRoomId"": ""ClassRoom01"",
@@ -287,13 +307,13 @@ this.FeatureBackground();
 	""ShiftDays"": []
    }", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 207
+#line 228
  testRunner.And("System upsert UserProfileId \'fresh@mindsage.com\' for update new subscription with" +
                     " JSON format are", "[\r\n{\r\n\"Role\": \"SelfPurchaser\",\r\n\"ClassRoomId\": \"ClassRoom01\",\r\n\"ClassRoomName\": \"" +
                     "Emotional literacy\",\r\n\"CourseCatalogId\": \"CourseCatalog01\",\r\n\"LastActiveDate\": \"" +
                     "1/1/2016\",\r\n\"CreatedDate\": \"1/1/2016\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 220
+#line 241
  testRunner.And("System create new UserActivity with JSON format is", @"{
 ""UserProfileId"": ""fresh@mindsage.com"",
 ""ClassRoomId"": ""ClassRoom01"",
@@ -312,6 +332,912 @@ this.FeatureBackground();
 }
 ]
 }", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "New account buy new course failed Then system record the failed payment but doesn" +
+            "\'t add new course to the user")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void NewAccountBuyNewCourseFailedThenSystemRecordTheFailedPaymentButDoesnTAddNewCourseToTheUser()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New account buy new course failed Then system record the failed payment but doesn" +
+                    "\'t add new course to the user", new string[] {
+                        "mock"});
+#line 264
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 265
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 266
+ testRunner.And("Payment system will return result \'failed\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 267
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 291
+ testRunner.Then("System record the payment information with JSON format is", @"{
+	""FirstName"": ""fresh"",
+	""LastName"": ""lastname"",
+	""Last4Digits"": ""7862"",
+	""CardType"": ""Visa"",
+	""CardNumber"": ""48772749xxxx7862"",
+	""TotalChargedAmount"": 80.01,
+	""BillingAddress"": ""799 E DRAGRAM SUITE 5A"",
+	""State"": ""CA"",
+	""City"": ""SEATTLE"",
+	""Country"": ""US"",
+	""ZipCode"": ""85705"",
+	""CourseName"": ""COMPLETE 7th GRADE COURSE"",
+	""IsCompleted"": false,
+	""CourseCatalogId"": ""CourseCatalog01"",
+	""CreatedDate"": ""1/1/2016""
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 311
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 312
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 313
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "An account try to buy the same course Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AnAccountTryToBuyTheSameCourseThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An account try to buy the same course Then system do nothing", new string[] {
+                        "mock"});
+#line 316
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 317
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 318
+ testRunner.And("Payment system will return result \'failed\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 319
+    testRunner.When("UserProfileId \'old@mindsage.com\' buy new course by using information in JSON form" +
+                    "at is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 343
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 344
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 345
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 346
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "A user buy a course but used incorrect CourseId (unknow) Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AUserBuyACourseButUsedIncorrectCourseIdUnknowThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user buy a course but used incorrect CourseId (unknow) Then system do nithing", new string[] {
+                        "mock"});
+#line 349
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 350
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 351
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 352
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""Unknow"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 376
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 377
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 378
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 379
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "A user buy a course but used incorrect CourseId (empty) Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AUserBuyACourseButUsedIncorrectCourseIdEmptyThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user buy a course but used incorrect CourseId (empty) Then system do nithing", new string[] {
+                        "mock"});
+#line 382
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 383
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 384
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 385
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": """",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 409
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 410
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 411
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 412
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "A user buy a course but used incorrect CourseId (null) Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AUserBuyACourseButUsedIncorrectCourseIdNullThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user buy a course but used incorrect CourseId (null) Then system do nithing", new string[] {
+                        "mock"});
+#line 415
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 416
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 417
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 418
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""NULL"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 442
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 443
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 444
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 445
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "A user buy a course but the selected course was deleted Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AUserBuyACourseButTheSelectedCourseWasDeletedThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user buy a course but the selected course was deleted Then system do nithing", new string[] {
+                        "mock"});
+#line 448
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 449
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 450
+ testRunner.And("System have CourseCatalog collection with JSON format are", @"[
+	{
+		""id"": ""CourseCatalog01"",
+		""Grade"": 7,
+		""SideName"": ""COMPLETE 7th GRADE COURSE"",
+		""PriceUSD"": 80.01,
+		""Series"": ""Mind Sage Middle School Program: 6th,7th & 8th Grades"",
+		""Title"": ""GUIDING THE NATURAL DESIRE TO BECOME INDEPENDENT THINKERS"",
+		""FullDescription"": ""Middle school is a transitional period for students. They are no longer children, but entering phase were they in lift affords quite adults either. This wonderful period in life affords teachers the opportunity to build on the awareness of the Elementary MindSage course, developing and guiding the students as they natural begin to push for indepedents and control of their lives."",
+		""DescriptionImageUrl"": ""http://placehold.it/350x110"",
+		""TotalWeeks"": 1,
+		""CreatedDate"": ""1/1/2016"",
+		""RelatedCourses"": [],
+		""Semesters"": [],
+		""DeletedDate"": ""1/1/2016""
+	}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 470
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 471
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 495
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 496
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 497
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 498
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "A user buy a course but the selected course doesn\'t existing Then system do nithi" +
+            "ng")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AUserBuyACourseButTheSelectedCourseDoesnTExistingThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A user buy a course but the selected course doesn\'t existing Then system do nithi" +
+                    "ng", new string[] {
+                        "mock"});
+#line 501
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 502
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 503
+ testRunner.And("System have CourseCatalog collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 507
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 508
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 532
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 533
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 534
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 535
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "Invalid user (unknow) buy a course Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserUnknowBuyACourseThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (unknow) buy a course Then system do nithing", new string[] {
+                        "mock"});
+#line 538
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 539
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 540
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 541
+    testRunner.When("UserProfileId \'unknow@mindsage.com\' buy new course by using information in JSON f" +
+                    "ormat is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 565
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 566
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 567
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 568
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "Invalid user (empty) buy a course Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserEmptyBuyACourseThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (empty) buy a course Then system do nithing", new string[] {
+                        "mock"});
+#line 571
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 572
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 573
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 574
+    testRunner.When("UserProfileId \'\' buy new course by using information in JSON format is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 598
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 599
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 600
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 601
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "Invalid user (null) buy a course Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserNullBuyACourseThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (null) buy a course Then system do nithing", new string[] {
+                        "mock"});
+#line 604
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 605
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 606
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 607
+    testRunner.When("UserProfileId \'NULL\' buy new course by using information in JSON format is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 631
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 632
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 633
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 634
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "Invalid user (the accout was deleted) buy a course Then system do nithing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void InvalidUserTheAccoutWasDeletedBuyACourseThenSystemDoNithing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Invalid user (the accout was deleted) buy a course Then system do nithing", new string[] {
+                        "mock"});
+#line 637
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 638
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 639
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"fresh@mindsage.com\",\r\n\"Name\": \"fresh\",\r\n\"ImageProfileUrl\": \"fresh.jp" +
+                    "g\",\r\n\"Subscriptions\": [],\r\n\"DeletedDate\": \"1/1/2016\"\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 651
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 652
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 676
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 677
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 678
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 679
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "An account who already have course subscription but its was deleted buy the same " +
+            "course Then system record the payment and add new course to the user")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AnAccountWhoAlreadyHaveCourseSubscriptionButItsWasDeletedBuyTheSameCourseThenSystemRecordThePaymentAndAddNewCourseToTheUser()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("An account who already have course subscription but its was deleted buy the same " +
+                    "course Then system record the payment and add new course to the user", new string[] {
+                        "mock"});
+#line 682
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 683
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 684
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""old@mindsage.com"",
+""Name"": ""old"",
+""ImageProfileUrl"": ""old.jpg"",
+""Subscriptions"": [
+{
+	""id"": ""Subscription01"",
+	""Role"": ""SelfPurchaser"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""CourseCatalogId"": ""CourseCatalog01"",
+	""DeletedDate"": ""1/1/2016""
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 704
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 705
+    testRunner.When("UserProfileId \'old@mindsage.com\' buy new course by using information in JSON form" +
+                    "at is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 729
+ testRunner.Then("System record the payment information with JSON format is", @"{
+	""FirstName"": ""fresh"",
+	""LastName"": ""lastname"",
+	""Last4Digits"": ""7862"",
+	""CardType"": ""Visa"",
+	""CardNumber"": ""48772749xxxx7862"",
+	""TotalChargedAmount"": 80.01,
+	""BillingAddress"": ""799 E DRAGRAM SUITE 5A"",
+	""State"": ""CA"",
+	""City"": ""SEATTLE"",
+	""Country"": ""US"",
+	""ZipCode"": ""85705"",
+	""CourseName"": ""COMPLETE 7th GRADE COURSE"",
+	""IsCompleted"": true,
+	""CourseCatalogId"": ""CourseCatalog01"",
+	""CreatedDate"": ""1/1/2016""
+}", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+#line 749
+ testRunner.And("System set course ClassCalendar collection with JSON format is", @"{
+	""BeginDate"": ""1/1/2016"",
+       ""ClassRoomId"": ""ClassRoom01"",
+	""CreatedDate"": ""1/1/2016"",
+       ""LessonCalendars"":
+       [
+           {
+               ""Id"": ""LessonCalendar01"",
+               ""Order"": 1,
+               ""SemesterGroupName"": ""A"",
+               ""BeginDate"": ""1/1/2016"",
+			""TopicOfTheDays"": [],
+               ""LessonId"": ""Lesson01"",
+			""TopicOfTheDays"": 
+			[
+				{
+					""id"": ""TOTD01"",
+					""Message"": ""Message01"",
+					""SendOnDay"": 1,
+					""CreatedDate"": ""1/1/2016"",
+					""RequiredSendTopicOfTheDayDate"": ""1/1/2016""
+				},
+				{
+					""id"": ""TOTD02"",
+					""Message"": ""Message02"",
+					""SendOnDay"": 3,
+					""CreatedDate"": ""1/1/2016"",
+					""RequiredSendTopicOfTheDayDate"": ""1/3/2016""
+				}
+			]
+           }
+       ],
+	""Holidays"": [],
+	""ShiftDays"": []
+   }", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 787
+ testRunner.And("System upsert UserProfileId \'old@mindsage.com\' for update new subscription with J" +
+                    "SON format are", @"[
+{
+""id"": ""Subscription01"",
+""Role"": ""SelfPurchaser"",
+""ClassRoomId"": ""ClassRoom01"",
+""ClassCalendarId"": ""ClassCalendar01"",
+""CourseCatalogId"": ""CourseCatalog01"",
+""DeletedDate"": ""1/1/2016""
+},
+{
+""Role"": ""SelfPurchaser"",
+""ClassRoomId"": ""ClassRoom01"",
+""ClassRoomName"": ""Emotional literacy"",
+""CourseCatalogId"": ""CourseCatalog01"",
+""LastActiveDate"": ""1/1/2016"",
+""CreatedDate"": ""1/1/2016""
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 808
+ testRunner.And("System create new UserActivity with JSON format is", @"{
+""UserProfileId"": ""old@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""CreatedDate"": ""1/1/2016"",
+""UserProfileName"": ""old"",
+""UserProfileImageUrl"": ""old.jpg"",
+""LessonActivities"":
+[
+{
+""LessonId"": ""Lesson01"",
+""BeginDate"": ""1/1/2016"",
+""SawContentIds"": [],
+""TotalContentsAmount"": 4,
+""ParticipationAmount"": 0,
+""CreatedCommentAmount"": 0,
+}
+]
+}", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "New account buy new course but ClassRoom was deleted Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void NewAccountBuyNewCourseButClassRoomWasDeletedThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New account buy new course but ClassRoom was deleted Then system do nothing", new string[] {
+                        "mock"});
+#line 832
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 833
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 834
+ testRunner.And("System have ClassRoom collection with JSON format are", @"[
+    {
+        ""id"": ""ClassRoom01"",
+        ""Name"": ""Emotional literacy"",
+        ""CourseCatalogId"": ""CourseCatalog01"",
+        ""CreatedDate"": ""1/1/2016"",
+""IsPublic"": true,
+        ""Lessons"":
+        [
+            {
+                ""id"": ""Lesson01"",
+                ""TotalLikes"": 0,
+                ""LessonCatalogId"": ""LessonCatalog01""
+            }
+        ],
+""DeletedDate"": ""1/1/2016""
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 855
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 856
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 880
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 881
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 882
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 883
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Buy_New_Course")]
+        [Xunit.TraitAttribute("Description", "New account buy new course but ClassRoom doesn\'t existing Then system do nothing")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void NewAccountBuyNewCourseButClassRoomDoesnTExistingThenSystemDoNothing()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("New account buy new course but ClassRoom doesn\'t existing Then system do nothing", new string[] {
+                        "mock"});
+#line 886
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 887
+    testRunner.Given("Today is \'1/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 888
+ testRunner.And("System have ClassRoom collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 892
+ testRunner.And("Payment system will return result \'approved\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+#line 893
+    testRunner.When("UserProfileId \'fresh@mindsage.com\' buy new course by using information in JSON fo" +
+                    "rmat is", @"{
+	""CourseId"": ""CourseCatalog01"",
+	""CreditCardInfo"":
+	{
+		""FirstName"": ""fresh"",
+		""LastName"": ""lastname"",
+		""CardNumber"": ""4877274905927862"",
+		""CardType"": ""Visa"",
+		""ExpiredMonth"": ""11"",
+		""ExpiredYear"": ""2018"",
+		""CVV"": ""874""
+	},
+	""PrimaryAddress"":
+	{
+		""Address"": ""799 E DRAGRAM SUITE 5A"",
+		""State"": ""CA"",
+		""City"": ""SEATTLE"",
+		""Country"": ""US"",
+		""ZipCode"": ""85705""
+	}
+}", ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 917
+ testRunner.Then("System doesn\'t record the payment information", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line 918
+ testRunner.And("System doesn\'t set course ClassCalendar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 919
+ testRunner.And("System doesn\'t upsert UserProfile", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 920
+ testRunner.And("System doesn\'t update UserActivity", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
             this.ScenarioCleanup();
         }

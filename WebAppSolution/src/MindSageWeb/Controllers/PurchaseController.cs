@@ -164,6 +164,15 @@ namespace MindSageWeb.Controllers
         {
             try
             {
+                var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
+                var isUserProfileValid = selectedUserProfile != null && !selectedUserProfile.DeletedDate.HasValue;
+                if (!isUserProfileValid)
+                {
+                    _logger.LogCritical($"User profile { User.Identity.Name } not found.");
+                    ViewBag.ErrorMessage = _errorMsgs.UserProfileNotFound;
+                    return View("Error");
+                }
+
                 var selectedCourse = _courseCtrl.GetCourseDetail(model.CourseId);
                 if (selectedCourse == null)
                 {
@@ -171,16 +180,9 @@ namespace MindSageWeb.Controllers
                     return View("Error");
                 }
 
-                var selectedUserProfile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
-                if (selectedUserProfile == null)
-                {
-                    _logger.LogCritical($"User profile { User.Identity.Name } not found.");
-                    ViewBag.ErrorMessage = _errorMsgs.UserProfileNotFound;
-                    return View("Error");
-                }
-
                 var selectedClassRoom = _classRoomRepo.GetPublicClassRoomByCourseCatalogId(model.CourseId);
-                if (selectedClassRoom == null)
+                var isClassRoomValid = selectedClassRoom != null && !selectedClassRoom.DeletedDate.HasValue;
+                if (!isClassRoomValid)
                 {
                     _logger.LogCritical($"ClassRoom of CourseId: { model.CourseId } not found.");
                     ViewBag.ErrorMessage = _errorMsgs.CourseInformationIncorrect;

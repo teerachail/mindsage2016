@@ -106,7 +106,8 @@ namespace MindSageWeb.Controllers
             if (!isArgumentValid) return null;
 
             var selectedCourse = _repo.GetCourseCatalogById(id);
-            if (selectedCourse == null) return null;
+            var isCourseValid = selectedCourse != null && !selectedCourse.DeletedDate.HasValue;
+            if (!isCourseValid) return null;
 
             var relatedCourses = GetRelatedCourses(selectedCourse.GroupName)
                 .Where(it => it.id != id)
