@@ -471,7 +471,7 @@ namespace MindSageWeb.Controllers
                 Code = body.Code,
                 Grade = body.Grade,
             };
-            
+
             var areArgumentsValid = body != null
                 && !string.IsNullOrEmpty(body.UserProfileId)
                 && !string.IsNullOrEmpty(body.Code)
@@ -889,8 +889,6 @@ namespace MindSageWeb.Controllers
             };
         }
 
-        #endregion Methods
-
         // GET: api/mycourse/{user-id}/{class-room-id}/schedule
         /// <summary>
         /// Get course schedule
@@ -1079,8 +1077,9 @@ namespace MindSageWeb.Controllers
             var canAccessToCourse = validateAccessToCourseScheduleManagement(body.UserProfileId, body.ClassRoomId, out userprofile);
             if (!canAccessToCourse) return;
 
-            var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
-            if (classCalendar == null) return;
+            var masterClassCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(body.ClassRoomId);
+            var isMasterClassCalendarValid = masterClassCalendar != null && !masterClassCalendar.DeletedDate.HasValue;
+            if (!isMasterClassCalendarValid) return;
 
             var reqChangeCourseScheduleClassRoomIds = userprofile.Subscriptions
                 .Where(it => it.ClassRoomId != body.ClassRoomId)
@@ -1097,15 +1096,16 @@ namespace MindSageWeb.Controllers
 
             reqApplyScheduleClassCalendars.ForEach(it =>
             {
-                it.BeginDate = classCalendar.BeginDate;
-                it.ExpiredDate = classCalendar.ExpiredDate;
-                it.ShiftDays = classCalendar.ShiftDays;
-                it.Holidays = classCalendar.Holidays;
+                it.BeginDate = masterClassCalendar.BeginDate;
+                it.ShiftDays = masterClassCalendar.ShiftDays;
+                it.Holidays = masterClassCalendar.Holidays;
                 it.CalculateCourseSchedule();
             });
 
             reqApplyScheduleClassCalendars.ForEach(it => _classCalendarRepo.UpsertClassCalendar(it));
         }
+
+        #endregion Methods
 
         private GetCourseScheduleRespond getCourseSchedule(ClassCalendar classCalendar, bool isComplete)
         {
