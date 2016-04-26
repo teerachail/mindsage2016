@@ -7,8 +7,8 @@
         private displayNpotifications;
         private notification: any[] = [];
 
-        static $inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private getProfile: app.shared.GetProfileService) {
+        static $inject = ['$sce', '$scope', '$state', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
+        constructor(private $sce, private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private getProfile: app.shared.GetProfileService) {
             this.prepareUserprofile();
         }
 

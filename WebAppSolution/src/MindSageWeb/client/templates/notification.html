@@ -51,9 +51,7 @@ controller: 'app.notification.NotificationController as cx'
                     </h6>
                 </a>
                 <div ng-show="isclose">
-                    <p class="card-section">
-                        {{ item.Message }}
-                    </p>
+                    <p class="card-section" ng-bind-html="cx.$sce.trustAsHtml(item.Message)"></p>
                 </div>
             </li>
         </ul>
