@@ -24,7 +24,7 @@ controller: 'app.lessons.LessonController as cx'
                 <i class="fi-alert size-36"></i>
             </div>
             <div class="grid-content">
-                <p>{{ cx.content.CourseMessage }}</p>
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.CourseMessage)"></p>
             </div>
         </div>
     </div>
@@ -37,7 +37,7 @@ controller: 'app.lessons.LessonController as cx'
             <div ng-show="cx.teacherView">
                 <h3>{{ cx.content.Title }}</h3>
                 <hr />
-                <p>{{ cx.content.ShortTeacherLessonPlan }}</p>
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.ShortTeacherLessonPlan)"></p>
                 <a ng-click="detailTeacherClose = !detailTeacherClose">
                     <img ng-hide="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
                     <img ng-show="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
@@ -45,14 +45,14 @@ controller: 'app.lessons.LessonController as cx'
                 </a>
                 <div ng-show="detailTeacherClose">
                     <br>
-                    <p>{{ cx.content.MoreTeacherLessonPlan }}</p>
+                    <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.MoreTeacherLessonPlan)"></p>
                 </div>
             </div>
 
             <div ng-show="!cx.teacherView">
                 <h3>{{ cx.content.Title }}</h3>
                 <hr />
-                <p>{{ cx.content.ShortDescription }}</p>
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.ShortDescription)"></p>
 
                 <a ng-click="detailClose = !detailClose">
                     <img ng-hide="detailClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
@@ -61,16 +61,14 @@ controller: 'app.lessons.LessonController as cx'
                 </a>
                 <div ng-show="detailClose">
                     <br>
-                    <p>{{ cx.content.MoreDescription }}</p>
+                    <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.MoreDescription)"></p>
                     <a href="{{ item.PrimaryContentURL }}">
                         <div class="grid-block">
                             <div class="grid-content shrink large-2">
                                 <img src="{{ cx.primaryContentIconUrl }}">
                             </div>
                             <div class="grid-content large-10">
-                                <p>
-                                    {{ cx.content.PrimaryContentDescription }}
-                                </p>
+                                <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.PrimaryContentDescription)"></p>
                             </div>
                         </div>
                     </a>
@@ -82,9 +80,7 @@ controller: 'app.lessons.LessonController as cx'
                                     <img src="{{ item.IconURL }}">
                                 </div>
                                 <div class="grid-content large-10">
-                                    <p>
-                                        {{ item.Description }}
-                                    </p>
+                                    <p ng-bind-html="cx.$sce.trustAsHtml(item.Description)"></p>
                                 </div>
                             </div>
                         </a>
