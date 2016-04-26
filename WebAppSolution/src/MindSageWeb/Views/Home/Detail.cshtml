@@ -44,9 +44,9 @@
                 <hr>
                 <h1 class="detail-header">@Model.Title</h1>
                 <p>
-                    @Model.FullDescription
+                    @Html.Raw(Model.FullDescription)
                 </p>
-                <h2 class="detail-header">@Model.TotalWeeks Week Courses <img class="float-right" src="@Model.DescriptionImageUrl"></h2>
+                <h2 class="detail-header">@Model.TotalWeeks Week(s) <img class="float-right" src="@Model.DescriptionImageUrl"></h2>
 
                 @{ var slot = 0; }
                 @foreach (var semester in Model.Semesters)
@@ -56,10 +56,10 @@
                         <div class="card-section">
                             <h1 class="success label titlePosition">INTRO</h1>
                             <h2>@semester.Title</h2>
-                            <p class="text-success">@semester.TotalWeeks Weeks</p>
+                            <p class="text-success">@semester.TotalWeeks Week(s)</p>
                             <hr />
                             <p>
-                                @semester.Description
+                                @Html.Raw(semester.Description)
                             </p>
                             <a ng-click="INTROClose[@slot] = !INTROClose[@slot]">
                                 <img ng-hide="INTROClose[@slot]" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
@@ -86,7 +86,7 @@
                                                                 </div>
                                                                 <div class="grid-content large-10">
                                                                     <p>
-                                                                        @content.Description
+                                                                        @Html.Raw(content.Description)
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -100,7 +100,7 @@
                                                             </div>
                                                             <div class="grid-content large-10">
                                                                 <p>
-                                                                    @content.Description
+                                                                    @Html.Raw(content.Description)
                                                                 </p>
                                                             </div>
                                                         </div>
@@ -128,10 +128,10 @@
                             <div class="card-section">
                                 <h2 class="success label titlePosition">UNIT @unit.UnitNo</h2>
                                 <h3>@unit.Title</h3>
-                                <p class="week-info">@unit.TotalWeeks Weeks</p>
+                                <p class="week-info">@unit.TotalWeeks Week(s)</p>
                                 <hr />
                                 <p>
-                                    @unit.Description
+                                    @Html.Raw(unit.Description)
                                 </p>
                                 <a ng-click="UNITClose[@slot] = !UNITClose[@slot]">
                                     <img ng-hide="UNITClose[@slot]" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
@@ -156,7 +156,7 @@
                                                                 </div>
                                                                 <div class="grid-content large-10">
                                                                     <p>
-                                                                        @content.Description
+                                                                        @Html.Raw(content.Description)
                                                                     </p>
                                                                 </div>
                                                             </div>
@@ -170,7 +170,7 @@
                                                             </div>
                                                             <div class="grid-content large-10">
                                                                 <p>
-                                                                    @content.Description
+                                                                    @Html.Raw(content.Description)
                                                                 </p>
                                                             </div>
                                                         </div>

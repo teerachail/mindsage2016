@@ -59,6 +59,7 @@ namespace WebManagementPortal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
@@ -94,6 +95,7 @@ namespace WebManagementPortal.Controllers
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
+        [ValidateInput(false)]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
@@ -357,15 +359,15 @@ namespace WebManagementPortal.Controllers
                     .Where(it => !it.RecLog.DeletedDate.HasValue)
                     .SelectMany(it => it.Lessons)
                     .Where(it => !it.RecLog.DeletedDate.HasValue)
-                    .Select(it =>
+                    .Select(courseCatalogLesson =>
                     {
-                        var selectedLesson = publicClassRoom.Lessons.FirstOrDefault(l => l.id == it.Id.ToString());
+                        var selectedLesson = publicClassRoom.Lessons.FirstOrDefault(l => l.LessonCatalogId == courseCatalogLesson.Id.ToString());
                         var totalLikes = selectedLesson?.TotalLikes ?? 0;
 
                         return new repoModel.ClassRoom.Lesson
                         {
                             id = selectedLesson.id,
-                            LessonCatalogId = it.Id.ToString(),
+                            LessonCatalogId = courseCatalogLesson.Id.ToString(),
                             TotalLikes = totalLikes
                         };
                     });
