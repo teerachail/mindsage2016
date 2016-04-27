@@ -4,7 +4,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>MindSage</title>
-
     <environment names="Development">
         <link rel="stylesheet" href="~/assets/css/app.css" />
         <link href="~/lib/owlcarousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
@@ -22,7 +21,6 @@
     </environment>
 </head>
 <body ng-app="app">
-
     <div class="dark title-bar" style="height: 140px;
     padding: 30px;
     background-color: rgba(73, 73, 73, 1);
@@ -49,107 +47,105 @@
             </div>
         </div>
     </div>
-
-        <footer class="footer">
-            <div class="grid-block align-center">
-                <div class="grid-block large-9 align-justify">
-                    <!-- col 1 -->
-                    <div class="small-12 medium-6 large-6 grid-block vertical">
-                        <div id="text-2" class="fusion-footer-widget-column widget widget_text">
-                            <div class="textwidget">
-                                <div>
-                                    <img class="logo" src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/logo_small.png"
-                                         alt="logo" width="246" height="79" />
-                                </div>
-                                <p><span style="color: #DDDDDD;">Mindsage is a teacher-friendly soft skills training program that spans 4th-12th grades.</span></p>
-                                <p><span style="color: #DDDDDD;">Our course adapts cutting edge corporate level training concepts to grade appropriate lessons.</span></p>
-                                <p><span style="color: #DDDDDD;">Mindsage uses a microlearning and metacognitive approach for a maximum transformative learning.</span></p>
+    @RenderBody()
+    <footer class="footer">
+        <div class="grid-block align-center">
+            <div class="grid-block large-9 align-justify">
+                <!-- col 1 -->
+                <div class="small-12 medium-6 large-6 grid-block vertical">
+                    <div id="text-2" class="fusion-footer-widget-column widget widget_text">
+                        <div class="textwidget">
+                            <div>
+                                <img class="logo" src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/logo_small.png"
+                                     alt="logo" width="246" height="79" />
                             </div>
-                            <div style="clear:both;"></div>
+                            <p><span style="color: #DDDDDD;">Mindsage is a teacher-friendly soft skills training program that spans 4th-12th grades.</span></p>
+                            <p><span style="color: #DDDDDD;">Our course adapts cutting edge corporate level training concepts to grade appropriate lessons.</span></p>
+                            <p><span style="color: #DDDDDD;">Mindsage uses a microlearning and metacognitive approach for a maximum transformative learning.</span></p>
                         </div>
-                        <div id="social_links-widget-2" class="fusion-footer-widget-column widget social_links">
-                            <div class="fusion-social-networks">
-                                <div class="fusion-social-networks-wrapper">
-
-                                    <a class="fusion-social-network-icon fusion-tooltip fusion-facebook fusion-icon-facebook" href="https://www.facebook.com/seniorsasa"
-                                       data-placement="top" data-title="Facebook" data-toggle="tooltip" data-original-title=""
-                                       title="Facebook" target="_self" style="font-size:16px;color:#bebdbd;"></a>
-
-                                </div>
-                            </div>
-
-                            <div style="clear:both;"></div>
-                        </div>
+                        <div style="clear:both;"></div>
                     </div>
-                    <!-- col 3 -->
-                    <div class="small-12 medium-12 large-5 grid-block vertical">
-                        <form class="footer-form ng-pristine ng-valid">
-                            <div class="row">
-                                <div class="columns">
-                                    <label>
-                                        <span>Name*</span>
-                                        <input type="text" id="name" placeholder="">
-                                    </label>
-                                </div>
+                    <div id="social_links-widget-2" class="fusion-footer-widget-column widget social_links">
+                        <div class="fusion-social-networks">
+                            <div class="fusion-social-networks-wrapper">
+
+                                <a class="fusion-social-network-icon fusion-tooltip fusion-facebook fusion-icon-facebook" href="https://www.facebook.com/seniorsasa"
+                                   data-placement="top" data-title="Facebook" data-toggle="tooltip" data-original-title=""
+                                   title="Facebook" target="_self" style="font-size:16px;color:#bebdbd;"></a>
+
+                            </div>
+                        </div>
+
+                        <div style="clear:both;"></div>
+                    </div>
+                </div>
+                <!-- col 3 -->
+                <div class="small-12 medium-12 large-5 grid-block vertical">
+                    <form class="footer-form ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="columns">
+                                <label>
+                                    <span>Name*</span>
+                                    <input type="text" id="name" placeholder="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns">
+                                <label>
+                                    <span>Email*</span>
+                                    <input type="email" id="email" placeholder="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns">
+                                <label>
+                                    <span>Message*</span>
+                                    <textarea rows="3" id="message" placeholder=""></textarea>
+                                </label>
                             </div>
                             <div class="row">
-                                <div class="columns">
-                                    <label>
-                                        <span>Email*</span>
-                                        <input type="email" id="email" placeholder="">
-                                    </label>
+                                <div class="medium-9 columns">
+                                    <button class="submit" type="submit" value="Submit">Send Email</button>
                                 </div>
                             </div>
-                            <div class="row">
-                                <div class="columns">
-                                    <label>
-                                        <span>Message*</span>
-                                        <textarea rows="3" id="message" placeholder=""></textarea>
-                                    </label>
-                                </div>
-                                <div class="row">
-                                    <div class="medium-9 columns">
-                                        <button class="submit" type="submit" value="Submit">Send Email</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!--
+                        </div>
+                    </form>
+                    <!--
                     <ul class="contact-address">
                         <li><p><i class="fa fa-map"></i>1595 Spring Street New Britain, CT 06051</p></li>
                         <li><p><i class="fa fa-phone-square"></i>+1-656-453-9966</p></li>
                         <li><p><i class="fa fa-envelope-square"></i>contact@emperor.com</p></li>
                     </ul>
                     -->
-                    </div>
                 </div>
             </div>
-        </footer>
-
-        <environment names="Development">
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/assets/js/foundation.js"></script>
-            <script src="~/assets/js/templates.js"></script>
-            <script src="~/assets/js/routes.js"></script>
-            <script src="~/assets/js/app.js"></script>
-            <script src="~/lib/angular-resource/angular-resource.js"></script>
-            <script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
-            <script src="~/lib/foundation-datepicker/js/foundation-datepicker.js"></script>
-            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        </environment>
-        <environment names="Staging,Production">
-            <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
-                    asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                    asp-fallback-test="window.jQuery">
-            </script>
-            <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
-                    asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
-                    asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
-            </script>
-            <script src="~/js/site.min.js" asp-append-version="true"></script>
-        </environment>
-
-        @RenderSection("scripts", required: false)
-    </body>
+        </div>
+    </footer>
+    <environment names="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/assets/js/foundation.js"></script>
+        <script src="~/assets/js/templates.js"></script>
+        <script src="~/assets/js/routes.js"></script>
+        <script src="~/assets/js/app.js"></script>
+        <script src="~/lib/angular-resource/angular-resource.js"></script>
+        <script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
+        <script src="~/lib/foundation-datepicker/js/foundation-datepicker.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-2.1.4.min.js"
+                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+                asp-fallback-test="window.jQuery">
+        </script>
+        <script src="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/bootstrap.min.js"
+                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.min.js"
+                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal">
+        </script>
+        <script src="~/js/site.min.js" asp-append-version="true"></script>
+    </environment>
+    @RenderSection("scripts", required: false)
+</body>
 </html>
