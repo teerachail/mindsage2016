@@ -1,35 +1,40 @@
 ﻿<!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>MindSage</title>
-
-        <environment names="Development">
-            <link rel="stylesheet" href="~/assets/css/app.css" />
-            <link href="~/lib/owlcarousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
-            <link href="~/lib/owlcarousel/owl-carousel/owl.theme.css" rel="stylesheet" />
-            <link href="~/lib/foundation-datepicker/css/foundation-datepicker.css" rel="stylesheet" />
-            <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
-            <link href="~/css/foundation.calendar.css" rel="stylesheet" />
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        </environment>
-        <environment names="Staging,Production">
-            <link rel="stylesheet" href="~/assets/css/app.css" />
-            <link href="~/lib/owlcarousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
-            <link href="~/lib/owlcarousel/owl-carousel/owl.theme.css" rel="stylesheet" />
-            <link href="~/lib/foundation-datepicker/css/foundation-datepicker.css" rel="stylesheet" />
-            <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
-            <link href="~/css/foundation.calendar.css" rel="stylesheet" />
-            <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
-        </environment>
-    </head>
-    <body ng-app="app">
-
-        <div class="dark title-bar">
-            <div class="left"></div>
-            <div class="center title">
-                <a class="float-left" asp-action="index" asp-controller="home"><img src="http://www.mindsage.org/assets/img/logo.png" /></a>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MindSage</title>
+    <environment names="Development">
+        <link rel="stylesheet" href="~/assets/css/app.css" />
+        <link href="~/lib/owlcarousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
+        <link href="~/lib/owlcarousel/owl-carousel/owl.theme.css" rel="stylesheet" />
+        <link href="~/lib/foundation-datepicker/css/foundation-datepicker.css" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
+        <link href="~/css/foundation.calendar.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    </environment>
+    <environment names="Staging,Production">
+        <link rel="stylesheet" href="~/assets/css/app.css" />
+        <link href="~/lib/owlcarousel/owl-carousel/owl.carousel.css" rel="stylesheet" />
+        <link href="~/lib/owlcarousel/owl-carousel/owl.theme.css" rel="stylesheet" />
+        <link href="~/lib/foundation-datepicker/css/foundation-datepicker.css" rel="stylesheet" />
+        <link href="//cdnjs.cloudflare.com/ajax/libs/foundicons/3.0.0/foundation-icons.css" rel="stylesheet">
+        <link href="~/css/foundation.calendar.css" rel="stylesheet" />
+        <link rel="stylesheet" href="//code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+    </environment>
+</head>
+<body ng-app="app">
+    <div class="dark title-bar" style="height: 140px;
+    padding: 30px;
+    background-color: rgba(73, 73, 73, 1);
+    border-bottom: #494949 1px solid;">
+        <div class="center" style="max-width: 1100px; margin: 0 auto;">
+            <div class="left">
+                <a class="float-left" asp-action="index" asp-controller="home">
+                    <img src="http://mindkey.org/wordpress/wp-content/uploads/2016/04/logo_small.png" />
+                </a>
+            </div>
+            <div class="right" style="margin-top: 12px;">
                 @if (User.Identity.IsAuthenticated)
                 {
                     <form asp-controller="Account" asp-action="LogOff" method="post" id="logoutForm" class="navbar-right">
@@ -43,102 +48,99 @@
                     <a asp-controller="Account" asp-action="Login" class="float-right secondary hollow button">LOGIN</a>
                 }
             </div>
-            <div class="right"></div>
         </div>
-        
-        @RenderBody()
-
-        <footer class="footer">
-            <div class="grid-block align-center">
-                <div class="grid-block large-9 align-justify">
-                    <!-- col 1 -->
-                    <div class="small-12 medium-6 large-3 grid-block vertical">
-                        <div class="logo">
-                            <a href="assets/img/logo.png">
-                                <img width="160" src="http://www.mindsage.org/assets/img/logo.png">
-                            </a>
+    </div>
+    @RenderBody()
+    <footer class="footer">
+        <div class="grid-block align-center">
+            <div class="grid-block large-9 align-justify">
+                <div class="small-12 medium-6 large-6 grid-block vertical">
+                    <div id="text-2" class="fusion-footer-widget-column widget widget_text">
+                        <div class="textwidget">
+                            <div>
+                                <img class="logo" src="http://mindkey.org/wordpress/wp-content/uploads/2016/03/logo_small.png"
+                                     alt="logo" width="246" height="79" />
+                            </div>
+                            <p><span style="color: #DDDDDD;">Mindsage is a teacher-friendly soft skills training program that spans 4th-12th grades.</span></p>
+                            <p><span style="color: #DDDDDD;">Our course adapts cutting edge corporate level training concepts to grade appropriate lessons.</span></p>
+                            <p><span style="color: #DDDDDD;">Mindsage uses a microlearning and metacognitive approach for a maximum transformative learning.</span></p>
                         </div>
-                        <p class="footer-links">
-                            <a href="#">Home</a>
-                            <a href="#">Pricing</a>
-                            <a href="#">About</a>
-                            <a href="#">FAQ</a>
-                        </p>
-                        <p class="inline-list social">
-                            <a href="#"><i class="fi-social-facebook"></i></a>
-                            <a href="#"><i class="fi-social-twitter"></i></a>
-                            <a href="#"><i class="fi-social-linkedin"></i></a>
-                            <a href="#"><i class="fi-social-github"></i></a>
-                        </p>
-                        <p class="copywrite">Copywrite © 2016</p>
+                        <div style="clear:both;"></div>
                     </div>
-                    <!-- col 2 -->
-                    <div class="small-12 medium-6 large-3 grid-block vertical">
-                        <h3 class="about">About Mind Sage</h3>
-                        <p class="about subheader">MindSage is a teacher-friendly soft skills training course that utilizes microlessons and a metacognitive approach.</p>
-                        <p class="about subheader">It can be integrated into any existing curriculum.</p>
-                    </div>
-                    <!-- col 3 -->
-                    <div class="small-12 medium-12 large-5 grid-block vertical">
-                        <h3 class="contact">Let's talk</h3>
-                        <form class="footer-form ng-pristine ng-valid">
-                            <div class="row">
-                                <div class="columns">
-                                    <label>
-                                        <input type="email" id="email" placeholder="Email Address">
-                                    </label>
-                                </div>
+                    <div id="social_links-widget-2" class="fusion-footer-widget-column widget social_links">
+                        <div class="fusion-social-networks">
+                            <div class="fusion-social-networks-wrapper">
+
+                                <a class="fusion-social-network-icon fusion-tooltip fusion-facebook fusion-icon-facebook" href="https://www.facebook.com/seniorsasa"
+                                   data-placement="top" data-title="Facebook" data-toggle="tooltip" data-original-title=""
+                                   title="Facebook" target="_self" style="font-size:16px;color:#bebdbd;"></a>
+
                             </div>
-                            <div class="row">
-                                <div class="columns">
-                                    <label>
-                                        <textarea rows="5" id="message" placeholder="What's on your mind?"></textarea>
-                                    </label>
-                                </div>
-                                <div class="row">
-                                    <div class="medium-9 columns">
-                                        <button class="submit" type="submit" value="Submit">Send</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </form>
-                        <!--
-                    <ul class="contact-address">
-                        <li><p><i class="fa fa-map"></i>1595 Spring Street New Britain, CT 06051</p></li>
-                        <li><p><i class="fa fa-phone-square"></i>+1-656-453-9966</p></li>
-                        <li><p><i class="fa fa-envelope-square"></i>contact@emperor.com</p></li>
-                    </ul>
-                    -->
+                        </div>
+
+                        <div style="clear:both;"></div>
                     </div>
                 </div>
+                <div class="small-12 medium-12 large-5 grid-block vertical">
+                    <form class="footer-form ng-pristine ng-valid">
+                        <div class="row">
+                            <div class="columns">
+                                <label>
+                                    <span>Name*</span>
+                                    <input type="text" id="name" placeholder="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns">
+                                <label>
+                                    <span>Email*</span>
+                                    <input type="email" id="email" placeholder="">
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="columns">
+                                <label>
+                                    <span>Message*</span>
+                                    <textarea rows="3" id="message" placeholder=""></textarea>
+                                </label>
+                            </div>
+                            <div class="row">
+                                <div class="medium-9 columns">
+                                    <button class="submit" type="submit" value="Submit">Send Email</button>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </footer>
-
-        <environment names="Development">
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/assets/js/foundation.js"></script>
-            <script src="~/assets/js/templates.js"></script>
-            <script src="~/assets/js/routes.js"></script>
-            <script src="~/assets/js/app.js"></script>
-            <script src="~/lib/angular-resource/angular-resource.js"></script>
-            <script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
-            <script src="~/lib/foundation-datepicker/js/foundation-datepicker.js"></script>
-            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        </environment>
-        <environment names="Staging,Production">
-            <script src="~/js/site.js" asp-append-version="true"></script>
-            <script src="~/lib/jquery/dist/jquery.js"></script>
-            <script src="~/assets/js/foundation.js"></script>
-            <script src="~/assets/js/templates.js"></script>
-            <script src="~/assets/js/routes.js"></script>
-            <script src="~/assets/js/app.js"></script>
-            <script src="~/lib/angular-resource/angular-resource.js"></script>
-            <script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
-            <script src="~/lib/foundation-datepicker/js/foundation-datepicker.js"></script>
-            <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
-        </environment>
-
-        @RenderSection("scripts", required: false)
-    </body>
+        </div>
+    </footer>
+    <environment names="Development">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/assets/js/foundation.js"></script>
+        <script src="~/assets/js/templates.js"></script>
+        <script src="~/assets/js/routes.js"></script>
+        <script src="~/assets/js/app.js"></script>
+        <script src="~/lib/angular-resource/angular-resource.js"></script>
+        <script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
+        <script src="~/lib/foundation-datepicker/js/foundation-datepicker.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    </environment>
+    <environment names="Staging,Production">
+        <script src="~/js/site.js" asp-append-version="true"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <script src="~/assets/js/foundation.js"></script>
+        <script src="~/assets/js/templates.js"></script>
+        <script src="~/assets/js/routes.js"></script>
+        <script src="~/assets/js/app.js"></script>
+        <script src="~/lib/angular-resource/angular-resource.js"></script>
+        <script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
+        <script src="~/lib/foundation-datepicker/js/foundation-datepicker.js"></script>
+        <script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
+    </environment>
+    @RenderSection("scripts", required: false)
+</body>
 </html>
