@@ -43,14 +43,14 @@ namespace MindSageWeb
             var appConfig = Configuration.GetSection("AppConfigOptions").Get<AppConfigOptions>();
             services.Configure<AppConfigOptions>(option =>
             {
-                option.GoogleClientSecret = appConfig.GoogleClientSecret;
-                option.GoogleClinetId = appConfig.GoogleClinetId;
-                option.ManagementPortalUrl = appConfig.ManagementPortalUrl;
-                option.MindSageUrl = appConfig.MindSageUrl;
-                option.PrimaryDBName = appConfig.PrimaryDBName;
-                option.PaypalClientId = appConfig.PaypalClientId;
-                option.PaypalClientSecret = appConfig.PaypalClientSecret;
-                option.EmailSenderName = appConfig.EmailSenderName;
+                option.PrimaryDBName = Configuration["AppConfigOptions:PrimaryDBName"];
+                option.GoogleClinetId = Configuration["AppConfigOptions:GoogleClinetId"];
+                option.GoogleClientSecret = Configuration["AppConfigOptions:GoogleClientSecret"];
+                option.ManagementPortalUrl = Configuration["AppConfigOptions:ManagementPortalUrl"];
+                option.MindSageUrl = Configuration["AppConfigOptions:MindSageUrl"];
+                option.PaypalClientId = Configuration["AppConfigOptions:PaypalClientId"];
+                option.PaypalClientSecret = Configuration["AppConfigOptions:PaypalClientSecret"];
+                option.EmailSenderName = Configuration["AppConfigOptions:EmailSenderName"];
                 option.SendGridUserName = Configuration["Data:SecrectKey:SendGridUserName"];
                 option.SendGridPassword = Configuration["Data:SecrectKey:SendGridPassword"];
             });
