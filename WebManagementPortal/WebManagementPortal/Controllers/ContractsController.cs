@@ -21,7 +21,21 @@ namespace WebManagementPortal.Controllers
         // GET: Contracts
         public async Task<ActionResult> Index()
         {
-            return View(await db.Contracts.Where(it => !it.RecLog.DeletedDate.HasValue).ToListAsync());
+            var contracts = await db.Contracts.Include("Licenses")
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .ToListAsync();
+
+            var userprofileRepo = new UserProfileRepository();
+            var licenseIdQry = from contract in contracts
+                               let licenseIds = contract.Licenses.Where(it => !it.RecLog.DeletedDate.HasValue).Select(it => it.Id.ToString()).Distinct().ToList()
+                               let totalStudents = userprofileRepo
+                                                        .GetUserProfileByLicenseIdInSubscription(licenseIds)
+                                                        .Where(it => it.Subscriptions.Any(s => !s.DeletedDate.HasValue))
+                                                        .Count()
+                               select new KeyValuePair<int, int>(contract.Id, totalStudents);
+
+            ViewBag.ContractCapacities = licenseIdQry.ToList();
+            return View(contracts);
         }
 
         // GET: Contracts/Details/5
@@ -31,11 +45,20 @@ namespace WebManagementPortal.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Contract contract = await db.Contracts.FindAsync(id);
+            var contract = await db.Contracts.Include("Licenses").FirstAsync(it => it.Id == id.Value);
             if (contract == null)
             {
                 return HttpNotFound();
             }
+
+            var userprofileRepo = new UserProfileRepository();
+            var licenseIds = contract.Licenses
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .Select(it => it.Id)
+                .Select(it => new KeyValuePair<int, int>(it, userprofileRepo.GetUserProfileByLicenseIdInSubscription(it.ToString()).Count()))
+                .ToList();
+
+            ViewBag.LicenseCapacities = licenseIds;
             return View(contract);
         }
 
