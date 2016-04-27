@@ -295,6 +295,7 @@
     <Compile Include="Repositories\IClassRoomRepository.cs" />
     <Compile Include="Repositories\IContractRepository.cs" />
     <Compile Include="Repositories\ILessonCatalogRepository.cs" />
+    <Compile Include="Repositories\IUserProfileRepository.cs" />
     <Compile Include="Repositories\LessonCatalogRepository.cs" />
     <Compile Include="Repositories\Models\ClassRoom.cs" />
     <Compile Include="Repositories\Models\Contract.cs" />
@@ -309,6 +310,8 @@
     <Compile Include="Repositories\CourseCatalogRepository.cs" />
     <Compile Include="Repositories\ICourseCatalogRepository.cs" />
     <Compile Include="Repositories\Models\CourseCatalog.cs" />
+    <Compile Include="Repositories\Models\UserProfile.cs" />
+    <Compile Include="Repositories\UserProfileRepository.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>

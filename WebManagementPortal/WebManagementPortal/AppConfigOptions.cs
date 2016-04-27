@@ -72,5 +72,13 @@ namespace WebManagementPortal
             }
         }
 
+        public static string UserProfileTableName
+        {
+            get
+            {
+                var value = ConfigurationManager.AppSettings["UserProfileTableName"] ?? string.Empty;
+                return value;
+            }
+        }
     }
 }

@@ -32,7 +32,16 @@
         <th></th>
     </tr>
 
-@foreach (var item in Model) {
+@{ var contractCapacities = ViewBag.ContractCapacities as IEnumerable<KeyValuePair<int, int>>; }
+@foreach (var item in Model)
+{
+    if (!contractCapacities.Any(it => it.Key == item.Id))
+    {
+        continue;
+    }
+
+    var contract = contractCapacities.FirstOrDefault(it => it.Key == item.Id);
+
     <tr>
         <td>
             @Html.DisplayFor(modelItem => item.PrimaryContractName)
@@ -44,7 +53,7 @@
             @Html.DisplayFor(modelItem => item.TimeZone)
         </td>
         <td>
-            0/0
+            @contract.Value/@item.Licenses.Select(it => it.StudentsCapacity).Sum()
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)

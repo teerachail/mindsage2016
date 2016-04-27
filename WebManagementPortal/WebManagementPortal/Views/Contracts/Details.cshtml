@@ -150,6 +150,7 @@
         <th class="col-md-2"></th>
     </tr>
 
+    @{ var licenses = ViewBag.LicenseCapacities as IEnumerable<KeyValuePair<int, int>>; }
     @foreach (var item in Model.Licenses.Where(it => !it.RecLog.DeletedDate.HasValue))
     {
         var teacherKey = (item?.TeacherKeys ?? Enumerable.Empty<WebManagementPortal.EF.TeacherKey>())
@@ -161,6 +162,13 @@
         {
             continue;
         }
+
+        if(!licenses.Any(it=>it.Key == item.Id))
+        {
+            continue;
+        }
+
+        var license = licenses.FirstOrDefault(it => it.Key == item.Id);
 
         <tr>
             <td class="col-md-1">
@@ -179,7 +187,7 @@
                 @teacherKey.Code
             </td>
             <td class="col-md-1">
-                @Html.DisplayFor(modelItem => item.StudentsCapacity)
+                @license.Value/@Html.DisplayFor(modelItem => item.StudentsCapacity)
             </td>
             <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
