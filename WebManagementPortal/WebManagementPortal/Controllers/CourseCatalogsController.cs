@@ -359,17 +359,28 @@ namespace WebManagementPortal.Controllers
                     .Where(it => !it.RecLog.DeletedDate.HasValue)
                     .SelectMany(it => it.Lessons)
                     .Where(it => !it.RecLog.DeletedDate.HasValue)
-                    .Select(courseCatalogLesson =>
+                    .Select(lesson =>
                     {
-                        var selectedLesson = publicClassRoom.Lessons.FirstOrDefault(l => l.LessonCatalogId == courseCatalogLesson.Id.ToString());
-                        var totalLikes = selectedLesson?.TotalLikes ?? 0;
-
-                        return new repoModel.ClassRoom.Lesson
+                        var existingLesson = publicClassRoom.Lessons.FirstOrDefault(l => l.LessonCatalogId == lesson.Id.ToString());
+                        if (existingLesson != null)
                         {
-                            id = selectedLesson.id,
-                            LessonCatalogId = courseCatalogLesson.Id.ToString(),
-                            TotalLikes = totalLikes
-                        };
+                            // Update Lesson in the public ClassRoom
+                            return new repoModel.ClassRoom.Lesson
+                            {
+                                id = existingLesson.id,
+                                TotalLikes = existingLesson.TotalLikes,
+                                LessonCatalogId = lesson.Id.ToString(),
+                            };
+                        }
+                        else
+                        {
+                            // Create new lesson
+                            return new repoModel.ClassRoom.Lesson
+                            {
+                                id = Guid.NewGuid().ToString(),
+                                LessonCatalogId = lesson.Id.ToString()
+                            };
+                        }
                     });
                 publicClassRoom.Lessons = lessonQry.ToList();
                 await classRoomRepo.UpsertClassRoom(publicClassRoom);
