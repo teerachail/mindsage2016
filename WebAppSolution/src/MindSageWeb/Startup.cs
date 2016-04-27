@@ -51,8 +51,8 @@ namespace MindSageWeb
                 option.PaypalClientId = appConfig.PaypalClientId;
                 option.PaypalClientSecret = appConfig.PaypalClientSecret;
                 option.EmailSenderName = appConfig.EmailSenderName;
-                option.SendGridUserName = appConfig.SendGridUserName;
-                option.SendGridPassword = appConfig.SendGridPassword;
+                option.SendGridUserName = Configuration["Data:SecrectKey:SendGridUserName"];
+                option.SendGridPassword = Configuration["Data:SecrectKey:SendGridPassword"];
             });
             var databaseTable = Configuration.GetSection("DatabaseTableOptions").Get<DatabaseTableOptions>();
             services.Configure<DatabaseTableOptions>(option =>
