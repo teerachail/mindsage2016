@@ -94,17 +94,18 @@ namespace MindSageWeb.Controllers
             var canAccessToTheClassRoom = _userprofileRepo.CheckAccessPermissionToSelectedClassRoom(userId, classRoomId, out userprofile);
             if (!canAccessToTheClassRoom) return null;
 
-            var subscription = userprofile.Subscriptions
+            var subscriptions = userprofile.Subscriptions
                 .Where(it => !it.DeletedDate.HasValue)
-                .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase))
-                .FirstOrDefault();
-
+                .Where(it => it.ClassRoomId.Equals(classRoomId, StringComparison.CurrentCultureIgnoreCase));
+            if (!subscriptions.Any()) return null;
             var now = _dateTime.GetCurrentTime();
-            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now);
+            var isTeacher = subscriptions.Any(it => it.Role == UserProfile.AccountRole.Teacher);
+            var canAccessToTheClassLesson = _classCalendarRepo.CheckAccessPermissionToSelectedClassLesson(classRoomId, id, now, isTeacher);
             if (!canAccessToTheClassLesson) return null;
 
             var selectedClassRoom = _classRoomRepo.GetClassRoomById(classRoomId);
-            if (selectedClassRoom == null) return null;
+            var isClassRoomValid = selectedClassRoom != null && !selectedClassRoom.DeletedDate.HasValue;
+            if (!isClassRoomValid) return null;
 
             var selectedLesson = selectedClassRoom.Lessons.FirstOrDefault(it => it.id.Equals(id, StringComparison.CurrentCultureIgnoreCase));
             if (selectedLesson == null) return null;
@@ -113,7 +114,8 @@ namespace MindSageWeb.Controllers
             if (selectedLessonCatalog == null) return null;
 
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(userId, classRoomId);
-            if (selectedUserActivity == null) return null;
+            var isUserActivityValid = selectedUserActivity != null && !selectedUserActivity.DeletedDate.HasValue;
+            if (!isUserActivityValid) return null;
             var selectedLessonActivity = selectedUserActivity.LessonActivities.FirstOrDefault(it => it.LessonId.Equals(id, StringComparison.CurrentCultureIgnoreCase));
             if (selectedLessonActivity == null) return null;
 
@@ -131,32 +133,33 @@ namespace MindSageWeb.Controllers
                 _userActivityRepo.UpsertUserActivity(selectedUserActivity);
             }
 
-            var isTeacher = subscription.Role == UserProfile.AccountRole.Teacher;
             var isDisplayTeacherMsg = selectedUserActivity.HideClassRoomMessageDate.HasValue ?
                 selectedClassRoom.LastUpdatedMessageDate > selectedUserActivity.HideClassRoomMessageDate.Value :
                 true;
 
-            return new LessonContentRespond
+            var result = new LessonContentRespond
             {
-                Advertisments = selectedLessonCatalog.Advertisments,
-                CourseCatalogId = selectedLessonCatalog.CourseCatalogId,
-                CreatedDate = selectedLessonCatalog.CreatedDate,
-                ExtraContents = selectedLessonCatalog.ExtraContents,
-                MoreDescription = selectedLessonCatalog.MoreDescription,
-                MoreTeacherLessonPlan = isTeacher ? selectedLessonCatalog.MoreTeacherLessonPlan : string.Empty,
                 id = id,
                 Order = selectedLessonCatalog.Order,
+                SemesterName = selectedLessonCatalog.SemesterName,
+                UnitNo = selectedLessonCatalog.UnitNo,
+                CourseCatalogId = selectedLessonCatalog.CourseCatalogId,
+                Title = selectedLessonCatalog.Title,
+                ShortDescription = selectedLessonCatalog.ShortDescription,
+                MoreDescription = selectedLessonCatalog.MoreDescription,
+                ShortTeacherLessonPlan = isTeacher ? selectedLessonCatalog.ShortTeacherLessonPlan : string.Empty,
+                MoreTeacherLessonPlan = isTeacher ? selectedLessonCatalog.MoreTeacherLessonPlan : string.Empty,
                 PrimaryContentURL = selectedLessonCatalog.PrimaryContentURL,
                 PrimaryContentDescription = selectedLessonCatalog.PrimaryContentDescription,
-                SemesterName = selectedLessonCatalog.SemesterName,
-                ShortDescription = selectedLessonCatalog.ShortDescription,
-                ShortTeacherLessonPlan = isTeacher ? selectedLessonCatalog.ShortTeacherLessonPlan : string.Empty,
-                Title = selectedLessonCatalog.Title,
-                UnitNo = selectedLessonCatalog.UnitNo,
+                CreatedDate = selectedLessonCatalog.CreatedDate,
+
+                Advertisments = selectedLessonCatalog.Advertisments,
+                ExtraContents = selectedLessonCatalog.ExtraContents,
                 CourseMessage = isDisplayTeacherMsg ? selectedClassRoom.Message : null,
                 IsTeacher = isTeacher,
-                TotalLikes = selectedLesson.TotalLikes
+                TotalLikes = selectedLesson.TotalLikes,
             };
+            return result;
         }
 
         [HttpGet]
