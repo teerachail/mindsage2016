@@ -79,8 +79,10 @@ namespace MindSageWeb
                 option.CanNotConnectToTheDatabase = errorMessages.CanNotConnectToTheDatabase;
                 option.CanNotChargeACreditCard = errorMessages.CanNotChargeACreditCard;
                 option.CourseNotFound = errorMessages.CourseNotFound;
-                option.UserProfileNotFound = errorMessages.UserProfileNotFound;
-                option.CourseInformationIncorrect = errorMessages.CourseInformationIncorrect;
+                option.AccountNotFound = errorMessages.AccountNotFound;
+                option.SelectedCourseIsNotAvailableForPurchase = errorMessages.SelectedCourseIsNotAvailableForPurchase;
+                option.NoLastActivatedCourse = errorMessages.NoLastActivatedCourse;
+                option.EntireCourseIsIncomplete = errorMessages.EntireCourseIsIncomplete;
             });
 
             // Add framework services.

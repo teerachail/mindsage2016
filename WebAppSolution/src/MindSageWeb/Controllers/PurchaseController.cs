@@ -73,7 +73,7 @@ namespace MindSageWeb.Controllers
             _dateTime = dateTime;
             _appConfig = appConfig.Value;
             _errorMsgs = errorMsgs.Value;
-            _logger = loggerFactory.CreateLogger("PurchaseController");
+            _logger = loggerFactory.CreateLogger<PurchaseController>();
             _payment = payment;
         }
 
@@ -129,7 +129,7 @@ namespace MindSageWeb.Controllers
                 if (selectedUserProfile == null)
                 {
                     _logger.LogCritical($"User profile { User.Identity.Name } not found.");
-                    ViewBag.ErrorMessage = _errorMsgs.UserProfileNotFound;
+                    ViewBag.ErrorMessage = _errorMsgs.AccountNotFound;
                     return View("Error");
                 }
 
@@ -137,7 +137,7 @@ namespace MindSageWeb.Controllers
                 if (selectedClassRoom == null)
                 {
                     _logger.LogCritical($"ClassRoom of CourseId: { id } not found.");
-                    ViewBag.ErrorMessage = _errorMsgs.CourseInformationIncorrect;
+                    ViewBag.ErrorMessage = _errorMsgs.SelectedCourseIsNotAvailableForPurchase;
                     return View("Error");
                 }
 
@@ -169,7 +169,7 @@ namespace MindSageWeb.Controllers
                 if (!isUserProfileValid)
                 {
                     _logger.LogCritical($"User profile { User.Identity.Name } not found.");
-                    ViewBag.ErrorMessage = _errorMsgs.UserProfileNotFound;
+                    ViewBag.ErrorMessage = _errorMsgs.AccountNotFound;
                     return View("Error");
                 }
 
@@ -185,7 +185,7 @@ namespace MindSageWeb.Controllers
                 if (!isClassRoomValid)
                 {
                     _logger.LogCritical($"ClassRoom of CourseId: { model.CourseId } not found.");
-                    ViewBag.ErrorMessage = _errorMsgs.CourseInformationIncorrect;
+                    ViewBag.ErrorMessage = _errorMsgs.SelectedCourseIsNotAvailableForPurchase;
                     return View("Error");
                 }
 
