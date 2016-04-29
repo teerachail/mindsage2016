@@ -155,7 +155,13 @@ namespace MindSageWeb.Controllers
                  && !string.IsNullOrEmpty(classCalendarId);
             if (!areArgumentsValid) return Enumerable.Empty<CourseMapStatusRespond>();
 
-            if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId)) return Enumerable.Empty<CourseMapStatusRespond>();
+            UserProfile userprofile;
+            if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId, out userprofile)) return Enumerable.Empty<CourseMapStatusRespond>();
+            var isUserprofileValid = userprofile != null
+                && !userprofile.DeletedDate.HasValue
+                && userprofile.Subscriptions.Any()
+                && userprofile.Subscriptions.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId);
+            if(!isUserprofileValid) return Enumerable.Empty<CourseMapStatusRespond>();
 
             var now = _dateTime.GetCurrentTime();
             var selectedUserActivity = _userActivityRepo.GetUserActivityByUserProfileIdAndClassRoomId(id, classRoomId);
@@ -170,7 +176,7 @@ namespace MindSageWeb.Controllers
                 {
                     LessonId = it.LessonId,
                     HaveAnyComments = it.CreatedCommentAmount > NoneComment,
-                    IsReadedAllContents = it.SawContentIds.Count() >= it.TotalContentsAmount
+                    IsReadedAllContents = it.SawContentIds.Any()
                 })
                 .ToList();
             return result;

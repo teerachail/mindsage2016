@@ -218,7 +218,7 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table26 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -226,7 +226,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 147
-    testRunner.Then("System send student list are", ((string)(null)), table2, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table26, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -251,14 +251,14 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table27 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table3.AddRow(new string[] {
+            table27.AddRow(new string[] {
                         "student@mindsage.com",
                         "student",
                         "student.jpg",
@@ -266,7 +266,7 @@ this.FeatureBackground();
                         "0",
                         "100"});
 #line 154
-    testRunner.Then("System send student list are", ((string)(null)), table3, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table27, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -291,14 +291,14 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table28 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table4.AddRow(new string[] {
+            table28.AddRow(new string[] {
                         "student@mindsage.com",
                         "student",
                         "student.jpg",
@@ -306,7 +306,7 @@ this.FeatureBackground();
                         "50",
                         "100"});
 #line 162
-    testRunner.Then("System send student list are", ((string)(null)), table4, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table28, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -411,14 +411,14 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table29 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table5.AddRow(new string[] {
+            table29.AddRow(new string[] {
                         "student@mindsage.com",
                         "student",
                         "student.jpg",
@@ -426,7 +426,7 @@ this.FeatureBackground();
                         "100",
                         "0"});
 #line 325
-    testRunner.Then("System send student list are", ((string)(null)), table5, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table29, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -480,14 +480,14 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table30 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table6.AddRow(new string[] {
+            table30.AddRow(new string[] {
                         "student@mindsage.com",
                         "student",
                         "student.jpg",
@@ -495,7 +495,7 @@ this.FeatureBackground();
                         "50",
                         "100"});
 #line 363
-    testRunner.Then("System send student list are", ((string)(null)), table6, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table30, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -524,14 +524,14 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table31 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table7.AddRow(new string[] {
+            table31.AddRow(new string[] {
                         "student@mindsage.com",
                         "student",
                         "student.jpg",
@@ -539,7 +539,7 @@ this.FeatureBackground();
                         "0",
                         "0"});
 #line 382
-    testRunner.Then("System send student list are", ((string)(null)), table7, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table31, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -567,14 +567,14 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table32 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
                         "CommentPercentage",
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
-            table8.AddRow(new string[] {
+            table32.AddRow(new string[] {
                         "student@mindsage.com",
                         "student",
                         "student.jpg",
@@ -582,7 +582,7 @@ this.FeatureBackground();
                         "0",
                         "0"});
 #line 394
-    testRunner.Then("System send student list are", ((string)(null)), table8, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table32, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -640,7 +640,7 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table33 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -648,7 +648,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 436
-    testRunner.Then("System send student list are", ((string)(null)), table9, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table33, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -697,7 +697,7 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table34 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -705,7 +705,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 468
-    testRunner.Then("System send student list are", ((string)(null)), table10, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table34, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -730,7 +730,7 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'student@mindsage.com\' request student list from ClassRoom: \'ClassRoo" +
                     "m01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table35 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -738,7 +738,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 475
-    testRunner.Then("System send student list are", ((string)(null)), table11, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table35, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -761,7 +761,7 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'unknow@mindsage.com\' request student list from ClassRoom: \'ClassRoom" +
                     "01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table36 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -769,7 +769,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 482
-    testRunner.Then("System send student list are", ((string)(null)), table12, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table36, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -791,7 +791,7 @@ this.FeatureBackground();
 #line 488
     testRunner.When("UserProfile \'\' request student list from ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table37 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -799,7 +799,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 489
-    testRunner.Then("System send student list are", ((string)(null)), table13, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table37, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -821,7 +821,7 @@ this.FeatureBackground();
 #line 495
     testRunner.When("UserProfile \'NULL\' request student list from ClassRoom: \'ClassRoom01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table38 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -829,7 +829,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 496
-    testRunner.Then("System send student list are", ((string)(null)), table14, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table38, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -854,7 +854,7 @@ this.FeatureBackground();
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'UnknowCl" +
                     "assRoom\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table39 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -862,7 +862,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 503
-    testRunner.Then("System send student list are", ((string)(null)), table15, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table39, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -886,7 +886,7 @@ this.FeatureBackground();
 #line 509
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table40 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -894,7 +894,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 510
-    testRunner.Then("System send student list are", ((string)(null)), table16, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table40, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
@@ -918,7 +918,7 @@ this.FeatureBackground();
 #line 516
     testRunner.When("UserProfile \'teacher@mindsage.com\' request student list from ClassRoom: \'NULL\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+            TechTalk.SpecFlow.Table table41 = new TechTalk.SpecFlow.Table(new string[] {
                         "id",
                         "Name",
                         "ImageUrl",
@@ -926,7 +926,7 @@ this.FeatureBackground();
                         "OnlineExtrasPercentage",
                         "SocialParticipationPercentage"});
 #line 517
-    testRunner.Then("System send student list are", ((string)(null)), table17, "Then ");
+    testRunner.Then("System send student list are", ((string)(null)), table41, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }
