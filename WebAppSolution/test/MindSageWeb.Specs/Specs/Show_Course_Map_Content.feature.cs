@@ -70,13 +70,251 @@ namespace SpecFlow.GeneratedTests.Specs
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
-    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul jaruthanaset\",\r\n\"ImageProfileUr" +
-                    "l\": \"ImgURL01\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Tea" +
-                    "cher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
-                    "},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+    testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 27
+#line 41
     testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/20/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar02"",
+                ""LessonId"": ""Lesson02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/8/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar03"",
+                ""LessonId"": ""Lesson03"",
+                ""Order"": 3,
+                ""SemesterGroupName"": ""B"",
+                ""BeginDate"": ""2/15/2016"",
+            }
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line hidden
+        }
+        
+        public virtual void SetFixture(Show_Course_Map_ContentFeature.FixtureData fixtureData)
+        {
+        }
+        
+        void System.IDisposable.Dispose()
+        {
+            this.ScenarioTearDown();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content (Single semester) Then system send the cont" +
+            "ent back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentSingleSemesterThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content (Single semester) Then system send the cont" +
+                    "ent back", new string[] {
+                        "mock"});
+#line 78
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 79
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 80
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/1/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar02"",
+                ""LessonId"": ""Lesson02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/6/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar03"",
+                ""LessonId"": ""Lesson03"",
+                ""Order"": 3,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/11/2016"",
+            },
+{
+                ""Id"": ""LessonCalendar04"",
+                ""LessonId"": ""Lesson04"",
+                ""Order"": 4,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/16/2016"",
+	""DeletedDate"": ""1/1/2016"",
+            },
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 123
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 124
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": true
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": false
+			}
+		]
+	}
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content (Multi semester) Then system send the conte" +
+            "nt back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentMultiSemesterThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content (Multi semester) Then system send the conte" +
+                    "nt back", new string[] {
+                        "mock"});
+#line 155
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 156
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 157
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 158
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": true
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": false
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content (Some lesson was deleted) Then system send " +
+            "the content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentSomeLessonWasDeletedThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content (Some lesson was deleted) Then system send " +
+                    "the content back", new string[] {
+                        "mock"});
+#line 195
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 196
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 197
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
     {
         ""id"": ""ClassCalendar01"",
         ""BeginDate"": ""2/1/2016"",
@@ -116,37 +354,11 @@ namespace SpecFlow.GeneratedTests.Specs
         ]
     },
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 240
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
-        }
-        
-        public virtual void SetFixture(Show_Course_Map_ContentFeature.FixtureData fixtureData)
-        {
-        }
-        
-        void System.IDisposable.Dispose()
-        {
-            this.ScenarioTearDown();
-        }
-        
-        [Xunit.FactAttribute()]
-        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
-        [Xunit.TraitAttribute("Description", "User request course map\'s content Then system send the content back")]
-        [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void UserRequestCourseMapSContentThenSystemSendTheContentBack()
-        {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request course map\'s content Then system send the content back", new string[] {
-                        "mock"});
-#line 72
-this.ScenarioSetup(scenarioInfo);
-#line 6
-this.FeatureBackground();
-#line 73
-    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 74
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map content of ClassRoom: \'Clas" +
-                    "sRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
-#line hidden
-#line 75
+#line 241
     testRunner.Then("System send course map content collection with JSON format are", @"[
 	{
 		""SemesterName"": ""A"",
@@ -156,12 +368,13 @@ this.FeatureBackground();
 				""LessonId"": ""Lesson01"",
 				""IsLocked"": false,
 				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": true
 			},
 			{
 				""LessonId"": ""Lesson02"",
-				""IsLocked"": false,
+				""IsLocked"": true,
 				""LessonWeekName"": ""Week02"",
-				""IsCurrent"": true
+				""IsCurrent"": false
 			},
 		]
 	},
@@ -173,10 +386,1163 @@ this.FeatureBackground();
 				""LessonId"": ""Lesson03"",
 				""IsLocked"": true,
 				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": false
 			}
 		]
 	},
 ]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content when time is the last week of the course Th" +
+            "en system send the content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentWhenTimeIsTheLastWeekOfTheCourseThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content when time is the last week of the course Th" +
+                    "en system send the content back", new string[] {
+                        "mock"});
+#line 278
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 279
+    testRunner.Given("Today is \'2/15/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 280
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 281
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": false
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": true
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content when the course was expired Then system sen" +
+            "d the content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentWhenTheCourseWasExpiredThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content when the course was expired Then system sen" +
+                    "d the content back", new string[] {
+                        "mock"});
+#line 318
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 319
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 320
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 321
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": false
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": true
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content when the course was closed Then system send" +
+            " an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentWhenTheCourseWasClosedThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content when the course was closed Then system send" +
+                    " an empty content back", new string[] {
+                        "mock"});
+#line 358
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 359
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 360
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/20/2017"",
+""CloseDate"": ""2/21/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            }
+        ]
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 382
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 383
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content when the course was deleted Then system sen" +
+            "d an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentWhenTheCourseWasDeletedThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content when the course was deleted Then system sen" +
+                    "d an empty content back", new string[] {
+                        "mock"});
+#line 389
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 390
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 391
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/20/2017"",
+""DeletedDate"": ""2/1/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            }
+        ]
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 413
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 414
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content when the course doesn\'t existing Then syste" +
+            "m send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentWhenTheCourseDoesnTExistingThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content when the course doesn\'t existing Then syste" +
+                    "m send an empty content back", new string[] {
+                        "mock"});
+#line 420
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 421
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 422
+ testRunner.And("System have ClassCalendar collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 426
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 427
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content but its subscription was deleted Then syste" +
+            "m send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentButItsSubscriptionWasDeletedThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content but its subscription was deleted Then syste" +
+                    "m send an empty content back", new string[] {
+                        "mock"});
+#line 433
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 434
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 435
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016"",
+},
+]
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 455
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 456
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s content but its subscription doesn\'t existing Then " +
+            "system send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSContentButItsSubscriptionDoesnTExistingThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s content but its subscription doesn\'t existing Then " +
+                    "system send an empty content back", new string[] {
+                        "mock"});
+#line 462
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 463
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 464
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"student@mindsage.com\",\r\n\"Name\": \"student\",\r\n\"ImageProfileUrl\": \"stud" +
+                    "ent.jpg\",\r\n\"Subscriptions\": []\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 475
+    testRunner.When("UserProfileId \'student@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 476
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content (Single semester) Then system send the cont" +
+            "ent back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentSingleSemesterThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content (Single semester) Then system send the cont" +
+                    "ent back", new string[] {
+                        "mock"});
+#line 482
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 483
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 484
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/1/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar02"",
+                ""LessonId"": ""Lesson02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/6/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar03"",
+                ""LessonId"": ""Lesson03"",
+                ""Order"": 3,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/11/2016"",
+            },
+{
+                ""Id"": ""LessonCalendar04"",
+                ""LessonId"": ""Lesson04"",
+                ""Order"": 4,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/16/2016"",
+	""DeletedDate"": ""1/1/2016"",
+            },
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 527
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 528
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": true
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": false
+			}
+		]
+	}
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content (Multi semester) Then system send the conte" +
+            "nt back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentMultiSemesterThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content (Multi semester) Then system send the conte" +
+                    "nt back", new string[] {
+                        "mock"});
+#line 559
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 560
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 561
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 562
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": true
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": false
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content (Some lesson was deleted) Then system send " +
+            "the content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentSomeLessonWasDeletedThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content (Some lesson was deleted) Then system send " +
+                    "the content back", new string[] {
+                        "mock"});
+#line 599
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 600
+    testRunner.Given("Today is \'2/1/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 601
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/1/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar02"",
+                ""LessonId"": ""Lesson02"",
+                ""Order"": 2,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/8/2016"",
+            },
+            {
+                ""Id"": ""LessonCalendar03"",
+                ""LessonId"": ""Lesson03"",
+                ""Order"": 3,
+                ""SemesterGroupName"": ""B"",
+                ""BeginDate"": ""2/15/2016"",
+            },
+{
+                ""Id"": ""LessonCalendar04"",
+                ""LessonId"": ""Lesson04"",
+                ""Order"": 4,
+                ""SemesterGroupName"": ""B"",
+                ""BeginDate"": ""2/22/2016"",
+	""DeletedDate"": ""1/1/2016"",
+            },
+        ]
+    },
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 644
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 645
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": true
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": true,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": false
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content when time is the last week of the course Th" +
+            "en system send the content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentWhenTimeIsTheLastWeekOfTheCourseThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content when time is the last week of the course Th" +
+                    "en system send the content back", new string[] {
+                        "mock"});
+#line 682
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 683
+    testRunner.Given("Today is \'2/15/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 684
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 685
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": false
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": true
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content when the course was expired Then system sen" +
+            "d the content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentWhenTheCourseWasExpiredThenSystemSendTheContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content when the course was expired Then system sen" +
+                    "d the content back", new string[] {
+                        "mock"});
+#line 722
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 723
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 724
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 725
+    testRunner.Then("System send course map content collection with JSON format are", @"[
+	{
+		""SemesterName"": ""A"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson01"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week01"",
+				""IsCurrent"": false
+			},
+			{
+				""LessonId"": ""Lesson02"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week02"",
+				""IsCurrent"": false
+			},
+		]
+	},
+	{
+		""SemesterName"": ""B"",
+		""LessonStatus"":
+		[
+			{
+				""LessonId"": ""Lesson03"",
+				""IsLocked"": false,
+				""LessonWeekName"": ""Week03"",
+				""IsCurrent"": true
+			}
+		]
+	},
+]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content when the course was closed Then system send" +
+            " an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentWhenTheCourseWasClosedThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content when the course was closed Then system send" +
+                    " an empty content back", new string[] {
+                        "mock"});
+#line 762
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 763
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 764
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/20/2017"",
+""CloseDate"": ""2/21/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            }
+        ]
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 786
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 787
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content when the course was deleted Then system sen" +
+            "d an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentWhenTheCourseWasDeletedThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content when the course was deleted Then system sen" +
+                    "d an empty content back", new string[] {
+                        "mock"});
+#line 793
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 794
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 795
+ testRunner.And("System have ClassCalendar collection with JSON format are", @"[
+    {
+        ""id"": ""ClassCalendar01"",
+        ""BeginDate"": ""2/1/2016"",
+""ExpiredDate"": ""2/20/2017"",
+""DeletedDate"": ""2/1/2017"",
+        ""ClassRoomId"": ""ClassRoom01"",
+        ""LessonCalendars"":
+        [
+            {
+                ""Id"": ""LessonCalendar01"",
+                ""LessonId"": ""Lesson01"",
+                ""Order"": 1,
+                ""SemesterGroupName"": ""A"",
+                ""BeginDate"": ""2/1/2016"",
+            }
+        ]
+    }
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 817
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 818
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content when the course doesn\'t existing Then syste" +
+            "m send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentWhenTheCourseDoesnTExistingThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content when the course doesn\'t existing Then syste" +
+                    "m send an empty content back", new string[] {
+                        "mock"});
+#line 824
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 825
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 826
+ testRunner.And("System have ClassCalendar collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 830
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 831
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but its subscription was deleted Then syste" +
+            "m send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButItsSubscriptionWasDeletedThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but its subscription was deleted Then syste" +
+                    "m send an empty content back", new string[] {
+                        "mock"});
+#line 837
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 838
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 839
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016"",
+},
+]
+},
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 859
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 860
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but its subscription doesn\'t existing Then " +
+            "system send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButItsSubscriptionDoesnTExistingThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but its subscription doesn\'t existing Then " +
+                    "system send an empty content back", new string[] {
+                        "mock"});
+#line 866
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 867
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 868
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\": []\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 879
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 880
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but input ClassCalendarId incorrect (unknow" +
+            ") Then system send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButInputClassCalendarIdIncorrectUnknowThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but input ClassCalendarId incorrect (unknow" +
+                    ") Then system send an empty content back", new string[] {
+                        "mock"});
+#line 886
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 887
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 888
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'UnknowClassCalendar\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 889
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but input ClassCalendarId incorrect (empty)" +
+            " Then system send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButInputClassCalendarIdIncorrectEmptyThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but input ClassCalendarId incorrect (empty)" +
+                    " Then system send an empty content back", new string[] {
+                        "mock"});
+#line 895
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 896
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 897
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 898
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but input ClassCalendarId incorrect (null) " +
+            "Then system send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButInputClassCalendarIdIncorrectNullThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but input ClassCalendarId incorrect (null) " +
+                    "Then system send an empty content back", new string[] {
+                        "mock"});
+#line 904
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 905
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 906
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'NULL\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 907
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but input ClassRoom incorrect (unknow) Then" +
+            " system send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButInputClassRoomIncorrectUnknowThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but input ClassRoom incorrect (unknow) Then" +
+                    " system send an empty content back", new string[] {
+                        "mock"});
+#line 913
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 914
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 915
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Un" +
+                    "knowClassRoom\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 916
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but input ClassRoom incorrect (empty) Then " +
+            "system send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButInputClassRoomIncorrectEmptyThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but input ClassRoom incorrect (empty) Then " +
+                    "system send an empty content back", new string[] {
+                        "mock"});
+#line 922
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 923
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 924
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'\' " +
+                    "and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 925
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s content but input ClassRoom incorrect (null) Then s" +
+            "ystem send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSContentButInputClassRoomIncorrectNullThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s content but input ClassRoom incorrect (null) Then s" +
+                    "ystem send an empty content back", new string[] {
+                        "mock"});
+#line 931
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 932
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 933
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'NU" +
+                    "LL\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 934
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "Incorrec user (unknow) request CourseMap\'s content Then system send an empty cont" +
+            "ent back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrecUserUnknowRequestCourseMapSContentThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrec user (unknow) request CourseMap\'s content Then system send an empty cont" +
+                    "ent back", new string[] {
+                        "mock"});
+#line 940
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 941
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 942
+    testRunner.When("UserProfileId \'unknow@mindsage.com\' reuqest course map content of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 943
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "Incorrec user (empty) request CourseMap\'s content Then system send an empty conte" +
+            "nt back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrecUserEmptyRequestCourseMapSContentThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrec user (empty) request CourseMap\'s content Then system send an empty conte" +
+                    "nt back", new string[] {
+                        "mock"});
+#line 949
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 950
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 951
+    testRunner.When("UserProfileId \'\' reuqest course map content of ClassRoom: \'ClassRoom01\' and Class" +
+                    "CalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 952
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "Incorrec user (null) request CourseMap\'s content Then system send an empty conten" +
+            "t back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrecUserNullRequestCourseMapSContentThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrec user (null) request CourseMap\'s content Then system send an empty conten" +
+                    "t back", new string[] {
+                        "mock"});
+#line 958
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 959
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 960
+    testRunner.When("UserProfileId \'NULL\' reuqest course map content of ClassRoom: \'ClassRoom01\' and C" +
+                    "lassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 961
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Content")]
+        [Xunit.TraitAttribute("Description", "A teacher user request CourseMap\'s content but its account was deleted Then syste" +
+            "m send an empty content back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherUserRequestCourseMapSContentButItsAccountWasDeletedThenSystemSendAnEmptyContentBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher user request CourseMap\'s content but its account was deleted Then syste" +
+                    "m send an empty content back", new string[] {
+                        "mock"});
+#line 967
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 968
+    testRunner.Given("Today is \'2/25/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 969
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""DeletedDate"": ""1/1/2016"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 989
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map content of ClassRoom: \'Cl" +
+                    "assRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+#line 990
+    testRunner.Then("System send course map content collection with JSON format are", "[]", ((TechTalk.SpecFlow.Table)(null)), "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

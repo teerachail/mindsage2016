@@ -100,11 +100,15 @@ namespace MindSageWeb.Controllers
 
             UserProfile userprofile;
             if (!_userprofileRepo.CheckAccessPermissionToSelectedClassRoom(id, classRoomId, out userprofile)) return Enumerable.Empty<CourseMapContentRespond>();
+            var isCanAccessToTheCourse = userprofile != null
+                && !userprofile.DeletedDate.HasValue
+                && userprofile.Subscriptions.Any(it => !it.DeletedDate.HasValue && it.ClassRoomId == classRoomId);
+            if(!isCanAccessToTheCourse) return Enumerable.Empty<CourseMapContentRespond>();
 
-            var isSelfPurchaseOrTeacher = userprofile.Subscriptions
+            var isSelfPurchase = userprofile.Subscriptions
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.ClassRoomId == classRoomId)
-                .Any(it => it.Role == UserProfile.AccountRole.SelfPurchaser || it.Role == UserProfile.AccountRole.Teacher);
+                .Any(it => it.Role == UserProfile.AccountRole.SelfPurchaser);
 
             var now = _dateTime.GetCurrentTime();
             var classCalendar = await _classCalendarRepo.GetClassCalendarById(classCalendarId);
@@ -112,7 +116,7 @@ namespace MindSageWeb.Controllers
                 && classCalendar.LessonCalendars != null
                 && !classCalendar.DeletedDate.HasValue
                 && !classCalendar.CloseDate.HasValue
-                && (classCalendar.ExpiredDate.HasValue && classCalendar.ExpiredDate.Value.Date > now.Date) || isSelfPurchaseOrTeacher;
+                && (classCalendar.ExpiredDate.HasValue && classCalendar.ExpiredDate.Value.Date > now.Date) || isSelfPurchase;
             if (!canAccessToTheClassRoom) return Enumerable.Empty<CourseMapContentRespond>();
 
             var result = classCalendar.LessonCalendars
