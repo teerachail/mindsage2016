@@ -6,7 +6,7 @@ using System.Web.Mvc;
 
 namespace WebManagementPortal.Controllers
 {
-    [Authorize(Users = "admin@mindsage.com")]
+    [Authorize]
     public class HomeController : Controller
     {
         public ActionResult Index()

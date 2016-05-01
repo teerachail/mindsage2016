@@ -11,7 +11,7 @@ using WebManagementPortal.EF;
 
 namespace WebManagementPortal.Controllers
 {
-    [Authorize(Users = "admin@mindsage.com")]
+    [Authorize]
     public class LessonsController : Controller
     {
         private MindSageDataModelsContainer db = new MindSageDataModelsContainer();
