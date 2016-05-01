@@ -70,58 +70,42 @@ namespace SpecFlow.GeneratedTests.Specs
  testRunner.Given("Initialize mocking data", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
 #line hidden
 #line 8
-    testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"sakul@mindsage.com\",\r\n\"Name\": \"Sakul jaruthanaset\",\r\n\"ImageProfileUr" +
-                    "l\": \"ImgURL01\",\r\n\"Subscriptions\":\r\n[\r\n{\r\n\t\"id\": \"Subscription01\",\r\n\t\"Role\": \"Tea" +
-                    "cher\",\r\n\t\"ClassRoomId\": \"ClassRoom01\",\r\n\t\"ClassCalendarId\": \"ClassCalendar01\",\r\n" +
-                    "},\r\n]\r\n},\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
-#line hidden
-#line 27
-    testRunner.And("System have ClassCalendar collection with JSON format are", @"[
-    {
-        ""id"": ""ClassCalendar01"",
-        ""BeginDate"": ""2/1/2016"",
-""ExpiredDate"": ""2/1/2017"",
-        ""ClassRoomId"": ""ClassRoom01"",
-        ""LessonCalendars"":
-        [
-            {
-                ""Id"": ""LessonCalendar01"",
-                ""LessonId"": ""Lesson01"",
-                ""Order"": 1,
-                ""SemesterGroupName"": ""A"",
-                ""BeginDate"": ""2/1/2016"",
-            },
-            {
-                ""Id"": ""LessonCalendar02"",
-                ""LessonId"": ""Lesson02"",
-                ""Order"": 2,
-                ""SemesterGroupName"": ""A"",
-                ""BeginDate"": ""2/8/2016"",
-            },
-            {
-                ""Id"": ""LessonCalendar03"",
-                ""LessonId"": ""Lesson03"",
-                ""Order"": 3,
-                ""SemesterGroupName"": ""B"",
-                ""BeginDate"": ""2/15/2016"",
-            },
+    testRunner.And("System have UserProfile collection with JSON format are", @"[
 {
-                ""Id"": ""LessonCalendar04"",
-                ""LessonId"": ""Lesson04"",
-                ""Order"": 4,
-                ""SemesterGroupName"": ""B"",
-                ""BeginDate"": ""2/22/2016"",
-	""DeletedDate"": ""1/1/2016"",
-            },
-        ]
-    },
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+},
+{
+""id"": ""student@mindsage.com"",
+""Name"": ""student"",
+""ImageProfileUrl"": ""student.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription02"",
+	""Role"": ""Student"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+}
 ]", ((TechTalk.SpecFlow.Table)(null)), "And ");
 #line hidden
-#line 70
+#line 41
  testRunner.And("System have UserActivity collection with JSON format are", @"[
 {
 ""id"": ""UserActivity01"",
-""UserProfileId"": ""sakul@mindsage.com"",
+""UserProfileId"": ""teacher@mindsage.com"",
 ""ClassRoomId"": ""ClassRoom01"",
 ""LessonActivities"":
 [
@@ -129,23 +113,17 @@ namespace SpecFlow.GeneratedTests.Specs
 	""id"": ""LessonActivity01"",
 	""LessonId"": ""Lesson01"",
 	""TotalContentsAmount"": 1,
-	""SawContentIds"": 
-	[
-		""Content01""
-	],
-	""CreatedCommentAmount"": 1,
-	""ParticipationAmount"": 1
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
 },
 {
 	""id"": ""LessonActivity02"",
 	""LessonId"": ""Lesson02"",
 	""TotalContentsAmount"": 2,
-	""SawContentIds"": 
-	[
-		""Content02""
-	],
+	""SawContentIds"": [],
 	""CreatedCommentAmount"": 0,
-	""ParticipationAmount"": 1
+	""ParticipationAmount"": 0
 },
 {
 	""id"": ""LessonActivity03"",
@@ -172,21 +150,23 @@ namespace SpecFlow.GeneratedTests.Specs
         
         [Xunit.FactAttribute()]
         [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
-        [Xunit.TraitAttribute("Description", "User request course map\'s status Then system send the status back")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s status (never do anythings) Then system send status" +
+            "s back")]
         [Xunit.TraitAttribute("Category", "mock")]
-        public virtual void UserRequestCourseMapSStatusThenSystemSendTheStatusBack()
+        public virtual void AStudentRequestCourseMapSStatusNeverDoAnythingsThenSystemSendStatussBack()
         {
-            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("User request course map\'s status Then system send the status back", new string[] {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s status (never do anythings) Then system send status" +
+                    "s back", new string[] {
                         "mock"});
-#line 115
+#line 80
 this.ScenarioSetup(scenarioInfo);
 #line 6
 this.FeatureBackground();
-#line 116
+#line 81
     testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
-#line 117
-    testRunner.When("UserProfileId \'sakul@mindsage.com\' reuqest course map status of ClassRoom: \'Class" +
-                    "Room01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line 82
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
 #line hidden
             TechTalk.SpecFlow.Table table1 = new TechTalk.SpecFlow.Table(new string[] {
                         "LessonId",
@@ -194,8 +174,8 @@ this.FeatureBackground();
                         "IsReadedAllContents"});
             table1.AddRow(new string[] {
                         "Lesson01",
-                        "true",
-                        "true"});
+                        "false",
+                        "false"});
             table1.AddRow(new string[] {
                         "Lesson02",
                         "false",
@@ -204,8 +184,1448 @@ this.FeatureBackground();
                         "Lesson03",
                         "false",
                         "false"});
-#line 118
+#line 83
     testRunner.Then("System send course map status back are", ((string)(null)), table1, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s status (already saw the first lesson) Then system s" +
+            "end statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSStatusAlreadySawTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s status (already saw the first lesson) Then system s" +
+                    "end statuss back", new string[] {
+                        "mock"});
+#line 90
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 91
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 92
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 129
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table2 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table2.AddRow(new string[] {
+                        "Lesson01",
+                        "false",
+                        "true"});
+            table2.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table2.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 130
+    testRunner.Then("System send course map status back are", ((string)(null)), table2, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s status (already commented the first lesson) Then sy" +
+            "stem send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSStatusAlreadyCommentedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s status (already commented the first lesson) Then sy" +
+                    "stem send statuss back", new string[] {
+                        "mock"});
+#line 137
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 138
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 139
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 176
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table3 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table3.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "false"});
+            table3.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table3.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 177
+    testRunner.Then("System send course map status back are", ((string)(null)), table3, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s status (already liked the first lesson) Then system" +
+            " send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSStatusAlreadyLikedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s status (already liked the first lesson) Then system" +
+                    " send statuss back", new string[] {
+                        "mock"});
+#line 184
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 185
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 186
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 223
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table4 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table4.AddRow(new string[] {
+                        "Lesson01",
+                        "false",
+                        "false"});
+            table4.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table4.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 224
+    testRunner.Then("System send course map status back are", ((string)(null)), table4, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s status (already saw & commented the first lesson) T" +
+            "hen system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSStatusAlreadySawCommentedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s status (already saw & commented the first lesson) T" +
+                    "hen system send statuss back", new string[] {
+                        "mock"});
+#line 231
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 232
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 233
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [ ""PrimaryContent02"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 270
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table5 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table5.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "true"});
+            table5.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "true"});
+            table5.AddRow(new string[] {
+                        "Lesson03",
+                        "true",
+                        "false"});
+#line 271
+    testRunner.Then("System send course map status back are", ((string)(null)), table5, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A1 student request CourseMap\'s status (already saw & commented & liked the first " +
+            "lesson) Then system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void A1StudentRequestCourseMapSStatusAlreadySawCommentedLikedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A1 student request CourseMap\'s status (already saw & commented & liked the first " +
+                    "lesson) Then system send statuss back", new string[] {
+                        "mock"});
+#line 278
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 279
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 280
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [ ""PrimaryContent02"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 1
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 317
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table6 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table6.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "true"});
+            table6.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "true"});
+            table6.AddRow(new string[] {
+                        "Lesson03",
+                        "true",
+                        "false"});
+#line 318
+    testRunner.Then("System send course map status back are", ((string)(null)), table6, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s status (already commented & liked the first lesson)" +
+            " Then system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSStatusAlreadyCommentedLikedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s status (already commented & liked the first lesson)" +
+                    " Then system send statuss back", new string[] {
+                        "mock"});
+#line 325
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 326
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 327
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 364
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table7 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table7.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "false"});
+            table7.AddRow(new string[] {
+                        "Lesson02",
+                        "true",
+                        "false"});
+            table7.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 365
+    testRunner.Then("System send course map status back are", ((string)(null)), table7, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A student request CourseMap\'s status (already liked & saw the first lesson) Then " +
+            "system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void AStudentRequestCourseMapSStatusAlreadyLikedSawTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A student request CourseMap\'s status (already liked & saw the first lesson) Then " +
+                    "system send statuss back", new string[] {
+                        "mock"});
+#line 372
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 373
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 374
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [ ""PrimaryContent03"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 411
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table8 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table8.AddRow(new string[] {
+                        "Lesson01",
+                        "false",
+                        "true"});
+            table8.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table8.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "true"});
+#line 412
+    testRunner.Then("System send course map status back are", ((string)(null)), table8, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status (never do anythings) Then system send status" +
+            "s back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusNeverDoAnythingsThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status (never do anythings) Then system send status" +
+                    "s back", new string[] {
+                        "mock"});
+#line 419
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 420
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 421
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table9 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table9.AddRow(new string[] {
+                        "Lesson01",
+                        "false",
+                        "false"});
+            table9.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table9.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 422
+    testRunner.Then("System send course map status back are", ((string)(null)), table9, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status (already saw the first lesson) Then system s" +
+            "end statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusAlreadySawTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status (already saw the first lesson) Then system s" +
+                    "end statuss back", new string[] {
+                        "mock"});
+#line 429
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 430
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 431
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 468
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table10 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table10.AddRow(new string[] {
+                        "Lesson01",
+                        "false",
+                        "true"});
+            table10.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table10.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 469
+    testRunner.Then("System send course map status back are", ((string)(null)), table10, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status (already commented the first lesson) Then sy" +
+            "stem send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusAlreadyCommentedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status (already commented the first lesson) Then sy" +
+                    "stem send statuss back", new string[] {
+                        "mock"});
+#line 476
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 477
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 478
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 515
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table11 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table11.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "false"});
+            table11.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table11.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 516
+    testRunner.Then("System send course map status back are", ((string)(null)), table11, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status (already liked the first lesson) Then system" +
+            " send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusAlreadyLikedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status (already liked the first lesson) Then system" +
+                    " send statuss back", new string[] {
+                        "mock"});
+#line 523
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 524
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 525
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 562
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table12 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table12.AddRow(new string[] {
+                        "Lesson01",
+                        "false",
+                        "false"});
+            table12.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table12.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 563
+    testRunner.Then("System send course map status back are", ((string)(null)), table12, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status (already saw & commented the first lesson) T" +
+            "hen system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusAlreadySawCommentedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status (already saw & commented the first lesson) T" +
+                    "hen system send statuss back", new string[] {
+                        "mock"});
+#line 570
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 571
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 572
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [ ""PrimaryContent02"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 609
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table13 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table13.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "true"});
+            table13.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "true"});
+            table13.AddRow(new string[] {
+                        "Lesson03",
+                        "true",
+                        "false"});
+#line 610
+    testRunner.Then("System send course map status back are", ((string)(null)), table13, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A1 teacher request CourseMap\'s status (already saw & commented & liked the first " +
+            "lesson) Then system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void A1TeacherRequestCourseMapSStatusAlreadySawCommentedLikedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A1 teacher request CourseMap\'s status (already saw & commented & liked the first " +
+                    "lesson) Then system send statuss back", new string[] {
+                        "mock"});
+#line 617
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 618
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 619
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [ ""PrimaryContent02"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 1
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 656
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table14 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table14.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "true"});
+            table14.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "true"});
+            table14.AddRow(new string[] {
+                        "Lesson03",
+                        "true",
+                        "false"});
+#line 657
+    testRunner.Then("System send course map status back are", ((string)(null)), table14, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status (already commented & liked the first lesson)" +
+            " Then system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusAlreadyCommentedLikedTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status (already commented & liked the first lesson)" +
+                    " Then system send statuss back", new string[] {
+                        "mock"});
+#line 664
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 665
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 666
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 1,
+	""ParticipationAmount"": 0
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 703
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table15 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table15.AddRow(new string[] {
+                        "Lesson01",
+                        "true",
+                        "false"});
+            table15.AddRow(new string[] {
+                        "Lesson02",
+                        "true",
+                        "false"});
+            table15.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "false"});
+#line 704
+    testRunner.Then("System send course map status back are", ((string)(null)), table15, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status (already liked & saw the first lesson) Then " +
+            "system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusAlreadyLikedSawTheFirstLessonThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status (already liked & saw the first lesson) Then " +
+                    "system send statuss back", new string[] {
+                        "mock"});
+#line 711
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 712
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 713
+ testRunner.And("System have UserActivity collection with JSON format are", @"[
+{
+""id"": ""UserActivity01"",
+""UserProfileId"": ""teacher@mindsage.com"",
+""ClassRoomId"": ""ClassRoom01"",
+""LessonActivities"":
+[
+{
+	""id"": ""LessonActivity01"",
+	""LessonId"": ""Lesson01"",
+	""TotalContentsAmount"": 1,
+	""SawContentIds"": [ ""PrimaryContent01"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity02"",
+	""LessonId"": ""Lesson02"",
+	""TotalContentsAmount"": 2,
+	""SawContentIds"": [],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 1
+},
+{
+	""id"": ""LessonActivity03"",
+	""LessonId"": ""Lesson03"",
+	""TotalContentsAmount"": 3,
+	""SawContentIds"": [ ""PrimaryContent03"" ],
+	""CreatedCommentAmount"": 0,
+	""ParticipationAmount"": 0
+},
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 750
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table16 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+            table16.AddRow(new string[] {
+                        "Lesson01",
+                        "false",
+                        "true"});
+            table16.AddRow(new string[] {
+                        "Lesson02",
+                        "false",
+                        "false"});
+            table16.AddRow(new string[] {
+                        "Lesson03",
+                        "false",
+                        "true"});
+#line 751
+    testRunner.Then("System send course map status back are", ((string)(null)), table16, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status but input ClassRoomId incorrect (unknow) The" +
+            "n system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusButInputClassRoomIdIncorrectUnknowThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status but input ClassRoomId incorrect (unknow) The" +
+                    "n system send statuss back", new string[] {
+                        "mock"});
+#line 758
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 759
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 760
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Unk" +
+                    "nowClassRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table17 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 761
+    testRunner.Then("System send course map status back are", ((string)(null)), table17, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status but input ClassRoomId incorrect (empty) Then" +
+            " system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusButInputClassRoomIdIncorrectEmptyThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status but input ClassRoomId incorrect (empty) Then" +
+                    " system send statuss back", new string[] {
+                        "mock"});
+#line 765
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 766
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 767
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'\' a" +
+                    "nd ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table18 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 768
+    testRunner.Then("System send course map status back are", ((string)(null)), table18, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status but input ClassRoomId incorrect (null) Then " +
+            "system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusButInputClassRoomIdIncorrectNullThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status but input ClassRoomId incorrect (null) Then " +
+                    "system send statuss back", new string[] {
+                        "mock"});
+#line 772
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 773
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 774
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'NUL" +
+                    "L\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table19 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 775
+    testRunner.Then("System send course map status back are", ((string)(null)), table19, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (unknow) request CourseMap\'s status Then system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserUnknowRequestCourseMapSStatusThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (unknow) request CourseMap\'s status Then system send statuss back", new string[] {
+                        "mock"});
+#line 779
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 780
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 781
+    testRunner.When("UserProfileId \'unknow@mindsage.com\' reuqest course map status of ClassRoom: \'Clas" +
+                    "sRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table20 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 782
+    testRunner.Then("System send course map status back are", ((string)(null)), table20, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (empty) request CourseMap\'s status Then system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserEmptyRequestCourseMapSStatusThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (empty) request CourseMap\'s status Then system send statuss back", new string[] {
+                        "mock"});
+#line 786
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 787
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 788
+    testRunner.When("UserProfileId \'\' reuqest course map status of ClassRoom: \'ClassRoom01\' and ClassC" +
+                    "alendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table21 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 789
+    testRunner.Then("System send course map status back are", ((string)(null)), table21, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "Incorrect user (null) request CourseMap\'s status Then system send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void IncorrectUserNullRequestCourseMapSStatusThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("Incorrect user (null) request CourseMap\'s status Then system send statuss back", new string[] {
+                        "mock"});
+#line 793
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 794
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line 795
+    testRunner.When("UserProfileId \'NULL\' reuqest course map status of ClassRoom: \'ClassRoom01\' and Cl" +
+                    "assCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table22 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 796
+    testRunner.Then("System send course map status back are", ((string)(null)), table22, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status but its subscription was deleted Then system" +
+            " send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusButItsSubscriptionWasDeletedThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status but its subscription was deleted Then system" +
+                    " send statuss back", new string[] {
+                        "mock"});
+#line 800
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 801
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 802
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+	""DeletedDate"": ""1/1/2016""
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 822
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table23 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 823
+    testRunner.Then("System send course map status back are", ((string)(null)), table23, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status but its subscription doesn\'t existing Then s" +
+            "ystem send statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusButItsSubscriptionDoesnTExistingThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status but its subscription doesn\'t existing Then s" +
+                    "ystem send statuss back", new string[] {
+                        "mock"});
+#line 827
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 828
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 829
+ testRunner.And("System have UserProfile collection with JSON format are", "[\r\n{\r\n\"id\": \"teacher@mindsage.com\",\r\n\"Name\": \"teacher\",\r\n\"ImageProfileUrl\": \"teac" +
+                    "her.jpg\",\r\n\"Subscriptions\": []\r\n}\r\n]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 840
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table24 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 841
+    testRunner.Then("System send course map status back are", ((string)(null)), table24, "Then ");
+#line hidden
+            this.ScenarioCleanup();
+        }
+        
+        [Xunit.FactAttribute()]
+        [Xunit.TraitAttribute("FeatureTitle", "Show_Course_Map_Status")]
+        [Xunit.TraitAttribute("Description", "A teacher request CourseMap\'s status but the account was deleted Then system send" +
+            " statuss back")]
+        [Xunit.TraitAttribute("Category", "mock")]
+        public virtual void ATeacherRequestCourseMapSStatusButTheAccountWasDeletedThenSystemSendStatussBack()
+        {
+            TechTalk.SpecFlow.ScenarioInfo scenarioInfo = new TechTalk.SpecFlow.ScenarioInfo("A teacher request CourseMap\'s status but the account was deleted Then system send" +
+                    " statuss back", new string[] {
+                        "mock"});
+#line 845
+this.ScenarioSetup(scenarioInfo);
+#line 6
+this.FeatureBackground();
+#line 846
+    testRunner.Given("Today is \'2/8/2016 00:00 am\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Given ");
+#line hidden
+#line 847
+ testRunner.And("System have UserProfile collection with JSON format are", @"[
+{
+""id"": ""teacher@mindsage.com"",
+""Name"": ""teacher"",
+""ImageProfileUrl"": ""teacher.jpg"",
+""DeletedDate"": ""1/1/2016"",
+""Subscriptions"":
+[
+{
+	""id"": ""Subscription01"",
+	""Role"": ""Teacher"",
+	""ClassRoomId"": ""ClassRoom01"",
+	""ClassCalendarId"": ""ClassCalendar01"",
+}
+]
+}
+]", ((TechTalk.SpecFlow.Table)(null)), "And ");
+#line 867
+    testRunner.When("UserProfileId \'teacher@mindsage.com\' reuqest course map status of ClassRoom: \'Cla" +
+                    "ssRoom01\' and ClassCalendarId: \'ClassCalendar01\'", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "When ");
+#line hidden
+            TechTalk.SpecFlow.Table table25 = new TechTalk.SpecFlow.Table(new string[] {
+                        "LessonId",
+                        "HaveAnyComments",
+                        "IsReadedAllContents"});
+#line 868
+    testRunner.Then("System send course map status back are", ((string)(null)), table25, "Then ");
 #line hidden
             this.ScenarioCleanup();
         }

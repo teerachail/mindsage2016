@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Mvc;
 using Microsoft.AspNet.Authorization;
 using MindSageWeb.Repositories;
+using Microsoft.Extensions.OptionsModel;
+using Microsoft.Extensions.Logging;
 
 namespace MindSageWeb.Controllers
 {
@@ -16,17 +18,23 @@ namespace MindSageWeb.Controllers
         private IUserProfileRepository _userprofileRepo;
         private MyCourseController _myCourseCtrl;
         private ProfileController _profileCtrl;
+        private ErrorMessageOptions _errorMsgs;
+        private ILogger _logger;
 
         public MyController(MyCourseController myCourseCtrl,
             ProfileController profileCtrl,
             IUserProfileRepository userprofileRepo,
             IClassCalendarRepository classCalendarRepo,
+            IOptions<ErrorMessageOptions> errorMsg,
+            ILoggerFactory loggerFactory,
             IDateTime dateTime)
         {
             _myCourseCtrl = myCourseCtrl;
             _profileCtrl = profileCtrl;
             _userprofileRepo = userprofileRepo;
             _classCalendarRepo = classCalendarRepo;
+            _errorMsgs = errorMsg.Value;
+            _logger = loggerFactory.CreateLogger<MyController>();
             _dateTime = dateTime;
         }
 
@@ -44,53 +52,81 @@ namespace MindSageWeb.Controllers
         public IActionResult EnterCourse(string id)
         {
             var userprofile = _userprofileRepo?.GetUserProfileById(User.Identity.Name);
-            if (userprofile == null) return View("Error");
+            if (userprofile == null)
+            {
+                _logger.LogCritical($"User profile { User.Identity.Name } not found.");
+                ViewBag.ErrorMessage = _errorMsgs.AccountNotFound;
+                return View("Error");
+            }
 
-            var subscription = userprofile.Subscriptions?
+            var lastActiveSubscription = userprofile.Subscriptions?
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.CourseCatalogId == id)
                 .OrderBy(it => it.LastActiveDate)
                 .LastOrDefault();
-            if (subscription == null) return View("Error");
+            var isAnyActivatedSubscription = lastActiveSubscription != null;
+            if (!isAnyActivatedSubscription)
+            {
+                ViewBag.ErrorMessage = _errorMsgs.NoLastActivatedCourse;
+                return View("Error");
+            }
 
             var courseInfo = _myCourseCtrl?.ChangeCourse(new Repositories.Models.ChangeCourseRequest
             {
                 UserProfileId = User.Identity.Name,
-                ClassRoomId = subscription.ClassRoomId
+                ClassRoomId = lastActiveSubscription.ClassRoomId
             });
 
             return RedirectToAction("Preparing", "My");
         }
 
+        /// <summary>
+        /// Find the user's last activate course and navigate user to that course
+        /// </summary>
         public IActionResult Preparing()
         {
             var userprofile = _userprofileRepo.GetUserProfileById(User.Identity.Name);
-            if (userprofile == null) return View("Error");
+            if (userprofile == null)
+            {
+                _logger.LogCritical($"User profile { User.Identity.Name } not found.");
+                ViewBag.ErrorMessage = _errorMsgs.AccountNotFound;
+                return View("Error");
+            }
 
             var lastActiveSubscription = userprofile.Subscriptions
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => it.LastActiveDate.HasValue)
                 .OrderByDescending(it => it.LastActiveDate)
                 .FirstOrDefault();
-            if (lastActiveSubscription == null) return View("NoCourseAccess");
-            var currentClassRoomId = lastActiveSubscription.ClassRoomId;
+            var isAnyActivatedSubscription = lastActiveSubscription != null;
+            if (!isAnyActivatedSubscription)
+            {
+                ViewBag.ErrorMessage = _errorMsgs.NoLastActivatedCourse;
+                return View("Error");
+            }
 
             var classCalendar = _classCalendarRepo.GetClassCalendarByClassRoomId(lastActiveSubscription.ClassRoomId);
-            var isClassCalendarValid = classCalendar != null && classCalendar.LessonCalendars != null && classCalendar.LessonCalendars.Any();
-            if (!isClassCalendarValid) return View("NoCourseAccess");
+            var isClassCalendarValid = classCalendar != null && classCalendar.LessonCalendars != null && classCalendar.LessonCalendars.Any(it => !it.DeletedDate.HasValue);
+            if (!isClassCalendarValid)
+            {
+                ViewBag.ErrorMessage = _errorMsgs.EntireCourseIsIncomplete;
+                return View("Error");
+            }
 
             var now = _dateTime.GetCurrentTime();
-
-            var lessonCalendar = classCalendar.LessonCalendars
+            var currentLessonCalendar = classCalendar.LessonCalendars
                 .Where(it => !it.DeletedDate.HasValue)
                 .Where(it => now.Date >= it.BeginDate)
                 .OrderByDescending(it => it.BeginDate)
-                .FirstOrDefault() ?? classCalendar.LessonCalendars.OrderBy(it => it.BeginDate).LastOrDefault();
+                .FirstOrDefault() ?? classCalendar.LessonCalendars.OrderBy(it => it.BeginDate).FirstOrDefault();
+            var isCurrentLessonValid = currentLessonCalendar != null;
+            if (!isCurrentLessonValid)
+            {
+                ViewBag.ErrorMessage = _errorMsgs.EntireCourseIsIncomplete;
+                return View("Error");
+            }
 
-            var currentLessonId = lessonCalendar?.LessonId;
-            if (string.IsNullOrEmpty(currentLessonId)) return View("NoCourseAccess");
-
-            var redirectURL = $"/my#!/app/main/lesson/{ currentLessonId }/{ currentClassRoomId }";
+            var redirectURL = $"/my#!/app/main/lesson/{ currentLessonCalendar.LessonId }/{ lastActiveSubscription.ClassRoomId }";
             return Redirect(redirectURL);
         }
     }

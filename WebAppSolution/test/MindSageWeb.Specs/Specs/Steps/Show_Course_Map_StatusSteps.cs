@@ -20,7 +20,7 @@ namespace MindSageWeb.Specs.Steps
         public void WhenUserProfileIdReuqestCourseMapStatusOfClassRoomAndClassCalendarId(string userprofileId, string classRoomId, string classCalendarId)
         {
             var mycourseCtrl = ScenarioContext.Current.Get<MyCourseController>();
-            var result = mycourseCtrl.GetStatus(userprofileId, classRoomId, classCalendarId);
+            var result = mycourseCtrl.GetStatus(userprofileId.GetMockStrinValue(), classRoomId.GetMockStrinValue(), classCalendarId.GetMockStrinValue());
             ScenarioContext.Current.Set(result);
         }
 

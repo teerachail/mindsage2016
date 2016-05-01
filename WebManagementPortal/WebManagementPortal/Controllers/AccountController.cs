@@ -12,7 +12,7 @@ using WebManagementPortal.Models;
 
 namespace WebManagementPortal.Controllers
 {
-    [Authorize(Users = "admin@mindsage.com")]
+    [Authorize]
     public class AccountController : Controller
     {
         private ApplicationSignInManager _signInManager;
