@@ -19,7 +19,13 @@ namespace ComputeWebJobsSDKQueue.Repositories
         /// </summary>
         /// <param name="userprofileId"></param>
         /// <returns></returns>
-        IEnumerable<Comment> GetCommentByRelatedUserProfileId(string userprofileId);
+        Task<IEnumerable<Comment>> GetCommentByRelatedUserProfileId(string userprofileId);
+
+        /// <summary>
+        /// อัพเดท comment
+        /// </summary>
+        /// <param name="data">Comment ที่จะทำการอัพเดท</param>
+        Task UpdateComment(Comment data);
 
         #endregion Methods
     }
