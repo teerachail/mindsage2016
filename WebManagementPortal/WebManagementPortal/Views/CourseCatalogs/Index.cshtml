@@ -29,6 +29,9 @@
         <th class="col-md-2">
             @Html.DisplayNameFor(model => model.PriceUSD)
         </th>
+        <th>
+            URL
+        </th>
         <th class="col-md-2">
             @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
         </th>
@@ -36,6 +39,7 @@
     </tr>
 
 @foreach (var item in Model) {
+    var courseUrl = string.Format("{0}/home/detail/{1}", AppConfigOptions.MindSageWebUrl, item.Id);
     <tr class="row">
         <td class="col-md-2">
             @Html.DisplayFor(modelItem => item.GroupName)
@@ -52,7 +56,10 @@
         <td class="col-md-2">
             @item.PriceUSD.ToString("C2")
         </td>
-        <td class="col-md-2">
+        <td class="col-md-1">
+            @courseUrl
+        </td>
+        <td class="col-md-1">
             @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
         </td>
         <td class="col-md-2">
