@@ -21,8 +21,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Azure.WebJobs;
-using Newtonsoft.Json;
 using ComputeWebJobsSDKQueue.Models;
+using ComputeWebJobsSDKQueue.Repositories;
 
 namespace MindSageWebJob
 {
@@ -32,10 +32,28 @@ namespace MindSageWebJob
         /// อัพเดทข้อมูล comments และ discussions
         /// </summary>
         /// <param name="userprofileStr">ข้อมูลผู้ใช้ที่ขอทำการอัพเดท</param>
-        public static void UpdateCommentsAndDiscussions([QueueTrigger("update-user-profile")] string userprofileStr)
+        public static async Task UpdateCommentsAndDiscussions([QueueTrigger("update-user-profile")] UpdateUserProfileMessage userprofile)
         {
-            // TODO: Not implemented
-            throw new NotImplementedException();
+            if (userprofile == null) return;
+
+            var commentRepo = new CommentRepository();
+            var requireUpdateComments = (await commentRepo.GetCommentByRelatedUserProfileId(userprofile.UserProfileId)).ToList();
+            foreach (var comment in requireUpdateComments)
+            {
+                if (comment.CreatedByUserProfileId == userprofile.UserProfileId)
+                {
+                    comment.CreatorDisplayName = userprofile.DisplayName;
+                    comment.CreatorImageUrl = userprofile.ProfileImageUrl;
+                }
+                var relatedDiscussions = comment.Discussions.Where(it => it.CreatedByUserProfileId == userprofile.UserProfileId);
+                foreach (var discussion in relatedDiscussions)
+                {
+                    discussion.CreatorDisplayName = userprofile.DisplayName;
+                    discussion.CreatorImageUrl = userprofile.ProfileImageUrl;
+                }
+
+                await commentRepo.UpdateComment(comment);
+            }
         }
     }
 }
