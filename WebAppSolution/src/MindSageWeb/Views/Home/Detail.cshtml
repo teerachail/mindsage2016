@@ -8,7 +8,7 @@
             <div class="small-6 grid-block vertical">
                 <div class="card">
                     <div class="card-section">
-                        <h2>@Model.SideName</h2>
+                        <h2>@Html.Raw(Model.SideName)</h2>
                         <h4>@Model.PriceUSD.ToString("C2")</h4>
                         @{
                             var isAlreadyHaveThisCourse = ViewBag?.IsAlreadyHaveThisCourse ?? false;
@@ -31,7 +31,7 @@
                 {
                     <div class="card">
                         <div class="card-section">
-                            <h2>@item.Name</h2>
+                            <h2>@Html.Raw(item.Name)</h2>
                             <a asp-action="detail" asp-controller="home" asp-route-id="@item.CourseId" class="button expand">VIEW</a>
                         </div>
                     </div>
@@ -40,9 +40,9 @@
         </div>
         <div class="small-7 grid-block align-center">
             <div class="small-10 grid-block vertical visible">
-                <p class="detail-info">@Model.Series</p>
+                <p class="detail-info">@Html.Raw(Model.Series)</p>
                 <hr>
-                <h1 class="detail-header">@Model.Title</h1>
+                <h1 class="detail-header">@Html.Raw(Model.Title)</h1>
                 <p>
                     @Html.Raw(Model.FullDescription)
                 </p>
@@ -55,7 +55,7 @@
                     <div class="card visible">
                         <div class="card-section">
                             <h1 class="success label titlePosition">INTRO</h1>
-                            <h2>@semester.Title</h2>
+                            <h2>@Html.Raw(semester.Title)</h2>
                             <p class="text-success">@semester.TotalWeeks Week(s)</p>
                             <hr />
                             <p>
@@ -127,7 +127,7 @@
                         <div class="card visible">
                             <div class="card-section">
                                 <h2 class="success label titlePosition">UNIT @unit.UnitNo</h2>
-                                <h3>@unit.Title</h3>
+                                <h3>@Html.Raw(unit.Title)</h3>
                                 <p class="week-info">@unit.TotalWeeks Week(s)</p>
                                 <hr />
                                 <p>
