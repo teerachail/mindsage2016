@@ -22,6 +22,7 @@ namespace MindSageWeb.Controllers
         private IUserProfileRepository _userProfileRepo;
         private IClassCalendarRepository _classCalendarRepo;
         private IDateTime _dateTime;
+        private Engines.IBackgroundProcessQueue _backgroundProcessQueue;
         private readonly UserManager<ApplicationUser> _userManager;
 
         #endregion Fields
@@ -33,15 +34,18 @@ namespace MindSageWeb.Controllers
         /// </summary>
         /// <param name="userprofileRepo">User profile repository</param>
         /// <param name="classCalendarRepo">Class calendar repository</param>
+        /// <param name="backgroundProcessQueue">Background process queue</param>
         public ProfileController(IUserProfileRepository userprofileRepo, 
             IClassCalendarRepository classCalendarRepo,
             IDateTime dateTime,
+            Engines.IBackgroundProcessQueue backgroundProcessQueue,
             UserManager<ApplicationUser> userManager)
         {
             _userProfileRepo = userprofileRepo;
             _classCalendarRepo = classCalendarRepo;
             _dateTime = dateTime;
             _userManager = userManager;
+            _backgroundProcessQueue = backgroundProcessQueue;
         }
 
         #endregion Constructors
@@ -65,7 +69,7 @@ namespace MindSageWeb.Controllers
         /// <param name="body">Request's information</param>
         [HttpPut]
         [Route("{id}")]
-        public void Put(string id, UpdateProfileRequest body)
+        public async Task Put(string id, UpdateProfileRequest body)
         {
             var areArgumentsValid = !string.IsNullOrEmpty(id)
                && body != null
@@ -86,6 +90,13 @@ namespace MindSageWeb.Controllers
                 UserProfile.ReminderFrequency.Once: 
                 UserProfile.ReminderFrequency.Twice;
             _userProfileRepo.UpsertUserProfile(userProfile);
+            var process = _backgroundProcessQueue.EnqueueUpdateUserProfile(new Engines.UpdateUserProfileMessage
+            {
+                UserProfileId = User.Identity.Name,
+                DisplayName = userProfile.Name,
+                ProfileImageUrl = userProfile.ImageProfileUrl
+            });
+            await Task.WhenAll(process);
         }
 
         // GET: api/profile/{user-id}

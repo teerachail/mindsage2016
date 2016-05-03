@@ -137,6 +137,7 @@ namespace MindSageWeb
 
             var azureStorageConnectionString = Configuration["Data:DefaultConnection:AzureStorageConnectionString"];
             services.AddTransient<Engines.IImageUploader>(pvdr => new Engines.AzureBlobStorageImageUploader(azureStorageConnectionString));
+            services.AddTransient<Engines.IBackgroundProcessQueue>(pvdr => new Engines.AzureBackgroundProcessQueue(azureStorageConnectionString));
 
             services.AddSwaggerGen();
         }
