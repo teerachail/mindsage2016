@@ -27,6 +27,7 @@ namespace MindSageWeb.Controllers
         private IUserProfileRepository _userprofileRepo;
         private ErrorMessageOptions _errorMsgs;
         private Engines.IImageUploader _imageUploader;
+        private Engines.IBackgroundProcessQueue _backgroundProcessQueue;
 
         public ManageController(
         UserManager<ApplicationUser> userManager,
@@ -36,6 +37,7 @@ namespace MindSageWeb.Controllers
         ILoggerFactory loggerFactory,
         IUserProfileRepository userprofileRepo,
         Engines.IImageUploader imageUploader,
+        Engines.IBackgroundProcessQueue backgroundProcessQueue,
         IOptions<ErrorMessageOptions> errorMsgs)
         {
             _userManager = userManager;
@@ -45,6 +47,7 @@ namespace MindSageWeb.Controllers
             _logger = loggerFactory.CreateLogger<ManageController>();
             _userprofileRepo = userprofileRepo;
             _imageUploader = imageUploader;
+            _backgroundProcessQueue = backgroundProcessQueue;
             _errorMsgs = errorMsgs.Value;
         }
 
@@ -273,12 +276,19 @@ namespace MindSageWeb.Controllers
                             var uploadedURL = await _imageUploader.UploadUserProfile(User.Identity.Name, model.ImagePath.OpenReadStream(), model.ImagePath.ContentType);
                             userprofile.ImageProfileUrl = uploadedURL;
                             _userprofileRepo.UpsertUserProfile(userprofile);
+                            var process = _backgroundProcessQueue.EnqueueUpdateUserProfile(new Engines.UpdateUserProfileMessage
+                            {
+                                UserProfileId = User.Identity.Name,
+                                DisplayName = userprofile.Name,
+                                ProfileImageUrl = userprofile.ImageProfileUrl
+                            });
+                            await Task.WhenAll(process);
                         }
 
                         var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";
                         return Redirect(redirectURL);
                     }
-                    catch (Exception)
+                    catch (Exception e)
                     {
                         ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
                         return View("Error");
