@@ -18,7 +18,7 @@ Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "MindSageWeb.Specs", "test\M
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindSageWebJob", "src\MindSageWebJob\MindSageWebJob.csproj", "{4C26EBE3-05D6-40F8-AB0E-E6C780DFA39E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindSagePageImporter", "MindSagePageImporter\MindSagePageImporter.csproj", "{E7918413-B56E-4001-8B53-AD3B8BA9F0FF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MindSagePageImporter", "src\MindSagePageImporter\MindSagePageImporter.csproj", "{E7918413-B56E-4001-8B53-AD3B8BA9F0FF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
