@@ -129,6 +129,6 @@ module app {
     // HACK: Change the host Url
     angular
         .module('app')
-        .constant('defaultUrl', 'http://mindsage.azurewebsites.net')
+        .constant('defaultUrl', 'http://www.mindsage.org')
         .service('appConfig', AppConfig);
 }
