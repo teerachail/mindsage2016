@@ -52,7 +52,10 @@
   <ItemGroup>
     <Content Include="Imports\21century.html" />
     <Content Include="Imports\approach.html" />
+    <Content Include="Imports\elementary.html" />
+    <Content Include="Imports\highschool.html" />
     <Content Include="Imports\home.html" />
+    <Content Include="Imports\middleschool.html" />
     <Content Include="Imports\necessity.html" />
     <Content Include="Imports\organisation.html" />
     <Content Include="Imports\seminars.html" />

@@ -69,9 +69,12 @@ namespace MindSagePageImporter
                 new KeyValuePair<string,string>("http://mindkey.org/wordpress/index.php/seminars/", "seminars.html"),
                 new KeyValuePair<string,string>("http://mindkey.org/wordpress/index.php/21_century_skills/", "21century.html"),
                 new KeyValuePair<string,string>("http://mindkey.org/wordpress/index.php/why-mindsage/", "whymindsage.html"),
+                new KeyValuePair<string,string>("http://mindkey.org/wordpress/index.php/elementary/","elementary.html"),
+                new KeyValuePair<string,string>("http://mindkey.org/wordpress/index.php/middle-school/","middleschool.html"),
+                new KeyValuePair<string,string>("http://mindkey.org/wordpress/index.php/high-school-course/","highschool.html"),
 
-                // Links
-                new KeyValuePair<string, string>("href=\"http://mindkey.org/wordpress\"", $"href=\"{ HostName }\""), // Logo
+            // Links
+            new KeyValuePair<string, string>("href=\"http://mindkey.org/wordpress\"", $"href=\"{ HostName }\""), // Logo
                 new KeyValuePair<string, string>("<a href=\"http://mindkey.org/wordpress/\">Home</a>", $"<a href=\"{ HostName }\">Home</a>") // Footer
             };
             foreach (var link in links) html = html.Replace(link.Key, link.Value);
