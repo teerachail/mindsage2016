@@ -246,3 +246,5 @@ WebAppSolution/src/MindSageWeb/client/assets/js/
 WebAppSolution/src/MindSageWeb/wwwroot/index.html
 WebAppSolution/src/MindSageWeb/wwwroot/_references.js
 WebAppSolution/src/MindSageWeb/MindSageWeb.xproj.user
+/WebAppSolution/MindSagePageImporter/Imports
+/WebAppSolution/MindSagePageImporter/Exports
