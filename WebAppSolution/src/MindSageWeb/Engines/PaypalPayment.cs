@@ -42,7 +42,7 @@ namespace MindSageWeb.Engines
             var tokenCredential = new OAuthTokenCredential(_appConfig.PaypalClientId, _appConfig.PaypalClientSecret, new Dictionary<string, string>());
             var accessToken = tokenCredential.GetAccessToken();
             var config = new Dictionary<string, string>();
-            config.Add("mode", "sandbox"); // HACK: Paypal mode ('live' or 'sandbox')
+            config.Add("mode", "live");
             var apiContext = new APIContext
             {
                 Config = config,

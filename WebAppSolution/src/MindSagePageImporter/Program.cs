@@ -9,8 +9,8 @@ namespace MindSagePageImporter
 {
     static class Program
     {
-        private static string HostName = "http://localhost:2528"; // Local
-        //private static string HostName = "http://www.mindsage.org"; // Production
+        //private static string HostName = "http://localhost:2528"; // Local
+        private static string HostName = "http://www.mindsage.org"; // Production
 
         static void Main(string[] args)
         {

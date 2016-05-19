@@ -3,7 +3,7 @@
     "windowsAuthentication": false,
     "anonymousAuthentication": true,
     "iisExpress": {
-      "applicationUrl": "http://localhost:2528/",
+      "applicationUrl": "http://www.mindsage.org/",
       "sslPort": 0
     }
   },
