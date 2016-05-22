@@ -50,6 +50,11 @@
                 var attName = $(this).attr('att-name');
                 $(containerName).append('<input type="text" name="' + attName + '" class="form-control" style="margin-top:1em;"/>');
             });
+            $('.table-add-able').click(function () {
+                var containerName = '#' + $(this).attr('container-name');
+                var attName = $(this).attr('att-name');
+                $(containerName).append('<tr><td><input type="text" name="' + attName + '" class="form-control"/></td></tr>');
+            });
         });
     </script>
 </body>

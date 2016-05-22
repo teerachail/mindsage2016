@@ -231,6 +231,7 @@
     <Compile Include="Controllers\CourseCatalogsController.cs" />
     <Compile Include="Controllers\ExtraContentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ImportContentController.cs" />
     <Compile Include="Controllers\LessonPreviewController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\LicensesController.cs" />
@@ -290,6 +291,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="ViewModels\ImportContentViewModel.cs" />
     <Compile Include="Repositories\ClassRoomRepository.cs" />
     <Compile Include="Repositories\ContractRepository.cs" />
     <Compile Include="Repositories\IClassRoomRepository.cs" />
@@ -443,6 +445,7 @@
     <Content Include="Views\ExtraContents\Details.cshtml" />
     <Content Include="Views\ExtraContents\Edit.cshtml" />
     <Content Include="Views\ExtraContents\Index.cshtml" />
+    <Content Include="Views\ImportContent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -476,7 +479,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>50726</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>
