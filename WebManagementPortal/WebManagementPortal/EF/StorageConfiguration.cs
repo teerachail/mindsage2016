@@ -22,6 +22,7 @@ namespace WebManagementPortal.EF
     
         public int Id { get; set; }
         public string BaseUrl { get; set; }
+        public string AccountName { get; set; }
         public string APIKey { get; set; }
     
         public RecordLog RecLog { get; set; }

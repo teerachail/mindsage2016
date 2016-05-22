@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/05/2016 17:31:57
--- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
+-- Date Created: 05/22/2016 17:12:53
+-- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -97,6 +97,10 @@ GO
 
 IF OBJECT_ID(N'[dbo].[ExtraContents]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ExtraContents];
+GO
+
+IF OBJECT_ID(N'[dbo].[StorageConfigurations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorageConfigurations];
 GO
 
 

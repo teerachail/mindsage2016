@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/22/2016 15:25:27
+-- Date Created: 05/22/2016 17:12:53
 -- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -78,6 +78,9 @@ IF OBJECT_ID(N'[dbo].[TeacherKeys]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ExtraContents]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ExtraContents];
+GO
+IF OBJECT_ID(N'[dbo].[StorageConfigurations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorageConfigurations];
 GO
 
 -- --------------------------------------------------
@@ -227,6 +230,7 @@ GO
 CREATE TABLE [dbo].[StorageConfigurations] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [BaseUrl] varchar(max)  NOT NULL,
+    [AccountName] varchar(max)  NOT NULL,
     [APIKey] varchar(max)  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL
