@@ -8,6 +8,7 @@
 
 @using (Html.BeginForm("Index", "ImportContent", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
+    @Html.HiddenFor(it => it.Id)
     @Html.AntiForgeryToken()
     <h4>Configuration</h4>
     <hr />
@@ -87,6 +88,12 @@
             @Html.LabelFor(m => m.StorageInfo.StorageBaseURL, new { @class = "col-md-2 control-label" })
             <div class="col-md-10">
                 @Html.TextBoxFor(m => m.StorageInfo.StorageBaseURL, new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(m => m.StorageInfo.AccountName, new { @class = "col-md-2 control-label" })
+            <div class="col-md-10">
+                @Html.TextBoxFor(m => m.StorageInfo.AccountName, new { @class = "form-control" })
             </div>
         </div>
         <div class="form-group">

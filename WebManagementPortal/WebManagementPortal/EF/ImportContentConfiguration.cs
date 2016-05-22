@@ -12,18 +12,21 @@ namespace WebManagementPortal.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class StorageConfiguration
+    public partial class ImportContentConfiguration
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public StorageConfiguration()
+        public ImportContentConfiguration()
         {
             this.RecLog = new RecordLog();
         }
     
         public int Id { get; set; }
-        public string BaseUrl { get; set; }
-        public string AccountName { get; set; }
-        public string APIKey { get; set; }
+        public string BaseURL { get; set; }
+        public string HomePageURL { get; set; }
+        public string PagesURLs { get; set; }
+        public string ReferenceFileURLs { get; set; }
+        public string ReplaceSections { get; set; }
+        public string StorageInfo { get; set; }
     
         public RecordLog RecLog { get; set; }
     }
