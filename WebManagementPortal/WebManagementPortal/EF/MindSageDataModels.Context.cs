@@ -35,5 +35,6 @@ namespace WebManagementPortal.EF
         public virtual DbSet<License> Licenses { get; set; }
         public virtual DbSet<TeacherKey> TeacherKeys { get; set; }
         public virtual DbSet<ExtraContent> ExtraContents { get; set; }
+        public virtual DbSet<StorageConfiguration> StorageConfigurations { get; set; }
     }
 }

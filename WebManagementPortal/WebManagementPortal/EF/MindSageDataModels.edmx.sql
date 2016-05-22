@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/10/2016 03:29:21
--- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
+-- Date Created: 05/22/2016 15:25:27
+-- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -223,6 +223,16 @@ CREATE TABLE [dbo].[ExtraContents] (
 );
 GO
 
+-- Creating table 'StorageConfigurations'
+CREATE TABLE [dbo].[StorageConfigurations] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [BaseUrl] varchar(max)  NOT NULL,
+    [APIKey] varchar(max)  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -284,6 +294,12 @@ GO
 -- Creating primary key on [Id] in table 'ExtraContents'
 ALTER TABLE [dbo].[ExtraContents]
 ADD CONSTRAINT [PK_ExtraContents]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'StorageConfigurations'
+ALTER TABLE [dbo].[StorageConfigurations]
+ADD CONSTRAINT [PK_StorageConfigurations]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

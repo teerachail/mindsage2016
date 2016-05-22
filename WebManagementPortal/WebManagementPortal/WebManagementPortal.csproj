@@ -278,6 +278,9 @@
     <Compile Include="EF\Semester.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\StorageConfiguration.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\TeacherKey.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
