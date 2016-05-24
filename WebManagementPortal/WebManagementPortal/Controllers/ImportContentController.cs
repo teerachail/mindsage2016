@@ -38,16 +38,37 @@ namespace WebManagementPortal.Controllers
         }
 
         [HttpPost]
+        [ValidateInput(false)]
         public ActionResult Index(ImportContentViewModel model)
         {
             cleanModel(model);
             var configuration = updateDatabase(model);
 
-            var credential = $"DefaultEndpointsProtocol=https;AccountName={ model.StorageInfo.AccountName };AccountKey={ model.StorageInfo.StorageKey }";
-            var storageAccount = CloudStorageAccount.Parse(credential);
-            var tableClient = storageAccount.CreateCloudTableClient();
-            var table = tableClient.GetTableReference("Configuration");
-            table.CreateIfNotExists();
+            //var credential = $"DefaultEndpointsProtocol=https;AccountName={ model.StorageInfo.AccountName };AccountKey={ model.StorageInfo.StorageKey }";
+            //var storageAccount = CloudStorageAccount.Parse(credential);
+            //var tableClient = storageAccount.CreateCloudTableClient();
+            //var table = tableClient.GetTableReference("Configuration");
+            //table.CreateIfNotExists();
+
+            // HACK: Create home page
+            var client = new WebClient();
+            var fileName = model.HomePageURL.Replace(".php", string.Empty).Replace(".html", string.Empty).Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+            var rawText = client.DownloadString($"{model.BaseURL}{model.HomePageURL}");
+            var replacedText = replaceContent(rawText, model.ReplaceSections);
+
+            int a = 3;
+            using (var steam = System.IO.File.CreateText(@"d:\home.html"))
+            {
+                steam.WriteLine(replacedText);
+            }
+
+
+            // Other pages
+            //foreach (var item in model.PagesURLs)
+            //{
+            //    var client = new WebClient();
+            //    var rawText = client.DownloadString($"{model.BaseURL}{item}");
+            //}
 
             //var data = new ImportContentTableEntity
             //{
@@ -71,8 +92,7 @@ namespace WebManagementPortal.Controllers
             model.PagesURLs = model.PagesURLs.Where(it => !string.IsNullOrEmpty(it) && !string.IsNullOrWhiteSpace(it)).ToList();
             model.ReferenceFileURLs = model.ReferenceFileURLs.Where(it => !string.IsNullOrEmpty(it) && !string.IsNullOrWhiteSpace(it)).ToList();
             model.ReplaceSections = model.ReplaceSections.Where(it => it != null
-                && !string.IsNullOrEmpty(it.Original) && !string.IsNullOrWhiteSpace(it.Original)
-                && !string.IsNullOrEmpty(it.ReplacedBy) && !string.IsNullOrWhiteSpace(it.ReplacedBy))
+                && !string.IsNullOrEmpty(it.Original) && !string.IsNullOrWhiteSpace(it.Original))
                 .ToList();
         }
         private ImportContentConfiguration updateDatabase(ImportContentViewModel model)
@@ -107,6 +127,14 @@ namespace WebManagementPortal.Controllers
                 dctx.SaveChanges();
                 return selectedObj;
             }
+        }
+        private string replaceContent(string rawHtml, IEnumerable<ReplaceSectionInformation> sections)
+        {
+            foreach (var item in sections)
+            {
+                rawHtml = rawHtml.Replace(item.Original, item.ReplacedBy);
+            }
+            return rawHtml;
         }
     }
 }
