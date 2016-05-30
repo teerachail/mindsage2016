@@ -50,16 +50,10 @@ namespace WebManagementPortal.Controllers
             var configuration = updateDatabase(model);
             
             var credential = $"DefaultEndpointsProtocol=https;AccountName={ model.StorageInfo.AccountName };AccountKey={ model.StorageInfo.StorageKey }";
-
-            //var storageAccount = CloudStorageAccount.Parse(credential);
-            //var tableClient = storageAccount.CreateCloudTableClient();
-            //var table = tableClient.GetTableReference("Configuration");
-            //table.CreateIfNotExists();
-
             var storageAccount = CloudStorageAccount.Parse(credential);
             var tableClient = storageAccount.CreateCloudBlobClient();
-            var table = tableClient.GetContainerReference("scripts");
-            table.CreateIfNotExists();
+            var blobRef = tableClient.GetContainerReference("scripts");
+            blobRef.CreateIfNotExists();
 
             var styleText = string.Empty;
             var ReferenceOldName = string.Empty;
@@ -84,7 +78,7 @@ namespace WebManagementPortal.Controllers
 
                     using (var fileStream = GenerateStreamFromString(fontsText))
                     {
-                        var blockBlob = table.GetBlockBlobReference(fontsName);
+                        var blockBlob = blobRef.GetBlockBlobReference(fontsName);
                         blockBlob.UploadFromStream(fileStream);
                         var url = blockBlob.Uri.AbsoluteUri;
                         styleText = replaceFontReference(styleText, fontsName, url);
@@ -92,24 +86,17 @@ namespace WebManagementPortal.Controllers
                 }
             }
 
-
             using (var fileStream = GenerateStreamFromString(styleText))
             {
-                var blockBlob = table.GetBlockBlobReference(ReferenceName);
+                var blockBlob = blobRef.GetBlockBlobReference(ReferenceName);
                 blockBlob.UploadFromStream(fileStream);
                 ReferenceName = blockBlob.Uri.AbsoluteUri;
             }
 
-            table = tableClient.GetContainerReference("htmls");
-            table.CreateIfNotExists();
+            blobRef = tableClient.GetContainerReference("htmls");
+            blobRef.CreateIfNotExists();
 
-            // HACK: Create home page
-            //var client = new WebClient();
-            //var fileName = model.HomePageURL.Replace(".php", string.Empty).Replace(".html", string.Empty).Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-            //client.Encoding = Encoding.UTF8;
-            //var dataText = client.DownloadData($"{model.BaseURL}{model.HomePageURL}");
-            //var rawText = client.DownloadString($"{model.BaseURL}{model.HomePageURL}");
-            //var replacedText = replaceContent(rawText, model.ReplaceSections);
+            // Create home page
             var Http = new HttpDownloader($"{model.BaseURL}{model.HomePageURL}");
             var rawText = Http.GetPage();
             var replacedText = replaceContent(rawText, model.ReplaceSections);
@@ -118,16 +105,13 @@ namespace WebManagementPortal.Controllers
 
             using (var fileStream = GenerateStreamFromString(replacedText))
             {
-                var blockBlob = table.GetBlockBlobReference("index.html");
+                var blockBlob = blobRef.GetBlockBlobReference("index.html");
                 blockBlob.UploadFromStream(fileStream);
             }
-
 
             // Other pages
             foreach (var item in model.PagesURLs)
             {
-                //var client = new WebClient();
-                //var rawText = client.DownloadString($"{model.BaseURL}{item}");
                 Http = new HttpDownloader($"{model.BaseURL}{item}");
                 rawText = Http.GetPage();
                 replacedText = replaceContent(rawText, model.ReplaceSections);
@@ -137,25 +121,11 @@ namespace WebManagementPortal.Controllers
 
                 using (var fileStream = GenerateStreamFromString(replacedText))
                 {
-                    var blockBlob = table.GetBlockBlobReference($"{fileName}.html");
+                    var blockBlob = blobRef.GetBlockBlobReference($"{fileName}.html");
                     blockBlob.UploadFromStream(fileStream);
                 }
             }
-
-            //var data = new ImportContentTableEntity
-            //{
-            //    PartitionKey = model.BaseURL,
-            //    RowKey = model.HomePageURL,
-            //    BaseURL = model.BaseURL,
-            //    HomePageURL = model.HomePageURL,
-            //    PagesURLs = JsonConvert.SerializeObject(model.PagesURLs),
-            //    ReferenceFileURLs = JsonConvert.SerializeObject(model.ReferenceFileURLs),
-            //    ReplaceSections = JsonConvert.SerializeObject(model.ReplaceSections),
-            //    StorageInfo = JsonConvert.SerializeObject(model.StorageInfo),
-            //    Timestamp = DateTime.Now
-            //};
-            //var insertOperation = TableOperation.InsertOrReplace(data);
-            //table.Execute(insertOperation);
+            
             return RedirectToAction("Index");
         }
 
