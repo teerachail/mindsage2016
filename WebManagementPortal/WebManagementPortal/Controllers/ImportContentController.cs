@@ -19,6 +19,8 @@ namespace WebManagementPortal.Controllers
 {
     public class ImportContentController : Controller
     {
+        private const string HomePageName = "home";
+
         // GET: ImportContent
         public ActionResult Index()
         {
@@ -105,7 +107,7 @@ namespace WebManagementPortal.Controllers
 
             using (var fileStream = GenerateStreamFromString(replacedText))
             {
-                var blockBlob = blobRef.GetBlockBlobReference("index.html");
+                var blockBlob = blobRef.GetBlockBlobReference(HomePageName);
                 blockBlob.UploadFromStream(fileStream);
             }
 
@@ -121,7 +123,7 @@ namespace WebManagementPortal.Controllers
 
                 using (var fileStream = GenerateStreamFromString(replacedText))
                 {
-                    var blockBlob = blobRef.GetBlockBlobReference($"{fileName}.html");
+                    var blockBlob = blobRef.GetBlockBlobReference(fileName);
                     blockBlob.UploadFromStream(fileStream);
                 }
             }
@@ -183,7 +185,7 @@ namespace WebManagementPortal.Controllers
             foreach (var item in links)
             {
                 var fileName = item.Replace(".php", string.Empty).Replace(".html", string.Empty).Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-                var replaceWith = $"www.mindsage.org/public/{ fileName }";
+                var replaceWith = $"http://www.mindsage.org/public/content/{ fileName }";
                 var original = $"{BaseURL}{item}";
                 html = html.Replace(original, replaceWith);
             }
