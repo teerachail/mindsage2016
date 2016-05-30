@@ -1,4 +1,5 @@
 ﻿using Microsoft.WindowsAzure.Storage;
+using Microsoft.WindowsAzure.Storage.Blob;
 using Microsoft.WindowsAzure.Storage.Table;
 using Newtonsoft.Json;
 using System;
@@ -47,37 +48,60 @@ namespace WebManagementPortal.Controllers
         {
             cleanModel(model);
             var configuration = updateDatabase(model);
-            string ReferenceOldName = null;
-            string ReferenceName = null;
+            
+            var credential = $"DefaultEndpointsProtocol=https;AccountName={ model.StorageInfo.AccountName };AccountKey={ model.StorageInfo.StorageKey }";
 
-            //var credential = $"DefaultEndpointsProtocol=https;AccountName={ model.StorageInfo.AccountName };AccountKey={ model.StorageInfo.StorageKey }";
             //var storageAccount = CloudStorageAccount.Parse(credential);
             //var tableClient = storageAccount.CreateCloudTableClient();
             //var table = tableClient.GetTableReference("Configuration");
             //table.CreateIfNotExists();
+
+            var storageAccount = CloudStorageAccount.Parse(credential);
+            var tableClient = storageAccount.CreateCloudBlobClient();
+            var table = tableClient.GetContainerReference("scripts");
+            table.CreateIfNotExists();
+
+            var styleText = string.Empty;
+            var ReferenceOldName = string.Empty;
+            var ReferenceName = string.Empty;
             foreach (var item in model.ReferenceFileURLs)
             {
                 if (item.IndexOf("style.css") > -1)
                 {
                     var ReferHttp = new HttpDownloader(item);
-                    var styleText = ReferHttp.GetPage();
+                    styleText = ReferHttp.GetPage();
                     ReferenceOldName = item;
                     ReferenceName = item.Replace("?", "/").Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).Last(element => element.IndexOf("style.css") > -1);
-                    using (var steam = System.IO.File.CreateText($@"d:\{ReferenceName}"))
-                    {
-                        steam.WriteLine(styleText);
-                    }
                 }
-                else {
+            }
+
+            foreach (var item in model.ReferenceFileURLs)
+            {
+                if(item.IndexOf("style.css") == -1) {
                     var fontsHttp = new HttpDownloader(item);
                     var fontsText = fontsHttp.GetPage();
                     var fontsName = item.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-                    using (var steam = System.IO.File.CreateText($@"d:\{fontsName}"))
+
+                    using (var fileStream = GenerateStreamFromString(fontsText))
                     {
-                        steam.WriteLine(fontsText);
+                        var blockBlob = table.GetBlockBlobReference(fontsName);
+                        blockBlob.UploadFromStream(fileStream);
+                        var url = blockBlob.Uri.AbsoluteUri;
+                        styleText = replaceFontReference(styleText, fontsName, url);
                     }
                 }
             }
+
+
+            using (var fileStream = GenerateStreamFromString(styleText))
+            {
+                var blockBlob = table.GetBlockBlobReference(ReferenceName);
+                blockBlob.UploadFromStream(fileStream);
+                ReferenceName = blockBlob.Uri.AbsoluteUri;
+            }
+
+            table = tableClient.GetContainerReference("htmls");
+            table.CreateIfNotExists();
 
             // HACK: Create home page
             //var client = new WebClient();
@@ -90,21 +114,33 @@ namespace WebManagementPortal.Controllers
             var rawText = Http.GetPage();
             var replacedText = replaceContent(rawText, model.ReplaceSections);
             replacedText = replaceLink(replacedText, model.BaseURL, model.PagesURLs);
-            replacedText = replaceReference(replacedText, ReferenceOldName, ReferenceName);
+            replacedText = replaceStyleReference(replacedText, ReferenceOldName, ReferenceName);
 
-            int a = 3;
-            using (var steam = System.IO.File.CreateText(@"d:\home.html"))
+            using (var fileStream = GenerateStreamFromString(replacedText))
             {
-                steam.WriteLine(replacedText);
+                var blockBlob = table.GetBlockBlobReference("index.html");
+                blockBlob.UploadFromStream(fileStream);
             }
 
 
             // Other pages
-            //foreach (var item in model.PagesURLs)
-            //{
-            //    var client = new WebClient();
-            //    var rawText = client.DownloadString($"{model.BaseURL}{item}");
-            //}
+            foreach (var item in model.PagesURLs)
+            {
+                //var client = new WebClient();
+                //var rawText = client.DownloadString($"{model.BaseURL}{item}");
+                Http = new HttpDownloader($"{model.BaseURL}{item}");
+                rawText = Http.GetPage();
+                replacedText = replaceContent(rawText, model.ReplaceSections);
+                replacedText = replaceLink(replacedText, model.BaseURL, model.PagesURLs);
+                replacedText = replaceStyleReference(replacedText, ReferenceOldName, ReferenceName);
+                var fileName = item.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
+
+                using (var fileStream = GenerateStreamFromString(replacedText))
+                {
+                    var blockBlob = table.GetBlockBlobReference($"{fileName}.html");
+                    blockBlob.UploadFromStream(fileStream);
+                }
+            }
 
             //var data = new ImportContentTableEntity
             //{
@@ -177,16 +213,30 @@ namespace WebManagementPortal.Controllers
             foreach (var item in links)
             {
                 var fileName = item.Replace(".php", string.Empty).Replace(".html", string.Empty).Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-                var replaceWith = $"www.mindsage.org/xxxxx/{ fileName }";
+                var replaceWith = $"www.mindsage.org/public/{ fileName }";
                 var original = $"{BaseURL}{item}";
                 html = html.Replace(original, replaceWith);
             }
             return html;
         }
-        private string replaceReference(string html, string oldReference ,string newReference)
+        private string replaceFontReference(string html, string fileName, string url)
+        {
+            html = html.Replace($"assets/fonts/icomoon/{fileName}", url);
+            return html;
+        }
+        private string replaceStyleReference(string html, string oldReference ,string newReference)
         {
             html = html.Replace(oldReference, newReference);
             return html;
+        }
+        public Stream GenerateStreamFromString(string file)
+        {
+            MemoryStream stream = new MemoryStream();
+            StreamWriter writer = new StreamWriter(stream);
+            writer.Write(file);
+            writer.Flush();
+            stream.Position = 0;
+            return stream;
         }
 
         public class HttpDownloader
