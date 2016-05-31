@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 04/10/2016 03:29:21
--- Generated from EDMX file: E:\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
+-- Date Created: 05/22/2016 20:08:02
+-- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -78,6 +78,9 @@ IF OBJECT_ID(N'[dbo].[TeacherKeys]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[ExtraContents]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ExtraContents];
+GO
+IF OBJECT_ID(N'[dbo].[StorageConfigurations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[StorageConfigurations];
 GO
 
 -- --------------------------------------------------
@@ -223,6 +226,20 @@ CREATE TABLE [dbo].[ExtraContents] (
 );
 GO
 
+-- Creating table 'ImportContentConfigurations'
+CREATE TABLE [dbo].[ImportContentConfigurations] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [BaseURL] varchar(max)  NOT NULL,
+    [HomePageURL] varchar(max)  NOT NULL,
+    [PagesURLs] varchar(max)  NOT NULL,
+    [ReferenceFileURLs] varchar(max)  NOT NULL,
+    [ReplaceSections] varchar(max)  NOT NULL,
+    [StorageInfo] varchar(max)  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -284,6 +301,12 @@ GO
 -- Creating primary key on [Id] in table 'ExtraContents'
 ALTER TABLE [dbo].[ExtraContents]
 ADD CONSTRAINT [PK_ExtraContents]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'ImportContentConfigurations'
+ALTER TABLE [dbo].[ImportContentConfigurations]
+ADD CONSTRAINT [PK_ImportContentConfigurations]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 

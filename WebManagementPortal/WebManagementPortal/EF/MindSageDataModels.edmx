@@ -16,6 +16,7 @@
     <EntitySet Name="Licenses" EntityType="MindSageDataModels.Store.Licenses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TeacherKeys" EntityType="MindSageDataModels.Store.TeacherKeys" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ExtraContents" EntityType="MindSageDataModels.Store.ExtraContents" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ImportContentConfigurations" EntityType="MindSageDataModels.Store.ImportContentConfigurations" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CourseCatalogSemester" Association="MindSageDataModels.Store.CourseCatalogSemester">
       <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
       <End Role="Semester" EntitySet="Semesters" />
@@ -192,6 +193,20 @@
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
   </EntityType>
+  <EntityType Name="ImportContentConfigurations">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="BaseURL" Type="varchar(max)" Nullable="false" />
+    <Property Name="HomePageURL" Type="varchar(max)" Nullable="false" />
+    <Property Name="PagesURLs" Type="varchar(max)" Nullable="false" />
+    <Property Name="ReferenceFileURLs" Type="varchar(max)" Nullable="false" />
+    <Property Name="ReplaceSections" Type="varchar(max)" Nullable="false" />
+    <Property Name="StorageInfo" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+  </EntityType>
   <Association Name="CourseCatalogSemester">
     <End Role="CourseCatalog" Type="MindSageDataModels.Store.CourseCatalogs" Multiplicity="1" />
     <End Role="Semester" Type="MindSageDataModels.Store.Semesters" Multiplicity="*" />
@@ -351,6 +366,7 @@
             <End Role="Lesson" EntitySet="Lessons" />
             <End Role="ExtraContent" EntitySet="ExtraContents" />
           </AssociationSet>
+          <EntitySet Name="ImportContentConfigurations" EntityType="MindSageDataModels.ImportContentConfiguration" />
         </EntityContainer>
         <EntityType Name="CourseCatalog">
           <Key>
@@ -611,6 +627,19 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="ImportContentConfiguration">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="BaseURL" Type="String" Nullable="false" Unicode="false" MaxLength="Max" />
+          <Property Name="HomePageURL" Type="String" Nullable="false" MaxLength="Max" Unicode="false" />
+          <Property Name="PagesURLs" Type="String" Nullable="false" MaxLength="Max" Unicode="false" />
+          <Property Name="ReferenceFileURLs" Type="String" Nullable="false" MaxLength="Max" Unicode="false" />
+          <Property Name="ReplaceSections" Type="String" Nullable="false" MaxLength="Max" Unicode="false" />
+          <Property Name="StorageInfo" Type="String" Nullable="false" MaxLength="Max" Unicode="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -779,6 +808,23 @@
           <ScalarProperty Name="IconURL" ColumnName="IconURL" />
           <ScalarProperty Name="IsPreviewable" ColumnName="IsPreviewable" />
           <ScalarProperty Name="LessonId" ColumnName="LessonId" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ImportContentConfigurations">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.ImportContentConfiguration)">
+        <MappingFragment StoreEntitySet="ImportContentConfigurations">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="BaseURL" ColumnName="BaseURL" />
+          <ScalarProperty Name="HomePageURL" ColumnName="HomePageURL" />
+          <ScalarProperty Name="PagesURLs" ColumnName="PagesURLs" />
+          <ScalarProperty Name="ReferenceFileURLs" ColumnName="ReferenceFileURLs" />
+          <ScalarProperty Name="ReplaceSections" ColumnName="ReplaceSections" />
+          <ScalarProperty Name="StorageInfo" ColumnName="StorageInfo" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
