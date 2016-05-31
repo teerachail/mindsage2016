@@ -91,6 +91,8 @@ namespace WebManagementPortal.Controllers
             using (var fileStream = GenerateStreamFromString(styleText))
             {
                 var blockBlob = blobRef.GetBlockBlobReference(ReferenceName);
+                blockBlob.Properties.ContentType = "text/css";
+                blockBlob.SetProperties();
                 blockBlob.UploadFromStream(fileStream);
                 ReferenceName = blockBlob.Uri.AbsoluteUri;
             }
