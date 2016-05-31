@@ -33,7 +33,7 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Index()
         {
-            return Redirect("/public/home.html");
+            return Redirect("/public/content/home");
         }
 
         public IActionResult Error()
