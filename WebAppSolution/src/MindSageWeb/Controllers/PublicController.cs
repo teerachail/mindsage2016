@@ -17,8 +17,7 @@ namespace MindSageWeb.Controllers
             
             var blockBlob = blobRef.GetBlockBlobReference(id);
             var text = blockBlob.DownloadText();
-            ViewBag.RawHtml = text;
-            return View();
+            return Content(text, "text/html");
         }
     }
 }

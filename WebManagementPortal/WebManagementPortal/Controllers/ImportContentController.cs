@@ -17,9 +17,12 @@ using WebManagementPortal.ViewModels;
 
 namespace WebManagementPortal.Controllers
 {
+    [Authorize]
     public class ImportContentController : Controller
     {
         private const string HomePageName = "home";
+        private const string CSSType = "text/css";
+        private const string HtmlType = "text/html";
 
         // GET: ImportContent
         public ActionResult Index()
@@ -91,7 +94,7 @@ namespace WebManagementPortal.Controllers
             using (var fileStream = GenerateStreamFromString(styleText))
             {
                 var blockBlob = blobRef.GetBlockBlobReference(ReferenceName);
-                blockBlob.Properties.ContentType = "text/css";
+                blockBlob.Properties.ContentType = CSSType;
                 blockBlob.SetProperties();
                 blockBlob.UploadFromStream(fileStream);
                 ReferenceName = blockBlob.Uri.AbsoluteUri;
@@ -110,6 +113,8 @@ namespace WebManagementPortal.Controllers
             using (var fileStream = GenerateStreamFromString(replacedText))
             {
                 var blockBlob = blobRef.GetBlockBlobReference(HomePageName);
+                blockBlob.Properties.ContentType = HtmlType;
+                blockBlob.SetProperties();
                 blockBlob.UploadFromStream(fileStream);
             }
 
@@ -126,6 +131,8 @@ namespace WebManagementPortal.Controllers
                 using (var fileStream = GenerateStreamFromString(replacedText))
                 {
                     var blockBlob = blobRef.GetBlockBlobReference(fileName);
+                    blockBlob.Properties.ContentType = HtmlType;
+                    blockBlob.SetProperties();
                     blockBlob.UploadFromStream(fileStream);
                 }
             }
@@ -187,7 +194,7 @@ namespace WebManagementPortal.Controllers
             foreach (var item in links)
             {
                 var fileName = item.Replace(".php", string.Empty).Replace(".html", string.Empty).Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-                var replaceWith = $"http://www.mindsage.org/public/content/{ fileName }";
+                var replaceWith = $"{ AppConfigOptions.MindSageWebUrl }/public/content/{ fileName }";
                 var original = $"{BaseURL}{item}";
                 html = html.Replace(original, replaceWith);
             }
@@ -212,7 +219,6 @@ namespace WebManagementPortal.Controllers
             stream.Position = 0;
             return stream;
         }
-
         public class HttpDownloader
         {
 
