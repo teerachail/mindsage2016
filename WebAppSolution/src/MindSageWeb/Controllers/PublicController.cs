@@ -16,14 +16,28 @@ namespace MindSageWeb.Controllers
 
         public IActionResult Content()
         {
+            const string ErrorMessage = "Page not found";
             var path = HttpContext.Request.Path;
-            if (!path.HasValue) return View("Error");
+            if (!path.HasValue)
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View("Error");
+            }
 
             var requestFileName = path.Value.Split(new char[] { '/' }, System.StringSplitOptions.RemoveEmptyEntries).LastOrDefault();
-            if(string.IsNullOrEmpty(requestFileName)) return View("Error");
+            if(string.IsNullOrEmpty(requestFileName))
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View("Error");
+            }
 
             var text = _storageContent.GetContent(requestFileName);
-            if (string.IsNullOrEmpty(text)) return View("Error");
+            if (string.IsNullOrEmpty(text))
+            {
+                ViewBag.ErrorMessage = ErrorMessage;
+                return View("Error");
+            }
+
             return Content(text, "text/html");
         }
     }
