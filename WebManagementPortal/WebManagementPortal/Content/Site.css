@@ -22,3 +22,8 @@ select,
 textarea {
     max-width: 280px;
 }
+
+/* set width on the form input elements back to default*/
+.Import input {
+    max-width: 100%;
+}
