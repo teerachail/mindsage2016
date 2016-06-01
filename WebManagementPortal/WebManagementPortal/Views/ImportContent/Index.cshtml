@@ -1,0 +1,121 @@
+﻿@model WebManagementPortal.ViewModels.ImportContentViewModel
+
+@{
+    ViewBag.Title = "Import content management";
+}
+
+<h2>@ViewBag.Title.</h2>
+
+@using (Html.BeginForm("Index", "ImportContent", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.HiddenFor(it => it.Id)
+    @Html.AntiForgeryToken()
+    <h4>Configuration</h4>
+    <hr />
+    <div class="Import">
+        <div class="form-group">
+            <div class="col-md-12">
+                <button ng-hide="work" type="submit" id="btn-submit" class="btn btn-success" ng-click="work=!work">Execute</button>
+                <button ng-show="work" class="btn btn-success" disabled>Working...</button>
+            </div>
+            <hr />
+        </div>
+        @Html.ValidationSummary("", new { @class = "text-danger" })
+        <div>
+            <h3>Main</h3>
+            <div class="form-group">
+                @Html.LabelFor(m => m.BaseURL, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.BaseURL, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.HomePageURL, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.HomePageURL, new { @class = "form-control" })
+                </div>
+            </div>
+            <hr />
+            <div class="col-md-offset-1 well">
+                <h3><span class="btn btn-info table-add-able" att-name="PagesURLs" container-name="PagesURLsContainer">Add</span> Pages</h3>
+                <table class="table-responsive col-md-12" id="PagesURLsContainer">
+                    <tr>
+                        <th>Link</th>
+                    </tr>
+                    @foreach (var item in Model.PagesURLs)
+                    {
+                        <tr>
+                            <td>@Html.TextBox("PagesURLs", item, new { @class = "form-control" })</td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+        <hr />
+        <div class="col-md-offset-1 well">
+            <h3><span class="btn btn-info table-add-able" att-name="ReferenceFileURLs" container-name="ReferenceFileURLsContainer">Add</span> File references</h3>
+            <table class="table-responsive col-md-12" id="ReferenceFileURLsContainer">
+                <tr>
+                    <th>URL</th>
+                </tr>
+                @foreach (var item in Model.ReferenceFileURLs)
+                {
+                    <tr>
+                        <td>@Html.TextBox("ReferenceFileURLs", item, new { @class = "form-control" })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <hr />
+        <div class="col-md-offset-1 well">
+            <h3><span class="btn btn-info table-replaced-add-able" att-name="ReplaceSections" container-name="ReplaceSectionsContainer">Add</span> Replacement</h3>
+            <table class="table-responsive col-md-12" id="ReplaceSectionsContainer">
+                <tr>
+                    <th>Original</th>
+                    <th>Replaced by</th>
+                </tr>
+                @for (var index = 0; index < Model.ReplaceSections.Count(); index++)
+                {
+                    <tr class="ReplaceSections">
+                        <td>@Html.TextBoxFor(m => m.ReplaceSections[index].Original, new { @class = "form-control" })</td>
+                        <td>@Html.TextBoxFor(m => m.ReplaceSections[index].ReplacedBy, new { @class = "form-control" })</td>
+                    </tr>
+                }
+            </table>
+        </div>
+        <hr />
+        <div>
+            <h3>Storage</h3>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StorageInfo.StorageBaseURL, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.StorageInfo.StorageBaseURL, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StorageInfo.AccountName, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.StorageInfo.AccountName, new { @class = "form-control" })
+                </div>
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.StorageInfo.StorageKey, new { @class = "col-md-2 control-label" })
+                <div class="col-md-10">
+                    @Html.TextBoxFor(m => m.StorageInfo.StorageKey, new { @class = "form-control" })
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('.table-replaced-add-able').click(function () {
+                var containerName = '#' + $(this).attr('container-name');
+                var elementCount = $(".ReplaceSections").length;
+                $(containerName).append('<tr class="ReplaceSections"><td><input type="text" name="ReplaceSections[' + elementCount + '].Original" class="form-control"/></td><td><input type="text" name="ReplaceSections[' + elementCount + '].ReplacedBy" class="form-control"/></td></tr>');
+            });
+        });
+    </script>
+}

@@ -25,6 +25,7 @@
                     <ul class="nav navbar-nav pull-right">
                         <li>@Html.ActionLink("Course catalogs", "Index", "CourseCatalogs")</li>
                         <li>@Html.ActionLink("Manage contracts", "Index", "Contracts")</li>
+                        <li>@Html.ActionLink("Import", "Index", "ImportContent")</li>
                         <li>@Html.ActionLink("Account settings", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })</li>
                     </ul>
                 }
@@ -49,6 +50,11 @@
                 var containerName = '#' + $(this).attr('container-name');
                 var attName = $(this).attr('att-name');
                 $(containerName).append('<input type="text" name="' + attName + '" class="form-control" style="margin-top:1em;"/>');
+            });
+            $('.table-add-able').click(function () {
+                var containerName = '#' + $(this).attr('container-name');
+                var attName = $(this).attr('att-name');
+                $(containerName).append('<tr><td><input type="text" name="' + attName + '" class="form-control"/></td></tr>');
             });
         });
     </script>
