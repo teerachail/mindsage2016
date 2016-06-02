@@ -126,7 +126,6 @@ module app {
         }
     }
     
-    // HACK: Change the host Url
     angular
         .module('app')
         .constant('defaultUrl', 'http://www.mindsage.org')
