@@ -95,8 +95,8 @@ namespace WebManagementPortal.Controllers
             {
                 var blockBlob = blobRef.GetBlockBlobReference(ReferenceName);
                 blockBlob.Properties.ContentType = CSSType;
-                blockBlob.SetProperties();
                 blockBlob.UploadFromStream(fileStream);
+                blockBlob.SetProperties();
                 ReferenceName = blockBlob.Uri.AbsoluteUri;
             }
 
@@ -114,8 +114,8 @@ namespace WebManagementPortal.Controllers
             {
                 var blockBlob = blobRef.GetBlockBlobReference(HomePageName);
                 blockBlob.Properties.ContentType = HtmlType;
-                blockBlob.SetProperties();
                 blockBlob.UploadFromStream(fileStream);
+                blockBlob.SetProperties();
             }
 
             // Other pages
@@ -132,8 +132,8 @@ namespace WebManagementPortal.Controllers
                 {
                     var blockBlob = blobRef.GetBlockBlobReference(fileName);
                     blockBlob.Properties.ContentType = HtmlType;
-                    blockBlob.SetProperties();
                     blockBlob.UploadFromStream(fileStream);
+                    blockBlob.SetProperties();
                 }
             }
             
