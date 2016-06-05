@@ -21,8 +21,6 @@ namespace WebManagementPortal.Controllers
     public class ImportContentController : Controller
     {
         private const string HomePageName = "home";
-        private const string CSSType = "text/css";
-        private const string HtmlType = "text/html";
 
         // GET: ImportContent
         public ActionResult Index()
@@ -94,7 +92,7 @@ namespace WebManagementPortal.Controllers
             using (var fileStream = GenerateStreamFromString(styleText))
             {
                 var blockBlob = blobRef.GetBlockBlobReference(ReferenceName);
-                blockBlob.Properties.ContentType = CSSType;
+                blockBlob.Properties.ContentType = "text/css";
                 blockBlob.UploadFromStream(fileStream);
                 blockBlob.SetProperties();
                 ReferenceName = blockBlob.Uri.AbsoluteUri;
@@ -113,7 +111,7 @@ namespace WebManagementPortal.Controllers
             using (var fileStream = GenerateStreamFromString(replacedText))
             {
                 var blockBlob = blobRef.GetBlockBlobReference(HomePageName);
-                blockBlob.Properties.ContentType = HtmlType;
+                blockBlob.Properties.ContentType = "text/html";
                 blockBlob.UploadFromStream(fileStream);
                 blockBlob.SetProperties();
             }
@@ -131,7 +129,7 @@ namespace WebManagementPortal.Controllers
                 using (var fileStream = GenerateStreamFromString(replacedText))
                 {
                     var blockBlob = blobRef.GetBlockBlobReference(fileName);
-                    blockBlob.Properties.ContentType = HtmlType;
+                    blockBlob.Properties.ContentType = "text/html";
                     blockBlob.UploadFromStream(fileStream);
                     blockBlob.SetProperties();
                 }
