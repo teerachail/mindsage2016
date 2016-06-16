@@ -1,0 +1,65 @@
+﻿@using System.Security.Claims
+@{
+    Layout = null;
+}
+@model ContactUsViewModel
+
+<style>
+    form {
+        margin-left: -.9375rem;
+        margin-right: -.9375rem;
+    }
+
+    h4, input, textarea {
+        color: white !important;
+    }
+
+    input, textarea {
+        width: 100%;
+        background-color: #363839 !important;
+        border: 1px solid #cacaca !important;
+        padding: .5rem;
+        display: block;
+        font: inherit;
+        margin: 0 0 1rem;
+    }
+
+    textarea {
+        height: 100px;
+        resize: none;
+    }
+
+    button {
+        padding: 0.85em 1em;
+        width: auto;
+        margin: 0 1rem 1rem 0;
+        border: 0;
+        font-size: 0.9rem;
+        font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        display: inline-block;
+        width: auto;
+        margin: 0 1rem 1rem 0;
+        background: #00558b;
+        color: #fff;
+    }
+</style>
+
+<form asp-controller="Home" asp-action="ContactUs" method="post" class="form-horizontal" role="form" data-abide novalidate>
+    <h4>Contact us</h4>
+    <div asp-validation-summary="ValidationSummary.All" data-abide-error class="form-error"></div>
+    <label asp-for="Name">
+        <input asp-for="Name" required pattern="email" placeholder="Name*" />
+        <span asp-validation-for="Name" class="form-error"></span>
+    </label>
+    <label asp-for="Email">
+        <input asp-for="Email" required pattern="email" placeholder="Email*" />
+        <span asp-validation-for="Email" class="form-error"></span>
+    </label>
+    <label asp-for="Message">
+        <textarea asp-for="Message" required placeholder="Message*"></textarea>
+        <span asp-validation-for="Message" class="form-error"></span>
+    </label>
+    <div style="text-align: center;">
+        <button type="submit" class="button expanded">Send Message</button>
+    </div>
+</form>

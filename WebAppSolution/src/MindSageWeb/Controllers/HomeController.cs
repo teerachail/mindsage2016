@@ -7,6 +7,7 @@ using System.Net.Http;
 using Newtonsoft.Json;
 using Microsoft.Extensions.OptionsModel;
 using Microsoft.Extensions.Logging;
+using MindSageWeb.ViewModels.Manage;
 
 namespace MindSageWeb.Controllers
 {
@@ -88,6 +89,21 @@ namespace MindSageWeb.Controllers
                 ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
                 return View("Error");
             }
+        }
+
+        //
+        // GET: /Home/ContactUs
+        public IActionResult ContactUs()
+        {
+            return View();
+        }
+
+        //
+        // POST: /Home/ContactUs
+        [HttpPost]
+        public async Task<IActionResult> ContactUs(ContactUsViewModel model)
+        {
+            return View();
         }
     }
 }
