@@ -5,16 +5,16 @@
 @model ContactUsViewModel
 
 <style>
-    form {
+    form.contactUs {
         margin-left: -.9375rem;
         margin-right: -.9375rem;
     }
 
-    h4, input, textarea {
+    .contactUs h4, .contactUs input, .contactUs textarea {
         color: white !important;
     }
 
-    input, textarea {
+    .contactUs input, .contactUs textarea {
         width: 100%;
         background-color: #363839 !important;
         border: 1px solid #cacaca !important;
@@ -24,12 +24,12 @@
         margin: 0 0 1rem;
     }
 
-    textarea {
+    .contactUs textarea {
         height: 100px;
         resize: none;
     }
 
-    button {
+    .contactUs button {
         padding: 0.85em 1em;
         width: auto;
         margin: 0 1rem 1rem 0;
@@ -44,7 +44,7 @@
     }
 </style>
 
-<form asp-controller="Home" asp-action="ContactUs" method="post" class="form-horizontal" role="form" data-abide novalidate>
+<form asp-controller="Home" asp-action="ContactUs" method="post" class="contactUs form-horizontal" role="form" data-abide novalidate>
     <h4>Contact us</h4>
     <div asp-validation-summary="ValidationSummary.All" data-abide-error class="form-error"></div>
     <label asp-for="Name">

@@ -18,18 +18,21 @@ namespace MindSageWeb.Controllers
         private AppConfigOptions _appConfig;
         private ErrorMessageOptions _errorMsgs;
         private ILogger _logger;
+        private readonly Engines.IEmailSender _mindsageEmailSender;
 
-        public HomeController(CourseController courseCtrl, 
+        public HomeController(CourseController courseCtrl,
             MyCourseController myCourseCtrl,
             IOptions<AppConfigOptions> options,
             IOptions<ErrorMessageOptions> errorMgs,
-            ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory,
+            Engines.IEmailSender mindsageEmailSender)
         {
             _courseCtrl = courseCtrl;
             _myCourseCtrl = myCourseCtrl;
             _appConfig = options.Value;
             _errorMsgs = errorMgs.Value;
             _logger = loggerFactory.CreateLogger<CourseController>();
+            _mindsageEmailSender = mindsageEmailSender;
         }
 
         public IActionResult Index()
@@ -101,9 +104,18 @@ namespace MindSageWeb.Controllers
         //
         // POST: /Home/ContactUs
         [HttpPost]
-        public async Task<IActionResult> ContactUs(ContactUsViewModel model)
+        public async Task ContactUs(ContactUsViewModel model)
         {
-            return View();
+            var noText = model.Email == null || model.Name == null || model.Message == null;
+            noText = noText || model.Email == string.Empty || model.Name == string.Empty || model.Message == string.Empty;
+            if (!noText)
+            {
+				var main = "Contact US";
+				var receiver = "captain.omega@hotmail.com";
+                var body = "<label><b>Name </b>" + model.Name + "</label></br></br><label><b>Message</b></br>" + model.Message + "</label>";
+                await _mindsageEmailSender.Send(model.Email, receiver, main, body);
+            }
         }
+            
     }
 }
