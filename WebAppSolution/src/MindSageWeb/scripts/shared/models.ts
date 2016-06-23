@@ -115,7 +115,7 @@
             public classRoomId: string) {
         }
     }
-    
+
     export class Comment {
         constructor(
             public id: string,
@@ -197,6 +197,14 @@
         constructor(
             public UserProfileId: string,
             public ClassRoomId: string) {
+        }
+    }
+
+    export class SendContactRequest {
+        constructor(
+            public Name: string,
+            public Email: string,
+            public Message: string) {
         }
     }
 }

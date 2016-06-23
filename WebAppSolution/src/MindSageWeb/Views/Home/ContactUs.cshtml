@@ -1,0 +1,70 @@
+﻿@using System.Security.Claims
+@{
+    Layout = null;
+}
+@model ContactUsViewModel
+
+<style>
+    form.contactUs {
+        margin-left: -.9375rem;
+        margin-right: -.9375rem;
+    }
+
+    .contactUs h4, .contactUs input, .contactUs textarea {
+        color: white !important;
+    }
+
+    .contactUs input, .contactUs textarea {
+        width: 100%;
+        background-color: #363839 !important;
+        border: 1px solid #cacaca !important;
+        padding: .5rem;
+        display: block;
+        font: inherit;
+        margin: 0 0 1rem;
+    }
+
+    .contactUs textarea {
+        height: 100px;
+        resize: none;
+    }
+
+    .contactUs button {
+        padding: 0.85em 1em;
+        width: auto;
+        margin: 0 1rem 1rem 0;
+        border: 0;
+        font-size: 0.9rem;
+        font-family: "Helvetica Neue", "Helvetica", Helvetica, Arial, sans-serif;
+        display: inline-block;
+        width: auto;
+        margin: 0 1rem 1rem 0;
+        background: #00558b;
+        color: #fff;
+    }
+</style>
+
+<div ng-controller="app.layouts.ContactUsController as cx" class="contactUs form-horizontal"  data-abide novalidate>
+    <h4>Contact us </h4>
+    <label>
+        <input ng-model="cx.Name" required placeholder="Name*" />
+    </label>
+    <label>
+        <input ng-model="cx.Email" required placeholder="Email*" />
+    </label>
+    <label>
+        <textarea ng-model="cx.Message" required placeholder="Message*"></textarea>
+    </label>
+    <div style="text-align: center;">
+        <button ng-click="cx.SendContact()" ng-hide="cx.send" class="button expanded">Send Message</button>
+        <button ng-show="cx.send" class="button expanded" disabled>Thank You</button>
+    </div>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/assets/js/templates.js"></script>
+<script src="~/assets/js/routes.js"></script>
+<script src="~/assets/js/app.js"></script>
+<script src="~/lib/angular-resource/angular-resource.js"></script>
+<script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>

@@ -53,7 +53,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ShortDescription)
+            @Html.Raw(Model.ShortDescription)
         </dd>
 
         <dt>
@@ -61,7 +61,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MoreDescription)
+            @Html.Raw(Model.MoreDescription)
         </dd>
 
         <dt>
@@ -69,7 +69,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ShortTeacherLessonPlan)
+            @Html.Raw(Model.ShortTeacherLessonPlan)
         </dd>
 
         <dt>
@@ -77,7 +77,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.MoreTeacherLessonPlan)
+            @Html.Raw(Model.MoreTeacherLessonPlan)
         </dd>
 
         <dt>
@@ -93,7 +93,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PrimaryContentDescription)
+            @Html.Raw(Model.PrimaryContentDescription)
         </dd>
 
         <dt>
@@ -164,7 +164,7 @@
                 @Html.DisplayFor(modelItem => item.ContentURL)
             </td>
             <td class="col-md-3">
-                @Html.DisplayFor(modelItem => item.Description)
+                @Html.Raw(item.Description)
             </td>
             <td class="col-md-1">
                 @item.IconURL
@@ -256,7 +256,7 @@
                 @Html.DisplayFor(modelItem => item.SendOnDay)
             </td>
             <td class="col-md-6">
-                @Html.DisplayFor(modelItem => item.Message)
+                @Html.Raw(item.Message)
             </td>
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)

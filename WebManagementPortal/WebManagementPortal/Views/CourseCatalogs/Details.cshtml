@@ -81,7 +81,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FullDescription)
+            @Html.Raw(Model.FullDescription)
         </dd>
 
         <dt>
@@ -163,7 +163,7 @@
                     @Html.DisplayFor(modelItem => semester.Title)
                 </td>
                 <td class="col-md-5">
-                    @Html.DisplayFor(modelItem => semester.Description)
+                    @Html.Raw(semester.Description)
                 </td>
                 <td class="col-md-1">
                     @Html.DisplayFor(modelItem => semester.TotalWeeks)
@@ -217,7 +217,7 @@
                                         @Html.DisplayFor(modelItem => unit.Title)
                                     </td>
                                     <td class="col-md-5">
-                                        @Html.DisplayFor(modelItem => unit.Description)
+                                       @Html.Raw(unit.Description)
                                     </td>
                                     <td class="col-md-1">
                                         @Html.DisplayFor(modelItem => unit.TotalWeeks)
@@ -267,7 +267,7 @@
                                                             @Html.DisplayFor(modelItem => lesson.Title)
                                                         </td>
                                                         <td class="col-md-8">
-                                                            @Html.DisplayFor(modelItem => lesson.ShortDescription)
+                                                            @Html.Raw(lesson.ShortDescription)
                                                         </td>
                                                         <td class="col-md-2">
                                                             @Html.ActionLink("View", "Details", "Lessons", new { id = lesson.Id }, new { @class = "btn btn-primary" })
