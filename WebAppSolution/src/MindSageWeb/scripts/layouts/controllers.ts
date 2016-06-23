@@ -91,9 +91,35 @@ module app.layouts {
         }
     }
 
+    class ContactUsController {
+
+        public Name: string;
+        public Email: string;
+        public Message: string;
+        public send: boolean;
+
+        static $inject = ['app.shared.ContactUsService'];
+        constructor(private ContactSvc: app.shared.ContactUsService) {
+            this.send = false;
+        }
+
+        private SendContact(): void {
+            if (this.Name == null || this.Name == "") return;
+            if (this.Email == null || this.Email == "") return;
+            if (this.Email.indexOf("@") == -1 || this.Email.indexOf(".") == -1 || this.Email.lastIndexOf("@") > this.Email.lastIndexOf(".")) return;
+            if (this.Message == null || this.Message == "") return;
+            this.ContactSvc.SendContact(this.Name, this.Email, this.Message).then(() => {
+                this.send = true;
+            });
+        }
+
+
+    }
+
     angular
         .module('app.layouts')
         .controller('app.layouts.AppLayoutController', AppLayoutController)
         .controller('app.layouts.LessonLayoutController', LessonLayoutController)
-        .controller('app.layouts.CourseLayoutController', CourseLayoutController);
+        .controller('app.layouts.CourseLayoutController', CourseLayoutController)
+        .controller('app.layouts.ContactUsController', ContactUsController);
 }

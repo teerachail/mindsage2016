@@ -255,7 +255,7 @@
         }
     }
 
-    
+
     interface IGetAllCourseResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         GetAllCourse(data: T): T;
     }
@@ -286,11 +286,11 @@
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
             this.getAllCourseSvc = <IGetAllCourseResourceClass<any>>$resource(appConfig.GetAllCourserofileUrl, { 'id': '@id' });
-            this.getNotificationNumberSvc = <IGetNotificationNumberClass<any>>$resource(appConfig.GetNotificationNumberUrl, { 'id': '@id', 'classRoomId': '@classRoomId'});
+            this.getNotificationNumberSvc = <IGetNotificationNumberClass<any>>$resource(appConfig.GetNotificationNumberUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
             this.getNotificationContentSvc = <IGetNotificationContentClass<any>>$resource(appConfig.GetNotificationContentUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
             this.getLikeSvc = <IGetLikeClass<any>>$resource(appConfig.GetLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId', 'lessonId': '@lessonId' });
             this.getAllLikeSvc = <IGetAllLikeClass<any>>$resource(appConfig.GetAllLiketUrl, { 'id': '@id', 'classRoomId': '@classRoomId' });
-            this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, { });
+            this.getUserProfileSvc = <IGetUserProfileResourceClass<any>>$resource(appConfig.GetUserProfileUrl, {});
         }
 
         public GetUserProfile(): ng.IPromise<any> {
@@ -325,10 +325,28 @@
         }
     }
 
+    interface ISendContactResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        SendContact(data: T): T;
+    }
+
+    export class ContactUsService {
+
+        private sendContactSvc: ISendContactResourceClass<any>;
+
+        static $inject = ['appConfig', '$resource'];
+        constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService) {
+            this.sendContactSvc = <ISendContactResourceClass<any>>$resource(appConfig.SendContactUrl, { 'Name': '@Name', 'Email': '@Email', 'Message': '@Message' }, { SendContact: { method: 'POST' } });
+        }
+        
+        public SendContact(name: string, email: string, message: string): ng.IPromise<any> {
+            return this.sendContactSvc.SendContact(new SendContactRequest(name, email, message)).$promise;
+        }
+    }
     angular
         .module('app.shared')
         .service('app.shared.ClientUserProfileService', ClientUserProfileService)
         .service('app.shared.CommentService', CommentService)
         .service('app.shared.DiscussionService', DiscussionService)
-        .service('app.shared.GetProfileService', GetProfileService);
+        .service('app.shared.GetProfileService', GetProfileService)
+        .service('app.shared.ContactUsService', ContactUsService);
 }

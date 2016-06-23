@@ -106,12 +106,11 @@ namespace MindSageWeb.Controllers
         [HttpPost]
         public async Task ContactUs(ContactUsViewModel model)
         {
-            var noText = model.Email == null || model.Name == null || model.Message == null;
-            noText = noText || model.Email == string.Empty || model.Name == string.Empty || model.Message == string.Empty;
-            if (!noText)
+            if (!(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Message)))
             {
 				var main = "Contact US";
 				var receiver = "captain.omega@hotmail.com";
+                //var receiver = "toddm@etamedia.com";
                 var body = "<label><b>Name </b>" + model.Name + "</label></br></br><label><b>Message</b></br>" + model.Message + "</label>";
                 await _mindsageEmailSender.Send(model.Email, receiver, main, body);
             }

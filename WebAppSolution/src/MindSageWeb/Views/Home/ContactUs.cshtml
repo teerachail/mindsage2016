@@ -44,22 +44,27 @@
     }
 </style>
 
-<form asp-controller="Home" asp-action="ContactUs" method="post" class="contactUs form-horizontal" role="form" data-abide novalidate>
-    <h4>Contact us</h4>
-    <div asp-validation-summary="ValidationSummary.All" data-abide-error class="form-error"></div>
-    <label asp-for="Name">
-        <input asp-for="Name" required pattern="email" placeholder="Name*" />
-        <span asp-validation-for="Name" class="form-error"></span>
+<div ng-controller="app.layouts.ContactUsController as cx" class="contactUs form-horizontal"  data-abide novalidate>
+    <h4>Contact us </h4>
+    <label>
+        <input ng-model="cx.Name" required placeholder="Name*" />
     </label>
-    <label asp-for="Email">
-        <input asp-for="Email" required pattern="email" placeholder="Email*" />
-        <span asp-validation-for="Email" class="form-error"></span>
+    <label>
+        <input ng-model="cx.Email" required placeholder="Email*" />
     </label>
-    <label asp-for="Message">
-        <textarea asp-for="Message" required placeholder="Message*"></textarea>
-        <span asp-validation-for="Message" class="form-error"></span>
+    <label>
+        <textarea ng-model="cx.Message" required placeholder="Message*"></textarea>
     </label>
     <div style="text-align: center;">
-        <button type="submit" class="button expanded">Send Message</button>
+        <button ng-click="cx.SendContact()" ng-hide="cx.send" class="button expanded">Send Message</button>
+        <button ng-show="cx.send" class="button expanded" disabled>Thank You</button>
     </div>
-</form>
+</div>
+
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<script src="~/assets/js/templates.js"></script>
+<script src="~/assets/js/routes.js"></script>
+<script src="~/assets/js/app.js"></script>
+<script src="~/lib/angular-resource/angular-resource.js"></script>
+<script src="~/lib/owlcarousel/owl-carousel/owl.carousel.js"></script>
+<script src="//code.jquery.com/ui/1.11.4/jquery-ui.js"></script>
