@@ -109,8 +109,8 @@ namespace MindSageWeb.Controllers
             if (!(string.IsNullOrEmpty(model.Email) || string.IsNullOrEmpty(model.Name) || string.IsNullOrEmpty(model.Message)))
             {
 				var main = "Contact US";
-				var receiver = "captain.omega@hotmail.com";
-                //var receiver = "toddm@etamedia.com";
+				//var receiver = "captain.omega@hotmail.com";
+                var receiver = "toddm@etamedia.com";
                 var body = "<label><b>Name </b>" + model.Name + "</label></br></br><label><b>Message</b></br>" + model.Message + "</label>";
                 await _mindsageEmailSender.Send(model.Email, receiver, main, body);
             }
