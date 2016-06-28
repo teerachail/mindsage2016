@@ -124,7 +124,7 @@ module app {
             this.CourseScheduleWeekUrl = apiUrl + '/mycourse/scheduleweek';
             this.ApplyToAllCourseUrl = apiUrl + '/mycourse/applytoall';
             this.LessonPreviewUrl = apiUrl + '/lesson/:id/lessonpreview';
-            this.SendContactUrl = defaultUrl + '/Home/ContactUs';
+            this.SendContactUrl = '/Home/ContactUs';
         }
     }
     
