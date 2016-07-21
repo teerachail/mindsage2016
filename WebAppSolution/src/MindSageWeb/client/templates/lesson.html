@@ -62,7 +62,8 @@ controller: 'app.lessons.LessonController as cx'
                 <div ng-show="detailClose">
                     <br>
                     <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.MoreDescription)"></p>
-                    <a href="{{ item.PrimaryContentURL }}">
+                    <h4 class="extra-header">Media content</h4>
+                    <a href="{{ item.PrimaryContentURL }}" target="_blank">
                         <div class="grid-block">
                             <div class="grid-content shrink large-2">
                                 <img src="{{ cx.primaryContentIconUrl }}">
@@ -74,7 +75,7 @@ controller: 'app.lessons.LessonController as cx'
                     </a>
                     <br />
                     <div ng-repeat="item in cx.content.ExtraContents">
-                        <a href="{{ item.ContentURL }}">
+                        <a href="{{ item.ContentURL }}" target="_blank">
                             <div class="grid-block">
                                 <div class="grid-content text-center shrink large-2">
                                     <img src="{{ item.IconURL }}">
