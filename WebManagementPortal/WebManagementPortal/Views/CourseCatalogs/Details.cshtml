@@ -36,7 +36,7 @@
         }
         else
         {
-            foreach (var item in Model.Advertisements?.Split(new [] { "#;" }, StringSplitOptions.RemoveEmptyEntries))
+            foreach (var item in Model.Advertisements?.Split(new[] { "#;" }, StringSplitOptions.RemoveEmptyEntries))
             {
                 <dd>
                     @item
@@ -136,7 +136,7 @@
             <th class="col-md-1">
                 Title
             </th>
-            <th  class="col-md-5">
+            <th class="col-md-5">
                 Description
             </th>
             <th class="col-md-1">
@@ -179,112 +179,131 @@
             <tr>
                 <td></td>
                 <td colspan="7">
-                    <div class="panel panel-default">
-                        <div class="panel-heading">
-                            <h3>Units</h3>
+                    <div class="panel-group" id="accordion-semester" role="tablist" aria-multiselectable="true">
+                        <div class="panel panel-default">
+                            <div class="panel-heading" role="tab" id="@semester.Id.ToString()semesterheading">
+                                <h4 class="panel-title">
+                                    <a role="button" data-toggle="collapse" data-parent="#accordion-semester" href="#@semester.Id.ToString()semester" aria-expanded="false" aria-controls="@semester.Id.ToString()semester">
+                                        Units : @Html.DisplayFor(modelItem => semester.Title)
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="@semester.Id.ToString()semester" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@semester.Id.ToString()semesterheading">
+                                <div class="panel-body">
+                                    <p>
+                                        @Html.ActionLink("Create new unit", "Create", "Units", new { @id = semester.Id }, new { @class = "btn btn-primary" })
+                                    </p>
+                                </div>
+
+                                <table class="table">
+                                    <tr class="row">
+                                        <th class="col-md-1">Unit No</th>
+                                        <th class="col-md-1">
+                                            Title
+                                        </th>
+                                        <th class="col-md-5">
+                                            Description
+                                        </th>
+                                        <th class="col-md-1">
+                                            Total weeks
+                                        </th>
+                                        <th class="col-md-2">
+                                            Created date
+                                        </th>
+                                        <th class="col-md-2"></th>
+                                    </tr>
+
+                                    @foreach (var unit in semester.Units.Where(it => !it.RecLog.DeletedDate.HasValue))
+                                    {
+                                        <tr class="row">
+                                            <td class="col-md-1">
+                                                @unitRunner
+                                            </td>
+                                            <td class="col-md-1">
+                                                @Html.DisplayFor(modelItem => unit.Title)
+                                            </td>
+                                            <td class="col-md-5">
+                                                @Html.Raw(unit.Description)
+                                            </td>
+                                            <td class="col-md-1">
+                                                @Html.DisplayFor(modelItem => unit.TotalWeeks)
+                                            </td>
+                                            <td class="col-md-2">
+                                                @Html.DisplayFor(modelItem => unit.RecLog.CreatedDate)
+                                            </td>
+                                            <td class="col-md-2">
+                                                @Html.ActionLink("Edit", "Edit", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-warning" })
+                                                @Html.ActionLink("Delete", "Delete", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-danger" })
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td colspan="6">
+                                                <div class="panel-group" id="accordion-unit" role="tablist" aria-multiselectable="true">
+                                                    <div class="panel panel-default">
+                                                        <div class="panel-heading" role="tab" id="@unit.Id.ToString()unitheading">
+                                                            <h4 class="panel-title">
+                                                                <a role="button" data-toggle="collapse" data-parent="#accordion-unit" href="#@unit.Id.ToString()unit" aria-expanded="false" aria-controls="@unit.Id.ToString()unit">
+                                                                    Lesson : @Html.DisplayFor(modelItem => unit.Title)
+                                                                </a>
+                                                            </h4>
+                                                        </div>
+                                                        <div id="@unit.Id.ToString()unit" class="panel-collapse collapse" role="tabpanel" aria-labelledby="@unit.Id.ToString()unitheading">
+                                                            <div class="panel-heading">
+                                                                <h3>Lesson</h3>
+                                                            </div>
+                                                            <div class="panel-body">
+                                                                <p>
+                                                                    @Html.ActionLink("Create new lesson", "Create", "Lessons", new { @id = unit.Id }, new { @class = "btn btn-primary" })
+                                                                </p>
+                                                            </div>
+
+                                                            <table class="table">
+                                                                <tr class="row">
+                                                                    <th class="col-md-1">
+                                                                        Lesson No
+                                                                    </th>
+                                                                    <th class="col-md-1">
+                                                                        Title
+                                                                    </th>
+                                                                    <th class="col-md-8">
+                                                                        Description
+                                                                    </th>
+                                                                    <th class="col-md-2"></th>
+                                                                </tr>
+
+                                                                @foreach (var lesson in unit.Lessons.Where(it => !it.RecLog.DeletedDate.HasValue))
+                                                                {
+                                                                    <tr class="row">
+                                                                        <td class="col-md-1">
+                                                                            @lessonRunner
+                                                                        </td>
+                                                                        <td class="col-md-1">
+                                                                            @Html.DisplayFor(modelItem => lesson.Title)
+                                                                        </td>
+                                                                        <td class="col-md-8">
+                                                                            @Html.Raw(lesson.ShortDescription)
+                                                                        </td>
+                                                                        <td class="col-md-2">
+                                                                            @Html.ActionLink("View", "Details", "Lessons", new { id = lesson.Id }, new { @class = "btn btn-primary" })
+                                                                            <a href="@AppConfigOptions.MindSageWebUrl/my#!/app/lessonpreview/@lesson.Id" target="_blank" class="btn btn-success">Preview</a>
+                                                                        </td>
+                                                                    </tr>
+                                                                    lessonRunner++;
+                                                                }
+
+                                                            </table>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+                                        unitRunner++;
+                                    }
+
+                                </table>
+                            </div>
                         </div>
-                        <div class="panel-body">
-                            <p>
-                                @Html.ActionLink("Create new unit", "Create", "Units", new { @id = semester.Id }, new { @class = "btn btn-primary" })
-                            </p>
-                        </div>
-
-                        <table class="table">
-                            <tr class="row">
-                                <th class="col-md-1">Unit No</th>
-                                <th class="col-md-1">
-                                    Title
-                                </th>
-                                <th class="col-md-5">
-                                    Description
-                                </th>
-                                <th class="col-md-1">
-                                    Total weeks
-                                </th>
-                                <th class="col-md-2">
-                                    Created date
-                                </th>
-                                <th class="col-md-2"></th>
-                            </tr>
-
-                            @foreach (var unit in semester.Units.Where(it => !it.RecLog.DeletedDate.HasValue))
-                            {
-                                <tr class="row">
-                                    <td class="col-md-1">
-                                        @unitRunner
-                                    </td>
-                                    <td class="col-md-1">
-                                        @Html.DisplayFor(modelItem => unit.Title)
-                                    </td>
-                                    <td class="col-md-5">
-                                       @Html.Raw(unit.Description)
-                                    </td>
-                                    <td class="col-md-1">
-                                        @Html.DisplayFor(modelItem => unit.TotalWeeks)
-                                    </td>
-                                    <td class="col-md-2">
-                                        @Html.DisplayFor(modelItem => unit.RecLog.CreatedDate)
-                                    </td>
-                                    <td class="col-md-2">
-                                        @Html.ActionLink("Edit", "Edit", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-warning" })
-                                        @Html.ActionLink("Delete", "Delete", "Units", new { id = unit.Id, semesterId = semester.Id }, new { @class = "btn btn-danger" })
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td></td>
-                                    <td colspan="6">
-                                        <div class="panel panel-default">
-                                            <div class="panel-heading">
-                                                <h3>Lesson</h3>
-                                            </div>
-                                            <div class="panel-body">
-                                                <p>
-                                                    @Html.ActionLink("Create new lesson", "Create", "Lessons", new { @id = unit.Id }, new { @class = "btn btn-primary" })
-                                                </p>
-                                            </div>
-
-                                            <table class="table">
-                                                <tr class="row">
-                                                    <th class="col-md-1">
-                                                        Lesson No
-                                                    </th>
-                                                    <th class="col-md-1">
-                                                        Title
-                                                    </th>
-                                                    <th class="col-md-8">
-                                                        Description
-                                                    </th>
-                                                    <th class="col-md-2"></th>
-                                                </tr>
-
-                                                @foreach (var lesson in unit.Lessons.Where(it => !it.RecLog.DeletedDate.HasValue))
-                                                {
-                                                    <tr class="row">
-                                                        <td class="col-md-1">
-                                                            @lessonRunner
-                                                        </td>
-                                                        <td class="col-md-1">
-                                                            @Html.DisplayFor(modelItem => lesson.Title)
-                                                        </td>
-                                                        <td class="col-md-8">
-                                                            @Html.Raw(lesson.ShortDescription)
-                                                        </td>
-                                                        <td class="col-md-2">
-                                                            @Html.ActionLink("View", "Details", "Lessons", new { id = lesson.Id }, new { @class = "btn btn-primary" })
-                                                            <a href="@AppConfigOptions.MindSageWebUrl/my#!/app/lessonpreview/@lesson.Id" target="_blank" class="btn btn-success">Preview</a>
-                                                        </td>
-                                                    </tr>
-                                                    lessonRunner++;
-                                                }
-
-                                            </table>
-                                        </div>
-                                    </td>
-                                </tr>
-                                unitRunner++;
-                            }
-
-                        </table>
                     </div>
                 </td>
             </tr>
