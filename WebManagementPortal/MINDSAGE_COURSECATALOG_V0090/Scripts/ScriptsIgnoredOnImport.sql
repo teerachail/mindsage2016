@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/22/2016 17:12:53
+-- Date Created: 07/25/2016 11:33:12
 -- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -99,8 +99,8 @@ IF OBJECT_ID(N'[dbo].[ExtraContents]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ExtraContents];
 GO
 
-IF OBJECT_ID(N'[dbo].[StorageConfigurations]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[StorageConfigurations];
+IF OBJECT_ID(N'[dbo].[ImportContentConfigurations]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[ImportContentConfigurations];
 GO
 
 
