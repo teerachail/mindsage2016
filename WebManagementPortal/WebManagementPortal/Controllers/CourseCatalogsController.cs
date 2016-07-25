@@ -61,7 +61,7 @@ namespace WebManagementPortal.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
+        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,IsFree,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace WebManagementPortal.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,IsFree,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
@@ -115,6 +115,7 @@ namespace WebManagementPortal.Controllers
                 selectedCourseCatalog.FullDescription = courseCatalog.FullDescription;
                 selectedCourseCatalog.TotalWeeks = courseCatalog.TotalWeeks;
                 selectedCourseCatalog.DescriptionImageUrl = courseCatalog.DescriptionImageUrl;
+                selectedCourseCatalog.IsFree = courseCatalog.IsFree;
                 foreach (var cc in selectedCourseCatalog.Licenses)
                 {
                     cc.Grade = courseCatalog.Grade.ToString();
@@ -336,6 +337,7 @@ namespace WebManagementPortal.Controllers
                     DeletedDate = courseCatalog.RecLog.DeletedDate,
                     Semesters = semesters,
                     TotalWeeks = courseCatalog.TotalWeeks,
+                    IsFree = courseCatalog.IsFree
                 };
 
                 await courseCatalogRepo.UpsertCourseCatalog(result);

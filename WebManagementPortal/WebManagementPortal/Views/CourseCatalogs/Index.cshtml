@@ -32,6 +32,7 @@
         <th>
             URL
         </th>
+        <th>@Html.DisplayNameFor(model => model.IsFree)</th>
         <th class="col-md-2">
             @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
         </th>
@@ -58,6 +59,9 @@
         </td>
         <td class="col-md-1">
             @courseUrl
+        </td>
+        <td class="col-md-1">
+            @Html.DisplayFor(modelItem => item.IsFree)
         </td>
         <td class="col-md-1">
             @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)

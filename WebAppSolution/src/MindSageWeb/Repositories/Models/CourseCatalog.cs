@@ -19,6 +19,7 @@ namespace MindSageWeb.Repositories.Models
         public string FullDescription { get; set; }
         public string DescriptionImageUrl { get; set; }
         public int TotalWeeks { get; set; }
+        public bool IsFree { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
