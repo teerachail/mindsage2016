@@ -15,19 +15,14 @@ namespace MindSageWeb.Repositories.Models
         public string Title { get; set; }
         public int UnitNo { get; set; }
         public string SemesterName { get; set; }
-        public string ShortDescription { get; set; }
-        public string MoreDescription { get; set; }
-        public string ShortTeacherLessonPlan { get; set; }
-        public string MoreTeacherLessonPlan { get; set; }
-        public string PrimaryContentURL { get; set; }
-        public string PrimaryContentDescription { get; set; }
-        public IEnumerable<ExtraContent> ExtraContents { get; set; }
         public string CourseCatalogId { get; set; }
         public DateTime CreatedDate { get; set; }
         public DateTime? DeletedDate { get; set; }
 
         public IEnumerable<Ads> Advertisments { get; set; }
         public IEnumerable<TopicOfTheDay> TopicOfTheDays { get; set; }
+        public IEnumerable<LessonItem> TeacherItems { get; set; }
+        public IEnumerable<LessonItem> StudentItems { get; set; }
 
         #endregion Properties
 
@@ -57,14 +52,56 @@ namespace MindSageWeb.Repositories.Models
             #endregion Properties
         }
 
-        public class ExtraContent
+        public class LessonItem
         {
             #region Properties
 
             public string id { get; set; }
-            public string ContentURL { get; set; }
-            public string Description { get; set; }
+            public string Name { get; set; }
+            public string ContentType { get; set; }
+            public bool IsPreviewable { get; set; }
             public string IconURL { get; set; }
+            public string Description { get; set; }
+            public string ContentURL { get; set; }
+
+            #endregion Properties
+        }
+
+        public class AssessmentItem
+        {
+            #region Properties
+
+            public string id { get; set; }
+            public string Name { get; set; }
+            public bool IsPreviewable { get; set; }
+            public string IconURL { get; set; }
+            public IEnumerable<Assessment> Assessments { get; set; }
+
+            #endregion Properties
+        }
+
+        public class Assessment
+        {
+            #region Properties
+
+            public string id { get; set; }
+            public int Order { get; set; }
+            public string ContentType { get; set; }
+            public string Question { get; set; }
+            public string StatementBefore { get; set; }
+            public string StatementAfter { get; set; }
+            public IEnumerable<Choice> Choices { get; set; }
+
+            #endregion Properties
+        }
+
+        public class Choice
+        {
+            #region Properties
+
+            public string id { get; set; }
+            public string Name { get; set; }
+            public bool IsCorrect { get; set; }
 
             #endregion Properties
         }
