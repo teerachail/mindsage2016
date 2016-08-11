@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/25/2016 11:33:12
+-- Date Created: 08/10/2016 11:57:10
 -- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -51,8 +51,28 @@ IF OBJECT_ID(N'[dbo].[FK_LicenseTeacherKey]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TeacherKeys] DROP CONSTRAINT [FK_LicenseTeacherKey];
 GO
 
-IF OBJECT_ID(N'[dbo].[FK_LessonExtraContent]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ExtraContents] DROP CONSTRAINT [FK_LessonExtraContent];
+IF OBJECT_ID(N'[dbo].[FK_AssessmentItemAssessment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Assessments] DROP CONSTRAINT [FK_AssessmentItemAssessment];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_AssessmentChoice]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Choices] DROP CONSTRAINT [FK_AssessmentChoice];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_LessonAssessmentItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_LessonAssessmentItem];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_LessonAssessmentItem1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_LessonAssessmentItem1];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_LessonLessonItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LessonItems] DROP CONSTRAINT [FK_LessonLessonItem];
+GO
+
+IF OBJECT_ID(N'[dbo].[FK_LessonLessonItem1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LessonItems] DROP CONSTRAINT [FK_LessonLessonItem1];
 GO
 
 -- --------------------------------------------------
@@ -95,12 +115,24 @@ IF OBJECT_ID(N'[dbo].[TeacherKeys]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TeacherKeys];
 GO
 
-IF OBJECT_ID(N'[dbo].[ExtraContents]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ExtraContents];
-GO
-
 IF OBJECT_ID(N'[dbo].[ImportContentConfigurations]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ImportContentConfigurations];
+GO
+
+IF OBJECT_ID(N'[dbo].[LessonItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LessonItems];
+GO
+
+IF OBJECT_ID(N'[dbo].[AssessmentItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AssessmentItems];
+GO
+
+IF OBJECT_ID(N'[dbo].[Assessments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Assessments];
+GO
+
+IF OBJECT_ID(N'[dbo].[Choices]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Choices];
 GO
 
 

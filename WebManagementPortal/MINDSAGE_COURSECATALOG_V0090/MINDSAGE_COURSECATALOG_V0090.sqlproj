@@ -71,8 +71,11 @@
     <Build Include="dbo\Tables\Contracts.sql" />
     <Build Include="dbo\Tables\Licenses.sql" />
     <Build Include="dbo\Tables\TeacherKeys.sql" />
-    <Build Include="dbo\Tables\ExtraContents.sql" />
     <Build Include="dbo\Tables\ImportContentConfigurations.sql" />
+    <Build Include="dbo\Tables\LessonItems.sql" />
+    <Build Include="dbo\Tables\AssessmentItems.sql" />
+    <Build Include="dbo\Tables\Assessments.sql" />
+    <Build Include="dbo\Tables\Choices.sql" />
     <None Include="Scripts\ScriptsIgnoredOnImport.sql" />
   </ItemGroup>
 </Project>

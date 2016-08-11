@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 07/25/2016 11:33:12
+-- Date Created: 08/10/2016 11:57:10
 -- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -41,8 +41,23 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_LicenseTeacherKey]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[TeacherKeys] DROP CONSTRAINT [FK_LicenseTeacherKey];
 GO
-IF OBJECT_ID(N'[dbo].[FK_LessonExtraContent]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ExtraContents] DROP CONSTRAINT [FK_LessonExtraContent];
+IF OBJECT_ID(N'[dbo].[FK_AssessmentItemAssessment]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Assessments] DROP CONSTRAINT [FK_AssessmentItemAssessment];
+GO
+IF OBJECT_ID(N'[dbo].[FK_AssessmentChoice]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[Choices] DROP CONSTRAINT [FK_AssessmentChoice];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LessonAssessmentItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_LessonAssessmentItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LessonAssessmentItem1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[AssessmentItems] DROP CONSTRAINT [FK_LessonAssessmentItem1];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LessonLessonItem]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LessonItems] DROP CONSTRAINT [FK_LessonLessonItem];
+GO
+IF OBJECT_ID(N'[dbo].[FK_LessonLessonItem1]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[LessonItems] DROP CONSTRAINT [FK_LessonLessonItem1];
 GO
 
 -- --------------------------------------------------
@@ -76,11 +91,20 @@ GO
 IF OBJECT_ID(N'[dbo].[TeacherKeys]', 'U') IS NOT NULL
     DROP TABLE [dbo].[TeacherKeys];
 GO
-IF OBJECT_ID(N'[dbo].[ExtraContents]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[ExtraContents];
-GO
 IF OBJECT_ID(N'[dbo].[ImportContentConfigurations]', 'U') IS NOT NULL
     DROP TABLE [dbo].[ImportContentConfigurations];
+GO
+IF OBJECT_ID(N'[dbo].[LessonItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[LessonItems];
+GO
+IF OBJECT_ID(N'[dbo].[AssessmentItems]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[AssessmentItems];
+GO
+IF OBJECT_ID(N'[dbo].[Assessments]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Assessments];
+GO
+IF OBJECT_ID(N'[dbo].[Choices]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[Choices];
 GO
 
 -- --------------------------------------------------
@@ -134,12 +158,6 @@ GO
 CREATE TABLE [dbo].[Lessons] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Title] varchar(255)  NOT NULL,
-    [ShortDescription] varchar(max)  NOT NULL,
-    [MoreDescription] varchar(max)  NOT NULL,
-    [ShortTeacherLessonPlan] varchar(max)  NOT NULL,
-    [MoreTeacherLessonPlan] varchar(max)  NOT NULL,
-    [PrimaryContentURL] varchar(max)  NOT NULL,
-    [PrimaryContentDescription] varchar(max)  NOT NULL,
     [IsPreviewable] bit  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
@@ -214,19 +232,6 @@ CREATE TABLE [dbo].[TeacherKeys] (
 );
 GO
 
--- Creating table 'ExtraContents'
-CREATE TABLE [dbo].[ExtraContents] (
-    [Id] int IDENTITY(1,1) NOT NULL,
-    [ContentURL] varchar(max)  NOT NULL,
-    [Description] varchar(max)  NOT NULL,
-    [IconURL] varchar(max)  NOT NULL,
-    [IsPreviewable] bit  NOT NULL,
-    [LessonId] int  NOT NULL,
-    [RecLog_CreatedDate] datetime  NOT NULL,
-    [RecLog_DeletedDate] datetime  NULL
-);
-GO
-
 -- Creating table 'ImportContentConfigurations'
 CREATE TABLE [dbo].[ImportContentConfigurations] (
     [Id] int IDENTITY(1,1) NOT NULL,
@@ -236,6 +241,60 @@ CREATE TABLE [dbo].[ImportContentConfigurations] (
     [ReferenceFileURLs] varchar(max)  NOT NULL,
     [ReplaceSections] varchar(max)  NOT NULL,
     [StorageInfo] varchar(max)  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
+-- Creating table 'LessonItems'
+CREATE TABLE [dbo].[LessonItems] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] varchar(255)  NOT NULL,
+    [IconURL] varchar(255)  NOT NULL,
+    [Description] varchar(max)  NOT NULL,
+    [IsPreviewable] bit  NOT NULL,
+    [ContentType] varchar(100)  NOT NULL,
+    [ContentURL] varchar(max)  NOT NULL,
+    [TeacherLessonId] int  NULL,
+    [StudentLessonId] int  NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
+-- Creating table 'AssessmentItems'
+CREATE TABLE [dbo].[AssessmentItems] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] varchar(255)  NOT NULL,
+    [IconURL] varchar(255)  NOT NULL,
+    [IsPreviewable] bit  NOT NULL,
+    [PreLessonId] int  NULL,
+    [PostLessonId] int  NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
+-- Creating table 'Assessments'
+CREATE TABLE [dbo].[Assessments] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Order] int  NOT NULL,
+    [ContentType] varchar(100)  NOT NULL,
+    [Question] varchar(max)  NOT NULL,
+    [StatementBefore] varchar(max)  NOT NULL,
+    [StatementAfter] varchar(max)  NOT NULL,
+    [AssessmentItemId] int  NOT NULL,
+    [RecLog_CreatedDate] datetime  NOT NULL,
+    [RecLog_DeletedDate] datetime  NULL
+);
+GO
+
+-- Creating table 'Choices'
+CREATE TABLE [dbo].[Choices] (
+    [Id] int IDENTITY(1,1) NOT NULL,
+    [Name] varchar(255)  NOT NULL,
+    [IsCorrect] bit  NOT NULL,
+    [AssessmentId] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL
 );
@@ -299,15 +358,33 @@ ADD CONSTRAINT [PK_TeacherKeys]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
--- Creating primary key on [Id] in table 'ExtraContents'
-ALTER TABLE [dbo].[ExtraContents]
-ADD CONSTRAINT [PK_ExtraContents]
-    PRIMARY KEY CLUSTERED ([Id] ASC);
-GO
-
 -- Creating primary key on [Id] in table 'ImportContentConfigurations'
 ALTER TABLE [dbo].[ImportContentConfigurations]
 ADD CONSTRAINT [PK_ImportContentConfigurations]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'LessonItems'
+ALTER TABLE [dbo].[LessonItems]
+ADD CONSTRAINT [PK_LessonItems]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'AssessmentItems'
+ALTER TABLE [dbo].[AssessmentItems]
+ADD CONSTRAINT [PK_AssessmentItems]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Assessments'
+ALTER TABLE [dbo].[Assessments]
+ADD CONSTRAINT [PK_Assessments]
+    PRIMARY KEY CLUSTERED ([Id] ASC);
+GO
+
+-- Creating primary key on [Id] in table 'Choices'
+ALTER TABLE [dbo].[Choices]
+ADD CONSTRAINT [PK_Choices]
     PRIMARY KEY CLUSTERED ([Id] ASC);
 GO
 
@@ -435,19 +512,94 @@ ON [dbo].[TeacherKeys]
     ([LicenseId]);
 GO
 
--- Creating foreign key on [LessonId] in table 'ExtraContents'
-ALTER TABLE [dbo].[ExtraContents]
-ADD CONSTRAINT [FK_LessonExtraContent]
-    FOREIGN KEY ([LessonId])
+-- Creating foreign key on [AssessmentItemId] in table 'Assessments'
+ALTER TABLE [dbo].[Assessments]
+ADD CONSTRAINT [FK_AssessmentItemAssessment]
+    FOREIGN KEY ([AssessmentItemId])
+    REFERENCES [dbo].[AssessmentItems]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AssessmentItemAssessment'
+CREATE INDEX [IX_FK_AssessmentItemAssessment]
+ON [dbo].[Assessments]
+    ([AssessmentItemId]);
+GO
+
+-- Creating foreign key on [AssessmentId] in table 'Choices'
+ALTER TABLE [dbo].[Choices]
+ADD CONSTRAINT [FK_AssessmentChoice]
+    FOREIGN KEY ([AssessmentId])
+    REFERENCES [dbo].[Assessments]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_AssessmentChoice'
+CREATE INDEX [IX_FK_AssessmentChoice]
+ON [dbo].[Choices]
+    ([AssessmentId]);
+GO
+
+-- Creating foreign key on [PreLessonId] in table 'AssessmentItems'
+ALTER TABLE [dbo].[AssessmentItems]
+ADD CONSTRAINT [FK_LessonAssessmentItem]
+    FOREIGN KEY ([PreLessonId])
     REFERENCES [dbo].[Lessons]
         ([Id])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
--- Creating non-clustered index for FOREIGN KEY 'FK_LessonExtraContent'
-CREATE INDEX [IX_FK_LessonExtraContent]
-ON [dbo].[ExtraContents]
-    ([LessonId]);
+-- Creating non-clustered index for FOREIGN KEY 'FK_LessonAssessmentItem'
+CREATE INDEX [IX_FK_LessonAssessmentItem]
+ON [dbo].[AssessmentItems]
+    ([PreLessonId]);
+GO
+
+-- Creating foreign key on [PostLessonId] in table 'AssessmentItems'
+ALTER TABLE [dbo].[AssessmentItems]
+ADD CONSTRAINT [FK_LessonAssessmentItem1]
+    FOREIGN KEY ([PostLessonId])
+    REFERENCES [dbo].[Lessons]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LessonAssessmentItem1'
+CREATE INDEX [IX_FK_LessonAssessmentItem1]
+ON [dbo].[AssessmentItems]
+    ([PostLessonId]);
+GO
+
+-- Creating foreign key on [TeacherLessonId] in table 'LessonItems'
+ALTER TABLE [dbo].[LessonItems]
+ADD CONSTRAINT [FK_LessonLessonItem]
+    FOREIGN KEY ([TeacherLessonId])
+    REFERENCES [dbo].[Lessons]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LessonLessonItem'
+CREATE INDEX [IX_FK_LessonLessonItem]
+ON [dbo].[LessonItems]
+    ([TeacherLessonId]);
+GO
+
+-- Creating foreign key on [StudentLessonId] in table 'LessonItems'
+ALTER TABLE [dbo].[LessonItems]
+ADD CONSTRAINT [FK_LessonLessonItem1]
+    FOREIGN KEY ([StudentLessonId])
+    REFERENCES [dbo].[Lessons]
+        ([Id])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_LessonLessonItem1'
+CREATE INDEX [IX_FK_LessonLessonItem1]
+ON [dbo].[LessonItems]
+    ([StudentLessonId]);
 GO
 
 -- --------------------------------------------------

@@ -49,54 +49,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.ShortDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoreDescription)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.MoreDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortTeacherLessonPlan)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.ShortTeacherLessonPlan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoreTeacherLessonPlan)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.MoreTeacherLessonPlan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrimaryContentURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrimaryContentURL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrimaryContentDescription)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.PrimaryContentDescription)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.IsPreviewable)
         </dt>
 
@@ -122,65 +74,6 @@
 </p>
 
 <hr />
-
-<h2>Extra contents</h2>
-@{ var extraContentRunner = 1; }
-<p>
-    @Html.ActionLink("Create new extra content", "Create", "ExtraContents", new { @id = Model.Id }, new { @class = "btn btn-primary" })
-</p>
-<table class="table">
-    <tr>
-        <th class="col-md-1">
-            No
-        </th>
-        <th class="col-md-1">
-            Previewable
-        </th>
-        <th class="col-md-3">
-            URL
-        </th>
-        <th class="col-md-3">
-            Description
-        </th>
-        <th class="col-md-1">
-            Type
-        </th>
-        <th class="col-md-1">
-            Created date
-        </th>
-        <th class="col-md-2"></th>
-    </tr>
-
-    @foreach (var item in Model.ExtraContents.Where(it => !it.RecLog.DeletedDate.HasValue))
-    {
-        <tr>
-            <td class="col-md-1">
-                @extraContentRunner
-            </td>
-            <td class="col-md-1">
-                @Html.DisplayFor(modelItem => item.IsPreviewable)
-            </td>
-            <td class="col-md-3">
-                @Html.DisplayFor(modelItem => item.ContentURL)
-            </td>
-            <td class="col-md-3">
-                @Html.Raw(item.Description)
-            </td>
-            <td class="col-md-1">
-                @item.IconURL
-            </td>
-            <td class="col-md-1">
-                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
-            </td>
-            <td class="col-md-2">
-                @Html.ActionLink("Edit", "Edit", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-warning" })
-                @Html.ActionLink("Delete", "Delete", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-danger" })
-            </td>
-        </tr>
-        extraContentRunner++;
-    }
-
-</table>
 
 <h2>Advertisements</h2>
 @{ var adsRunner = 1; }

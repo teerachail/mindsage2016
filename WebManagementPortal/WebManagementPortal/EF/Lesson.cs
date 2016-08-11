@@ -19,18 +19,15 @@ namespace WebManagementPortal.EF
         {
             this.Advertisements = new HashSet<Advertisement>();
             this.TopicOfTheDays = new HashSet<TopicOfTheDay>();
-            this.ExtraContents = new HashSet<ExtraContent>();
+            this.PreAssessments = new HashSet<AssessmentItem>();
+            this.PostAssessments = new HashSet<AssessmentItem>();
+            this.TeacherLessonItems = new HashSet<LessonItem>();
+            this.StudentLessonItems = new HashSet<LessonItem>();
             this.RecLog = new RecordLog();
         }
     
         public int Id { get; set; }
         public string Title { get; set; }
-        public string ShortDescription { get; set; }
-        public string MoreDescription { get; set; }
-        public string ShortTeacherLessonPlan { get; set; }
-        public string MoreTeacherLessonPlan { get; set; }
-        public string PrimaryContentURL { get; set; }
-        public string PrimaryContentDescription { get; set; }
         public bool IsPreviewable { get; set; }
         public int UnitId { get; set; }
     
@@ -42,6 +39,12 @@ namespace WebManagementPortal.EF
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<TopicOfTheDay> TopicOfTheDays { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExtraContent> ExtraContents { get; set; }
+        public virtual ICollection<AssessmentItem> PreAssessments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<AssessmentItem> PostAssessments { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LessonItem> TeacherLessonItems { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<LessonItem> StudentLessonItems { get; set; }
     }
 }

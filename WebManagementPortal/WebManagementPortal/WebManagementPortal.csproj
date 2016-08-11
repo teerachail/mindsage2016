@@ -254,7 +254,6 @@
     <Compile Include="Controllers\ControllerHelper.cs" />
     <Compile Include="Controllers\CourseCatalogController.cs" />
     <Compile Include="Controllers\CourseCatalogsController.cs" />
-    <Compile Include="Controllers\ExtraContentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportContentController.cs" />
     <Compile Include="Controllers\LessonPreviewController.cs" />
@@ -267,19 +266,28 @@
     <Compile Include="EF\Advertisement.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
+    <Compile Include="EF\Assessment.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\AssessmentItem.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Choice.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
     <Compile Include="EF\Contract.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\CourseCatalog.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\ExtraContent.cs">
-      <DependentUpon>MindSageDataModels.tt</DependentUpon>
-    </Compile>
     <Compile Include="EF\ImportContentConfiguration.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Lesson.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\LessonItem.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\License.cs">
@@ -468,11 +476,6 @@
     <Content Include="Views\Licenses\Index.cshtml" />
     <Content Include="Views\Licenses\RegenerateTeacherCode.cshtml" />
     <Content Include="Views\Contracts\UpdateAllContracts.cshtml" />
-    <Content Include="Views\ExtraContents\Create.cshtml" />
-    <Content Include="Views\ExtraContents\Delete.cshtml" />
-    <Content Include="Views\ExtraContents\Details.cshtml" />
-    <Content Include="Views\ExtraContents\Edit.cshtml" />
-    <Content Include="Views\ExtraContents\Index.cshtml" />
     <Content Include="Views\ImportContent\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>

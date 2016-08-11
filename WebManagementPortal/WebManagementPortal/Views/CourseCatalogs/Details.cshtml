@@ -286,11 +286,8 @@
                                                                         <td class="col-md-1">
                                                                             @lessonRunner
                                                                         </td>
-                                                                        <td class="col-md-1">
+                                                                        <td class="col-md-9">
                                                                             @Html.DisplayFor(modelItem => lesson.Title)
-                                                                        </td>
-                                                                        <td class="col-md-8">
-                                                                            @Html.Raw(lesson.ShortDescription)
                                                                         </td>
                                                                         <td class="col-md-2">
                                                                             @Html.ActionLink("View", "Details", "Lessons", new { id = lesson.Id }, new { @class = "btn btn-primary" })

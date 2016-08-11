@@ -23,6 +23,8 @@ namespace MindSageWeb.Repositories.Models
         public IEnumerable<TopicOfTheDay> TopicOfTheDays { get; set; }
         public IEnumerable<LessonItem> TeacherItems { get; set; }
         public IEnumerable<LessonItem> StudentItems { get; set; }
+        public IEnumerable<AssessmentItem> PreAssessments { get; set; }
+        public IEnumerable<AssessmentItem> PostAssessments { get; set; }
 
         #endregion Properties
 

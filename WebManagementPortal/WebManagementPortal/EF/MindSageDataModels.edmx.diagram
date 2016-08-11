@@ -22,9 +22,17 @@
         <AssociationConnector Association="MindSageDataModels.CourseCatalogLicense" />
         <EntityTypeShape EntityType="MindSageDataModels.TeacherKey" Width="1.75" PointX="3.625" PointY="5.125" />
         <AssociationConnector Association="MindSageDataModels.LicenseTeacherKey" />
-        <EntityTypeShape EntityType="MindSageDataModels.ExtraContent" Width="2" PointX="6.5" PointY="8.125" />
-        <AssociationConnector Association="MindSageDataModels.LessonExtraContent" />
         <EntityTypeShape EntityType="MindSageDataModels.ImportContentConfiguration" Width="2.25" PointX="9.625" PointY="0.5" />
+        <EntityTypeShape EntityType="MindSageDataModels.LessonItem" Width="1.5" PointX="6" PointY="7.75" />
+        <EntityTypeShape EntityType="MindSageDataModels.AssessmentItem" Width="1.5" PointX="7.625" PointY="7.75" />
+        <EntityTypeShape EntityType="MindSageDataModels.Assessment" Width="1.5" PointX="7.625" PointY="11.25" />
+        <AssociationConnector Association="MindSageDataModels.AssessmentItemAssessment" />
+        <EntityTypeShape EntityType="MindSageDataModels.Choice" Width="1.5" PointX="7.625" PointY="14.625" />
+        <AssociationConnector Association="MindSageDataModels.AssessmentChoice" />
+        <AssociationConnector Association="MindSageDataModels.LessonAssessmentItem" />
+        <AssociationConnector Association="MindSageDataModels.LessonAssessmentItem1" />
+        <AssociationConnector Association="MindSageDataModels.LessonLessonItem" />
+        <AssociationConnector Association="MindSageDataModels.LessonLessonItem1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

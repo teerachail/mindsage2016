@@ -12,23 +12,27 @@ namespace WebManagementPortal.EF
     using System;
     using System.Collections.Generic;
     
-    public partial class ExtraContent
+    public partial class AssessmentItem
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ExtraContent()
+        public AssessmentItem()
         {
+            this.Assessments = new HashSet<Assessment>();
             this.RecLog = new RecordLog();
         }
     
         public int Id { get; set; }
-        public string ContentURL { get; set; }
-        public string Description { get; set; }
+        public string Name { get; set; }
         public string IconURL { get; set; }
         public bool IsPreviewable { get; set; }
-        public int LessonId { get; set; }
+        public Nullable<int> PreLessonId { get; set; }
+        public Nullable<int> PostLessonId { get; set; }
     
         public RecordLog RecLog { get; set; }
     
-        public virtual Lesson Lesson { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Assessment> Assessments { get; set; }
+        public virtual Lesson PreLesson { get; set; }
+        public virtual Lesson PostLesson { get; set; }
     }
 }

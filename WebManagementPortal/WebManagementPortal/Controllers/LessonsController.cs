@@ -103,12 +103,6 @@ namespace WebManagementPortal.Controllers
                 if (selectedLesson == null) return View("Error");
 
                 selectedLesson.Title = lesson.Title;
-                selectedLesson.ShortDescription = lesson.ShortDescription;
-                selectedLesson.MoreDescription = lesson.MoreDescription;
-                selectedLesson.ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan;
-                selectedLesson.MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan;
-                selectedLesson.PrimaryContentURL = lesson.PrimaryContentURL;
-                selectedLesson.PrimaryContentDescription = lesson.PrimaryContentDescription;
                 selectedLesson.IsPreviewable = lesson.IsPreviewable;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Lessons", new { @id = lesson.Id });
