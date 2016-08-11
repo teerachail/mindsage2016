@@ -136,6 +136,11 @@ namespace WebManagementPortal.Controllers
             lesson.RecLog.DeletedDate = now;
             foreach (var item in lesson.Advertisements) item.RecLog.DeletedDate = now;
             foreach (var item in lesson.TopicOfTheDays) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.TeacherLessonItems) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.StudentLessonItems) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.PreAssessments) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.PostAssessments) item.RecLog.DeletedDate = now;
+
             await db.SaveChangesAsync();
             return RedirectToAction("Details", "CourseCatalogs", new { @id = lesson.Unit.Semester.CourseCatalogId });
         }

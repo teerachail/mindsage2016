@@ -74,17 +74,15 @@
         </dd>
         @using (Html.BeginForm())
         {
-        <dt>
-            <br>
-            @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, new { @class = "btn btn-default" })
-        </dt>
-        <dd>
-            <br>
-                @Html.AntiForgeryToken()
-                <input type="submit" value="Delete" class="btn btn-danger" />         
-        </dd>
+            <dt>
+                <br>
+                @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, new { @class = "btn btn-default" })
+            </dt>
+            <dd>
+                <br>
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" class="btn btn-danger" />         
+            </dd>
         }
     </dl>
-
-
 </div>
