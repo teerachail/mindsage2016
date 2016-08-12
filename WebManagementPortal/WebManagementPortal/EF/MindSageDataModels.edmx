@@ -249,8 +249,8 @@
     <Property Name="Order" Type="int" Nullable="false" />
     <Property Name="ContentType" Type="varchar" Nullable="false" MaxLength="100" />
     <Property Name="Question" Type="varchar(max)" Nullable="false" />
-    <Property Name="StatementBefore" Type="varchar(max)" Nullable="false" />
-    <Property Name="StatementAfter" Type="varchar(max)" Nullable="false" />
+    <Property Name="StatementBefore" Type="varchar(max)" Nullable="true" />
+    <Property Name="StatementAfter" Type="varchar(max)" Nullable="true" />
     <Property Name="AssessmentItemId" Type="int" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
@@ -795,8 +795,8 @@
           <Property Name="Order" Type="Int32" Nullable="false" />
           <Property Name="ContentType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
           <Property Name="Question" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="StatementBefore" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="StatementAfter" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StatementBefore" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="StatementAfter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="true" />
           <NavigationProperty Name="AssessmentItem" Relationship="MindSageDataModels.AssessmentItemAssessment" FromRole="Assessment" ToRole="AssessmentItem" />
           <Property Name="AssessmentItemId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Choices" Relationship="MindSageDataModels.AssessmentChoice" FromRole="Assessment" ToRole="Choice" />

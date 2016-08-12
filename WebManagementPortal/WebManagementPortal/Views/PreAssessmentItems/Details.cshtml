@@ -72,7 +72,9 @@
     <h2>Assessments</h2>
     @{ var assessmentRunner = 1; }
     <p>
-        @Html.ActionLink("Create new assessment", "Create", "StudentLessonItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create new multiple choice Radio button", "Create", "Assessments", new { @id = Model.Id, @contentType = "QA" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create new multiple choice Pull down", "Create", "Assessments", new { @id = Model.Id, @contentType = "PQA" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create new Free response", "Create", "Assessments", new { @id = Model.Id, @contentType = "FResponse" }, new { @class = "btn btn-primary" })
     </p>
     <table class="table">
         <tr class="row">
@@ -102,14 +104,14 @@
                     @Html.DisplayFor(modelItem => item.ContentType)
                 </td>
                 <td class="col-md-5">
-                    @Html.DisplayFor(modelItem => item.Question)
+                    @Html.Raw(item.Question)
                 </td>
                 <td class="col-md-2">
                     @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
                 </td>
                 <td class="col-md-2">
-                    @Html.ActionLink("Edit", "Edit", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-warning" })
-                    @Html.ActionLink("Delete", "Delete", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Edit", "Edit", "Assessments", new { id = item.Id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "Delete", "Assessments", new { id = item.Id }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
             assessmentRunner++;

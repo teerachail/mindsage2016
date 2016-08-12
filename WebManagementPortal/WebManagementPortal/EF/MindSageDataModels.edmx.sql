@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/10/2016 11:57:10
+-- Date Created: 08/12/2016 15:15:45
 -- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -281,8 +281,8 @@ CREATE TABLE [dbo].[Assessments] (
     [Order] int  NOT NULL,
     [ContentType] varchar(100)  NOT NULL,
     [Question] varchar(max)  NOT NULL,
-    [StatementBefore] varchar(max)  NOT NULL,
-    [StatementAfter] varchar(max)  NOT NULL,
+    [StatementBefore] varchar(max)  NULL,
+    [StatementAfter] varchar(max)  NULL,
     [AssessmentItemId] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL

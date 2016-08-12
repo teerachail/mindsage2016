@@ -250,6 +250,7 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdvertisementsController.cs" />
+    <Compile Include="Controllers\AssessmentsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\ControllerHelper.cs" />
     <Compile Include="Controllers\CourseCatalogController.cs" />
@@ -495,6 +496,11 @@
     <Content Include="Views\PreAssessmentItems\Details.cshtml" />
     <Content Include="Views\PreAssessmentItems\Edit.cshtml" />
     <Content Include="Views\PreAssessmentItems\Index.cshtml" />
+    <Content Include="Views\Assessments\Create.cshtml" />
+    <Content Include="Views\Assessments\Delete.cshtml" />
+    <Content Include="Views\Assessments\Details.cshtml" />
+    <Content Include="Views\Assessments\Edit.cshtml" />
+    <Content Include="Views\Assessments\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

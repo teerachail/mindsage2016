@@ -4,8 +4,8 @@ CREATE TABLE [dbo].[Assessments] (
     [Order] int  NOT NULL,
     [ContentType] varchar(100)  NOT NULL,
     [Question] varchar(max)  NOT NULL,
-    [StatementBefore] varchar(max)  NOT NULL,
-    [StatementAfter] varchar(max)  NOT NULL,
+    [StatementBefore] varchar(max)  NULL,
+    [StatementAfter] varchar(max)  NULL,
     [AssessmentItemId] int  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL
