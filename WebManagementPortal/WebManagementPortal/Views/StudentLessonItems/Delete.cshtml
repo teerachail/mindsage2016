@@ -1,0 +1,112 @@
+﻿@model WebManagementPortal.EF.LessonItem
+
+@{
+    ViewBag.Title = "Delete";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>Student item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            CourseCatalog
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentLesson.Unit.Semester.CourseCatalog.SideName)
+        </dd>
+
+        <dt>
+            Semester
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentLesson.Unit.Semester.Title)
+        </dd>
+
+        <dt>
+            Unit
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentLesson.Unit.Title)
+        </dd>
+
+        <dt>
+            Lesson
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentLesson.Title)
+        </dd>
+
+    </dl>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPreviewable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPreviewable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLog.CreatedDate)
+        </dd>
+
+        @using (Html.BeginForm())
+        {
+            <dt>
+                <br>
+                @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.StudentLessonId }, new { @class = "btn btn-default" })
+            </dt>
+            <dd>
+                <br>
+                @Html.AntiForgeryToken()
+                <input type="submit" value="Delete" class="btn btn-danger" />
+            </dd>
+        }
+    </dl>
+</div>

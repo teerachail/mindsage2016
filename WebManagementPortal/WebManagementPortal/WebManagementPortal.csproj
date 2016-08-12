@@ -261,6 +261,7 @@
     <Compile Include="Controllers\LicensesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\SemestersController.cs" />
+    <Compile Include="Controllers\StudentLessonItemsController.cs" />
     <Compile Include="Controllers\TeacherLessonItemsController.cs" />
     <Compile Include="Controllers\TopicOfTheDaysController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
@@ -483,6 +484,11 @@
     <Content Include="Views\TeacherLessonItems\Details.cshtml" />
     <Content Include="Views\TeacherLessonItems\Edit.cshtml" />
     <Content Include="Views\TeacherLessonItems\Index.cshtml" />
+    <Content Include="Views\StudentLessonItems\Create.cshtml" />
+    <Content Include="Views\StudentLessonItems\Delete.cshtml" />
+    <Content Include="Views\StudentLessonItems\Details.cshtml" />
+    <Content Include="Views\StudentLessonItems\Edit.cshtml" />
+    <Content Include="Views\StudentLessonItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

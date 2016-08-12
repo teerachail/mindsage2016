@@ -11,18 +11,18 @@ using WebManagementPortal.EF;
 
 namespace WebManagementPortal.Controllers
 {
-    public class TeacherLessonItemsController : Controller
+    public class StudentLessonItemsController : Controller
     {
         private MindSageDataModelsContainer db = new MindSageDataModelsContainer();
 
-        // GET: TeacherLessonItems
+        // GET: StudentLessonItems
         //public ActionResult Index()
         //{
         //    var lessonItems = db.LessonItems.Include(l => l.TeacherLesson).Include(l => l.StudentLesson);
         //    return View(lessonItems.ToList());
         //}
 
-        // GET: TeacherLessonItems/Details/5
+        // GET: StudentLessonItems/Details/5
         public ActionResult Details(int? id)
         {
             if (id == null)
@@ -37,7 +37,7 @@ namespace WebManagementPortal.Controllers
             return View(lessonItem);
         }
 
-        // GET: TeacherLessonItems/Create
+        // GET: StudentLessonItems/Create
         public async Task<ActionResult> Create(int id)
         {
             var lesson = await db.Lessons.FirstOrDefaultAsync(it => it.Id == id);
@@ -45,12 +45,12 @@ namespace WebManagementPortal.Controllers
 
             return View(new LessonItem
             {
-                TeacherLesson = lesson,
-                TeacherLessonId = lesson.Id,
+                StudentLesson = lesson,
+                StudentLessonId = lesson.Id,
             });
         }
 
-        // POST: TeacherLessonItems/Create
+        // POST: StudentLessonItems/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -60,20 +60,20 @@ namespace WebManagementPortal.Controllers
         {
             if (ModelState.IsValid)
             {
-                var lesson = await db.Lessons.FirstOrDefaultAsync(it => it.Id == lessonItem.TeacherLessonId);
+                var lesson = await db.Lessons.FirstOrDefaultAsync(it => it.Id == lessonItem.StudentLessonId);
                 if (lesson == null || lesson.RecLog.DeletedDate.HasValue) return View("Error");
 
                 lessonItem.RecLog.CreatedDate = DateTime.Now;
                 lessonItem.IconURL = ControllerHelper.ConvertToIconUrl(lessonItem.ContentType);
                 db.LessonItems.Add(lessonItem);
                 db.SaveChanges();
-                return RedirectToAction("Details", "Lessons", new { @id = lessonItem.TeacherLessonId });
+                return RedirectToAction("Details", "Lessons", new { @id = lessonItem.StudentLessonId });
             }
 
             return View(lessonItem);
         }
 
-        // GET: TeacherLessonItems/Edit/5
+        // GET: StudentLessonItems/Edit/5
         public ActionResult Edit(int? id)
         {
             if (id == null)
@@ -89,7 +89,7 @@ namespace WebManagementPortal.Controllers
             return View(lessonItem);
         }
 
-        // POST: TeacherLessonItems/Edit/5
+        // POST: StudentLessonItems/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
@@ -109,20 +109,20 @@ namespace WebManagementPortal.Controllers
                 selectedLessonItem.ContentURL = lessonItem.ContentURL;
                 selectedLessonItem.IconURL = ControllerHelper.ConvertToIconUrl(lessonItem.ContentType);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Details", "Lessons", new { @id = lessonItem.TeacherLessonId });
+                return RedirectToAction("Details", "Lessons", new { @id = lessonItem.StudentLessonId });
             }
 
             return View(lessonItem);
         }
 
-        // GET: TeacherLessonItems/Delete/5
-        public async Task<ActionResult> Delete(int? id)
+        // GET: StudentLessonItems/Delete/5
+        public ActionResult Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            LessonItem lessonItem = await db.LessonItems.FindAsync(id);
+            LessonItem lessonItem = db.LessonItems.Find(id);
             if (lessonItem == null)
             {
                 return HttpNotFound();
@@ -130,16 +130,16 @@ namespace WebManagementPortal.Controllers
             return View(lessonItem);
         }
 
-        // POST: TeacherLessonItems/Delete/5
+        // POST: StudentLessonItems/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            LessonItem lessonItem = await db.LessonItems.FindAsync(id);
+            LessonItem lessonItem = db.LessonItems.Find(id);
             lessonItem.RecLog.DeletedDate = DateTime.Now;
 
             await db.SaveChangesAsync();
-            return RedirectToAction("Details", "Lessons", new { @id = lessonItem.TeacherLessonId });
+            return RedirectToAction("Details", "Lessons", new { @id = lessonItem.StudentLessonId });
         }
 
         protected override void Dispose(bool disposing)
