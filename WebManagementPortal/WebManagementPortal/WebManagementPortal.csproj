@@ -260,6 +260,7 @@
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\LicensesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PreAssessmentItemsController.cs" />
     <Compile Include="Controllers\SemestersController.cs" />
     <Compile Include="Controllers\StudentLessonItemsController.cs" />
     <Compile Include="Controllers\TeacherLessonItemsController.cs" />
@@ -489,6 +490,11 @@
     <Content Include="Views\StudentLessonItems\Details.cshtml" />
     <Content Include="Views\StudentLessonItems\Edit.cshtml" />
     <Content Include="Views\StudentLessonItems\Index.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Create.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Delete.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Details.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Edit.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

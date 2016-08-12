@@ -1,0 +1,123 @@
+﻿@model WebManagementPortal.EF.AssessmentItem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Pre-Assessment item</h4>
+    <hr />
+    <dl class="dl-horizontal">
+
+        <dt>
+            CourseCatalog
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreLesson.Unit.Semester.CourseCatalog.SideName)
+        </dd>
+
+        <dt>
+            Semester
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreLesson.Unit.Semester.Title)
+        </dd>
+
+        <dt>
+            Unit
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreLesson.Unit.Title)
+        </dd>
+
+        <dt>
+            Lesson
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.PreLesson.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPreviewable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPreviewable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLog.CreatedDate)
+        </dd>
+    </dl>
+    <hr />
+
+    <h2>Assessments</h2>
+    @{ var assessmentRunner = 1; }
+    <p>
+        @Html.ActionLink("Create new assessment", "Create", "StudentLessonItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+    </p>
+    <table class="table">
+        <tr class="row">
+            <th class="col-md-1">
+                No
+            </th>
+            <th class="col-md-2">
+                Type
+            </th>
+            <th class="col-md-5">
+                Question
+            </th>
+            <th class="col-md-2">
+                Created date
+            </th>
+
+            <th class="col-md-2"></th>
+        </tr>
+
+        @foreach (var item in Model.Assessments.Where(it => !it.RecLog.DeletedDate.HasValue))
+        {
+            <tr class="row">
+                <td class="col-md-1">
+                    @assessmentRunner
+                </td>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.ContentType)
+                </td>
+                <td class="col-md-5">
+                    @Html.DisplayFor(modelItem => item.Question)
+                </td>
+                <td class="col-md-2">
+                    @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+                </td>
+                <td class="col-md-2">
+                    @Html.ActionLink("Edit", "Edit", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "Delete", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-danger" })
+                </td>
+            </tr>
+            assessmentRunner++;
+        }
+
+    </table>
+
+</div>
+<p>
+    @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.PreLessonId }, new { @class = "btn btn-default" })
+</p>

@@ -126,7 +126,7 @@
 <h2>Student items</h2>
 @{ var studentLessonItemRunner = 1; }
 <p>
-    @Html.ActionLink("Create new teacher item", "Create", "StudentLessonItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create new student item", "Create", "StudentLessonItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
     <tr class="row">
@@ -167,6 +167,63 @@
             </td>
         </tr>
         studentLessonItemRunner++;
+    }
+
+</table>
+
+<hr/>
+
+<h2>Pre-assessment items</h2>
+@{ var preAssessmentItemRunner = 1; }
+<p>
+    @Html.ActionLink("Create new pre-assessment", "Create", "PreAssessmentItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr class="row">
+        <th class="col-md-1">
+            No
+        </th>
+        <th class="col-md-1">
+            IsPreviewable
+        </th>
+        <th class="col-md-3">
+            Name
+        </th>
+        <th class="col-md-2">
+            Questions
+        </th>
+        <th class="col-md-2">
+            Created date
+        </th>
+
+        <th class="col-md-3"></th>
+    </tr>
+
+    @foreach (var item in Model.PreAssessments.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        <tr class="row">
+            <td class="col-md-1">
+                @preAssessmentItemRunner
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.IsPreviewable)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="col-md-2">
+                @item.Assessments.Count
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-3">
+                @Html.ActionLink("View", "Details", "PreAssessmentItems", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", "PreAssessmentItems", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Delete", "PreAssessmentItems", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        preAssessmentItemRunner++;
     }
 
 </table>
