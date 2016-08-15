@@ -124,11 +124,11 @@ namespace MindSageWeb.Controllers
             selectedSubscription.LastActiveDate = now;
             _userprofileRepo.UpsertUserProfile(userprofile);
 
-            var shouldUpdateSawPrimaryContent = !selectedLessonActivity.SawContentIds.Contains(selectedLessonCatalog.PrimaryContentURL);
+            var shouldUpdateSawPrimaryContent = !selectedLessonActivity.SawContentIds.Contains(selectedLessonCatalog.id);
             if (shouldUpdateSawPrimaryContent)
             {
                 var sawList = selectedLessonActivity.SawContentIds.ToList();
-                sawList.Add(selectedLessonCatalog.PrimaryContentURL);
+                sawList.Add(selectedLessonCatalog.id);
                 selectedLessonActivity.SawContentIds = sawList;
                 _userActivityRepo.UpsertUserActivity(selectedUserActivity);
             }
@@ -145,19 +145,15 @@ namespace MindSageWeb.Controllers
                 UnitNo = selectedLessonCatalog.UnitNo,
                 CourseCatalogId = selectedLessonCatalog.CourseCatalogId,
                 Title = selectedLessonCatalog.Title,
-                ShortDescription = selectedLessonCatalog.ShortDescription,
-                MoreDescription = selectedLessonCatalog.MoreDescription,
-                ShortTeacherLessonPlan = isTeacher ? selectedLessonCatalog.ShortTeacherLessonPlan : string.Empty,
-                MoreTeacherLessonPlan = isTeacher ? selectedLessonCatalog.MoreTeacherLessonPlan : string.Empty,
-                PrimaryContentURL = selectedLessonCatalog.PrimaryContentURL,
-                PrimaryContentDescription = selectedLessonCatalog.PrimaryContentDescription,
                 CreatedDate = selectedLessonCatalog.CreatedDate,
-
                 Advertisments = selectedLessonCatalog.Advertisments,
-                ExtraContents = selectedLessonCatalog.ExtraContents,
                 CourseMessage = isDisplayTeacherMsg ? selectedClassRoom.Message : null,
                 IsTeacher = isTeacher,
                 TotalLikes = selectedLesson.TotalLikes,
+                StudentItems = selectedLessonCatalog.StudentItems ?? Enumerable.Empty<LessonCatalog.LessonItem>(),
+                TeacherItems = selectedLessonCatalog.TeacherItems ?? Enumerable.Empty<LessonCatalog.LessonItem>(),
+                PostAssessments = selectedLessonCatalog.PostAssessments ?? Enumerable.Empty<LessonCatalog.AssessmentItem>(),
+                PreAssessments = selectedLessonCatalog.PreAssessments ?? Enumerable.Empty<LessonCatalog.AssessmentItem>(),
             };
             return result;
         }

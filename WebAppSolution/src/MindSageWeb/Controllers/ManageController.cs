@@ -288,7 +288,7 @@ namespace MindSageWeb.Controllers
                         var redirectURL = $"/my#!/app/course/{ model.ClassRoom }/setting";
                         return Redirect(redirectURL);
                     }
-                    catch (Exception e)
+                    catch (Exception)
                     {
                         ViewBag.ErrorMessage = _errorMsgs.CanNotConnectToTheDatabase;
                         return View("Error");
