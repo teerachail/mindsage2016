@@ -139,6 +139,7 @@ namespace WebManagementPortal.Controllers
                 
                 var now = DateTime.Now;
                 int choiceIndex = 0;
+                IsCorrects = IsCorrects ?? Enumerable.Empty<string>();
                 var choices = (Choices ?? Enumerable.Empty<string>()).Select(it =>
                 {
                     return new Choice

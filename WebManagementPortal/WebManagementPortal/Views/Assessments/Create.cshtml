@@ -93,10 +93,10 @@
             if (Model.ContentType == "PQA")
             {
                 <div class="form-group">
-                    @Html.LabelFor(model => model.StatementAfter, htmlAttributes: new { @class = "control-label col-md-2" })
+                    @Html.LabelFor(model => model.StatementBefore, htmlAttributes: new { @class = "control-label col-md-2" })
                     <div class="col-md-10">
-                        @Html.TextAreaFor(model => model.StatementAfter, 5, 1, new { @class = "form-control" })
-                        @Html.ValidationMessageFor(model => model.StatementAfter, "", new { @class = "text-danger" })
+                        @Html.TextAreaFor(model => model.StatementBefore, 5, 1, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StatementBefore, "", new { @class = "text-danger" })
                     </div>
                 </div>
             }
