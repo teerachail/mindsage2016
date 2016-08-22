@@ -97,9 +97,13 @@
 
         @using (Html.BeginForm())
         {
+            @Html.Hidden("FromPage", ViewBag.FromPage as string)
             <dt>
                 <br>
-                @Html.ActionLink("Back", "Details", "PreAssessmentItems", new { @id = Model.AssessmentItemId }, new { @class = "btn btn-default" })
+                @{
+                    var controllerName = ViewBag.FromPage as string;
+                    @Html.ActionLink("Back", "Details", controllerName, new { @id = Model.AssessmentItemId }, new { @class = "btn btn-default" })
+                }
             </dt>
             <dd>
                 <br>

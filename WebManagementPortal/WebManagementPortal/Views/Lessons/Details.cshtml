@@ -212,7 +212,7 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td class="col-md-2">
-                @item.Assessments.Count
+                @item.Assessments.Count(it => !it.RecLog.DeletedDate.HasValue)
             </td>
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
@@ -227,6 +227,64 @@
     }
 
 </table>
+
+
+<h2>Post-assessment items</h2>
+@{ var postAssessmentItemRunner = 1; }
+<p>
+    @Html.ActionLink("Create new post-assessment", "Create", "PostAssessmentItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr class="row">
+        <th class="col-md-1">
+            No
+        </th>
+        <th class="col-md-1">
+            IsPreviewable
+        </th>
+        <th class="col-md-3">
+            Name
+        </th>
+        <th class="col-md-2">
+            Questions
+        </th>
+        <th class="col-md-2">
+            Created date
+        </th>
+
+        <th class="col-md-3"></th>
+    </tr>
+
+    @foreach (var item in Model.PostAssessments.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        <tr class="row">
+            <td class="col-md-1">
+                @postAssessmentItemRunner
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.IsPreviewable)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="col-md-2">
+                @item.Assessments.Count(it => !it.RecLog.DeletedDate.HasValue)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-3">
+                @Html.ActionLink("View", "Details", "PostAssessmentItems", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", "PostAssessmentItems", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Delete", "PostAssessmentItems", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        postAssessmentItemRunner++;
+    }
+
+</table>
+
+<hr/>
 
 <h2>Advertisements</h2>
 @{ var adsRunner = 1; }

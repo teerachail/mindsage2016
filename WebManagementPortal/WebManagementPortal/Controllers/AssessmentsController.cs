@@ -38,7 +38,7 @@ namespace WebManagementPortal.Controllers
         }
 
         // GET: Assessments/Create
-        public async Task<ActionResult> Create(int id, string contentType = "QA")
+        public async Task<ActionResult> Create(int id, string contentType = "QA", string fromPage = "PostAssessmentItems")
         {
             var assessmentItem = await db.AssessmentItems.FirstOrDefaultAsync(it => it.Id == id);
             if (assessmentItem == null || assessmentItem.RecLog.DeletedDate.HasValue) return View("Error");
@@ -48,6 +48,7 @@ namespace WebManagementPortal.Controllers
             ViewBag.SemesterName = lesson.Unit.Semester.Title;
             ViewBag.UnitName = lesson.Unit.Title;
             ViewBag.LessonName = lesson.Title;
+            ViewBag.FromPage = fromPage;
 
             return View(new Assessment
             {
@@ -63,7 +64,7 @@ namespace WebManagementPortal.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,Order,ContentType,Question,StatementBefore,StatementAfter,AssessmentItemId,RecLog")] Assessment assessment, IEnumerable<string> Choices, IEnumerable<string> IsCorrects)
+        public async Task<ActionResult> Create([Bind(Include = "Id,Order,ContentType,Question,StatementBefore,StatementAfter,AssessmentItemId,RecLog")] Assessment assessment, IEnumerable<string> Choices, IEnumerable<string> IsCorrects, string FromPage = "PostAssessmentItems")
         {
             if (ModelState.IsValid)
             {
@@ -72,6 +73,7 @@ namespace WebManagementPortal.Controllers
 
                 var now = DateTime.Now;
                 int choiceIndex = 0;
+                IsCorrects = IsCorrects ?? Enumerable.Empty<string>();
                 var choices = (Choices ?? Enumerable.Empty<string>()).Select(it =>
                 {
                     return new Choice
@@ -84,18 +86,20 @@ namespace WebManagementPortal.Controllers
                 }).ToList();
                 if (choices.Any()) db.Choices.AddRange(choices);
 
+                assessment.Question = assessment.Question ?? $"{ assessment.StatementBefore} [Choices] { assessment.StatementAfter }";
                 assessment.RecLog.CreatedDate = now;
                 assessment.Order = assessmentItem.Assessments.Count + 1;
                 db.Assessments.Add(assessment);
                 await db.SaveChangesAsync();
-                return RedirectToAction("Details", "PreAssessmentItems", new { @id = assessment.AssessmentItemId });
+                return RedirectToAction("Details", FromPage, new { @id = assessment.AssessmentItemId });
             }
 
+            ViewBag.FromPage = FromPage;
             return View(assessment);
         }
 
         // GET: Assessments/Edit/5
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(int? id, string fromPage = "PostAssessmentItems")
         {
             if (id == null)
             {
@@ -112,6 +116,7 @@ namespace WebManagementPortal.Controllers
             ViewBag.SemesterName = lesson.Unit.Semester.Title;
             ViewBag.UnitName = lesson.Unit.Title;
             ViewBag.LessonName = lesson.Title;
+            ViewBag.FromPage = fromPage;
 
             return View(assessment);
         }
@@ -122,7 +127,7 @@ namespace WebManagementPortal.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,Order,ContentType,Question,StatementBefore,StatementAfter,AssessmentItemId,RecLog")] Assessment assessment, IEnumerable<string> Choices, IEnumerable<string> IsCorrects)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,Order,ContentType,Question,StatementBefore,StatementAfter,AssessmentItemId,RecLog")] Assessment assessment, IEnumerable<string> Choices, IEnumerable<string> IsCorrects, string FromPage = "PostAssessmentItems")
         {
             if (ModelState.IsValid)
             {
@@ -147,14 +152,15 @@ namespace WebManagementPortal.Controllers
                 db.Choices.AddRange(choices);
 
                 await db.SaveChangesAsync();
-                return RedirectToAction("Details", "PreAssessmentItems", new { @id = selectedAssessment.AssessmentItemId });
+                return RedirectToAction("Details", FromPage, new { @id = selectedAssessment.AssessmentItemId });
             }
 
+            ViewBag.FromPage = FromPage;
             return View(assessment);
         }
 
         // GET: Assessments/Delete/5
-        public ActionResult Delete(int? id)
+        public ActionResult Delete(int? id, string fromPage = "PostAssessmentItems")
         {
             if (id == null)
             {
@@ -170,18 +176,21 @@ namespace WebManagementPortal.Controllers
             ViewBag.SemesterName = lesson.Unit.Semester.Title;
             ViewBag.UnitName = lesson.Unit.Title;
             ViewBag.LessonName = lesson.Title;
+            var isPreAssessment = assessment.AssessmentItem.PreLesson == null;
+            ViewBag.CurrentAssessmentId = isPreAssessment ? assessment.AssessmentItem.PreLessonId : assessment.AssessmentItem.PostLessonId;
+            ViewBag.FromPage = fromPage;
             return View(assessment);
         }
 
         // POST: Assessments/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
+        public async Task<ActionResult> DeleteConfirmed(int id, string fromPage = "PostAssessmentItems")
         {
             Assessment assessment = db.Assessments.Find(id);
             assessment.RecLog.DeletedDate = DateTime.Now;
             await db.SaveChangesAsync();
-            return RedirectToAction("Details", "PreAssessmentItems", new { @id = assessment.AssessmentItemId });
+            return RedirectToAction("Details", fromPage, new { @id = assessment.AssessmentItemId });
         }
 
         protected override void Dispose(bool disposing)

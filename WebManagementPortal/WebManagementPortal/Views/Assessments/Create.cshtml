@@ -7,11 +7,12 @@
 <h2>Create</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(it => it.AssessmentItemId)
     @Html.HiddenFor(it => it.ContentType)
+    @Html.Hidden("FromPage", ViewBag.FromPage as string);
     <div class="form-horizontal">
         <h4>Assessment</h4>
         <hr />
@@ -76,17 +77,20 @@
         <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextAreaFor(model => model.Question, 5,1, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+        @if(Model.ContentType != "PQA")
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Question, 5, 1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+                </div>
             </div>
-        </div>
+        }
 
         @if (Model.ContentType != "FResponse")
         {
-            if (Model.ContentType == "QAP")
+            if (Model.ContentType == "PQA")
             {
                 <div class="form-group">
                     @Html.LabelFor(model => model.StatementAfter, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -130,7 +134,7 @@
                 </div>
             </div>
 
-            if (Model.ContentType == "QAP")
+            if (Model.ContentType == "PQA")
             {
                 <div class="form-group">
                     @Html.LabelFor(model => model.StatementAfter, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -151,7 +155,10 @@
 }
 
 <div>
-    @Html.ActionLink("Back", "Details", "PreAssessmentItems", new { @id = Model.AssessmentItemId }, new { @class = "btn btn-default" })
+    @{ 
+        var controllerName = ViewBag.FromPage as string;
+        @Html.ActionLink("Back", "Details", controllerName, new { @id = Model.AssessmentItemId }, new { @class = "btn btn-default" })
+    }
 </div>
 
 @section Scripts {

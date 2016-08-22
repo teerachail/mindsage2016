@@ -7,7 +7,7 @@
 <h2>Details</h2>
 
 <div>
-    <h4>Pre-Assessment item</h4>
+    <h4>Post-Assessment item</h4>
     <hr />
     <dl class="dl-horizontal">
 
@@ -16,7 +16,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PreLesson.Unit.Semester.CourseCatalog.SideName)
+            @Html.DisplayFor(model => model.PostLesson.Unit.Semester.CourseCatalog.SideName)
         </dd>
 
         <dt>
@@ -24,7 +24,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PreLesson.Unit.Semester.Title)
+            @Html.DisplayFor(model => model.PostLesson.Unit.Semester.Title)
         </dd>
 
         <dt>
@@ -32,7 +32,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PreLesson.Unit.Title)
+            @Html.DisplayFor(model => model.PostLesson.Unit.Title)
         </dd>
 
         <dt>
@@ -40,7 +40,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.PreLesson.Title)
+            @Html.DisplayFor(model => model.PostLesson.Title)
         </dd>
 
         <dt>
@@ -72,9 +72,9 @@
     <h2>Assessments</h2>
     @{ var assessmentRunner = 1; }
     <p>
-        @Html.ActionLink("Create new multiple choice Radio button", "Create", "Assessments", new { @id = Model.Id, @contentType = "QA", fromPage = "PreAssessmentItems" }, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Create new multiple choice Pull down", "Create", "Assessments", new { @id = Model.Id, @contentType = "PQA", fromPage = "PreAssessmentItems" }, new { @class = "btn btn-primary" })
-        @Html.ActionLink("Create new Free response", "Create", "Assessments", new { @id = Model.Id, @contentType = "FResponse", fromPage = "PreAssessmentItems" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create new multiple choice Radio button", "Create", "Assessments", new { @id = Model.Id, @contentType = "QA", fromPage = "PostAssessmentItems" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create new multiple choice Pull down", "Create", "Assessments", new { @id = Model.Id, @contentType = "PQA", fromPage = "PostAssessmentItems" }, new { @class = "btn btn-primary" })
+        @Html.ActionLink("Create new Free response", "Create", "Assessments", new { @id = Model.Id, @contentType = "FResponse", fromPage = "PostAssessmentItems" }, new { @class = "btn btn-primary" })
     </p>
     <table class="table">
         <tr class="row">
@@ -110,8 +110,8 @@
                     @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
                 </td>
                 <td class="col-md-2">
-                    @Html.ActionLink("Edit", "Edit", "Assessments", new { @id = item.Id, fromPage = "PreAssessmentItems" }, new { @class = "btn btn-warning" })
-                    @Html.ActionLink("Delete", "Delete", "Assessments", new { @id = item.Id, fromPage = "PreAssessmentItems" }, new { @class = "btn btn-danger" })
+                    @Html.ActionLink("Edit", "Edit", "Assessments", new { @id = item.Id, fromPage = "PostAssessmentItems" }, new { @class = "btn btn-warning" })
+                    @Html.ActionLink("Delete", "Delete", "Assessments", new { @id = item.Id, fromPage = "PostAssessmentItems" }, new { @class = "btn btn-danger" })
                 </td>
             </tr>
             assessmentRunner++;
@@ -121,5 +121,5 @@
 
 </div>
 <p>
-    @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.PreLessonId }, new { @class = "btn btn-default" })
+    @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.PostLessonId }, new { @class = "btn btn-default" })
 </p>
