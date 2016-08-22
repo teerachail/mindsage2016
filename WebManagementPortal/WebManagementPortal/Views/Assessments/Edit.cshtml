@@ -112,11 +112,13 @@
                         @{ var choiceIndex = 0; }
                         @foreach (var item in Model.Choices)
                         {
+                            var isChecked = item.IsCorrect ? "checked" : string.Empty;
                             <tr>
                                 <td>@(choiceIndex+1)</td>
                                 <td><textarea rows="5" cols="1" class="form-control" name="Choices">@item.Name</textarea></td>
-                                <td><input type="checkbox" value="@choiceIndex" name="IsCorrects" /></td>
+                                <td><input type="checkbox" @isChecked value="@choiceIndex" name="IsCorrects" /></td>
                             </tr>
+                            choiceIndex++;
                         }
                     </table>
                 </div>
