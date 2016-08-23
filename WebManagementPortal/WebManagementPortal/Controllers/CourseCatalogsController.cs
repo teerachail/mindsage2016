@@ -184,7 +184,10 @@ namespace WebManagementPortal.Controllers
                 allCourseCatalog = dctx.CourseCatalogs
                     .Include("Semesters.Units.Lessons.Advertisements")
                     .Include("Semesters.Units.Lessons.TopicOfTheDays")
-                    .Include("Semesters.Units.Lessons.ExtraContents")
+                    .Include("Semesters.Units.Lessons.TeacherLessonItems")
+                    .Include("Semesters.Units.Lessons.StudentLessonItems")
+                    .Include("Semesters.Units.Lessons.PreAssessments.Assessments.Choices")
+                    .Include("Semesters.Units.Lessons.PostAssessments.Assessments.Choices")
                     .ToList();
             }
             var canUpdateCourses = allCourseCatalog != null && allCourseCatalog.Any();
