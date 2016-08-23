@@ -1,16 +1,312 @@
 ---
 name: app.main
-url: /main
-abstract: true
-controller: 'app.layouts.LessonLayoutController as mcx'
+url: /main/:lessonId/:classRoomId
+controller: 'app.lessons.LessonController as cx'
 ---
-<div class="flex-video widescreen">
-    <iframe height="712" class="large-12" ng-src="{{ mcx.clientSvc.PrimaryVideoUrl }}" frameborder="0" allowfullscreen></iframe>
-</div>
-<br />
-<div class="grid-block noscroll">
-    <div class="medium-4 align-center grid-block" ng-include="'/templates/sidemenu.html'"></div>
-    <div ui-view class="medium-8 grid-block noscroll clearfix">
+<style>
+    .button.hollow.quest {
+        border: inherit;
+        border-bottom: 1px solid #00558b;
+    }
+
+    .button.hollow.success.quest {
+        border: inherit;
+        border-bottom: 1px solid #43AC6A;
+    }
+
+    .button.hollow.alert.quest {
+        border: inherit;
+        border-bottom: 1px solid #F04124;
+    }
+
+    .button.hollow.dark.quest {
+        border: inherit;
+        border-bottom: 1px solid #232323;
+    }
+
+    .not-active {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+
+
+<!-- Lesson mode -->
+<div>
+    <div class="vertical medium-horizontal grid-block">
+        <!-- Side menu -->
+        <div class="medium-4 small-12 align-center grid-block">
+            <div class="grid-content medium-9 small-12">
+                <div class="clearfix">
+                    <a class="float-left" ui-sref="app.course.notification({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId })"><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"><span class="badge" ng-hide="cx.notification <= 0">{{ cx.notification }}</span></a>
+                    <a class="float-right" href="#" zf-open="MenuModal"><img zf-iconic="" icon="Account" size="medium" class="iconic-color-dark"></a>
+                    <hr />
+                </div>
+                <h1 class="lesson-header">
+                    {{ cx.content.Title }}
+                    <hr />
+                </h1>
+                <ul class="vertical icon-left menu-bar">
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                    </li>
+                    <li ui-sref-active="is-active" ng-show="cx.IsTeacher">
+                        <a class="not-active">Teacher Section</a>
+                    </li>
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.TeacherItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}" ng-show="cx.IsTeacher">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                    </li>
+                    <li ui-sref-active="is-active" ng-show="cx.IsTeacher">
+                        <a class="not-active">Student Section</a>
+                    </li>
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.StudentItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                    </li>
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.PostAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Lesson contents -->
+        <div class="medium-8 small-12 vertical grid-block grid-content card-section">
+            <!-- Item -->
+            <div class="grid-block" ng-show="cx.ItemSelect.ContentType == 'Video' || cx.ItemSelect.ContentType == 'Audio' || cx.ItemSelect.ContentType == 'File' || cx.ItemSelect.ContentType == 'Game'">
+                <iframe height="540" class="small-12" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.ItemSelect.ContentURL) }}" frameborder="0" allowfullscreen></iframe>
+                <hr>
+            </div>
+            <div class="card-section" ng-show="cx.ItemSelect.ContentType == 'None' || cx.ItemSelect.ContentType == 'Video' || cx.ItemSelect.ContentType == 'Audio' || cx.ItemSelect.ContentType == 'File' || cx.ItemSelect.ContentType == 'Game'">
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.ItemSelect.Description)"></p>
+            </div>
+
+            <!-- Question -->
+            <div class="small-12" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
+                <h2 class="text-center">
+                    Qulz: {{ cx.ItemSelect.Name }}
+                </h2>
+                <hr>
+            </div>
+
+            <!-- Question text box -->
+            <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'FResponse'">
+                <p>Give the correct answer to text box</p>
+
+                <p>Qusetion:</p>
+
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
+
+
+                <textarea ng-model="cx.Answer" rows="3"></textarea>
+            </div>
+
+            <!-- Question choices -->
+            <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'QA'">
+                <p>Select the correct answer from choices</p>
+
+                <p>Qusetion:</p>
+
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
+
+                <p ng-repeat="Choice in cx.QuestionSelect.Choices"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></span></label></p>
+            </div>
+
+            <!-- Question drop down -->
+            <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'PQA'">
+                <p>Select the correct answer from the drop down menu below</p>
+
+                <p>Qusetion:</p>
+
+                <p>
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementBefore)"></span>
+                    <select ng-model="cx.Answer" style="display: inline; width: inherit;">
+                        <option value="{{ Choice.id }}" ng-repeat="Choice in cx.QuestionSelect.Choices" ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></option>
+                    </select>
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementAfter)"></span>
+                </p>
+            </div>
+            <div class="medium-10 medium-offset-1 small-12 clearfix" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
+                <a class="button float-right " ng-class="{'secondary disabled': !cx.Answer, 'success': cx.Answer }" zf-open="AnswerModel" ng-hide="cx.AnswerSend">OK</a>
+                <a class="button float-right " ng-class="{'secondary disabled': !cx.Answer, 'success': cx.Answer }" ng-click="cx.NextQuestion()" ng-show="cx.ChangeQuestionButton()">Next Question</a>
+                <a class="button float-right " ng-class="{'secondary disabled': !cx.Answer, 'success': cx.Answer }" ng-click="cx.NextPage()" ng-show="cx.FinishButton()">Finish</a>
+            </div>
+            <div class="small-12 clearfix" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
+                <div class="float-left">
+                    <a class="quest hollow button not-active" ng-class="{'success': cx.IsAnswerCorrect(item) == true && cx.HaveAnswer(item) ,'alert': cx.IsAnswerCorrect(item) == false && cx.HaveAnswer(item), 'dark': cx.QuestionSelect.id != item.id && !cx.HaveAnswer(item)}" ng-repeat="item in cx.ItemSelect.Assessments">
+                        <img zf-iconic="" icon="Circle-check" size="small" class="iconic-color-dark" ng-show="cx.IsAnswerCorrect(item) == true && cx.HaveAnswer(item)">
+                        <img zf-iconic="" icon="Circle-x" size="small" class="iconic-color-dark" ng-show="cx.IsAnswerCorrect(item) == false && cx.HaveAnswer(item)">
+                        <img height="16px" width="16px" zf-iconic="" icon="" size="small" class="iconic-color-dark" ng-show="!cx.HaveAnswer(item)">
+                    </a>
+                </div>
+            </div>
+            <!-- End item -->
+            <div class="small-12">
+                <hr>
+                <p>
+                    <a ng-hide="cx.likes.IsLikedLesson" ng-click="cx.LikeLesson()"><span><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></span></a><a ng-show="cx.likes.IsLikedLesson" ng-click="cx.DisLikeLesson()"><span><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></span></a> {{ cx.content.TotalLikes }} people like this
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- command section -->
+    <div class="vertical medium-horizontal grid-block">
+        <div class="medium-8 medium-offset-4 small-12 vertical grid-block grid-content card-section">
+            <div class="small-12 grid-block">
+                <!-- post section -->
+                <div class="small-4 medium-2 medium-offset-2"><img src="{{ cx.userprofileSvc.ClientUserProfile.ImageUrl }}"></div>
+                <div class="small-8 medium-8">
+                    <h4>{{ cx.userprofileSvc.ClientUserProfile.FullName }}</h4>
+                    <textarea ng-model="message" rows="3"></textarea>
+                    <ul class="button-group float-right">
+                        <li><a ng-click="message = cx.CreateNewComment(message)">Post</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="small-12 grid-block" ng-repeat="item in cx.comment.Comments | orderBy: 'Order'">
+                <div class="small-4 medium-2 medium-offset-2"><img ng-src="{{ cx.$sce.trustAsResourceUrl(item.CreatorImageUrl) }}"></div>
+                <div class="small-8 medium-8">
+                    <a href="#" ui-sref="app.course.journal({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: item.CreatedByUserProfileId })"><h4>{{ item.CreatorDisplayName }}<span class="comment-time"></span></h4></a>
+
+                    <p ng-show="!cx.IsEdit(item.id)">
+                        {{ item.Description }}
+                        <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId" ng-click="cx.EditOpen(item)"><a> Edit</a></span>
+                        <span ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></a></span>
+                        <span ng-hide="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></a></span> {{ item.TotalLikes }} people like this
+                        <span zf-open="ConfirmModel" ng-click="cx.deleteComfirm(item)" ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher"><a><img zf-iconic="" icon="trash" size="medium" class="iconic-color-dark"></a></span>
+                    </p>
+
+                    <div ng-show="cx.IsEdit(item.id)">
+                        <textarea ng-model="cx.message"></textarea>
+                        <ul class="button-group float-right">
+                            <li><a ng-click="cx.SaveEdit(item.id)" class="button">Save</a></li>
+                            <li><a ng-click="cx.CancelEdit()" class="button">Cancel</a></li>
+                        </ul>
+                    </div>
+
+                    <a ng-click="discusClose = cx.showDiscussion(item, discusClose)">
+                        <p ng-hide="discusClose">show discussion ({{ item.TotalDiscussions }})</p>
+                        <p ng-show="discusClose">hide discussion ({{ item.TotalDiscussions }})</p>
+                    </a>
+
+                    <div class="small-12 grid-block" ng-show="discusClose">
+                        <!-- post section -->
+                        <div class="small-4 medium-2"><img ng-src="{{ cx.$sce.trustAsResourceUrl(cx.userprofileSvc.ClientUserProfile.ImageUrl) }}"></div>
+                        <div class="small-8 medium-10">
+                            <h4>{{ cx.userprofileSvc.ClientUserProfile.FullName }}</h4>
+                            <textarea ng-model="discussionMsg" rows="3"></textarea>
+                            <ul class="button-group float-right">
+                                <li><a ng-click="discussionMsg = cx.CreateNewDiscussion(item.id, discussionMsg)">Post</a></li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }">
+                        <div class="discussion">
+                            <div class="small-12 grid-block">
+                                <div class="small-4 medium-2"><img ng-src="{{ cx.$sce.trustAsResourceUrl(discussion.CreatorImageUrl) }}"></div>
+                                <div class="small-8 medium-10">
+                                    <a href="#" ng-hide="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" zf-open="Modal" ng-click="acx.targetData(discussion.CreatedByUserProfileId)"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
+                                    <a href="#" ng-show="acx.CanAccessToUserJournal(discussion.CreatedByUserProfileId)" ui-sref="app.course.journal({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: discussion.CreatedByUserProfileId })"><h4>{{ discussion.CreatorDisplayName }}</h4></a>
+                                    <p ng-show="!cx.IsEdit(discussion.id)">
+                                        {{ discussion.Description }}
+                                        <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
+                                        <span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></a></span>
+                                        <span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></a></span> {{ discussion.TotalLikes }} people like this
+                                        <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher" zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><img zf-iconic="" icon="trash" size="medium" class="iconic-color-dark"></a></span>
+                                    </p>
+                                    <div ng-show="cx.IsEdit(discussion.id)">
+                                        <textarea ng-model="cx.message"></textarea>
+                                        <ul class="button-group float-right">
+                                            <li><a ng-click="cx.SaveEditDiscus(item.id, discussion.id)" class="button">Save</a></li>
+                                            <li><a ng-click="cx.CancelEdit()" class="button">Cancel</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
+<div zf-modal="" id="MenuModal">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Menu</h4>
+    <div>
+        <div class="medium-10 large-10 text-center grid-container">
+            <ul class="vertical icon-left menu-bar">
+                <li ng-hide="cx.userprofileSvc.AllAvailableCourses.length <= 1">
+                    <a zf-open="classModal"><img zf-iconic="" icon="Document" size="medium" class="iconic-color-dark"> COURSES</a>
+                </li>
+                <li>
+                    <a ui-sref="app.main({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userprofileSvc.ClientUserProfile.CurrentLessonId })"><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
+                </li>
+                <li>
+                    <a ui-sref="app.course.journal({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><img zf-iconic="" icon="journal" size="medium" class="iconic-color-dark"> JOURNAL</a>
+                </li>
+                <li>
+                    <a ui-sref="app.course.coursemap({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId })"><img zf-iconic="" icon="course_map" size="medium" class="iconic-color-dark"> COURSE MAP</a>
+                </li>
+                <li ng-hide="cx.IsTeacher">
+                    <a ui-sref="app.course.studentlist({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId })"><img zf-iconic="" icon="class" size="medium" class="iconic-color-dark"> CLASS</a>
+                </li>
+                <li ng-show="cx.IsTeacher">
+                    <a ui-sref="app.course.teacherlist({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId })"><img zf-iconic="" icon="class" size="medium" class="iconic-color-dark"> CLASS</a>
+                </li>
+                <li>
+                    <a ui-sref="app.course.config({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId })"><img zf-iconic="" icon="setting" size="medium" class="iconic-color-dark"> SETTING</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div zf-modal="" id="classModal">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">CLASS LIST</h4>
+    <div>
+        <div class="medium-10 large-10 text-center grid-container">
+            <a href="#" zf-close=""
+               ng-repeat="item in cx.userprofileSvc.AllAvailableCourses"
+               ng-class="{'large expanded button': item.ClassRoomId == cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId,
+               'large hollow expanded button': item.ClassRoomId != cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId}"
+               ng-click="cx.ChangeCourse(item.ClassRoomId, item.LessonId, item.ClassCalendarId)">
+                {{ item.Name }}
+            </a>
+        </div>
+    </div>
+</div>
+<div zf-modal="" id="ConfirmModel">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Are you sure you want to delete this comment?</h4>
+    <div>
+        <div class="medium-10 large-10 text-center grid-container">
+            <div class="text-center">
+                <div>
+                    <button class="button alert" ng-show="cx.deleteComment" ng-click="cx.DeleteComment()" zf-close="">Confirm</button>
+                    <button class="button alert" ng-show="!cx.deleteComment" ng-click="cx.DeleteDiscussion()" zf-close="">Confirm</button>
+                    <button class="button" zf-close="">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div zf-modal="" id="AnswerModel">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Are you sure?</h4>
+    <div>
+        <div class="text-center grid-container">
+            <div class="text-center">
+                <div>
+                    <button class="button success" zf-close="" ng-click="cx.SendAnswer()">Yes</button>
+                    <button class="button success" zf-close="">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End lesson page -->
