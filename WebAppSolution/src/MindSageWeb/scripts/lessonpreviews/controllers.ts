@@ -71,7 +71,7 @@ module app.lessonpreviews {
             this.AnswerSend = this.HaveAnswer(item.Assessments[this.QuestionIndex]);
             this.QuestionSelect = item.Assessments[this.QuestionIndex];
 
-            var answer = this.LessonAnswer.Answer.filter(it => it.assessmentId == this.QuestionSelect.id)[0];
+            var answer = this.LessonAnswer.Answer.filter(it => it.AssessmentId == this.QuestionSelect.id)[0];
             if (answer == null)
                 this.Answer = null;
             else
@@ -82,7 +82,7 @@ module app.lessonpreviews {
             this.QuestionIndex = this.CheckQuestion(this.ItemSelect);
             if (this.QuestionIndex < this.ItemSelect.Assessments.length) {
                 this.QuestionSelect = this.ItemSelect.Assessments[this.QuestionIndex];
-                var answer = this.LessonAnswer.Answer.filter(it => it.assessmentId == this.ItemSelect.Assessments[this.QuestionIndex].id)[0];
+                var answer = this.LessonAnswer.Answer.filter(it => it.AssessmentId == this.ItemSelect.Assessments[this.QuestionIndex].id)[0];
                 if (answer == null) {
                     this.Answer = null;
                     this.AnswerSend = false;
@@ -122,7 +122,7 @@ module app.lessonpreviews {
         private CheckQuestion(item: any): number {
             if (item.Assessments != null) {
                 for (var index = 0; index < item.Assessments.length; index++) {
-                    if (this.LessonAnswer.Answer.filter(it => it.assessmentId == item.Assessments[index].id)[0] == null)
+                    if (this.LessonAnswer.Answer.filter(it => it.AssessmentId == item.Assessments[index].id)[0] == null)
                         return index;
                 }
                 return item.Assessments.length;
@@ -131,7 +131,7 @@ module app.lessonpreviews {
 
         private SendAnswer(): void {
             var item = {
-                assessmentId: this.QuestionSelect.id,
+                AssessmentId: this.QuestionSelect.id,
                 Answer: this.Answer
             }
             this.LessonAnswer.Answer.push(item);
@@ -139,14 +139,14 @@ module app.lessonpreviews {
         }
 
         private HaveAnswer(item: any): boolean {
-            if (this.LessonAnswer.Answer.filter(it => it.assessmentId == item.id)[0])
+            if (this.LessonAnswer.Answer.filter(it => it.AssessmentId == item.id)[0])
                 return true;
             else
                 return false;
         }
 
         private IsAnswerCorrect(item: any): boolean {
-            var answer = this.LessonAnswer.Answer.filter(it => it.assessmentId == item.id)[0];
+            var answer = this.LessonAnswer.Answer.filter(it => it.AssessmentId == item.id)[0];
             if (answer == null) return null;
             if (item.Choices == null || item.Choices.length == 0) return true;
             return item.Choices.filter(it => it.id == answer.Answer)[0].IsCorrect;
