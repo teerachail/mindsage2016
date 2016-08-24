@@ -61,7 +61,7 @@ module app.lessons {
                 this.likes = data[0];
                 this.content = data[1];
                 this.SelectItem(this.content.StudentItems[0]);
-                this.SelectQuestion(this.content.PreAssessments[0]);
+                this.SelectQuestion(null);
                 this.userprofileSvc.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(data[1].PrimaryContentURL);
                 this.comment = data[2];
                 this.userprofileSvc.Advertisments = this.content.Advertisments;
