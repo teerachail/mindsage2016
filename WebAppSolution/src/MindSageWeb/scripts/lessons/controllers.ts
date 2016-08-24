@@ -56,7 +56,8 @@ module app.lessons {
             this.$q.all([
                 this.getProfileSvc.GetLike(),
                 this.lessonSvc.GetContent(this.lessonId, this.classRoomId),
-                this.commentSvc.GetComments(this.lessonId, this.classRoomId)
+                this.commentSvc.GetComments(this.lessonId, this.classRoomId),
+                this.lessonSvc.LessonAnswer(this.lessonId, this.classRoomId)
             ]).then(data => {
                 this.likes = data[0];
                 this.content = data[1];
@@ -65,6 +66,8 @@ module app.lessons {
                 this.userprofileSvc.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(data[1].PrimaryContentURL);
                 this.comment = data[2];
                 this.userprofileSvc.Advertisments = this.content.Advertisments;
+
+                this.LessonAnswer = data[3];
             }, error => {
                 console.log('Load lesson content failed');
                 this.prepareLessonContents();
@@ -187,6 +190,7 @@ module app.lessons {
                 Answer: this.Answer
             }
             this.LessonAnswer.Answer.push(item);
+            this.lessonSvc.CreateNewAnswer(this.LessonAnswer.id, this.QuestionSelect.id, this.Answer);
             this.AnswerSend = true;
         }
 
