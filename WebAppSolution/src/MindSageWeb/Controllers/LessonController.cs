@@ -182,6 +182,32 @@ namespace MindSageWeb.Controllers
             }
         }
 
+        // GET: api/lesson/{lesson-id}/{class-room-id}/answers/{user-id}
+        /// <summary>
+        /// Get lesson's comments
+        /// </summary>
+        /// <param name="id">Lesson's id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <param name="userId">Request by user id</param>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/answers/{userId}")]
+        public GetLessonAnswerRespond Answers(string id, string classRoomId, string userId)
+        {
+            return new GetLessonAnswerRespond();
+        }
+
+        // HttpPost: api/lesson/answer/{assessment-id}
+        /// <summary>
+        /// Update a comment
+        /// </summary>
+        /// <param name="id">Comment's id</param>
+        /// <param name="body">Request information</param>
+        [HttpPost("answer")]
+        public void Put(PostNewAnswerRequest body)
+        {
+
+        }
+
         // GET: api/lesson/{lesson-id}/{class-room-id}/comments/{user-id}
         /// <summary>
         /// Get lesson's comments
