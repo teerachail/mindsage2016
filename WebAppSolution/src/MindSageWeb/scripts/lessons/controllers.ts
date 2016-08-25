@@ -61,13 +61,12 @@ module app.lessons {
             ]).then(data => {
                 this.likes = data[0];
                 this.content = data[1];
-                this.SelectItem(this.content.StudentItems[0]);
-                this.SelectQuestion(null);
                 this.userprofileSvc.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(data[1].PrimaryContentURL);
                 this.comment = data[2];
                 this.userprofileSvc.Advertisments = this.content.Advertisments;
-
                 this.LessonAnswer = data[3];
+                this.SelectItem(this.content.StudentItems[0]);
+                this.SelectQuestion(null);
             }, error => {
                 console.log('Load lesson content failed');
                 this.prepareLessonContents();
@@ -223,9 +222,9 @@ module app.lessons {
         private FinishButton(): boolean {
             if (this.ItemSelect != null) {
                 if (this.ItemSelect.Assessments != null) {
-                return this.AnswerSend && this.CheckQuestion(this.ItemSelect) >= this.ItemSelect.Assessments.length;
-            }
-            else
+                    return this.AnswerSend && this.CheckQuestion(this.ItemSelect) >= this.ItemSelect.Assessments.length;
+                }
+                else
                     return false;
             }
             else

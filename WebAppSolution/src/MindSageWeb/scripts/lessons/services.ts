@@ -62,7 +62,6 @@ module app.lessons {
         }
 
         public CreateNewAnswer(lessonTestModel: LessonAnswers, Answer: AnswerModel): ng.IPromise<any> {
-            console.log(this.createAnswerSvc.save(lessonTestModel).$promise)
             return this.createAnswerSvc.save(new LessonAnswersRequest(lessonTestModel.UserProfileId, lessonTestModel.ClassRoomId, lessonTestModel.LessonId, Answer.AssessmentId, Answer.Answer)).$promise;
         }
     }
