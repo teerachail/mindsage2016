@@ -43,9 +43,32 @@ module app.lessons {
 
     }
 
-    export class CreateAnswerRequest {
+    export class AnswerModel {
         constructor(
-            public LessonTestId: string,
+            public AssessmentId: string,
+            public Answer: string) {
+        }
+
+    }
+
+    export class LessonAnswers {
+        constructor(
+            public id: string,
+            public UserProfileId: string,
+            public ClassRoomId: string,
+            public LessonId: string,
+            public CreatedDate: any,
+            public DeletedDate: any,
+            public Answer: AnswerModel[]) {
+        }
+
+    }
+
+    export class LessonAnswersRequest {
+        constructor(
+            public UserProfileId: string,
+            public ClassRoomId: string,
+            public LessonId: string,
             public AssessmentId: string,
             public Answer: string) {
         }

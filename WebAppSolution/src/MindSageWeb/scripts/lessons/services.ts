@@ -61,8 +61,9 @@ module app.lessons {
             return this.lessonAnswerSvc.get(new LessonAnswerRequest(lessonId, classRoomId, userId)).$promise;
         }
 
-        public CreateNewAnswer(lessonTestId: string, assessmentId: string, answer: string): ng.IPromise<any> {
-            return this.createAnswerSvc.save(new CreateAnswerRequest(lessonTestId, assessmentId, answer)).$promise;
+        public CreateNewAnswer(lessonTestModel: LessonAnswers, Answer: AnswerModel): ng.IPromise<any> {
+            console.log(this.createAnswerSvc.save(lessonTestModel).$promise)
+            return this.createAnswerSvc.save(new LessonAnswersRequest(lessonTestModel.UserProfileId, lessonTestModel.ClassRoomId, lessonTestModel.LessonId, Answer.AssessmentId, Answer.Answer)).$promise;
         }
     }
     
