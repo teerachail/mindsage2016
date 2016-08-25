@@ -126,6 +126,7 @@ namespace MindSageWeb
             services.AddTransient<IContractRepository, ContractRepository>();
             services.AddTransient<Engines.IPayment, Engines.PaypalPayment>();
             services.AddTransient<Engines.IEmailSender, Engines.SendGridEmailSender>();
+            services.AddTransient<ILessonTestResultRepository, LessonTestResultRepository>();
 
             services.AddTransient<Controllers.NotificationController, Controllers.NotificationController>();
             services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();

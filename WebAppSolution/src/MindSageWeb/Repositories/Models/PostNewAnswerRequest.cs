@@ -9,10 +9,14 @@ namespace MindSageWeb.Repositories.Models
     public class PostNewAnswerRequest
     {
         #region Properties
-        
-        public string LessonTestId { get; set; }
-        public string AssessmentId { get; set; }
-        public int Answer { get; set; }
+
+        public string id { get; set; }
+        public string UserProfileId { get; set; }
+        public string ClassRoomId { get; set; }
+        public string LessonId { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public DateTime? DeletedDate { get; set; }
+        public IEnumerable<LessonAnswerInformation> Answer { get; set; }
 
         #endregion Properties
     }
