@@ -26,7 +26,7 @@ namespace MindSageWeb.Repositories
         public LessonTestResultRepository(MongoAccess.MongoUtil mongoUtil, IOptions<DatabaseTableOptions> option)
         {
             _mongoUtil = mongoUtil;
-            TableName = option.Value.LessonTestResult;
+            TableName = option.Value.LessonTestResults;
         }
 
         #endregion Constructors

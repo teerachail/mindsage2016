@@ -72,6 +72,7 @@ namespace MindSageWeb
                 option.UserActivities = databaseTable.UserActivities;
                 option.UserProfiles = databaseTable.UserProfiles;
                 option.Contracts = databaseTable.Contracts;
+                option.LessonTestResults = databaseTable.LessonTestResults;
             });
             var errorMessages = Configuration.GetSection("ErrorMessageOptions").Get<ErrorMessageOptions>();
             services.Configure<ErrorMessageOptions>(option =>
