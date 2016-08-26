@@ -172,8 +172,8 @@ controller: 'app.lessons.LessonController as cx'
                     <p ng-show="!cx.IsEdit(item.id)">
                         {{ item.Description }}
                         <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId" ng-click="cx.EditOpen(item)"><a> Edit</a></span>
-                        <span ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></a></span>
-                        <span ng-hide="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><a><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></a></span> {{ item.TotalLikes }} people like this
+                        <a><span ng-show="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></span></a>
+                        <a><span ng-hide="cx.likes.LikeCommentIds.indexOf(item.id) == -1" ng-click="cx.LikeComment(item.id, cx.likes.LikeCommentIds.indexOf(item.id))"><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></span></a> {{ item.TotalLikes }} people like this
                         <span zf-open="ConfirmModel" ng-click="cx.deleteComfirm(item)" ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher"><a><img zf-iconic="" icon="trash" size="medium" class="iconic-color-dark"></a></span>
                     </p>
 
@@ -202,7 +202,7 @@ controller: 'app.lessons.LessonController as cx'
                         </div>
                     </div>
 
-                    <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }">
+                    <div ng-repeat="discussion in cx.discussions | orderBy: 'Order' | filter: { CommentId: item.id }" ng-show="discusClose">
                         <div class="discussion">
                             <div class="small-12 grid-block">
                                 <div class="small-4 medium-2"><img ng-src="{{ cx.$sce.trustAsResourceUrl(discussion.CreatorImageUrl) }}"></div>
@@ -212,8 +212,8 @@ controller: 'app.lessons.LessonController as cx'
                                     <p ng-show="!cx.IsEdit(discussion.id)">
                                         {{ discussion.Description }}
                                         <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId" ng-click="cx.EditOpen(discussion)"><a> Edit</a></span>
-                                        <span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></a></span>
-                                        <span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><a><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></a></span> {{ discussion.TotalLikes }} people like this
+                                        <a><span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) == -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></span></a>
+                                        <a><span ng-show="cx.likes.LikeDiscussionIds.indexOf(discussion.id) != -1" ng-click="cx.LikeDiscussion(item.id, discussion.id, cx.likes.LikeDiscussionIds.indexOf(discussion.id))"><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></span></a> {{ discussion.TotalLikes }} people like this
                                         <span ng-show="cx.userprofileSvc.ClientUserProfile.UserProfileId == item.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.UserProfileId == discussion.CreatedByUserProfileId || cx.userprofileSvc.ClientUserProfile.IsTeacher" zf-open="ConfirmModel" ng-click="cx.deleteDisComfirm(item, discussion)"><a><img zf-iconic="" icon="trash" size="medium" class="iconic-color-dark"></a></span>
                                     </p>
                                     <div ng-show="cx.IsEdit(discussion.id)">
@@ -226,6 +226,7 @@ controller: 'app.lessons.LessonController as cx'
                                 </div>
                             </div>
                         </div>
+                        <br />
                     </div>
                 </div>
             </div>

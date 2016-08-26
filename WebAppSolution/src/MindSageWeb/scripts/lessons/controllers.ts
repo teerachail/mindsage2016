@@ -30,7 +30,7 @@ module app.lessons {
         private classRoomId: string;
         static $inject = ['$sce', '$scope', '$state', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService', '$q', '$stateParams', 'defaultUrl', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
         constructor(private $sce, private $scope, private $state, private userprofileSvc: app.shared.ClientUserProfileService, private getProfileSvc: app.shared.GetProfileService, private $q, private $stateParams, private defaultUrl, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
-
+            this.requestedCommentIds = ['', ''];
             this.LessonAnswer = {
                 id: '01',
                 Answers: [
@@ -230,7 +230,6 @@ module app.lessons {
             else
                 return false;
         }
-
         //comment & discussions
         public showDiscussion(item: any, open: boolean) {
             this.GetDiscussions(item);
@@ -242,17 +241,21 @@ module app.lessons {
 
             const NoneDiscussion = 0;
             if (comment.TotalDiscussions <= NoneDiscussion) return;
+            if (this.requestedCommentIds == null) this.requestedCommentIds.push(comment.id);
             if (this.requestedCommentIds.filter(it => it == comment.id).length > NoneDiscussion) return;
+            else this.requestedCommentIds.push(comment.id);
 
-            this.requestedCommentIds.push(comment.id);
+
             this.discussionSvc
                 .GetDiscussions(this.lessonId, this.classRoomId, comment.id)
                 .then(it => {
                     if (it == null) return;
-                    for (var index = 0; index < it.length; index++) {
-                        if (this.discussions.filter(dis => dis.id == it[index].id).length == 0)
-                            this.discussions.push(it[index]);
-                    }
+                    if (this.discussions == null) this.discussions = it;
+                    else
+                        for (var index = 0; index < it.length; index++) {
+                            if (this.discussions.filter(dis => dis.id == it[index].id).length == 0)
+                                this.discussions.push(it[index]);
+                        }
                 });
         }
 
@@ -285,7 +288,10 @@ module app.lessons {
                     }
                     else {
                         var userprofile = this.userprofileSvc.ClientUserProfile;
-                        var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - this.discussions.length);
+                        var discussionOrder = 0;
+                        if (this.discussions != null) discussionOrder = this.discussions.length;
+
+                        var newDiscussion = new app.shared.Discussion(it.ActualCommentId, commentId, message, 0, userprofile.ImageUrl, userprofile.FullName, userprofile.UserProfileId, 0 - discussionOrder);
                         this.discussions.push(newDiscussion);
                         this.comment.Comments.filter(it => it.id == commentId)[0].TotalDiscussions++;
                         return "";
