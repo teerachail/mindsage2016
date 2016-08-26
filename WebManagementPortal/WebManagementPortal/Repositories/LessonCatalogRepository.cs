@@ -26,18 +26,15 @@ namespace WebManagementPortal.Repositories
               .Set(it => it.Title, data.Title)
               .Set(it => it.UnitNo, data.UnitNo)
               .Set(it => it.SemesterName, data.SemesterName)
-              .Set(it => it.ShortDescription, data.ShortDescription)
-              .Set(it => it.MoreDescription, data.MoreDescription)
-              .Set(it => it.ShortTeacherLessonPlan, data.ShortTeacherLessonPlan)
-              .Set(it => it.MoreTeacherLessonPlan, data.MoreTeacherLessonPlan)
-              .Set(it => it.PrimaryContentURL, data.PrimaryContentURL)
-              .Set(it => it.PrimaryContentDescription, data.PrimaryContentDescription)
-              .Set(it => it.ExtraContents, data.ExtraContents)
               .Set(it => it.CourseCatalogId, data.CourseCatalogId)
               .Set(it => it.CreatedDate, data.CreatedDate)
               .Set(it => it.DeletedDate, data.DeletedDate)
               .Set(it => it.Advertisments, data.Advertisments)
-              .Set(it => it.TopicOfTheDays, data.TopicOfTheDays);
+              .Set(it => it.TopicOfTheDays, data.TopicOfTheDays)
+              .Set(it => it.TeacherItems, data.TeacherItems)
+              .Set(it => it.StudentItems, data.StudentItems)
+              .Set(it => it.PreAssessments, data.PreAssessments)
+              .Set(it => it.PostAssessments, data.PostAssessments);
 
             var updateOption = new UpdateOptions { IsUpsert = true };
             await MongoAccess.MongoUtil.Instance

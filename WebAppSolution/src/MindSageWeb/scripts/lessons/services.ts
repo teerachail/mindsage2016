@@ -10,12 +10,20 @@ module app.lessons {
     interface IReadNoteContentResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
         ReadNote(data: T): T;
     }
+    interface IGetLessonAnswerResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        GetLessonAnswer(data: T): T;
+    }
+    interface ICreateAnswerResourceClass<T> extends ng.resource.IResourceClass<ng.resource.IResource<T>> {
+        CreateNewAnswer(data: T): T;
+    }
 
     export class LessonService {
                 
         private getLessonSvc: IGetLessonContentResourceClass<any>;
         private likeLessonSvc: ILikeLessonContentResourceClass<any>;
         private readNoteSvc: IReadNoteContentResourceClass<any>;
+        private lessonAnswerSvc: IGetLessonAnswerResourceClass<any>;
+        private createAnswerSvc: ICreateAnswerResourceClass<any>;
         
         static $inject = ['appConfig', '$resource', 'app.shared.ClientUserProfileService'];
         constructor(appConfig: IAppConfig, private $resource: angular.resource.IResourceService, private userprofileSvc: app.shared.ClientUserProfileService) {
@@ -25,6 +33,12 @@ module app.lessons {
             });
             this.readNoteSvc = <IReadNoteContentResourceClass<any>>$resource(appConfig.ReadNoteUrl, {
                 'ClassRoomId': '@ClassRoomId', 'UserProfileId': '@UserProfileId'
+            });
+            this.lessonAnswerSvc = <IGetLessonAnswerResourceClass<any>>$resource(appConfig.LessonAnswerUrl, {
+                'id': '@id', 'classRoomId': '@classRoomId', 'userId': '@userId'
+            });
+            this.createAnswerSvc = <ICreateAnswerResourceClass<any>>$resource(appConfig.CreateAnswerUrl, {
+                'LessonTestId': '@LessonTestId', 'AssessmentId': '@AssessmentId', 'Answer': '@Answer'
             });
         }
 
@@ -40,6 +54,15 @@ module app.lessons {
         public ReadNote(classRoomId: string): ng.IPromise<any> {
             var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
             return this.readNoteSvc.save(new ReadNoteRequest(classRoomId, userId)).$promise;
+        }
+
+        public LessonAnswer(classRoomId: string, lessonId: string): ng.IPromise<any> {
+            var userId = this.userprofileSvc.ClientUserProfile.UserProfileId;
+            return this.lessonAnswerSvc.get(new LessonAnswerRequest(lessonId, classRoomId, userId)).$promise;
+        }
+
+        public CreateNewAnswer(lessonTestModel: LessonAnswers, Answer: AnswerModel): ng.IPromise<any> {
+            return this.createAnswerSvc.save(new LessonAnswersRequest(lessonTestModel.UserProfileId, lessonTestModel.ClassRoomId, lessonTestModel.LessonId, Answer.AssessmentId, Answer.Answer)).$promise;
         }
     }
     

@@ -1,0 +1,166 @@
+﻿@model WebManagementPortal.EF.Assessment
+
+@{
+    ViewBag.Title = "Create";
+}
+
+<h2>Create</h2>
+
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.HiddenFor(it => it.AssessmentItemId)
+    @Html.HiddenFor(it => it.ContentType)
+    @Html.Hidden("FromPage", ViewBag.FromPage as string);
+    <div class="form-horizontal">
+        <h4>Assessment</h4>
+        <hr />
+        <dl class="dl-horizontal">
+
+            <dt>
+                CourseCatalog
+            </dt>
+
+            <dd>
+                @ViewBag.CourseName
+            </dd>
+
+            <dt>
+                Semester
+            </dt>
+
+            <dd>
+                @ViewBag.SemesterName
+            </dd>
+
+            <dt>
+                Unit
+            </dt>
+
+            <dd>
+                @ViewBag.UnitName
+            </dd>
+
+            <dt>
+                Lesson
+            </dt>
+
+            <dd>
+                @ViewBag.LessonName
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AssessmentItem.Name)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AssessmentItem.Name)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AssessmentItem.IsPreviewable)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AssessmentItem.IsPreviewable)
+            </dd>
+
+            <dt>
+                @Html.DisplayNameFor(model => model.AssessmentItem.RecLog.CreatedDate)
+            </dt>
+
+            <dd>
+                @Html.DisplayFor(model => model.AssessmentItem.RecLog.CreatedDate)
+            </dd>
+        </dl>
+        <hr />
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+        @if(Model.ContentType != "PQA")
+        {
+            <div class="form-group">
+                @Html.LabelFor(model => model.Question, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.TextAreaFor(model => model.Question, 5, 1, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Question, "", new { @class = "text-danger" })
+                </div>
+            </div>
+        }
+
+        @if (Model.ContentType != "FResponse")
+        {
+            if (Model.ContentType == "PQA")
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StatementBefore, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.StatementBefore, 5, 1, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StatementBefore, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Choices, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    <table class="table">
+                        <tr>
+                            <th>No</th>
+                            <th>Choice</th>
+                            <th>Is correct</th>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td><textarea rows="5" cols="1" class="form-control" name="Choices"></textarea></td>
+                            <td><input type="checkbox" value="0" name="IsCorrects"/></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><textarea rows="5" cols="1" class="form-control" name="Choices"></textarea></td>
+                            <td><input type="checkbox" value="1" name="IsCorrects" /></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><textarea rows="5" cols="1" class="form-control" name="Choices"></textarea></td>
+                            <td><input type="checkbox" value="2" name="IsCorrects" /></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><textarea rows="5" cols="1" class="form-control" name="Choices"></textarea></td>
+                            <td><input type="checkbox" value="3" name="IsCorrects" /></td>
+                        </tr>
+                </table>
+                </div>
+            </div>
+
+            if (Model.ContentType == "PQA")
+            {
+                <div class="form-group">
+                    @Html.LabelFor(model => model.StatementAfter, htmlAttributes: new { @class = "control-label col-md-2" })
+                    <div class="col-md-10">
+                        @Html.TextAreaFor(model => model.StatementAfter, 5, 1, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(model => model.StatementAfter, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            }
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @{ 
+        var controllerName = ViewBag.FromPage as string;
+        @Html.ActionLink("Back", "Details", controllerName, new { @id = Model.AssessmentItemId }, new { @class = "btn btn-default" })
+    }
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

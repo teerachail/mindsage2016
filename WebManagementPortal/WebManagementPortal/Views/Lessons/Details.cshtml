@@ -49,54 +49,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.ShortDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoreDescription)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.MoreDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortTeacherLessonPlan)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.ShortTeacherLessonPlan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoreTeacherLessonPlan)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.MoreTeacherLessonPlan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrimaryContentURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrimaryContentURL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrimaryContentDescription)
-        </dt>
-
-        <dd>
-            @Html.Raw(Model.PrimaryContentDescription)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.IsPreviewable)
         </dt>
 
@@ -123,64 +75,216 @@
 
 <hr />
 
-<h2>Extra contents</h2>
-@{ var extraContentRunner = 1; }
+<h2>Teacher items</h2>
+@{ var teacherLessonItemRunner = 1; }
 <p>
-    @Html.ActionLink("Create new extra content", "Create", "ExtraContents", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+    @Html.ActionLink("Create new teacher item", "Create", "TeacherLessonItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
 </p>
 <table class="table">
-    <tr>
+    <tr class="row">
+        <th class="col-md-1">
+            No
+        </th>
+        <th class="col-md-2">
+            IsPreviewable
+        </th>
+        <th class="col-md-5">
+            Name
+        </th>
+        <th class="col-md-2">
+            Created date
+        </th>
+
+        <th class="col-md-2"></th>
+    </tr>
+
+    @foreach (var item in Model.TeacherLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        <tr class="row">
+            <td class="col-md-1">
+                @teacherLessonItemRunner
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.IsPreviewable)
+            </td>
+            <td class="col-md-5">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-2">
+                @Html.ActionLink("Edit", "Edit", "TeacherLessonItems", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Delete", "TeacherLessonItems", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        teacherLessonItemRunner++;
+    }
+
+</table>
+
+<h2>Student items</h2>
+@{ var studentLessonItemRunner = 1; }
+<p>
+    @Html.ActionLink("Create new student item", "Create", "StudentLessonItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr class="row">
+        <th class="col-md-1">
+            No
+        </th>
+        <th class="col-md-2">
+            IsPreviewable
+        </th>
+        <th class="col-md-5">
+            Name
+        </th>
+        <th class="col-md-2">
+            Created date
+        </th>
+
+        <th class="col-md-2"></th>
+    </tr>
+
+    @foreach (var item in Model.StudentLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        <tr class="row">
+            <td class="col-md-1">
+                @studentLessonItemRunner
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.IsPreviewable)
+            </td>
+            <td class="col-md-5">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-2">
+                @Html.ActionLink("Edit", "Edit", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Delete", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        studentLessonItemRunner++;
+    }
+
+</table>
+
+<hr/>
+
+<h2>Pre-assessment items</h2>
+@{ var preAssessmentItemRunner = 1; }
+<p>
+    @Html.ActionLink("Create new pre-assessment", "Create", "PreAssessmentItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr class="row">
         <th class="col-md-1">
             No
         </th>
         <th class="col-md-1">
-            Previewable
+            IsPreviewable
         </th>
         <th class="col-md-3">
-            URL
+            Name
         </th>
-        <th class="col-md-3">
-            Description
+        <th class="col-md-2">
+            Questions
         </th>
-        <th class="col-md-1">
-            Type
-        </th>
-        <th class="col-md-1">
+        <th class="col-md-2">
             Created date
         </th>
-        <th class="col-md-2"></th>
+
+        <th class="col-md-3"></th>
     </tr>
 
-    @foreach (var item in Model.ExtraContents.Where(it => !it.RecLog.DeletedDate.HasValue))
+    @foreach (var item in Model.PreAssessments.Where(it => !it.RecLog.DeletedDate.HasValue))
     {
-        <tr>
+        <tr class="row">
             <td class="col-md-1">
-                @extraContentRunner
+                @preAssessmentItemRunner
             </td>
             <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.IsPreviewable)
             </td>
             <td class="col-md-3">
-                @Html.DisplayFor(modelItem => item.ContentURL)
-            </td>
-            <td class="col-md-3">
-                @Html.Raw(item.Description)
-            </td>
-            <td class="col-md-1">
-                @item.IconURL
-            </td>
-            <td class="col-md-1">
-                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+                @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td class="col-md-2">
-                @Html.ActionLink("Edit", "Edit", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-warning" })
-                @Html.ActionLink("Delete", "Delete", "ExtraContents", new { id = item.Id }, new { @class = "btn btn-danger" })
+                @item.Assessments.Count(it => !it.RecLog.DeletedDate.HasValue)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-3">
+                @Html.ActionLink("View", "Details", "PreAssessmentItems", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", "PreAssessmentItems", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Delete", "PreAssessmentItems", new { id = item.Id }, new { @class = "btn btn-danger" })
             </td>
         </tr>
-        extraContentRunner++;
+        preAssessmentItemRunner++;
     }
 
 </table>
+
+
+<h2>Post-assessment items</h2>
+@{ var postAssessmentItemRunner = 1; }
+<p>
+    @Html.ActionLink("Create new post-assessment", "Create", "PostAssessmentItems", new { @id = Model.Id }, new { @class = "btn btn-primary" })
+</p>
+<table class="table">
+    <tr class="row">
+        <th class="col-md-1">
+            No
+        </th>
+        <th class="col-md-1">
+            IsPreviewable
+        </th>
+        <th class="col-md-3">
+            Name
+        </th>
+        <th class="col-md-2">
+            Questions
+        </th>
+        <th class="col-md-2">
+            Created date
+        </th>
+
+        <th class="col-md-3"></th>
+    </tr>
+
+    @foreach (var item in Model.PostAssessments.Where(it => !it.RecLog.DeletedDate.HasValue))
+    {
+        <tr class="row">
+            <td class="col-md-1">
+                @postAssessmentItemRunner
+            </td>
+            <td class="col-md-1">
+                @Html.DisplayFor(modelItem => item.IsPreviewable)
+            </td>
+            <td class="col-md-3">
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td class="col-md-2">
+                @item.Assessments.Count(it => !it.RecLog.DeletedDate.HasValue)
+            </td>
+            <td class="col-md-2">
+                @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-3">
+                @Html.ActionLink("View", "Details", "PostAssessmentItems", new { id = item.Id }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Edit", "Edit", "PostAssessmentItems", new { id = item.Id }, new { @class = "btn btn-warning" })
+                @Html.ActionLink("Delete", "Delete", "PostAssessmentItems", new { id = item.Id }, new { @class = "btn btn-danger" })
+            </td>
+        </tr>
+        postAssessmentItemRunner++;
+    }
+
+</table>
+
+<hr/>
 
 <h2>Advertisements</h2>
 @{ var adsRunner = 1; }

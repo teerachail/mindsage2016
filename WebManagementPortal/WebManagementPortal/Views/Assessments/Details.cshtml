@@ -1,0 +1,74 @@
+﻿@model WebManagementPortal.EF.Assessment
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Assessment</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Order)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Order)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Question)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Question)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatementBefore)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatementBefore)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StatementAfter)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StatementAfter)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLog)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLog)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AssessmentItem.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AssessmentItem.Name)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

@@ -250,21 +250,34 @@
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AdvertisementsController.cs" />
+    <Compile Include="Controllers\AssessmentsController.cs" />
     <Compile Include="Controllers\ContractsController.cs" />
     <Compile Include="Controllers\ControllerHelper.cs" />
     <Compile Include="Controllers\CourseCatalogController.cs" />
     <Compile Include="Controllers\CourseCatalogsController.cs" />
-    <Compile Include="Controllers\ExtraContentsController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ImportContentController.cs" />
     <Compile Include="Controllers\LessonPreviewController.cs" />
     <Compile Include="Controllers\LessonsController.cs" />
     <Compile Include="Controllers\LicensesController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PostAssessmentItemsController.cs" />
+    <Compile Include="Controllers\PreAssessmentItemsController.cs" />
     <Compile Include="Controllers\SemestersController.cs" />
+    <Compile Include="Controllers\StudentLessonItemsController.cs" />
+    <Compile Include="Controllers\TeacherLessonItemsController.cs" />
     <Compile Include="Controllers\TopicOfTheDaysController.cs" />
     <Compile Include="Controllers\UnitsController.cs" />
     <Compile Include="EF\Advertisement.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Assessment.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\AssessmentItem.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\Choice.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Contract.cs">
@@ -273,13 +286,13 @@
     <Compile Include="EF\CourseCatalog.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
-    <Compile Include="EF\ExtraContent.cs">
-      <DependentUpon>MindSageDataModels.tt</DependentUpon>
-    </Compile>
     <Compile Include="EF\ImportContentConfiguration.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\Lesson.cs">
+      <DependentUpon>MindSageDataModels.tt</DependentUpon>
+    </Compile>
+    <Compile Include="EF\LessonItem.cs">
       <DependentUpon>MindSageDataModels.tt</DependentUpon>
     </Compile>
     <Compile Include="EF\License.cs">
@@ -468,12 +481,32 @@
     <Content Include="Views\Licenses\Index.cshtml" />
     <Content Include="Views\Licenses\RegenerateTeacherCode.cshtml" />
     <Content Include="Views\Contracts\UpdateAllContracts.cshtml" />
-    <Content Include="Views\ExtraContents\Create.cshtml" />
-    <Content Include="Views\ExtraContents\Delete.cshtml" />
-    <Content Include="Views\ExtraContents\Details.cshtml" />
-    <Content Include="Views\ExtraContents\Edit.cshtml" />
-    <Content Include="Views\ExtraContents\Index.cshtml" />
     <Content Include="Views\ImportContent\Index.cshtml" />
+    <Content Include="Views\TeacherLessonItems\Create.cshtml" />
+    <Content Include="Views\TeacherLessonItems\Delete.cshtml" />
+    <Content Include="Views\TeacherLessonItems\Details.cshtml" />
+    <Content Include="Views\TeacherLessonItems\Edit.cshtml" />
+    <Content Include="Views\TeacherLessonItems\Index.cshtml" />
+    <Content Include="Views\StudentLessonItems\Create.cshtml" />
+    <Content Include="Views\StudentLessonItems\Delete.cshtml" />
+    <Content Include="Views\StudentLessonItems\Details.cshtml" />
+    <Content Include="Views\StudentLessonItems\Edit.cshtml" />
+    <Content Include="Views\StudentLessonItems\Index.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Create.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Delete.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Details.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Edit.cshtml" />
+    <Content Include="Views\PreAssessmentItems\Index.cshtml" />
+    <Content Include="Views\Assessments\Create.cshtml" />
+    <Content Include="Views\Assessments\Delete.cshtml" />
+    <Content Include="Views\Assessments\Details.cshtml" />
+    <Content Include="Views\Assessments\Edit.cshtml" />
+    <Content Include="Views\Assessments\Index.cshtml" />
+    <Content Include="Views\PostAssessmentItems\Create.cshtml" />
+    <Content Include="Views\PostAssessmentItems\Delete.cshtml" />
+    <Content Include="Views\PostAssessmentItems\Details.cshtml" />
+    <Content Include="Views\PostAssessmentItems\Edit.cshtml" />
+    <Content Include="Views\PostAssessmentItems\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -57,32 +57,22 @@ namespace WebManagementPortal.Controllers
                     Title = unit.Title,
                     Description = unit.Description,
                     UnitNo = unitIdRunner++,
-                    Lessons = lessonQry.Where(it => it.UnitId == unit.Id).Select(it =>
+                    Lessons = lessonQry.Where(it => it.UnitId == unit.Id).Select(lesson =>
                     {
-                        var extraContents = it.ExtraContents
-                                .Where(eit => !eit.RecLog.DeletedDate.HasValue)
-                                .Where(eit => eit.LessonId == it.Id)
-                                .Select(eit => new GetCourseDetailRespond.LessonContent
+                        var studentContentQry = lesson.StudentLessonItems
+                                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                                .Select(it => new GetCourseDetailRespond.LessonContent
                                 {
-                                    ContentUrl = eit.ContentURL,
-                                    Description = eit.Description,
-                                    ImageUrl = ControllerHelper.ConvertToIconUrl(eit.IconURL),
-                                    IsPreviewable = eit.IsPreviewable
+                                    ContentUrl = it.ContentURL,
+                                    ImageUrl = it.IconURL,
+                                    Description = it.Description,
+                                    IsPreviewable = it.IsPreviewable,
                                 });
-                        var contents = new List<GetCourseDetailRespond.LessonContent>
-                        {
-                            new GetCourseDetailRespond.LessonContent {
-                                ContentUrl = it.PrimaryContentURL,
-                                Description = it.PrimaryContentDescription,
-                                ImageUrl = ExtraContentType.Video.ConvertToIconUrl(),
-                                IsPreviewable = it.IsPreviewable
-                            }
-                        };
                         return new GetCourseDetailRespond.Lesson
                         {
-                            id = it.Id.ToString(),
+                            id = lesson.Id.ToString(),
                             Order = lessonIdRunner++,
-                            Contents = contents.Union(extraContents)
+                            Contents = studentContentQry
                         };
                     }),
                     TotalWeeks = unit.TotalWeeks

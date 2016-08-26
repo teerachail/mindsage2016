@@ -15,6 +15,7 @@ CREATE TABLE [dbo].[CourseCatalogs] (
     [FullDescription] varchar(max)  NOT NULL,
     [DescriptionImageUrl] varchar(max)  NOT NULL,
     [TotalWeeks] int  NOT NULL,
+    [IsFree] bit  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL
 );

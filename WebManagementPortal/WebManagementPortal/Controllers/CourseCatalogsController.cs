@@ -61,7 +61,7 @@ namespace WebManagementPortal.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
+        public async Task<ActionResult> Create([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,IsFree,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
@@ -97,7 +97,7 @@ namespace WebManagementPortal.Controllers
         [HttpPost]
         [ValidateInput(false)]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
+        public async Task<ActionResult> Edit([Bind(Include = "Id,GroupName,Grade,SideName,PriceUSD,Series,Title,FullDescription,TotalWeeks,DescriptionImageUrl,IsFree,RecLog")] CourseCatalog courseCatalog, IEnumerable<string> Advertisements)
         {
             if (ModelState.IsValid)
             {
@@ -115,6 +115,7 @@ namespace WebManagementPortal.Controllers
                 selectedCourseCatalog.FullDescription = courseCatalog.FullDescription;
                 selectedCourseCatalog.TotalWeeks = courseCatalog.TotalWeeks;
                 selectedCourseCatalog.DescriptionImageUrl = courseCatalog.DescriptionImageUrl;
+                selectedCourseCatalog.IsFree = courseCatalog.IsFree;
                 foreach (var cc in selectedCourseCatalog.Licenses)
                 {
                     cc.Grade = courseCatalog.Grade.ToString();
@@ -183,7 +184,10 @@ namespace WebManagementPortal.Controllers
                 allCourseCatalog = dctx.CourseCatalogs
                     .Include("Semesters.Units.Lessons.Advertisements")
                     .Include("Semesters.Units.Lessons.TopicOfTheDays")
-                    .Include("Semesters.Units.Lessons.ExtraContents")
+                    .Include("Semesters.Units.Lessons.TeacherLessonItems")
+                    .Include("Semesters.Units.Lessons.StudentLessonItems")
+                    .Include("Semesters.Units.Lessons.PreAssessments.Assessments.Choices")
+                    .Include("Semesters.Units.Lessons.PostAssessments.Assessments.Choices")
                     .ToList();
             }
             var canUpdateCourses = allCourseCatalog != null && allCourseCatalog.Any();
@@ -226,15 +230,10 @@ namespace WebManagementPortal.Controllers
                                 CreatedDate = it.RecLog.CreatedDate,
                                 DeletedDate = it.RecLog.DeletedDate
                             });
-                            var extraContents = lesson.ExtraContents
-                                .Where(it => !it.RecLog.DeletedDate.HasValue)
-                                .Select(it => new repoModel.LessonCatalog.ExtraContent
-                                {
-                                    id = it.Id.ToString(),
-                                    ContentURL = it.ContentURL,
-                                    Description = it.Description,
-                                    IconURL = ControllerHelper.ConvertToIconUrl(it.IconURL)
-                                });
+                            var teacherItemQry = createLessonItems(lesson.TeacherLessonItems);
+                            var studentItemQry = createLessonItems(lesson.StudentLessonItems);
+                            var preAssessmentQry = createAssessmentItems(lesson.PreAssessments);
+                            var postAssessmentQry = createAssessmentItems(lesson.PostAssessments);
                             var lessonCatalog = new repoModel.LessonCatalog
                             {
                                 id = lesson.Id.ToString(),
@@ -242,13 +241,10 @@ namespace WebManagementPortal.Controllers
                                 Title = lesson.Title,
                                 UnitNo = unitOrderRunner,
                                 SemesterName = string.Format("{0}", (char)semesterNameRunner),
-                                ShortDescription = lesson.ShortDescription,
-                                MoreDescription = lesson.MoreDescription,
-                                ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan,
-                                MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan,
-                                PrimaryContentURL = lesson.PrimaryContentURL,
-                                PrimaryContentDescription = lesson.PrimaryContentDescription,
-                                ExtraContents = extraContents,
+                                TeacherItems = teacherItemQry,
+                                StudentItems = studentItemQry,
+                                PreAssessments = preAssessmentQry,
+                                PostAssessments = postAssessmentQry,
                                 CourseCatalogId = courseCatalog.Id.ToString(),
                                 CreatedDate = lesson.RecLog.CreatedDate,
                                 DeletedDate = lesson.RecLog.DeletedDate,
@@ -262,6 +258,62 @@ namespace WebManagementPortal.Controllers
                     semesterNameRunner++;
                 }
             }
+        }
+        private IEnumerable<repoModel.LessonCatalog.LessonItem> createLessonItems(IEnumerable<LessonItem> collection)
+        {
+            var isParameterValid = collection != null && collection.Any();
+            if (!isParameterValid) return Enumerable.Empty<repoModel.LessonCatalog.LessonItem>();
+
+            return collection
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .Select(it => new repoModel.LessonCatalog.LessonItem
+                {
+                    id = it.Id.ToString(),
+                    Name = it.Name,
+                    ContentType = it.ContentType,
+                    ContentURL = it.ContentURL,
+                    Description = it.Description,
+                    IconURL = it.IconURL,
+                    IsPreviewable = it.IsPreviewable,
+                });
+        }
+        private IEnumerable<repoModel.LessonCatalog.AssessmentItem> createAssessmentItems(IEnumerable<AssessmentItem> collection)
+        {
+            var isParameterValid = collection != null && collection.Any();
+            if (!isParameterValid) return Enumerable.Empty<repoModel.LessonCatalog.AssessmentItem>();
+
+            return collection
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .Select(assessmentItem =>
+                {
+                    var assessmentQry = assessmentItem.Assessments
+                        .Where(it => !it.RecLog.DeletedDate.HasValue)
+                        .Select(it => new repoModel.LessonCatalog.Assessment
+                        {
+                            id = it.Id.ToString(),
+                            Order = it.Order,
+                            ContentType = it.ContentType,
+                            Question = it.Question,
+                            StatementAfter = it.StatementAfter,
+                            StatementBefore = it.StatementBefore,
+                            Choices = it.Choices
+                                .Where(choice => !choice.RecLog.DeletedDate.HasValue)
+                                .Select(choice => new repoModel.LessonCatalog.Choice
+                                {
+                                    id = choice.Id.ToString(),
+                                    Name = choice.Name,
+                                    IsCorrect = choice.IsCorrect,
+                                })
+                        });
+                    return new repoModel.LessonCatalog.AssessmentItem
+                    {
+                        id = assessmentItem.Id.ToString(),
+                        Name = assessmentItem.Name,
+                        IsPreviewable = assessmentItem.IsPreviewable,
+                        IconURL = assessmentItem.IconURL,
+                        Assessments = assessmentQry
+                    };
+                });
         }
         private async Task updateCourseCatalog(IEnumerable<CourseCatalog> allCourseCatalog)
         {
@@ -289,32 +341,32 @@ namespace WebManagementPortal.Controllers
                         Description = unit.Description,
                         Order = unitIdRunner++,
                         TotalWeeks = unit.TotalWeeks,
-                        Lessons = lessonQry.Where(it => it.UnitId == unit.Id).Select(it =>
+                        Lessons = lessonQry.Where(it => it.UnitId == unit.Id).Select(lesson =>
                         {
-                            var extraContents = it.ExtraContents
-                                    .Where(eit => !eit.RecLog.DeletedDate.HasValue)
-                                    .Where(eit => eit.LessonId == it.Id)
-                                    .Select(eit => new repoModel.CourseCatalog.LessonContent
-                                    {
-                                        ImageUrl = ControllerHelper.ConvertToIconUrl(eit.IconURL),
-                                        ContentURL = eit.ContentURL,
-                                        Description = eit.Description,
-                                        IsPreviewable = eit.IsPreviewable
-                                    });
-                            var contents = new List<repoModel.CourseCatalog.LessonContent>
-                            {
-                                new repoModel.CourseCatalog.LessonContent {
-                                    ContentURL = it.PrimaryContentURL,
-                                    Description = it.PrimaryContentDescription,
-                                    ImageUrl = ExtraContentType.Video.ConvertToIconUrl(),
-                                    IsPreviewable = it.IsPreviewable
-                                }
-                            };
+                            var teacherContentQry = lesson.TeacherLessonItems
+                               .Where(it => !it.RecLog.DeletedDate.HasValue)
+                               .Select(it => new repoModel.CourseCatalog.LessonContent
+                               {
+                                   ContentURL = it.ContentURL,
+                                   ImageUrl = it.IconURL,
+                                   Description = it.Description,
+                                   IsPreviewable = it.IsPreviewable,
+                               });
+                            var studentContentQry = lesson.StudentLessonItems
+                                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                                .Select(it => new repoModel.CourseCatalog.LessonContent
+                                {
+                                    ContentURL = it.ContentURL,
+                                    ImageUrl = it.IconURL,
+                                    Description = it.Description,
+                                    IsPreviewable = it.IsPreviewable,
+                                });
+                            var contentQry = teacherContentQry.Union(studentContentQry);
                             return new repoModel.CourseCatalog.Lesson
                             {
-                                id = it.Id.ToString(),
+                                id = lesson.Id.ToString(),
                                 Order = lessonIdRunner++,
-                                Contents = contents.Union(extraContents)
+                                Contents = contentQry,
                             };
                         }),
                     }),
@@ -336,6 +388,7 @@ namespace WebManagementPortal.Controllers
                     DeletedDate = courseCatalog.RecLog.DeletedDate,
                     Semesters = semesters,
                     TotalWeeks = courseCatalog.TotalWeeks,
+                    IsFree = courseCatalog.IsFree
                 };
 
                 await courseCatalogRepo.UpsertCourseCatalog(result);

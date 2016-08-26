@@ -7,11 +7,5 @@ namespace MindSageWeb.Repositories.Models
 {
     public class SetScheduleWithWeekRespond : GetCourseScheduleRespond
     {
-        #region Properties
-
-        public bool IsComplete { get; set; }
-
-        #endregion Properties
-
     }
 }

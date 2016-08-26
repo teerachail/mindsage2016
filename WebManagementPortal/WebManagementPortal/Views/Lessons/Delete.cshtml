@@ -50,54 +50,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.ShortDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShortDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoreDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoreDescription)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.ShortTeacherLessonPlan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.ShortTeacherLessonPlan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.MoreTeacherLessonPlan)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.MoreTeacherLessonPlan)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrimaryContentURL)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrimaryContentURL)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.PrimaryContentDescription)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.PrimaryContentDescription)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.IsPreviewable)
         </dt>
 
@@ -106,11 +58,11 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.RecLog)
+            @Html.DisplayNameFor(model => model.RecLog.CreatedDate)
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.RecLog)
+            @Html.DisplayFor(model => model.RecLog.CreatedDate)
         </dd>
 
         <dt>
@@ -122,17 +74,15 @@
         </dd>
         @using (Html.BeginForm())
         {
-        <dt>
-            <br>
-            @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, new { @class = "btn btn-default" })
-        </dt>
-        <dd>
-            <br>
-                @Html.AntiForgeryToken()
-                <input type="submit" value="Delete" class="btn btn-danger" />         
-        </dd>
+            <dt>
+                <br>
+                @Html.ActionLink("Back", "Details", "Lessons", new { @id = Model.Id }, new { @class = "btn btn-default" })
+            </dt>
+            <dd>
+                <br>
+                    @Html.AntiForgeryToken()
+                    <input type="submit" value="Delete" class="btn btn-danger" />         
+            </dd>
         }
     </dl>
-
-
 </div>

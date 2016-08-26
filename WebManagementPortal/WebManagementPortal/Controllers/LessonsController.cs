@@ -103,12 +103,6 @@ namespace WebManagementPortal.Controllers
                 if (selectedLesson == null) return View("Error");
 
                 selectedLesson.Title = lesson.Title;
-                selectedLesson.ShortDescription = lesson.ShortDescription;
-                selectedLesson.MoreDescription = lesson.MoreDescription;
-                selectedLesson.ShortTeacherLessonPlan = lesson.ShortTeacherLessonPlan;
-                selectedLesson.MoreTeacherLessonPlan = lesson.MoreTeacherLessonPlan;
-                selectedLesson.PrimaryContentURL = lesson.PrimaryContentURL;
-                selectedLesson.PrimaryContentDescription = lesson.PrimaryContentDescription;
                 selectedLesson.IsPreviewable = lesson.IsPreviewable;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Lessons", new { @id = lesson.Id });
@@ -142,6 +136,11 @@ namespace WebManagementPortal.Controllers
             lesson.RecLog.DeletedDate = now;
             foreach (var item in lesson.Advertisements) item.RecLog.DeletedDate = now;
             foreach (var item in lesson.TopicOfTheDays) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.TeacherLessonItems) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.StudentLessonItems) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.PreAssessments) item.RecLog.DeletedDate = now;
+            foreach (var item in lesson.PostAssessments) item.RecLog.DeletedDate = now;
+
             await db.SaveChangesAsync();
             return RedirectToAction("Details", "CourseCatalogs", new { @id = lesson.Unit.Semester.CourseCatalogId });
         }

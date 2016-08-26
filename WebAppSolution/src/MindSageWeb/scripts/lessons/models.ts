@@ -34,4 +34,45 @@ module app.lessons {
 
     }
 
+    export class LessonAnswerRequest {
+        constructor(
+            public id: string,
+            public classRoomId: string,
+            public userId: string) {
+        }
+
+    }
+
+    export class AnswerModel {
+        constructor(
+            public AssessmentId: string,
+            public Answer: string) {
+        }
+
+    }
+
+    export class LessonAnswers {
+        constructor(
+            public id: string,
+            public UserProfileId: string,
+            public ClassRoomId: string,
+            public LessonId: string,
+            public CreatedDate: any,
+            public DeletedDate: any,
+            public Answer: AnswerModel[]) {
+        }
+
+    }
+
+    export class LessonAnswersRequest {
+        constructor(
+            public UserProfileId: string,
+            public ClassRoomId: string,
+            public LessonId: string,
+            public AssessmentId: string,
+            public Answer: string) {
+        }
+
+    }
+
 }

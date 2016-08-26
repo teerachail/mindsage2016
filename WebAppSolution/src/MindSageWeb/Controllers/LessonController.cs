@@ -26,6 +26,7 @@ namespace MindSageWeb.Controllers
         private ICommentRepository _commentRepo;
         private IFriendRequestRepository _friendRequestRepo;
         private IUserActivityRepository _userActivityRepo;
+        private ILessonTestResultRepository _lessonTestResultRepo;
         private IDateTime _dateTime;
 
         #endregion Fields
@@ -55,6 +56,7 @@ namespace MindSageWeb.Controllers
             IUserActivityRepository userActivityRepo,
             NotificationController notificationCtrl,
             IOptions<AppConfigOptions> options,
+            ILessonTestResultRepository lessonTestResultRepo,
             IDateTime dateTime)
         {
             _classCalendarRepo = classCalendarRepo;
@@ -68,6 +70,7 @@ namespace MindSageWeb.Controllers
             _notificationCtrl = notificationCtrl;
             _appConfig = options.Value;
             _dateTime = dateTime;
+            _lessonTestResultRepo = lessonTestResultRepo;
         }
 
         #endregion Constructors
@@ -124,11 +127,11 @@ namespace MindSageWeb.Controllers
             selectedSubscription.LastActiveDate = now;
             _userprofileRepo.UpsertUserProfile(userprofile);
 
-            var shouldUpdateSawPrimaryContent = !selectedLessonActivity.SawContentIds.Contains(selectedLessonCatalog.PrimaryContentURL);
+            var shouldUpdateSawPrimaryContent = !selectedLessonActivity.SawContentIds.Contains(selectedLessonCatalog.id);
             if (shouldUpdateSawPrimaryContent)
             {
                 var sawList = selectedLessonActivity.SawContentIds.ToList();
-                sawList.Add(selectedLessonCatalog.PrimaryContentURL);
+                sawList.Add(selectedLessonCatalog.id);
                 selectedLessonActivity.SawContentIds = sawList;
                 _userActivityRepo.UpsertUserActivity(selectedUserActivity);
             }
@@ -145,19 +148,15 @@ namespace MindSageWeb.Controllers
                 UnitNo = selectedLessonCatalog.UnitNo,
                 CourseCatalogId = selectedLessonCatalog.CourseCatalogId,
                 Title = selectedLessonCatalog.Title,
-                ShortDescription = selectedLessonCatalog.ShortDescription,
-                MoreDescription = selectedLessonCatalog.MoreDescription,
-                ShortTeacherLessonPlan = isTeacher ? selectedLessonCatalog.ShortTeacherLessonPlan : string.Empty,
-                MoreTeacherLessonPlan = isTeacher ? selectedLessonCatalog.MoreTeacherLessonPlan : string.Empty,
-                PrimaryContentURL = selectedLessonCatalog.PrimaryContentURL,
-                PrimaryContentDescription = selectedLessonCatalog.PrimaryContentDescription,
                 CreatedDate = selectedLessonCatalog.CreatedDate,
-
                 Advertisments = selectedLessonCatalog.Advertisments,
-                ExtraContents = selectedLessonCatalog.ExtraContents,
                 CourseMessage = isDisplayTeacherMsg ? selectedClassRoom.Message : null,
                 IsTeacher = isTeacher,
                 TotalLikes = selectedLesson.TotalLikes,
+                StudentItems = selectedLessonCatalog.StudentItems ?? Enumerable.Empty<LessonCatalog.LessonItem>(),
+                TeacherItems = selectedLessonCatalog.TeacherItems ?? Enumerable.Empty<LessonCatalog.LessonItem>(),
+                PostAssessments = selectedLessonCatalog.PostAssessments ?? Enumerable.Empty<LessonCatalog.AssessmentItem>(),
+                PreAssessments = selectedLessonCatalog.PreAssessments ?? Enumerable.Empty<LessonCatalog.AssessmentItem>(),
             };
             return result;
         }
@@ -184,6 +183,66 @@ namespace MindSageWeb.Controllers
                 var ads = Newtonsoft.Json.JsonConvert.DeserializeObject<OwnCarousel>(result);
                 return ads;
             }
+        }
+
+        // GET: api/lesson/{lesson-id}/{class-room-id}/answers/{user-id}
+        /// <summary>
+        /// Get lesson's comments
+        /// </summary>
+        /// <param name="id">Lesson's id</param>
+        /// <param name="classRoomId">Class room id</param>
+        /// <param name="userId">Request by user id</param>
+        [HttpGet]
+        [Route("{id}/{classRoomId}/answers/{userId}")]
+        public LessonTestResult Answers(string id, string classRoomId, string userId)
+        {
+            var invalidRequestRespond = new LessonTestResult
+            {
+                ClassRoomId = classRoomId,
+                LessonId = id,
+                UserProfileId = userId,
+                Answers = Enumerable.Empty<LessonTestResult.AnswerInformation>()
+            };
+            var areArgumentsValid = !string.IsNullOrEmpty(id)
+                && !string.IsNullOrEmpty(classRoomId)
+                && !string.IsNullOrEmpty(userId);
+            if (!areArgumentsValid) return invalidRequestRespond;
+
+            var selectedTestedResult = _lessonTestResultRepo.GetTestedResult(classRoomId, id, userId);
+            if (selectedTestedResult == null) return invalidRequestRespond;
+            return selectedTestedResult;
+        }
+
+        // HttpPost: api/lesson/answer
+        /// <summary>
+        /// Create a answer
+        /// </summary>
+        /// <param name="body">Request information</param>
+        [HttpPost]
+        [Route("answer")]
+        public void Post([FromBody]LessonTestedResultRequest body)
+        {
+            var areArgumentsValid = body != null
+                && !string.IsNullOrEmpty(body.UserProfileId)
+                && !string.IsNullOrEmpty(body.ClassRoomId)
+                && !string.IsNullOrEmpty(body.LessonId)
+                && !string.IsNullOrEmpty(body.Answer)
+                && !string.IsNullOrEmpty(body.AssessmentId);
+            if (!areArgumentsValid) return;
+
+            var currentAnswer = Answers(body.LessonId, body.ClassRoomId, body.UserProfileId);
+            if (currentAnswer.Answers.Any(it => it.AssessmentId == body.AssessmentId)) return;
+
+            var newAnswer = new List<LessonTestResult.AnswerInformation>
+            {
+                new LessonTestResult.AnswerInformation
+                {
+                    AssessmentId = body.AssessmentId,
+                    Answer = body.Answer
+                }
+            };
+            currentAnswer.Answers = currentAnswer.Answers.Union(newAnswer);
+            _lessonTestResultRepo.UpsertTestedResult(currentAnswer);
         }
 
         // GET: api/lesson/{lesson-id}/{class-room-id}/comments/{user-id}

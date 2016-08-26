@@ -24,7 +24,11 @@ namespace WebManagementPortal.Controllers
             {
                 lessonCatalog = await dctx.Lessons
                     .Include("Unit.Semester")
-                    .Include("ExtraContents")
+                    .Include("TeacherLessonItems")
+                    .Include("TeacherLessonItems")
+                    .Include("StudentLessonItems")
+                    .Include("PreAssessments.Assessments.Choices")
+                    .Include("PostAssessments.Assessments.Choices")
                     .FirstOrDefaultAsync(it => it.Id == id);
                 if (lessonCatalog == null) return null;
 
@@ -49,33 +53,81 @@ namespace WebManagementPortal.Controllers
                 if (item.Id == lessonCatalog.UnitId) break;
                 unitRunner++;
             }
-            var extraContents = lessonCatalog.ExtraContents
-                                .Where(it => !it.RecLog.DeletedDate.HasValue)
-                                .Select(it => new LessonContentRespond.ExtraContent
-                                {
-                                    id = it.Id.ToString(),
-                                    ContentURL = it.ContentURL,
-                                    Description = it.Description,
-                                    IconURL = ControllerHelper.ConvertToIconUrl(it.IconURL)
-                                });
+            var teacherItemQry = createLessonItems(lessonCatalog.TeacherLessonItems);
+            var studentItemQry = createLessonItems(lessonCatalog.StudentLessonItems);
+            var preAssessmentQry = createAssessmentItems(lessonCatalog.PreAssessments);
+            var postAssessmentQry = createAssessmentItems(lessonCatalog.PostAssessments);
             var result = new LessonContentRespond
             {
-                ExtraContents = extraContents,
+                //ExtraContents = extraContents,
                 CreatedDate = lessonCatalog.RecLog.CreatedDate,
-                PrimaryContentURL = lessonCatalog.PrimaryContentURL,
-                PrimaryContentDescription = lessonCatalog.PrimaryContentDescription,
                 IsPreviewable = lessonCatalog.IsPreviewable,
                 SemesterName = string.Format("{0}", (char)semesterRunner),
-                ShortDescription = lessonCatalog.ShortDescription,
-                ShortTeacherLessonPlan = lessonCatalog.ShortTeacherLessonPlan,
-                MoreDescription = lessonCatalog.MoreDescription,
-                MoreTeacherLessonPlan = lessonCatalog.MoreTeacherLessonPlan,
                 Title = lessonCatalog.Title,
-                Order = unitRunner
+                Order = unitRunner,
+                TeacherItems = teacherItemQry,
+                StudentItems = studentItemQry,
+                PreAssessments = preAssessmentQry,
+                PostAssessments = postAssessmentQry,
             };
             return result;
         }
+        private IEnumerable<LessonContentRespond.LessonItem> createLessonItems(IEnumerable<LessonItem> collection)
+        {
+            var isParameterValid = collection != null && collection.Any();
+            if (!isParameterValid) return Enumerable.Empty<LessonContentRespond.LessonItem>();
 
+            return collection
+                .Where(it => !it.RecLog.DeletedDate.HasValue)
+                .Select(it => new LessonContentRespond.LessonItem
+                {
+                    id = it.Id.ToString(),
+                    Name = it.Name,
+                    IsPreviewable = it.IsPreviewable,
+                    Description = it.Description,
+                    IconURL = it.IconURL,
+                    ContentType = it.ContentType,
+                    ContentURL = it.ContentURL,
+                });
+        }
+        private IEnumerable<LessonContentRespond.AssessmentItem> createAssessmentItems(IEnumerable<AssessmentItem> collection)
+        {
+            var isParameterValid = collection != null && collection.Any();
+            if (!isParameterValid) return Enumerable.Empty<LessonContentRespond.AssessmentItem>();
+
+            return collection
+                .Where(assessmentItem => !assessmentItem.RecLog.DeletedDate.HasValue)
+                .Select(assessmentItem =>
+                {
+                    var assessmentQry = assessmentItem.Assessments
+                         .Where(it => !it.RecLog.DeletedDate.HasValue)
+                         .Select(it => new LessonContentRespond.Assessment
+                         {
+                             id = it.Id.ToString(),
+                             Order = it.Order,
+                             ContentType = it.ContentType,
+                             Question = it.Question,
+                             StatementAfter = it.StatementAfter,
+                             StatementBefore = it.StatementBefore,
+                             Choices = it.Choices
+                                 .Where(choice => !choice.RecLog.DeletedDate.HasValue)
+                                 .Select(choice => new LessonContentRespond.Choice
+                                 {
+                                     id = choice.Id.ToString(),
+                                     Name = choice.Name,
+                                     IsCorrect = choice.IsCorrect,
+                                 })
+                         });
+                    return new LessonContentRespond.AssessmentItem
+                    {
+                        id = assessmentItem.Id.ToString(),
+                        Name = assessmentItem.Name,
+                        IsPreviewable = assessmentItem.IsPreviewable,
+                        IconURL = assessmentItem.IconURL,
+                        Assessments = assessmentQry
+                    };
+                });
+        }
         [HttpGet]
         [Route("{id}/ads")]
         public async Task<OwnCarousel> GetAds(int id)

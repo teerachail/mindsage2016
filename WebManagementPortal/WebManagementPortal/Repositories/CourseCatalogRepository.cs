@@ -34,6 +34,7 @@ namespace WebManagementPortal.Repositories
                .Set(it => it.CreatedDate, data.CreatedDate)
                .Set(it => it.DeletedDate, data.DeletedDate)
                .Set(it => it.Semesters, data.Semesters)
+               .Set(it => it.IsFree, data.IsFree)
                .Set(it => it.TotalWeeks, data.TotalWeeks);
 
             var updateOption = new UpdateOptions { IsUpsert = true };

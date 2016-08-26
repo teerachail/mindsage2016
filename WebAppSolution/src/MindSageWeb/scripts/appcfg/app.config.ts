@@ -40,6 +40,8 @@ module app {
         ApplyToAllCourseUrl: string;
         LessonPreviewUrl: string;
         SendContactUrl: string;
+        LessonAnswerUrl: string;
+        CreateAnswerUrl: string;
     }
 
     export class AppConfig implements IAppConfig {
@@ -82,6 +84,8 @@ module app {
         public ApplyToAllCourseUrl: string;
         public LessonPreviewUrl: string;
         public SendContactUrl: string;
+        public LessonAnswerUrl: string;
+        public CreateAnswerUrl: string;
 
         static $inject = ['defaultUrl'];
         constructor(defaultUrl: string) {
@@ -125,6 +129,8 @@ module app {
             this.ApplyToAllCourseUrl = apiUrl + '/mycourse/applytoall';
             this.LessonPreviewUrl = apiUrl + '/lesson/:id/lessonpreview';
             this.SendContactUrl = '/Home/ContactUs';
+            this.LessonAnswerUrl = apiUrl + '/lesson/:id/:classRoomId/answers/:userId';
+            this.CreateAnswerUrl = apiUrl + '/lesson/answer';
         }
     }
     

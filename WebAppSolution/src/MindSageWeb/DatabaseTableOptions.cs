@@ -24,6 +24,7 @@ namespace MindSageWeb
         public string UserActivities { get; set; }
         public string UserProfiles { get; set; }
         public string Contracts { get; set; }
+        public string LessonTestResults { get; set; }
 
         #endregion Properties
     }

@@ -82,7 +82,7 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.FullDescription)
+            @Html.Raw(Model.FullDescription)
         </dd>
 
         <dt>
@@ -99,6 +99,14 @@
 
         <dd>
             @Html.DisplayFor(model => model.DescriptionImageUrl)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsFree)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsFree)
         </dd>
 
         <dt>

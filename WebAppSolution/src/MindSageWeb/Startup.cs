@@ -72,6 +72,7 @@ namespace MindSageWeb
                 option.UserActivities = databaseTable.UserActivities;
                 option.UserProfiles = databaseTable.UserProfiles;
                 option.Contracts = databaseTable.Contracts;
+                option.LessonTestResults = databaseTable.LessonTestResults;
             });
             var errorMessages = Configuration.GetSection("ErrorMessageOptions").Get<ErrorMessageOptions>();
             services.Configure<ErrorMessageOptions>(option =>
@@ -126,6 +127,7 @@ namespace MindSageWeb
             services.AddTransient<IContractRepository, ContractRepository>();
             services.AddTransient<Engines.IPayment, Engines.PaypalPayment>();
             services.AddTransient<Engines.IEmailSender, Engines.SendGridEmailSender>();
+            services.AddTransient<ILessonTestResultRepository, LessonTestResultRepository>();
 
             services.AddTransient<Controllers.NotificationController, Controllers.NotificationController>();
             services.AddTransient<Controllers.MyCourseController, Controllers.MyCourseController>();

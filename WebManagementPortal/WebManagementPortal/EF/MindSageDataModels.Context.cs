@@ -34,7 +34,10 @@ namespace WebManagementPortal.EF
         public virtual DbSet<Contract> Contracts { get; set; }
         public virtual DbSet<License> Licenses { get; set; }
         public virtual DbSet<TeacherKey> TeacherKeys { get; set; }
-        public virtual DbSet<ExtraContent> ExtraContents { get; set; }
         public virtual DbSet<ImportContentConfiguration> ImportContentConfigurations { get; set; }
+        public virtual DbSet<LessonItem> LessonItems { get; set; }
+        public virtual DbSet<AssessmentItem> AssessmentItems { get; set; }
+        public virtual DbSet<Assessment> Assessments { get; set; }
+        public virtual DbSet<Choice> Choices { get; set; }
     }
 }

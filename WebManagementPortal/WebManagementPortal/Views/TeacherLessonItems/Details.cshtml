@@ -1,0 +1,90 @@
+﻿@model WebManagementPortal.EF.LessonItem
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>LessonItem</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IconURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IconURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Description)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsPreviewable)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.IsPreviewable)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ContentURL)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ContentURL)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.RecLog)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.RecLog)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TeacherLesson.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TeacherLesson.Title)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.StudentLesson.Title)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.StudentLesson.Title)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

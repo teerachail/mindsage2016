@@ -1,4 +1,4 @@
-﻿@model IEnumerable<WebManagementPortal.EF.ExtraContent>
+﻿@model IEnumerable<WebManagementPortal.EF.AssessmentItem>
 
 @{
     ViewBag.Title = "Index";
@@ -12,19 +12,22 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ContentURL)
-        </th>
-        <th>
-            @Html.DisplayNameFor(model => model.Description)
+            @Html.DisplayNameFor(model => model.Name)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.IconURL)
         </th>
         <th>
+            @Html.DisplayNameFor(model => model.IsPreviewable)
+        </th>
+        <th>
             @Html.DisplayNameFor(model => model.RecLog)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.Lesson.Title)
+            @Html.DisplayNameFor(model => model.PreLesson.Title)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.PostLesson.Title)
         </th>
         <th></th>
     </tr>
@@ -32,19 +35,22 @@
 @foreach (var item in Model) {
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.ContentURL)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.Description)
+            @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.IconURL)
         </td>
         <td>
+            @Html.DisplayFor(modelItem => item.IsPreviewable)
+        </td>
+        <td>
             @Html.DisplayFor(modelItem => item.RecLog)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.Lesson.Title)
+            @Html.DisplayFor(modelItem => item.PreLesson.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.PostLesson.Title)
         </td>
         <td>
             @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |

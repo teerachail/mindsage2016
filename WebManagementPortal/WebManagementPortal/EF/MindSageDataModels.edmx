@@ -15,8 +15,11 @@
     <EntitySet Name="Contracts" EntityType="MindSageDataModels.Store.Contracts" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="Licenses" EntityType="MindSageDataModels.Store.Licenses" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="TeacherKeys" EntityType="MindSageDataModels.Store.TeacherKeys" store:Type="Tables" Schema="dbo" />
-    <EntitySet Name="ExtraContents" EntityType="MindSageDataModels.Store.ExtraContents" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="ImportContentConfigurations" EntityType="MindSageDataModels.Store.ImportContentConfigurations" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="LessonItems" EntityType="MindSageDataModels.Store.LessonItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="AssessmentItems" EntityType="MindSageDataModels.Store.AssessmentItems" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Assessments" EntityType="MindSageDataModels.Store.Assessments" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="Choices" EntityType="MindSageDataModels.Store.Choices" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="CourseCatalogSemester" Association="MindSageDataModels.Store.CourseCatalogSemester">
       <End Role="CourseCatalog" EntitySet="CourseCatalogs" />
       <End Role="Semester" EntitySet="Semesters" />
@@ -49,9 +52,29 @@
       <End Role="License" EntitySet="Licenses" />
       <End Role="TeacherKey" EntitySet="TeacherKeys" />
     </AssociationSet>
-    <AssociationSet Name="LessonExtraContent" Association="MindSageDataModels.Store.LessonExtraContent">
+    <AssociationSet Name="AssessmentItemAssessment" Association="MindSageDataModels.Store.AssessmentItemAssessment">
+      <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+      <End Role="Assessment" EntitySet="Assessments" />
+    </AssociationSet>
+    <AssociationSet Name="AssessmentChoice" Association="MindSageDataModels.Store.AssessmentChoice">
+      <End Role="Assessment" EntitySet="Assessments" />
+      <End Role="Choice" EntitySet="Choices" />
+    </AssociationSet>
+    <AssociationSet Name="LessonAssessmentItem" Association="MindSageDataModels.Store.LessonAssessmentItem">
       <End Role="Lesson" EntitySet="Lessons" />
-      <End Role="ExtraContent" EntitySet="ExtraContents" />
+      <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+    </AssociationSet>
+    <AssociationSet Name="LessonAssessmentItem1" Association="MindSageDataModels.Store.LessonAssessmentItem1">
+      <End Role="Lesson" EntitySet="Lessons" />
+      <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+    </AssociationSet>
+    <AssociationSet Name="LessonLessonItem" Association="MindSageDataModels.Store.LessonLessonItem">
+      <End Role="Lesson" EntitySet="Lessons" />
+      <End Role="LessonItem" EntitySet="LessonItems" />
+    </AssociationSet>
+    <AssociationSet Name="LessonLessonItem1" Association="MindSageDataModels.Store.LessonLessonItem1">
+      <End Role="Lesson" EntitySet="Lessons" />
+      <End Role="LessonItem" EntitySet="LessonItems" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="CourseCatalogs">
@@ -69,6 +92,7 @@
     <Property Name="FullDescription" Type="varchar(max)" Nullable="false" />
     <Property Name="DescriptionImageUrl" Type="varchar(max)" Nullable="false" />
     <Property Name="TotalWeeks" Type="int" Nullable="false" />
+    <Property Name="IsFree" Type="bit" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
   </EntityType>
@@ -102,12 +126,6 @@
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Title" Type="varchar" Nullable="false" MaxLength="255" />
-    <Property Name="ShortDescription" Type="varchar(max)" Nullable="false" />
-    <Property Name="MoreDescription" Type="varchar(max)" Nullable="false" />
-    <Property Name="ShortTeacherLessonPlan" Type="varchar(max)" Nullable="false" />
-    <Property Name="MoreTeacherLessonPlan" Type="varchar(max)" Nullable="false" />
-    <Property Name="PrimaryContentURL" Type="varchar(max)" Nullable="false" />
-    <Property Name="PrimaryContentDescription" Type="varchar(max)" Nullable="false" />
     <Property Name="IsPreviewable" Type="bit" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
@@ -180,19 +198,6 @@
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
     <Property Name="LicenseId" Type="int" Nullable="false" />
   </EntityType>
-  <EntityType Name="ExtraContents">
-    <Key>
-      <PropertyRef Name="Id" />
-    </Key>
-    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-    <Property Name="ContentURL" Type="varchar(max)" Nullable="false" />
-    <Property Name="Description" Type="varchar(max)" Nullable="false" />
-    <Property Name="IconURL" Type="varchar(max)" Nullable="false" />
-    <Property Name="IsPreviewable" Type="bit" Nullable="false" />
-    <Property Name="LessonId" Type="int" Nullable="false" />
-    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
-    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
-  </EntityType>
   <EntityType Name="ImportContentConfigurations">
     <Key>
       <PropertyRef Name="Id" />
@@ -204,6 +209,60 @@
     <Property Name="ReferenceFileURLs" Type="varchar(max)" Nullable="false" />
     <Property Name="ReplaceSections" Type="varchar(max)" Nullable="false" />
     <Property Name="StorageInfo" Type="varchar(max)" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="LessonItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="IconURL" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="Description" Type="varchar(max)" Nullable="false" />
+    <Property Name="IsPreviewable" Type="bit" Nullable="false" />
+    <Property Name="ContentType" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="ContentURL" Type="varchar(max)" Nullable="false" />
+    <Property Name="TeacherLessonId" Type="int" Nullable="true" />
+    <Property Name="StudentLessonId" Type="int" Nullable="true" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="AssessmentItems">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="IconURL" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="IsPreviewable" Type="bit" Nullable="false" />
+    <Property Name="PreLessonId" Type="int" Nullable="true" />
+    <Property Name="PostLessonId" Type="int" Nullable="true" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Assessments">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Order" Type="int" Nullable="false" />
+    <Property Name="ContentType" Type="varchar" Nullable="false" MaxLength="100" />
+    <Property Name="Question" Type="varchar(max)" Nullable="false" />
+    <Property Name="StatementBefore" Type="varchar(max)" Nullable="true" />
+    <Property Name="StatementAfter" Type="varchar(max)" Nullable="true" />
+    <Property Name="AssessmentItemId" Type="int" Nullable="false" />
+    <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
+    <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
+  </EntityType>
+  <EntityType Name="Choices">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
+    <Property Name="IsCorrect" Type="bit" Nullable="false" />
+    <Property Name="AssessmentId" Type="int" Nullable="false" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
     <Property Name="RecLog_DeletedDate" Type="datetime" Nullable="true" />
   </EntityType>
@@ -303,15 +362,75 @@
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  <Association Name="LessonExtraContent">
-    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="1" />
-    <End Role="ExtraContent" Type="MindSageDataModels.Store.ExtraContents" Multiplicity="*" />
+  <Association Name="AssessmentItemAssessment">
+    <End Role="AssessmentItem" Type="MindSageDataModels.Store.AssessmentItems" Multiplicity="1" />
+    <End Role="Assessment" Type="MindSageDataModels.Store.Assessments" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="AssessmentItem">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Assessment">
+        <PropertyRef Name="AssessmentItemId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="AssessmentChoice">
+    <End Role="Assessment" Type="MindSageDataModels.Store.Assessments" Multiplicity="1" />
+    <End Role="Choice" Type="MindSageDataModels.Store.Choices" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Assessment">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="Choice">
+        <PropertyRef Name="AssessmentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonAssessmentItem">
+    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="0..1" />
+    <End Role="AssessmentItem" Type="MindSageDataModels.Store.AssessmentItems" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="Lesson">
         <PropertyRef Name="Id" />
       </Principal>
-      <Dependent Role="ExtraContent">
-        <PropertyRef Name="LessonId" />
+      <Dependent Role="AssessmentItem">
+        <PropertyRef Name="PreLessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonAssessmentItem1">
+    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="0..1" />
+    <End Role="AssessmentItem" Type="MindSageDataModels.Store.AssessmentItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AssessmentItem">
+        <PropertyRef Name="PostLessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonLessonItem">
+    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="0..1" />
+    <End Role="LessonItem" Type="MindSageDataModels.Store.LessonItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LessonItem">
+        <PropertyRef Name="TeacherLessonId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="LessonLessonItem1">
+    <End Role="Lesson" Type="MindSageDataModels.Store.Lessons" Multiplicity="0..1" />
+    <End Role="LessonItem" Type="MindSageDataModels.Store.LessonItems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lesson">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="LessonItem">
+        <PropertyRef Name="StudentLessonId" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -361,12 +480,35 @@
             <End Role="License" EntitySet="Licenses" />
             <End Role="TeacherKey" EntitySet="TeacherKeys" />
           </AssociationSet>
-          <EntitySet Name="ExtraContents" EntityType="MindSageDataModels.ExtraContent" />
-          <AssociationSet Name="LessonExtraContent" Association="MindSageDataModels.LessonExtraContent">
-            <End Role="Lesson" EntitySet="Lessons" />
-            <End Role="ExtraContent" EntitySet="ExtraContents" />
-          </AssociationSet>
           <EntitySet Name="ImportContentConfigurations" EntityType="MindSageDataModels.ImportContentConfiguration" />
+          <EntitySet Name="LessonItems" EntityType="MindSageDataModels.LessonItem" />
+          <EntitySet Name="AssessmentItems" EntityType="MindSageDataModels.AssessmentItem" />
+          <EntitySet Name="Assessments" EntityType="MindSageDataModels.Assessment" />
+          <AssociationSet Name="AssessmentItemAssessment" Association="MindSageDataModels.AssessmentItemAssessment">
+            <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+            <End Role="Assessment" EntitySet="Assessments" />
+          </AssociationSet>
+          <EntitySet Name="Choices" EntityType="MindSageDataModels.Choice" />
+          <AssociationSet Name="AssessmentChoice" Association="MindSageDataModels.AssessmentChoice">
+            <End Role="Assessment" EntitySet="Assessments" />
+            <End Role="Choice" EntitySet="Choices" />
+          </AssociationSet>
+          <AssociationSet Name="LessonAssessmentItem" Association="MindSageDataModels.LessonAssessmentItem">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+          </AssociationSet>
+          <AssociationSet Name="LessonAssessmentItem1" Association="MindSageDataModels.LessonAssessmentItem1">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="AssessmentItem" EntitySet="AssessmentItems" />
+          </AssociationSet>
+          <AssociationSet Name="LessonLessonItem" Association="MindSageDataModels.LessonLessonItem">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="LessonItem" EntitySet="LessonItems" />
+          </AssociationSet>
+          <AssociationSet Name="LessonLessonItem1" Association="MindSageDataModels.LessonLessonItem1">
+            <End Role="Lesson" EntitySet="Lessons" />
+            <End Role="LessonItem" EntitySet="LessonItems" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="CourseCatalog">
           <Key>
@@ -383,6 +525,7 @@
           <Property Name="FullDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="DescriptionImageUrl" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="TotalWeeks" Type="Int32" Nullable="false" />
+          <Property Name="IsFree" Type="Boolean" Nullable="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
           <NavigationProperty Name="Semesters" Relationship="MindSageDataModels.CourseCatalogSemester" FromRole="CourseCatalog" ToRole="Semester" />
           <NavigationProperty Name="Licenses" Relationship="MindSageDataModels.CourseCatalogLicense" FromRole="CourseCatalog" ToRole="License" />
@@ -447,19 +590,16 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Title" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
-          <Property Name="ShortDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="MoreDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="ShortTeacherLessonPlan" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="MoreTeacherLessonPlan" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PrimaryContentURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="PrimaryContentDescription" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsPreviewable" Type="Boolean" Nullable="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
           <NavigationProperty Name="Unit" Relationship="MindSageDataModels.UnitLesson" FromRole="Lesson" ToRole="Unit" />
           <Property Name="UnitId" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Advertisements" Relationship="MindSageDataModels.LessonAdvertisement" FromRole="Lesson" ToRole="Advertisement" />
           <NavigationProperty Name="TopicOfTheDays" Relationship="MindSageDataModels.LessonTopicOfTheDay" FromRole="Lesson" ToRole="TopicOfTheDay" />
-          <NavigationProperty Name="ExtraContents" Relationship="MindSageDataModels.LessonExtraContent" FromRole="Lesson" ToRole="ExtraContent" />
+          <NavigationProperty Name="PreAssessments" Relationship="MindSageDataModels.LessonAssessmentItem" FromRole="Lesson" ToRole="AssessmentItem" />
+          <NavigationProperty Name="PostAssessments" Relationship="MindSageDataModels.LessonAssessmentItem1" FromRole="Lesson" ToRole="AssessmentItem" />
+          <NavigationProperty Name="TeacherLessonItems" Relationship="MindSageDataModels.LessonLessonItem" FromRole="Lesson" ToRole="LessonItem" />
+          <NavigationProperty Name="StudentLessonItems" Relationship="MindSageDataModels.LessonLessonItem1" FromRole="Lesson" ToRole="LessonItem" />
         </EntityType>
         <EntityType Name="Advertisement">
           <Key>
@@ -602,31 +742,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <EntityType Name="ExtraContent">
-          <Key>
-            <PropertyRef Name="Id" />
-          </Key>
-          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="ContentURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IconURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
-          <Property Name="IsPreviewable" Type="Boolean" Nullable="false" />
-          <NavigationProperty Name="Lesson" Relationship="MindSageDataModels.LessonExtraContent" FromRole="ExtraContent" ToRole="Lesson" />
-          <Property Name="LessonId" Type="Int32" Nullable="false" />
-          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
-        </EntityType>
-        <Association Name="LessonExtraContent">
-          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="1" />
-          <End Type="MindSageDataModels.ExtraContent" Role="ExtraContent" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Lesson">
-              <PropertyRef Name="Id" />
-            </Principal>
-            <Dependent Role="ExtraContent">
-              <PropertyRef Name="LessonId" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <EntityType Name="ImportContentConfiguration">
           <Key>
             <PropertyRef Name="Id" />
@@ -640,6 +755,136 @@
           <Property Name="StorageInfo" Type="String" Nullable="false" MaxLength="Max" Unicode="false" />
           <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
         </EntityType>
+        <EntityType Name="LessonItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IconURL" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IsPreviewable" Type="Boolean" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="ContentURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="TeacherLesson" Relationship="MindSageDataModels.LessonLessonItem" FromRole="LessonItem" ToRole="Lesson" />
+          <Property Name="TeacherLessonId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="StudentLesson" Relationship="MindSageDataModels.LessonLessonItem1" FromRole="LessonItem" ToRole="Lesson" />
+          <Property Name="StudentLessonId" Type="Int32" Nullable="true" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AssessmentItem">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IconURL" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Assessments" Relationship="MindSageDataModels.AssessmentItemAssessment" FromRole="AssessmentItem" ToRole="Assessment" />
+          <NavigationProperty Name="PreLesson" Relationship="MindSageDataModels.LessonAssessmentItem" FromRole="AssessmentItem" ToRole="Lesson" />
+          <Property Name="IsPreviewable" Type="Boolean" Nullable="false" />
+          <Property Name="PreLessonId" Type="Int32" Nullable="true" />
+          <NavigationProperty Name="PostLesson" Relationship="MindSageDataModels.LessonAssessmentItem1" FromRole="AssessmentItem" ToRole="Lesson" />
+          <Property Name="PostLessonId" Type="Int32" Nullable="true" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Assessment">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
+          <Property Name="ContentType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Question" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="StatementBefore" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="true" />
+          <Property Name="StatementAfter" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="true" />
+          <NavigationProperty Name="AssessmentItem" Relationship="MindSageDataModels.AssessmentItemAssessment" FromRole="Assessment" ToRole="AssessmentItem" />
+          <Property Name="AssessmentItemId" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Choices" Relationship="MindSageDataModels.AssessmentChoice" FromRole="Assessment" ToRole="Choice" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+        </EntityType>
+        <Association Name="AssessmentItemAssessment">
+          <End Type="MindSageDataModels.AssessmentItem" Role="AssessmentItem" Multiplicity="1" />
+          <End Type="MindSageDataModels.Assessment" Role="Assessment" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AssessmentItem">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Assessment">
+              <PropertyRef Name="AssessmentItemId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityType Name="Choice">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
+          <Property Name="IsCorrect" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Assessment" Relationship="MindSageDataModels.AssessmentChoice" FromRole="Choice" ToRole="Assessment" />
+          <Property Name="AssessmentId" Type="Int32" Nullable="false" />
+          <Property Name="RecLog" Type="MindSageDataModels.RecordLog" Nullable="false" />
+        </EntityType>
+        <Association Name="AssessmentChoice">
+          <End Type="MindSageDataModels.Assessment" Role="Assessment" Multiplicity="1" />
+          <End Type="MindSageDataModels.Choice" Role="Choice" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Assessment">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Choice">
+              <PropertyRef Name="AssessmentId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LessonAssessmentItem">
+          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="0..1" />
+          <End Type="MindSageDataModels.AssessmentItem" Role="AssessmentItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssessmentItem">
+              <PropertyRef Name="PreLessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LessonAssessmentItem1">
+          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="0..1" />
+          <End Type="MindSageDataModels.AssessmentItem" Role="AssessmentItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="AssessmentItem">
+              <PropertyRef Name="PostLessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LessonLessonItem">
+          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="0..1" />
+          <End Type="MindSageDataModels.LessonItem" Role="LessonItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LessonItem">
+              <PropertyRef Name="TeacherLessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="LessonLessonItem1">
+          <End Type="MindSageDataModels.Lesson" Role="Lesson" Multiplicity="0..1" />
+          <End Type="MindSageDataModels.LessonItem" Role="LessonItem" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lesson">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="LessonItem">
+              <PropertyRef Name="StudentLessonId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -660,6 +905,7 @@
           <ScalarProperty Name="FullDescription" ColumnName="FullDescription" />
           <ScalarProperty Name="DescriptionImageUrl" ColumnName="DescriptionImageUrl" />
           <ScalarProperty Name="TotalWeeks" ColumnName="TotalWeeks" />
+          <ScalarProperty Name="IsFree" ColumnName="IsFree" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
@@ -702,12 +948,6 @@
         <MappingFragment StoreEntitySet="Lessons">
           <ScalarProperty Name="Id" ColumnName="Id" />
           <ScalarProperty Name="Title" ColumnName="Title" />
-          <ScalarProperty Name="ShortDescription" ColumnName="ShortDescription" />
-          <ScalarProperty Name="MoreDescription" ColumnName="MoreDescription" />
-          <ScalarProperty Name="ShortTeacherLessonPlan" ColumnName="ShortTeacherLessonPlan" />
-          <ScalarProperty Name="MoreTeacherLessonPlan" ColumnName="MoreTeacherLessonPlan" />
-          <ScalarProperty Name="PrimaryContentURL" ColumnName="PrimaryContentURL" />
-          <ScalarProperty Name="PrimaryContentDescription" ColumnName="PrimaryContentDescription" />
           <ScalarProperty Name="IsPreviewable" ColumnName="IsPreviewable" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
@@ -799,22 +1039,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="ExtraContents">
-      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.ExtraContent)">
-        <MappingFragment StoreEntitySet="ExtraContents">
-          <ScalarProperty Name="Id" ColumnName="Id" />
-          <ScalarProperty Name="ContentURL" ColumnName="ContentURL" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="IconURL" ColumnName="IconURL" />
-          <ScalarProperty Name="IsPreviewable" ColumnName="IsPreviewable" />
-          <ScalarProperty Name="LessonId" ColumnName="LessonId" />
-          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
-            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
-            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
-          </ComplexProperty>
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="ImportContentConfigurations">
       <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.ImportContentConfiguration)">
         <MappingFragment StoreEntitySet="ImportContentConfigurations">
@@ -825,6 +1049,72 @@
           <ScalarProperty Name="ReferenceFileURLs" ColumnName="ReferenceFileURLs" />
           <ScalarProperty Name="ReplaceSections" ColumnName="ReplaceSections" />
           <ScalarProperty Name="StorageInfo" ColumnName="StorageInfo" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LessonItems">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.LessonItem)">
+        <MappingFragment StoreEntitySet="LessonItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IconURL" ColumnName="IconURL" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="IsPreviewable" ColumnName="IsPreviewable" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="ContentURL" ColumnName="ContentURL" />
+          <ScalarProperty Name="TeacherLessonId" ColumnName="TeacherLessonId" />
+          <ScalarProperty Name="StudentLessonId" ColumnName="StudentLessonId" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="AssessmentItems">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.AssessmentItem)">
+        <MappingFragment StoreEntitySet="AssessmentItems">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IconURL" ColumnName="IconURL" />
+          <ScalarProperty Name="IsPreviewable" ColumnName="IsPreviewable" />
+          <ScalarProperty Name="PreLessonId" ColumnName="PreLessonId" />
+          <ScalarProperty Name="PostLessonId" ColumnName="PostLessonId" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Assessments">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Assessment)">
+        <MappingFragment StoreEntitySet="Assessments">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
+          <ScalarProperty Name="ContentType" ColumnName="ContentType" />
+          <ScalarProperty Name="Question" ColumnName="Question" />
+          <ScalarProperty Name="StatementBefore" ColumnName="StatementBefore" />
+          <ScalarProperty Name="StatementAfter" ColumnName="StatementAfter" />
+          <ScalarProperty Name="AssessmentItemId" ColumnName="AssessmentItemId" />
+          <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
+            <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
+            <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />
+          </ComplexProperty>
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Choices">
+      <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.Choice)">
+        <MappingFragment StoreEntitySet="Choices">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="IsCorrect" ColumnName="IsCorrect" />
+          <ScalarProperty Name="AssessmentId" ColumnName="AssessmentId" />
           <ComplexProperty Name="RecLog" TypeName="MindSageDataModels.RecordLog">
             <ScalarProperty Name="CreatedDate" ColumnName="RecLog_CreatedDate" />
             <ScalarProperty Name="DeletedDate" ColumnName="RecLog_DeletedDate" />

@@ -115,7 +115,6 @@ namespace MindSageWeb.Controllers
 
         public static UserActivity CreateNewUserActivity(this UserProfile selectedUserProfile, ClassRoom selectedClassRoom, ClassCalendar selectedClassCalendar, List<LessonCatalog> lessonCatalogs, DateTime now)
         {
-            const int PrimaryContent = 1;
             var lessonActivities = selectedClassRoom.Lessons.Select(lessonInClassRoom =>
             {
                 var selectedLessonCalendar = selectedClassCalendar.LessonCalendars
@@ -124,11 +123,15 @@ namespace MindSageWeb.Controllers
 
                 var selectedLessonCatalog = lessonCatalogs.FirstOrDefault(it => it.id == lessonInClassRoom.LessonCatalogId);
 
+                var totalContentsAmount = selectedLessonCatalog.PostAssessments.Count()
+                    + selectedLessonCatalog.PreAssessments.Count()
+                    + selectedLessonCatalog.StudentItems.Count()
+                    + selectedLessonCatalog.TeacherItems.Count();
                 return new UserActivity.LessonActivity
                 {
                     id = Guid.NewGuid().ToString(),
                     BeginDate = selectedLessonCalendar.BeginDate,
-                    TotalContentsAmount = selectedLessonCatalog.ExtraContents.Count() + PrimaryContent,
+                    TotalContentsAmount = totalContentsAmount,
                     LessonId = lessonInClassRoom.id,
                     SawContentIds = Enumerable.Empty<string>()
                 };

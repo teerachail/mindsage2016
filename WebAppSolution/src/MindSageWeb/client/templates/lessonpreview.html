@@ -3,135 +3,164 @@ name: app.lessonpreview
 url: /lessonpreview/:lessonId
 controller: 'app.lessonpreviews.LessonPreviewController as cx'
 ---
-<div class="clearfix">
-    <div class="flex-video widescreen">
-        <iframe height="712" class="large-12" ng-src="{{ cx.PrimaryVideoUrl }}" frameborder="0" allowfullscreen></iframe>
-    </div>
-    <br />
-    <div class="grid-block noscroll">
+
+<style>
+    .button.hollow.quest {
+        border: inherit;
+        border-bottom: 1px solid #00558b;
+    }
+
+    .button.hollow.success.quest {
+        border: inherit;
+        border-bottom: 1px solid #43AC6A;
+    }
+
+    .button.hollow.alert.quest {
+        border: inherit;
+        border-bottom: 1px solid #F04124;
+    }
+
+    .button.hollow.dark.quest {
+        border: inherit;
+        border-bottom: 1px solid #232323;
+    }
+
+    .not-active {
+        pointer-events: none;
+        cursor: default;
+    }
+</style>
+
+<!-- Preview mode -->
+<div style="margin-top: 1rem;">
+    <div class="vertical medium-horizontal grid-block">
         <!-- Side menu -->
-        <div class="medium-4 align-center grid-block">
-            <div class="grid-content medium-6 block-list ng-scope">
+        <div class="medium-4 small-12 align-center grid-block">
+            <div class="grid-content medium-9 small-12">
+                <div class="clearfix">
+                    <a class="float-left"><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"><span class="badge">5</span></a>
+                    <a class="float-right"><img zf-iconic="" icon="Account" size="medium" class="iconic-color-dark"></a>
+                    <hr />
+                </div>
                 <h1 class="lesson-header">
-                    Preview
+                    {{ cx.content.Title }}
+                    <hr />
                 </h1>
-                <a><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"></a>
-                <a class="float-right" zf-open="classModal"><i class="fi-list size-36"></i></a>
                 <ul class="vertical icon-left menu-bar">
-                    <li ui-sref-active="is-active" class="is-active">
-                        <a><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ item.IconURL }}"> {{ item.Name }}</a>
                     </li>
                     <li ui-sref-active="is-active">
-                        <a><img zf-iconic="" icon="journal" size="medium" class="iconic-color-dark"> JOURNAL</a>
+                        <a class="not-active">Teacher Section</a>
+                    </li>
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.TeacherItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ item.IconURL }}"> {{ item.Name }}</a>
                     </li>
                     <li ui-sref-active="is-active">
-                        <a><img zf-iconic="" icon="course_map" size="medium" class="iconic-color-dark"> COURSE MAP</a>
+                        <a class="not-active">Student Section</a>
                     </li>
-                    <li ui-sref-active="is-active">
-                        <a><img zf-iconic="" icon="class" size="medium" class="iconic-color-dark"> CLASS</a>
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.StudentItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ item.IconURL }}"> {{ item.Name }}</a>
                     </li>
-                    <li ui-sref-active="is-active">
-                        <a><img zf-iconic="" icon="setting" size="medium" class="iconic-color-dark"> SETTING</a>
+                    <li ui-sref-active="is-active" ng-repeat="item in cx.content.PostAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
+                        <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ item.IconURL }}"> {{ item.Name }}</a>
                     </li>
                 </ul>
             </div>
         </div>
 
         <!-- Lesson contents -->
-        <div class="medium-8 grid-block noscroll clearfix">
-            <div class="large-8 push-4 large-offset-1 columns">
+        <div class="medium-8 small-12 vertical grid-block grid-content card-section" ng-hide="cx.content == null">
+            <!-- Item -->
+            <div class="grid-block" ng-show="cx.ItemSelect.ContentType == 'Video' || cx.ItemSelect.ContentType == 'Audio' || cx.ItemSelect.ContentType == 'File' || cx.ItemSelect.ContentType == 'Game'">
+                <iframe height="540" class="small-12" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.ItemSelect.ContentURL) }}" frameborder="0" allowfullscreen></iframe>
+                <hr>
+            </div>
+            <div class="card-section" ng-show="cx.ItemSelect.ContentType == 'None' || cx.ItemSelect.ContentType == 'Video' || cx.ItemSelect.ContentType == 'Audio' || cx.ItemSelect.ContentType == 'File' || cx.ItemSelect.ContentType == 'Game'">
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.ItemSelect.Description)"></p>
+            </div>
 
-                <div class="grid-block clearfix">
-                    <div class="grid-block float-left">
-                        <h1>SEMESTER {{ cx.content.SemesterName }}</h1>
-                    </div>
-                    <div class="grid-block float-right align-right">
-                        <a ng-class="{ 'inactive': !cx.teacherView }" ng-click="cx.selectTeacherView()">TEACHER VIEW</a>
-                        <span>|</span>
-                        <a ng-class="{ 'inactive': cx.teacherView }" ng-click="cx.selectStdView()">STUDENT VIEW</a>
-                    </div>
+            <!-- Question -->
+            <div class="small-12" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
+                <h2 class="text-center">
+                    Qulz: {{ cx.ItemSelect.Name }}
+                </h2>
+                <hr>
+            </div>
+
+            <!-- Question text box -->
+            <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'FResponse'">
+                <p>Give the correct answer to text box</p>
+
+                <p>Qusetion:</p>
+
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
+
+
+                <textarea ng-model="cx.Answer" rows="3"></textarea>
+            </div>
+
+            <!-- Question choices -->
+            <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'QA'">
+                <p>Select the correct answer from choices</p>
+
+                <p>Qusetion:</p>
+
+                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
+
+                <p ng-repeat="Choice in cx.QuestionSelect.Choices"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></span></label></p>
+            </div>
+
+            <!-- Question drop down -->
+            <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'PQA'">
+                <p>Select the correct answer from the drop down menu below</p>
+
+                <p>Qusetion:</p>
+
+                <p>
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementBefore)"></span>
+                    <select ng-model="cx.Answer" style="display: inline; width: inherit;">
+                        <option value="{{ Choice.id }}" ng-repeat="Choice in cx.QuestionSelect.Choices" ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></option>
+                    </select>
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementAfter)"></span>
+                </p>
+            </div>
+            <div class="medium-10 medium-offset-1 small-12 clearfix" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
+                <a class="button float-right " ng-class="{'secondary disabled': !cx.Answer, 'success': cx.Answer }" zf-open="PreAnswerModel" ng-hide="cx.AnswerSend">OK</a>
+                <a class="button float-right " ng-class="{'secondary disabled': !cx.Answer, 'success': cx.Answer }" ng-click="cx.NextQuestion()" ng-show="cx.ChangeQuestionButton()">Next Question</a>
+                <a class="button float-right " ng-class="{'secondary disabled': !cx.Answer, 'success': cx.Answer }" ng-click="cx.NextPage()" ng-show="cx.FinishButton()">Finish</a>
+            </div>
+            <div class="small-12 clearfix" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
+                <div class="float-left">
+                    <a class="quest hollow button not-active" ng-class="{'success': cx.IsAnswerCorrect(item) == true && cx.HaveAnswer(item) ,'alert': cx.IsAnswerCorrect(item) == false && cx.HaveAnswer(item), 'dark': cx.QuestionSelect.id != item.id && !cx.HaveAnswer(item)}" ng-repeat="item in cx.ItemSelect.Assessments">
+                        <img zf-iconic="" icon="Circle-check" size="small" class="iconic-color-dark" ng-show="cx.IsAnswerCorrect(item) == true && cx.HaveAnswer(item)">
+                        <img zf-iconic="" icon="Circle-x" size="small" class="iconic-color-dark" ng-show="cx.IsAnswerCorrect(item) == false && cx.HaveAnswer(item)">
+                        <img height="16px" width="16px" zf-iconic="" icon="" size="small" class="iconic-color-dark" ng-show="!cx.HaveAnswer(item)">
+                    </a>
                 </div>
+            </div>
+            <!-- End item -->
+            <div class="small-12">
+                <hr>
+                <p>
+                    <a><span><img zf-iconic="" icon="like_inactive" size="medium" class="iconic-color-dark"></span></a><a></a> 0 people like this
+                </p>
+            </div>
+        </div>
+    </div>
 
-                <div class="card visible">
-                    <div class="card-section">
-                        <h2 class="success label titlePosition">Week {{ cx.content.Order }}</h2>
-
-                        <div ng-show="cx.teacherView">
-                            <h3>{{ cx.content.Title }}</h3>
-                            <hr />
-                            <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.ShortTeacherLessonPlan)"></p>
-                            <a ng-click="detailTeacherClose = !detailTeacherClose">
-                                <img ng-hide="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
-                                <img ng-show="detailTeacherClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
-                                More detail
-                            </a>
-                            <div ng-show="detailTeacherClose">
-                                <br>
-                                <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.MoreTeacherLessonPlan)"></p>
-                            </div>
-                        </div>
-
-                        <div ng-show="!cx.teacherView">
-                            <h3>{{ cx.content.Title }}</h3>
-                            <hr />
-                            <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.ShortDescription)"></p>
-
-                            <a ng-click="detailClose = !detailClose">
-                                <img ng-hide="detailClose" zf-iconic="" icon="chevron" data-direction="right" size="small" class="iconic-color-success">
-                                <img ng-show="detailClose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-success">
-                                More detail
-                            </a>
-                            <div ng-show="detailClose">
-                                <br>
-                                <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.MoreDescription)"></p>
-                                <h4 class="extra-header">Extra learning</h4>
-                                <a href="{{ item.PrimaryContentURL }}">
-                                    <div class="grid-block">
-                                        <div class="grid-content text-center shrink large-2">
-                                            <img src="{{ cx.primaryContentIconUrl }}">
-                                        </div>
-                                        <div class="grid-content large-10">
-                                            <p ng-bind-html="cx.$sce.trustAsHtml(cx.content.PrimaryContentDescription)"></p>
-                                        </div>
-                                    </div>
-                                </a>
-                                <br />
-                                <div ng-repeat="item in cx.content.ExtraContents">
-                                    <a href="{{ item.ContentURL }}">
-                                        <div class="grid-block">
-                                            <div class="grid-content shrink large-2">
-                                                <img src="{{ item.IconURL }}">
-                                            </div>
-                                            <div class="grid-content large-10">
-                                                <p ng-bind-html="cx.$sce.trustAsHtml(item.Description)"></p>
-                                            </div>
-                                        </div>
-                                    </a>
-                                    <br />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="success label menu-bar"></div>
-                </div>
-
-                <div>
-                    <p>
-                        <a><span><img zf-iconic="" icon="like_active" size="medium" class="iconic-color-alert"></span></a> 0 people like this
-                    </p>
-                </div>
-
-                <div class="clearfix">
-                    <div class="grid-block">
-                        <div class="grid-content shrink large-2"><img src="http://placehold.it/100x100"></div>
-                        <div class="grid-content large-10">
-                            <h4>Preview</h4>
-                            <textarea ng-model="message" rows="3"></textarea>
-                        </div>
-                    </div>
-                    <div class="float-right">
-                        <button class="button">Post</button>
-                    </div>
+    <!-- command section -->
+    <div class="vertical medium-horizontal grid-block">
+        <div class="medium-8 medium-offset-4 small-12 vertical grid-block grid-content card-section">
+            <div class="small-12 grid-block">
+                <!-- post section -->
+                <div class="small-4 medium-2 medium-offset-2"><img src="http://placehold.it/100x100"></div>
+                <div class="small-8 medium-8">
+                    <h4>Preview</h4>
+                    <textarea ng-model="message" rows="3"></textarea>
+                    <ul class="button-group float-right">
+                        <li><a>Post</a></li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -140,3 +169,19 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
 
 <div class="owl-carousel owl-theme">
 </div>
+
+<div zf-modal="" id="PreAnswerModel">
+    <a zf-close="" class="close-button">x</a>
+    <h4 class="text-center">Are you sure?</h4>
+    <div>
+        <div class="text-center grid-container">
+            <div class="text-center">
+                <div>
+                    <button class="button success" zf-close="" ng-click="cx.SendAnswer()">Yes</button>
+                    <button class="button success" zf-close="">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End preview page -->

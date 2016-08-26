@@ -2,12 +2,6 @@
 CREATE TABLE [dbo].[Lessons] (
     [Id] int IDENTITY(1,1) NOT NULL,
     [Title] varchar(255)  NOT NULL,
-    [ShortDescription] varchar(max)  NOT NULL,
-    [MoreDescription] varchar(max)  NOT NULL,
-    [ShortTeacherLessonPlan] varchar(max)  NOT NULL,
-    [MoreTeacherLessonPlan] varchar(max)  NOT NULL,
-    [PrimaryContentURL] varchar(max)  NOT NULL,
-    [PrimaryContentDescription] varchar(max)  NOT NULL,
     [IsPreviewable] bit  NOT NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
     [RecLog_DeletedDate] datetime  NULL,
