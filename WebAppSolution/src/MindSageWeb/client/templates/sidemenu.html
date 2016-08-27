@@ -6,7 +6,7 @@
     <a class="float-right" zf-open="classModal" ng-show="cx.userSvc.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
     <ul class="vertical icon-left menu-bar">
         <li ui-sref-active="is-active">
-            <a ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userSvc.ClientUserProfile.CurrentLessonId })"><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
+            <a ui-sref="app.main({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userSvc.ClientUserProfile.CurrentLessonId })"><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
         </li>
         <li ui-sref-active="is-active">
             <a ui-sref="app.course.journal({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><img zf-iconic="" icon="journal" size="medium" class="iconic-color-dark"> JOURNAL</a>
