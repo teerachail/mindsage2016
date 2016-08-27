@@ -25,7 +25,10 @@ namespace WebManagementPortal.Controllers
                 courseCatalog = await dctx.CourseCatalogs
                     .Include("Semesters.Units.Lessons.Advertisements")
                     .Include("Semesters.Units.Lessons.TopicOfTheDays")
-                    .Include("Semesters.Units.Lessons.ExtraContents")
+                    .Include("Semesters.Units.Lessons.TeacherLessonItems")
+                    .Include("Semesters.Units.Lessons.StudentLessonItems")
+                    .Include("Semesters.Units.Lessons.PreAssessments.Assessments.Choices")
+                    .Include("Semesters.Units.Lessons.PostAssessments.Assessments.Choices")
                     .FirstOrDefaultAsync(it => it.Id == id);
 
                 if (courseCatalog != null)
