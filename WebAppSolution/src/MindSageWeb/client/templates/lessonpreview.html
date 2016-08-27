@@ -108,7 +108,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
 
                 <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
 
-                <p ng-repeat="Choice in cx.QuestionSelect.Choices"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></span></label></p>
+                <p ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></span></label></p>
             </div>
 
             <!-- Question drop down -->
@@ -120,7 +120,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
                 <p>
                     <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementBefore)"></span>
                     <select ng-model="cx.Answer" style="display: inline; width: inherit;">
-                        <option value="{{ Choice.id }}" ng-repeat="Choice in cx.QuestionSelect.Choices" ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></option>
+                        <option value="{{ Choice.id }}" ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)" ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></option>
                     </select>
                     <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementAfter)"></span>
                 </p>

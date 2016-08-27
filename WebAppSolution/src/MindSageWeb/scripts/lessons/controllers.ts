@@ -230,6 +230,21 @@ module app.lessons {
             else
                 return false;
         }
+
+        private HideChoice(item: string): boolean {
+            var HaveString = item;
+            HaveString = HaveString.replace('<!DOCTYPE html>', '');
+            HaveString = HaveString.replace(' ', '');
+            HaveString = HaveString.replace('<html>', '');
+            HaveString = HaveString.replace('<head>', '');
+            HaveString = HaveString.replace('</head>', '');
+            HaveString = HaveString.replace('<body>', '');
+            HaveString = HaveString.replace('</body>', '');
+            HaveString = HaveString.replace('</html>', '');
+            HaveString = HaveString.trim();
+            return HaveString.trim() == '';
+        }
+
         //comment & discussions
         public showDiscussion(item: any, open: boolean) {
             this.GetDiscussions(item);
