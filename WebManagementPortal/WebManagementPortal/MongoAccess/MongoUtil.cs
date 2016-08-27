@@ -11,8 +11,8 @@ namespace WebManagementPortal.MongoAccess
     {
         #region Fields
 
-        private static IMongoClient _client;
-        private static IMongoDatabase _database;
+        private IMongoClient _client;
+        private IMongoDatabase _database;
 
         #endregion Fields
 
