@@ -176,35 +176,19 @@ module app.lessonpreviews {
                 return false;
         }
 
-        //static $inject = ['$sce', '$q', '$stateParams', 'defaultUrl', 'app.lessonpreviews.LessonService'];
-        //constructor(private $sce, private $q, private $stateParams, private defaultUrl, private svc: app.lessonpreviews.LessonService) {
-        //    this.primaryContentIconUrl = defaultUrl + "/assets/img/iconic/media/video.png";
-        //    this.prepareLessonContents();
-        //}
-
-        //private prepareLessonContents(): void {
-        //    var lessonId = this.$stateParams.lessonId;
-        //    this.svc.GetContent(lessonId).then(
-        //        it => {
-        //            this.content = it;
-        //            this.PrimaryVideoUrl = this.$sce.trustAsResourceUrl(it.PrimaryContentURL);
-        //        }                    ,
-        //        error => console.log('Error: ' + error));
-        //    (<any>angular.element(".owl-carousel")).owlCarousel({
-        //        autoPlay: true,
-        //        slideSpeed: 300,
-        //        jsonPath: this.defaultUrl + '/api/lesson/' + lessonId + '/lessonpreviewads',
-        //        singleItem: true
-        //    });
-        //}
-
-        //public selectTeacherView(): void {
-        //    this.teacherView = true;
-        //}
-
-        //public selectStdView(): void {
-        //    this.teacherView = false;
-        //}
+        private HideChoice(item: string): boolean {
+            var HaveString = item;
+            HaveString = HaveString.replace('<!DOCTYPE html>', '');
+            HaveString = HaveString.replace(' ', '');
+            HaveString = HaveString.replace('<html>', '');
+            HaveString = HaveString.replace('<head>', '');
+            HaveString = HaveString.replace('</head>', '');
+            HaveString = HaveString.replace('<body>', '');
+            HaveString = HaveString.replace('</body>', '');
+            HaveString = HaveString.replace('</html>', '');
+            HaveString = HaveString.trim();
+            return HaveString.trim() == '';
+        }
     }
 
     angular
