@@ -3,34 +3,6 @@ name: app.main
 url: /main/lesson/:lessonId/:classRoomId
 controller: 'app.lessons.LessonController as cx'
 ---
-<style>
-    .button.hollow.quest {
-        border: inherit;
-        border-bottom: 1px solid #00558b;
-    }
-
-    .button.hollow.success.quest {
-        border: inherit;
-        border-bottom: 1px solid #43AC6A;
-    }
-
-    .button.hollow.alert.quest {
-        border: inherit;
-        border-bottom: 1px solid #F04124;
-    }
-
-    .button.hollow.dark.quest {
-        border: inherit;
-        border-bottom: 1px solid #232323;
-    }
-
-    .not-active {
-        pointer-events: none;
-        cursor: default;
-    }
-</style>
-
-
 <!-- Lesson mode -->
 <div style="margin-top: 1rem;">
     <div class="vertical medium-horizontal grid-block">
@@ -244,7 +216,7 @@ controller: 'app.lessons.LessonController as cx'
                     <a zf-open="classModal"><img zf-iconic="" icon="Document" size="medium" class="iconic-color-dark"> COURSES</a>
                 </li>
                 <li>
-                    <a ui-sref="app.main({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userprofileSvc.ClientUserProfile.CurrentLessonId })"><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
+                    <a ui-sref="app.main({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userprofileSvc.ClientUserProfile.CurrentLessonId })" zf-close=""><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
                 </li>
                 <li>
                     <a ui-sref="app.course.journal({ classRoomId: cx.userprofileSvc.ClientUserProfile.CurrentClassRoomId, targetUserId: cx.currentUserId })"><img zf-iconic="" icon="journal" size="medium" class="iconic-color-dark"> JOURNAL</a>
