@@ -35,7 +35,7 @@ controller: 'app.coursemaps.CourseMapController as cx'
                                 <img ng-show="lesson.IsLocked" src="../assets/img/icon/black.png">
                             </div>
                             <div ng-show="cx.userSvc.ClientUserProfile.IsTeacher">
-                                <a href="#" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
+                                <a href="#" ui-sref="app.main({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
                                     <img ng-show="lesson.IsCurrent" src="../assets/img/icon/blue.png">
                                     <img ng-show="!lesson.IsCurrent" src="../assets/img/icon/green.png">
                                 </a>
@@ -60,7 +60,7 @@ controller: 'app.coursemaps.CourseMapController as cx'
                                 <img ng-show="lesson.IsLocked" src="../assets/img/icon/black.png">
                             </div>
                             <div ng-show="cx.userSvc.ClientUserProfile.IsTeacher">
-                                <a href="#" ui-sref="app.main.lesson({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
+                                <a href="#" ui-sref="app.main({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
                                     <img ng-show="lesson.IsCurrent" src="../assets/img/icon/blue.png">
                                     <img ng-show="!lesson.IsCurrent" src="../assets/img/icon/green.png">
                                 </a>
