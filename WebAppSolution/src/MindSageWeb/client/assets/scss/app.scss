@@ -551,3 +551,30 @@ $flexvideo-ratio-widescreen: 16 by 9 !default;
 }
 
 @include foundation-flex-video;
+
+// block active
+    .not-active {
+        pointer-events: none;
+        cursor: default;
+    }
+	
+// css check answer on lesson
+	.button.hollow.quest {
+        border: inherit;
+        border-bottom: 1px solid #00558b;
+    }
+
+    .button.hollow.success.quest {
+        border: inherit;
+        border-bottom: 1px solid #43AC6A;
+    }
+
+    .button.hollow.alert.quest {
+        border: inherit;
+        border-bottom: 1px solid #F04124;
+    }
+
+    .button.hollow.dark.quest {
+        border: inherit;
+        border-bottom: 1px solid #232323;
+    }
