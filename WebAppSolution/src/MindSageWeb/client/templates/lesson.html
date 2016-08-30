@@ -22,14 +22,8 @@ controller: 'app.lessons.LessonController as cx'
                     <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
                         <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
                     </li>
-                    <li ui-sref-active="is-active" ng-show="cx.IsTeacher">
-                        <a class="not-active">Teacher Section</a>
-                    </li>
                     <li ui-sref-active="is-active" ng-repeat="item in cx.content.TeacherItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}" ng-show="cx.IsTeacher">
                         <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
-                    </li>
-                    <li ui-sref-active="is-active" ng-show="cx.IsTeacher">
-                        <a class="not-active">Student Section</a>
                     </li>
                     <li ui-sref-active="is-active" ng-repeat="item in cx.content.StudentItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
                         <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
@@ -64,9 +58,7 @@ controller: 'app.lessons.LessonController as cx'
             <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'FResponse'">
                 <p>Give the correct answer to text box</p>
 
-                <p>Qusetion:</p>
-
-                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
+                <p>Qusetion : <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.Question))"></span></p>
 
 
                 <textarea ng-model="cx.Answer" rows="3"></textarea>
@@ -76,25 +68,23 @@ controller: 'app.lessons.LessonController as cx'
             <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'QA'">
                 <p>Select the correct answer from choices</p>
 
-                <p>Qusetion:</p>
+                <p>Qusetion : <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.Question))"></span></p>
 
-                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
+                
 
-                <p ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></span></label></p>
+                <p ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(Choice.Name))"></span></label></p>
             </div>
 
             <!-- Question drop down -->
             <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'PQA'">
                 <p>Select the correct answer from the drop down menu below</p>
 
-                <p>Qusetion:</p>
-
-                <p>
-                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementBefore)"></span>
+                <p>Qusetion : 
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.StatementBefore))"></span>
                     <select ng-model="cx.Answer" style="display: inline; width: inherit;">
                         <option value="{{ Choice.id }}" ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)" ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></option>
                     </select>
-                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementAfter)"></span>
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.StatementAfter))"></span>
                 </p>
             </div>
             <div class="medium-10 medium-offset-1 small-12 clearfix" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">

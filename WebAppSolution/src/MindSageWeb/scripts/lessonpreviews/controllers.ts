@@ -189,6 +189,13 @@ module app.lessonpreviews {
             HaveString = HaveString.trim();
             return HaveString.trim() == '';
         }
+
+        public HtmlReplace(item: string) {
+            if (item == null) return;
+            item = item.replace('<p>', '<span>');
+            item = item.replace('</p>', '</span>');
+            return item;
+        }
     }
 
     angular
