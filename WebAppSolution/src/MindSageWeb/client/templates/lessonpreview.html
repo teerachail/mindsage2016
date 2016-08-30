@@ -55,7 +55,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
             <!-- Question -->
             <div class="small-12" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
                 <h2 class="text-center">
-                    Qulz: {{ cx.ItemSelect.Name }}
+                    Quiz: {{ cx.ItemSelect.Name }}
                 </h2>
                 <hr>
             </div>
@@ -64,9 +64,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
             <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'FResponse'">
                 <p>Give the correct answer to text box</p>
 
-                <p>Qusetion:</p>
-
-                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
+                <p>Qusetion : <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.Question))"></span></p>
 
 
                 <textarea ng-model="cx.Answer" rows="3"></textarea>
@@ -76,26 +74,24 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
             <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'QA'">
                 <p>Select the correct answer from choices</p>
 
-                <p>Qusetion:</p>
+                <p>Qusetion : <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.Question))"></span></p>
 
-                <p ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.Question)"></p>
-
-                <p ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></span></label></p>
+                <p ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)"><label><input type="radio" name="Answer" ng-model="cx.Answer" value="{{ Choice.id }}" id="{{ Choice.id }}"><span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(Choice.Name))"></span></label></p>
             </div>
 
             <!-- Question drop down -->
             <div class="grid-content medium-10 medium-offset-1 small-12" ng-show="cx.QuestionSelect.ContentType == 'PQA'">
                 <p>Select the correct answer from the drop down menu below</p>
 
-                <p>Qusetion:</p>
-
                 <p>
-                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementBefore)"></span>
+                    Qusetion :
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.StatementBefore))"></span>
                     <select ng-model="cx.Answer" style="display: inline; width: inherit;">
                         <option value="{{ Choice.id }}" ng-repeat="Choice in cx.QuestionSelect.Choices" ng-hide="cx.HideChoice(Choice.Name)" ng-bind-html="cx.$sce.trustAsHtml(Choice.Name)"></option>
                     </select>
-                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.QuestionSelect.StatementAfter)"></span>
+                    <span ng-bind-html="cx.$sce.trustAsHtml(cx.HtmlReplace(cx.QuestionSelect.StatementAfter))"></span>
                 </p>
+
             </div>
             <div class="medium-10 medium-offset-1 small-12 clearfix" ng-show="cx.ItemSelect.ContentType != 'None' && cx.ItemSelect.ContentType != 'Video' && cx.ItemSelect.ContentType != 'Audio' && cx.ItemSelect.ContentType != 'File' && cx.ItemSelect.ContentType != 'Game'">
                 <a class="button float-right " ng-class="{'secondary disabled': !cx.Answer, 'success': cx.Answer }" zf-open="PreAnswerModel" ng-hide="cx.AnswerSend">OK</a>

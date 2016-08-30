@@ -14,15 +14,15 @@ controller: 'app.coursemaps.CourseMapController as cx'
                         <h2 class="success label titlePosition">SEMESTER {{ item.SemesterName }}</h2>
                     </div>
                     <a class="float-right" ng-click="isclose = !isclose">
-                        <img ng-if="$first" ng-show="isclose" zf-iconic="" icon="chevron" data-direction="left" size="small" class="iconic-color-dark">
-                        <img ng-if="$first" ng-hide="isclose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-dark">
-                        <img ng-if="!$first" ng-hide="isclose" zf-iconic="" icon="chevron" data-direction="left" size="small" class="iconic-color-dark">
-                        <img ng-if="!$first" ng-show="isclose" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-dark">
+                        <img ng-show="isclose && $first" zf-iconic="" icon="chevron" data-direction="left" size="small" class="iconic-color-dark">
+                        <img ng-show="!isclose && $first" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-dark">
+                        <img ng-show="!isclose && !$first" zf-iconic="" icon="chevron" data-direction="left" size="small" class="iconic-color-dark">
+                        <img ng-show="isclose && !$first" zf-iconic="" icon="chevron" data-direction="bottom" size="small" class="iconic-color-dark">
                     </a>
                 </div>
                 <div ng-if="$first" ng-hide="isclose">
                     <div class="grid-block small-up-2 medium-up-5">
-                        <div ng-repeat="lesson in item.LessonStatus" class="grid-content">
+                        <div ng-repeat="lesson in item.LessonStatus | orderBy: 'LessonId'" class="grid-content">
                             <div ng-show="!cx.userSvc.ClientUserProfile.IsTeacher">
                                 <a href="#" ng-show="!lesson.IsLocked" ui-sref="app.main({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
                                     <img ng-show="lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/blue.png">
@@ -47,7 +47,7 @@ controller: 'app.coursemaps.CourseMapController as cx'
 
                 <div ng-if="!$first" ng-show="isclose">
                     <div class="grid-block small-up-2 medium-up-5">
-                        <div ng-repeat="lesson in item.LessonStatus" class="grid-content">
+                        <div ng-repeat="lesson in item.LessonStatus | orderBy: 'LessonId'" class="grid-content">
                             <div ng-show="!cx.userSvc.ClientUserProfile.IsTeacher">
                                 <a href="#" ng-show="!lesson.IsLocked" ui-sref="app.main({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: lesson.LessonId })">
                                     <img ng-show="lesson.IsCurrent && !cx.HaveAnyComments(lesson.LessonId)" src="../assets/img/icon/blue.png">

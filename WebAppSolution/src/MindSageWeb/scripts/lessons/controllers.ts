@@ -31,6 +31,7 @@ module app.lessons {
         static $inject = ['$sce', '$scope', '$state', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService', '$q', '$stateParams', 'defaultUrl', 'app.shared.DiscussionService', 'app.shared.CommentService', 'app.lessons.LessonService'];
         constructor(private $sce, private $scope, private $state, private userprofileSvc: app.shared.ClientUserProfileService, private getProfileSvc: app.shared.GetProfileService, private $q, private $stateParams, private defaultUrl, private discussionSvc: app.shared.DiscussionService, private commentSvc: app.shared.CommentService, private lessonSvc: app.lessons.LessonService) {
             this.requestedCommentIds = ['', ''];
+            this.discussions = [];
             this.LessonAnswer = {
                 id: '01',
                 Answers: [
@@ -243,6 +244,13 @@ module app.lessons {
             HaveString = HaveString.replace('</html>', '');
             HaveString = HaveString.trim();
             return HaveString.trim() == '';
+        }
+
+        public HtmlReplace(item: string) {
+            if (item == null) return;
+            item = item.replace('<p>', '<span>');
+            item = item.replace('</p>', '</span>');
+            return item;
         }
 
         //comment & discussions
