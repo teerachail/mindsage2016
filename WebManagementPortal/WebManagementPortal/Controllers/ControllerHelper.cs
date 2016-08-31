@@ -16,6 +16,7 @@ namespace WebManagementPortal.Controllers
             Enum.TryParse<ExtraContentType>(selectedType, out extraContentType);
             return new List<SelectListItem>
             {
+                new SelectListItem { Value = ExtraContentType.None.ToString(), Text = ExtraContentType.None.ToString(), Selected = extraContentType == ExtraContentType.None },
                 new SelectListItem { Value = ExtraContentType.Video.ToString(), Text = ExtraContentType.Video.ToString(), Selected = extraContentType == ExtraContentType.Video },
                 new SelectListItem { Value = ExtraContentType.Audio.ToString(), Text = ExtraContentType.Audio.ToString(), Selected = extraContentType == ExtraContentType.Audio },
                 new SelectListItem { Value = ExtraContentType.File.ToString(),  Text = ExtraContentType.File.ToString(),  Selected = extraContentType == ExtraContentType.File },
@@ -32,6 +33,8 @@ namespace WebManagementPortal.Controllers
         {
             switch (content)
             {
+                case ExtraContentType.None:
+                    return string.Format("{0}/assets/img/iconic/media/none.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Video:
                     return string.Format("{0}/assets/img/iconic/media/video.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Audio:
@@ -47,6 +50,7 @@ namespace WebManagementPortal.Controllers
 
     public enum ExtraContentType
     {
+        None = 0,
         Video = 1,
         Audio = 2,
         File = 3,

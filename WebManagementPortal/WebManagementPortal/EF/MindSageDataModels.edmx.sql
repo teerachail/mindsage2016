@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/12/2016 15:15:45
+-- Date Created: 08/31/2016 09:34:39
 -- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
@@ -254,7 +254,7 @@ CREATE TABLE [dbo].[LessonItems] (
     [Description] varchar(max)  NOT NULL,
     [IsPreviewable] bit  NOT NULL,
     [ContentType] varchar(100)  NOT NULL,
-    [ContentURL] varchar(max)  NOT NULL,
+    [ContentURL] varchar(max)  NULL,
     [TeacherLessonId] int  NULL,
     [StudentLessonId] int  NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,

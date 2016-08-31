@@ -6,7 +6,7 @@ CREATE TABLE [dbo].[LessonItems] (
     [Description] varchar(max)  NOT NULL,
     [IsPreviewable] bit  NOT NULL,
     [ContentType] varchar(100)  NOT NULL,
-    [ContentURL] varchar(max)  NOT NULL,
+    [ContentURL] varchar(max)  NULL,
     [TeacherLessonId] int  NULL,
     [StudentLessonId] int  NULL,
     [RecLog_CreatedDate] datetime  NOT NULL,
