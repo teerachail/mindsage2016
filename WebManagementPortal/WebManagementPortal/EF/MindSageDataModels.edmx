@@ -222,7 +222,7 @@
     <Property Name="Description" Type="varchar(max)" Nullable="false" />
     <Property Name="IsPreviewable" Type="bit" Nullable="false" />
     <Property Name="ContentType" Type="varchar" Nullable="false" MaxLength="100" />
-    <Property Name="ContentURL" Type="varchar(max)" Nullable="false" />
+    <Property Name="ContentURL" Type="varchar(max)" Nullable="true" />
     <Property Name="TeacherLessonId" Type="int" Nullable="true" />
     <Property Name="StudentLessonId" Type="int" Nullable="true" />
     <Property Name="RecLog_CreatedDate" Type="datetime" Nullable="false" />
@@ -765,7 +765,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
           <Property Name="IsPreviewable" Type="Boolean" Nullable="false" />
           <Property Name="ContentType" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
-          <Property Name="ContentURL" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="ContentURL" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="true" />
           <NavigationProperty Name="TeacherLesson" Relationship="MindSageDataModels.LessonLessonItem" FromRole="LessonItem" ToRole="Lesson" />
           <Property Name="TeacherLessonId" Type="Int32" Nullable="true" />
           <NavigationProperty Name="StudentLesson" Relationship="MindSageDataModels.LessonLessonItem1" FromRole="LessonItem" ToRole="Lesson" />
