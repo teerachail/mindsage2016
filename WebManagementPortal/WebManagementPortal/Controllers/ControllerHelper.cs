@@ -34,7 +34,7 @@ namespace WebManagementPortal.Controllers
             switch (content)
             {
                 case ExtraContentType.None:
-                    return string.Format("{0}/assets/img/iconic/media/none.png", AppConfigOptions.MindSageWebUrl);
+                    return string.Format("{0}/assets/img/iconic/document.svg", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Video:
                     return string.Format("{0}/assets/img/iconic/media/video.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Audio:
