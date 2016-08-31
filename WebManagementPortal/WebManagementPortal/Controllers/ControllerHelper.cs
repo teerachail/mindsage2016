@@ -34,18 +34,19 @@ namespace WebManagementPortal.Controllers
             switch (content)
             {
                 case ExtraContentType.None:
-                    return string.Format("{0}/assets/img/iconic/document.svg", AppConfigOptions.MindSageWebUrl);
+                    return string.Format("{0}/assets/img/iconic/document.svg", AppConfigOptions.MindSageWebUrl); //HACK: None Icon
                 case ExtraContentType.Video:
                     return string.Format("{0}/assets/img/iconic/media/video.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Audio:
                     return string.Format("{0}/assets/img/iconic/media/audio.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Game:
+                    return string.Format("{0}/assets/img/iconic/circle-x.png", AppConfigOptions.MindSageWebUrl); //HACK: Game Icon
                 case ExtraContentType.File:
                     return string.Format("{0}/assets/img/iconic/media/text.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.PreAssessment:
-                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl);
+                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl); //HACK: PreAssessment Icon
                 case ExtraContentType.PostAssessment:
-                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl);
+                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl); //HACK: PostAssessment Icon
                 default:
                     return "";
             }
