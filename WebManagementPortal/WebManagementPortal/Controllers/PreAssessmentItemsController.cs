@@ -63,7 +63,8 @@ namespace WebManagementPortal.Controllers
                 if (lesson == null || lesson.RecLog.DeletedDate.HasValue) return View("Error");
 
                 assessmentItem.RecLog.CreatedDate = DateTime.Now;
-                assessmentItem.IconURL = "www.google.com"; // HACK: Assessment icon
+                var IconUrl = ExtraContentType.PreAssessment.ToString();
+                assessmentItem.IconURL = ControllerHelper.ConvertToIconUrl(IconUrl);
                 db.AssessmentItems.Add(assessmentItem);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Lessons", new { @id = assessmentItem.PreLessonId });
