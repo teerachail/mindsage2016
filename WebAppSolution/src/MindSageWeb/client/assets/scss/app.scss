@@ -552,10 +552,17 @@ $flexvideo-ratio-widescreen: 16 by 9 !default;
 
 @include foundation-flex-video;
 
+// Profile's image size
+    .medium-img {
+        height: 100px;
+        width: 100px;
+    }
+
 // add scroll bar
     .y-scroll {
         overflow-y: scroll !important; 
     }
+
 // block active
     .not-active {
         pointer-events: none;

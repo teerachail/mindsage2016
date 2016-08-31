@@ -42,6 +42,10 @@ namespace WebManagementPortal.Controllers
                 case ExtraContentType.Game:
                 case ExtraContentType.File:
                     return string.Format("{0}/assets/img/iconic/media/text.png", AppConfigOptions.MindSageWebUrl);
+                case ExtraContentType.PreAssessment:
+                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl);
+                case ExtraContentType.PostAssessment:
+                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl);
                 default:
                     return "";
             }
@@ -55,5 +59,7 @@ namespace WebManagementPortal.Controllers
         Audio = 2,
         File = 3,
         Game = 4,
+        PreAssessment = 5,
+        PostAssessment = 6,
     }
 }
