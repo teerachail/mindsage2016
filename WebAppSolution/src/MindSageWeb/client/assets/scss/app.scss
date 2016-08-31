@@ -552,6 +552,10 @@ $flexvideo-ratio-widescreen: 16 by 9 !default;
 
 @include foundation-flex-video;
 
+// add scroll bar
+    .y-scroll {
+        overflow-y: scroll !important; 
+    }
 // block active
     .not-active {
         pointer-events: none;
