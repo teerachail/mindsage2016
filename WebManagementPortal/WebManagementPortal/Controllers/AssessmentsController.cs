@@ -135,6 +135,7 @@ namespace WebManagementPortal.Controllers
                 if (selectedAssessment == null) return View("Error");
 
                 selectedAssessment.Question = assessment.Question;
+                selectedAssessment.Question = selectedAssessment.Question ?? $"{ assessment.StatementBefore} [Choices] { assessment.StatementAfter }";
                 db.Choices.RemoveRange(selectedAssessment.Choices);
                 
                 var now = DateTime.Now;
