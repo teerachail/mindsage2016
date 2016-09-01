@@ -552,16 +552,33 @@ $flexvideo-ratio-widescreen: 16 by 9 !default;
 
 @include foundation-flex-video;
 
+// Lesson Menu and Contents
+@media only screen and (min-width: 40em) {
+    .menu-rundown {
+        position: fixed;
+        width: 40rem;
+    }
+
+    .y-scroll {
+        overflow-y: scroll !important;
+        height: 450px; 
+    }
+
+    .hidden-x-scroll {
+        overflow-x: hidden !important;
+    }
+
+    .lesson-contents {
+        min-height: 500px;
+    }
+}
+
 // Profile's image size
     .medium-img {
         height: 100px;
         width: 100px;
     }
 
-// add scroll bar
-    .y-scroll {
-        overflow-y: scroll !important; 
-    }
 
 // block active
     .not-active {
