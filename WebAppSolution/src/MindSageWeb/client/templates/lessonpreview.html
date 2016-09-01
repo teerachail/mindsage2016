@@ -7,18 +7,19 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
 <div style="margin-top: 1rem;">
     <div class="vertical medium-horizontal grid-block">
         <!-- Side menu -->
-        <div class="medium-4 small-12 align-center grid-block">
-            <div class="grid-content medium-9 small-12">
+        <div class="medium-4 small-12 align-center grid-block menu-rundown">
+            <div class="grid-content medium-9 small-12 hidden-x-scroll">
                 <div class="v-align title-bar">
                     <a><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"><span class="badge">5</span></a>
                     <a class="right"><img zf-iconic="" icon="Person" size="medium" class="iconic-color-dark"></a>
                     <hr />
                 </div>
-                <h1 class="lesson-header">
-                    {{ cx.content.Title }}
-                    <hr />
-                </h1>
-                <div class="y-scroll" style="height: 450px">
+                <div class="v-align title-bar">
+                    <h1 class="lesson-header">
+                        {{ cx.content.Title }}
+                    </h1>
+                </div>
+                <div class="y-scroll">
                     <ul class="vertical icon-left menu-bar">
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
                             <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ item.IconURL }}"> {{ item.Name }}</a>
@@ -38,8 +39,8 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
         </div>
 
         <!-- Lesson contents -->
-        <div class="medium-8 small-12 vertical grid-block grid-content card-section" ng-hide="cx.content == null">
-            <div style="min-height: 500px">
+        <div class="medium-8 medium-offset-4 small-12 vertical grid-block grid-content card-section" ng-hide="cx.content == null">
+            <div class="lesson-contents">
                 <!-- Item -->
                 <div class="grid-block" ng-show="cx.ItemSelect.ContentURL != null">
                     <iframe height="540" class="small-12" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.ItemSelect.ContentURL) }}" frameborder="0" allowfullscreen></iframe>
