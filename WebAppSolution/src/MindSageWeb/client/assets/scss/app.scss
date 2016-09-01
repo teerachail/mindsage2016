@@ -447,7 +447,8 @@ footer p {
 }
 
 footer a {
-    color:#ddd;
+    color: #ddd;
+
     &:hover {
         color: #a0ce4e;
     }
@@ -560,8 +561,28 @@ $flexvideo-ratio-widescreen: 16 by 9 !default;
     }
 
     .y-scroll {
-        overflow-y: scroll !important;
-        height: 450px; 
+        overflow-y: scroll;
+        height: 450px;
+        background: #FFF;
+    }
+
+    .y-scroll ul li {
+        border-bottom: 1px solid #ccc;
+    }
+
+    .y-scroll::-webkit-scrollbar {
+        width: 20px;
+    }
+
+    .y-scroll::-webkit-scrollbar-track {
+        background: #FFF;
+        -webkit-box-shadow: inset 0 0 1px #000;
+    }
+
+    .y-scroll::-webkit-scrollbar-thumb {
+        background: #edefef;
+        border: 1px solid #333;
+        -webkit-box-shadow: inset 0 0 1px #000;
     }
 
     .hidden-x-scroll {
@@ -574,35 +595,35 @@ $flexvideo-ratio-widescreen: 16 by 9 !default;
 }
 
 // Profile's image size
-    .medium-img {
-        height: 100px;
-        width: 100px;
-    }
+.medium-img {
+    height: 100px;
+    width: 100px;
+}
 
 
 // block active
-    .not-active {
-        pointer-events: none;
-        cursor: default;
-    }
-	
+.not-active {
+    pointer-events: none;
+    cursor: default;
+}
+
 // css check answer on lesson
-	.button.hollow.quest {
-        border: inherit;
-        border-bottom: 1px solid #00558b;
-    }
+.button.hollow.quest {
+    border: inherit;
+    border-bottom: 1px solid #00558b;
+}
 
-    .button.hollow.success.quest {
-        border: inherit;
-        border-bottom: 1px solid #43AC6A;
-    }
+.button.hollow.success.quest {
+    border: inherit;
+    border-bottom: 1px solid #43AC6A;
+}
 
-    .button.hollow.alert.quest {
-        border: inherit;
-        border-bottom: 1px solid #F04124;
-    }
+.button.hollow.alert.quest {
+    border: inherit;
+    border-bottom: 1px solid #F04124;
+}
 
-    .button.hollow.dark.quest {
-        border: inherit;
-        border-bottom: 1px solid #232323;
-    }
+.button.hollow.dark.quest {
+    border: inherit;
+    border-bottom: 1px solid #232323;
+}
