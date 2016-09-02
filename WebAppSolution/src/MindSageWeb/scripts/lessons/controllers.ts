@@ -184,6 +184,13 @@ module app.lessons {
             } else return 0;
         }
 
+        private MenuOnSelect(item: string, IsSelect: boolean) {
+            if (IsSelect)
+                return item.replace('.png', '_SELECTED.png');
+            else
+                return item;
+        }
+
         private SendAnswer(): void {
             var item = {
                 AssessmentId: this.QuestionSelect.id,

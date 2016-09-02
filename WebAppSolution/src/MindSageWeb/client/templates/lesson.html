@@ -20,18 +20,18 @@ controller: 'app.lessons.LessonController as cx'
                     </h1>
                 </div>
                 <div class="y-scroll">
-                    <ul class="vertical icon-left menu-bar ">
+                    <ul class="vertical icon-left menu-bar">
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.TeacherItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}" ng-show="cx.IsTeacher">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.StudentItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PostAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(item.IconURL) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
                         </li>
                     </ul>
                 </div>
@@ -116,10 +116,8 @@ controller: 'app.lessons.LessonController as cx'
                 </p>
             </div>
         </div>
-    </div>
 
     <!-- command section -->
-    <div class="vertical medium-horizontal grid-block">
         <div class="medium-8 medium-offset-4 small-12 vertical grid-block grid-content card-section">
             <div class="small-12 grid-block">
                 <!-- post section -->
@@ -280,3 +278,21 @@ controller: 'app.lessons.LessonController as cx'
     </div>
 </div>
 <!-- End lesson page -->
+
+<script>
+    var sOffset = $(".menu-rundown").offset().top;
+    $(window).scroll(function () {
+        var scrollYpos = $(document).scrollTop();
+        if (scrollYpos > sOffset) {
+            var scroll = sOffset - scrollYpos;
+            $(".menu-rundown").css({
+                'top': '0px'
+            });
+        } else {
+            var point = sOffset - scrollYpos;
+            $(".menu-rundown").css({
+                'top': point + 'px'
+            });
+        }
+    });
+</script>

@@ -34,19 +34,19 @@ namespace WebManagementPortal.Controllers
             switch (content)
             {
                 case ExtraContentType.None:
-                    return string.Format("{0}/assets/img/iconic/document.svg", AppConfigOptions.MindSageWebUrl); //HACK: None Icon
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/document.svg", AppConfigOptions.MindSageWebUrl); //HACK: None Icon
                 case ExtraContentType.Video:
-                    return string.Format("{0}/assets/img/iconic/media/video.png", AppConfigOptions.MindSageWebUrl);
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/VideoFile.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Audio:
-                    return string.Format("{0}/assets/img/iconic/media/audio.png", AppConfigOptions.MindSageWebUrl);
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/AudioFile.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Game:
-                    return string.Format("{0}/assets/img/iconic/circle-x.png", AppConfigOptions.MindSageWebUrl); //HACK: Game Icon
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/GameFile.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.File:
-                    return string.Format("{0}/assets/img/iconic/media/text.png", AppConfigOptions.MindSageWebUrl);
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/File.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.PreAssessment:
-                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl); //HACK: PreAssessment Icon
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/Assessment.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.PostAssessment:
-                    return string.Format("{0}/assets/img/iconic/star.svg", AppConfigOptions.MindSageWebUrl); //HACK: PostAssessment Icon
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/Assessment.png", AppConfigOptions.MindSageWebUrl);
                 default:
                     return "";
             }

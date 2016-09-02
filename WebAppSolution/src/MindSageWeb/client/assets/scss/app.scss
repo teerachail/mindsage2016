@@ -432,10 +432,6 @@
     border: solid 0.3rem $warning-color;
 }
 
-/*p img {
-    width: 1.4rem !important;
-}*/
-
 .card .grid-block .grid-content.text-center.shrink.large-2 img {
     width: auto;
     max-height: 60%;
@@ -556,8 +552,8 @@ $flexvideo-ratio-widescreen: 16 by 9 !default;
 // Lesson Menu and Contents
 @media only screen and (min-width: 40em) {
     .menu-rundown {
-        position: fixed;
         width: 40rem;
+        position: fixed;
     }
 
     .y-scroll {
