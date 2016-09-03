@@ -22,16 +22,16 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
                 <div class="y-scroll">
                     <ul class="vertical icon-left menu-bar">
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.TeacherItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.StudentItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PostAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
                         </li>
                     </ul>
                 </div>
