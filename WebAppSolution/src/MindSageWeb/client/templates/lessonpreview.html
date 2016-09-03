@@ -43,7 +43,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
             <div class="lesson-contents">
                 <!-- Item -->
                 <div class="grid-block" ng-show="cx.ItemSelect.ContentURL != null">
-                    <iframe height="540" class="small-12" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.ItemSelect.ContentURL) }}" frameborder="0" allowfullscreen></iframe>
+                    <iframe height="540" class="small-12" src="{{ cx.$sce.trustAsResourceUrl(cx.ItemSelect.ContentURL) }}" frameborder="0" allowfullscreen></iframe>
                     <hr>
                 </div>
                 <div class="card-section" ng-show="cx.ItemSelect.ContentType == 'None' || cx.ItemSelect.ContentType == 'Video' || cx.ItemSelect.ContentType == 'Audio' || cx.ItemSelect.ContentType == 'File' || cx.ItemSelect.ContentType == 'Game'">
