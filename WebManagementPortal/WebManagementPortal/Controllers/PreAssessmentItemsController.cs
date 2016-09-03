@@ -103,6 +103,8 @@ namespace WebManagementPortal.Controllers
 
                 selectedAssessmentItem.Name = assessmentItem.Name;
                 selectedAssessmentItem.IsPreviewable = assessmentItem.IsPreviewable;
+                var IconUrl = ExtraContentType.PreAssessment.ToString();
+                selectedAssessmentItem.IconURL = ControllerHelper.ConvertToIconUrl(IconUrl);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Lessons", new { @id = assessmentItem.PreLessonId });
             }
