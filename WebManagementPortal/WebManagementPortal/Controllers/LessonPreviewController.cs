@@ -82,6 +82,7 @@ namespace WebManagementPortal.Controllers
                 .Select(it => new LessonContentRespond.LessonItem
                 {
                     id = it.Id.ToString(),
+                    Order = it.Order,
                     Name = it.Name,
                     IsPreviewable = it.IsPreviewable,
                     Description = it.Description,
@@ -121,6 +122,7 @@ namespace WebManagementPortal.Controllers
                     return new LessonContentRespond.AssessmentItem
                     {
                         id = assessmentItem.Id.ToString(),
+                        Order = assessmentItem.Order,
                         Name = assessmentItem.Name,
                         IsPreviewable = assessmentItem.IsPreviewable,
                         IconURL = assessmentItem.IconURL,

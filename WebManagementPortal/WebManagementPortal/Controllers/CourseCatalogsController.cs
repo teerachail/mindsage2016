@@ -269,6 +269,7 @@ namespace WebManagementPortal.Controllers
                 .Select(it => new repoModel.LessonCatalog.LessonItem
                 {
                     id = it.Id.ToString(),
+                    Order = it.Order,
                     Name = it.Name,
                     ContentType = it.ContentType,
                     ContentURL = it.ContentURL,
@@ -308,6 +309,7 @@ namespace WebManagementPortal.Controllers
                     return new repoModel.LessonCatalog.AssessmentItem
                     {
                         id = assessmentItem.Id.ToString(),
+                        Order = assessmentItem.Order,
                         Name = assessmentItem.Name,
                         IsPreviewable = assessmentItem.IsPreviewable,
                         IconURL = assessmentItem.IconURL,
