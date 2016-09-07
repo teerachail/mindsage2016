@@ -20,7 +20,7 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
                     </h1>
                 </div>
                 <div class="y-scroll">
-                    <ul class="vertical icon-left menu-bar">
+                    <ul class="vertical icon-left menu-bar scrollup">
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
                             <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
                         </li>
@@ -166,5 +166,11 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
                 'top': point + 'px'
             });
         }
+    });
+
+    $('.scrollup').click(function () {
+        $("html, body").animate({
+            scrollTop: 0
+        });
     });
 </script>
