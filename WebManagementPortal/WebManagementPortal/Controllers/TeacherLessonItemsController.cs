@@ -65,7 +65,9 @@ namespace WebManagementPortal.Controllers
 
                 lessonItem.Order = lesson.TeacherLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue).Count() + 1;
                 lessonItem.RecLog.CreatedDate = DateTime.Now;
-                lessonItem.IconURL = ControllerHelper.ConvertToIconUrl(lessonItem.ContentType);
+
+                var IconUrl = ExtraContentType.Teacher.ToString();
+                lessonItem.IconURL = ControllerHelper.ConvertToIconUrl(IconUrl);
                 db.LessonItems.Add(lessonItem);
                 db.SaveChanges();
                 return RedirectToAction("Details", "Lessons", new { @id = lessonItem.TeacherLessonId });
@@ -108,7 +110,8 @@ namespace WebManagementPortal.Controllers
                 selectedLessonItem.IsPreviewable = lessonItem.IsPreviewable;
                 selectedLessonItem.ContentType = lessonItem.ContentType;
                 selectedLessonItem.ContentURL = lessonItem.ContentURL;
-                selectedLessonItem.IconURL = ControllerHelper.ConvertToIconUrl(lessonItem.ContentType);
+                var IconUrl = ExtraContentType.Teacher.ToString();
+                selectedLessonItem.IconURL = ControllerHelper.ConvertToIconUrl(IconUrl);
                 await db.SaveChangesAsync();
                 return RedirectToAction("Details", "Lessons", new { @id = lessonItem.TeacherLessonId });
             }
