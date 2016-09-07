@@ -62,6 +62,7 @@ namespace WebManagementPortal.Controllers
                 var lesson = await db.Lessons.FirstOrDefaultAsync(it => it.Id == assessmentItem.PreLessonId);
                 if (lesson == null || lesson.RecLog.DeletedDate.HasValue) return View("Error");
 
+                assessmentItem.Order = lesson.PreAssessments.Where(it => !it.RecLog.DeletedDate.HasValue).Count() + 1;
                 assessmentItem.RecLog.CreatedDate = DateTime.Now;
                 var IconUrl = ExtraContentType.PreAssessment.ToString();
                 assessmentItem.IconURL = ControllerHelper.ConvertToIconUrl(IconUrl);
@@ -135,10 +136,16 @@ namespace WebManagementPortal.Controllers
             AssessmentItem assessmentItem = await db.AssessmentItems.FindAsync(id);
             var now = DateTime.Now;
             assessmentItem.RecLog.DeletedDate = now;
+            var lessonId = assessmentItem.PreLessonId;
+
             foreach (var item in assessmentItem.Assessments) item.RecLog.DeletedDate = now;
 
+            var deleteOrder = assessmentItem.Order;
+            var AssessmentList = db.AssessmentItems.Where(it => !it.RecLog.DeletedDate.HasValue && it.PreLessonId == lessonId && it.Order > deleteOrder);
+            foreach (var item in AssessmentList) item.Order--;
+
             await db.SaveChangesAsync();
-            return RedirectToAction("Details", "Lessons", new { @id = assessmentItem.PreLessonId });
+            return RedirectToAction("Details", "Lessons", new { @id = lessonId });
         }
 
         protected override void Dispose(bool disposing)
