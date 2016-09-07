@@ -79,21 +79,6 @@
                                                 {
                                                     if (content.IsPreviewable)
                                                     {
-                                                        <a href="@content.ContentUrl" target="_blank">
-                                                            <div class="grid-block">
-                                                                <div class="grid-content shrink large-2">
-                                                                    <img src="@content.ImageUrl">
-                                                                </div>
-                                                                <div class="grid-content large-10">
-                                                                    <p>
-                                                                        @Html.Raw(content.Description)
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    }
-                                                    else
-                                                    {
                                                         <div class="grid-block">
                                                             <div class="grid-content text-center shrink large-2">
                                                                 <img src="@content.ImageUrl">
@@ -148,21 +133,6 @@
                                                 @foreach (var content in lesson.Contents)
                                                 {
                                                     if (content.IsPreviewable)
-                                                    {
-                                                        <a href="@content.ContentUrl" target="_blank">
-                                                            <div class="grid-block">
-                                                                <div class="grid-content shrink large-2">
-                                                                    <img src="@content.ImageUrl">
-                                                                </div>
-                                                                <div class="grid-content large-10">
-                                                                    <p>
-                                                                        @Html.Raw(content.Description)
-                                                                    </p>
-                                                                </div>
-                                                            </div>
-                                                        </a>
-                                                    }
-                                                    else
                                                     {
                                                         <div class="grid-block">
                                                             <div class="grid-content text-center shrink large-2">
