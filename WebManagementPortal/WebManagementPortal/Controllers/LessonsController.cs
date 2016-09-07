@@ -38,6 +38,52 @@ namespace WebManagementPortal.Controllers
             return View(lesson);
         }
 
+        [HttpPost]
+        public async Task<ActionResult> ItemReorder(int? id, bool isUp)
+        {
+            LessonItem selected = await db.LessonItems.FirstOrDefaultAsync(it => it.Id == id);
+            if (selected == null) return View("Error");
+
+            var selectedOrder = isUp? --selected.Order : ++selected.Order;
+            var lessonId = selected.TeacherLessonId == null ? selected.StudentLessonId : selected.TeacherLessonId;
+
+            LessonItem swapItem;
+            if (selected.TeacherLessonId == null)
+                swapItem = await db.LessonItems.FirstOrDefaultAsync(it => !it.RecLog.DeletedDate.HasValue && it.StudentLessonId == lessonId && it.Order == selectedOrder);
+            else
+                swapItem = await db.LessonItems.FirstOrDefaultAsync(it => !it.RecLog.DeletedDate.HasValue && it.TeacherLessonId == lessonId && it.Order == selectedOrder);
+
+            if(swapItem == null) return View("Error");
+
+            swapItem.Order = isUp ? ++swapItem.Order : --swapItem.Order;
+
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details", "Lessons", new { @id = lessonId });
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> AssessmentReorder(int? id, bool isUp)
+        {
+            AssessmentItem selected = await db.AssessmentItems.FirstOrDefaultAsync(it => it.Id == id);
+            if (selected == null) return View("Error");
+
+            var selectedOrder = isUp ? --selected.Order : ++selected.Order;
+            var lessonId = selected.PreLessonId == null ? selected.PostLessonId : selected.PreLessonId;
+
+            AssessmentItem swapItem;
+            if (selected.PreLessonId == null)
+                swapItem = await db.AssessmentItems.FirstOrDefaultAsync(it => !it.RecLog.DeletedDate.HasValue && it.PostLessonId == lessonId && it.Order == selectedOrder);
+            else
+                swapItem = await db.AssessmentItems.FirstOrDefaultAsync(it => !it.RecLog.DeletedDate.HasValue && it.PreLessonId == lessonId && it.Order == selectedOrder);
+
+            if (swapItem == null) return View("Error");
+
+            swapItem.Order = isUp ? ++swapItem.Order : --swapItem.Order;
+
+            await db.SaveChangesAsync();
+            return RedirectToAction("Details", "Lessons", new { @id = lessonId });
+        }
+
         // GET: Lessons/Create
         public async Task<ActionResult> Create(int id)
         {
