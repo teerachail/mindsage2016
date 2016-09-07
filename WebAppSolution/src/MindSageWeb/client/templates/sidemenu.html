@@ -4,7 +4,7 @@
     </h1>
     <a ui-sref="app.course.notification({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId })"><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"><span ng-show="cx.notification > 0" class="badge">{{ cx.notification }}</span></a>
     <a class="float-right" zf-open="classModal" ng-show="cx.userSvc.AllAvailableCourses.length > 1" ><i class="fi-list size-36"></i></a>
-    <ul class="vertical icon-left menu-bar">
+    <ul class="vertical icon-left menu-bar" ng-click="cx.ToTop()">
         <li ui-sref-active="is-active">
             <a ui-sref="app.main({ classRoomId: cx.userSvc.ClientUserProfile.CurrentClassRoomId, lessonId: cx.userSvc.ClientUserProfile.CurrentLessonId })"><img zf-iconic="" icon="home" size="medium" class="iconic-color-dark"> HOME</a>
         </li>
