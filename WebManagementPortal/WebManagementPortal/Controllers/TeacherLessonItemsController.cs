@@ -63,6 +63,7 @@ namespace WebManagementPortal.Controllers
                 var lesson = await db.Lessons.FirstOrDefaultAsync(it => it.Id == lessonItem.TeacherLessonId);
                 if (lesson == null || lesson.RecLog.DeletedDate.HasValue) return View("Error");
 
+                lessonItem.Order = lesson.TeacherLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue).Count() + 1;
                 lessonItem.RecLog.CreatedDate = DateTime.Now;
                 lessonItem.IconURL = ControllerHelper.ConvertToIconUrl(lessonItem.ContentType);
                 db.LessonItems.Add(lessonItem);
@@ -137,9 +138,14 @@ namespace WebManagementPortal.Controllers
         {
             LessonItem lessonItem = await db.LessonItems.FindAsync(id);
             lessonItem.RecLog.DeletedDate = DateTime.Now;
+            var lessonId = lessonItem.TeacherLessonId;
+
+            var deleteOrder = lessonItem.Order;
+            var lessonList = db.LessonItems.Where(it => !it.RecLog.DeletedDate.HasValue && it.TeacherLessonId == lessonId && it.Order > deleteOrder);
+            foreach (var item in lessonList) item.Order--;
 
             await db.SaveChangesAsync();
-            return RedirectToAction("Details", "Lessons", new { @id = lessonItem.TeacherLessonId });
+            return RedirectToAction("Details", "Lessons", new { @id = lessonId });
         }
 
         protected override void Dispose(bool disposing)
