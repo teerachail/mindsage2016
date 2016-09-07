@@ -64,6 +64,7 @@ namespace WebManagementPortal.Repositories.Models
             #region Properties
 
             public string id { get; set; }
+            public int Order { get; set; }
             public string Name { get; set; }
             public string ContentType { get; set; }
             public bool IsPreviewable { get; set; }
@@ -79,6 +80,7 @@ namespace WebManagementPortal.Repositories.Models
             #region Properties
 
             public string id { get; set; }
+            public int Order { get; set; }
             public string Name { get; set; }
             public bool IsPreviewable { get; set; }
             public string IconURL { get; set; }

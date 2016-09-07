@@ -85,7 +85,7 @@
         <th class="col-md-1">
             No
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             IsPreviewable
         </th>
         <th class="col-md-5">
@@ -94,17 +94,20 @@
         <th class="col-md-2">
             Created date
         </th>
+        <th class="col-md-1">
+            Re-order
+        </th>
 
         <th class="col-md-2"></th>
     </tr>
 
-    @foreach (var item in Model.TeacherLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue))
+    @foreach (var item in Model.TeacherLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.Order))
     {
         <tr class="row">
             <td class="col-md-1">
                 @teacherLessonItemRunner
             </td>
-            <td class="col-md-2">
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.IsPreviewable)
             </td>
             <td class="col-md-5">
@@ -112,6 +115,32 @@
             </td>
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-1">
+                <table>
+                    <thead>
+                        <tr>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order > 1)
+                                {
+                                    using (Html.BeginForm("ItemReorder", "Lessons", new { id = item.Id, isUp = true }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                    }
+                                }
+                            </td>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order < Model.TeacherLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue).Count())
+                                {
+                                    using (Html.BeginForm("ItemReorder", "Lessons", new { id = item.Id, isUp = false }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
             </td>
             <td class="col-md-2">
                 @Html.ActionLink("Edit", "Edit", "TeacherLessonItems", new { id = item.Id }, new { @class = "btn btn-warning" })
@@ -123,6 +152,8 @@
 
 </table>
 
+
+
 <h2>Student items</h2>
 @{ var studentLessonItemRunner = 1; }
 <p>
@@ -133,7 +164,7 @@
         <th class="col-md-1">
             No
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             IsPreviewable
         </th>
         <th class="col-md-5">
@@ -142,17 +173,20 @@
         <th class="col-md-2">
             Created date
         </th>
+        <th class="col-md-1">
+            Re-order
+        </th>
 
         <th class="col-md-2"></th>
     </tr>
 
-    @foreach (var item in Model.StudentLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue))
+    @foreach (var item in Model.StudentLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.Order))
     {
         <tr class="row">
             <td class="col-md-1">
                 @studentLessonItemRunner
             </td>
-            <td class="col-md-2">
+            <td class="col-md-1">
                 @Html.DisplayFor(modelItem => item.IsPreviewable)
             </td>
             <td class="col-md-5">
@@ -161,6 +195,33 @@
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
             </td>
+            <td class="col-md-1">
+                <table>
+                    <thead>
+                        <tr>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order > 1)
+                                {
+                                    using (Html.BeginForm("ItemReorder", "Lessons", new { id = item.Id, isUp = true }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                    }
+                                }
+                            </td>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order < Model.StudentLessonItems.Where(it => !it.RecLog.DeletedDate.HasValue).Count())
+                                {
+                                    using (Html.BeginForm("ItemReorder", "Lessons", new { id = item.Id, isUp = false }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
+            </td>
+
             <td class="col-md-2">
                 @Html.ActionLink("Edit", "Edit", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", "StudentLessonItems", new { id = item.Id }, new { @class = "btn btn-danger" })
@@ -171,7 +232,7 @@
 
 </table>
 
-<hr/>
+<hr />
 
 <h2>Pre-assessment items</h2>
 @{ var preAssessmentItemRunner = 1; }
@@ -189,17 +250,20 @@
         <th class="col-md-3">
             Name
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             Questions
         </th>
         <th class="col-md-2">
             Created date
         </th>
+        <th class="col-md-1">
+            Re-order
+        </th>
 
         <th class="col-md-3"></th>
     </tr>
 
-    @foreach (var item in Model.PreAssessments.Where(it => !it.RecLog.DeletedDate.HasValue))
+    @foreach (var item in Model.PreAssessments.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.Order))
     {
         <tr class="row">
             <td class="col-md-1">
@@ -211,11 +275,37 @@
             <td class="col-md-3">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td class="col-md-2">
+            <td class="col-md-1">
                 @item.Assessments.Count(it => !it.RecLog.DeletedDate.HasValue)
             </td>
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-1">
+                <table>
+                    <thead>
+                        <tr>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order > 1)
+                                {
+                                    using (Html.BeginForm("AssessmentReorder", "Lessons", new { id = item.Id, isUp = true }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                    }
+                                }
+                            </td>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order < Model.PreAssessments.Where(it => !it.RecLog.DeletedDate.HasValue).Count())
+                                {
+                                    using (Html.BeginForm("AssessmentReorder", "Lessons", new { id = item.Id, isUp = false }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
             </td>
             <td class="col-md-3">
                 @Html.ActionLink("View", "Details", "PreAssessmentItems", new { id = item.Id }, new { @class = "btn btn-primary" })
@@ -245,17 +335,20 @@
         <th class="col-md-3">
             Name
         </th>
-        <th class="col-md-2">
+        <th class="col-md-1">
             Questions
         </th>
         <th class="col-md-2">
             Created date
         </th>
+        <th class="col-md-1">
+            Re-order
+        </th>
 
         <th class="col-md-3"></th>
     </tr>
 
-    @foreach (var item in Model.PostAssessments.Where(it => !it.RecLog.DeletedDate.HasValue))
+    @foreach (var item in Model.PostAssessments.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.Order))
     {
         <tr class="row">
             <td class="col-md-1">
@@ -267,11 +360,37 @@
             <td class="col-md-3">
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
-            <td class="col-md-2">
+            <td class="col-md-1">
                 @item.Assessments.Count(it => !it.RecLog.DeletedDate.HasValue)
             </td>
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
+            </td>
+            <td class="col-md-1">
+                <table>
+                    <thead>
+                        <tr>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order > 1)
+                                {
+                                    using (Html.BeginForm("AssessmentReorder", "Lessons", new { id = item.Id, isUp = true }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-up"></span></button>
+                                    }
+                                }
+                            </td>
+                            <td style="padding: 0px;" class="col-md-6">
+                                @if (item.Order < Model.PostAssessments.Where(it => !it.RecLog.DeletedDate.HasValue).Count())
+                                {
+                                    using (Html.BeginForm("AssessmentReorder", "Lessons", new { id = item.Id, isUp = false }, FormMethod.Post))
+                                    {
+                                        <button type="submit" class="btn btn-primary"><span class="glyphicon glyphicon-arrow-down"></span></button>
+                                    }
+                                }
+                            </td>
+                        </tr>
+                    </thead>
+                </table>
             </td>
             <td class="col-md-3">
                 @Html.ActionLink("View", "Details", "PostAssessmentItems", new { id = item.Id }, new { @class = "btn btn-primary" })
@@ -284,7 +403,7 @@
 
 </table>
 
-<hr/>
+<hr />
 
 <h2>Advertisements</h2>
 @{ var adsRunner = 1; }
@@ -318,6 +437,7 @@
             <td class="col-md-2">
                 @Html.DisplayFor(modelItem => item.RecLog.CreatedDate)
             </td>
+
             <td class="col-md-2">
                 @Html.ActionLink("Edit", "Edit", "Advertisements", new { id = item.Id }, new { @class = "btn btn-warning" })
                 @Html.ActionLink("Delete", "Delete", "Advertisements", new { id = item.Id }, new { @class = "btn btn-danger" })
@@ -350,7 +470,7 @@
         <th class="col-md-2"></th>
     </tr>
 
-    @foreach (var item in Model.TopicOfTheDays.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.SendOnDay).ThenBy(it => it.Message)) 
+    @foreach (var item in Model.TopicOfTheDays.Where(it => !it.RecLog.DeletedDate.HasValue).OrderBy(it => it.SendOnDay).ThenBy(it => it.Message))
     {
         <tr class="row">
             <td class="col-md-1">

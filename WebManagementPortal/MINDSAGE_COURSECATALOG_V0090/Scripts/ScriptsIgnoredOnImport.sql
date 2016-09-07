@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/31/2016 09:34:39
--- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
+-- Date Created: 09/07/2016 09:19:14
+-- Generated from EDMX file: D:\Work\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;

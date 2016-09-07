@@ -217,6 +217,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Order" Type="int" Nullable="false" />
     <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="IconURL" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="Description" Type="varchar(max)" Nullable="false" />
@@ -233,6 +234,7 @@
       <PropertyRef Name="Id" />
     </Key>
     <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Order" Type="int" Nullable="false" />
     <Property Name="Name" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="IconURL" Type="varchar" Nullable="false" MaxLength="255" />
     <Property Name="IsPreviewable" Type="bit" Nullable="false" />
@@ -760,6 +762,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IconURL" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
@@ -777,6 +780,7 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Order" Type="Int32" Nullable="false" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <Property Name="IconURL" Type="String" Nullable="false" MaxLength="255" FixedLength="false" Unicode="false" />
           <NavigationProperty Name="Assessments" Relationship="MindSageDataModels.AssessmentItemAssessment" FromRole="AssessmentItem" ToRole="Assessment" />
@@ -1060,6 +1064,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.LessonItem)">
         <MappingFragment StoreEntitySet="LessonItems">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="IconURL" ColumnName="IconURL" />
           <ScalarProperty Name="Description" ColumnName="Description" />
@@ -1079,6 +1084,7 @@
       <EntityTypeMapping TypeName="IsTypeOf(MindSageDataModels.AssessmentItem)">
         <MappingFragment StoreEntitySet="AssessmentItems">
           <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="Order" ColumnName="Order" />
           <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="IconURL" ColumnName="IconURL" />
           <ScalarProperty Name="IsPreviewable" ColumnName="IsPreviewable" />

@@ -1,6 +1,7 @@
 ﻿-- Creating table 'AssessmentItems'
 CREATE TABLE [dbo].[AssessmentItems] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Order] int  NOT NULL,
     [Name] varchar(255)  NOT NULL,
     [IconURL] varchar(255)  NOT NULL,
     [IsPreviewable] bit  NOT NULL,

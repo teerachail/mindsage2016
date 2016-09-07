@@ -158,6 +158,10 @@ namespace MindSageWeb.Controllers
                 PostAssessments = selectedLessonCatalog.PostAssessments ?? Enumerable.Empty<LessonCatalog.AssessmentItem>(),
                 PreAssessments = selectedLessonCatalog.PreAssessments ?? Enumerable.Empty<LessonCatalog.AssessmentItem>(),
             };
+            result.StudentItems = result.StudentItems.OrderBy(it => it.Order);
+            result.TeacherItems = result.TeacherItems.OrderBy(it => it.Order);
+            result.PostAssessments = result.PostAssessments.OrderBy(it => it.Order);
+            result.PreAssessments = result.PreAssessments.OrderBy(it => it.Order);
             return result;
         }
 
@@ -169,6 +173,11 @@ namespace MindSageWeb.Controllers
             {
                 var result = await http.GetStringAsync($"{ _appConfig.ManagementPortalUrl }/api/lessonpreview/{ id }/lesson");
                 var lessonCatalog = Newtonsoft.Json.JsonConvert.DeserializeObject<LessonContentRespond>(result);
+
+                lessonCatalog.StudentItems = lessonCatalog.StudentItems.OrderBy(it => it.Order);
+                lessonCatalog.TeacherItems = lessonCatalog.TeacherItems.OrderBy(it => it.Order);
+                lessonCatalog.PostAssessments = lessonCatalog.PostAssessments.OrderBy(it => it.Order);
+                lessonCatalog.PreAssessments = lessonCatalog.PreAssessments.OrderBy(it => it.Order);
                 return lessonCatalog;
             }
         }

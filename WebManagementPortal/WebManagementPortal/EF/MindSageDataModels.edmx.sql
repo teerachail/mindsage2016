@@ -2,8 +2,8 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 08/31/2016 09:34:39
--- Generated from EDMX file: D:\gits\TheS\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
+-- Date Created: 09/07/2016 09:19:14
+-- Generated from EDMX file: D:\Work\mindsage2016\WebManagementPortal\WebManagementPortal\EF\MindSageDataModels.edmx
 -- --------------------------------------------------
 
 SET QUOTED_IDENTIFIER OFF;
@@ -249,6 +249,7 @@ GO
 -- Creating table 'LessonItems'
 CREATE TABLE [dbo].[LessonItems] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Order] int  NOT NULL,
     [Name] varchar(255)  NOT NULL,
     [IconURL] varchar(255)  NOT NULL,
     [Description] varchar(max)  NOT NULL,
@@ -265,6 +266,7 @@ GO
 -- Creating table 'AssessmentItems'
 CREATE TABLE [dbo].[AssessmentItems] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Order] int  NOT NULL,
     [Name] varchar(255)  NOT NULL,
     [IconURL] varchar(255)  NOT NULL,
     [IsPreviewable] bit  NOT NULL,

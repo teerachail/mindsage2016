@@ -22,6 +22,7 @@ namespace WebManagementPortal.EF
         }
     
         public int Id { get; set; }
+        public int Order { get; set; }
         public string Name { get; set; }
         public string IconURL { get; set; }
         public bool IsPreviewable { get; set; }
