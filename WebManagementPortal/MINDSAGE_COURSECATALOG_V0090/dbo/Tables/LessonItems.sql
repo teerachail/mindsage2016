@@ -1,6 +1,7 @@
 ﻿-- Creating table 'LessonItems'
 CREATE TABLE [dbo].[LessonItems] (
     [Id] int IDENTITY(1,1) NOT NULL,
+    [Order] int  NOT NULL,
     [Name] varchar(255)  NOT NULL,
     [IconURL] varchar(255)  NOT NULL,
     [Description] varchar(max)  NOT NULL,
