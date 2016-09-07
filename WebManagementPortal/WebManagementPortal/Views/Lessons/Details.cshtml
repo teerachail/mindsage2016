@@ -295,7 +295,7 @@
                                 }
                             </td>
                             <td style="padding: 0px;" class="col-md-6">
-                                @if (item.Order < Model.PostAssessments.Where(it => !it.RecLog.DeletedDate.HasValue).Count())
+                                @if (item.Order < Model.PreAssessments.Where(it => !it.RecLog.DeletedDate.HasValue).Count())
                                 {
                                     using (Html.BeginForm("AssessmentReorder", "Lessons", new { id = item.Id, isUp = false }, FormMethod.Post))
                                     {
