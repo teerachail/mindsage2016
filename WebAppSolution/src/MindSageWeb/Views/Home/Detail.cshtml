@@ -77,7 +77,7 @@
                                                 <p>WEEK @lesson.Order</p>
                                                 @foreach (var content in lesson.Contents)
                                                 {
-                                                    if (content.IsPreviewable)
+                                                    if (content.IsPreviewable && content.ImageUrl.IndexOf("LessonPlan") == -1)
                                                     {
                                                         <div class="grid-block">
                                                             <div class="grid-content text-center shrink large-2" style="padding: 0;">
@@ -132,7 +132,7 @@
                                                 <p>WEEK @lesson.Order</p>
                                                 @foreach (var content in lesson.Contents)
                                                 {
-                                                    if (content.IsPreviewable)
+                                                    if (content.IsPreviewable && content.ImageUrl.IndexOf("LessonPlan") == -1)
                                                     {
                                                         <div class="grid-block">
                                                             <div class="grid-content text-center shrink large-2" style="padding: 0;">
