@@ -34,7 +34,7 @@ namespace WebManagementPortal.Controllers
             switch (content)
             {
                 case ExtraContentType.None:
-                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/File.png", AppConfigOptions.MindSageWebUrl); //HACK: None Icon
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/NextStep.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Video:
                     return string.Format("{0}/assets/img/icon/LessonMenuIcon/VideoFile.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.Audio:
@@ -47,6 +47,8 @@ namespace WebManagementPortal.Controllers
                     return string.Format("{0}/assets/img/icon/LessonMenuIcon/Assessment.png", AppConfigOptions.MindSageWebUrl);
                 case ExtraContentType.PostAssessment:
                     return string.Format("{0}/assets/img/icon/LessonMenuIcon/Assessment.png", AppConfigOptions.MindSageWebUrl);
+                case ExtraContentType.Teacher:
+                    return string.Format("{0}/assets/img/icon/LessonMenuIcon/LessonPlan.png", AppConfigOptions.MindSageWebUrl);
                 default:
                     return "";
             }
@@ -62,5 +64,6 @@ namespace WebManagementPortal.Controllers
         Game = 4,
         PreAssessment = 5,
         PostAssessment = 6,
+        Teacher = 7
     }
 }

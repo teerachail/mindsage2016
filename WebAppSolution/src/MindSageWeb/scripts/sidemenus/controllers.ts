@@ -6,8 +6,8 @@
         private currentUserId: string;
         public notification: number;
 
-        static $inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService'];
-        constructor(private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private profileSvc: app.shared.GetProfileService) {
+        static $inject = ['$scope', '$state', 'app.shared.ClientUserProfileService', 'app.shared.GetProfileService', '$location', '$anchorScroll'];
+        constructor(private $scope, private $state, private userSvc: app.shared.ClientUserProfileService, private profileSvc: app.shared.GetProfileService, private $location, private $anchorScroll) {
             this.prepareUserprofile();
         }
 
@@ -36,6 +36,11 @@
             }, error => {
                 console.log('Change course failed');
             });
+        }
+
+        public ToTop() {
+            this.$location.hash('main-bg');
+            this.$anchorScroll();
         }
     }
 
