@@ -10,8 +10,8 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
         <div class="medium-4 small-12 align-center grid-block menu-rundown">
             <div class="grid-content medium-9 small-12 hidden-x-scroll">
                 <div class="v-align title-bar">
-                    <a><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"><span class="badge">5</span></a>
-                    <a class="right"><img zf-iconic="" icon="Person" size="medium" class="iconic-color-dark"></a>
+                    <a><i class="fi-list size-36"></i></a>
+                    <a class="right"><img zf-iconic="" icon="notification" size="medium" class="iconic-color-primary"><span class="badge">5</span></a>
                     <hr />
                 </div>
                 <div class="v-align title-bar">
@@ -20,18 +20,18 @@ controller: 'app.lessonpreviews.LessonPreviewController as cx'
                     </h1>
                 </div>
                 <div class="y-scroll">
-                    <ul class="vertical icon-left menu-bar scrollup">
+                    <ul class="vertical icon-left primary menu-bar scrollup">
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PreAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="32px" width="32px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.TeacherItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="32px" width="32px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.StudentItems" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect == null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(null)"><img height="32px" width="32px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect == null)) }}"> {{ item.Name }}</a>
                         </li>
                         <li ui-sref-active="is-active" ng-repeat="item in cx.content.PostAssessments" ng-class="{'is-active': cx.ItemSelect.id == item.id && cx.QuestionSelect != null}">
-                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="16px" width="16px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
+                            <a ng-click="cx.SelectItem(item); cx.SelectQuestion(item)"><img height="32px" width="32px" ng-src="{{ cx.$sce.trustAsResourceUrl(cx.MenuOnSelect(item.IconURL, cx.ItemSelect.id == item.id && cx.QuestionSelect != null)) }}"> {{ item.Name }}</a>
                         </li>
                     </ul>
                 </div>
